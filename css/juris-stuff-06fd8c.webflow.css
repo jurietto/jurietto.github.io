@@ -1,0 +1,129 @@
+.body {
+  background-color: #000;
+}
+
+.heading {
+  color: #fff;
+  text-align: center;
+  border: 1px #fff;
+  border-bottom-width: 5px;
+  font-family: Lindl, sans-serif;
+}
+
+.image {
+  vertical-align: baseline;
+  min-width: auto;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.image-2 {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.heading-2, .heading-3 {
+  color: #fff;
+  text-align: center;
+  font-family: Lindl, sans-serif;
+}
+
+.link, .link-2, .link-3, .link-4, .link-5, .link-6 {
+  color: #fff;
+  text-decoration: none;
+}
+
+.paragraph {
+  color: #fff;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+.heading-4, .heading-5 {
+  color: #d10073;
+  text-align: center;
+  border-bottom: 1px #fff;
+  font-family: Lindl, sans-serif;
+}
+
+.image-3 {
+  max-width: 200px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.code-embed {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heading-6 {
+  color: #fff;
+  text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+@media screen and (max-width: 991px) {
+  .heading {
+    border-style: none;
+    border-color: #000 #000 #fff;
+    border-bottom-width: 5px;
+  }
+
+  .image-2 {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  .heading-4, .heading-5 {
+    color: #d10073;
+    text-align: center;
+    border-bottom: 1px #fff;
+    font-family: Lindl, sans-serif;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .heading {
+    text-shadow: none;
+    border-bottom-style: none;
+    text-decoration: underline;
+  }
+
+  .heading-3 {
+    color: #fff;
+    text-shadow: 0 0 1px #d10073;
+  }
+
+  .link {
+    color: #fff;
+  }
+
+  .heading-4, .heading-5 {
+    color: #d10073;
+    border-bottom-style: none;
+  }
+
+  .image-3 {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+@font-face {
+  font-family: 'Lindl';
+  src: url('../fonts/LINDL___.TTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
