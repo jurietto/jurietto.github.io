@@ -2,14 +2,15 @@ body {
   background-color: #000;
   color: #fff;
   font-family: 'Times New Roman', serif;
-  margin: 0;
-  padding: 0;
-  text-align: center; /* Ensure all content is centered */
+  margin: 20px; /* Balanced margin on all sides */
+  padding: 20px; /* Padding for consistent spacing */
+  text-align: center; /* Center all content */
+  line-height: 1.6; /* Improve readability */
 }
 
 @font-face {
   font-family: 'Lindl';
-  src: url('LINDL___.TTF') format('truetype');
+  src: url('fonts/LINDL___.TTF') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -19,7 +20,7 @@ body {
   color: #ff33aa; /* Pink color for JURI'S STUFF */
   font-family: 'Lindl', sans-serif;
   font-size: 4rem; /* Larger font for main heading */
-  margin: 0;
+  margin-bottom: 20px; /* Space below heading */
   text-align: center;
 }
 
@@ -35,6 +36,7 @@ body {
   color: #ff33aa; /* Deeper magenta */
   text-align: center;
   font-family: 'Lindl', sans-serif;
+  margin: 10px 0; /* Add spacing between headings */
 }
 
 .heading-2 {
@@ -63,24 +65,28 @@ body {
   text-decoration: none;
   text-align: center;
   display: inline-block;
-  margin: 5px 0;
+  margin: 10px 5px; /* Balanced spacing around links */
+  padding: 5px 10px; /* Padding for clickable area */
+  border-radius: 5px; /* Rounded corners for links */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
 }
 
 .link:hover {
   color: #ff33aa; /* Hover effect with deeper magenta */
+  background-color: #222; /* Subtle background highlight */
 }
 
 .heading-6 {
   text-align: center;
   font-family: Verdana, Geneva, sans-serif;
-  margin: 0;
+  margin: 20px 0; /* Add balanced spacing */
   padding: 0;
   color: inherit;
 }
 
 .shia {
   display: block;
-  margin: 10px auto;
+  margin: 20px auto; /* Add balanced spacing */
   width: 100px;
   height: 100px;
 }
