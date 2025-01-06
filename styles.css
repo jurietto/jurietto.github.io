@@ -90,3 +90,15 @@ body {
   background-size: cover;
   border: 1px solid #ff33aa; /* Magenta border */
 }
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: auto;
+  height: 250px;
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/pngegg.png') no-repeat right bottom;
+  background-size: contain;
+  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+  z-index: 1000; /* Ensure it stays on top */
+}
