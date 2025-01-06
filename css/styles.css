@@ -1,183 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Juri's Stuff</title>
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+  margin: 0;
+  padding: 0;
+}
 
-  <style>
-    @font-face {
-      font-family: 'Lindl';
-      src: url('fonts/LINDL___.TTF') format('truetype');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
+header {
+  text-align: center;
+  padding: 20px;
+}
 
-    body {
-      font-family: 'Lindl', sans-serif;
-      background-color: #000;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
+.heading {
+  color: #fff;
+  font-family: 'Lindl', sans-serif;
+  font-size: 2.5rem;
+  margin: 0;
+}
 
-    header {
-      text-align: center;
-      padding: 20px;
-      background: #ff9eb6;
-      color: white;
-    }
+.main {
+  padding: 20px;
+}
 
-    .heading {
-      color: #fff;
-      text-align: center;
-      border: 1px #fff;
-      border-bottom-width: 5px;
-      font-family: 'Lindl', sans-serif;
-      font-size: 3rem;
-    }
+.heading-4,
+.heading-5,
+.link,
+.link-2,
+.link-3,
+.link-4,
+.link-5,
+.link-6,
+.heading-3 {
+  color: #ff66cc; /* Bubblegum Magenta */
+  text-align: center;
+  font-family: 'Lindl', sans-serif;
+}
 
-    .heading-4,
-    .heading-5 {
-      color: #d10073;
-      text-align: center;
-      border-bottom: 1px #fff;
-      font-family: 'Lindl', sans-serif;
-      font-size: 2rem;
-    }
+.paragraph {
+  color: #fff;
+  text-align: center;
+  margin: 10px 0;
+  font-family: Verdana, Geneva, sans-serif;
+}
 
-    .heading-2,
-    .heading-3 {
-      color: #fff;
-      text-align: center;
-      font-family: 'Lindl', sans-serif;
-      font-size: 2.5rem;
-    }
+.heading-6 {
+  color: #fff;
+  text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+}
 
-    .links {
-      text-align: center;
-    }
+.image-3 {
+  display: block;
+  margin: 10px auto;
+  width: 100px;
+  height: 100px;
+}
 
-    .link,
-    .link-2,
-    .link-3,
-    .link-4,
-    .link-5,
-    .link-6 {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .link:hover {
-      text-decoration: underline;
-    }
-
-    .image-3 {
-      max-width: 200px;
-      margin-bottom: 10px;
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-    }
-
-    .paragraph {
-      color: #fff;
-      text-align: center;
-      margin-left: 10px;
-      margin-right: 10px;
-      font-family: Verdana, Geneva, sans-serif;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      background: #ff9eb6;
-      color: white;
-    }
-
-    .heading-6 {
-      color: #fff;
-      text-align: center;
-      font-family: Verdana, Geneva, sans-serif;
-    }
-
-    @media screen and (max-width: 991px) {
-      .heading {
-        border-style: none;
-        border-color: #000 #000 #fff;
-        border-bottom-width: 5px;
-      }
-
-      .heading-4,
-      .heading-5 {
-        color: #d10073;
-        text-align: center;
-        border-bottom: 1px #fff;
-        font-family: 'Lindl', sans-serif;
-      }
-    }
-
-    @media screen and (max-width: 479px) {
-      .heading {
-        text-shadow: none;
-        border-bottom-style: none;
-        text-decoration: underline;
-      }
-
-      .heading-3 {
-        color: #fff;
-      }
-
-      .link {
-        color: #fff;
-      }
-
-      .heading-4,
-      .heading-5 {
-        color: #d10073;
-        border-bottom-style: none;
-      }
-
-      .image-3 {
-        min-width: 100%;
-        max-width: 100%;
-      }
-    }
-  </style>
-</head>
-<body class="body">
-  <header>
-    <h1 class="heading">JURI'S STUFF</h1>
-  </header>
-
-  <main>
-    <section>
-      <h2 class="heading-4">Links...</h2>
-      <div class="links">
-        <h3 class="heading-3">
-          <a href="https://x.com/sotokomorii" target="_blank" class="link">Twiiiiiiter</a><br>
-          <a href="https://www.youtube.com/@juriscafe" target="_blank" class="link-2">Youuuuuutube</a><br>
-          <a href="https://bsky.app/profile/sotokomori.bsky.social" target="_blank" class="link-3">Bluuuuuuuuesky</a><br>
-          <a href="https://soundcloud.com/jetsetjuri" target="_blank" class="link-5">Soundcloud</a><br>
-          <a href="https://shirojuri.blogspot.com/" target="_blank" class="link-6">Translations</a>
-        </h3>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="heading-5">ABOUT ME if you care...</h2>
-      <img src="images/SHIA.png" loading="lazy" alt="Juri's image" class="image-3">
-      <p class="paragraph">
-        Baker by trade ^_^ I DJ and make music ♪ I like old visual novels~!
-      </p>
-    </section>
-  </main>
-
-  <footer>
-    <h6 class="heading-6">2024 - ???</h6>
-  </footer>
-</body>
-</html>
 
