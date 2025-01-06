@@ -1,33 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Juri's Stuff</title>
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Times New Roman', serif;
+  margin: 20px; /* Balanced margin on all sides */
+  padding: 20px; /* Padding for consistent spacing */
+  text-align: center; /* Center all content */
+  line-height: 1.6; /* Improve readability */
+}
 
-  <!-- Link to the external CSS stylesheet -->
-  <link href="styles.css" rel="stylesheet" type="text/css">
-</head>
-<body class="body">
-  <header>
-    <h1 class="heading">JURI'S STUFF</h1>
-    <img src="images/SHIA.png" alt="SHIA Image" class="shia">
-  </header>
+@font-face {
+  font-family: 'Lindl';
+  src: url('fonts/LINDL___.TTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-  <main>
-    <div class="links">
-      <h3 class="heading-3">
-        <a href="https://shirojuri.blogspot.com/" target="_blank" class="link">About Me</a><br>
-        <a href="https://x.com/sotokomorii" target="_blank" class="link">Twiiiiiiter</a><br>
-        <a href="https://www.youtube.com/@juriscafe" target="_blank" class="link">Youuuuuutube</a><br>
-        <a href="https://bsky.app/profile/sotokomori.bsky.social" target="_blank" class="link">Bluuuuuuuuesky</a><br>
-        <a href="https://soundcloud.com/jetsetjuri" target="_blank" class="link">Soundcloud</a><br>
-      </h3>
-    </div>
-  </main>
+.heading {
+  color: #ff33aa; /* Pink color for JURI'S STUFF */
+  font-family: 'Lindl', sans-serif;
+  font-size: 4rem; /* Larger font for main heading */
+  margin-bottom: 20px; /* Space below heading */
+  text-align: center;
+}
 
-  <footer>
-    <h6 class="heading-6">2024 - ???</h6>
-  </footer>
-</body>
-</html>
+.main {
+  padding: 20px;
+  text-align: center; /* Center the main section */
+}
+
+.heading-2,
+.heading-3,
+.heading-4,
+.heading-5 {
+  color: #ff33aa; /* Deeper magenta */
+  text-align: center;
+  font-family: 'Lindl', sans-serif;
+  margin: 10px 0; /* Add spacing between headings */
+}
+
+.heading-2 {
+  font-size: 3.5rem;
+}
+
+.heading-3 {
+  font-size: 3rem;
+}
+
+.heading-4 {
+  font-size: 2.5rem;
+}
+
+.heading-5 {
+  font-size: 2.25rem;
+}
+
+.link,
+.link-2,
+.link-3,
+.link-4,
+.link-5,
+.link-6 {
+  color: #fff; /* Links are white */
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  margin: 10px 5px; /* Balanced spacing around links */
+  padding: 5px 10px; /* Padding for clickable area */
+  border-radius: 5px; /* Rounded corners for links */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.link:hover {
+  color: #ff33aa; /* Hover effect with deeper magenta */
+  background-color: #222; /* Subtle background highlight */
+}
+
+.heading-6 {
+  text-align: center;
+  font-family: Verdana, Geneva, sans-serif;
+  margin: 20px 0; /* Add balanced spacing */
+  padding: 0;
+  color: inherit;
+}
+
+.shia {
+  display: block;
+  margin: 20px auto; /* Add balanced spacing */
+  width: 100px;
+  height: 100px;
+}
+
