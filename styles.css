@@ -96,7 +96,7 @@ body::after {
   bottom: 0;
   right: 0;
   width: auto;
-  height: 250px;
+  height: 250px; /* Adjusted height to 250px */
   background: url('https://file.garden/ZhTgSjrp5nAroRKq/pngegg.png') no-repeat right bottom;
   background-size: contain;
   pointer-events: none; /* Ensure it doesn't interfere with clicks */
