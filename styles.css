@@ -65,7 +65,6 @@ body {
   text-decoration: none;
   text-align: center;
   display: inline-block;
-  margin: 5px 5px; /* Balanced spacing around links */
 }
 
 .link:hover {
