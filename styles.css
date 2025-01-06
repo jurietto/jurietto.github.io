@@ -1,7 +1,5 @@
 body {
-  background: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif') no-repeat center center fixed;
-  background-size: cover;
-  position: relative;
+  background: #000; /* Plain black background */
   color: #fff;
   font-family: 'Times New Roman', serif;
   margin: 20px; /* Balanced margin on all sides */
@@ -81,8 +79,15 @@ body {
   color: inherit;
 }
 
-.shia {
+.image {
   display: block;
+  margin: 20px auto; /* Add balanced spacing */
+  width: 100px;
+  height: 100px;
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif') no-repeat center center;
+  background-size: cover;
+}
+
   margin: 20px auto; /* Add balanced spacing */
   width: 100px;
   height: 100px;
