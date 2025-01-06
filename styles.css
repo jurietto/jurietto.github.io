@@ -10,7 +10,7 @@ body {
 
 @font-face {
   font-family: 'Lindl';
-  src: url('fonts/LINDL___.TTF') format('truetype');
+  src: url('LINDL___.TTF') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
