@@ -6,6 +6,8 @@ body {
   padding: 40px 20px; /* Extra padding on top for spacing */
   text-align: center; /* Center all content */
   line-height: 1.6; /* Improve readability */
+  cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/Honeycute%20normal%20select.cur'), auto; /* Custom cursor */
+
 }
 
 @font-face {
