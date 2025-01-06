@@ -1,10 +1,17 @@
-
 body {
   background-color: #000;
   color: #fff;
   font-family: 'Times New Roman', serif;
   margin: 0;
   padding: 0;
+}
+
+@font-face {
+  font-family: 'Lindl';
+  src: url('LINDL___.TTF') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 .heading {
@@ -47,7 +54,7 @@ body {
   color: inherit;
 }
 
-.image-3 {
+.shia {
   display: block;
   margin: 10px auto;
   width: 100px;
