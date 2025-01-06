@@ -66,14 +66,10 @@ body {
   text-align: center;
   display: inline-block;
   margin: 10px 5px; /* Balanced spacing around links */
-  padding: 5px 10px; /* Padding for clickable area */
-  border-radius: 5px; /* Rounded corners for links */
-  transition: color 0.3s ease, background-color 0.3s ease; /* Smooth hover effect */
 }
 
 .link:hover {
   color: #ff33aa; /* Hover effect with deeper magenta */
-  background-color: #222; /* Subtle background highlight */
 }
 
 .heading-6 {
