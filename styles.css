@@ -1,13 +1,14 @@
 body {
   background-color: #000;
   color: #fff;
+  font-family: 'Times New Roman', serif;
   margin: 0;
   padding: 0;
 }
 
 @font-face {
   font-family: 'Lindl';
-  src: url('LINDL___.TTF') format('truetype');
+  src: url('fonts/LINDL___.TTF') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -16,26 +17,55 @@ body {
 .heading {
   color: #fff;
   font-family: 'Lindl', sans-serif;
-  font-size: 2.5rem;
+  font-size: 3.5rem; /* Larger font for main heading */
   margin: 0;
+  text-align: center;
 }
 
 .main {
   padding: 20px;
 }
 
+.heading-2,
+.heading-3,
 .heading-4,
-.heading-5,
+.heading-5 {
+  color: #ff33aa; /* Deeper magenta */
+  text-align: center;
+  font-family: 'Lindl', sans-serif;
+}
+
+.heading-2 {
+  font-size: 3rem;
+}
+
+.heading-3 {
+  font-size: 2.5rem;
+}
+
+.heading-4 {
+  font-size: 2rem;
+}
+
+.heading-5 {
+  font-size: 1.75rem;
+}
+
 .link,
 .link-2,
 .link-3,
 .link-4,
 .link-5,
-.link-6,
-.heading-3 {
-  color: #ff66cc; /* Bubblegum Magenta */
+.link-6 {
+  color: #fff; /* Links are white */
+  text-decoration: none;
   text-align: center;
-  font-family: 'Lindl', sans-serif;
+  display: inline-block;
+  margin: 5px 0;
+}
+
+.link:hover {
+  color: #ff33aa; /* Hover effect with deeper magenta */
 }
 
 .paragraph {
@@ -55,6 +85,11 @@ body {
 
 .shia {
   display: block;
+  margin: 10px auto;
+  width: 100px;
+  height: 100px;
+}
+
   margin: 10px auto;
   width: 100px;
   height: 100px;
