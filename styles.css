@@ -82,7 +82,7 @@ body {
 .image {
   display: block;
   margin: 20px auto; /* Add balanced spacing */
-  
+  width: auto;
   height: 100px;
   background: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif') no-repeat center center;
   background-size: cover;
