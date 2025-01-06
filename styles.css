@@ -90,12 +90,3 @@ body {
   background-size: cover;
   border: 1px solid #ff33aa; /* Magenta border */
 }
-.corner-image {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  height: 250px; /* Set the height */
-  width: auto; /* Adjust width proportionally */
-  z-index: -1; /* Place it behind text and other elements */
-  pointer-events: none; /* Prevent interaction */
-}
