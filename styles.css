@@ -3,7 +3,7 @@ body {
   color: #fff;
   font-family: 'Times New Roman', serif;
   margin: 20px; /* Balanced margin on all sides */
-  padding: 20px; /* Padding for consistent spacing */
+  padding: 5px; /* Padding for consistent spacing */
   text-align: center; /* Center all content */
   line-height: 1.6; /* Improve readability */
 }
