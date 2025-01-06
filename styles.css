@@ -9,14 +9,14 @@ body {
 
 @font-face {
   font-family: 'Lindl';
-  src: url('LINDL___.TTF') format('truetype');
+  src: url('fonts/LINDL___.TTF') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 .heading {
-  color: #fff;
+  color: #ff33aa; /* Pink color for JURI'S STUFF */
   font-family: 'Lindl', sans-serif;
   font-size: 4rem; /* Larger font for main heading */
   margin: 0;
@@ -70,13 +70,6 @@ body {
   color: #ff33aa; /* Hover effect with deeper magenta */
 }
 
-.paragraph {
-  color: #fff;
-  text-align: center;
-  margin: 10px 0;
-  font-family: Verdana, Geneva, sans-serif;
-}
-
 .heading-6 {
   text-align: center;
   font-family: Verdana, Geneva, sans-serif;
@@ -91,3 +84,4 @@ body {
   width: 100px;
   height: 100px;
 }
+
