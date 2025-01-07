@@ -93,7 +93,10 @@ body {
   padding: 0;
   color: inherit;
 }
-
+p {
+  font-family: 'MS UI Gothic', sans-serif;
+  color: #fff;
+}
 .image {
   display: block;
   margin: 20px auto; /* Add balanced spacing */
