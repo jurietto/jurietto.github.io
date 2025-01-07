@@ -65,6 +65,7 @@ body {
 .link-6 {
   color: #fff; /* Links are white */
   text-align: center;
+  font-style: normal;
 }
 
 .link:hover {
