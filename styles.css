@@ -24,7 +24,6 @@ body {
   color: #ff33aa; /* Pink color for JURI'S STUFF */
   font-family: 'Lindl', sans-serif;
   font-size: 4rem; /* Larger font for main heading */
-  margin-bottom: 20px; /* Space below heading */
   text-align: center;
 }
 
@@ -68,9 +67,7 @@ body {
 .link-5,
 .link-6 {
   color: #fff; /* Links are white */
-  text-decoration: none;
   text-align: center;
-  display: inline-block;
 }
 
 .link:hover {
