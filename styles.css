@@ -31,7 +31,7 @@ body {
 .main {
   padding: 20px;
   text-align: center; /* Center the main section */
-  max-width: 800px; /* Limit text width to 800px */
+  max-width: 500px; /* Limit text width to 800px */
   margin: 0 auto; /* Center content within the page */
 }
 
