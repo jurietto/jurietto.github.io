@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Me</title>
+
+  <!-- Link to the external CSS stylesheet -->
+  <link href="styles.css" rel="stylesheet" type="text/css">
+
+  <style>
+    .book-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 20px;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .left-page {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 1px solid #fff;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid #ff33aa;
+      background: url('profile-picture.jpg') no-repeat center center;
+      background-size: cover;
+      margin-bottom: 20px;
+    }
+
+    .profile-details {
+      font-family: Verdana, Geneva, sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .right-page {
+      flex: 2;
+      padding: 20px;
+    }
+
+    .bio-header {
+      font-family: 'Lindl', sans-serif;
+      color: #ff33aa;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .bio-text {
+      font-family: 'MS UI Gothic', sans-serif;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    h3, h4, h5, h6 {
+      font-family: Verdana, Geneva, sans-serif;
+      color: #ff33aa;
+    }
+  </style>
+</head>
+<body class="body">
+  <header>
+    <h1 class="heading">ABOUT ME</h1>
+  </header>
+
+  <main class="book-container">
+    <section class="left-page">
+      <div class="profile-picture"></div>
+      <div class="profile-details">
+        <p>Name: Juri</p>
+        <p>Role: Developer / Creator</p>
+        <p>Hobbies: Music, Baking, Visual Novels</p>
+      </div>
+    </section>
+
+    <section class="right-page">
+      <h2 class="bio-header">My Journey</h2>
+      <p class="bio-text">
+        Welcome to my little corner of the web! I'm a passionate creator who loves bringing ideas to life. 
+        From baking intricate desserts to crafting beautiful code, I find joy in creativity and expression. 
+        My fascination with visual novels has fueled my storytelling pursuits, and music is my constant companion.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <h6 class="heading-6">2024 - ???</h6>
+  </footer>
+</body>
+</html>
