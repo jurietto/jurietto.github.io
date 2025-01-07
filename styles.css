@@ -12,18 +12,6 @@ body {
   cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/Honeycute%20normal%20select.cur'), auto; /* Custom cursor */
 }
 
-.background-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('https://cdn.discordapp.com/attachments/1252067540037795971/1325975183323959327/image0.gif') no-repeat center center;
-  background-size: cover;
-  pointer-events: none; /* Prevent interaction */
-  z-index: 0; /* Place above black background but behind text */
-}
-
 @font-face {
   font-family: 'Lindl';
   src: url('LINDL___.TTF') format('truetype');
