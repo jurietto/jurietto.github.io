@@ -10,8 +10,8 @@ body {
   text-align: center; /* Center all content */
   line-height: 1.6; /* Improve readability */
   cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/Honeycute%20normal%20select.cur'), auto; /* Custom cursor */
-
 }
+
 .background-overlay {
   position: absolute;
   top: 0;
@@ -42,6 +42,8 @@ body {
 .main {
   padding: 20px;
   text-align: center; /* Center the main section */
+  max-width: 800px; /* Limit text width to 800px */
+  margin: 0 auto; /* Center content within the page */
 }
 
 .heading-2,
@@ -93,10 +95,14 @@ body {
   padding: 0;
   color: inherit;
 }
+
 p {
   font-family: 'MS UI Gothic', sans-serif;
   color: #fff;
+  max-width: 800px; /* Limit paragraph width to 800px */
+  margin: 0 auto; /* Center paragraphs */
 }
+
 .image {
   display: block;
   margin: 20px auto; /* Add balanced spacing */
@@ -104,5 +110,8 @@ p {
   height: 100px;
   background: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif') no-repeat center center;
   background-size: cover;
+  border: 1px solid #ff33aa; /* Magenta border */
+}
+
   border: 1px solid #ff33aa; /* Magenta border */
 }
