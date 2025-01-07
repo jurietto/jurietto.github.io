@@ -9,45 +9,43 @@
   <link href="styles.css" rel="stylesheet" type="text/css">
 
   <style>
-    .book-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
       padding: 20px;
-      height: 100vh;
       box-sizing: border-box;
+      height: auto;
     }
 
-    .left-page {
-      flex: 1;
+    .left-section {
+      background-color: rgba(255, 255, 255, 0.1);
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-right: 1px solid #fff;
+      border-radius: 10px;
+      text-align: center;
     }
 
     .profile-picture {
-      width: 180px;
-      height: 180px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       border: 1px solid #ff33aa;
       background: url('https://file.garden/ZhTgSjrp5nAroRKq/SHIA.png') no-repeat center center;
       background-size: cover;
-      margin-bottom: 20px;
+      margin: 0 auto 20px;
     }
 
     .profile-details {
       font-family: Verdana, Geneva, sans-serif;
       font-weight: bold;
       color: #fff;
-      text-align: center;
       line-height: 1.5;
     }
 
-    .right-page {
-      flex: 2;
+    .right-section {
+      background-color: rgba(255, 255, 255, 0.1);
       padding: 20px;
+      border-radius: 10px;
     }
 
     .bio-header {
@@ -75,13 +73,11 @@
 </head>
 <body class="body">
   <header>
-    <body class="body">
-    <div class="image"></div> 
     <h1 class="heading">ABOUT ME</h1>
   </header>
 
-  <main class="book-container">
-    <section class="left-page">
+  <main class="container">
+    <section class="left-section">
       <div class="profile-picture"></div>
       <div class="profile-details">
         <p><strong>Name:</strong> Juri</p>
@@ -93,7 +89,7 @@
       </div>
     </section>
 
-    <section class="right-page">
+    <section class="right-section">
       <h2 class="bio-header">My Journey</h2>
       <p class="bio-text">
         Welcome to my little corner of the web! I'm a passionate creator who loves bringing ideas to life. 
