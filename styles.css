@@ -99,3 +99,9 @@ p {
   border: 1px solid #ff33aa; /* Magenta border */
 }
 
+
+
+h1, h2, h3 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
