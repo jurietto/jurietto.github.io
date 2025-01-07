@@ -1,98 +1,95 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  margin: 20px;
+  margin: 0;
+  padding: 20px;
   background: url('https://file.garden/ZhTgSjrp5nAroRKq/image0.gif') no-repeat center center fixed;
   background-size: cover;
-  height: 100%;
-  background: #000; /* Plain black background */
   color: #fff;
   font-family: 'Verdana', sans-serif;
-  font-weight: bold; /* Bold font for Veranda */
-   /* Balanced margin on all sides */
-   /* Extra padding on top for spacing */
-  text-align: center; /* Center all content */
-  cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/Honeycute%20normal%20select.cur'), auto; /* Custom cursor */
+  font-weight: bold;
+  text-align: center;
+  cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/Honeycute%20normal%20select.cur'), auto;
 }
 
 @font-face {
   font-family: 'Lindl';
   src: url('LINDL___.TTF') format('truetype');
-  font-weight: 400;
-  font-style: normal;
 }
 
 .heading {
-  color: #ff33aa; /* Pink color for JURI'S STUFF */
+  color: #ff33aa;
   font-family: 'Lindl', sans-serif;
-  font-size: 4rem; /* Larger font for main heading */
-  text-align: center;
+  font-size: 4rem;
+  margin-bottom: 20px;
 }
 
 .main {
-  text-align: center; /* Center the main section */
-  max-width: 800px; /* Limit text width to 800px */
-   /* Center content within the page */
-}
-
-.heading-2,
-.heading-3,
-.heading-4,
-.heading-5 {
-  color: #fff; /* Deeper magenta */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
-  font-family: 'Lindl', sans-serif;
-}
-
-.heading-2 {
-  font-size: 3.5rem;
-}
-
-.heading-3 {
-  font-size: 3rem;
-}
-
-.heading-4 {
-  font-size: 2.5rem;
-}
-
-.heading-5 {
-  font-size: 2.25rem;
-}
-
-.link,
-.link-2,
-.link-3,
-.link-4,
-.link-5,
-.link-6 {
-  color: #fff; /* Links are white */
-  text-align: center;
-  font-style: normal;
-}
-
-.link:hover {
-  color: #ff33aa; /* Hover effect with deeper magenta */
-}
-
-.heading-6 {
-  text-align: center;
-  font-family: Verdana, Geneva, sans-serif;
-  
-  color: inherit;
 }
 
 p {
   font-family: 'MS UI Gothic', sans-serif;
   color: #fff;
-  max-width: 800px; /* Limit paragraph width to 800px */
-   /* Center paragraphs */
+  line-height: 1.8;
+  text-align: justify;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+ul {
+  list-style-position: inside;
+  margin: 20px auto;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border: 2px solid #ff33aa;
 }
 
 .image {
   display: block;
-   /* Add balanced spacing */
   width: 150px;
   height: 100px;
+  margin: 20px auto;
   background: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #ff33aa;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #ff33aa;
+  text-decoration: underline;
+}
+
+.heading-6 {
+  font-family: Verdana, Geneva, sans-serif;
+  margin-top: 20px;
+  color: inherit;
+  text-align: center;
+}
+s://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif') no-repeat center center;
   background-size: cover;
   border: 1px solid #ff33aa; /* Magenta border */
 }
