@@ -5,7 +5,8 @@
 
 body {
     font-family: 'MS Gothic', sans-serif;
-    background-color: black;
+    background: url('https://file.garden/ZhTgSjrp5nAroRKq/blood-splatter-png-44466.png') no-repeat center center fixed;
+    background-size: cover; /* Ensures the image covers the screen */
     color: white;
     max-width: 500px;
     margin: 20px auto;
@@ -44,6 +45,11 @@ footer {
     margin-top: 40px;
     font-size: 0.9em;
     color: #FF0099; /* Matches the headers for consistency */
+}
+
+/* Customize bullet points with an image */
+ul {
+    list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
 }
 
 /* Add padding for mobile devices */
