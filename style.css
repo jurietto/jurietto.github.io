@@ -7,7 +7,7 @@ body {
     font-family: 'MS Gothic', sans-serif;
     background-color: black;
     color: white;
-    max-width: 800px;
+    max-width: 500px;
     margin: 20px auto;
     line-height: 1.6;
     padding: 0; /* Default padding for larger screens */
@@ -15,7 +15,7 @@ body {
 
 h1 {
     font-family: 'Lindley', sans-serif;
-    font-size: 3.5em; /* Larger size for h1 */
+    font-size: 4em; /* Larger size for h1 */
     margin-bottom: 10px;
     color: #FF0099; /* More vibrant magenta */
 }
