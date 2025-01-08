@@ -10,7 +10,7 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed; /* Keeps the image fixed during scrolling */
-    background-size: cover; /* Ensures the image covers the screen */
+    background-size: contain; /* Ensures the image covers the screen */
     color: white; 
     max-width: 500px;
     margin: 20px auto;
