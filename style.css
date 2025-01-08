@@ -15,13 +15,12 @@ body {
     max-width: 500px;
     margin: 20px auto;
     line-height: 1.6;
-    padding: 0; /* Default padding for larger screens */
+    padding: 20px; /* Adds padding for desktop */
     text-align: justify; /* Justify all text */
     text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
- 
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
 }
 
 h1 {
@@ -30,10 +29,9 @@ h1 {
     margin-bottom: 10px;
     color: white;
     text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
-
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
 }
 
 h2 {
@@ -42,10 +40,9 @@ h2 {
     margin-bottom: 10px;
     color: #FF0099; /* Consistent vibrant magenta */
     text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
-
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
 }
 
 h3, h4, h5, h6 {
@@ -53,20 +50,18 @@ h3, h4, h5, h6 {
     font-weight: bold;
     color: white;
     text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
-
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
 }
 
 a {
     color: #FF0099;
     text-decoration: underline;
     text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
-
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
 }
 
 footer {
@@ -75,27 +70,32 @@ footer {
     font-size: 0.9em;
     color: #FF0099; /* Matches the headers for consistency */
     text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
-
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
 }
 
 /* Customize bullet points with an image */
 ul {
     list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
-ul li {
-    text-shadow: 
-    2px 2px 4px #000000, 
-    3px 3px 6px #000000, 
-    1px 1px 2px #000000;
-
 }
 
-/* Add padding for mobile devices */
+ul li {
+    text-shadow: 
+        2px 2px 4px #000000, 
+        3px 3px 6px #000000, 
+        1px 1px 2px #000000; /* Desktop text shadow */
+}
+
+/* Mobile-specific styles */
 @media screen and (max-width: 600px) {
     body {
-        padding: 20px;
-        background-image: none; /* Hides the background image on mobile */
+        padding: 10px; /* Adds padding for mobile */
+        background-image: none; /* Removes the background image on mobile */
+        text-shadow: none; /* Disables text shadow on mobile */
+    }
+
+    h1, h2, h3, h4, h5, h6, a, ul li, footer {
+        text-shadow: none; /* Ensures no text shadow for these elements on mobile */
     }
 }
