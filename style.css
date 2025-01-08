@@ -1,24 +1,40 @@
 @font-face {
-	font-family: 'Lindley';
-	src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
+    font-family: 'Lindley';
+    src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
 }
+
 body {
-	font-family: 'Verdana', sans-serif;
-	max-width: 800px;
-	margin: 20px auto;
-	line-height: 1.6;
+    font-family: 'MS Gothic', sans-serif;
+    background-color: black;
+    color: white;
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.6;
+    padding: 0; /* Default padding for larger screens */
 }
+
 h1, h2 {
-	font-family: 'Lindley', sans-serif;
-	font-size: 2.5em;
-	margin-bottom: 10px;
+    font-family: 'Lindley', sans-serif;
+    font-size: 2.5em;
+    margin-bottom: 10px;
 }
+
 h3, h4, h5, h6 {
-	font-family: 'Verdana', sans-serif;
-	font-weight: bold;
+    font-family: 'Verdana', sans-serif;
+    font-weight: bold;
+    color: #FF66CC; /* Bubblegum magenta leaning towards magenta */
 }
+
 footer {
-	text-align: center;
-	margin-top: 40px;
-	font-size: 0.9em;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #FF66CC; /* Matches the headers for consistency */
+}
+
+/* Add padding for mobile devices */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
 }
