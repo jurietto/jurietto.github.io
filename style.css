@@ -6,8 +6,12 @@
 body {
     font-family: 'MS Gothic', sans-serif;
     background-color: black; /* Sets the base background color to black */
-    background: url('https://file.garden/ZhTgSjrp5nAroRKq/blood-splatter-png-44466.png') no-repeat center center fixed;
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/blood-splatter-png-44466.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed; /* Keeps the image fixed during scrolling */
     background-size: cover; /* Ensures the image covers the screen */
+    color: white; 
     max-width: 500px;
     margin: 20px auto;
     line-height: 1.6;
