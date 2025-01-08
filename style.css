@@ -34,7 +34,7 @@ h3, h4, h5, h6 {
 }
 
 a {
-    color: white; /* More vibrant magenta for links */
+    color: #FF0099;
     text-decoration: underline;
 }
 
