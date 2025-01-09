@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments Section</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <h1>Comments Section</h1>
+
+    <!-- Comments Section -->
+    <div class="comments-container">
+        <h2>Comments</h2>
+
+        <!-- Comment Form -->
+        <div class="comment-form">
+            <textarea id="comment-input" placeholder="Write your comment here..." maxlength="250"></textarea>
+            <button id="post-comment">Post Comment</button>
+        </div>
+
+        <!-- Comments List -->
+        <div id="comments-list">
+            <p>Loading comments...</p>
+        </div>
+    </div>
+
+    <!-- Decorative Image -->
+    <img 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
+        alt="Decorative Image" 
+        width="200" 
+        height="150" 
+        style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;"
+    />
+
+    <!-- Home Button -->
+    <a href="index.html">
+        <img 
+            id="home-button" 
+            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
+            alt="Home Button" 
+            class="home-button" 
+            title="Go Home"
+        />
+    </a>
+
+    <!-- Audio Control -->
+    <img 
+        id="audio-control" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
+        alt="Audio Control" 
+        class="audio-control" 
+        title="Play Music"
+    />
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
+
+    <!-- Script -->
+    <script src="scripts.js"></script>
+</body>
+</html>
