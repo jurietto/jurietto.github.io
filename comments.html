@@ -4,7 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Section</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
+    <style>
+        
+        /* Comments Container */
+        .comments-container {
+            background-color: #1a1a1a;
+            border: 2px solid #FF0099;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .comments-container h2 {
+            margin-bottom: 15px;
+        }
+
+        /* Comment Form */
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 100px;
+            background-color: #000000;
+            border: 2px solid #FF0099;
+            border-radius: 8px;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+        }
+
+        .comment-form textarea::placeholder {
+            color: #888888;
+        }
+
+        .comment-form button {
+            background-color: #FF0099;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-form button:hover {
+            background-color: #cc0077;
+        }
+
+        /* Comments List */
+        #comments-list {
+            margin-top: 20px;
+            background-color: #000000;
+            border: 2px solid #FF0099;
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .comment-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #FF0099;
+        }
+
+        .comment-item p {
+            margin: 0;
+        }
+
+        /* Mobile-Specific Styles */
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            h1, h2 {
+                font-size: 1.5em;
+            }
+
+            .comments-container {
+                padding: 15px;
+            }
+
+            .comment-form textarea {
+                height: 80px;
+            }
+
+            #comments-list {
+                max-height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Comments Section</h1>
@@ -21,44 +119,8 @@
 
         <!-- Comments List -->
         <div id="comments-list">
-            <p>Loading comments...</p>
+            <p>No comments yet. Be the first to share your thoughts!</p>
         </div>
     </div>
-
-    <!-- Decorative Image -->
-    <img 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
-        alt="Decorative Image" 
-        width="200" 
-        height="150" 
-        style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;"
-    />
-
-    <!-- Home Button -->
-    <a href="index.html">
-        <img 
-            id="home-button" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-            alt="Home Button" 
-            class="home-button" 
-            title="Go Home"
-        />
-    </a>
-
-    <!-- Audio Control -->
-    <img 
-        id="audio-control" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        class="audio-control" 
-        title="Play Music"
-    />
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
-
-    <!-- Script -->
-    <script src="scripts.js"></script>
 </body>
 </html>
