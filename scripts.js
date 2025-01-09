@@ -35,5 +35,85 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("beforeunload", () => {
         localStorage.setItem("music-time", musicPlayer.currentTime);
         localStorage.setItem("music-playing", !musicPlayer.paused);
+   
+});
+// Import the Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+    authDomain: "comments-ff6c9.firebaseapp.com",
+    projectId: "comments-ff6c9",
+    storageBucket: "comments-ff6c9.appspot.com",
+    messagingSenderId: "778548096311",
+    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+    measurementId: "G-T8QFHWJDB5"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+// Submit a new comment
+async function submitComment(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const comment = document.getElementById("comment").value;
+    const mediaFile = document.getElementById("media").files[0];
+
+    let mediaUrl = null;
+
+    if (mediaFile) {
+        const storageRef = ref(storage, `comments/${mediaFile.name}`);
+        await uploadBytes(storageRef, mediaFile);
+        mediaUrl = await getDownloadURL(storageRef);
+    }
+
+    await addDoc(collection(db, "comments"), {
+        name,
+        comment,
+        mediaUrl,
+        timestamp: serverTimestamp(),
     });
+
+    alert("Comment submitted!");
+    document.getElementById("add-comment").reset();
+    loadComments();
+}
+
+// Load and display comments
+async function loadComments() {
+    const commentsList = document.getElementById("comments-list");
+    commentsList.innerHTML = "";
+
+    const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+            <blockquote>
+                <p>${data.comment}</p>
+                <footer>— ${data.name}</footer>
+                ${
+                    data.mediaUrl
+                        ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
+                        : ""
+                }
+            </blockquote>
+        `;
+        commentsList.appendChild(listItem);
+    });
+}
+
+// Event listeners
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("add-comment").addEventListener("submit", submitComment);
+    loadComments();
 });
