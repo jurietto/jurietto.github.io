@@ -5,97 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Page</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-
-        form {
-            margin: 20px auto;
-            padding: 15px;
-            width: 90%;
-            max-width: 600px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin: 10px 0 5px;
-            color: #333;
-            font-weight: bold;
-        }
-
-        input, textarea, input[type="submit"], input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: none;
-            height: 100px;
-        }
-
-        input[type="submit"] {
-            background-color: #FF0099;
-            color: white;
-            font-size: 1.2em;
-            border: none;
-            cursor: pointer;
-            text-shadow: 2px 2px 4px #000000;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #FF33AA;
-        }
-
-        /* Comments Section Styling */
-        #comments h2 {
-            font-family: 'Arial', sans-serif;
-            font-size: 2.5em;
-            color: #FF0099;
-            text-shadow: 2px 2px 4px #000000;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        #comments-list {
-            list-style: none;
-            padding: 0;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        #comments-list li {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #FF0099;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        #comments-list blockquote {
-            margin: 0;
-            font-style: italic;
-            color: #555;
-        }
-
-        #comments-list footer {
-            text-align: right;
-            font-size: 0.9em;
-            color: #FF0099;
-        }
-    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Play audio when the page loads
+            const navSound = new Audio("https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3");
+            navSound.play();
+        });
+    </script>
 </head>
 <body>
     <!-- Decorative Image -->
     <img 
-        style="transform: rotate(-5deg); border: 1px solid;" 
+        style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
         src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
         alt="Decorative Image" 
         width="200" 
@@ -125,14 +46,60 @@
     <!-- Comments Section -->
     <section id="comments">
         <h2>Comments</h2>
-        <ol id="comments-list"></ol>
+        <ol id="comments-list">
+            <!-- Placeholder comments -->
+            <li>
+                <blockquote>
+                    <p>This is a great example of a comment system!</p>
+                    <footer>— Jane Doe</footer>
+                </blockquote>
+            </li>
+            <li>
+                <blockquote>
+                    <p>I love the clean design and functionality.</p>
+                    <footer>— John Smith</footer>
+                </blockquote>
+            </li>
+            <li>
+                <blockquote>
+                    <p>Looking forward to seeing more updates!</p>
+                    <footer>— Alex Brown</footer>
+                </blockquote>
+            </li>
+        </ol>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button id="prev-page" disabled>Previous</button>
+            <button id="next-page">Next</button>
+        </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Home Button -->
+    <a href="index.html">
+        <img 
+            id="home-button" 
+            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
+            alt="Home Button" 
+            class="home-button" 
+            title="Go Home"
+        />
+    </a>
+    
+    <!-- Audio Control -->
+    <img 
+        id="audio-control" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
+        alt="Audio Control" 
+        class="audio-control" 
+        title="Play Music"
+    />
+    
     <footer>
-        <h6>2024 - ???</h6>
+        <h6>&copy; 2024 - ???</h6>
     </footer>
 
-    <script type="module" src="scripts.js"></script>
+    <!-- Include External JavaScript -->
+    <script src="scripts.js"></script>
 </body>
 </html>
