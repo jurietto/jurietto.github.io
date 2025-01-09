@@ -4,68 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Section</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS -->
     <style>
-        
-        /* Comments Container */
+        /* Comments Section Styling */
         .comments-container {
-            background-color: #1a1a1a;
+            font-family: 'MS Gothic', sans-serif;
+            background-color: black;
+            color: white;
             border: 2px solid #FF0099;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 15px;
+            margin: 20px 0;
         }
 
         .comments-container h2 {
-            margin-bottom: 15px;
+            color: #FF0099;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px #000000;
         }
 
-        /* Comment Form */
+        /* Comment Form Styling */
         .comment-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .comment-form textarea {
             width: 100%;
-            height: 100px;
-            background-color: #000000;
+            height: 120px;
+            background-color: black;
             border: 2px solid #FF0099;
-            border-radius: 8px;
             color: white;
             padding: 10px;
             font-size: 14px;
-            resize: none;
-            outline: none;
+            font-family: 'MS Gothic', sans-serif;
+            text-shadow: 2px 2px 4px #000000;
         }
 
         .comment-form textarea::placeholder {
             color: #888888;
+            text-shadow: none;
         }
 
         .comment-form button {
-            background-color: #FF0099;
-            border: none;
+            background-color: black;
+            border: 2px solid #FF0099;
             color: white;
             padding: 10px 15px;
-            border-radius: 8px;
             font-size: 16px;
+            font-family: 'MS Gothic', sans-serif;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px #000000;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .comment-form button:hover {
-            background-color: #cc0077;
+            background-color: #FF0099;
+            color: black;
         }
 
-        /* Comments List */
+        /* Comments List Styling */
         #comments-list {
             margin-top: 20px;
-            background-color: #000000;
+            background-color: black;
             border: 2px solid #FF0099;
-            border-radius: 10px;
-            padding: 15px;
+            padding: 10px;
             max-height: 300px;
             overflow-y: auto;
         }
@@ -73,34 +79,16 @@
         .comment-item {
             padding: 10px;
             margin-bottom: 10px;
-            border-bottom: 1px solid #FF0099;
+            border-bottom: 2px solid #FF0099;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
         }
 
         .comment-item p {
             margin: 0;
-        }
-
-        /* Mobile-Specific Styles */
-        @media screen and (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-
-            h1, h2 {
-                font-size: 1.5em;
-            }
-
-            .comments-container {
-                padding: 15px;
-            }
-
-            .comment-form textarea {
-                height: 80px;
-            }
-
-            #comments-list {
-                max-height: 200px;
-            }
+            text-shadow: 2px 2px 4px #000000;
         }
     </style>
 </head>
