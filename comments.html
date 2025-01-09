@@ -3,271 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comments Section</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Comments System</title>
     <style>
-
-        /* Comments Container */
-        .comments-container {
-            background-color: black;
-            color: white;
-            border: 3px solid #FF0099;
+        /* Reset Styles */
+        body, h1, h2, h3, p, ul, li, textarea, input, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
             padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0px 0px 20px #FF0099;
         }
-
-        .comments-container h2 {
-            text-align: center;
-            color: #FF0099;
-            margin-bottom: 15px;
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
         }
-
-        /* Comment Form Styling */
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        #comments-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        #comments-list {
+            list-style-type: none;
             margin-bottom: 20px;
         }
-
-        .comment-form textarea {
-            width: 100%;
-            height: 120px;
-            background-color: #000000;
-            border: 3px solid #FF0099;
-            color: white;
-            padding: 10px;
-            font-family: 'MS Gothic', sans-serif;
-            font-size: 14px;
-            resize: none; /* Disable resizing */
-            box-shadow: inset 0 0 5px #FF0099;
-        }
-
-        .comment-form textarea::placeholder {
-            color: #888888;
-        }
-
-        .comment-form button {
-            background-color: #000000;
-            border: 3px solid white;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            box-shadow: 0px 0px 10px #FFFFFF;
-        }
-
-        .comment-form button:hover {
-            background-color: #FF0099;
-            color: black;
-            box-shadow: 0px 0px 20px #FF0099;
-        }
-
-        /* Comments List Styling */
-        #comments-list {
-            margin-top: 20px;
-            background-color: #000000;
-            border: 3px solid #FF0099;
-            padding: 15px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .comment-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
+        #comments-list li {
             padding: 10px;
             margin-bottom: 10px;
-            border-bottom: 1px solid #FF0099;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
-
-        .comment-item img {
-            width: 60px;
-            height: 60px;
-            border: 3px solid #FF0099;
-            box-shadow: 0px 0px 10px #FF0099;
+        #comments-list li:nth-child(even) {
+            background: #efefef;
         }
-
-        .comment-item p {
-            margin: 0;
+        #add-comment {
+            display: flex;
+            flex-direction: column;
+        }
+        #add-comment label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        #add-comment input, #add-comment textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 14px;
-            line-height: 1.4;
         }
-
-        .comment-item strong {
-            color: #FF0099;
-            font-size: 15px;
-        }
-
-        /* Filter and Pagination */
-        .filter-options {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .filter-options select {
-            background-color: black;
+        #add-comment button {
+            padding: 10px;
+            background-color: #007bff;
             color: white;
-            border: 3px solid #FF0099;
-            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .pagination button {
-            background-color: black;
-            border: 3px solid #FF0099;
-            color: white;
-            padding: 5px 15px;
-            cursor: pointer;
-            box-shadow: 0px 0px 10px #FF0099;
-        }
-
-        .pagination button:hover {
-            background-color: #FF0099;
-            color: black;
-        }
-
-        /* Button Styles */
-        .audio-control, .home-button {
-            position: fixed;
-            bottom: 20px;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-        }
-
-        .audio-control {
-            right: 20px;
-        }
-
-        .home-button {
-            left: 20px;
+        #add-comment button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Comments Section</h1>
-
-    <!-- Comments Container -->
-    <div class="comments-container">
-        <h2>Share Your Thoughts</h2>
-
-        <!-- Comment Form -->
-        <div class="comment-form">
-            <textarea id="comment-input" placeholder="Write your comment here..." maxlength="250"></textarea>
-            <button id="post-comment">Post Comment</button>
-        </div>
-
-        <!-- Filter and Sort Options -->
-        <div class="filter-options">
-            <label for="sort-order">Sort by:</label>
-            <select id="sort-order">
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-            </select>
-        </div>
-
-        <!-- Comments List -->
-        <div id="comments-list">
-            <div class="comment-item">
-                <img src="https://via.placeholder.com/50" alt="Profile Picture">
-                <p><strong>Sample User:</strong> This is a sample comment!</p>
-            </div>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            <button>&laquo; Prev</button>
-            <button>Next &raquo;</button>
-        </div>
+    <div id="comments-section">
+        <h1>Comments</h1>
+        <ul id="comments-list">
+            <!-- Example Comments -->
+            <li>
+                <p><strong>Jane Doe:</strong> Great content! Love it!</p>
+            </li>
+            <li>
+                <p><strong>John Smith:</strong> Thanks for sharing this amazing post.</p>
+            </li>
+        </ul>
+        <form id="add-comment" action="post_comment.php" method="post">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+            <label for="comment">Comment</label>
+            <textarea id="comment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
     </div>
+</body>
+</html>
 
-    <!-- Home Button -->
-    <a href="index.html">
-        <img 
-            id="home-button" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-            alt="Home Button" 
-            class="home-button"
-        />
-    </a>
-
-    <!-- Audio Control -->
-    <img 
-        id="audio-control" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        class="audio-control"
-    />
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js"></script>
-
-    <!-- Script -->
-    <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            // Add your Firebase configuration here
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        const database = firebase.database();
-        const commentsRef = database.ref("comments");
-
-        const commentInput = document.getElementById("comment-input");
-        const postCommentBtn = document.getElementById("post-comment");
-        const commentsList = document.getElementById("comments-list");
-        const sortOrder = document.getElementById("sort-order");
-
-        postCommentBtn.addEventListener("click", () => {
-            const commentText = commentInput.value.trim();
-            if (commentText) {
-                const newComment = {
-                    text: commentText,
-                    user: "Anonymous",
-                    timestamp: Date.now(),
-                };
-                commentsRef.push(newComment);
-                commentInput.value = "";
-            }
-        });
-
-        sortOrder.addEventListener("change", loadComments);
-
-        function loadComments() {
-            commentsList.innerHTML = "";
-            commentsRef.orderByChild("timestamp").once("value", (snapshot) => {
-                const comments = [];
-                snapshot.forEach((childSnapshot) => {
-                    comments.push(childSnapshot.val());
-                });
-                if (sortOrder.value === "newest") comments.reverse();
-                comments.forEach((comment) => {
-                    const commentItem = document.createElement("div");
-                    commentItem.className = "comment-item";
-                    commentItem.innerHTML = `
-                        <img src="https://via.placeholder.com/50" alt="Profile Picture">
-                        <p><strong>${comment.user}:</strong> ${comment.text}</p>
-                    `;
-                    commentsList.appendChild(commentItem);
-                });
-            });
-        }
-
-        loadComments();
     </script>
 </body>
 </html>
