@@ -6,39 +6,32 @@
     <title>Comments Page</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Comments Section Styling */
-        #respond h2, #comments h2 {
-            font-family: 'Arial', sans-serif;
-            font-size: 2.5em;
-            color: #FF0099;
-            text-shadow: 
-                2px 2px 4px #000000, 
-                3px 3px 6px #000000, 
-                1px 1px 2px #000000;
-        }
 
         form {
-            margin-bottom: 30px;
+            margin: 20px auto;
+            padding: 15px;
+            width: 90%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         label {
             display: block;
             margin: 10px 0 5px;
-            font-family: 'Arial', sans-serif;
-            font-size: 1.2em;
+            color: #333;
             font-weight: bold;
-            color: black;
         }
 
-        input, textarea, input[type="submit"] {
+        input, textarea, input[type="submit"], input[type="file"] {
             width: 100%;
-            box-sizing: border-box;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-family: 'Arial', sans-serif;
             font-size: 1em;
+            box-sizing: border-box;
         }
 
         textarea {
@@ -59,22 +52,37 @@
             background-color: #FF33AA;
         }
 
+        /* Comments Section Styling */
+        #comments h2 {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5em;
+            color: #FF0099;
+            text-shadow: 2px 2px 4px #000000;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
         #comments-list {
             list-style: none;
             padding: 0;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
         }
 
         #comments-list li {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid #FF0099;
             border-radius: 5px;
             margin-bottom: 15px;
-            padding: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #comments-list blockquote {
             margin: 0;
             font-style: italic;
+            color: #555;
         }
 
         #comments-list footer {
@@ -83,102 +91,24 @@
             color: #FF0099;
         }
     </style>
-    <script type="module">
-        // Import the Firebase SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
-
-        // Your Firebase credentials
-        const firebaseConfig = {
-            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-            authDomain: "comments-ff6c9.firebaseapp.com",
-            projectId: "comments-ff6c9",
-            storageBucket: "comments-ff6c9.appspot.com",
-            messagingSenderId: "778548096311",
-            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-            measurementId: "G-T8QFHWJDB5"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        async function submitComment(event) {
-            event.preventDefault();
-
-            const name = document.getElementById("name").value;
-            const comment = document.getElementById("comment").value;
-            const mediaFile = document.getElementById("media").files[0];
-
-            let mediaUrl = null;
-
-            if (mediaFile) {
-                const storageRef = ref(storage, `comments/${mediaFile.name}`);
-                await uploadBytes(storageRef, mediaFile);
-                mediaUrl = await getDownloadURL(storageRef);
-            }
-
-            await addDoc(collection(db, "comments"), {
-                name,
-                comment,
-                mediaUrl,
-                timestamp: serverTimestamp(),
-            });
-
-            alert("Comment submitted!");
-            document.getElementById("add-comment").reset();
-            loadComments();
-        }
-
-        async function loadComments() {
-            const commentsList = document.getElementById("comments-list");
-            commentsList.innerHTML = "";
-
-            const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
-            const querySnapshot = await getDocs(q);
-
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const listItem = document.createElement("li");
-                listItem.innerHTML = `
-                    <blockquote>
-                        <p>${data.comment}</p>
-                        <footer>— ${data.name}</footer>
-                        ${
-                            data.mediaUrl
-                                ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
-                                : ""
-                        }
-                    </blockquote>
-                `;
-                commentsList.appendChild(listItem);
-            });
-        }
-
-        document.addEventListener("DOMContentLoaded", loadComments);
-    </script>
 </head>
 <body>
-
-<!-- Decorative Image -->
+    <!-- Decorative Image -->
     <img 
-        style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
+        style="transform: rotate(-5deg); border: 1px solid;" 
         src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
         alt="Decorative Image" 
         width="200" 
         height="150" 
     />
 
-    
     <!-- Page Heading -->
     <h1>Comments Page</h1>
 
     <!-- Form Section -->
     <section id="respond">
         <h2>Leave a Comment</h2>
-        <form id="add-comment" onsubmit="submitComment(event)">
+        <form id="add-comment">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
 
@@ -192,48 +122,17 @@
         </form>
     </section>
 
-   <!-- Comments Section -->
+    <!-- Comments Section -->
     <section id="comments">
         <h2>Comments</h2>
-        <ol id="comments-list">
-            <li>
-                <blockquote>
-                    <p>Great content! Love the design!</p>
-                    <footer>— Jane Doe</footer>
-                </blockquote>
-            </li>
-            <li>
-                <blockquote>
-                    <p>Looking forward to more posts like this.</p>
-                    <footer>— John Smith</footer>
-                </blockquote>
-            </li>
-        </ol>
+        <ol id="comments-list"></ol>
     </section>
 
-<!-- Home Button -->
-<a href="index.html">
-    <img 
-        id="home-button" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-        alt="Home Button" 
-        class="home-button" 
-        title="Go Home"
-    />
-</a>
-    
-    <!-- Audio Control -->
-    <img 
-        id="audio-control" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        class="audio-control" 
-        title="Play Music"
-    />
-    
     <!-- Footer -->
     <footer>
         <h6>2024 - ???</h6>
     </footer>
+
+    <script type="module" src="scripts.js"></script>
 </body>
-</html
+</html>
