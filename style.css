@@ -66,6 +66,11 @@ a {
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
+/* Link Hover Effect */
+a:hover {
+    color: white; /* Change link color to white on hover */
+}
+
 footer {
     text-align: center;
     margin-top: 40px;
@@ -129,3 +134,4 @@ ul li {
         text-shadow: none; /* Ensures no text shadow for these elements on mobile */
     }
 }
+
