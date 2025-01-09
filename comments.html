@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Page</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         /* Comments Section Styling */
         #respond h2, #comments h2 {
-            font-family: 'Lindley', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 2.5em;
             color: #FF0099;
             text-shadow: 
@@ -24,26 +23,26 @@
         label {
             display: block;
             margin: 10px 0 5px;
-            font-family: 'MS UI Gothic', sans-serif; /* Ensure labels use MS UI Gothic */
+            font-family: 'Arial', sans-serif;
             font-size: 1.2em;
             font-weight: bold;
-            color: white;
+            color: black;
         }
 
         input, textarea, input[type="submit"] {
-            width: 100%; /* Ensures consistent width for all inputs and button */
-            box-sizing: border-box; /* Includes padding and border in width calculation */
+            width: 100%;
+            box-sizing: border-box;
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-family: 'MS UI Gothic', sans-serif; /* Ensure inputs use MS UI Gothic */
+            font-family: 'Arial', sans-serif;
             font-size: 1em;
         }
 
         textarea {
-            resize: none; /* Disable resizing */
-            height: 100px; /* Fixed height for comment box */
+            resize: none;
+            height: 100px;
         }
 
         input[type="submit"] {
@@ -65,7 +64,7 @@
         }
 
         #comments-list li {
-            background: rgba(0, 0, 0, 0.7); /* Transparent black */
+            background: rgba(0, 0, 0, 0.1);
             border: 1px solid #FF0099;
             border-radius: 5px;
             margin-bottom: 15px;
@@ -83,56 +82,99 @@
             color: #FF0099;
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navSound = new Audio("https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3");
-            navSound.play();
-        });
+    <script type="module">
+        // Import the Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+
+        // Your Firebase credentials
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        async function submitComment(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const comment = document.getElementById("comment").value;
+            const mediaFile = document.getElementById("media").files[0];
+
+            let mediaUrl = null;
+
+            if (mediaFile) {
+                const storageRef = ref(storage, `comments/${mediaFile.name}`);
+                await uploadBytes(storageRef, mediaFile);
+                mediaUrl = await getDownloadURL(storageRef);
+            }
+
+            await addDoc(collection(db, "comments"), {
+                name,
+                comment,
+                mediaUrl,
+                timestamp: serverTimestamp(),
+            });
+
+            alert("Comment submitted!");
+            document.getElementById("add-comment").reset();
+            loadComments();
+        }
+
+        async function loadComments() {
+            const commentsList = document.getElementById("comments-list");
+            commentsList.innerHTML = "";
+
+            const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
+            const querySnapshot = await getDocs(q);
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    <blockquote>
+                        <p>${data.comment}</p>
+                        <footer>— ${data.name}</footer>
+                        ${
+                            data.mediaUrl
+                                ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
+                                : ""
+                        }
+                    </blockquote>
+                `;
+                commentsList.appendChild(listItem);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", loadComments);
     </script>
 </head>
 <body>
-    <!-- Decorative Image -->
-    <img 
-        style="transform: rotate(-5deg); border: 1px solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
-        alt="Decorative Image" 
-        width="200" 
-        height="150" 
-    />
-
-    <!-- Home Button -->
-    <a href="index.html">
-        <img 
-            class="home-button" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-            alt="Home Button" 
-            title="Go Home"
-        />
-    </a>
-
-    <!-- Audio Control -->
-    <img 
-        class="audio-control" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        title="Play Music"
-    />
-
     <!-- Page Heading -->
     <h1>Comments Page</h1>
 
     <!-- Form Section -->
     <section id="respond">
         <h2>Leave a Comment</h2>
-        <form id="add-comment" action="post_comment.php" method="post">
+        <form id="add-comment" onsubmit="submitComment(event)">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Your Email" required>
-
             <label for="comment">Comment:</label>
             <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
+
+            <label for="media">Upload Media (optional):</label>
+            <input type="file" id="media" name="media" accept="image/*,video/*">
 
             <input type="submit" value="Post Comment">
         </form>
@@ -141,20 +183,7 @@
     <!-- Comments Section -->
     <section id="comments">
         <h2>Comments</h2>
-        <ol id="comments-list">
-            <li>
-                <blockquote>
-                    <p>Great content! Love the design!</p>
-                    <footer>— Jane Doe</footer>
-                </blockquote>
-            </li>
-            <li>
-                <blockquote>
-                    <p>Looking forward to more posts like this.</p>
-                    <footer>— John Smith</footer>
-                </blockquote>
-            </li>
-        </ol>
+        <ol id="comments-list"></ol>
     </section>
 
     <!-- Footer -->
