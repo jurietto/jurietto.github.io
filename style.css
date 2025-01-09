@@ -19,6 +19,8 @@ body {
     text-align: justify; /* Justify all text */
     text-shadow: 
         2px 2px 4px #000000, 
+        2px 2px 4px #000000,
+        3px 3px 6px #000000,
         3px 3px 6px #000000, 
         1px 1px 2px #000000; /* Desktop text shadow */
 }
@@ -41,8 +43,6 @@ h2 {
     color: #FF0099; /* Consistent vibrant magenta */
     text-shadow: 
         2px 2px 4px #000000, 
-        2px 2px 4px #000000,
-        3px 3px 6px #000000, 
         3px 3px 6px #000000, 
         1px 1px 2px #000000; /* Desktop text shadow */
 }
