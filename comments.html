@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Page</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* Font and Background Styling */
-        @font-face {
-            font-family: 'Lindley';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
-        }
-
+        /* General Body Styling */
         body {
             font-family: 'MS Gothic', sans-serif;
             background-color: black;
@@ -31,26 +27,17 @@
                 1px 1px 2px #000000;
         }
 
-        h1, h2 {
+        /* Form and Inputs Styling */
+        #respond h2, #comments h2 {
             font-family: 'Lindley', sans-serif;
+            font-size: 2.5em;
+            color: #FF0099;
             text-shadow: 
                 2px 2px 4px #000000, 
                 3px 3px 6px #000000, 
                 1px 1px 2px #000000;
         }
 
-        h1 {
-            font-size: 4em;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 2.5em;
-            color: #FF0099;
-            margin-bottom: 20px;
-        }
-
-        /* Form Styling */
         form {
             margin-bottom: 30px;
         }
@@ -61,10 +48,12 @@
             font-family: 'MS UI Gothic', sans-serif;
             font-size: 1.2em;
             font-weight: bold;
+            color: white;
         }
 
-        input, textarea {
-            width: 100%;
+        input, textarea, input[type="submit"] {
+            width: 100%; /* Ensures consistent width for all inputs and button */
+            box-sizing: border-box; /* Includes padding and border in width calculation */
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
@@ -74,7 +63,8 @@
         }
 
         textarea {
-            resize: none;
+            resize: none; /* Disable resizing */
+            height: 100px; /* Fixed height for comment box */
         }
 
         input[type="submit"] {
@@ -82,24 +72,22 @@
             color: white;
             font-size: 1.2em;
             border: none;
-            padding: 10px 20px;
             cursor: pointer;
             text-shadow: 2px 2px 4px #000000;
-            width: 100%;
         }
 
         input[type="submit"]:hover {
             background-color: #FF33AA;
         }
 
-        /* Comments Styling */
+        /* Comments Section Styling */
         #comments-list {
             list-style: none;
             padding: 0;
         }
 
         #comments-list li {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.7); /* Transparent black */
             border: 1px solid #FF0099;
             border-radius: 5px;
             margin-bottom: 15px;
@@ -178,7 +166,7 @@
             <input type="email" id="email" name="email" placeholder="Your Email" required>
 
             <label for="comment">Comment:</label>
-            <textarea id="comment" name="comment" rows="5" placeholder="Write your comment here..." required></textarea>
+            <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
 
             <input type="submit" value="Post Comment">
         </form>
@@ -209,4 +197,3 @@
     </footer>
 </body>
 </html>
-
