@@ -22,6 +22,7 @@ body {
         2px 2px 4px #000000,
         3px 3px 6px #000000,
         3px 3px 6px #000000, 
+        1px 1px 2px #000000,
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
@@ -90,7 +91,10 @@ ul {
 ul li {
     text-shadow: 
         2px 2px 4px #000000, 
+        2px 2px 4px #000000,
+        3px 3px 6px #000000,
         3px 3px 6px #000000, 
+        1px 1px 2px #000000,
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
