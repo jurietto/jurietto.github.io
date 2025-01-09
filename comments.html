@@ -3,96 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comments System</title>
+    <title>Comments Page</title>
     <style>
-        /* Reset Styles */
-        body, h1, h2, h3, p, ul, li, textarea, input, button {
+        /* Reset Stylesheet */
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, font, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            border: 0;
+            font-size: 100%;
+            vertical-align: baseline;
         }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            line-height: 1.5;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            background: #F5F4EF;
+            color: #000305;
+            margin: 0;
+            padding: 0;
+        }
+        /* Main Layout */
+        #content {
+            width: 800px;
+            margin: 20px auto;
             padding: 20px;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        #comments-section {
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #banner h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        /* Navigation Bar */
+        #nav {
+            background: #000305;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        #nav a:hover {
+            color: #F5F4EF;
+        }
+        /* Comments Section */
+        #comments h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
         }
         #comments-list {
-            list-style-type: none;
+            list-style: none;
             margin-bottom: 20px;
         }
         #comments-list li {
-            padding: 10px;
-            margin-bottom: 10px;
             background: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 5px;
-        }
-        #comments-list li:nth-child(even) {
-            background: #efefef;
-        }
-        #add-comment {
-            display: flex;
-            flex-direction: column;
-        }
-        #add-comment label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        #add-comment input, #add-comment textarea {
             margin-bottom: 10px;
             padding: 10px;
+        }
+        #comments-list li:nth-child(even) {
+            background: #eee;
+        }
+        #comments-list blockquote {
+            margin: 0;
+            font-style: italic;
+        }
+        #comments-list footer {
+            text-align: right;
+            font-size: 12px;
+            color: #555;
+        }
+        /* Form Section */
+        #respond h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        #respond label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        #respond input,
+        #respond textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 14px;
         }
-        #add-comment button {
-            padding: 10px;
-            background-color: #007bff;
+        #respond input[type="submit"] {
+            width: auto;
+            background-color: #C74350;
             color: white;
+            font-size: 16px;
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
             cursor: pointer;
+            border-radius: 5px;
+            text-shadow: 1px 1px 1px #000;
         }
-        #add-comment button:hover {
-            background-color: #0056b3;
+        #respond input[type="submit"]:hover {
+            background-color: #A03040;
+        }
+        /* Additional Styling */
+        #about {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        #about h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        #about p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <div id="comments-section">
-        <h1>Comments</h1>
-        <ul id="comments-list">
-            <!-- Example Comments -->
-            <li>
-                <p><strong>Jane Doe:</strong> Great content! Love it!</p>
-            </li>
-            <li>
-                <p><strong>John Smith:</strong> Thanks for sharing this amazing post.</p>
-            </li>
-        </ul>
-        <form id="add-comment" action="post_comment.php" method="post">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required>
-            <label for="comment">Comment</label>
-            <textarea id="comment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
-            <button type="submit">Post Comment</button>
-        </form>
+    <div id="content">
+        <header id="banner">
+            <h1>Comments Page</h1>
+        </header>
+
+        <nav id="nav">
+            <a href="#about">About</a>
+            <a href="#comments">Comments</a>
+            <a href="#respond">Leave a Comment</a>
+        </nav>
+
+        <section id="about">
+            <h3>About This Page</h3>
+            <p>
+                Welcome to the comments page! Here, you can share your thoughts,
+                feedback, and interact with other visitors. Scroll down to see comments 
+                from others or leave your own below.
+            </p>
+        </section>
+
+        <main id="comments">
+            <h2>Comments</h2>
+            <ol id="comments-list">
+                <!-- Sample Comments -->
+                <li>
+                    <blockquote>
+                        <p>Great content! Love the design!</p>
+                        <footer>— Jane Doe</footer>
+                    </blockquote>
+                </li>
+                <li>
+                    <blockquote>
+                        <p>Looking forward to more posts like this.</p>
+                        <footer>— John Smith</footer>
+                    </blockquote>
+                </li>
+                <li>
+                    <blockquote>
+                        <p>The navigation bar makes everything so accessible. Great job!</p>
+                        <footer>— Alex Carter</footer>
+                    </blockquote>
+                </li>
+                <li>
+                    <blockquote>
+                        <p>Wow, this is amazing! I love the styling and layout!</p>
+                        <footer>— Lisa Ray</footer>
+                    </blockquote>
+                </li>
+                <li>
+                    <blockquote>
+                        <p>Can't wait to see what's next. Keep it up!</p>
+                        <footer>— Sam Taylor</footer>
+                    </blockquote>
+                </li>
+            </ol>
+        </main>
+
+        <section id="respond">
+            <h3>Leave a Comment</h3>
+            <form id="add-comment" action="post_comment.php" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+                <label for="comment">Comment:</label>
+                <textarea id="comment" name="comment" rows="5" placeholder="Write your comment here..." required></textarea>
+
+                <input type="submit" value="Post Comment">
+            </form>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 - ???</p>
+        </footer>
     </div>
 </body>
 </html>
+
 
     </script>
 </body>
