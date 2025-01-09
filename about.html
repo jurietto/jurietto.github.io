@@ -3,45 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff</title>
-    <link rel="stylesheet" href="style.css">
+    <title>About Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Play scream sound when the About Me page loads
+            const navSound = new Audio("https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3");
+            navSound.play();
+        });
+    </script>
 </head>
 <body>
-    <!-- Audio Control -->
-    <img 
-        id="audio-control" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        class="audio-control" 
-    />
-
-    <!-- Main Content -->
+    <!-- Decorative Image -->
     <img 
         style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
         src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
-        alt="Decorative" 
+        alt="Decorative Image" 
         width="200" 
         height="150" 
     />
-    <h1><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://jurietto.github.io/">Juri's Stuff</a></span></h1>
-    <p><strong>Note:</strong> Under Construction :)</p>
 
-    <h2>About Me</h2>
-    <hr>
+    <!-- Page Heading -->
+    <h1>About Me</h1>
+
+    <!-- About Content -->
     <p>I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!</p>
     <p>I'm sometimes on social media like Twitter or Bluesky, but I deactivate from time to time. I'm most active lurking on Discord—add me @sotokomori. Kindly reach out, but I may or may not be accepting friend requests.</p>
     <p><strong>Recommendation:</strong> Use a desktop to access this site.</p>
 
+    <!-- Coding Projects -->
     <h2>Coding Projects</h2>
     <hr>
     <p>I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re not very ambitious. I’d like to get better at web design eventually, but it’s not my main focus. One day, I’d love to teach myself how to create a visual novel or a game.</p>
 
+    <!-- DJing & Music -->
     <h2>DJing & Music</h2>
     <hr>
     <p>I've been producing music since 2017 and DJing since 2021. My music mainly falls into electronic dance genres—people often describe it as happy hardcore or hard dance. You can check out my music on SoundCloud and decide for yourself!</p>
     <p>I listen to all kinds of music, but my favorite genres are EBM, electro-industrial, trance, hardstyle, and happy hardcore. There’s something to appreciate about all music.</p>
     <p>My favorite artist is Velvet Acid Christ. Other favorites include Goreshit, Lords of Acid, Eisenfunk, DJ Billybool, God Module, and Ladytron.</p>
 
+    <!-- Artists Section -->
     <h3>Artists I Think Are Worth Supporting</h3>
     <ul>
         <li>
@@ -69,14 +71,17 @@
         </li>
     </ul>
 
+    <!-- Baking Section -->
     <h2>Baking</h2>
     <hr>
     <p>Baking rocks! I used to be an overnight baker, and during that time, I read a lot about it and maintained an entire kitchen. In my free time, I like reading about pastries from around the world.</p>
 
+    <!-- Visual Novels Section -->
     <h2>Visual Novels</h2>
     <hr>
     <p>My favorite visual novel is <em>Monochrome</em>, and my first was <em>Cafe Little Wish</em>. I also collect old PS2 and PSX NTSC-J titles. I archive playthroughs and am learning how to translate them.</p>
 
+    <!-- Personality Section -->
     <h2>Personality</h2>
     <hr>
     <ul>
@@ -88,12 +93,20 @@
         <li>Psychotic</li>
     </ul>
 
+    <!-- Audio Control -->
+    <img 
+        id="audio-control" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
+        alt="Audio Control" 
+        class="audio-control" 
+        title="Play Music"
+    />
+
     <footer>
         <h6>&copy; 2024 - ???</h6>
     </footer>
 
-    <!-- Include the JavaScript file -->
+    <!-- Include External JavaScript -->
     <script src="scripts.js"></script>
 </body>
 </html>
-
