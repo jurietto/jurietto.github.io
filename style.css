@@ -92,10 +92,23 @@ ul li {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 150px;
-    height: 150px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
-    z-index: 1000; /* Ensure it is above other content */
+    z-index: 10000; /* Ensure it is above everything */
+    pointer-events: auto; /* Ensure it is clickable */
+}
+
+/* Home Button Style */
+.home-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 10000; /* Ensure it is above everything */
+    pointer-events: auto; /* Ensure it is clickable */
 }
 
 /* Mobile-specific styles */
