@@ -3,42 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff</title>
+    <title>Comments Page</title>
     <link rel="stylesheet" href="style.css">
-    <script src="scripts.js"></script> <!-- External JavaScript for functionality -->
+    <style>
+        /* Form and Comments Styling */
+        #respond h2, #comments h2 {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5em;
+            color: #FF0099;
+            text-shadow: 
+                2px 2px 4px #000000, 
+                3px 3px 6px #000000, 
+                1px 1px 2px #000000;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white; /* White text for labels */
+        }
+
+        input, textarea, input[type="submit"], input[type="file"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+            background-color: white; /* Solid white background for inputs */
+            color: black;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        input[type="submit"] {
+            background-color: #FF0099;
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            text-shadow: 2px 2px 4px #000000;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #FF33AA;
+        }
+
+        #comments-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #comments-list li {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #FF0099;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+
+        #comments-list blockquote {
+            margin: 0;
+            font-style: italic;
+        }
+
+        #comments-list footer {
+            text-align: right;
+            font-size: 0.9em;
+            color: #FF0099;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            font-size: 1em;
+            background-color: #FF0099;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover {
+            background-color: #FF33AA;
+        }
+    </style>
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getDatabase, ref, onValue, push, query, limitToLast } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com/",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let currentPage = 0;
+        const commentsPerPage = 5;
+
+        async function submitComment(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const comment = document.getElementById("comment").value;
+
+            push(ref(database, "comments"), {
+                name,
+                comment,
+                timestamp: Date.now(),
+            });
+
+            alert("Comment submitted!");
+            document.getElementById("add-comment").reset();
+        }
+
+        function loadComments() {
+            const commentsList = document.getElementById("comments-list");
+            commentsList.innerHTML = "";
+
+            const commentsQuery = query(ref(database, "comments"), limitToLast(commentsPerPage));
+            onValue(commentsQuery, (snapshot) => {
+                const data = snapshot.val();
+                const comments = Object.values(data || {});
+                comments.reverse().forEach((comment) => {
+                    const listItem = document.createElement("li");
+                    listItem.innerHTML = `
+                        <blockquote>
+                            <p>${comment.comment}</p>
+                            <footer>— ${comment.name}</footer>
+                        </blockquote>
+                    `;
+                    commentsList.appendChild(listItem);
+                });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadComments();
+        });
+    </script>
 </head>
 <body>
     <!-- Decorative Image -->
     <img 
-        style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif" 
+        style="transform: rotate(-5deg); border: 1px solid;" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
         alt="Decorative Image" 
         width="200" 
         height="150" 
     />
 
-    <h1>Juri's Stuff</h1>
-    <p>Note: Under Construction :)</p>
-
-    <ul>
-        <li><h2><a href="about.html">About</a></h2></li>
-        <li><h2><a href="https://x.com/sotokomorii">Twitter</a></h2></li>
-        <li><h2><a href="https://bsky.app/profile/sotokomori.bsky.social">Bluesky</a></h2></li>
-        <li><h2><a href="https://www.youtube.com/@juriscafe">YouTube</a></h2></li>
-        <li><h2><a href="https://soundcloud.com/jetsetjuri">My Music</a></h2></li>
-        <li><h2><a href="gallery.html">Gallery</a></h2></li>
-        <li><h2><a href="vns.html">Visual Novels</a></h2></li>
-        <li><h2><a href="updates.html">Updates</a></h2></li>
-        <li><h2><a href="comments">Comments</a></h2></li>
-    </ul>
+    <!-- Home Button -->
+    <a href="index.html">
+        <img 
+            class="home-button" 
+            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
+            alt="Home Button" 
+            title="Go Home"
+        />
+    </a>
 
     <!-- Audio Control -->
-    <img 
-        id="audio-control" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        class="audio-control" 
-        title="Play Music"
-    />
+    <audio controls>
+        <source src="https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Page Heading -->
+    <h1>Comments Page</h1>
+
+    <!-- Form Section -->
+    <section id="respond">
+        <h2>Leave a Comment</h2>
+        <form id="add-comment" onsubmit="submitComment(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
+
+            <input type="submit" value="Post Comment">
+        </form>
+    </section>
+
+    <!-- Comments Section -->
+    <section id="comments">
+        <h2>Comments</h2>
+        <ol id="comments-list"></ol>
+        <div class="pagination">
+            <button onclick="prevPage()">Previous</button>
+            <button onclick="nextPage()">Next</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
 </body>
 </html>
