@@ -87,20 +87,6 @@ ul li {
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
-/* Mobile-specific styles */
-@media screen and (max-width: 600px) {
-    body {
-        padding: 20px; /* Adds padding for mobile */
-        background-image: none; /* Removes the background image on mobile */
-        text-shadow: none; /* Disables text shadow on mobile */
-    .audio-control {
-        display: none;
-    }
-
-    h1, h2, h3, h4, h5, h6, a, ul li, footer {
-        text-shadow: none; /* Ensures no text shadow for these elements on mobile */
-    }
-}
 /* Audio Control Style */
 .audio-control {
     position: fixed;
@@ -110,4 +96,21 @@ ul li {
     height: 50px;
     cursor: pointer;
     z-index: 1000; /* Ensure it is above other content */
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 20px; /* Adds padding for mobile */
+        background-image: none; /* Removes the background image on mobile */
+        text-shadow: none; /* Disables text shadow on mobile */
+    }
+
+    .audio-control {
+        display: none; /* Hide audio control on mobile */
+    }
+
+    h1, h2, h3, h4, h5, h6, a, ul li, footer {
+        text-shadow: none; /* Ensures no text shadow for these elements on mobile */
+    }
 }
