@@ -93,9 +93,21 @@ ul li {
         padding: 20px; /* Adds padding for mobile */
         background-image: none; /* Removes the background image on mobile */
         text-shadow: none; /* Disables text shadow on mobile */
+    .audio-control {
+        display: none;
     }
 
     h1, h2, h3, h4, h5, h6, a, ul li, footer {
         text-shadow: none; /* Ensures no text shadow for these elements on mobile */
     }
+}
+/* Style for the audio control */
+.audio-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 1000; /* Ensure it is above other content */
 }
