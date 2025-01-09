@@ -101,7 +101,7 @@ ul li {
         text-shadow: none; /* Ensures no text shadow for these elements on mobile */
     }
 }
-/* Style for the audio control */
+/* Audio Control Style */
 .audio-control {
     position: fixed;
     bottom: 20px;
