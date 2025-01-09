@@ -29,42 +29,25 @@
                 2px 2px 4px #000000, 
                 3px 3px 6px #000000, 
                 1px 1px 2px #000000;
-            cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/62820.png');
+        }
+
+        h1, h2 {
+            font-family: 'Lindley', sans-serif;
+            text-shadow: 
+                2px 2px 4px #000000, 
+                3px 3px 6px #000000, 
+                1px 1px 2px #000000;
         }
 
         h1 {
-            font-family: 'Lindley', sans-serif;
             font-size: 4em;
             margin-bottom: 10px;
-            color: white;
-            text-shadow: 
-                2px 2px 4px #000000, 
-                3px 3px 6px #000000, 
-                1px 1px 2px #000000;
         }
 
         h2 {
-            font-family: 'Lindley', sans-serif;
             font-size: 2.5em;
-            margin-bottom: 10px;
             color: #FF0099;
-            text-shadow: 
-                2px 2px 4px #000000, 
-                3px 3px 6px #000000, 
-                1px 1px 2px #000000;
-        }
-
-        a {
-            color: #FF0099;
-            text-decoration: underline;
-            text-shadow: 
-                2px 2px 4px #000000, 
-                3px 3px 6px #000000, 
-                1px 1px 2px #000000;
-        }
-
-        a:hover {
-            color: white;
+            margin-bottom: 20px;
         }
 
         /* Form Styling */
@@ -75,6 +58,7 @@
         label {
             display: block;
             margin: 10px 0 5px;
+            font-family: 'MS UI Gothic', sans-serif;
             font-size: 1.2em;
             font-weight: bold;
         }
@@ -85,7 +69,12 @@
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-family: 'MS UI Gothic', sans-serif;
             font-size: 1em;
+        }
+
+        textarea {
+            resize: none;
         }
 
         input[type="submit"] {
@@ -96,6 +85,7 @@
             padding: 10px 20px;
             cursor: pointer;
             text-shadow: 2px 2px 4px #000000;
+            width: 100%;
         }
 
         input[type="submit"]:hover {
@@ -109,7 +99,7 @@
         }
 
         #comments-list li {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid #FF0099;
             border-radius: 5px;
             margin-bottom: 15px;
@@ -127,51 +117,55 @@
             color: #FF0099;
         }
 
-        /* Pagination */
-        .pagination {
+        /* Footer */
+        footer {
             text-align: center;
-            margin: 20px 0;
-        }
-
-        .pagination a {
+            margin-top: 40px;
+            font-size: 0.9em;
             color: #FF0099;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        .pagination a:hover {
-            color: white;
-        }
-
-        /* Filter */
-        .filter {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .filter select {
-            padding: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: black;
-            color: white;
+            text-shadow: 
+                2px 2px 4px #000000, 
+                3px 3px 6px #000000, 
+                1px 1px 2px #000000;
         }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const navSound = new Audio("https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3");
+            navSound.play();
+        });
+    </script>
 </head>
 <body>
-    <header>
-        <h1>Comments Page</h1>
-    </header>
+    <!-- Decorative Image -->
+    <img 
+        style="transform: rotate(-5deg); border: 1px solid;" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
+        alt="Decorative Image" 
+        width="200" 
+        height="150" 
+    />
 
-    <!-- Filter Section -->
-    <div class="filter">
-        <label for="filter">Filter Comments:</label>
-        <select id="filter">
-            <option value="all">All</option>
-            <option value="latest">Latest</option>
-            <option value="top-rated">Top Rated</option>
-        </select>
-    </div>
+    <!-- Home Button -->
+    <a href="index.html">
+        <img 
+            id="home-button" 
+            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
+            alt="Home Button" 
+            title="Go Home"
+        />
+    </a>
+
+    <!-- Audio Control -->
+    <img 
+        id="audio-control" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
+        alt="Audio Control" 
+        title="Play Music"
+    />
+
+    <!-- Page Heading -->
+    <h1>Comments Page</h1>
 
     <!-- Form Section -->
     <section id="respond">
@@ -199,39 +193,20 @@
                     <p>Great content! Love the design!</p>
                     <footer>— Jane Doe</footer>
                 </blockquote>
-            </
+            </li>
             <li>
                 <blockquote>
                     <p>Looking forward to more posts like this.</p>
                     <footer>— John Smith</footer>
                 </blockquote>
             </li>
-            <li>
-                <blockquote>
-                    <p>Very informative and well presented!</p>
-                    <footer>— Alex Carter</footer>
-                </blockquote>
-            </li>
-            <li>
-                <blockquote>
-                    <p>The styling on this page is amazing. Great work!</p>
-                    <footer>— Lisa Ray</footer>
-                </blockquote>
-            </li>
         </ol>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            <a href="#">&laquo; Previous</a>
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">Next &raquo;</a>
-        </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <p>&copy; 2024 - ??? | All Rights Reserved</p>
     </footer>
 </body>
 </html>
+
