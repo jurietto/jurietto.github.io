@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Firebase Setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
@@ -18,6 +19,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 const storage = getStorage(app);
 
 /**
@@ -25,7 +27,7 @@ const storage = getStorage(app);
  */
 function setupMusicPlayer() {
     const musicPlayer = new Audio(
-        "https://file.garden/ZhTgSjrp5nAroRKq/Velvet%20Acid%20Christ%20-%20Lust%20For%20Blood%20(2006)%20(Full%20Album)%20[ezmp3.cc].mp3"
+        "https://your-valid-audio-file-url.com/audio.mp3"
     );
     const audioControl = document.getElementById("audio-control");
 
@@ -97,8 +99,8 @@ async function submitComment(event) {
         const uniqueName = `${Date.now()}-${mediaFile.name}`;
         const fileRef = storageRef(storage, `comments/${uniqueName}`);
         try {
-            await uploadBytes(fileRef, mediaFile);
-            mediaUrl = await getDownloadURL(fileRef);
+            const uploadResult = await uploadBytes(fileRef, mediaFile);
+            mediaUrl = await getDownloadURL(uploadResult.ref);
         } catch (error) {
             alert("Error uploading media. Please try again.");
             console.error("Upload Error:", error);
