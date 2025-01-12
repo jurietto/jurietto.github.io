@@ -6,58 +6,63 @@
     <title>Comments Section</title>
     <!-- Include the JavaScript file -->
     <script type="module" src="scripts.js"></script>
-    <!-- Link to CSS (optional) -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Link to CSS for styling -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to the Comments Section</h1>
-        <p>Share your thoughts and media below!</p>
+        <h1>Comments Section</h1>
+        <p>Share your thoughts and upload media!</p>
+        <!-- Decorative Image -->
+        <img src="images/bloods.png" alt="Decorative Blood Image" class="decorative-image">
     </header>
 
-    <!-- Comment Form Section -->
-    <main>
-        <section id="respond" class="comment-form-section">
-            <h2>Leave a Comment</h2>
-            <form id="add-comment">
-                <!-- Name Input -->
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                
-                <!-- Comment Textarea -->
-                <div class="form-group">
-                    <label for="comment">Comment:</label>
-                    <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
-                </div>
-                
-                <!-- Media Upload -->
-                <div class="form-group">
-                    <label for="media">Upload Media (optional):</label>
-                    <input type="file" id="media" name="media" accept="image/*,video/*">
-                </div>
-                
-                <!-- Submit Button -->
-                <div class="form-group">
-                    <input type="submit" value="Post Comment">
-                </div>
-            </form>
-        </section>
+    <!-- Navigation Buttons -->
+    <nav>
+        <button onclick="window.location.href='index.html'">Home</button>
+        <button onclick="window.location.href='about.html'">About</button>
+    </nav>
 
-        <!-- Comments List Section -->
-        <section id="comments" class="comments-list-section">
-            <h2>Comments</h2>
-            <ol id="comments-list" aria-live="polite">
-                <!-- Dynamic content will be populated here -->
-                <li class="comment-placeholder">Loading comments...</li>
-            </ol>
-        </section>
-    </main>
+    <!-- Audio Player -->
+    <section id="audio-player">
+        <audio id="audio-control" controls>
+            <source src="audio/scream-with-echo-46585.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <!-- Comment Form Section -->
+    <section id="respond">
+        <h2>Leave a Comment</h2>
+        <form id="add-comment">
+            <!-- Name Input -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+            
+            <!-- Comment Textarea -->
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
+            
+            <!-- Media Upload -->
+            <label for="media">Upload Media (optional):</label>
+            <input type="file" id="media" name="media" accept="image/*,video/*">
+            
+            <!-- Submit Button -->
+            <input type="submit" value="Post Comment">
+        </form>
+    </section>
+
+    <!-- Comments List Section -->
+    <section id="comments">
+        <h2>Comments</h2>
+        <ol id="comments-list">
+            <p>Loading comments...</p>
+        </ol>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 - All Rights Reserved</p>
+        <h6>&copy; 2024 - Juri's Dungeon</h6>
     </footer>
 </body>
 </html>
