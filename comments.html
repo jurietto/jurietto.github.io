@@ -6,45 +6,58 @@
     <title>Comments Section</title>
     <!-- Include the JavaScript file -->
     <script type="module" src="scripts.js"></script>
+    <!-- Link to CSS (optional) -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Comments Section</h1>
+        <h1>Welcome to the Comments Section</h1>
+        <p>Share your thoughts and media below!</p>
     </header>
 
     <!-- Comment Form Section -->
-    <section id="respond">
-        <h2>Leave a Comment</h2>
-        <form id="add-comment">
-            <!-- Name Input -->
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your Name" required>
-            
-            <!-- Comment Textarea -->
-            <label for="comment">Comment:</label>
-            <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
-            
-            <!-- Media Upload -->
-            <label for="media">Upload Media (optional):</label>
-            <input type="file" id="media" name="media" accept="image/*,video/*">
-            
-            <!-- Submit Button -->
-            <input type="submit" value="Post Comment">
-        </form>
-    </section>
+    <main>
+        <section id="respond" class="comment-form-section">
+            <h2>Leave a Comment</h2>
+            <form id="add-comment">
+                <!-- Name Input -->
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                </div>
+                
+                <!-- Comment Textarea -->
+                <div class="form-group">
+                    <label for="comment">Comment:</label>
+                    <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
+                </div>
+                
+                <!-- Media Upload -->
+                <div class="form-group">
+                    <label for="media">Upload Media (optional):</label>
+                    <input type="file" id="media" name="media" accept="image/*,video/*">
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <input type="submit" value="Post Comment">
+                </div>
+            </form>
+        </section>
 
-    <!-- Comments List Section -->
-    <section id="comments">
-        <h2>Comments</h2>
-        <ol id="comments-list">
-            <!-- This will dynamically populate -->
-            <p>Loading comments...</p>
-        </ol>
-    </section>
+        <!-- Comments List Section -->
+        <section id="comments" class="comments-list-section">
+            <h2>Comments</h2>
+            <ol id="comments-list" aria-live="polite">
+                <!-- Dynamic content will be populated here -->
+                <li class="comment-placeholder">Loading comments...</li>
+            </ol>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <h6>&copy; 2024 - ???</h6>
+        <p>&copy; 2024 - All Rights Reserved</p>
     </footer>
 </body>
 </html>
