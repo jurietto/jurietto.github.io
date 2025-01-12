@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Section</title>
+    <!-- Include the JavaScript file -->
     <script type="module" src="scripts.js"></script>
 </head>
 <body>
@@ -13,15 +14,19 @@
     <section id="respond">
         <h2>Leave a Comment</h2>
         <form id="add-comment">
+            <!-- Name Input -->
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
             
+            <!-- Comment Textarea -->
             <label for="comment">Comment:</label>
             <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
             
+            <!-- Media Upload -->
             <label for="media">Upload Media (optional):</label>
             <input type="file" id="media" name="media" accept="image/*,video/*">
             
+            <!-- Submit Button -->
             <input type="submit" value="Post Comment">
         </form>
     </section>
@@ -30,10 +35,12 @@
     <section id="comments">
         <h2>Comments</h2>
         <ol id="comments-list">
+            <!-- This will dynamically populate -->
             <p>Loading comments...</p>
         </ol>
     </section>
 
+    <!-- Footer -->
     <footer>
         <h6>&copy; 2024 - ???</h6>
     </footer>
