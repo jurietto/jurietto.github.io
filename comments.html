@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Section</title>
+    <link rel="stylesheet" href="style.css">
     <style>
+        /* General Styles */
         section {
             margin: 20px auto;
             max-width: 800px;
             padding: 20px;
-            background-color: #2c2c3c;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
@@ -66,26 +67,68 @@
             margin-top: 10px;
             border-radius: 5px;
         }
+
+        footer {
+            margin-top: 30px;
+            padding: 10px 0;
+            background-color: #282a36;
+            color: #f8f8f2;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        #home-button {
+            margin: 20px auto;
+            display: block;
+        }
+
+        #audio-player {
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #3e3e50;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #audio-control {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Comments Section</h1>
+        <p>Share your thoughts and upload media!</p>
+        <img 
+            class="decorative" 
+            src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
+            alt="Decorative Image" 
+            width="200" 
+            height="150" 
+        />
+    </header>
+
+    <!-- Audio Player -->
+    <section id="audio-player">
+        <audio id="audio-control" controls>
+            <source src="https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
     <!-- Comment Form Section -->
     <section id="respond">
         <h2>Leave a Comment</h2>
         <form id="add-comment">
-            <!-- Name Input -->
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
-            
-            <!-- Comment Textarea -->
+
             <label for="comment">Comment:</label>
             <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
-            
-            <!-- Media Upload -->
+
             <label for="media">Upload Media (optional):</label>
             <input type="file" id="media" name="media" accept="image/*,video/*">
-            
-            <!-- Submit Button -->
+
             <input type="submit" value="Post Comment">
         </form>
     </section>
@@ -97,5 +140,22 @@
             <p>Loading comments...</p>
         </ol>
     </section>
+
+    <!-- Home Button -->
+    <a href="index.html">
+        <img 
+            id="home-button" 
+            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
+            alt="Home Button" 
+            title="Go Home"
+        />
+    </a>
+
+    <footer>
+        <h6>&copy; 2024 - ???</h6>
+    </footer>
+
+    <!-- Include External JavaScript -->
+    <script src="scripts.js"></script>
 </body>
 </html>
