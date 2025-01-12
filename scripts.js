@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Firebase Setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -30,6 +30,11 @@ function setupMusicPlayer() {
         "https://file.garden/ZhTgSjrp5nAroRKq/Velvet%20Acid%20Christ%20-%20Lust%20For%20Blood%20(2006)%20(Full%20Album)%20[ezmp3.cc].mp3"
     );
     const audioControl = document.getElementById("audio-control");
+
+    if (!audioControl) {
+        console.error("Audio control element not found.");
+        return;
+    }
 
     const savedTime = parseFloat(localStorage.getItem("music-time")) || 0;
     const isPlaying = localStorage.getItem("music-playing") === "true";
@@ -64,7 +69,13 @@ function setupMusicPlayer() {
  * Setup the comments system, including form submission and loading comments.
  */
 function setupCommentsSystem() {
-    document.getElementById("add-comment").addEventListener("submit", submitComment);
+    const commentForm = document.getElementById("add-comment");
+    if (!commentForm) {
+        console.error("Comment form element not found.");
+        return;
+    }
+    commentForm.addEventListener("submit", submitComment);
+
     loadComments();
 }
 
@@ -76,7 +87,7 @@ async function submitComment(event) {
 
     const name = document.getElementById("name").value.trim();
     const comment = document.getElementById("comment").value.trim();
-    const mediaFile = document.getElementById("media").files[0];
+    const mediaFile = document.getElementById("media")?.files[0];
 
     if (!name || !comment) {
         alert("Name and comment are required!");
@@ -121,6 +132,10 @@ async function submitComment(event) {
  */
 function loadComments() {
     const commentsList = document.getElementById("comments-list");
+    if (!commentsList) {
+        console.error("Comments list element not found.");
+        return;
+    }
     commentsList.innerHTML = "<p>Loading comments...</p>";
 
     const commentsRef = ref(db, "comments");
