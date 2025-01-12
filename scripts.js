@@ -160,13 +160,13 @@ function loadComments() {
                 const listItem = document.createElement("li");
                 listItem.innerHTML = `
                     <blockquote>
-                        <p>${sanitizeInput(data.comment)}</p>
-                        <footer>— ${sanitizeInput(data.name)}</footer>
+                        <p><strong>${sanitizeInput(data.name)}</strong>: ${sanitizeInput(data.comment)}</p>
                         ${
                             data.mediaUrl
-                                ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
+                                ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 300px; height: auto; margin-top: 10px;">`
                                 : ""
                         }
+                        <footer>Posted at ${new Date(data.timestamp).toLocaleString()}</footer>
                     </blockquote>
                 `;
                 commentsList.appendChild(listItem);
