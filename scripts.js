@@ -33,25 +33,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Firebase setup
+// Firebase Realtime Database Setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+import { getDatabase, ref, push, set, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
     authDomain: "comments-ff6c9.firebaseapp.com",
     projectId: "comments-ff6c9",
+    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com", // Realtime Database URL
     storageBucket: "comments-ff6c9.appspot.com",
     messagingSenderId: "778548096311",
     appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getDatabase(app);
 const storage = getStorage(app);
 
-// Handle comment submission
+// Submit comment to Realtime Database
 async function submitComment(event) {
     event.preventDefault();
 
@@ -64,58 +65,62 @@ async function submitComment(event) {
         return;
     }
 
-    // Show a loading message
-    const submitButton = event.target.querySelector('[type="submit"]');
-    submitButton.disabled = true;
-    submitButton.value = "Submitting...";
-
     let mediaUrl = null;
     if (mediaFile) {
         const uniqueName = `${Date.now()}-${mediaFile.name}`;
-        const storageRef = ref(storage, `comments/${uniqueName}`);
+        const fileRef = storageRef(storage, `comments/${uniqueName}`);
         try {
-            await uploadBytes(storageRef, mediaFile);
-            mediaUrl = await getDownloadURL(storageRef);
+            await uploadBytes(fileRef, mediaFile);
+            mediaUrl = await getDownloadURL(fileRef);
         } catch (error) {
             alert("Error uploading media. Please try again.");
             console.error("Upload Error:", error);
-            submitButton.disabled = false;
-            submitButton.value = "Post Comment";
             return;
         }
     }
 
+    const commentsRef = ref(db, "comments");
+    const newCommentRef = push(commentsRef);
+
     try {
-        await addDoc(collection(db, "comments"), {
-            name: sanitizeInput(name),
-            comment: sanitizeInput(comment),
+        await set(newCommentRef, {
+            name,
+            comment,
             mediaUrl,
             timestamp: serverTimestamp(),
         });
         alert("Comment submitted successfully!");
         document.getElementById("add-comment").reset();
-        loadComments();
+        loadComments(); // Refresh the comments list
     } catch (error) {
         alert("Error submitting comment. Please try again.");
         console.error("Submission Error:", error);
     }
-
-    submitButton.disabled = false;
-    submitButton.value = "Post Comment";
 }
 
-// Load and display comments
-async function loadComments() {
+// Load and display comments from Realtime Database
+function loadComments() {
     const commentsList = document.getElementById("comments-list");
     commentsList.innerHTML = "<p>Loading comments...</p>";
 
-    try {
-        const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
-        const querySnapshot = await getDocs(q);
-
+    const commentsRef = ref(db, "comments");
+    onValue(commentsRef, (snapshot) => {
         commentsList.innerHTML = ""; // Clear the list
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
+
+        const comments = snapshot.val();
+        if (!comments) {
+            commentsList.innerHTML = "<p>No comments yet. Be the first to comment!</p>";
+            return;
+        }
+
+        // Sort comments by timestamp
+        const sortedComments = Object.entries(comments).sort((a, b) => {
+            const timestampA = a[1].timestamp || 0;
+            const timestampB = b[1].timestamp || 0;
+            return timestampB - timestampA; // Descending order
+        });
+
+        sortedComments.forEach(([key, data]) => {
             const listItem = document.createElement("li");
             listItem.innerHTML = `
                 <blockquote>
@@ -130,10 +135,10 @@ async function loadComments() {
             `;
             commentsList.appendChild(listItem);
         });
-    } catch (error) {
+    }, (error) => {
         commentsList.innerHTML = "<p>Error loading comments. Please try again later.</p>";
         console.error("Error loading comments:", error);
-    }
+    });
 }
 
 // Sanitize user inputs to prevent XSS
