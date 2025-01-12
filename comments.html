@@ -11,8 +11,7 @@
             margin: 20px auto;
             max-width: 800px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
         }
 
         section h2 {
@@ -99,22 +98,15 @@
     <header>
         <h1>Comments Section</h1>
         <p>Share your thoughts and upload media!</p>
-        <img 
-            class="decorative" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
-            alt="Decorative Image" 
-            width="200" 
-            height="150" 
-        />
+        <!-- Decorative Image -->
+    <img 
+    style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
+    src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
+    alt="Decorative Image" 
+    width="200" 
+    height="150" 
+/>
     </header>
-
-    <!-- Audio Player -->
-    <section id="audio-player">
-        <audio id="audio-control" controls>
-            <source src="https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    </section>
 
     <!-- Comment Form Section -->
     <section id="respond">
@@ -141,15 +133,25 @@
         </ol>
     </section>
 
-    <!-- Home Button -->
-    <a href="index.html">
-        <img 
-            id="home-button" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-            alt="Home Button" 
-            title="Go Home"
-        />
-    </a>
+   <!-- Home Button -->
+<a href="index.html">
+    <img 
+        id="home-button" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
+        alt="Home Button" 
+        class="home-button" 
+        title="Go Home"
+    />
+</a>
+    
+    <!-- Audio Control -->
+    <img 
+        id="audio-control" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
+        alt="Audio Control" 
+        class="audio-control" 
+        title="Play Music"
+    />
 
     <footer>
         <h6>&copy; 2024 - ???</h6>
