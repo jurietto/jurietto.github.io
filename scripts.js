@@ -6,20 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Firebase Setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
     authDomain: "comments-ff6c9.firebaseapp.com",
     databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
-    storageBucket: "comments-ff6c9.appspot.com",
+    storageBucket: "comments-ff6c9.firebasestorage.app",
     messagingSenderId: "778548096311",
     appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 const storage = getStorage(app);
 
 /**
