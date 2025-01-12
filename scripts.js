@@ -1,12 +1,39 @@
+// Wait until the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", () => {
-    const musicPlayer = new Audio("https://file.garden/ZhTgSjrp5nAroRKq/Velvet%20Acid%20Christ%20-%20Lust%20For%20Blood%20(2006)%20(Full%20Album)%20[ezmp3.cc].mp3");
+    setupMusicPlayer();
+    setupCommentsSystem();
+});
+
+// Firebase Setup
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getDatabase, ref, push, set, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+    authDomain: "comments-ff6c9.firebaseapp.com",
+    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+    storageBucket: "comments-ff6c9.appspot.com",
+    messagingSenderId: "778548096311",
+    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app);
+
+/**
+ * Setup the music player and control its behavior.
+ */
+function setupMusicPlayer() {
+    const musicPlayer = new Audio(
+        "https://file.garden/ZhTgSjrp5nAroRKq/Velvet%20Acid%20Christ%20-%20Lust%20For%20Blood%20(2006)%20(Full%20Album)%20[ezmp3.cc].mp3"
+    );
     const audioControl = document.getElementById("audio-control");
 
-    // Load playback state
     const savedTime = parseFloat(localStorage.getItem("music-time")) || 0;
     const isPlaying = localStorage.getItem("music-playing") === "true";
 
-    // Set the saved time and play if required
     musicPlayer.currentTime = savedTime;
     if (isPlaying) {
         musicPlayer.play().catch((error) => {
@@ -31,28 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("beforeunload", () => {
         localStorage.setItem("music-time", musicPlayer.currentTime);
     });
-});
+}
 
-// Firebase Realtime Database Setup
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+/**
+ * Setup the comments system, including form submission and loading comments.
+ */
+function setupCommentsSystem() {
+    document.getElementById("add-comment").addEventListener("submit", submitComment);
+    loadComments();
+}
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-    authDomain: "comments-ff6c9.firebaseapp.com",
-    projectId: "comments-ff6c9",
-    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com", // Realtime Database URL
-    storageBucket: "comments-ff6c9.appspot.com",
-    messagingSenderId: "778548096311",
-    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const storage = getStorage(app);
-
-// Submit comment to Realtime Database
+/**
+ * Handle the submission of a comment to the Firebase Realtime Database.
+ */
 async function submitComment(event) {
     event.preventDefault();
 
@@ -87,68 +105,70 @@ async function submitComment(event) {
             name,
             comment,
             mediaUrl,
-            timestamp: serverTimestamp(),
+            timestamp: Date.now(),
         });
         alert("Comment submitted successfully!");
         document.getElementById("add-comment").reset();
-        loadComments(); // Refresh the comments list
+        loadComments();
     } catch (error) {
         alert("Error submitting comment. Please try again.");
         console.error("Submission Error:", error);
     }
 }
 
-// Load and display comments from Realtime Database
+/**
+ * Load and display comments from Firebase Realtime Database.
+ */
 function loadComments() {
     const commentsList = document.getElementById("comments-list");
     commentsList.innerHTML = "<p>Loading comments...</p>";
 
     const commentsRef = ref(db, "comments");
-    onValue(commentsRef, (snapshot) => {
-        commentsList.innerHTML = ""; // Clear the list
+    onValue(
+        commentsRef,
+        (snapshot) => {
+            commentsList.innerHTML = "";
 
-        const comments = snapshot.val();
-        if (!comments) {
-            commentsList.innerHTML = "<p>No comments yet. Be the first to comment!</p>";
-            return;
+            const comments = snapshot.val();
+            if (!comments) {
+                commentsList.innerHTML = "<p>No comments yet. Be the first to comment!</p>";
+                return;
+            }
+
+            const sortedComments = Object.entries(comments).sort((a, b) => {
+                const timestampA = a[1].timestamp || 0;
+                const timestampB = b[1].timestamp || 0;
+                return timestampB - timestampA;
+            });
+
+            sortedComments.forEach(([key, data]) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    <blockquote>
+                        <p>${sanitizeInput(data.comment)}</p>
+                        <footer>— ${sanitizeInput(data.name)}</footer>
+                        ${
+                            data.mediaUrl
+                                ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
+                                : ""
+                        }
+                    </blockquote>
+                `;
+                commentsList.appendChild(listItem);
+            });
+        },
+        (error) => {
+            commentsList.innerHTML = "<p>Error loading comments. Please try again later.</p>";
+            console.error("Error loading comments:", error);
         }
-
-        // Sort comments by timestamp
-        const sortedComments = Object.entries(comments).sort((a, b) => {
-            const timestampA = a[1].timestamp || 0;
-            const timestampB = b[1].timestamp || 0;
-            return timestampB - timestampA; // Descending order
-        });
-
-        sortedComments.forEach(([key, data]) => {
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `
-                <blockquote>
-                    <p>${sanitizeInput(data.comment)}</p>
-                    <footer>— ${sanitizeInput(data.name)}</footer>
-                    ${
-                        data.mediaUrl
-                            ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
-                            : ""
-                    }
-                </blockquote>
-            `;
-            commentsList.appendChild(listItem);
-        });
-    }, (error) => {
-        commentsList.innerHTML = "<p>Error loading comments. Please try again later.</p>";
-        console.error("Error loading comments:", error);
-    });
+    );
 }
 
-// Sanitize user inputs to prevent XSS
+/**
+ * Sanitize user inputs to prevent XSS attacks.
+ */
 function sanitizeInput(input) {
     const div = document.createElement("div");
     div.innerText = input;
     return div.innerHTML;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("add-comment").addEventListener("submit", submitComment);
-    loadComments();
-});
