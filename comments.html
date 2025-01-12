@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Section</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const navSound = new Audio("https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3");
-            navSound.play();
-        });
-    </script>
+    <script type="module" src="scripts.js"></script>
 </head>
 <body>
     <h1>Comments Section</h1>
 
-    <!-- Single Comment Form -->
+    <!-- Comment Form -->
     <section id="respond">
         <h2>Leave a Comment</h2>
         <form id="add-comment">
@@ -31,7 +26,7 @@
         </form>
     </section>
 
-    <!-- Comments List Section -->
+    <!-- Comments List -->
     <section id="comments">
         <h2>Comments</h2>
         <ol id="comments-list">
@@ -42,7 +37,5 @@
     <footer>
         <h6>&copy; 2024 - ???</h6>
     </footer>
-
-    <script src="scripts.js" type="module"></script>
 </body>
 </html>
