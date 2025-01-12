@@ -14,19 +14,24 @@
 <body>
     <h1>Comments Section</h1>
 
+    <!-- Single Comment Form -->
     <section id="respond">
         <h2>Leave a Comment</h2>
         <form id="add-comment">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
+            
             <label for="comment">Comment:</label>
             <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
+            
             <label for="media">Upload Media (optional):</label>
             <input type="file" id="media" name="media" accept="image/*,video/*">
+            
             <input type="submit" value="Post Comment">
         </form>
     </section>
 
+    <!-- Comments List Section -->
     <section id="comments">
         <h2>Comments</h2>
         <ol id="comments-list">
