@@ -6,12 +6,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedTime = parseFloat(localStorage.getItem("music-time")) || 0;
     const isPlaying = localStorage.getItem("music-playing") === "true";
 
+    // Set the saved time and play if required
     musicPlayer.currentTime = savedTime;
-    if (isPlaying) musicPlayer.play();
+    if (isPlaying) {
+        musicPlayer.play().catch((error) => {
+            console.error("Error playing audio:", error);
+            alert("Unable to play audio. Please try again later.");
+        });
+    }
 
     audioControl.addEventListener("click", () => {
         if (musicPlayer.paused) {
-            musicPlayer.play();
+            musicPlayer.play().catch((error) => {
+                console.error("Error playing audio:", error);
+                alert("Unable to play audio.");
+            });
             localStorage.setItem("music-playing", "true");
         } else {
             musicPlayer.pause();
@@ -55,24 +64,44 @@ async function submitComment(event) {
         return;
     }
 
+    // Show a loading message
+    const submitButton = event.target.querySelector('[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.value = "Submitting...";
+
     let mediaUrl = null;
     if (mediaFile) {
         const uniqueName = `${Date.now()}-${mediaFile.name}`;
         const storageRef = ref(storage, `comments/${uniqueName}`);
-        await uploadBytes(storageRef, mediaFile);
-        mediaUrl = await getDownloadURL(storageRef);
+        try {
+            await uploadBytes(storageRef, mediaFile);
+            mediaUrl = await getDownloadURL(storageRef);
+        } catch (error) {
+            alert("Error uploading media. Please try again.");
+            console.error("Upload Error:", error);
+            submitButton.disabled = false;
+            submitButton.value = "Post Comment";
+            return;
+        }
     }
 
-    await addDoc(collection(db, "comments"), {
-        name: sanitizeInput(name),
-        comment: sanitizeInput(comment),
-        mediaUrl,
-        timestamp: serverTimestamp(),
-    });
+    try {
+        await addDoc(collection(db, "comments"), {
+            name: sanitizeInput(name),
+            comment: sanitizeInput(comment),
+            mediaUrl,
+            timestamp: serverTimestamp(),
+        });
+        alert("Comment submitted successfully!");
+        document.getElementById("add-comment").reset();
+        loadComments();
+    } catch (error) {
+        alert("Error submitting comment. Please try again.");
+        console.error("Submission Error:", error);
+    }
 
-    alert("Comment submitted successfully!");
-    document.getElementById("add-comment").reset();
-    loadComments();
+    submitButton.disabled = false;
+    submitButton.value = "Post Comment";
 }
 
 // Load and display comments
@@ -84,21 +113,26 @@ async function loadComments() {
         const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
         const querySnapshot = await getDocs(q);
 
-        commentsList.innerHTML = "";
+        commentsList.innerHTML = ""; // Clear the list
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const listItem = document.createElement("li");
             listItem.innerHTML = `
                 <blockquote>
-                    <p>${data.comment}</p>
-                    <footer>— ${data.name}</footer>
-                    ${data.mediaUrl ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">` : ""}
+                    <p>${sanitizeInput(data.comment)}</p>
+                    <footer>— ${sanitizeInput(data.name)}</footer>
+                    ${
+                        data.mediaUrl
+                            ? `<img src="${data.mediaUrl}" alt="Uploaded Media" style="max-width: 100%; height: auto;">`
+                            : ""
+                    }
                 </blockquote>
             `;
             commentsList.appendChild(listItem);
         });
     } catch (error) {
         commentsList.innerHTML = "<p>Error loading comments. Please try again later.</p>";
+        console.error("Error loading comments:", error);
     }
 }
 
