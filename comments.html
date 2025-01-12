@@ -36,14 +36,15 @@
         }
 
         form input[type="submit"] {
-            background-color: #8e44ad;
+            width: 100%;
+            background-color: #FF0099;
             color: white;
             border: none;
             cursor: pointer;
         }
 
         form input[type="submit"]:hover {
-            background-color: #732d91;
+            background-color: #FF0099;
         }
 
         #comments-list {
@@ -67,38 +68,11 @@
             border-radius: 5px;
         }
 
-        footer {
-            margin-top: 30px;
-            padding: 10px 0;
-            background-color: #282a36;
-            color: #f8f8f2;
-            font-size: 0.9em;
-            text-align: center;
-        }
-
-        #home-button {
-            margin: 20px auto;
-            display: block;
-        }
-
-        #audio-player {
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #3e3e50;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        #audio-control {
-            width: 100%;
-        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Comments Section</h1>
-        <p>Share your thoughts and upload media!</p>
-        <!-- Decorative Image -->
+             <!-- Decorative Image -->
     <img 
     style="-moz-transform: rotate(-5deg); -webkit-transform: rotate(-5deg); -o-transform: rotate(-5deg); -ms-transform: rotate(-5deg); transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
     src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
@@ -106,11 +80,14 @@
     width="200" 
     height="150" 
 />
+        <h1>Comments</h1>
+
+   
     </header>
 
     <!-- Comment Form Section -->
     <section id="respond">
-        <h2>Leave a Comment</h2>
+        <h2>Share your thoughts and upload media!</h2>
         <form id="add-comment">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
