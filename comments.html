@@ -8,13 +8,12 @@
     <style>
         body {
             font-family: 'MS Gothic', sans-serif;
-            }
+        }
 
         section {
             margin: 20px auto;
             max-width: 800px;
             padding: 20px;
-           
         }
 
         section h2 {
@@ -116,19 +115,15 @@
     <section id="respond">
         <h2>Leave a Comment</h2>
         <form id="add-comment">
-            <!-- Name Input -->
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" placeholder="Your Name" required>
             
-            <!-- Comment Textarea -->
             <label for="comment">Comment:</label>
             <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
             
-            <!-- Media Upload -->
             <label for="media">Upload Media (optional):</label>
             <input type="file" id="media" name="media" accept="image/*,video/*">
             
-            <!-- Submit Button -->
             <input type="submit" value="Post Comment">
         </form>
     </section>
@@ -136,9 +131,7 @@
     <!-- Comments List Section -->
     <section id="comments">
         <h2>Comments</h2>
-        <ol id="comments-list">
-            <p>Loading comments...</p>
-        </ol>
+        <ol id="comments-list"></ol>
     </section>
 
     <!-- Home Button -->
@@ -154,5 +147,27 @@
     <footer>
         <h6>&copy; 2024 - ???</h6>
     </footer>
+
+    <script>
+        const form = document.getElementById('add-comment');
+        const commentsList = document.getElementById('comments-list');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the form from submitting in the traditional way
+
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+
+            // Create a new comment item
+            const newComment = document.createElement('li');
+            newComment.textContent = `${name}: ${comment}`;
+            
+            // Append the new comment to the list
+            commentsList.appendChild(newComment);
+
+            // Clear the input fields
+            form.reset();
+        });
+    </script>
 </body>
 </html>
