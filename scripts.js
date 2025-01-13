@@ -22,52 +22,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const storage = getStorage(app);
 
-/**
- * Setup the music player and control its behavior.
- */
-function setupMusicPlayer() {
-    const musicPlayer = new Audio(
-        "https://file.garden/ZhTgSjrp5nAroRKq/Velvet%20Acid%20Christ%20-%20Lust%20For%20Blood%20(2006)%20(Full%20Album)%20%5B%20ezmp3.cc%20%5D.mp3"
-    );
-    const audioControl = document.getElementById("audio-control");
-
-    if (!audioControl) {
-        console.error("Audio control element not found.");
-        return;
-    }
-
-    const savedTime = parseFloat(localStorage.getItem("music-time")) || 0;
-    const isPlaying = localStorage.getItem("music-playing") === "true";
-
-    musicPlayer.currentTime = savedTime;
-    if (isPlaying) {
-        musicPlayer.play().catch((error) => {
-            console.error("Error playing audio:", error);
-            alert("Unable to play audio. Please try again later.");
-        });
-    }
-
-    audioControl.addEventListener("click", () => {
-        if (musicPlayer.paused) {
-            musicPlayer.play().catch((error) => {
-                console.error("Error playing audio:", error);
-                alert("Unable to play audio.");
-            });
-            localStorage.setItem("music-playing", "true");
-        } else {
-            musicPlayer.pause();
-            localStorage.setItem("music-playing", "false");
-        }
-    });
-
-    window.addEventListener("beforeunload", () => {
-        localStorage.setItem("music-time", musicPlayer.currentTime);
-    });
-}
-
-/**
- * Setup the comments system, including form submission and loading comments.
- */
 function setupCommentsSystem() {
     const commentForm = document.getElementById("add-comment");
     if (!commentForm) {
@@ -79,64 +33,6 @@ function setupCommentsSystem() {
     loadComments();
 }
 
-/**
- * Handle the submission of a comment to the Firebase Realtime Database.
- */
-async function submitComment(event) {
-    event.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const comment = document.getElementById("comment").value.trim();
-    const mediaFile = document.getElementById("media")?.files[0];
-
-    if (!name || !comment) {
-        alert("Name and comment are required!");
-        return;
-    }
-
-    let mediaUrl = null;
-    if (mediaFile) {
-        const allowedTypes = ["image/", "video/"];
-        const isAllowed = allowedTypes.some((type) => mediaFile.type.startsWith(type));
-        if (!isAllowed) {
-            alert("Only image and video files are allowed.");
-            return;
-        }
-
-        const uniqueName = `${Date.now()}-${mediaFile.name}`;
-        const fileRef = storageRef(storage, `comments/${uniqueName}`);
-        try {
-            const uploadResult = await uploadBytes(fileRef, mediaFile);
-            mediaUrl = await getDownloadURL(uploadResult.ref);
-        } catch (error) {
-            alert("Error uploading media. Please try again.");
-            console.error("Upload Error:", error);
-            return;
-        }
-    }
-
-    const commentsRef = ref(db, "comments");
-    const newCommentRef = push(commentsRef);
-
-    try {
-        await set(newCommentRef, {
-            name,
-            comment,
-            mediaUrl,
-            timestamp: Date.now(),
-        });
-        alert("Comment submitted successfully!");
-        document.getElementById("add-comment").reset();
-        loadComments();
-    } catch (error) {
-        alert("Error submitting comment. Please try again.");
-        console.error("Submission Error:", error);
-    }
-}
-
-/**
- * Load and display comments from Firebase Realtime Database.
- */
 function loadComments() {
     const commentsList = document.getElementById("comments-list");
     if (!commentsList) {
@@ -186,11 +82,58 @@ function loadComments() {
     );
 }
 
-/**
- * Sanitize user inputs to prevent XSS attacks.
- */
-function sanitizeInput(input) {
-    const div = document.createElement("div");
-    div.innerText = input;
-    return div.innerHTML;
+// Reimplementation of submitComment function
+function submitComment(event) {
+    event.preventDefault(); // Prevent the form from refreshing the page
+
+    const nameInput = document.getElementById("name");
+    const commentInput = document.getElementById("comment");
+    const fileInput = document.getElementById("file");
+
+    if (!nameInput || !commentInput) {
+        console.error("Form inputs are missing.");
+        return;
+    }
+
+    const name = nameInput.value.trim();
+    const comment = commentInput.value.trim();
+
+    if (!name || !comment) {
+        alert("Please fill out both the name and comment fields.");
+        return;
+    }
+
+    const timestamp = Date.now();
+    const commentData = { name, comment, timestamp };
+
+    if (fileInput && fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const fileRef = storageRef(storage, `uploads/${timestamp}_${file.name}`);
+
+        uploadBytes(fileRef, file)
+            .then(() => getDownloadURL(fileRef))
+            .then((url) => {
+                commentData.mediaUrl = url;
+                pushCommentToDatabase(commentData);
+            })
+            .catch((error) => {
+                console.error("Error uploading file:", error);
+                alert("Failed to upload file.");
+            });
+    } else {
+        pushCommentToDatabase(commentData);
+    }
+}
+
+function pushCommentToDatabase(commentData) {
+    const commentsRef = ref(db, "comments");
+    push(commentsRef, commentData)
+        .then(() => {
+            alert("Comment submitted successfully!");
+            document.getElementById("add-comment").reset();
+        })
+        .catch((error) => {
+            console.error("Error saving comment to database:", error);
+            alert("Failed to submit comment. Please try again.");
+        });
 }
