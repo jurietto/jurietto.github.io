@@ -84,14 +84,15 @@ footer {
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
-/* Customize bullet points with the default image */
-ul {
-    list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
+/* Customize first indent bullet points */
+ul > li {
+    list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif'); /* First-level bullet points */
 }
 
-/* Change the second bullet point to the new image */
-ul li:nth-child(2) {
-    list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif');
+/* Keep normal bullet points for deeper levels */
+ul ul li {
+    list-style-type: disc;
+    list-style-image: none;
 }
 
 ul li {
