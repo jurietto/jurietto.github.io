@@ -52,8 +52,8 @@
             commentDiv.innerHTML = `
                 <strong>${comment.username}</strong>
                 <small>(${new Date(comment.timestamp).toLocaleString()})</small>: 
-                <p>${comment.message}</p>
-                ${comment.mediaUrl ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: auto;" />` : ""}
+                <p>${comment.message}</p><br>
+                ${comment.mediaUrl ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: 100%;" />` : ""}
                 <button onclick="toggleReplyForm('${key}')">Reply</button>
                 <div class="replies" id="replies-${key}"></div>
                 <hr />
