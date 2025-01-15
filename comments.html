@@ -7,6 +7,8 @@
     <!-- Import Firebase libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Import Replit Object Storage Library -->
+    <script src="https://replit.com/site/packages/replit-object-storage/replit-object-storage.js"></script>
     <script>
       // Firebase configuration
       const firebaseConfig = {
@@ -25,7 +27,12 @@
       const database = firebase.database();
 
       // Global DOM Elements
-      let form, feedback, commentsSection, loadMoreButton;
+      let form,
+        feedback,
+        commentsSection,
+        loadMoreButton,
+        fileInput,
+        mediaUrlInput;
 
       const commentsPerPage = 5; // Number of comments per page
       let lastLoadedKey = null;
@@ -67,14 +74,19 @@
         commentDiv.style.marginLeft = parentId ? "20px" : "0";
 
         commentDiv.innerHTML = `
-          <strong>${comment.username}</strong>: <em>${comment.subject}</em>
-          <p>${comment.message}</p>
+          <strong class="comment-username">${comment.username}</strong>: <em>${comment.subject}</em>
+          <p class="comment-message">${comment.message}</p>
           ${
             comment.mediaUrl
-              ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: auto;" />`
+              ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: auto;" class="comment-media" />`
               : ""
           }
-          <button onclick="replyToComment('${key}', '${parentId || ""}')">Reply</button>
+          ${
+            comment.mediaFile
+              ? `<a href="${comment.mediaFile}" download class="comment-media-download">Download Media</a>`
+              : ""
+          }
+          <button onclick="replyToComment('${key}', '${parentId || ""}')" class="comment-reply-button">Reply</button>
           <div class="replies" id="replies-${key}"></div>
           <hr />
         `;
@@ -98,7 +110,8 @@
         const username = document.getElementById("username").value.trim();
         const subject = document.getElementById("subject").value.trim();
         const message = document.getElementById("message").value.trim();
-        const mediaUrl = document.getElementById("media-url").value.trim();
+        const mediaUrl = mediaUrlInput.value.trim();
+        const file = fileInput.files[0]; // Get selected file
 
         // Validation for required fields
         if (!username || !subject || !message) {
@@ -118,6 +131,14 @@
             timestamp: firebase.database.ServerValue.TIMESTAMP,
           };
 
+          // Upload file to Object Storage if selected
+          if (file) {
+            const client = new replit.object_storage.Client();
+            const filename = file.name;
+            const mediaFile = await client.upload(filename, file);
+            newComment.mediaFile = mediaFile; // Store the Object Storage URL
+          }
+
           if (parentId) {
             await database.ref(`comments/${parentId}/replies/${commentKey}`).set(newComment);
           } else {
@@ -127,6 +148,8 @@
           feedback.textContent = "Comment submitted successfully!";
           feedback.style.color = "green";
           form.reset();
+          fileInput.value = ""; // Clear file input
+          mediaUrlInput.value = ""; // Clear media URL input
 
           if (!parentId) {
             commentsSection.innerHTML = ""; // Reload all comments
@@ -151,11 +174,65 @@
           <input type="text" placeholder="Username" id="reply-username" required /><br />
           <input type="text" placeholder="Subject" id="reply-subject" required /><br />
           <textarea placeholder="Message" id="reply-message" required></textarea><br />
+          <input type="file" id="reply-file-input" accept="image/*,video/*,audio/*" />
+          <input type="url" id="reply-media-url" placeholder="https://example.com/image.jpg" />
           <button type="submit">Submit Reply</button>
         `;
 
-        replyForm.onsubmit = (e) =>
-          submitComment(e, parentId || commentId);
+        replyForm.onsubmit = async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("reply-username").value.trim();
+          const subject = document.getElementById("reply-subject").value.trim();
+          const message = document.getElementById("reply-message").value.trim();
+          const mediaUrl = document.getElementById("reply-media-url").value.trim();
+          const file = document.getElementById("reply-file-input").files[0];
+
+          // Validation for required fields
+          if (!username || !subject || !message) {
+            feedback.textContent = "All fields except media are required.";
+            feedback.style.color = "red";
+            setTimeout(() => (feedback.textContent = ""), 3000);
+            return;
+          }
+
+          try {
+            const commentKey = Date.now().toString();
+            const newComment = {
+              username,
+              subject,
+              message,
+              mediaUrl,
+              timestamp: firebase.database.ServerValue.TIMESTAMP,
+            };
+
+            if (file) {
+              const client = new replit.object_storage.Client();
+              const filename = file.name;
+              const mediaFile = await client.upload(filename, file);
+              newComment.mediaFile = mediaFile;
+            }
+
+            await database.ref(`comments/${parentId || commentId}/replies/${commentKey}`).set(newComment);
+
+            feedback.textContent = "Reply submitted successfully!";
+            feedback.style.color = "green";
+            replyForm.reset();
+
+            // Reload the replies section
+            const repliesDiv = document.getElementById(`replies-${parentId || commentId}`);
+            repliesDiv.innerHTML = "";
+            loadComments(parentId || commentId);
+          } catch (error) {
+            console.error("Error during reply submission:", error);
+            feedback.textContent =
+              "Failed to submit your reply. Please check your network and try again.";
+            feedback.style.color = "red";
+          } finally {
+            setTimeout(() => {
+              feedback.textContent = "";
+            }, 3000);
+          }
+        };
 
         const repliesDiv = document.getElementById(`replies-${commentId}`);
         repliesDiv.appendChild(replyForm);
@@ -167,6 +244,8 @@
         feedback = document.getElementById("feedback");
         commentsSection = document.getElementById("comments-section");
         loadMoreButton = document.getElementById("load-more");
+        fileInput = document.getElementById("file-input");
+        mediaUrlInput = document.getElementById("media-url");
 
         form.addEventListener("submit", (e) => submitComment(e));
         loadMoreButton.addEventListener("click", () => loadComments());
@@ -174,6 +253,52 @@
         loadComments();
       });
     </script>
+    <style>
+      body {
+        font-family: "MS UI Gothic", sans-serif; /* Set font to MS UI Gothic */
+      }
+
+      .comment-username {
+        font-weight: bold;
+      }
+
+      .comment-message {
+        margin-bottom: 10px;
+      }
+
+      .comment-media {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+      }
+
+      .comment-media-download {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .comment-reply-button {
+        display: block;
+        margin-top: 10px;
+      }
+
+      .replies {
+        margin-left: 20px;
+      }
+
+      #comments-section {
+        margin-top: 20px;
+      }
+
+      #comment-form {
+        margin-bottom: 20px;
+      }
+
+      #load-more {
+        display: block;
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
     <h1>Say something...</h1>
@@ -189,6 +314,8 @@
       <textarea id="message" rows="5" cols="30" required></textarea><br /><br />
       <label for="media-url">Media URL (optional):</label><br />
       <input type="url" id="media-url" placeholder="https://example.com/image.jpg" /><br /><br />
+      <label for="file-input">Upload File (optional):</label><br />
+      <input type="file" id="file-input" accept="image/*,video/*,audio/*" /><br /><br />
       <button type="submit">Submit Comment</button>
     </form>
 
