@@ -52,7 +52,7 @@ h2 {
 h3, h4, h5, h6 {
     font-family: 'Verdana', sans-serif;
     font-weight: bold;
-    color: white;
+    color: white; /* Changed to white */
     text-shadow: 
         2px 2px 4px #000000, 
         3px 3px 6px #000000, 
@@ -84,9 +84,14 @@ footer {
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
-/* Customize bullet points with an image */
+/* Customize bullet points with the default image */
 ul {
     list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
+}
+
+/* Change the second bullet point to the new image */
+ul li:nth-child(2) {
+    list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif');
 }
 
 ul li {
@@ -139,4 +144,3 @@ ul li {
         text-shadow: none; /* Ensures no text shadow for these elements on mobile */
     }
 }
-
