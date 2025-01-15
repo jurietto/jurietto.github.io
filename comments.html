@@ -49,7 +49,7 @@
                     <p>${comment.message}</p>
                     ${
                       comment.imageUrl
-                        ? `<img src="${comment.imageUrl}" alt="Comment Image" height="100" />`
+                        ? `<img src="${comment.imageUrl}" alt="Comment Image" style="max-width: 100%; height: auto;" />`
                         : ""
                     }
                     <hr />
@@ -68,6 +68,14 @@
         const subject = document.getElementById("subject").value.trim();
         const message = document.getElementById("message").value.trim();
         const imageFile = document.getElementById("image").files[0];
+
+        // Validation for empty fields
+        if (!username || !subject || !message) {
+          feedback.textContent = "All fields except image are required.";
+          feedback.style.color = "red";
+          setTimeout(() => (feedback.textContent = ""), 3000);
+          return;
+        }
 
         let imageUrl = "";
         try {
@@ -91,12 +99,14 @@
 
           // Provide success feedback
           feedback.textContent = "Comment submitted successfully!";
+          feedback.style.color = "green";
           form.reset();
           loadComments(); // Refresh comments
         } catch (error) {
           console.error("Error during comment submission:", error);
           feedback.textContent =
             "Failed to submit your comment. Please check your network and try again.";
+          feedback.style.color = "red";
         } finally {
           // Clear feedback after a delay
           setTimeout(() => {
@@ -136,7 +146,7 @@
       <button type="submit">Submit Comment</button>
     </form>
 
-    <p id="feedback" style="color: green;"></p>
+    <p id="feedback"></p>
     <div id="comments-section"></div>
   </body>
 </html>
