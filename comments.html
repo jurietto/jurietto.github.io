@@ -25,69 +25,42 @@
         const database = firebase.database();
 
         // Global DOM Elements
-        let form, feedback, commentsSection, loadMoreButton, filterInput;
-        const commentsPerPage = 5; // Number of comments to load per page
-        let lastLoadedKey = null; // Key to track the last loaded comment
-        let currentComments = []; // Array to hold current comments for filtering
-        let loading = false; // Flag to prevent multiple loads
+        let form, feedback, commentsSection;
+        let currentComments = []; // Array to hold current comments
 
-        // Function to Load Comments with Pagination
-        const loadComments = (parentId = null) => {
-            loading = true; // Set loading to true to prevent duplicate loads
-
-            let commentsRef = database.ref("comments");
-            if (parentId) {
-                commentsRef = commentsRef.child(parentId).child("replies");
-            }
-            if (lastLoadedKey) {
-                commentsRef = commentsRef.orderByKey().endBefore(lastLoadedKey);
-            }
-            commentsRef = commentsRef.limitToLast(commentsPerPage);
-
+        // Function to Load Comments
+        const loadComments = () => {
+            const commentsRef = database.ref("comments");
             commentsRef.once("value", (snapshot) => {
                 const comments = snapshot.val();
+                commentsSection.innerHTML = ""; // Clear current comments display
 
                 if (comments) {
-                    lastLoadedKey = Object.keys(comments)[0]; // Store the last key for pagination
-
-                    Object.entries(comments)
-                        .reverse()
-                        .forEach(([key, comment]) => {
-                            currentComments.push({ key, comment }); // Keep for filtering
-                            displayComment(key, comment, parentId);
-                        });
-                } else {
-                    loadMoreButton.style.display = "none"; // Hide 'Load More' if no more comments
+                    // Load and display all comments
+                    Object.entries(comments).forEach(([key, comment]) => {
+                        currentComments.push({ key, comment }); // Keep for potential future use
+                        displayComment(key, comment);
+                    });
                 }
-
-                loading = false; // Reset loading flag after loading
             });
         };
 
         // Function to Display a Single Comment
-        const displayComment = (key, comment, parentId = null) => {
+        const displayComment = (key, comment) => {
             const commentDiv = document.createElement("div");
             commentDiv.setAttribute("data-id", key);
             commentDiv.innerHTML = `
-                <strong>${comment.username}</strong> <small>(${new Date(comment.timestamp).toLocaleString()})</small>: <em>${comment.subject}</em>
+                <strong>${comment.username}</strong> 
+                <small>(${new Date(comment.timestamp).toLocaleString()})</small>: 
+                <em>${comment.subject}</em>
                 <p>${comment.message}</p>
                 ${comment.mediaUrl ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: auto;" />` : ""}
-                <button onclick="replyToComment('${key}', '${parentId || ""}')">Reply</button>
+                <button onclick="replyToComment('${key}')">Reply</button>
                 <div class="replies" id="replies-${key}"></div>
                 <hr />
             `;
 
-            const container = parentId
-                ? document.getElementById(`replies-${parentId}`)
-                : commentsSection;
-            container.prepend(commentDiv); // Add the comment to the top of the list
-            
-            // Load replies under this comment
-            if (comment.replies) {
-                Object.entries(comment.replies).forEach(([replyKey, reply]) => {
-                    displayComment(replyKey, reply, key);
-                });
-            }
+            commentsSection.prepend(commentDiv); // Add the comment to the top of the list
         };
 
         // Function to Submit Comment or Reply
@@ -128,11 +101,10 @@
                 feedback.style.color = "green";
                 form.reset(); // Reset form fields
 
-                if (!parentId) {
-                    commentsSection.innerHTML = ""; // Clear comments section
-                    currentComments = []; // Reset comments for filtering
-                    loadComments(); // Reload comments after submission
-                }
+                // Reload comments after submission
+                commentsSection.innerHTML = ""; // Clear comments section
+                currentComments = []; // Reset comments
+                loadComments(); // Reload comments
             } catch (error) {
                 console.error("Error during comment submission:", error);
                 feedback.textContent =
@@ -146,7 +118,7 @@
         };
 
         // Function to Reply to Comment
-        const replyToComment = (commentId, parentId) => {
+        const replyToComment = (parentId) => {
             const replyForm = document.createElement("form");
             replyForm.innerHTML = `
                 <input type="text" placeholder="Username" id="reply-username" required /><br />
@@ -156,22 +128,10 @@
             `;
 
             // Handle reply form submission
-            replyForm.onsubmit = (e) =>
-                submitComment(e, parentId || commentId); // Submit as reply or top-level comment
+            replyForm.onsubmit = (e) => submitComment(e, parentId); // Submit as reply
 
-            const repliesDiv = document.getElementById(`replies-${commentId}`);
+            const repliesDiv = document.getElementById(`replies-${parentId}`);
             repliesDiv.appendChild(replyForm); // Append reply form to the comment's replies section
-        };
-
-        // Function to Filter Comments by Subject
-        const filterComments = () => {
-            const filterText = filterInput.value.toLowerCase(); // Get user input for filtering
-            commentsSection.innerHTML = ""; // Clear current comments display
-
-            // Filter comments based on the subject
-            currentComments
-                .filter(({ comment }) => comment.subject.toLowerCase().includes(filterText))
-                .forEach(({ key, comment }) => displayComment(key, comment)); // Display filtered results
         };
 
         // Initialize DOM and Attach Event Listeners
@@ -180,17 +140,9 @@
             form = document.getElementById("comment-form");
             feedback = document.getElementById("feedback");
             commentsSection = document.getElementById("comments-section");
-            loadMoreButton = document.getElementById("load-more");
-            filterInput = document.getElementById("filter-input");
 
-            // Add event listeners to the form and buttons
+            // Add event listeners to the form
             form.addEventListener("submit", (e) => submitComment(e)); // Attach submit event
-            loadMoreButton.addEventListener("click", () => {
-                if (!loading) { // Check if not already loading
-                    loadComments();
-                }
-            });
-            filterInput.addEventListener("input", filterComments); // Filter comments on input
 
             loadComments(); // Initial load of comments
         });
@@ -199,9 +151,6 @@
 <body>
     <h1>Welcome to the Comments Section!</h1>
     <h2>Share Your Thoughts and Feedback!</h2>
-
-    <!-- Filter Comments by Subject Input -->
-    <input type="text" id="filter-input" placeholder="Filter comments by subject..." />
 
     <!-- Comment submission form for new comments -->
     <form id="comment-form">
@@ -221,108 +170,5 @@
 
     <!-- Section to display comments -->
     <div id="comments-section"></div>
-    
-    <!-- Load More button for pagination -->
-    <button id="load-more" style="display: block;">Load More Comments</button>
-
-    <script>
-        // Filler comments with anonymous usernames and Lorem Ipsum text
-        const fillerComments = [
-            {
-                key: "comment1",
-                comment: {
-                    username: "anon1",
-                    subject: "Lorem Ipsum",
-                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel orci et lorem tincidunt iaculis.",
-                    mediaUrl: "",
-                    timestamp: new Date().getTime() - 86400000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment2",
-                comment: {
-                    username: "anon2",
-                    subject: "Lorem Ipsum",
-                    message: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
-                    mediaUrl: "https://example.com/image1.jpg",
-                    timestamp: new Date().getTime() - 172800000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment3",
-                comment: {
-                    username: "anon3",
-                    subject: "Lorem Ipsum",
-                    message: "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
-                    mediaUrl: "",
-                    timestamp: new Date().getTime() - 259200000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment4",
-                comment: {
-                    username: "anon4",
-                    subject: "Lorem Ipsum",
-                    message: "Dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    mediaUrl: "",
-                    timestamp: new Date().getTime() - 345600000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment5",
-                comment: {
-                    username: "anon5",
-                    subject: "Lorem Ipsum",
-                    message: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    mediaUrl: "",
-                    timestamp: new Date().getTime() - 432000000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment6",
-                comment: {
-                    username: "anon6",
-                    subject: "Lorem Ipsum",
-                    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-                    mediaUrl: "https://example.com/image2.jpg",
-                    timestamp: new Date().getTime() - 518400000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment7",
-                comment: {
-                    username: "anon7",
-                    subject: "Lorem Ipsum",
-                    message: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                    mediaUrl: "",
-                    timestamp: new Date().getTime() - 604800000,
-                    replies: {}
-                }
-            },
-            {
-                key: "comment8",
-                comment: {
-                    username: "anon8",
-                    subject: "Lorem Ipsum",
-                    message: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                    mediaUrl: "",
-                    timestamp: new Date().getTime() - 691200000,
-                    replies: {}
-                }
-            },
-        ];
-
-        // Simulate pre-loading comments for testing; in a real app, these would come from the database
-        fillerComments.forEach(({ key, comment }) => {
-            currentComments.push({ key, comment });
-            displayComment(key, comment); // Display each filler comment in the comments section
-        });
-    </script>
 </body>
 </html>
