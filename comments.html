@@ -7,7 +7,6 @@
     <!-- Import Firebase libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script>
       // Firebase configuration
       const firebaseConfig = {
@@ -24,7 +23,6 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const database = firebase.database();
-      const storage = firebase.storage();
 
       // Global DOM Elements
       let form, feedback, commentsSection;
@@ -48,8 +46,8 @@
                     <strong>${comment.username}</strong>: <em>${comment.subject}</em>
                     <p>${comment.message}</p>
                     ${
-                      comment.imageUrl
-                        ? `<img src="${comment.imageUrl}" alt="Comment Image" style="max-width: 100%; height: auto;" />`
+                      comment.mediaUrl
+                        ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: auto;" />`
                         : ""
                     }
                     <hr />
@@ -61,39 +59,30 @@
         });
       };
 
-      // Submit Comment with Error Handling
+      // Submit Comment with Media URL
       const submitComment = async (e) => {
         e.preventDefault();
         const username = document.getElementById("username").value.trim();
         const subject = document.getElementById("subject").value.trim();
         const message = document.getElementById("message").value.trim();
-        const imageFile = document.getElementById("image").files[0];
+        const mediaUrl = document.getElementById("media-url").value.trim();
 
         // Validation for empty fields
         if (!username || !subject || !message) {
-          feedback.textContent = "All fields except image are required.";
+          feedback.textContent = "All fields except media URL are required.";
           feedback.style.color = "red";
           setTimeout(() => (feedback.textContent = ""), 3000);
           return;
         }
 
-        let imageUrl = "";
         try {
-          // Validate file name and upload image
-          if (imageFile) {
-            const sanitizedFileName = imageFile.name.replace(/\s+/g, "_").toLowerCase();
-            const imgRef = storage.ref(`images/${Date.now()}_${sanitizedFileName}`);
-            const uploadTask = await imgRef.put(imageFile);
-            imageUrl = await uploadTask.ref.getDownloadURL();
-          }
-
           // Save comment to Firebase Database
           const commentKey = Date.now().toString();
           await database.ref(`comments/${commentKey}`).set({
             username,
             subject,
             message,
-            imageUrl,
+            mediaUrl,
             timestamp: firebase.database.ServerValue.TIMESTAMP,
           });
 
@@ -141,8 +130,8 @@
       <input type="text" id="subject" required /><br /><br />
       <label for="message">Message:</label><br />
       <textarea id="message" rows="5" cols="30" required></textarea><br /><br />
-      <label for="image">Upload Image:</label><br />
-      <input type="file" id="image" accept="image/*" /><br /><br />
+      <label for="media-url">Media URL (optional):</label><br />
+      <input type="url" id="media-url" placeholder="https://example.com/image.jpg" /><br /><br />
       <button type="submit">Submit Comment</button>
     </form>
 
