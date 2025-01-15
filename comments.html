@@ -1,173 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Comments Section</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: 'MS Gothic', sans-serif;
-        }
-
-        section {
-            margin: 20px auto;
-            max-width: 800px;
-            padding: 20px;
-        }
-
-        section h2 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: #f5f5f5;
-            text-align: center;
-        }
-
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #f5f5f5;
-        }
-
-        form input, form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        form input[type="submit"] {
-            width: 100%;
-            background-color: #8e44ad;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        form input[type="submit"]:hover {
-            background-color: #732d91;
-        }
-
-        #comments-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #comments-list li {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #444;
-            border-radius: 5px;
-            background-color: #3e3e50;
-            color: #f5f5f5;
-        }
-
-        footer {
-            margin-top: 30px;
-            padding: 10px 0;
-            background-color: #282a36;
-            color: #f8f8f2;
-            font-size: 0.9em;
-        }
-
-        #home-button {
-            margin: 20px auto;
-            display: block;
-        }
-
-        #audio-player {
-            margin: 20px auto;
-            padding: 10px;
-            background-color: #3e3e50;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        #audio-control {
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Comments Section</h1>
-        <p>Share your thoughts and upload media!</p>
-        <img 
-            class="decorative" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
-            alt="Decorative Image" 
-            width="200" 
-            height="150" 
-        />
-    </header>
-
-    <!-- Audio Player -->
-    <section id="audio-player">
-        <audio id="audio-control" controls>
-            <source src="https://file.garden/ZhTgSjrp5nAroRKq/scream-with-echo-46585.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-    </section>
-
-    <!-- Comment Form Section -->
-    <section id="respond">
-        <h2>Leave a Comment</h2>
-        <form id="add-comment">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Your Name" required>
-            
-            <label for="comment">Comment:</label>
-            <textarea id="comment" name="comment" placeholder="Write your comment here..." required></textarea>
-            
-            <label for="media">Upload Media (optional):</label>
-            <input type="file" id="media" name="media" accept="image/*,video/*">
-            
-            <input type="submit" value="Post Comment">
-        </form>
-    </section>
-
-    <!-- Comments List Section -->
-    <section id="comments">
-        <h2>Comments</h2>
-        <ol id="comments-list"></ol>
-    </section>
-
-    <!-- Home Button -->
-    <a href="index.html">
-        <img 
-            id="home-button" 
-            src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-            alt="Home Button" 
-            title="Go Home"
-        />
-    </a>
-
-    <footer>
-        <h6>&copy; 2024 - ???</h6>
-    </footer>
-
+    <!-- Import Firebase libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script>
-        const form = document.getElementById('add-comment');
-        const commentsList = document.getElementById('comments-list');
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+        authDomain: "comments-ff6c9.firebaseapp.com",
+        databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+        projectId: "comments-ff6c9",
+        storageBucket: "comments-ff6c9.appspot.com",
+        messagingSenderId: "778548096311",
+        appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+        measurementId: "G-T8QFHWJDB5",
+      };
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the form from submitting in the traditional way
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+      const storage = firebase.storage();
 
-            const name = document.getElementById('name').value;
-            const comment = document.getElementById('comment').value;
+      // DOM Elements (moved inside DOMContentLoaded)
+      let form;
+      let feedback;
+      let commentsSection;
 
-            // Create a new comment item
-            const newComment = document.createElement('li');
-            newComment.textContent = `${name}: ${comment}`;
-            
-            // Append the new comment to the list
-            commentsList.appendChild(newComment);
+      // Load Comments
+      const loadComments = () => {
+        const commentsRef = database.ref("comments");
+        commentsRef.on("value", (snapshot) => {
+          const comments = snapshot.val();
 
-            // Clear the input fields
-            form.reset();
+          // Check if there are comments before clearing the section
+          if (comments) {
+            commentsSection.innerHTML = ""; // Clear previous comments
+            Object.keys(comments)
+              .sort((a, b) => b - a) // Sort by timestamp (newest first)
+              .forEach((key) => {
+                const comment = comments[key];
+                commentsSection.innerHTML += `
+                              <div>
+                                  <strong>${comment.username}</strong>: <em>${comment.subject}</em>
+                                  <p>${comment.message}</p>
+                                  ${
+                                    comment.imageUrl
+                                      ? `<img src="${comment.imageUrl}" alt="Comment Image" height="100"/>`
+                                      : ""
+                                  }
+                                  <hr>
+                              </div>`;
+              });
+          } else {
+            commentsSection.innerHTML = "<p>No comments found.</p>";
+          }
         });
+      };
+
+      // Submit Comment
+      const submitComment = async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const message = document.getElementById("message").value.trim();
+        const imageFile = document.getElementById("image").files[0];
+
+        let imageUrl = "";
+
+        // Upload image to Firebase Storage
+        if (imageFile) {
+          const imgRef = storage.ref(`images/${Date.now()}_${imageFile.name}`);
+          await imgRef.put(imageFile);
+          imageUrl = await imgRef.getDownloadURL();
+        }
+
+        // Store comment in Firebase Database
+        const commentKey = Date.now().toString();
+        await database.ref(`comments/${commentKey}`).set({
+          username,
+          subject,
+          message,
+          imageUrl,
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        feedback.textContent = "Comment submitted successfully!";
+        form.reset();
+        loadComments(); // Refresh comments
+        setTimeout(() => {
+          feedback.textContent = ""; // Clear feedback message
+        }, 3000);
+      };
+
+      // DOMContentLoaded Event Listener
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get DOM Elements
+        form = document.getElementById("comment-form");
+        feedback = document.getElementById("feedback");
+        commentsSection = document.getElementById("comments-section");
+
+        // Attach Event Listener to the Form
+        form.addEventListener("submit", submitComment);
+
+        // Initial Load
+        loadComments();
+      });
     </script>
-</body>
+  </head>
+  <body>
+    <h1>Say something...</h1>
+    <h2>... from the heart. Please be kind!</h2>
+
+    <!-- Form for submitting comments -->
+    <form id="comment-form">
+      <label for="username">Username:</label><br />
+      <input type="text" id="username" required /><br /><br />
+      <label for="subject">Subject:</label><br />
+      <input type="text" id="subject" required /><br /><br />
+      <label for="message">Message:</label><br />
+      <textarea id="message" rows="5" cols="30" required></textarea><br /><br />
+      <label for="image">Upload Image:</label><br />
+      <input type="file" id="image" /><br /><br />
+      <button type="submit">Submit Comment</button>
+    </form>
+
+    <p id="feedback"></p>
+    <div id="comments-section"></div>
+  </body>
 </html>
