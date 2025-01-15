@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <script>
-      // Your web app's Firebase configuration
+      // Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
         authDomain: "comments-ff6c9.firebaseapp.com",
@@ -26,35 +26,34 @@
       const database = firebase.database();
       const storage = firebase.storage();
 
-      // DOM Elements (moved inside DOMContentLoaded)
-      let form;
-      let feedback;
-      let commentsSection;
+      // Global DOM Elements
+      let form, feedback, commentsSection;
 
-      // Load Comments
+      // Load Comments from Firebase Database
       const loadComments = () => {
         const commentsRef = database.ref("comments");
         commentsRef.on("value", (snapshot) => {
           const comments = snapshot.val();
 
-          // Check if there are comments before clearing the section
+          // Clear comments section
+          commentsSection.innerHTML = "";
           if (comments) {
-            commentsSection.innerHTML = ""; // Clear previous comments
+            // Display each comment
             Object.keys(comments)
-              .sort((a, b) => b - a) // Sort by timestamp (newest first)
+              .sort((a, b) => b - a) // Sort comments by timestamp
               .forEach((key) => {
                 const comment = comments[key];
                 commentsSection.innerHTML += `
-                              <div>
-                                  <strong>${comment.username}</strong>: <em>${comment.subject}</em>
-                                  <p>${comment.message}</p>
-                                  ${
-                                    comment.imageUrl
-                                      ? `<img src="${comment.imageUrl}" alt="Comment Image" height="100"/>`
-                                      : ""
-                                  }
-                                  <hr>
-                              </div>`;
+                  <div>
+                    <strong>${comment.username}</strong>: <em>${comment.subject}</em>
+                    <p>${comment.message}</p>
+                    ${
+                      comment.imageUrl
+                        ? `<img src="${comment.imageUrl}" alt="Comment Image" height="100" />`
+                        : ""
+                    }
+                    <hr />
+                  </div>`;
               });
           } else {
             commentsSection.innerHTML = "<p>No comments found.</p>";
@@ -62,7 +61,7 @@
         });
       };
 
-      // Submit Comment
+      // Submit Comment with Error Handling
       const submitComment = async (e) => {
         e.preventDefault();
         const username = document.getElementById("username").value.trim();
@@ -71,43 +70,51 @@
         const imageFile = document.getElementById("image").files[0];
 
         let imageUrl = "";
+        try {
+          // Validate file name and upload image
+          if (imageFile) {
+            const sanitizedFileName = imageFile.name.replace(/\s+/g, "_").toLowerCase();
+            const imgRef = storage.ref(`images/${Date.now()}_${sanitizedFileName}`);
+            const uploadTask = await imgRef.put(imageFile);
+            imageUrl = await uploadTask.ref.getDownloadURL();
+          }
 
-        // Upload image to Firebase Storage
-        if (imageFile) {
-          const imgRef = storage.ref(`images/${Date.now()}_${imageFile.name}`);
-          await imgRef.put(imageFile);
-          imageUrl = await imgRef.getDownloadURL();
+          // Save comment to Firebase Database
+          const commentKey = Date.now().toString();
+          await database.ref(`comments/${commentKey}`).set({
+            username,
+            subject,
+            message,
+            imageUrl,
+            timestamp: firebase.database.ServerValue.TIMESTAMP,
+          });
+
+          // Provide success feedback
+          feedback.textContent = "Comment submitted successfully!";
+          form.reset();
+          loadComments(); // Refresh comments
+        } catch (error) {
+          console.error("Error during comment submission:", error);
+          feedback.textContent =
+            "Failed to submit your comment. Please check your network and try again.";
+        } finally {
+          // Clear feedback after a delay
+          setTimeout(() => {
+            feedback.textContent = "";
+          }, 3000);
         }
-
-        // Store comment in Firebase Database
-        const commentKey = Date.now().toString();
-        await database.ref(`comments/${commentKey}`).set({
-          username,
-          subject,
-          message,
-          imageUrl,
-          timestamp: firebase.database.ServerValue.TIMESTAMP,
-        });
-
-        feedback.textContent = "Comment submitted successfully!";
-        form.reset();
-        loadComments(); // Refresh comments
-        setTimeout(() => {
-          feedback.textContent = ""; // Clear feedback message
-        }, 3000);
       };
 
-      // DOMContentLoaded Event Listener
+      // Initialize DOM and Attach Event Listeners
       document.addEventListener("DOMContentLoaded", () => {
-        // Get DOM Elements
         form = document.getElementById("comment-form");
         feedback = document.getElementById("feedback");
         commentsSection = document.getElementById("comments-section");
 
-        // Attach Event Listener to the Form
+        // Attach event listener for form submission
         form.addEventListener("submit", submitComment);
 
-        // Initial Load
+        // Load existing comments
         loadComments();
       });
     </script>
@@ -116,7 +123,7 @@
     <h1>Say something...</h1>
     <h2>... from the heart. Please be kind!</h2>
 
-    <!-- Form for submitting comments -->
+    <!-- Comment submission form -->
     <form id="comment-form">
       <label for="username">Username:</label><br />
       <input type="text" id="username" required /><br /><br />
@@ -125,11 +132,11 @@
       <label for="message">Message:</label><br />
       <textarea id="message" rows="5" cols="30" required></textarea><br /><br />
       <label for="image">Upload Image:</label><br />
-      <input type="file" id="image" /><br /><br />
+      <input type="file" id="image" accept="image/*" /><br /><br />
       <button type="submit">Submit Comment</button>
     </form>
 
-    <p id="feedback"></p>
+    <p id="feedback" style="color: green;"></p>
     <div id="comments-section"></div>
   </body>
 </html>
