@@ -52,7 +52,6 @@
             commentDiv.innerHTML = `
                 <strong>${comment.username}</strong>
                 <small>(${new Date(comment.timestamp).toLocaleString()})</small>: 
-                <em>${comment.subject}</em>
                 <p>${comment.message}</p>
                 ${comment.mediaUrl ? `<img src="${comment.mediaUrl}" alt="Media" style="max-width: 100%; height: auto;" />` : ""}
                 <button onclick="toggleReplyForm('${key}')">Reply</button>
@@ -79,8 +78,7 @@
                 replyForm.style.display = 'block'; // Show form by default
                 replyForm.innerHTML = `
                     <input type="text" placeholder="Username" id="reply-username" required /><br />
-                    <input type="text" placeholder="Subject" id="reply-subject" required /><br />
-                    <textarea placeholder="Message" id="reply-message" required></textarea><br />
+                    <textarea placeholder="Message" id="reply-message" required style="resize: none; width: 100%; height: 60px;"></textarea><br />
                     <button type="submit">Submit Reply</button>
                 `;
 
@@ -97,12 +95,10 @@
         const submitComment = async (e, parentId = null) => {
             e.preventDefault(); // Prevent form submission
             const username = e.target.querySelector("#reply-username") ? e.target.querySelector("#reply-username").value.trim() : document.getElementById("username").value.trim();
-            const subject = e.target.querySelector("#reply-subject") ? e.target.querySelector("#reply-subject").value.trim() : document.getElementById("subject").value.trim();
             const message = e.target.querySelector("#reply-message") ? e.target.querySelector("#reply-message").value.trim() : document.getElementById("message").value.trim();
-            const mediaUrl = document.getElementById("media-url") ? document.getElementById("media-url").value.trim() : '';
 
             // Validation for required fields
-            if (!username || !subject || !message) {
+            if (!username || !message) {
                 feedback.textContent = "All fields are required.";
                 feedback.style.color = "red";
                 setTimeout(() => (feedback.textContent = ""), 3000);
@@ -113,9 +109,8 @@
                 const commentKey = Date.now().toString(); // Generate a unique key based on timestamp
                 const newComment = {
                     username,
-                    subject,
                     message,
-                    mediaUrl,
+                    mediaUrl: document.getElementById("media-url") ? document.getElementById("media-url").value.trim() : '', // Capture media URL from the main comment form
                     timestamp: firebase.database.ServerValue.TIMESTAMP // Set server timestamp
                 };
 
