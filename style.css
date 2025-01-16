@@ -68,7 +68,7 @@ ul {
 
 ul li {
     display: flex;
-    align-items: center;
+    align-items: middle;
     gap: 10px;
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
     line-height: 1.6;
