@@ -84,18 +84,16 @@ footer {
         1px 1px 2px #000000; /* Desktop text shadow */
 }
 
-/* Customize first indent bullet points */
-ul > li {
-    list-style-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif'); /* First-level bullet points */
-}
-
-/* Keep normal bullet points for deeper levels */
-ul ul li {
-    list-style-type: disc;
-    list-style-image: none;
+/* Customize bullet points with inline image */
+ul {
+    list-style: none; /* Remove default bullet styling */
+    padding: 0;
 }
 
 ul li {
+    display: flex;
+    align-items: center; /* Center bullet vertically */
+    gap: 10px; /* Space between bullet image and text */
     text-shadow: 
         2px 2px 4px #000000, 
         2px 2px 4px #000000,
@@ -103,6 +101,16 @@ ul li {
         3px 3px 6px #000000, 
         1px 1px 2px #000000,
         1px 1px 2px #000000; /* Desktop text shadow */
+}
+
+ul li::before {
+    content: '';
+    display: inline-block;
+    width: 32px; /* Size of the bullet image */
+    height: 32px;
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif');
+    background-size: cover; /* Ensure the image fills the space */
+    background-repeat: no-repeat;
 }
 
 /* Audio Control Style */
