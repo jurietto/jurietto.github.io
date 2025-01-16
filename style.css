@@ -35,9 +35,9 @@ h2 {
     font-family: 'Lindley', sans-serif;
     font-size: 2.5em;
     margin-bottom: 10px;
-    background: linear-gradient(to right, magenta, red, orange, yellow, green, blue, indigo, violet);
+    background: linear-gradient(to right, #FF0099, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: #FF0099;
+    color: transparent;
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
 }
 
