@@ -4,28 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff</title>
-    <link rel="stylesheet" href="style.css">
     <style>
-        @keyframes neon-rainbow {
+        :root {
+            --gradient: linear-gradient(
+                to right,
+                #ff9aff,
+                #ff9a9e,
+                #fad0c4,
+                #fbc2eb,
+                #a18cd1,
+                #f9c2ff
+            );
+        }
+
+        @keyframes pastel-rainbow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
         h2 {
-            font-family: 'Lindley', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 2.5em;
             margin-bottom: 10px;
-            background: linear-gradient(to right, #FF00FF, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #8000FF);
-            background-size: 200% 200%;
+            background: var(--gradient);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: neon-rainbow 3s infinite;
-            text-shadow: none; /* Removed shadow to improve gradient visibility */
+            animation: pastel-rainbow 5s infinite ease-in-out;
+            text-shadow: none;
         }
 
+        /* Random animation delays for variation */
+        h2:nth-child(1) { animation-delay: 0s; }
+        h2:nth-child(2) { animation-delay: 1s; }
+        h2:nth-child(3) { animation-delay: 2s; }
+        h2:nth-child(4) { animation-delay: 3s; }
+        h2:nth-child(5) { animation-delay: 4s; }
+        h2:nth-child(6) { animation-delay: 5s; }
+        h2:nth-child(7) { animation-delay: 6s; }
+        h2:nth-child(8) { animation-delay: 7s; }
+
         a:hover {
-            color: white; /* Makes the link white on hover */
+            color: white;
             text-decoration: underline;
         }
     </style>
