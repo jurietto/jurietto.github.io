@@ -38,7 +38,7 @@ body::before {
     height: 100%;
     background-color: black;
     opacity: 0.2; /* Base opacity of the flicker */
-    animation: flicker 1.5s infinite;
+    animation: flicker 0.8s infinite ease-in-out; /* Faster and smoother flickering */
     z-index: 1; /* Ensures it sits above the background but below text */
     pointer-events: none; /* Allows interaction with underlying elements */
 }
@@ -48,7 +48,7 @@ body::before {
         opacity: 0.2;
     }
     50% {
-        opacity: 0.5;
+        opacity: 0.4;
     }
     75% {
         opacity: 0.1;
