@@ -66,7 +66,7 @@ ul {
     margin: 0;
 }
 
-ul li h2 {
+ul li {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -94,7 +94,7 @@ ul li::before {
 }
 
 .home-button {
-    position: fixed; 
+    position: fixed;
     bottom: 20px;
     left: 20px;
     width: 150px;
