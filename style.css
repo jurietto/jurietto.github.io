@@ -46,7 +46,6 @@ h3, h4, h5, h6 {
 a {
     color: white;
     text-decoration: underline;
-    text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
 }
 
 a:hover {
