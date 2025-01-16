@@ -77,9 +77,9 @@ ul li {
 ul li::before {
     content: '';
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/44.gif');
+    width: 20px;
+    height: 20px;
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
     background-size: cover;
 }
 
