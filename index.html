@@ -6,22 +6,27 @@
     <title>Juri's Stuff</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        @keyframes neon-flash {
-            0% { color: #FF00FF; } /* Magenta */
-            20% { color: #FF0000; } /* Red */
-            40% { color: #FFFF00; } /* Yellow */
-            60% { color: #00FF00; } /* Green */
-            80% { color: #00FFFF; } /* Cyan */
-            100% { color: #0000FF; } /* Blue */
+        @keyframes neon-rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         h2 {
-            animation: neon-flash 2s infinite; /* Flashes through neon colors */
+            font-size: 2.5em;
+            font-family: 'Lindley', sans-serif;
+            background: linear-gradient(to right, #FF00FF, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #8000FF);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neon-rainbow 3s infinite;
             text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+            margin-bottom: 10px;
         }
 
         a:hover {
             color: white; /* Makes the link white on hover */
+            text-decoration: underline;
         }
     </style>
 </head>
