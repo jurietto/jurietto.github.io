@@ -106,8 +106,8 @@ ul li {
 ul li::before {
     content: '';
     display: inline-block;
-    width: 32px; /* Size of the bullet image */
-    height: 32px;
+    width: 15px; /* Size of the bullet image */
+    height: 15px;
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif');
     background-size: cover; /* Ensure the image fills the space */
     background-repeat: no-repeat;
