@@ -4,7 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        @keyframes neon-flash {
+            0% { color: #FF00FF; } /* Magenta */
+            20% { color: #FF0000; } /* Red */
+            40% { color: #FFFF00; } /* Yellow */
+            60% { color: #00FF00; } /* Green */
+            80% { color: #00FFFF; } /* Cyan */
+            100% { color: #0000FF; } /* Blue */
+        }
+
+
+        h1 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: neon-flash 2s infinite; /* Flashes through neon colors */
+            text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+        }
+
+        a {
+            color: white;
+            text-decoration: underline;
+            text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+        }
+
+        a:hover {
+            color: white; /* Makes the link white on hover */
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            display: flex;
+            align-items: baseline; /* Aligns bullet with text baseline */
+            gap: 10px;
+            text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+            line-height: 1.2;
+        }
+
+        ul li::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/32.gif');
+            background-size: cover;
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            z-index: 10000;
+        }
+    </style>
 </head>
 <body>
     <!-- Decorative Image -->
