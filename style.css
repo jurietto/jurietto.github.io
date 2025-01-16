@@ -60,7 +60,7 @@ h3, h4, h5, h6 {
 }
 
 a {
-    color: #FF0099;
+    color: white;
     text-decoration: underline;
     text-shadow: 
         2px 2px 4px #000000, 
@@ -70,7 +70,7 @@ a {
 
 /* Link Hover Effect */
 a:hover {
-    color: white; /* Change link color to white on hover */
+    color: lime; /* Change link color to white on hover */
 }
 
 footer {
