@@ -52,7 +52,7 @@ a:hover {
     color: transparent;
     background: linear-gradient(to right, #FF00FF, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #8000FF);
     -webkit-background-clip: text;
-    text-decoration: underline;
+    
 }
 
 footer {
