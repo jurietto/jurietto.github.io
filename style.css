@@ -18,7 +18,6 @@ body {
     padding: 20px;
     text-align: justify;
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
-    cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/62820.png'), auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -44,12 +43,12 @@ h3, h4, h5, h6 {
 }
 
 a {
-    color: white;
+    color: white; /* Default link color */
     text-decoration: underline;
 }
 
 a:hover {
-    color: cyan; 
+    color: white; /* Reverted link hover color to white */
 }
 
 footer {
