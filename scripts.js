@@ -2,7 +2,7 @@
 
 // Function to initialize audio player
 function initAudioPlayer() {
-    let audio = new Audio('path/to/your/audio/file.mp3');
+    let audio = new Audio('https://file.garden/ZhTgSjrp5nAroRKq/Velvet%20Acid%20Christ%20-%20Lust%20For%20Blood%20(2006)%20(Full%20Album)%20%5B%20ezmp3.cc%20%5D.mp3');
     let audioState = JSON.parse(localStorage.getItem('audioState'));
 
     if (audioState) {
