@@ -1,131 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <!-- Metadata and Page Configuration -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Information -->
+    <meta charset="UTF-8"> <!-- Sets the character encoding to UTF-8 for better compatibility -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsive design for all devices -->
+
+    <!-- Page Title -->
     <title>Juri's Stuff</title>
 
-    <!-- Link to External Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <!-- External CSS and JavaScript -->
+    <script src="scripts.js" defer></script> <!-- Links an external JavaScript file and ensures it runs after the HTML loads -->
+    <link rel="stylesheet" href="style.css"> <!-- Links an external CSS file for styling -->
 
-    <!-- Link to External JavaScript -->
-    <script src="scripts.js" defer></script>
+    <!-- Inline Styles (Specific to this Page) -->
+    <style>
+        /* Hover effect for links */
+        a:hover {
+            color: #FF0099; /* Bright pink hover color for links */
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Decorative Image -->
+    <!-- Decorative Image Section -->
     <img 
         style="transform: rotate(-5deg); border-width: 1px; border-style: solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif" 
         alt="Decorative Image" 
         width="200" 
         height="150" 
     />
+    <!-- Image is rotated slightly and has a border for a playful aesthetic -->
 
     <!-- Main Heading -->
-    <h1>About Me</h1>
+    <h1>Juri's Stuff</h1>
+    <p>Note: Under Construction :)</p> <!-- Small disclaimer or playful note -->
 
-    <!-- About Content -->
-    <p style="text-align: justify;">
-        I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. 
-        I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!
-    </p>
-    <p style="text-align: justify;">
-        I'm sometimes on social media like Twitter or Bluesky, but I deactivate from time to time. 
-        I'm most active lurking on Discord&mdash;add me @sotokomori. Kindly reach out, but I may or may not 
-        be accepting friend requests.
-    </p>
-    <p style="text-align: justify;">
-        <strong>Recommendation:</strong> Use a desktop to access this site.
-    </p>
-
-    <!-- Coding Projects Section -->
-    <h2>Coding Projects</h2>
-    <hr />
-    <p style="text-align: justify;">
-        I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re 
-        not very ambitious. I’d like to get better at web design eventually, but it’s not my main focus. One day, 
-        I’d love to teach myself how to create a visual novel or a game.
-    </p>
-
-    <!-- DJing and Music Section -->
-    <h2>DJing &amp; Music</h2>
-    <hr />
-    <p style="text-align: justify;">
-        I've been producing music since 2017 and DJing since 2021. My music mainly falls into electronic dance 
-        genres&mdash;people often describe it as happy hardcore or hard dance. You can check out my music on 
-        SoundCloud and decide for yourself!
-    </p>
-    <p style="text-align: justify;">
-        I listen to all kinds of music, but my favorite genres are EBM, electro-industrial, trance, hardstyle, and 
-        happy hardcore. There’s something to appreciate about all music.
-    </p>
-    <p style="text-align: justify;">
-        My favorite artist is Velvet Acid Christ. Other favorites include Goreshit, Lords of Acid, Eisenfunk, 
-        DJ Billybool, God Module, and Ladytron.
-    </p>
-
-    <!-- Artists Worth Supporting Section -->
-    <h3>Artists worth supporting...</h3>
+    <!-- Navigation Menu -->
     <ul>
-        <li><a href="https://velvetacidchrist.com/" target="_blank">Velvet Acid Christ</a></li>
-        <li><a href="https://open.spotify.com/artist/5BYTM7ej0bnE7XNgtlMhGR" target="_blank">Dippers</a></li>
-        <li><a href="https://open.spotify.com/artist/2hqIZImqlWKsasi0CMdtAX" target="_blank">DJ Nusagi</a></li>
+        <!-- Each link leads to a different section or external site -->
+        <li><h2><a href="about.html">About</a></h2></li>
+        <li><h2><a href="https://x.com/sotokomorii">Twitter</a></h2></li>
+        <li><h2><a href="https://bsky.app/profile/sotokomori.bsky.social">Bluesky</a></h2></li>
+        <li><h2><a href="https://www.youtube.com/@juriscafe">YouTube</a></h2></li>
+        <li><h2><a href="https://soundcloud.com/jetsetjuri">My Music</a></h2></li>
+        <li><h2><a href="gallery.html">Gallery</a></h2></li>
+        <li><h2><a href="vns.html">Visual Novels</a></h2></li>
+        <li><h2><a href="updates.html">Updates</a></h2></li>
     </ul>
 
-    <!-- Baking Section -->
-    <h2>Baking</h2>
-    <hr />
-    <p style="text-align: justify;">
-        Baking rocks! I used to be an overnight baker, and during that time, I read a lot about it and maintained 
-        an entire kitchen. In my free time, I like reading about pastries from around the world.
-    </p>
-
-    <!-- Visual Novels Section -->
-    <h2>Visual Novels</h2>
-    <hr />
-    <p style="text-align: justify;">
-        My favorite visual novel is <em>Monochrome</em>, and my first was <em>Cafe Little Wish</em>. I also collect 
-        old PS2 and PSX NTSC-J titles. I archive playthroughs and am learning how to translate them.
-    </p>
-
-    <!-- Personality Section -->
-    <h2>Personality</h2>
-    <hr />
-    <ul>
-        <li>Asocial</li>
-        <li>Introverted</li>
-        <li>Silly</li>
-        <li>Charming</li>
-        <li>Depressive</li>
-        <li>Psychotic</li>
-    </ul>
-
-    <!-- Home Button -->
-    <p>
-        <a href="index.html">
-            <img 
-                id="home-button" 
-                class="home-button" 
-                title="Go Home" 
-                src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" 
-                alt="Home Button" 
-            />
-        </a>
-    </p>
-
-    <!-- Audio Control -->
+    <!-- Audio Control Section -->
     <img 
         id="audio-control" 
-        class="audio-control" 
+        class="audio-control" <!-- Ensures the styles from CSS are applied -->
         src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" 
-        title="Play Music" 
+        alt="Audio Control" <!-- Descriptive alternative text for accessibility -->
+        title="Play Music" <!-- Tooltip text when hovering over the image -->
+        onclick="toggleAudio()" <!-- Calls JavaScript function toggleAudio() when clicked -->
+        style="cursor: pointer;" <!-- Changes cursor to pointer when hovering for usability -->
     />
 
-    <!-- Footer -->
+    <!-- Footer Section -->
     <footer>
-        <h6>2024 - ???</h6>
+        <h6>2024 - ???</h6> <!-- Placeholder for footer content -->
     </footer>
+
+    <!-- JavaScript Section -->
+    <script>
+        // Function to toggle audio play/pause
+        function toggleAudio() {
+            var audio = document.getElementById('background-music'); // Assumes audio element has id 'background-music'
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('audio-control').title = 'Pause Music'; // Updates tooltip text
+                document.getElementById('audio-control').src = 'https://file.garden/ZhTgSjrp5nAroRKq/496-pause.gif'; // Updates image source for pause icon
+            } else {
+                audio.pause();
+                document.getElementById('audio-control').title = 'Play Music'; // Updates tooltip text
+                document.getElementById('audio-control').src = 'https://file.garden/ZhTgSjrp5nAroRKq/496.gif'; // Resets image source to play icon
+            }
+        }
+    </script>
 </body>
+
 </html>
