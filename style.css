@@ -85,8 +85,8 @@ ul li::before {
 
 .audio-control {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 10px;
+    right: 10px;
     width: 150px;
     height: 150px;
     cursor: pointer;
@@ -95,15 +95,15 @@ ul li::before {
 
 .home-button {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 10px;
+    left: 10px;
     width: 150px;
     height: 150px;
     cursor: pointer;
     z-index: 10000;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
     body {
         padding: 20px;
         background-image: none;
