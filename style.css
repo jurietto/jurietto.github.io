@@ -18,7 +18,7 @@ body {
     padding: 20px;
     text-align: justify;
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
-    cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/62820.png');
+    cursor: url('https://file.garden/ZhTgSjrp5nAroRKq/62820.png'), auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -50,7 +50,6 @@ a {
 
 a:hover {
     color: cyan; 
-    
 }
 
 footer {
@@ -68,10 +67,10 @@ ul {
 
 ul li {
     display: flex;
-    align-items: baseline; /* Aligns bullet with text baseline */
+    align-items: baseline;
     gap: 10px;
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
-    line-height: 1.2; /* Adjusted for better alignment */
+    line-height: 1.2;
 }
 
 ul li::before {
@@ -118,10 +117,4 @@ ul li::before {
         text-shadow: none;
         color: white;
     }
-}
-footer {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 0.9em;
-    color: white;
 }
