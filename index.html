@@ -50,38 +50,17 @@
         <li><h2><a href="updates.html">Updates</a></h2></li>
     </ul>
 
-    <!-- Audio Control Section -->
-    <img 
-        id="audio-control" 
-        class="audio-control" <!-- Ensures the styles from CSS are applied -->
-        src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
-        alt="Audio Control" <!-- Descriptive alternative text for accessibility -->
-        title="Play Music" <!-- Tooltip text when hovering over the image -->
-        onclick="toggleAudio()" <!-- Calls JavaScript function toggleAudio() when clicked -->
-        style="cursor: pointer;" <!-- Changes cursor to pointer when hovering for usability -->
-    />
-
+  <!-- Audio Control -->
+<img 
+    id="audio-control" 
+    src="https://file.garden/ZhTgSjrp5nAroRKq/496.gif" 
+    alt="Audio Control" 
+    title="Play Music"
+/>
     <!-- Footer Section -->
     <footer>
         <h6>2024 - ???</h6> <!-- Placeholder for footer content -->
     </footer>
-
-    <!-- JavaScript Section -->
-    <script>
-        // Function to toggle audio play/pause
-        function toggleAudio() {
-            var audio = document.getElementById('background-music'); // Assumes audio element has id 'background-music'
-            if (audio.paused) {
-                audio.play();
-                document.getElementById('audio-control').title = 'Pause Music'; // Updates tooltip text
-                document.getElementById('audio-control').src = 'https://file.garden/ZhTgSjrp5nAroRKq/496-pause.gif'; // Updates image source for pause icon
-            } else {
-                audio.pause();
-                document.getElementById('audio-control').title = 'Play Music'; // Updates tooltip text
-                document.getElementById('audio-control').src = 'https://file.garden/ZhTgSjrp5nAroRKq/496.gif'; // Resets image source to play icon
-            }
-        }
-    </script>
 </body>
 
 </html>
