@@ -9,7 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        
+        body {
+            font-family: Arial, sans-serif;
         }
         .date {
             font-weight: bold;
@@ -52,8 +53,8 @@
     <div class="search-sort">
         <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
         <select id="sort" onchange="loadUpdates()">
-            <option value="asc">Sort by Oldest</option>
             <option value="desc">Sort by Newest</option>
+            <option value="asc">Sort by Oldest</option>
             <option value="shuffle">Shuffle</option>
         </select>
     </div>
@@ -88,7 +89,7 @@
         // Function to fetch and display life updates
         function loadUpdates() {
             const searchQuery = document.getElementById('search').value.toLowerCase();
-            const sortOrder = document.getElementById('sort').value;
+            const sortOrder = document.getElementById('sort').value || 'desc';
 
             // Fetch data from Firebase Realtime Database
             database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
