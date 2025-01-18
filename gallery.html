@@ -81,7 +81,7 @@
         // Function to fetch images from Firebase Storage
         async function loadImages() {
             // This is the path inside Firebase Storage where your images are stored
-            const storageRef = storage.ref().child('comments-ff6c9.firebasestorage.app/comments'); // UPDATE this path to your actual image folder
+            const storageRef = storage.ref().child('gallery'); // UPDATE this path to your actual image folder
 
             try {
                 // Get a list of all items in the specified storage path
