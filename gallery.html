@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
 
-    <!-- Firebase App and Storage libraries -->
+    <!-- Firebase App, Database, and Storage libraries -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
     <link rel="stylesheet" href="style.css">
     
@@ -50,6 +51,9 @@
     
     <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
     
+    <input type="file" id="imageUpload" accept="image/*">
+    <input type="text" id="captionInput" placeholder="Enter a caption">
+    <button id="uploadButton">Upload</button>
 
     <!-- Other content -->
     <a href="index.html">
@@ -74,34 +78,106 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const storage = firebase.storage(app);  // Initialize the Storage service
+        const database = firebase.database(app); // Initialize the Database service
 
         // Reference to the gallery container in the HTML
         const galleryElement = document.getElementById('gallery');
 
-        // Function to fetch images from Firebase Storage
-        async function loadImages() {
-            // This is the path inside Firebase Storage where your images are stored
-            const storageRef = storage.ref().child('gallery'); // UPDATE this path to your actual image folder
+        // References to the upload elements
+        const imageUpload = document.getElementById('imageUpload');
+        const captionInput = document.getElementById('captionInput');
+        const uploadButton = document.getElementById('uploadButton');
 
-            try {
-                // Get a list of all items in the specified storage path
-                const listRef = await storageRef.listAll();
-                
-                // Loop through each item (image) in the storage path
-                listRef.items.forEach((item) => {
-                    // Get the download URL for each image
-                    item.getDownloadURL().then((url) => {
-                        const img = document.createElement('img'); // Create an img element
-                        img.src = url; // Set the img element's src to the download URL
-                        galleryElement.appendChild(img); // Add the image to the gallery container
-                    });
-                });
-            } catch (error) {
-                console.error("Error fetching images: ", error); // Log any errors
+        // Function to upload images and store captions in Firebase
+        async function uploadImage() {
+            // Get the file from the input
+            const file = imageUpload.files[0];
+            const caption = captionInput.value;
+
+            // If there is a file and a caption, proceed with upload
+            if (file && caption) {
+                try {
+                    // Create a reference to the location in Firebase Storage where the image will be saved
+                    const storageRef = storage.ref().child(`gallery/${file.name}`); 
+
+                    // Upload the image to Firebase Storage
+                    const uploadTask = storageRef.put(file);
+
+                    // Monitor upload progress
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            // Get upload progress data
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done');
+                        },
+                        (error) => {
+                            // Handle unsuccessful uploads
+                            console.error('Error during upload:', error);
+                        },
+                        () => {
+                            // After successful upload, get the download URL
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                console.log('File available at', downloadURL);
+
+                                // Store the download URL and caption in Firebase Realtime Database
+                                database.ref('gallery').push({
+                                    imageUrl: downloadURL,
+                                    caption: caption
+                                });
+
+                                // Clear the input fields after upload
+                                imageUpload.value = '';
+                                captionInput.value = '';
+                            });
+                        }
+                    );
+                } catch (error) {
+                    console.error("Error uploading image:", error);
+                }
+            } else {
+                // Display an alert if the user does not select an image or enter a caption
+                alert("Please select an image and enter a caption");
             }
         }
 
-        // Call loadImages to fetch and display the images when the script runs
+        // Function to load and display images from Firebase
+        async function loadImages() {
+            try {
+                // Reference to the gallery data in Firebase Realtime Database
+                const galleryRef = database.ref('gallery');
+
+                // Fetch the data from the database
+                galleryRef.on('value', (snapshot) => {
+                    // Clear the gallery container
+                    galleryElement.innerHTML = '';
+
+                    // Loop through each image and caption in the data
+                    snapshot.forEach((childSnapshot) => {
+                        const data = childSnapshot.val();
+
+                        // Create an image element
+                        const img = document.createElement('img');
+                        img.src = data.imageUrl;
+                        img.alt = data.caption;
+
+                        // Create a caption element
+                        const caption = document.createElement('p');
+                        caption.textContent = data.caption;
+
+                        // Append the image and caption to the gallery container
+                        galleryElement.appendChild(img);
+                        galleryElement.appendChild(caption);
+                    });
+                });
+            } catch (error) {
+                console.error("Error fetching images:", error);
+            }
+        }
+
+        // Event listener for the upload button
+        uploadButton.addEventListener('click', uploadImage);
+
+        // Call the loadImages function to fetch and display images on page load
         loadImages();
     </script>
 </body>
