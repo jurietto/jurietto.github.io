@@ -9,7 +9,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-      
+        body {
+            font-family: Arial, sans-serif;
+        }
         .date {
             font-weight: bold;
         }
@@ -83,22 +85,6 @@
         let currentPage = 1;
         const itemsPerPage = 5;
         let totalPages = 1;
-
-        // Function to add a life update with a specified timestamp
-        function addLifeUpdate(id, title, content, timestamp) {
-            database.ref('lifeupdates/' + id).set({
-                title: title,
-                content: content,
-                timestamp: timestamp
-            });
-        }
-
-        // Example: Adding a new life update with a specified timestamp
-        const specifiedTimestamp = "2025-01-18T21:03:01Z"; // ISO 8601 format
-        addLifeUpdate('update1', 'Forgot My Meds Again (^～^;)ゞ', 
-            'I just started my day and it\'s like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I\'ll have for dinner probably nothing special or something simple. Right now I\'m just figuring out my next update – I\'ll include a message saying something about how I\'m not really going to be updating this like all the time. It\'s just kinda there when I want to use it. (⌒ω⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)', 
-            specifiedTimestamp
-        );
 
         // Function to fetch and display life updates
         function loadUpdates() {
