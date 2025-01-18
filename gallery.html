@@ -49,15 +49,12 @@
     <h1>Gallery</h1>
     
     <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
-
-    <p>I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!</p>
-
-    <h2>Coding Projects</h2>
-    <hr />
-    <p>I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re not very ambitious. One day, I’d love to teach myself how to create a visual novel or a game.</p>
+    
 
     <!-- Other content -->
-    
+    <a href="index.html">
+        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
+    </a>
     <footer>
         <h6>2024 - ???</h6>
     </footer>
@@ -84,7 +81,7 @@
         // Function to fetch images from Firebase Storage
         async function loadImages() {
             // This is the path inside Firebase Storage where your images are stored
-            const storageRef = storage.ref().child('gs://comments-ff6c9.firebasestorage.app/comments'); // UPDATE this path to your actual image folder
+            const storageRef = storage.ref().child('comments-ff6c9.firebasestorage.app/comments'); // UPDATE this path to your actual image folder
 
             try {
                 // Get a list of all items in the specified storage path
