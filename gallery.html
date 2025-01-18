@@ -6,42 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
 
-    <!-- Inline CSS -->
+    <!-- Firebase App, Database, and Storage libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        /* Ensure h2 and h3 elements are centered on mobile devices */
-        @media (max-width: 768px) {
-            h2, h3 {
-                text-align: center;
-            }
+        /* Gallery container style */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on small screens */
+            gap: 20px; /* Space between images */
+            margin: 20px 0; /* Margin for top and bottom */
+            justify-content: center;
         }
 
-        /* Other existing styles */
         .gallery-item {
-            margin-bottom: 20px;
+            width: 100%; /* Full width for each gallery item */
+            display: flex; /* Flex container for image and text */
+            flex-direction: column;
+            align-items: center; /* Center the content */
+            margin-bottom: 20px; /* Space between items */
+            user-select: none; /* Prevent text selection */
+        }
+
+        .gallery-item img {
+            width: 100%; /* Make photos 100% in width */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #FF0099; /* Border for images */
+            border-radius: 5px; /* Rounded corners */
+            pointer-events: none; /* Disable interactions */
         }
 
         .caption {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .timestamp {
-            font-size: 12px;
-            color: #777;
+            color: white; /* Caption text color */
+            text-align: center; /* Center caption text */
+            font-size: 14px; /* Caption text size */
+            margin-top: 5px; /* Margin above caption */
         }
 
         .divider {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            display: block;
-            width: 100%;
+            width: 20px; /* Set width for divider image */
+            height: 20px; /* Set height for divider image */
+            border: none; /* No border for divider image */
+            margin: 10px 0;
+            display: block; /* Ensure it's displayed as a block element */
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #FF0099; /* Set background color to #FF0099 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            user-select: none; /* Prevent text selection */
+        }
+
+        .pagination button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
         }
     </style>
 
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-auth.js"></script>
 </head>
 
 <body>
@@ -72,9 +107,6 @@
         <span id="page-numbers"></span>
         <button id="next" onclick="changePage(1)">Next &#62;</button>
     </div>
-
-    <!-- Include the external JavaScript file -->
-    <script src="gallery.js"></script>
 
     <a href="index.html">
         <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
