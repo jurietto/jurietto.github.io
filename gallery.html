@@ -169,6 +169,12 @@
                 captionElement.textContent = item.text;
                 galleryItem.appendChild(captionElement);
 
+                const timestampElement = document.createElement('h3');
+                timestampElement.className = 'timestamp';
+                const date = new Date(item.timestamp);
+                timestampElement.textContent = `Uploaded on: ${date.toLocaleString()}`;
+                galleryItem.appendChild(timestampElement);
+
                 galleryElement.appendChild(galleryItem);
 
                 // Add divider after each image except the last one
