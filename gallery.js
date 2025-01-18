@@ -132,3 +132,10 @@ function shuffle(array) {
 
 // Call loadImages to fetch and display the images when the script runs
 window.addEventListener('load', loadImages);
+
+// Add event listener to the sort dropdown to reload images on shuffle
+document.getElementById('sort').addEventListener('change', function() {
+    if (this.value === 'shuffle') {
+        loadImages();
+    }
+});
