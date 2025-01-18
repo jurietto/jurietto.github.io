@@ -1,16 +1,19 @@
+Thank you for providing the data structure for your Firebase Realtime Database. Given your structure, I will ensure that the code correctly retrieves the image URL and caption based on the information you provided.
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
 
-    <!-- Firebase App, Database and Storage libraries -->
+    <!-- Firebase App, Database, and Storage libraries -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
     <link rel="stylesheet" href="style.css">
-    
+
     <style>
         /* Apply full screen background image */
         body {
@@ -34,7 +37,15 @@
             border: 1px solid #ddd; /* Optional: border for images */
             border-radius: 5px; /* Optional: rounded corners */
         }
+
+        .caption {
+            color: white; /* Caption text color */
+            text-align: center; /* Center caption text */
+            font-size: 14px; /* Caption text size */
+            margin-top: 5px; /* Margin above caption */
+        }
     </style>
+
 </head>
 
 <body>
@@ -49,21 +60,8 @@
     
     <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
     
-    <h2>Upload Image and Caption</h2>
-    <input type="file" id="imageUpload" accept="image/*">
-    <textarea id="captionInput" placeholder="Enter your caption"></textarea>
-    <button id="uploadButton">Upload</button>
-
-    <!-- Other content -->
-    <a href="index.html">
-        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
-    </a>
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
-
     <script>
-        // Firebase configuration - replace values with your actual Firebase project details
+        // Your Firebase configuration object
         const firebaseConfig = {
             apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s", // Your Firebase API key
             authDomain: "comments-ff6c9.firebaseapp.com", // Your Firebase Auth domain
@@ -71,20 +69,15 @@
             storageBucket: "comments-ff6c9.appspot.com", // Your Firebase Storage bucket
             messagingSenderId: "778548096311", // Your Firebase Messaging Sender ID
             appId: "1:778548096311:web:968b95a4fc97f13f21feb2", // Your Firebase App ID
-            databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com/", // Your Firebase Realtime Database URL
             measurementId: "G-T8QFHWJDB5" // Your Firebase Measurement ID (if applicable)
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();  // Initialize the Database service
-        const storage = firebase.storage();  // Initialize the Storage service
 
         // Reference to the gallery container in the HTML
         const galleryElement = document.getElementById('gallery');
-        const imageUpload = document.getElementById('imageUpload');
-        const captionInput = document.getElementById('captionInput');
-        const uploadButton = document.getElementById('uploadButton');
 
         // Function to fetch images and captions from Firebase Realtime Database
         function loadImages() {
@@ -92,8 +85,8 @@
                 galleryElement.innerHTML = ''; // Clear previous images
 
                 snapshot.forEach((childSnapshot) => {
-                    const imageUrl = childSnapshot.val().imageUrl;
-                    const caption = childSnapshot.val().caption;
+                    const imageUrl = childSnapshot.val().url; // Adjusted according to your structure
+                    const caption = childSnapshot.val().text; // Adjusted according to your structure
 
                     const img = document.createElement('img');
                     img.src = imageUrl;
@@ -103,53 +96,15 @@
                     // Add a caption element
                     const captionElement = document.createElement('p');
                     captionElement.textContent = caption;
+                    captionElement.className = 'caption'; // Apply caption styling
                     galleryElement.appendChild(captionElement);
                 });
             });
         }
 
-        // Function to upload image to Firebase Storage and store data in Realtime Database
-        function uploadImage() {
-            const file = imageUpload.files[0];
-            const caption = captionInput.value;
-
-            // Create a reference to the storage location
-            const storageRef = storage.ref().child('gallery/' + file.name);
-
-            // Upload the image
-            const uploadTask = storageRef.put(file);
-
-            // Listen for upload progress
-            uploadTask.on('state_changed', 
-                (snapshot) => {
-                    // Progress function
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log('Upload is ' + progress + '% done');
-                }, 
-                (error) => {
-                    // Error function
-                    console.error("Error uploading image: ", error);
-                }, 
-                () => {
-                    // Complete function
-                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                        console.log('File available at', downloadURL);
-
-                        // Store data in Realtime Database
-                        database.ref('gallery/' + file.name).set({
-                            imageUrl: downloadURL,
-                            caption: caption
-                        });
-                    });
-                }
-            );
-        }
-
-        // Event listener for upload button
-        uploadButton.addEventListener('click', uploadImage);
-
         // Call loadImages to fetch and display the images when the script runs
         loadImages();
     </script>
 </body>
+
 </html>
