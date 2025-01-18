@@ -20,6 +20,13 @@
             background-repeat: no-repeat; /* Do not repeat image */
         }
 
+        /* Remove background image on mobile devices */
+        @media (max-width: 768px) {
+            body {
+                background-image: none;
+            }
+        }
+
         /* Gallery container style */
         .gallery {
             display: flex;
@@ -37,9 +44,11 @@
         }
 
         .gallery img {
-            width: 200px; /* Set a fixed width for gallery images */
+            width: 100%; /* Make photos 100% in width */
             height: auto; /* Maintain aspect ratio */
-            border: 1px solid #ddd; /* Optional: border for images */
+            border: 5px solid; /* Border for images */
+            border-image-slice: 1;
+            border-image-source: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet); /* Rainbow gradient border */
             border-radius: 5px; /* Optional: rounded corners */
         }
 
@@ -160,6 +169,10 @@
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
 
+                const titleElement = document.createElement('h2');
+                titleElement.textContent = item.key;
+                galleryItem.appendChild(titleElement);
+
                 const img = document.createElement('img');
                 img.src = item.url;
                 img.alt = item.text;
@@ -172,7 +185,8 @@
 
                 const metaElement = document.createElement('p');
                 metaElement.className = 'meta';
-                metaElement.textContent = `Uploaded on ${new Date(item.timestamp).toLocaleDateString()}`;
+                const date = new Date(item.timestamp);
+                metaElement.textContent = `Uploaded on ${date.toLocaleDateString()}`;
                 galleryItem.appendChild(metaElement);
 
                 galleryElement.appendChild(galleryItem);
