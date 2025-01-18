@@ -1,123 +1,89 @@
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-    authDomain: "comments-ff6c9.firebaseapp.com",
-    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
-    projectId: "comments-ff6c9",
-    storageBucket: "comments-ff6c9.appspot.com",
-    messagingSenderId: "778548096311",
-    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-    measurementId: "G-T8QFHWJDB5"
-};
+<!DOCTYPE html>
+<html lang="en">
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juri's Stuff - About Me</title>
 
-let currentPage = 1;
-const itemsPerPage = 5;
-let totalPages = 1;
-
-// Function to fetch images and captions from Firebase Realtime Database
-function loadImages() {
-    const searchQuery = document.getElementById('search').value.toLowerCase();
-    const sortOrder = document.getElementById('sort').value;
-
-    database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
-        let items = [];
-        snapshot.forEach((childSnapshot) => {
-            const imageData = childSnapshot.val();
-            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
-                items.push({ key: childSnapshot.key, ...imageData });
+    <!-- Inline CSS -->
+    <style>
+        /* Ensure h2 and h3 elements are centered on mobile devices */
+        @media (max-width: 768px) {
+            h2, h3 {
+                text-align: center;
             }
-        });
-
-        // Sort items
-        if (sortOrder === 'desc') {
-            items.reverse();
         }
 
-        // Pagination logic
-        totalPages = Math.ceil(items.length / itemsPerPage);
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const paginatedItems = items.slice(start, end);
-
-        // Display items
-        displayItems(paginatedItems);
-
-        // Display pagination
-        displayPagination();
-    }, (error) => {
-        console.error("Error fetching data: ", error);
-    });
-}
-
-function displayItems(items) {
-    const galleryElement = document.getElementById('gallery');
-    galleryElement.innerHTML = ''; // Clear previous images
-
-    items.forEach((item, index) => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = item.key;
-        galleryItem.appendChild(titleElement);
-
-        const timestampElement = document.createElement('h3');
-        timestampElement.className = 'timestamp';
-        const date = new Date(item.timestamp);
-        timestampElement.textContent = `Uploaded on: ${date.toLocaleString()}`;
-        galleryItem.appendChild(timestampElement);
-
-        const img = document.createElement('img');
-        img.src = item.url;
-        img.alt = item.text; // provide a meaningful description
-        galleryItem.appendChild(img);
-
-        const captionElement = document.createElement('p');
-        captionElement.className = 'caption';
-        captionElement.textContent = item.text;
-        galleryItem.appendChild(captionElement);
-
-        galleryElement.appendChild(galleryItem);
-
-        // Add divider after each image except the last one
-        if (index < items.length - 1) {
-            const divider = document.createElement('img');
-            divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif';
-            divider.className = 'divider';
-            divider.alt = "Divider"; // add alt text for accessibility
-            galleryElement.appendChild(divider);
+        /* Other existing styles */
+        .gallery-item {
+            margin-bottom: 20px;
         }
-    });
-}
 
-function displayPagination() {
-    const paginationElement = document.getElementById('pagination');
-    const pageNumbersElement = document.getElementById('page-numbers');
-    pageNumbersElement.innerHTML = ''; // Clear previous page numbers
+        .caption {
+            font-size: 14px;
+            color: #555;
+        }
 
-    document.getElementById('prev').disabled = currentPage === 1;
-    document.getElementById('next').disabled = currentPage === totalPages;
+        .timestamp {
+            font-size: 12px;
+            color: #777;
+        }
 
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.className = i === currentPage ? 'active' : '';
-        button.onclick = () => {
-            currentPage = i;
-            loadImages();
-        };
-        pageNumbersElement.appendChild(button);
-    }
-}
+        .divider {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: block;
+            width: 100%;
+        }
+    </style>
 
-function changePage(direction) {
-    currentPage += direction;
-    loadImages();
-}
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.0/firebase-auth.js"></script>
+</head>
 
-// Call loadImages to fetch and display the images when the script runs
-window.addEventListener('load', loadImages);
+<body>
+    <img 
+        style="transform: rotate(-5deg); border: 1px solid;" 
+        src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
+        alt="Decorative Image" 
+        width="200" 
+        height="150" 
+    />
+
+    <h1>Gallery</h1>
+
+    <!-- Search and Sort UI -->
+    <div>
+        <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
+        <select id="sort" onchange="loadImages()">
+            <option value="asc">Sort by Oldest</option>
+            <option value="desc">Sort by Newest</option>
+        </select>
+    </div>
+    
+    <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+        <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+        <span id="page-numbers"></span>
+        <button id="next" onclick="changePage(1)">Next &#62;</button>
+    </div>
+
+    <!-- Include the external JavaScript file -->
+    <script src="gallery.js"></script>
+
+    <a href="index.html">
+        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
+    </a>
+
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
+    
+</body>
+
+</html>
