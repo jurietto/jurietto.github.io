@@ -58,14 +58,14 @@
 </head>
 
 <body>
-     <img 
+    <img 
         style="transform: rotate(-5deg); border: 1px solid;" 
         src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
         alt="Decorative Image" 
         width="200" 
         height="150" 
     />
-    <h1>My Life Updates</h1>
+    <h1>Life Updates</h1>
     <div class="search-sort">
         <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
         <select id="sort" onchange="loadUpdates()">
@@ -123,11 +123,13 @@
             const searchQuery = document.getElementById('search').value.toLowerCase();
             const sortOrder = document.getElementById('sort').value;
 
+            // Fetch data from Firebase Realtime Database
             database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
                 let updates = [];
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
+                    // Filter updates based on search query
                     if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
@@ -156,6 +158,7 @@
             });
         }
 
+        // Function to display life updates
         function displayUpdates(updates) {
             const updatesContainer = document.getElementById('updates');
             updatesContainer.innerHTML = ''; // Clear previous updates
@@ -182,14 +185,18 @@
             });
         }
 
+        // Function to display pagination controls
         function displayPagination() {
             const paginationElement = document.getElementById('pagination');
             const pageNumbersElement = document.getElementById('page-numbers');
             pageNumbersElement.innerHTML = ''; // Clear previous page numbers
 
+            // Disable prev button if on the first page
             document.getElementById('prev').disabled = currentPage === 1;
+            // Disable next button if on the last page
             document.getElementById('next').disabled = currentPage === totalPages;
 
+            // Create pagination buttons
             for (let i = 1; i <= totalPages; i++) {
                 const button = document.createElement('button');
                 button.textContent = i;
@@ -202,6 +209,7 @@
             }
         }
 
+        // Function to change the current page and reload updates
         function changePage(direction) {
             currentPage += direction;
             loadUpdates();
