@@ -4,31 +4,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff - About Me</title>
-    <script src="scripts.js" defer></script>
-    <link rel="stylesheet" href="style.css">
+    <title>Life Updates</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .update {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .update h2 {
+            margin: 0 0 10px;
+        }
+        .update p {
+            margin: 5px 0;
+        }
+        .update b {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .timestamp {
+            font-size: 0.9em;
+            color: #888;
+        }
+        .search-sort {
+            margin-bottom: 20px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background-color: #FF0099;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            user-select: none;
+        }
+        .pagination button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
-    <img 
-        style="transform: rotate(-5deg); border: 1px solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/50b7f6da61a51ce7b2c7aab29a938318.gif" 
-        alt="Decorative Image" 
-        width="200" 
-        height="150" 
-    />
-    <h1> Life Updates</h1>
-    
-       
-    
-    
-    <!-- Home button to navigate to index.html -->
-    <a href="index.html">
-        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
-    </a>
+    <h1>My Life Updates</h1>
+    <div class="search-sort">
+        <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
+        <select id="sort" onchange="loadUpdates()">
+            <option value="asc">Sort by Oldest</option>
+            <option value="desc">Sort by Newest</option>
+            <option value="shuffle">Shuffle</option>
+        </select>
+    </div>
+    <div id="updates"></div>
+    <div class="pagination" id="pagination">
+        <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+        <span id="page-numbers"></span>
+        <button id="next" onclick="changePage(1)">Next &#62;</button>
+    </div>
 
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            databaseURL: "https://updates-e2454.firebaseio.com/",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let totalPages = 1;
+
+        // Function to add a life update with a specified timestamp
+        function addLifeUpdate(id, title, content, timestamp) {
+            database.ref('lifeupdates/' + id).set({
+                title: title,
+                content: content,
+                timestamp: timestamp
+            });
+        }
+
+        // Example: Adding a new life update with a specified timestamp
+        const specifiedTimestamp = "2025-01-18T21:03:01Z"; // ISO 8601 format
+        addLifeUpdate('update1', 'Forgot My Meds Again (^～^;)ゞ', 
+            'I just started my day and it\'s like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I\'ll have for dinner probably nothing special or something simple. Right now I\'m just figuring out my next update – I\'ll include a message saying something about how I\'m not really going to be updating this like all the time. It\'s just kinda there when I want to use it. (⌒ω⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)', 
+            specifiedTimestamp
+        );
+
+        // Function to fetch and display life updates
+        function loadUpdates() {
+            const searchQuery = document.getElementById('search').value.toLowerCase();
+            const sortOrder = document.getElementById('sort').value;
+
+            database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
+                let updates = [];
+                snapshot.forEach((childSnapshot) => {
+                    const updateData = childSnapshot.val();
+                    const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                        updates.push({ key: childSnapshot.key, ...updateData });
+                    }
+                });
+
+                // Sort updates
+                if (sortOrder === 'desc') {
+                    updates.reverse();
+                } else if (sortOrder === 'shuffle') {
+                    updates = shuffle(updates);
+                }
+
+                // Pagination logic
+                totalPages = Math.ceil(updates.length / itemsPerPage);
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedUpdates = updates.slice(start, end);
+
+                // Display updates
+                displayUpdates(paginatedUpdates);
+
+                // Display pagination
+                displayPagination();
+            }, (error) => {
+                console.error("Error fetching data: ", error);
+            });
+        }
+
+        function displayUpdates(updates) {
+            const updatesContainer = document.getElementById('updates');
+            updatesContainer.innerHTML = ''; // Clear previous updates
+
+            updates.forEach((update) => {
+                const updateDiv = document.createElement('div');
+                updateDiv.className = 'update';
+
+                const timestampElement = document.createElement('h2');
+                timestampElement.className = 'timestamp';
+                const date = new Date(update.timestamp);
+                timestampElement.innerHTML = date.toLocaleString();
+                updateDiv.appendChild(timestampElement);
+
+                const titleElement = document.createElement('b');
+                titleElement.textContent = update.title;
+                updateDiv.appendChild(titleElement);
+
+                const contentElement = document.createElement('p');
+                contentElement.innerHTML = update.content;
+                updateDiv.appendChild(contentElement);
+
+                updatesContainer.appendChild(updateDiv);
+            });
+        }
+
+        function displayPagination() {
+            const paginationElement = document.getElementById('pagination');
+            const pageNumbersElement = document.getElementById('page-numbers');
+            pageNumbersElement.innerHTML = ''; // Clear previous page numbers
+
+            document.getElementById('prev').disabled = currentPage === 1;
+            document.getElementById('next').disabled = currentPage === totalPages;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = i === currentPage ? 'active' : '';
+                button.onclick = () => {
+                    currentPage = i;
+                    loadUpdates();
+                };
+                pageNumbersElement.appendChild(button);
+            }
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            loadUpdates();
+        }
+
+        // Helper function to shuffle an array
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Call loadUpdates to fetch and display the updates when the script runs
+        window.addEventListener('load', loadUpdates);
+    </script>
 </body>
+
 </html>
