@@ -82,9 +82,11 @@
                 galleryElement.innerHTML = ''; // Clear previous images
 
                 snapshot.forEach((childSnapshot) => {
-                    const imageUrl = childSnapshot.val().url; // Adjusted according to your structure
-                    const caption = childSnapshot.val().text; // Adjusted according to your structure
+                    const imageData = childSnapshot.val(); // Get the data for each image
+                    const imageUrl = imageData.url; // Get the URL of the image
+                    const caption = imageData.text; // Get the caption of the image
 
+                    // Create an image element
                     const img = document.createElement('img');
                     img.src = imageUrl;
                     img.alt = caption;
@@ -96,6 +98,8 @@
                     captionElement.className = 'caption'; // Apply caption styling
                     galleryElement.appendChild(captionElement);
                 });
+            }, (error) => {
+                console.error("Error fetching data: ", error);
             });
         }
 
