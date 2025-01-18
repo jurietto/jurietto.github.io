@@ -1,121 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+    authDomain: "comments-ff6c9.firebaseapp.com",
+    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+    projectId: "comments-ff6c9",
+    storageBucket: "comments-ff6c9.appspot.com",
+    messagingSenderId: "778548096311",
+    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+    measurementId: "G-T8QFHWJDB5"
+};
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff - About Me</title>
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-    <!-- Firebase App, Database, and Storage libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <link rel="stylesheet" href="style.css">
+let currentPage = 1;
+const itemsPerPage = 5;
+let totalPages = 1;
 
-    <style>
-        /* Gallery container style */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap; /* Allow items to wrap on small screens */
-            gap: 20px; /* Space between images */
-            margin: 20px 0; /* Margin for top and bottom */
-            justify-content: center;
+// Function to fetch images and captions from Firebase Realtime Database
+function loadImages() {
+    const searchQuery = document.getElementById('search').value.toLowerCase();
+    const sortOrder = document.getElementById('sort').value;
+
+    database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
+        let items = [];
+        snapshot.forEach((childSnapshot) => {
+            const imageData = childSnapshot.val();
+            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
+                items.push({ key: childSnapshot.key, ...imageData });
+            }
+        });
+
+        // Sort items
+        if (sortOrder === 'desc') {
+            items.reverse();
+        } else if (sortOrder === 'shuffle') {
+            items = shuffle(items);
         }
 
-        .gallery-item {
-            width: 100%; /* Full width for each gallery item */
-            display: flex; /* Flex container for image and text */
-            flex-direction: column;
-            align-items: center; /* Center the content */
-            margin-bottom: 20px; /* Space between items */
-            user-select: none; /* Prevent text selection */
+        // Pagination logic
+        totalPages = Math.ceil(items.length / itemsPerPage);
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = items.slice(start, end);
+
+        // Display items
+        displayItems(paginatedItems);
+
+        // Display pagination
+        displayPagination();
+    }, (error) => {
+        console.error("Error fetching data: ", error);
+    });
+}
+
+function displayItems(items) {
+    const galleryElement = document.getElementById('gallery');
+    galleryElement.innerHTML = ''; // Clear previous images
+
+    items.forEach((item, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = item.key;
+        galleryItem.appendChild(titleElement);
+
+        const timestampElement = document.createElement('h3');
+        timestampElement.className = 'timestamp';
+        const date = new Date(item.timestamp);
+        timestampElement.innerHTML = `<b>Uploaded on: ${date.toLocaleString()}</b>`;
+        galleryItem.appendChild(timestampElement);
+
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = item.text; // provide a meaningful description
+        galleryItem.appendChild(img);
+
+        const captionElement = document.createElement('p');
+        captionElement.className = 'caption';
+        captionElement.textContent = item.text;
+        galleryItem.appendChild(captionElement);
+
+        galleryElement.appendChild(galleryItem);
+
+        // Add divider after each image except the last one
+        if (index < items.length - 1) {
+            const divider = document.createElement('img');
+            divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif';
+            divider.className = 'divider';
+            divider.alt = "Divider"; // add alt text for accessibility
+            galleryElement.appendChild(divider);
         }
+    });
+}
 
-        .gallery-item img {
-            width: 100%; /* Make photos 100% in width */
-            height: auto; /* Maintain aspect ratio */
-            border: 1px solid #FF0099; /* Border for images */
-            border-radius: 5px; /* Rounded corners */
-            pointer-events: none; /* Disable interactions */
-        }
+function displayPagination() {
+    const paginationElement = document.getElementById('pagination');
+    const pageNumbersElement = document.getElementById('page-numbers');
+    pageNumbersElement.innerHTML = ''; // Clear previous page numbers
 
-        .caption {
-            color: white; /* Caption text color */
-            text-align: center; /* Center caption text */
-            font-size: 14px; /* Caption text size */
-            margin-top: 5px; /* Margin above caption */
-        }
+    document.getElementById('prev').disabled = currentPage === 1;
+    document.getElementById('next').disabled = currentPage === totalPages;
 
-        .divider {
-            width: 20px; /* Set width for divider image */
-            height: 20px; /* Set height for divider image */
-            border: none; /* No border for divider image */
-            margin: 10px 0;
-            display: block; /* Ensure it's displayed as a block element */
-        }
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.className = i === currentPage ? 'active' : '';
+        button.onclick = () => {
+            currentPage = i;
+            loadImages();
+        };
+        pageNumbersElement.appendChild(button);
+    }
+}
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
+function changePage(direction) {
+    currentPage += direction;
+    loadImages();
+}
 
-        .pagination button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            background-color: #FF0099; /* Set background color to #FF0099 */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            user-select: none; /* Prevent text selection */
-        }
+// Helper function to shuffle an array
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
-        .pagination button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-    </style>
-
-</head>
-
-<body>
-    <img 
-        style="transform: rotate(-5deg); border: 1px solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
-        alt="Decorative Image" 
-        width="200" 
-        height="150" 
-    />
-
-    <h1>Gallery</h1>
-
-    <!-- Search and Sort UI -->
-    <div>
-        <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
-        <select id="sort" onchange="loadImages()">
-            <option value="asc">Sort by Oldest</option>
-            <option value="desc">Sort by Newest</option>
-        </select>
-    </div>
-    
-    <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
-
-    <!-- Pagination -->
-    <div class="pagination" id="pagination">
-        <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
-        <span id="page-numbers"></span>
-        <button id="next" onclick="changePage(1)">Next &#62;</button>
-    </div>
-
-    <a href="index.html">
-        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
-    </a>
-
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
-    
-</body>
-
+// Call loadImages to fetch and display the images when the script runs
+window.addEventListener('load', loadImages);
 </html>
