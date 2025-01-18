@@ -27,7 +27,8 @@ function loadImages() {
         let items = [];
         snapshot.forEach((childSnapshot) => {
             const imageData = childSnapshot.val();
-            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
+            const date = new Date(imageData.timestamp).toLocaleString().toLowerCase();
+            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || childSnapshot.key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
                 items.push({ key: childSnapshot.key, ...imageData });
             }
         });
