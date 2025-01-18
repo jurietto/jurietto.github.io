@@ -84,7 +84,7 @@ ul li::before {
 .home-button {
     position: fixed;
     bottom: 10px;
-    left: 10px;
+    right: 10px;
     width: 150px;
     height: 150px;
     cursor: pointer;
