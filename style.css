@@ -99,4 +99,12 @@ ul li::before {
     h1, h2, h3, h4, h5, h6, a, ul li, footer {
         text-shadow: none;
     }
+
+    .home-button {
+        top: 10px; /* Move the home button to the top */
+        bottom: auto; /* Reset the bottom position */
+        right: 10px;
+        width: 100px; /* Adjust size for mobile */
+        height: 100px;
+    }
 }
