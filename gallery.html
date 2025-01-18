@@ -7,42 +7,98 @@
     <title>Juri's Stuff - About Me</title>
 
     <!-- Firebase App, Database, and Storage libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
 
     <style>
         /* Apply full screen background image */
         body {
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/321354');
-            background-size: cover; /* Make background image cover */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Do not repeat image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Ensure all text is visible */
+            font-family: Arial, sans-serif; /* Clean font */
+        }
+
+        /* Header and Main Title */
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Search and Filter Section */
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .controls input[type="text"], .controls select {
+            margin: 0 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
 
         /* Gallery container style */
         .gallery {
             display: flex;
-            flex-wrap: wrap; /* Allow items to wrap on small screens */
-            gap: 10px; /* Space between images */
-            margin: 20px 0; /* Margin for top and bottom */
+            flex-direction: column; /* Stack items vertically */
+            gap: 20px; /* Space between items */
+            margin: 0 auto; /* Center the gallery */
+            width: 80%; /* Width of the gallery area */
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column; /* Align items vertically */
+            align-items: center; /* Center items */
+            text-align: center; /* Center text */
         }
 
         .gallery img {
-            width: 100px; /* Set a fixed width for gallery images */
+            width: 200px; /* Set the width for images */
             height: auto; /* Maintain aspect ratio */
-            border: 1px solid #ddd; /* Optional: border for images */
-            border-radius: 5px; /* Optional: rounded corners */
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
 
         .caption {
-            color: white; /* Caption text color */
-            text-align: center; /* Center caption text */
             font-size: 14px; /* Caption text size */
             margin-top: 5px; /* Margin above caption */
         }
-    </style>
 
+        .divider {
+            width: 100%; /* Full width for the divider */
+            height: 2px; /* Height of the divider */
+            background-color: white; /* Divide color */
+            margin: 20px 0; /* Margin for the divider */
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center; /* Center pagination controls */
+            margin: 20px 0; /* Margin for pagination */
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background-color: gray; /* Style for disabled buttons */
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
@@ -54,57 +110,154 @@
         height="150" 
     />
     <h1>Gallery</h1>
-    
+
+    <!-- Search Box and Sort Options -->
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search..." />
+        <select id="sortBy">
+            <option value="default">Sort by</option>
+            <option value="caption">Caption</option>
+            <option value="date">Date</option>
+        </select>
+    </div>
+
     <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
-    
+
+    <!-- Dummy Divider Image -->
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/yourDividerImageURL.jpg" alt="Divider" class="divider" />
+
+    <!-- Pagination Controls -->
+    <div class="pagination" id="pagination">
+        <button id="prevPage" disabled>Previous</button>
+        <button id="nextPage">Next</button>
+    </div>
+
     <script>
         // Your Firebase configuration object
         const firebaseConfig = {
-            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s", // Your Firebase API key
-            authDomain: "comments-ff6c9.firebaseapp.com", // Your Firebase Auth domain
-            databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com", // Your Firebase Database URL
-            projectId: "comments-ff6c9", // Your Firebase Project ID
-            storageBucket: "comments-ff6c9.appspot.com", // Your Firebase Storage bucket
-            messagingSenderId: "778548096311", // Your Firebase Messaging Sender ID
-            appId: "1:778548096311:web:968b95a4fc97f13f21feb2", // Your Firebase App ID
-            measurementId: "G-T8QFHWJDB5" // Your Firebase Measurement ID (if applicable)
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
         };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();  // Initialize the Database service
+        const database = firebase.database();
 
-        // Reference to the gallery container in the HTML
+        // Reference to the gallery and pagination elements
         const galleryElement = document.getElementById('gallery');
+        const pagination = document.getElementById('pagination');
+        const prevPageButton = document.getElementById('prevPage');
+        const nextPageButton = document.getElementById('nextPage');
+        const searchInput = document.getElementById('search');
+        const sortSelect = document.getElementById('sortBy');
 
-        // Function to fetch images and captions from Firebase Realtime Database
+        let images = [];
+        let currentPage = 0;
+        const imagesPerPage = 5;
+
+        // Function to fetch images and captions from Firebase
         function loadImages() {
             database.ref('gallery').on('value', (snapshot) => {
-                galleryElement.innerHTML = ''; // Clear previous images
-
+                images = []; // Clear existing images
                 snapshot.forEach((childSnapshot) => {
-                    const imageData = childSnapshot.val(); // Get the data for each image
-                    const imageUrl = imageData.url; // Get the URL of the image
-                    const caption = imageData.text; // Get the caption of the image
-
-                    // Create an image element
-                    const img = document.createElement('img');
-                    img.src = imageUrl;
-                    img.alt = caption;
-                    galleryElement.appendChild(img);
-
-                    // Add a caption element
-                    const captionElement = document.createElement('p');
-                    captionElement.textContent = caption;
-                    captionElement.className = 'caption'; // Apply caption styling
-                    galleryElement.appendChild(captionElement);
+                    images.push(childSnapshot.val());
                 });
+                displayImages();
+                updatePagination();
             }, (error) => {
                 console.error("Error fetching data: ", error);
             });
         }
 
-        // Call loadImages to fetch and display the images when the script runs
+        // Function to display images based on the current page
+        function displayImages() {
+            galleryElement.innerHTML = '';
+
+            // Filter images based on search
+            const searchQuery = searchInput.value.toLowerCase();
+            const filteredImages = images.filter(image => image.text.toLowerCase().includes(searchQuery));
+
+            // Sort images based on selected option
+            if (sortSelect.value === "caption") {
+                filteredImages.sort((a, b) => a.text.localeCompare(b.text));
+            } else if (sortSelect.value === "date") {
+                // Assuming you have a date field in your data to sort by
+                // filteredImages.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+
+            // Pagination logic
+            const start = currentPage * imagesPerPage;
+            const end = start + imagesPerPage;
+            const pagedImages = filteredImages.slice(start, end);
+
+            pagedImages.forEach(imageData => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'gallery-item';
+
+                const img = document.createElement('img');
+                img.src = imageData.url; 
+                img.alt = imageData.text; 
+
+                const captionElement = document.createElement('p');
+                captionElement.textContent = imageData.text;
+                captionElement.className = 'caption';
+
+                const metaElement = document.createElement('p');
+                metaElement.textContent = `<Meta Data>`; // Replace with actual metadata if available
+
+                itemDiv.appendChild(img);
+                itemDiv.appendChild(captionElement);
+                itemDiv.appendChild(metaElement);
+                galleryElement.appendChild(itemDiv);
+            });
+        }
+
+        // Update pagination buttons
+        function updatePagination() {
+            const totalPages = Math.ceil(images.length / imagesPerPage);
+            prevPageButton.disabled = currentPage === 0; // Disable on the first page
+            nextPageButton.disabled = currentPage >= totalPages - 1; // Disable on last page
+        }
+
+        // Event listeners for pagination buttons
+        prevPageButton.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                displayImages();
+                updatePagination();
+            }
+        });
+
+        nextPageButton.addEventListener('click', () => {
+            const totalPages = Math.ceil(images.length / imagesPerPage);
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                displayImages();
+                updatePagination();
+            }
+        });
+
+        // Search event listener
+        searchInput.addEventListener('keyup', () => {
+            currentPage = 0; // Reset to first page on search
+            displayImages();
+            updatePagination();
+        });
+
+        // Sort event listener
+        sortSelect.addEventListener('change', () => {
+            currentPage = 0; // Reset to first page on sort
+            displayImages();
+            updatePagination();
+        });
+
+        // Initial load of images
         loadImages();
     </script>
 
