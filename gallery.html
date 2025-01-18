@@ -7,98 +7,69 @@
     <title>Juri's Stuff - About Me</title>
 
     <!-- Firebase App, Database, and Storage libraries -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
 
     <style>
         /* Apply full screen background image */
         body {
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/321354');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: white; /* Ensure all text is visible */
-            font-family: Arial, sans-serif; /* Clean font */
-        }
-
-        /* Header and Main Title */
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Search and Filter Section */
-        .controls {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .controls input[type="text"], .controls select {
-            margin: 0 10px;
-            padding: 8px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+            background-size: cover; /* Make background image cover */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat image */
         }
 
         /* Gallery container style */
         .gallery {
             display: flex;
-            flex-direction: column; /* Stack items vertically */
-            gap: 20px; /* Space between items */
-            margin: 0 auto; /* Center the gallery */
-            width: 80%; /* Width of the gallery area */
+            flex-wrap: wrap; /* Allow items to wrap on small screens */
+            gap: 10px; /* Space between images */
+            margin: 20px 0; /* Margin for top and bottom */
         }
 
         .gallery-item {
-            display: flex;
-            flex-direction: column; /* Align items vertically */
-            align-items: center; /* Center items */
-            text-align: center; /* Center text */
+            width: 100%; /* Full width for each gallery item */
+            display: flex; /* Flex container for image and text */
+            flex-direction: column;
+            align-items: center; /* Center the content */
+            margin-bottom: 20px; /* Space between items */
         }
 
         .gallery img {
-            width: 200px; /* Set the width for images */
+            width: 200px; /* Set a fixed width for gallery images */
             height: auto; /* Maintain aspect ratio */
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border: 1px solid #ddd; /* Optional: border for images */
+            border-radius: 5px; /* Optional: rounded corners */
         }
 
         .caption {
+            color: white; /* Caption text color */
+            text-align: center; /* Center caption text */
             font-size: 14px; /* Caption text size */
             margin-top: 5px; /* Margin above caption */
         }
 
-        .divider {
-            width: 100%; /* Full width for the divider */
-            height: 2px; /* Height of the divider */
-            background-color: white; /* Divide color */
-            margin: 20px 0; /* Margin for the divider */
+        .meta {
+            color: lightgray; /* Metadata text color */
+            text-align: center; /* Center metadata text */
+            font-size: 12px; /* Metadata text size */
         }
 
         /* Pagination styles */
         .pagination {
             display: flex;
-            justify-content: center; /* Center pagination controls */
-            margin: 20px 0; /* Margin for pagination */
+            justify-content: center;
+            margin-top: 20px;
         }
 
         .pagination button {
             margin: 0 5px;
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
+            padding: 5px 10px;
             cursor: pointer;
         }
-
-        .pagination button:disabled {
-            background-color: gray; /* Style for disabled buttons */
-            cursor: not-allowed;
-        }
     </style>
+
 </head>
 
 <body>
@@ -109,28 +80,22 @@
         width="200" 
         height="150" 
     />
+
     <h1>Gallery</h1>
 
-    <!-- Search Box and Sort Options -->
-    <div class="controls">
-        <input type="text" id="search" placeholder="Search..." />
-        <select id="sortBy">
-            <option value="default">Sort by</option>
-            <option value="caption">Caption</option>
-            <option value="date">Date</option>
+    <!-- Search and Sort UI -->
+    <div>
+        <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
+        <select id="sort" onchange="loadImages()">
+            <option value="asc">Sort by Oldest</option>
+            <option value="desc">Sort by Newest</option>
         </select>
     </div>
-
+    
     <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
 
-    <!-- Dummy Divider Image -->
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/yourDividerImageURL.jpg" alt="Divider" class="divider" />
-
-    <!-- Pagination Controls -->
-    <div class="pagination" id="pagination">
-        <button id="prevPage" disabled>Previous</button>
-        <button id="nextPage">Next</button>
-    </div>
+    <!-- Pagination -->
+    <div class="pagination" id="pagination"></div>
 
     <script>
         // Your Firebase configuration object
@@ -147,117 +112,90 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+        const database = firebase.database();  // Initialize the Database service
 
-        // Reference to the gallery and pagination elements
-        const galleryElement = document.getElementById('gallery');
-        const pagination = document.getElementById('pagination');
-        const prevPageButton = document.getElementById('prevPage');
-        const nextPageButton = document.getElementById('nextPage');
-        const searchInput = document.getElementById('search');
-        const sortSelect = document.getElementById('sortBy');
+        let currentPage = 1;
+        const itemsPerPage = 5;
 
-        let images = [];
-        let currentPage = 0;
-        const imagesPerPage = 5;
-
-        // Function to fetch images and captions from Firebase
+        // Function to fetch images and captions from Firebase Realtime Database
         function loadImages() {
-            database.ref('gallery').on('value', (snapshot) => {
-                images = []; // Clear existing images
+            const searchQuery = document.getElementById('search').value.toLowerCase();
+            const sortOrder = document.getElementById('sort').value;
+
+            database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
+                let items = [];
                 snapshot.forEach((childSnapshot) => {
-                    images.push(childSnapshot.val());
+                    const imageData = childSnapshot.val();
+                    if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
+                        items.push({ key: childSnapshot.key, ...imageData });
+                    }
                 });
-                displayImages();
-                updatePagination();
+
+                // Sort items
+                if (sortOrder === 'desc') {
+                    items.reverse();
+                }
+
+                // Pagination logic
+                const totalPages = Math.ceil(items.length / itemsPerPage);
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedItems = items.slice(start, end);
+
+                // Display items
+                displayItems(paginatedItems);
+
+                // Display pagination
+                displayPagination(totalPages);
             }, (error) => {
                 console.error("Error fetching data: ", error);
             });
         }
 
-        // Function to display images based on the current page
-        function displayImages() {
-            galleryElement.innerHTML = '';
+        function displayItems(items) {
+            const galleryElement = document.getElementById('gallery');
+            galleryElement.innerHTML = ''; // Clear previous images
 
-            // Filter images based on search
-            const searchQuery = searchInput.value.toLowerCase();
-            const filteredImages = images.filter(image => image.text.toLowerCase().includes(searchQuery));
-
-            // Sort images based on selected option
-            if (sortSelect.value === "caption") {
-                filteredImages.sort((a, b) => a.text.localeCompare(b.text));
-            } else if (sortSelect.value === "date") {
-                // Assuming you have a date field in your data to sort by
-                // filteredImages.sort((a, b) => new Date(b.date) - new Date(a.date));
-            }
-
-            // Pagination logic
-            const start = currentPage * imagesPerPage;
-            const end = start + imagesPerPage;
-            const pagedImages = filteredImages.slice(start, end);
-
-            pagedImages.forEach(imageData => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'gallery-item';
+            items.forEach((item) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
 
                 const img = document.createElement('img');
-                img.src = imageData.url; 
-                img.alt = imageData.text; 
+                img.src = item.url;
+                img.alt = item.text;
+                galleryItem.appendChild(img);
 
                 const captionElement = document.createElement('p');
-                captionElement.textContent = imageData.text;
                 captionElement.className = 'caption';
+                captionElement.textContent = item.text;
+                galleryItem.appendChild(captionElement);
 
                 const metaElement = document.createElement('p');
-                metaElement.textContent = `<Meta Data>`; // Replace with actual metadata if available
+                metaElement.className = 'meta';
+                metaElement.textContent = `Uploaded on ${new Date(item.timestamp).toLocaleDateString()}`;
+                galleryItem.appendChild(metaElement);
 
-                itemDiv.appendChild(img);
-                itemDiv.appendChild(captionElement);
-                itemDiv.appendChild(metaElement);
-                galleryElement.appendChild(itemDiv);
+                galleryElement.appendChild(galleryItem);
             });
         }
 
-        // Update pagination buttons
-        function updatePagination() {
-            const totalPages = Math.ceil(images.length / imagesPerPage);
-            prevPageButton.disabled = currentPage === 0; // Disable on the first page
-            nextPageButton.disabled = currentPage >= totalPages - 1; // Disable on last page
+        function displayPagination(totalPages) {
+            const paginationElement = document.getElementById('pagination');
+            paginationElement.innerHTML = ''; // Clear previous pagination
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = i === currentPage ? 'active' : '';
+                button.onclick = () => {
+                    currentPage = i;
+                    loadImages();
+                };
+                paginationElement.appendChild(button);
+            }
         }
 
-        // Event listeners for pagination buttons
-        prevPageButton.addEventListener('click', () => {
-            if (currentPage > 0) {
-                currentPage--;
-                displayImages();
-                updatePagination();
-            }
-        });
-
-        nextPageButton.addEventListener('click', () => {
-            const totalPages = Math.ceil(images.length / imagesPerPage);
-            if (currentPage < totalPages - 1) {
-                currentPage++;
-                displayImages();
-                updatePagination();
-            }
-        });
-
-        // Search event listener
-        searchInput.addEventListener('keyup', () => {
-            currentPage = 0; // Reset to first page on search
-            displayImages();
-            updatePagination();
-        });
-
-        // Sort event listener
-        sortSelect.addEventListener('change', () => {
-            currentPage = 0; // Reset to first page on sort
-            displayImages();
-            updatePagination();
-        });
-
-        // Initial load of images
+        // Call loadImages to fetch and display the images when the script runs
         loadImages();
     </script>
 
