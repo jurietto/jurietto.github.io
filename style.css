@@ -48,7 +48,7 @@ a {
 }
 
 a:hover {
-    color: white; /* Reverted link hover color to white */
+    color: #FF0099; /* Reverted link hover color to white */
 }
 
 footer {
@@ -81,16 +81,6 @@ ul li::before {
     background-size: cover;
 }
 
-.audio-control {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 150px;
-    height: 150px;
-    cursor: pointer;
-    z-index: 10000;
-}
-
 .home-button {
     position: fixed;
     bottom: 10px;
@@ -99,4 +89,17 @@ ul li::before {
     height: 150px;
     cursor: pointer;
     z-index: 10000;
+}
+
+@media screen and (max-width: 700px) {
+    body {
+        padding: 20px;
+        background-image: none;
+        
+    }
+
+    h1, h2, h3, h4, h5, h6, a, ul li, footer {
+        text-shadow: none;
+       
+    }
 }
