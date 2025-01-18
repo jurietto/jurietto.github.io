@@ -67,7 +67,7 @@ function displayItems(items) {
         titleElement.textContent = item.key;
         galleryItem.appendChild(titleElement);
 
-        const timestampElement = document.createElement('h3');
+        const timestampElement = document.createElement('p');
         timestampElement.className = 'timestamp';
         const date = new Date(item.timestamp);
         timestampElement.innerHTML = `<b>Uploaded on: ${date.toLocaleString()}</b>`;
