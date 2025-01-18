@@ -135,6 +135,9 @@
                     }
                 });
 
+                // Log the updates for debugging
+                console.log("Fetched updates: ", updates);
+
                 // Sort updates
                 if (sortOrder === 'desc') {
                     updates.reverse();
@@ -162,6 +165,11 @@
         function displayUpdates(updates) {
             const updatesContainer = document.getElementById('updates');
             updatesContainer.innerHTML = ''; // Clear previous updates
+
+            if (updates.length === 0) {
+                updatesContainer.innerHTML = '<p>No updates found.</p>';
+                return;
+            }
 
             updates.forEach((update) => {
                 const updateDiv = document.createElement('div');
