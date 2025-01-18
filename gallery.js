@@ -35,6 +35,8 @@ function loadImages() {
         // Sort items
         if (sortOrder === 'desc') {
             items.reverse();
+        } else if (sortOrder === 'shuffle') {
+            items = shuffle(items);
         }
 
         // Pagination logic
@@ -68,7 +70,7 @@ function displayItems(items) {
         const timestampElement = document.createElement('h3');
         timestampElement.className = 'timestamp';
         const date = new Date(item.timestamp);
-        timestampElement.textContent = `Uploaded on: ${date.toLocaleString()}`;
+        timestampElement.innerHTML = `<b>Uploaded on: ${date.toLocaleString()}</b>`;
         galleryItem.appendChild(timestampElement);
 
         const img = document.createElement('img');
@@ -117,6 +119,15 @@ function displayPagination() {
 function changePage(direction) {
     currentPage += direction;
     loadImages();
+}
+
+// Helper function to shuffle an array
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 // Call loadImages to fetch and display the images when the script runs
