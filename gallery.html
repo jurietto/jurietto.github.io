@@ -31,8 +31,9 @@
         .gallery {
             display: flex;
             flex-wrap: wrap; /* Allow items to wrap on small screens */
-            gap: 10px; /* Space between images */
+            gap: 20px; /* Space between images */
             margin: 20px 0; /* Margin for top and bottom */
+            justify-content: center;
         }
 
         .gallery-item {
@@ -46,10 +47,8 @@
         .gallery img {
             width: 100%; /* Make photos 100% in width */
             height: auto; /* Maintain aspect ratio */
-            border: 5px solid; /* Border for images */
-            border-image-slice: 1;
-            border-image-source: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet); /* Rainbow gradient border */
-            border-radius: 5px; /* Optional: rounded corners */
+            border: 5px solid #FF0099; /* Border for images */
+            border-radius: 5px; /* Rounded corners */
         }
 
         .caption {
@@ -59,10 +58,9 @@
             margin-top: 5px; /* Margin above caption */
         }
 
-        .meta {
-            color: lightgray; /* Metadata text color */
-            text-align: center; /* Center metadata text */
-            font-size: 12px; /* Metadata text size */
+        .divider {
+            width: 100%;
+            margin: 10px 0;
         }
 
         /* Pagination styles */
@@ -165,7 +163,7 @@
             const galleryElement = document.getElementById('gallery');
             galleryElement.innerHTML = ''; // Clear previous images
 
-            items.forEach((item) => {
+            items.forEach((item, index) => {
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item';
 
@@ -183,13 +181,15 @@
                 captionElement.textContent = item.text;
                 galleryItem.appendChild(captionElement);
 
-                const metaElement = document.createElement('p');
-                metaElement.className = 'meta';
-                const date = new Date(item.timestamp);
-                metaElement.textContent = `Uploaded on ${date.toLocaleDateString()}`;
-                galleryItem.appendChild(metaElement);
-
                 galleryElement.appendChild(galleryItem);
+
+                // Add divider after each image except the last one
+                if (index < items.length - 1) {
+                    const divider = document.createElement('img');
+                    divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif';
+                    divider.className = 'divider';
+                    galleryElement.appendChild(divider);
+                }
             });
         }
 
