@@ -76,9 +76,9 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database(app);  // Initialize the Database service
-        const storage = firebase.storage(app);  // Initialize the Storage service
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();  // Initialize the Database service
+        const storage = firebase.storage();  // Initialize the Storage service
 
         // Reference to the gallery container in the HTML
         const galleryElement = document.getElementById('gallery');
