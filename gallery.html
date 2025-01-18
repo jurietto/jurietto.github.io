@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
 
+    <!-- Firebase App and Storage libraries -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
-    <script src="scripts.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    
     <style>
 
         /* Apply full screen background image */
@@ -47,95 +48,63 @@
     />
     <h1>Gallery</h1>
     
-    <div class="gallery" id="gallery"></div>
+    <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
 
     <p>I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!</p>
-    <p>I'm sometimes on social media like Twitter or Bluesky, but I deactivate from time to time. I'm most active lurking on Discord—add me @sotokomori. Kindly reach out, but I may or may not be accepting friend requests.</p>
-    <p><strong>Recommendation:</strong> Use a desktop to access this site.</p>
 
     <h2>Coding Projects</h2>
     <hr />
-    <p>I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re not very ambitious. I’d like to get better at web design eventually, but it’s not my main focus. One day, I’d love to teach myself how to create a visual novel or a game.</p>
+    <p>I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re not very ambitious. One day, I’d love to teach myself how to create a visual novel or a game.</p>
 
-    <h2>DJing & Music</h2>
-    <hr />
-    <p>I've been producing music since 2017 and DJing since 2021. My music mainly falls into electronic dance genres—people often describe it as happy hardcore or hard dance. You can check out my music on SoundCloud and decide for yourself!</p>
-    <p>I listen to all kinds of music, but my favorite genres are EBM, electro-industrial, trance, hardstyle, and happy hardcore. There’s something to appreciate about all music.</p>
-    <p>My favorite artist is Velvet Acid Christ. Other favorites include Goreshit, Lords of Acid, Eisenfunk, DJ Billybool, God Module, and Ladytron.</p>
-
-    <h3>Artists worth supporting...</h3>
-    <ul>
-        <li><a href="https://velvetacidchrist.com/" target="_blank">Velvet Acid Christ</a></li>
-        <li><a href="https://open.spotify.com/artist/5BYTM7ej0bnE7XNgtlMhGR" target="_blank">Dippers</a></li>
-        <li><a href="https://open.spotify.com/artist/2hqIZImqlWKsasi0CMdtAX" target="_blank">DJ Nusagi</a></li>
-    </ul>
-
-    <h2>Baking</h2>
-    <hr />
-    <p>Baking rocks! I used to be an overnight baker, and during that time, I read a lot about it and maintained an entire kitchen. In my free time, I like reading about pastries from around the world.</p>
-
-    <h2>Visual Novels</h2>
-    <hr />
-    <p>My favorite visual novel is <em>Monochrome</em>, and my first was <em>Cafe Little Wish</em>. I also collect old PS2 and PSX NTSC-J titles. I archive playthroughs and am learning how to translate them.</p>
-
-    <h2>Personality</h2>
-    <hr />
-    <ul>
-        <li>Asocial</li>
-        <li>Introverted</li>
-        <li>Silly</li>
-        <li>Charming</li>
-        <li>Depressive</li>
-        <li>Psychotic</li>
-    </ul>
-
-    <a href="index.html">
-        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
-    </a>
-
+    <!-- Other content -->
+    
     <footer>
         <h6>2024 - ???</h6>
     </footer>
 
     <script>
-        // Firebase configuration
+        // Firebase configuration - replace values with your actual Firebase project details
         const firebaseConfig = {
-            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-            authDomain: "comments-ff6c9.firebaseapp.com",
-            projectId: "comments-ff6c9",
-            storageBucket: "comments-ff6c9.appspot.com",
-            messagingSenderId: "778548096311",
-            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-            measurementId: "G-T8QFHWJDB5"
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s", // Your Firebase API key
+            authDomain: "comments-ff6c9.firebaseapp.com", // Your Firebase Auth domain
+            projectId: "comments-ff6c9", // Your Firebase Project ID
+            storageBucket: "comments-ff6c9.appspot.com", // Your Firebase Storage bucket
+            messagingSenderId: "778548096311", // Your Firebase Messaging Sender ID
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2", // Your Firebase App ID
+            measurementId: "G-T8QFHWJDB5" // Your Firebase Measurement ID (if applicable)
         };
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
-        const storage = firebase.storage();
+        const storage = firebase.storage(app);  // Initialize the Storage service
 
+        // Reference to the gallery container in the HTML
         const galleryElement = document.getElementById('gallery');
 
-        // Fetch images from Firebase Storage
+        // Function to fetch images from Firebase Storage
         async function loadImages() {
-            const storageRef = storage.ref();
-            // Replace with your folder path in Firebase Storage
-            const listRef = storageRef.child('path/to/your/images'); // Update this path
+            // This is the path inside Firebase Storage where your images are stored
+            const storageRef = storage.ref().child('gs://comments-ff6c9.firebasestorage.app/comments'); // UPDATE this path to your actual image folder
 
             try {
-                const result = await listRef.listAll();
-                result.items.forEach(item => {
-                    item.getDownloadURL().then(url => {
-                        const img = document.createElement('img');
-                        img.src = url;
-                        galleryElement.appendChild(img);
+                // Get a list of all items in the specified storage path
+                const listRef = await storageRef.listAll();
+                
+                // Loop through each item (image) in the storage path
+                listRef.items.forEach((item) => {
+                    // Get the download URL for each image
+                    item.getDownloadURL().then((url) => {
+                        const img = document.createElement('img'); // Create an img element
+                        img.src = url; // Set the img element's src to the download URL
+                        galleryElement.appendChild(img); // Add the image to the gallery container
                     });
                 });
             } catch (error) {
-                console.error("Error fetching images: ", error);
+                console.error("Error fetching images: ", error); // Log any errors
             }
         }
 
-        // Call loadImages to fetch and display the images
+        // Call loadImages to fetch and display the images when the script runs
         loadImages();
     </script>
 </body>
