@@ -12,24 +12,14 @@
         body {
             font-family: Arial, sans-serif;
         }
-        .update {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
-        }
         .update h2 {
             margin: 0 0 10px;
         }
         .update p {
             margin: 5px 0;
         }
-        .update b {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .timestamp {
-            font-size: 0.9em;
-            color: #888;
+        .date {
+            font-weight: bold;
         }
         .search-sort {
             margin-bottom: 20px;
@@ -175,13 +165,13 @@
                 const updateDiv = document.createElement('div');
                 updateDiv.className = 'update';
 
-                const timestampElement = document.createElement('h2');
-                timestampElement.className = 'timestamp';
+                const dateElement = document.createElement('p');
+                dateElement.className = 'date';
                 const date = new Date(update.timestamp);
-                timestampElement.innerHTML = date.toLocaleString();
-                updateDiv.appendChild(timestampElement);
+                dateElement.innerHTML = date.toLocaleString();
+                updateDiv.appendChild(dateElement);
 
-                const titleElement = document.createElement('b');
+                const titleElement = document.createElement('h2');
                 titleElement.textContent = update.title;
                 updateDiv.appendChild(titleElement);
 
