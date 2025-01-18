@@ -9,7 +9,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-       
+        body {
+            font-family: Arial, sans-serif;
+        }
         .date {
             font-weight: bold;
         }
@@ -166,6 +168,10 @@
                 const titleElement = document.createElement('h2');
                 titleElement.textContent = update.title;
                 updateDiv.appendChild(titleElement);
+
+                // Add horizontal line below the title
+                const hrElement = document.createElement('hr');
+                updateDiv.appendChild(hrElement);
 
                 const contentElement = document.createElement('p');
                 contentElement.innerHTML = update.content;
