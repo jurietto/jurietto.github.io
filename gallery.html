@@ -12,21 +12,6 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Apply full screen background image */
-        body {
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/321354');
-            background-size: cover; /* Make background image cover */
-            background-position: center; /* Center the image */
-            background-repeat: no-repeat; /* Do not repeat image */
-        }
-
-        /* Remove background image on mobile devices */
-        @media (max-width: 768px) {
-            body {
-                background-image: none;
-            }
-        }
-
         /* Gallery container style */
         .gallery {
             display: flex;
@@ -184,12 +169,6 @@
                 captionElement.textContent = item.text;
                 galleryItem.appendChild(captionElement);
 
-                const timestampElement = document.createElement('p');
-                timestampElement.className = 'timestamp';
-                const date = new Date(item.timestamp);
-                timestampElement.textContent = `Uploaded on: ${date.toLocaleString()}`;
-                galleryItem.appendChild(timestampElement);
-
                 galleryElement.appendChild(galleryItem);
 
                 // Add divider after each image except the last one
@@ -217,23 +196,6 @@
                 paginationElement.appendChild(button);
             }
         }
-
-        // Function to add a new entry
-        function addEntry(name, text, url) {
-            const galleryRef = database.ref('gallery');
-            galleryRef.child(name).set({
-                text: text,
-                url: url,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            });
-        }
-
-        // Adding entries with timestamps
-        addEntry('charmmy kitty blue bow', '☆ ～(\'▽^人)', 'https://firebasestorage.googleapis.com/v0/b/comments-ff6c9.firebasestorage.app/o/comments%2Fgallery%2FIMG_2635.webp?alt=media&token=04561f19-f63b-4ddc-8576-ffd56e51b57a');
-        addEntry('charmmy kitty green bow', '☆ ～(\'▽^人)', 'https://firebasestorage.googleapis.com/v0/b/comments-ff6c9.firebasestorage.app/o/comments%2Fgallery%2FIMG_2641.webp?alt=media&token=e7ee4882-670b-48e8-a227-b72b6426e234');
-        addEntry('charmmy kitty pink bow', '☆ ～(\'▽^人)', 'https://firebasestorage.googleapis.com/v0/b/comments-ff6c9.firebasestorage.app/o/comments%2Fgallery%2FIMG_2640.webp?alt=media&token=808fc14e-683e-45e9-b86b-bd74f4da96c7');
-        addEntry('charmmy kitty yellow bow', '☆ ～(\'▽^人)', 'https://firebasestorage.googleapis.com/v0/b/comments-ff6c9.firebasestorage.app/o/comments%2Fgallery%2FIMG_2642.webp?alt=media&token=2d35e2a6-9b63-43b4-aae8-e1c7f55e6a46');
-        addEntry('hospital img thx giving', 'hospital arc - thanksgiving 2023. horrible day omfg...', 'https://firebasestorage.googleapis.com/v0/b/comments-ff6c9.firebasestorage.app/o/comments%2Fgallery%2FIMG_1514.jpg?alt=media&token=f8e23728-5040-4c77-bcf2-b78369fb1e33');
 
         // Call loadImages to fetch and display the images when the script runs
         loadImages();
