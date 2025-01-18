@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
     <script src="scripts.js" defer></script>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Apply full screen background image */
+        body {
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/321354');
+            background-size: cover; /* Make background image cover */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat image */
+            color: white; /* Change text color for better contrast with background */
+            font-family: Arial, sans-serif; /* Basic font for better readability */
+            padding: 20px; /* Padding around the body */
+        }
+
+        /* Gallery container style */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on small screens */
+            gap: 10px; /* Space between images */
+            margin: 20px 0; /* Margin for top and bottom */
+        }
+
+        .gallery img {
+            width: 100px; /* Set a fixed width for gallery images */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #ddd; /* Optional: border for images */
+            border-radius: 5px; /* Optional: rounded corners */
+        }
+    </style>
 </head>
 
-<body style="background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/321354');">
+<body>
     <img 
         style="transform: rotate(-5deg); border: 1px solid;" 
         src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
@@ -18,6 +47,9 @@
         height="150" 
     />
     <h1>Gallery</h1>
+    
+    <div class="gallery" id="gallery"></div>
+
     <p>I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!</p>
     <p>I'm sometimes on social media like Twitter or Bluesky, but I deactivate from time to time. I'm most active lurking on Discord—add me @sotokomori. Kindly reach out, but I may or may not be accepting friend requests.</p>
     <p><strong>Recommendation:</strong> Use a desktop to access this site.</p>
@@ -65,5 +97,47 @@
     <footer>
         <h6>2024 - ???</h6>
     </footer>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
+        const galleryElement = document.getElementById('gallery');
+
+        // Fetch images from Firebase Storage
+        async function loadImages() {
+            const storageRef = storage.ref();
+            // Replace with your folder path in Firebase Storage
+            const listRef = storageRef.child('path/to/your/images'); // Update this path
+
+            try {
+                const result = await listRef.listAll();
+                result.items.forEach(item => {
+                    item.getDownloadURL().then(url => {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        galleryElement.appendChild(img);
+                    });
+                });
+            } catch (error) {
+                console.error("Error fetching images: ", error);
+            }
+        }
+
+        // Call loadImages to fetch and display the images
+        loadImages();
+    </script>
 </body>
 </html>
