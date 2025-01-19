@@ -101,10 +101,7 @@ ul li::before {
     }
 
     .home-button {
-        top: 10px; /* Move the home button to the top */
-        bottom: auto; /* Reset the bottom position */
+        bottom: 200px; /* Position the button 200px above the bottom */
         right: 10px;
-        width: 100px; /* Adjust size for mobile */
-        height: 100px;
     }
 }
