@@ -9,43 +9,41 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Gallery container style */
         .gallery {
             display: flex;
-            flex-wrap: wrap; /* Allow items to wrap on small screens */
-            gap: 20px; /* Space between images */
+            flex-wrap: wrap;
             justify-content: center;
         }
 
         .gallery-item {
-            width: 100%; /* Full width for each gallery item */
-            display: flex; /* Flex container for image and text */
+            width: 100%;
+            display: flex;
             flex-direction: column;
-            align-items: center; /* Center the content */
-            user-select: none; /* Prevent text selection */
+            align-items: center;
+            user-select: none;
         }
 
         .gallery-item img {
-            width: 100%; /* Make photos 100% in width */
-            height: auto; /* Maintain aspect ratio */
-            border: 1px solid #FF0099; /* Border for images */
-            border-radius: 5px; /* Rounded corners */
-            pointer-events: none; /* Disable interactions */
+            width: 100%;
+            height: auto;
+            border: 1px solid #FF0099;
+            border-radius: 5px;
+            pointer-events: none;
         }
 
         .caption {
-            color: white; /* Caption text color */
-            text-align: center; /* Center caption text */
-            font-size: 14px; /* Caption text size */
-            margin-top: 5px; /* Margin above caption */
+            color: white;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 5px;
         }
 
         .divider {
-            width: 20px; /* Set width for divider image */
-            height: 20px; /* Set height for divider image */
-            border: none; /* No border for divider image */
-            display: block; /* Ensure it's displayed as a block element */
-            margin: 20px auto; /* Center and add margin for spacing */
+            width: 20px;
+            height: 20px;
+            border: none;
+            display: block;
+            margin: 0 auto;
         }
 
         .pagination {
@@ -59,11 +57,11 @@
             margin: 0 5px;
             padding: 5px 10px;
             cursor: pointer;
-            background-color: #FF0099; /* Set background color to #FF0099 */
+            background-color: #FF0099;
             color: white;
             border: none;
             border-radius: 5px;
-            user-select: none; /* Prevent text selection */
+            user-select: none;
         }
 
         .pagination button:disabled {
@@ -71,7 +69,6 @@
             cursor: not-allowed;
         }
 
-        /* Ensure h2 and h3 elements are centered on mobile devices */
         @media (max-width: 768px) {
             h2,
             .caption,
@@ -81,24 +78,27 @@
         }
 
         .update {
-            margin-bottom: 40px; /* Space between posts */
-            text-align: center; /* Center the content */
+            text-align: center;
         }
 
         .date {
             font-weight: bold;
-            color: white; /* Ensure consistent color */
-            margin-top: 10px; /* Margin above the date */
+            color: white;
+            margin-top: 10px;
         }
 
         .update h2 {
-            margin: 0; /* Remove margin */
-            color: white; /* Ensure consistent color */
+            margin: 0;
+            color: white;
+        }
+
+        .update hr {
+            margin-top: 10px;
         }
 
         .update p {
-            margin-bottom: 40px; /* Remove space below each paragraph */
-            color: white; /* Ensure consistent color */
+            margin-bottom: 40px;
+            color: white;
         }
 
         .search-sort {
@@ -133,10 +133,10 @@
             }
 
             .home-button {
-                top: 10px; /* Move the home button to the top */
-                bottom: auto; /* Reset the bottom position */
+                top: 10px;
+                bottom: auto;
                 right: 10px;
-                width: 100px; /* Adjust size for mobile */
+                width: 100px;
                 height: 100px;
             }
         }
@@ -154,7 +154,7 @@
             <option value="shuffle">Shuffle</option>
         </select>
     </div>
-    <div class="gallery" id="updates"></div> <!-- Container for the updates -->
+    <div class="gallery" id="updates"></div>
     <div class="pagination" id="pagination">
         <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
         <span id="page-numbers"></span>
@@ -162,7 +162,6 @@
     </div>
 
     <script>
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
             authDomain: "comments-ff6c9.firebaseapp.com",
@@ -174,7 +173,6 @@
             measurementId: "G-T8QFHWJDB5"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
@@ -182,53 +180,43 @@
         const itemsPerPage = 5;
         let totalPages = 1;
 
-        // Function to fetch and display life updates
         function loadUpdates() {
             const searchQuery = document.getElementById('search').value.toLowerCase();
             const sortOrder = document.getElementById('sort').value || 'desc';
 
-            // Fetch data from Firebase Realtime Database
             database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
                 let updates = [];
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    // Filter updates based on search query
                     if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
 
-                // Log the updates for debugging
                 console.log("Fetched updates: ", updates);
 
-                // Sort updates
                 if (sortOrder === 'desc') {
                     updates.reverse();
                 } else if (sortOrder === 'shuffle') {
                     updates = shuffle(updates);
                 }
 
-                // Pagination logic
                 totalPages = Math.ceil(updates.length / itemsPerPage);
                 const start = (currentPage - 1) * itemsPerPage;
                 const end = start + itemsPerPage;
                 const paginatedUpdates = updates.slice(start, end);
 
-                // Display updates
                 displayUpdates(paginatedUpdates);
-
-                // Display pagination
                 displayPagination();
             }, (error) => {
                 console.error("Error fetching data: ", error);
             });
         }
 
-        // Function to display life updates
         function displayUpdates(updates) {
             const updatesContainer = document.getElementById('updates');
-            updatesContainer.innerHTML = ''; // Clear previous updates
+            updatesContainer.innerHTML = ''; 
 
             if (updates.length === 0) {
                 updatesContainer.innerHTML = '<p>No updates found.</p>';
@@ -258,28 +246,23 @@
 
                 updatesContainer.appendChild(updateDiv);
 
-                // Add a divider between posts
                 if (index < updates.length - 1) {
                     const divider = document.createElement('img');
                     divider.className = 'divider';
-                    divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif'; // Divider image URL
+                    divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif';
                     updatesContainer.appendChild(divider);
                 }
             });
         }
 
-        // Function to display pagination controls
         function displayPagination() {
             const paginationElement = document.getElementById('pagination');
             const pageNumbersElement = document.getElementById('page-numbers');
-            pageNumbersElement.innerHTML = ''; // Clear previous page numbers
+            pageNumbersElement.innerHTML = '';
 
-            // Disable prev button if on the first page
             document.getElementById('prev').disabled = currentPage === 1;
-            // Disable next button if on the last page
             document.getElementById('next').disabled = currentPage === totalPages;
 
-            // Create pagination buttons
             for (let i = 1; i <= totalPages; i++) {
                 const button = document.createElement('button');
                 button.textContent = i;
@@ -292,13 +275,11 @@
             }
         }
 
-        // Function to change the current page and reload updates
         function changePage(direction) {
             currentPage += direction;
             loadUpdates();
         }
 
-        // Helper function to shuffle an array
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -307,10 +288,8 @@
             return array;
         }
 
-        // Call loadUpdates to fetch and display the updates when the script runs
         window.addEventListener('load', loadUpdates);
     </script>
-    <!-- Home button to navigate to index.html -->
     <a href="index.html">
         <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
     </a>
