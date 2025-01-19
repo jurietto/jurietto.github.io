@@ -9,47 +9,100 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Gallery container style */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap on small screens */
+            gap: 20px; /* Space between images */
+            justify-content: center;
         }
-        .update {
-            margin-bottom: 40px; /* Space between posts */
+
+        .gallery-item {
+            width: 100%; /* Full width for each gallery item */
+            display: flex; /* Flex container for image and text */
+            flex-direction: column;
+            align-items: center; /* Center the content */
+            user-select: none; /* Prevent text selection */
         }
-        .date {
-            font-weight: bold;
-            
+
+        .gallery-item img {
+            width: 100%; /* Make photos 100% in width */
+            height: auto; /* Maintain aspect ratio */
+            border: 1px solid #FF0099; /* Border for images */
+            border-radius: 5px; /* Rounded corners */
+            pointer-events: none; /* Disable interactions */
         }
-        .update h2 {
-            
-            margin: 0; /* Remove margin */
+
+        .caption {
+            color: white; /* Caption text color */
+            text-align: center; /* Center caption text */
+            font-size: 14px; /* Caption text size */
+            margin-top: 5px; /* Margin above caption */
         }
-        .update hr {
-            margin-top: 10px; /* Add space above the horizontal line */
+
+        .divider {
+            width: 20px; /* Set width for divider image */
+            height: 20px; /* Set height for divider image */
+            border: none; /* No border for divider image */
+            display: block; /* Ensure it's displayed as a block element */
         }
-        .update p {
-            margin-bottom: 40px; /* Remove space below each paragraph */
-        }
-        .search-sort {
-            margin-bottom: 20px;
-        }
+
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 20px;
         }
+
         .pagination button {
             margin: 0 5px;
             padding: 5px 10px;
             cursor: pointer;
-            background-color: #FF0099;
+            background-color: #FF0099; /* Set background color to #FF0099 */
             color: white;
             border: none;
             border-radius: 5px;
-            user-select: none;
+            user-select: none; /* Prevent text selection */
         }
+
         .pagination button:disabled {
             background-color: #555;
             cursor: not-allowed;
         }
+
+        /* Ensure h2 and h3 elements are centered on mobile devices */
+        @media (max-width: 768px) {
+            h2,
+            .caption,
+            .timestamp {
+                text-align: center;
+            }
+        }
+
+        .update {
+            margin-bottom: 40px; /* Space between posts */
+        }
+
+        .date {
+            font-weight: bold;
+        }
+
+        .update h2 {
+            margin: 0; /* Remove margin */
+        }
+
+        .update hr {
+            margin-top: 10px; /* Add space above the horizontal line */
+        }
+
+        .update p {
+            margin-bottom: 40px; /* Remove space below each paragraph */
+        }
+
+        .search-sort {
+            margin-bottom: 20px;
+        }
+
         .home-button {
             position: fixed;
             bottom: 10px;
@@ -59,13 +112,24 @@
             cursor: pointer;
             z-index: 10000;
         }
+
         @media screen and (max-width: 700px) {
             body {
                 padding: 20px;
             }
-            h1, h2, h3, h4, h5, h6, a, ul li, footer {
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            a,
+            ul li,
+            footer {
                 text-shadow: none;
             }
+
             .home-button {
                 top: 10px; /* Move the home button to the top */
                 bottom: auto; /* Reset the bottom position */
@@ -78,13 +142,7 @@
 </head>
 
 <body>
-    <img 
-        style="transform: rotate(-5deg); border: 1px solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
-        alt="Decorative Image" 
-        width="200" 
-        height="150" 
-    />
+    <img style="transform: rotate(-5deg); border: 1px solid;" src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" alt="Decorative Image" width="200" height="150" />
     <h1>Life Updates</h1>
     <div class="search-sort">
         <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
@@ -94,7 +152,7 @@
             <option value="shuffle">Shuffle</option>
         </select>
     </div>
-    <div id="updates"></div>
+    <div class="gallery" id="updates"></div> <!-- Container for the updates -->
     <div class="pagination" id="pagination">
         <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
         <span id="page-numbers"></span>
@@ -177,7 +235,7 @@
 
             updates.forEach((update) => {
                 const updateDiv = document.createElement('div');
-                updateDiv.className = 'update';
+                updateDiv.className = 'gallery-item';
 
                 const dateElement = document.createElement('span');
                 dateElement.className = 'date';
@@ -243,11 +301,11 @@
         // Call loadUpdates to fetch and display the updates when the script runs
         window.addEventListener('load', loadUpdates);
     </script>
-   <!-- Home button to navigate to index.html -->
+    <!-- Home button to navigate to index.html -->
     <a href="index.html">
         <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
     </a>
-    
+
     <footer>
         <h6>2024 - ???</h6>
     </footer>
