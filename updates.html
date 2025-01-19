@@ -45,6 +45,7 @@
             height: 20px; /* Set height for divider image */
             border: none; /* No border for divider image */
             display: block; /* Ensure it's displayed as a block element */
+            margin: 20px auto; /* Center and add margin for spacing */
         }
 
         .pagination {
@@ -81,16 +82,18 @@
 
         .update {
             margin-bottom: 40px; /* Space between posts */
+            text-align: center; /* Center the content */
         }
 
         .date {
             font-weight: bold;
+            color: white; /* Ensure consistent color */
+            margin-top: 10px; /* Margin above the date */
         }
 
         .update h2 {
             margin: 0; /* Remove margin */
             color: white; /* Ensure consistent color */
-            text-align: center; /* Center the text */
         }
 
         .update hr {
@@ -99,6 +102,7 @@
 
         .update p {
             margin-bottom: 40px; /* Remove space below each paragraph */
+            color: white; /* Ensure consistent color */
         }
 
         .search-sort {
@@ -262,7 +266,7 @@
                 if (index < updates.length - 1) {
                     const divider = document.createElement('img');
                     divider.className = 'divider';
-                    divider.src = 'path/to/divider/image.png'; // Replace with the actual path to your divider image
+                    divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif'; // Divider image URL
                     updatesContainer.appendChild(divider);
                 }
             });
