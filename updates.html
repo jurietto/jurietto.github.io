@@ -9,21 +9,23 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        
         }
         .update {
-           
+            margin-bottom: 40px; /* Space between posts */
         }
         .date {
             font-weight: bold;
-            margin-bottom: 0; /* Remove space below the date */
+            display: inline; /* Display date inline */
         }
         .update h2 {
-            margin-top: 0; /* Remove space above the title */
-           
+            display: inline; /* Display title inline */
+            margin: 0; /* Remove margin */
+        }
+        .update hr {
+            margin-top: 10px; /* Add space above the horizontal line */
         }
         .update p {
-            margin-bottom: 50px; /* Add space below each paragraph */
+            margin-bottom: 0; /* Remove space below each paragraph */
         }
         .search-sort {
             margin-bottom: 20px;
@@ -177,7 +179,7 @@
                 const updateDiv = document.createElement('div');
                 updateDiv.className = 'update';
 
-                const dateElement = document.createElement('p');
+                const dateElement = document.createElement('span');
                 dateElement.className = 'date';
                 const date = new Date(update.timestamp);
                 dateElement.innerHTML = date.toLocaleString();
