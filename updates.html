@@ -9,7 +9,19 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-  
+        @font-face {
+            font-family: 'Malkavian';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/Malkavian%20Font%20Regular.ttf') format('truetype');
+        }
+
+        body {
+            background-color: #000;
+            color: #f0f0f0;
+            font-family: 'MS Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         header {
             text-align: center;
             padding: 20px;
@@ -28,8 +40,19 @@
             height: 100%;
             background: url('https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg') no-repeat center center;
             background-size: cover;
-            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 75%);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 75%);
+            mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+            filter: blur(10px); /* Blurred effect on the sides */
+        }
+
+        h1 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 4em;
+            color: #FF0099;
+            margin: 0;
+            padding-top: 10px;
+            position: relative; /* Ensure h1 is above the overlay */
+            z-index: 1; /* Ensure h1 is above the overlay */
         }
 
         .search-sort {
@@ -55,7 +78,12 @@
             margin: 40px 0;
             padding: 20px;
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
-    
+        }
+
+        .gallery-item h2 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 2.5em;
+            color: #FF0099;
         }
 
         .date {
@@ -172,7 +200,7 @@
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
