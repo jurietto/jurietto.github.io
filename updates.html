@@ -9,7 +9,19 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-       
+        @font-face {
+            font-family: 'Malkavian';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/Malkavian%20Font%20Regular.ttf') format('truetype');
+        }
+
+        body {
+            background-color: #000;
+            color: #f0f0f0;
+            font-family: 'MS Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         header {
             text-align: center;
             padding: 20px;
@@ -18,6 +30,17 @@
             background-position: center;
         }
 
+        header img {
+            display: none; /* Hide the image since it's now a background */
+        }
+
+        h1 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 4em;
+            color: #FF0099;
+            margin: 0;
+            padding: 10px 0;
+        }
 
         .search-sort {
             text-align: center;
@@ -39,7 +62,7 @@
             background-size: 20px 20px;
             border: 1px solid #FF0099;
             border-radius: 10px;
-            margin: 40px 0; /* Increased margin for more space between posts */
+            margin: 40px 0;
             padding: 20px;
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
         }
@@ -74,6 +97,45 @@
             margin: 0 5px;
             padding: 10px 15px;
             cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .home-button {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        @media screen and (max-width: 700px) {
+            body {
+                padding: 20px;
+            }
+
+            .home-button {
+                top: 10px;
+                bottom: auto;
+                width: 100px;
+                height: 100px;
+            }
+
+            h1,
+            h3,
+            h4,
+            h5,
+            h6,
+            a,
+            ul li,
+            footer {
+                text-shadow: none;
+            }
         }
     </style>
 </head>
