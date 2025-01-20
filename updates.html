@@ -9,59 +9,106 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'MS Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            border-bottom: 1px solid #444;
+        }
+
+        header img {
+            border-radius: 50%;
+            border: 2px solid #FF0099;
+        }
+
+        h1 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 3em;
+            color: #FF0099;
+            margin: 0;
+        }
+
+        .search-sort {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .search-sort input,
+        .search-sort select {
+            margin: 0 10px;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
         .gallery {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
 
         .gallery-item {
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            user-select: none;
+            max-width: 600px;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 10px;
+            margin: 10px 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            border: 1px solid #FF0099;
-            border-radius: 5px;
-            pointer-events: none;
+        .gallery-item h2 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 2em;
+            color: #FF0099;
         }
 
-        .caption {
-            color: white;
-            text-align: center;
-            font-size: 14px;
-            margin-top: 5px;
+        .date {
+            font-weight: bold;
+            color: #aaa;
+            margin-bottom: 10px;
         }
 
-        .divider {
-            width: 20px;
-            height: 20px;
-            border: none;
-            display: block;
-            margin: 0 auto;
+        .line {
+            height: 1px;
+            background-color: grey;
+            margin: 20px 0;
         }
 
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            margin: 20px 0;
         }
 
         .pagination button {
             margin: 0 5px;
-            padding: 5px 10px;
+            padding: 10px 15px;
             cursor: pointer;
             background-color: #FF0099;
             color: white;
             border: none;
             border-radius: 5px;
-            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background-color: #cc0077;
         }
 
         .pagination button:disabled {
@@ -69,28 +116,11 @@
             cursor: not-allowed;
         }
 
-        @media (max-width: 768px) {
-            .caption,
-            .timestamp {
-                text-align: center;
-            }
-        }
-
-        .update {
+        footer {
             text-align: center;
-        }
-
-        .date {
-            font-weight: bold;
-            color: white;
-        }
-
-        .update p {
-            color: white;
-        }
-
-        .search-sort {
-            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-top: 1px solid #444;
         }
 
         .home-button {
@@ -108,6 +138,13 @@
                 padding: 20px;
             }
 
+            .home-button {
+                top: 10px;
+                bottom: auto;
+                width: 100px;
+                height: 100px;
+            }
+
             h1,
             h3,
             h4,
@@ -118,21 +155,15 @@
             footer {
                 text-shadow: none;
             }
-
-            .home-button {
-                top: 10px;
-                bottom: auto;
-                right: 10px;
-                width: 100px;
-                height: 100px;
-            }
         }
     </style>
 </head>
 
 <body>
-    <img style="transform: rotate(-5deg); border: 1px solid;" src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" alt="Decorative Image" width="200" height="150" />
-    <h1>Life Updates</h1>
+    <header>
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" alt="Decorative Image" width="100" height="100">
+        <h1>Life Updates</h1>
+    </header>
     <div class="search-sort">
         <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
         <select id="sort" onchange="loadUpdates()">
@@ -279,7 +310,7 @@
         window.addEventListener('load', loadUpdates);
     </script>
     <a href="index.html">
-        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
+        <img id="home-button" class="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button">
     </a>
 
     <footer>
