@@ -89,8 +89,7 @@ ul li::before {
     z-index: 10000;
 }
 
-hr {
-    border: none;
+.line {
     height: 1px;
     background-color: grey;
     margin: 20px 0; /* Adjust margin as needed */
