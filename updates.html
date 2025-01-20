@@ -9,16 +9,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-    
+        @font-face {
+            font-family: 'Malkavian';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/Malkavian%20Font%20Regular.ttf') format('truetype');
+        }
+
+        body {
+            background-color: #000;
+            color: #f0f0f0;
+            font-family: 'MS Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         header {
             text-align: center;
-            height: 300px; /* Increased height of the header */
+            height: 300px; /* Height of the header */
             width: 300px; /* Ensure the heart shape is a square */
-            border-radius: 50%; /* Initially make it a circle */
-            overflow: hidden; /* Ensure content stays within the border-radius */
             position: relative; /* For positioning the overlay */
             margin: 0 auto 20px; /* Center the header and add margin below */
-            transform: rotate(-45deg); /* Rotate to start shaping the heart */
         }
 
         .header-image {
@@ -26,15 +35,18 @@
             background-size: cover;
             width: 100%;
             height: 100%;
-            mask-image: radial-gradient(circle at top left, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%), radial-gradient(circle at top right, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
-            -webkit-mask-image: radial-gradient(circle at top left, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%), radial-gradient(circle at top right, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
-            mask-composite: intersect;
-            -webkit-mask-composite: destination-in;
-            filter: blur(10px); /* Blurred effect on the sides */
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: rotate(45deg); /* Rotate back to normal */
+            clip-path: path("M 150 30 A 30 30 0 0 1 210 90 Q 150 180 90 90 A 30 30 0 0 1 150 30 Z");
+            /* Blurred effect on the sides */
+            filter: blur(10px);
+        }
+
+        h1 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 4em;
+            color: #FF0099;
+            margin: 0;
+            padding-top: 10px;
+            text-align: center; /* Center align the h1 text */
         }
 
         .search-sort {
@@ -183,7 +195,7 @@
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
