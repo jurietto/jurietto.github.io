@@ -24,8 +24,9 @@
 
         header {
             text-align: center;
-            height: 300px; /* Height of the header */
-            width: 300px; /* Ensure the heart shape is a square */
+            height: 250px; /* Set height of the header */
+            border-radius: 10px; /* Match the border-radius of the posts */
+            overflow: hidden; /* Ensure content stays within the border-radius */
             position: relative; /* For positioning the overlay */
             margin: 0 auto 20px; /* Center the header and add margin below */
         }
@@ -35,8 +36,9 @@
             background-size: cover;
             width: 100%;
             height: 100%;
-            clip-path: path("M 150 30 A 30 30 0 0 1 210 90 Q 150 180 90 90 A 30 30 0 0 1 150 30 Z");
             /* Blurred effect on the sides */
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent 100%);
             filter: blur(10px);
         }
 
@@ -195,7 +197,7 @@
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date includes(searchQuery)) {
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
