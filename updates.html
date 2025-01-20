@@ -24,25 +24,23 @@
 
         header {
             text-align: center;
-            padding: 20px;
             height: 300px; /* Increased height of the header */
             border-radius: 10px; /* Match the border-radius of the posts */
             overflow: hidden; /* Ensure content stays within the border-radius */
             position: relative; /* For positioning the overlay */
+            margin-bottom: 20px; /* Add margin to separate header from h1 */
         }
 
-        header::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .header-image {
             background: url('https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg') no-repeat center center;
             background-size: cover;
+            width: 100%;
+            height: 100%;
             mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
             -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-            filter: blur(10px); /* Blurred effect on the sides */
+            /* Blurred effect on the sides */
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent 100%);
         }
 
         h1 {
@@ -51,8 +49,7 @@
             color: #FF0099;
             margin: 0;
             padding-top: 10px;
-            position: relative; /* Ensure h1 is above the overlay */
-            z-index: 1; /* Ensure h1 is above the overlay */
+            text-align: center; /* Center align the h1 text */
         }
 
         .search-sort {
@@ -155,8 +152,9 @@
 
 <body>
     <header>
-        <h1>Life Updates</h1>
+        <div class="header-image"></div>
     </header>
+    <h1>Life Updates</h1>
     <div class="search-sort">
         <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
         <select id="sort" onchange="loadUpdates()">
@@ -200,7 +198,7 @@
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date includes(searchQuery)) {
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
