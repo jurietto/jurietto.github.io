@@ -9,13 +9,49 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        @font-face {
+            font-family: 'Malkavian';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/Malkavian%20Font%20Regular.ttf') format('truetype');
+        }
+
+        body {
+            background-color: #000;
+            color: #f0f0f0;
+            font-family: 'MS Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         header {
             text-align: center;
             padding: 20px;
             height: 300px; /* Increased height of the header */
-            background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.6) 100%), url('https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg');
+            border-radius: 10px; /* Match the border-radius of the posts */
+            overflow: hidden; /* Ensure content stays within the border-radius */
+            position: relative; /* For positioning the overlay */
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg') no-repeat center center;
             background-size: cover;
-            background-position: center;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        h1 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 4em;
+            color: #FF0099;
+            margin: 0;
+            padding-top: 10px;
+            position: relative; /* Ensure h1 is above the overlay */
+            z-index: 1; /* Ensure h1 is above the overlay */
         }
 
         .search-sort {
@@ -118,7 +154,6 @@
 
 <body>
     <header>
-
         <h1>Life Updates</h1>
     </header>
     <div class="search-sort">
