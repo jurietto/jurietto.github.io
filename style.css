@@ -89,7 +89,7 @@ ul li::before {
     z-index: 10000;
 }
 
-href {
+hr {
     border: none;
     height: 1px;
     background-color: grey;
