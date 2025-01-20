@@ -9,26 +9,16 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-        @font-face {
-            font-family: 'Malkavian';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/Malkavian%20Font%20Regular.ttf') format('truetype');
-        }
-
-        body {
-            background-color: #000;
-            color: #f0f0f0;
-            font-family: 'MS Gothic', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
+    
         header {
             text-align: center;
             height: 300px; /* Increased height of the header */
-            border-radius: 10px; /* Match the border-radius of the posts */
+            width: 300px; /* Ensure the heart shape is a square */
+            border-radius: 50%; /* Initially make it a circle */
             overflow: hidden; /* Ensure content stays within the border-radius */
             position: relative; /* For positioning the overlay */
-            margin-bottom: 20px; /* Add margin to separate header from h1 */
+            margin: 0 auto 20px; /* Center the header and add margin below */
+            transform: rotate(-45deg); /* Rotate to start shaping the heart */
         }
 
         .header-image {
@@ -36,20 +26,15 @@
             background-size: cover;
             width: 100%;
             height: 100%;
-            mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-            /* Blurred effect on the sides */
-            mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 80%, transparent 100%);
-        }
-
-        h1 {
-            font-family: 'Lindley', sans-serif;
-            font-size: 4em;
-            color: #FF0099;
-            margin: 0;
-            padding-top: 10px;
-            text-align: center; /* Center align the h1 text */
+            mask-image: radial-gradient(circle at top left, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%), radial-gradient(circle at top right, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+            -webkit-mask-image: radial-gradient(circle at top left, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%), radial-gradient(circle at top right, transparent 0%, transparent 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+            mask-composite: intersect;
+            -webkit-mask-composite: destination-in;
+            filter: blur(10px); /* Blurred effect on the sides */
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(45deg); /* Rotate back to normal */
         }
 
         .search-sort {
