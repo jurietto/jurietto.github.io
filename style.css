@@ -79,15 +79,6 @@ ul li::before {
     background-size: cover;
 }
 
-.home-button {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 150px;
-    height: 150px;
-    cursor: pointer;
-    z-index: 10000;
-}
 
 .line {
     width: 100%;
