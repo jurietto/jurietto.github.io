@@ -214,8 +214,8 @@
                 const updateDiv = document.createElement('div');
                 updateDiv.className = 'gallery-item';
 
-                const titleElement = document.createElement('div');
-                titleElement.className = 'line';
+                const titleElement = document.createElement('h2');
+                titleElement.textContent = update.title;
                 updateDiv.appendChild(titleElement);
 
                 const dateElement = document.createElement('span');
@@ -223,6 +223,10 @@
                 const date = new Date(update.timestamp);
                 dateElement.innerHTML = date.toLocaleString();
                 updateDiv.appendChild(dateElement);
+
+                const hrElement = document.createElement('div');
+                hrElement.className = 'line';
+                updateDiv.appendChild(hrElement);
 
                 const contentElement = document.createElement('p');
                 contentElement.innerHTML = update.content;
