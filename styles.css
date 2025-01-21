@@ -2,7 +2,7 @@
 body {
     background-color: black; /* Set the body background to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
-    background-size: contain; /* Cover the entire body */
+    background-size: cover; /* Cover the entire body */
     background-attachment: fixed; /* Make the background image fixed */
     background-position: center; /* Center the background image */
     color: white; /* Set default text color to white */
@@ -18,25 +18,32 @@ h2, a {
     color: #FF007F; /* Hot pink color for H2 and links */
 }
 
-/* Add text shadow to all text */
+/* Add soft text shadow to all text */
 h1, h2, h3, h4, h5, h6, p, a {
     text-shadow: 
-        1px 1px 0 rgba(0, 0, 0, 1),
-        -1px -1px 0 rgba(0, 0, 0, 1),
-        1px -1px 0 rgba(0, 0, 0, 1),
-        -1px 1px 0 rgba(0, 0, 0, 1); /* Four shadows for all text with 100% opacity */
+        1px 1px 3px rgba(0, 0, 0, 1), /* Soft shadow */
+        -1px -1px 3px rgba(0, 0, 0, 1),
+        1px -1px 3px rgba(0, 0, 0, 1),
+        -1px 1px 3px rgba(0, 0, 0, 1); /* Adjusted for softer effect */
+}
+
+/* Automatic line break below each h2 */
+h2::after {
+    content: ''; /* Create an empty content for the pseudo-element */
+    display: block; /* Make it a block to take up space */
+    margin: 10px 0; /* Add some vertical space above and below the <hr /> */
 }
 
 /* Footer styles */
 footer {
     text-align: center; /* Center the footer content */
-    color: white; /* White for the footer text, to keep all text except h2 and links white */
+    color: white; /* White for the footer text */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
     text-shadow: 
-        1px 1px 0 rgba(0, 0, 0, 1),
-        -1px -1px 0 rgba(0, 0, 0, 1),
-        1px -1px 0 rgba(0, 0, 0, 1),
-        -1px 1px 0 rgba(0, 0, 0, 1); /* Shadow for footer text with 100% opacity */
+        1px 1px 3px rgba(0, 0, 0, 1),
+        -1px -1px 3px rgba(0, 0, 0, 1),
+        1px -1px 3px rgba(0, 0, 0, 1),
+        -1px 1px 3px rgba(0, 0, 0, 1); /* Shadow for footer text */
 }
 
 /* Custom styles for header and sidebar can be added here */
