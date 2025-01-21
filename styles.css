@@ -9,7 +9,7 @@ body {
     font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
     margin: 20px; /* Apply uniform margins */
     padding: 10px; /* Apply some padding */
-    max-width: 575px; /* Limit body width to 800px */
+    max-width: 800px; /* Limit body width to 800px */
     width: 100%; /* Set the width to 100% of its parent */
     line-height: 1.6; /* Improve readability */
     text-align: justify; /* Justify the text */
@@ -24,7 +24,6 @@ header {
     padding: 20px; /* Add some padding to the header */
     border: 1px solid white; /* White border */
     border-radius: 3px; /* Rounded corners */
-    text-align: justify; /* Justify text inside the header */
     margin: 20px 0; /* Uniform margin above and below the header */
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for better text visibility */
     box-shadow: 
@@ -47,12 +46,14 @@ header h1 {
     font-size: 2.5rem; /* Adjust font size */
 }
 
-/* Styles for general H2 elements in the body */
-h2 {
+/* H2 styles in the header */
+header h2 {
     color: #FF007F; /* Hot pink color for H2 */
     text-transform: uppercase; /* Make H2 text uppercase */
-    padding: 10px; /* Add some padding to the H2 */
-    margin: 20px 0; /* Uniform margin for H2 */
+    position: absolute; /* Position it absolutely within the header */
+    bottom: 10px; /* Align to bottom */
+    right: 20px; /* Align to the right */
+    margin: 0; /* Remove default margin */
 }
 
 /* H2 after pseudo-element */
@@ -64,6 +65,25 @@ h2::after {
     background-color: #FF007F; /* Color of the horizontal line */
 }
 
+/* Styles for general H2 elements in the body */
+h2 {
+    color: #FF007F; /* Hot pink color for H2 */
+    text-transform: uppercase; /* Make H2 text uppercase */
+    padding: 10px; /* Add some padding to the H2 */
+    margin: 20px 0; /* Uniform margin for H2 in the body */
+}
+
+/* Style for links */
+a {
+    color: #FF007F; /* Magenta color for links */
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Hover effect for links */
+a:hover {
+    color: white; /* Change link color to white on hover */
+}
+
 /* Style for links and paragraph text */
 p {
     color: white; /* Set default text color to white for paragraphs */
@@ -72,7 +92,7 @@ p {
 }
 
 /* Add intense text shadow to all text */
-h1, .header-h2, h2, p {
+h1, h2, p {
     text-shadow: 
         2px 2px 4px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
         -2px -2px 4px rgba(0, 0, 0, 1),
