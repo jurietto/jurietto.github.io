@@ -17,11 +17,11 @@ body {
     line-height: 1.6;
     padding: 20px 30px; /* Adjust padding for better readability */
     text-align: justify; /* Justify text alignment */
-    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
+    text-shadow: 16px 16px 32px rgba(0, 0, 0, 0.99), 8px 8px 16px rgba(0, 0, 0, 0.89), 4px 4px 8px rgba(0, 0, 0, 0.69); /* More intense and opaque shadows */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
+    text-shadow: 16px 16px 32px rgba(0, 0, 0, 0.99), 8px 8px 16px rgba(0, 0, 0, 0.89), 4px 4px 8px rgba(0, 0, 0, 0.69); /* More intense and opaque shadows */
     text-align: left; /* Align headers to the left */
     margin: 20px 0; /* Add margin for headers */
 }
@@ -43,7 +43,7 @@ h3, h4, h5, h6 {
 }
 
 p, a {
-    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
+    text-shadow: 16px 16px 32px rgba(0, 0, 0, 0.99), 8px 8px 16px rgba(0, 0, 0, 0.89), 4px 4px 8px rgba(0, 0, 0, 0.69); /* More intense and opaque shadows */
 }
 
 a {
@@ -73,7 +73,7 @@ ul li {
     display: flex;
     align-items: baseline;
     gap: 10px;
-    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
+    text-shadow: 16px 16px 32px rgba(0, 0, 0, 0.99), 8px 8px 16px rgba(0, 0, 0, 0.89), 4px 4px 8px rgba(0, 0, 0, 0.69); /* More intense and opaque shadows */
     line-height: 1.4; /* Adjust line height for better readability */
     margin-bottom: 10px; /* Add margin between list items */
 }
