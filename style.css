@@ -52,7 +52,7 @@ a {
 }
 
 a:hover {
-    color: lime; /* Revert link hover color */
+    color: #FF0099; /* Revert link hover color */
 }
 
 footer {
