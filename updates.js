@@ -19,7 +19,14 @@ const updatesRef = firebase.database().ref('lifeupdates');
 function loadUpdates() {
     updatesRef.once('value', function(snapshot) {
         const updates = snapshot.val();
-        displayUpdates(updates);
+        // Check if updates is defined
+        if (updates) {
+            displayUpdates(updates);
+        } else {
+            console.error('No updates found in the database.');
+        }
+    }).catch(error => {
+        console.error('Error fetching updates:', error);
     });
 }
 
