@@ -5,10 +5,10 @@
 body {
     background-color: black; /* Set the background color of the body to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
-    background-size: contain; /* Contain the background image within the body */
+    background-size: contain; /* Contain the image within the body */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
     background-position: center; /* Center the background image */
-    background-attachment: fixed; /* Fix background image so it stays in place during scroll */
+    background-attachment: fixed; /* Make the background image fixed */
     
     color: white; /* Set the default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman font */
@@ -220,7 +220,7 @@ main {
 
 /* Apply specific styles for h2 elements */
 h2 {
-    color: #FF2B79; /* Again, bubblegum pink color for h2 */
+    color: #FF2B79; /* Bubblegum pink color for h2 */
     text-transform: uppercase; /* Uppercase styling */
     
     display: inline-block; /* For alignment with h1 */
