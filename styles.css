@@ -2,8 +2,9 @@
 body {
     background-color: black; /* Set the body background to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set your custom background image */
-    background-size: cover; /* Ensure the background image covers the entire area */
+    background-size: contain; /* Ensure the background image is contained within the body */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-attachment: fixed; /* Make the background image fixed */
     color: white; /* Set default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Set the body font */
     margin: 20px; /* Apply uniform margins only to the body */
