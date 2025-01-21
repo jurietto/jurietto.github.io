@@ -29,10 +29,9 @@
             color: white; /* Set the default text color to white */
             line-height: 1.6; /* Line height for better readability */
             max-width: 600px; /* Maximum width of the body */
-            width: 100%; /* Full width relative to its container, with a 5% margin */
-            margin: 50; /* Center the body */
+            width: 100%; /* Full width relative to its container */
+            margin: 50px auto; /* Center the body with a top margin */
             padding: 10px; /* Padding for the body */
-            box-sizing: border-box; /* Include padding in the element's total width and height */
         }
 
         /* ------------------------------ 
@@ -44,7 +43,8 @@
             height: 300px; 
             overflow: hidden; 
             margin: 20px; /* Margins for header */
-            width: 100%; /* Full width of its container */
+            width: calc(100% - 40px); /* Full width of its container minus margins */
+            max-width: 600px; /* Make header width the same as body width */
         }
 
         /* Header video background */
@@ -68,6 +68,7 @@
             height: 100%; 
             justify-content: center; 
             text-align: center; 
+            padding: 10px; /* Added padding for header content */
         }
 
         .title-container {
@@ -80,7 +81,7 @@
             font-family: 'Apple Chancery', cursive; /* Custom font for h1 */
             font-size: 2.5rem; 
             text-shadow: 
-                0 0 4px rgba(0, 0, 0, 1); /* Simplified shadow effect */
+                0 0 4px rgba(0, 0, 0, 0.8); /* Very dark shadow effect */
         }
 
         .title-container hr {
@@ -108,7 +109,7 @@
             text-decoration: none; 
             margin: 0 10px; 
             text-shadow: 
-                0 0 4px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
+                0 0 4px rgba(0, 0, 0, 0.8); /* Very dark shadow effect */
         }
 
         nav .separator {
@@ -123,6 +124,7 @@
 
         h2, h3, h4, h5 {
             font-family: 'Apple Chancery', cursive; /* Custom font for h2-h5 */
+            text-transform: capitalize; /* Capitalize the first letter of each word */
         }
 
         /* ------------------------------ 
@@ -151,6 +153,10 @@
 
         .gallery-item {
             padding: 20px; 
+        }
+
+        .gallery-item h2 {
+            text-transform: capitalize; /* Capitalize individual words for gallery titles */
         }
 
         .gallery-item .date {
@@ -329,7 +335,10 @@
                 updateDiv.className = 'gallery-item';
 
                 const titleElement = document.createElement('h2');
-                titleElement.textContent = update.title;
+                titleElement.textContent = update.title
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                    .join(' '); // Capitalizes each word
                 updateDiv.appendChild(titleElement);
 
                 // Create and append date element
