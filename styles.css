@@ -5,9 +5,10 @@
 body {
     background-color: black; /* Set the background color of the body to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
-    background-size: cover; /* Cover full body with the image */
+    background-size: contain; /* Contain the background image within the body */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
     background-position: center; /* Center the background image */
+    background-attachment: fixed; /* Fix background image so it stays in place during scroll */
     
     color: white; /* Set the default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman font */
