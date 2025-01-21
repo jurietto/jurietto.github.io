@@ -7,129 +7,7 @@
     <title>Life Updates</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Font face for custom font */
-        @font-face {
-            font-family: 'Lindley';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
-        }
-
-        /* Body styling */
-        body {
-            font-family: 'MS Gothic', sans-serif;
-            background-color: black;
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: contain;
-            color: white;
-            max-width: 500px; /* Maximum width for the content */
-            margin: 20px; /* Add uniform margin */
-            line-height: 1.6;
-            padding: 20px 30px; /* Adjust padding for better readability */
-            text-align: justify; /* Justify text alignment */
-        }
-
-        /* Header styling */
-        header {
-            width: 100%; /* Set width of the header */
-            height: 200px; /* Set height of the header */
-            overflow: hidden; /* Ensure content stays within the border-radius */
-            position: relative; /* For positioning the overlay */
-            background: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg') no-repeat top center;
-            background-size: cover;
-            border-radius: 10px; /* Add border radius */
-            border: 1px solid #FF0099; /* Add border */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0); /* Intense black shadow */
-        }
-
-        /* Header text styling */
-        .header-text {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            color: #f0f0f0;
-            text-align: right;
-            font-weight: bold; /* Make header text bold */
-        }
-        
-        /* Search and sort styling */
-        .search-sort {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .search-sort input[type="text"],
-        .search-sort select {
-            border: 2px inset #FF0099;
-            padding: 4px;
-            background-color: #fff;
-            color: #000;
-            font-family: 'MS Gothic', sans-serif;
-        }
-
-        /* Gallery styling */
-        .gallery {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Line styling */
-        .line {
-            width: 100%;
-            height: 1px;
-            background-color: grey;
-            margin: 20px 0; /* Adjust margin as needed */
-        }
-
-        /* Gallery item styling */
-        .gallery-item {
-            width: 100%;
-            max-width: 500px;
-            background-color: rgba(0, 0, 0, 0.9); /* More opaque background */
-            background-image: repeating-linear-gradient(
-                225deg,
-                rgba(255, 0, 153, 0.2) 0, /* Increased opacity */
-                rgba(255, 0, 153, 0.2) 10px,
-                transparent 10px,
-                transparent 20px
-            ); /* Diagonal stripes */
-            border: 1px solid #FF0099; /* Same border color */
-            border-radius: 10px;
-            margin: 20px 0; /* Adjust margin for better spacing */
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0); /* Intense black shadow */
-        }
-
-        /* Pagination styling */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .pagination button {
-            margin: 0 5px; /* Add space between buttons */
-            padding: 10px 15px;
-            cursor: pointer;
-            border: 2px outset #FF0099; /* Same border color */
-            background-color: #fff;
-            color: #000;
-            font-family: 'MS Gothic', sans-serif;
-        }
-
-        /* Footer styling */
-        footer {
-            text-align: center; /* Align footer text to the center */
-            margin-top: 20px; /* Adjust margin for better spacing */
-            font-size: 0.9em;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -154,6 +32,10 @@
         <span id="page-numbers"></span>
         <button id="next" onclick="changePage(1)">Next &#62;</button>
     </div>
+
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
 
     <script>
         // Firebase configuration
@@ -291,10 +173,6 @@
         // Load updates on window load
         window.addEventListener('load', loadUpdates);
     </script>
-
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
 </body>
 
 </html>
