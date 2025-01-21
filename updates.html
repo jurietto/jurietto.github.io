@@ -16,27 +16,47 @@
 
 <body>
     <header>
-        <h1>Juri's Stuff</h1>
-        <h2>Updates</h2>
+        <video autoplay muted loop>
+            <source src="https://file.garden/ZhTgSjrp5nAroRKq/videoplayback.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="header-content">
+            <h1>juri's stuff</h1>
+            <h2>updates</h2>
+        </div>
+        <nav>
+            <a href="index.html">home</a>
+            <span>★</span>
+            <a href="about.html">about</a>
+            <span>♥</span>
+            <a href="gallery.html">gallery</a>
+            <span>♦</span>
+            <a href="updates.html">updates</a>
+            <span>♠</span>
+            <span>♪</span>
+        </nav>
     </header>
 
     <div class="sidebar">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="updates.html">Updates</a>
+        <a href="index.html">home</a>
+        <span>★</span>
+        <a href="about.html">about</a>
+        <span>♥</span>
+        <a href="gallery.html">gallery</a>
+        <span>♦</span>
+        <a href="updates.html">updates</a>
+        <span>♠</span>
+        <span>♪</span>
     </div>
 
     <main>
-      
-
         <!-- Search and Sort UI -->
-        <div>
+        <div class="search-sort">
             <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
             <select id="sort" onchange="loadUpdates()">
-                <option value="desc">Sort by Newest</option>
-                <option value="asc">Sort by Oldest</option>
-                <option value="shuffle">Shuffle</option>
+                <option value="desc">sort by newest</option>
+                <option value="asc">sort by oldest</option>
+                <option value="shuffle">shuffle</option>
             </select>
         </div>
 
@@ -50,9 +70,6 @@
             <button id="next" onclick="changePage(1)">Next &#62;</button>
         </div>
     </main>
-
-    <!-- Include the external JavaScript file -->
-    <script src="updates.js"></script>
 
     <footer>
         <h6>2024 - ???</h6>
