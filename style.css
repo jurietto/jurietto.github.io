@@ -100,7 +100,7 @@ header {
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-blend-mode: overlay;
+    background-blend-mode: ;
     opacity: 0.5; /* 50% opacity for background image */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
