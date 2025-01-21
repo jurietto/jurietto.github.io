@@ -15,7 +15,7 @@ body {
     background-size: contain; /* Make background image contain within the body */
     color: white; /* Default text color */
     max-width: 500px; /* Maximum width for the content */
-    margin: 20px; /* Add uniform margin around body */
+    margin: 20px auto; /* Add uniform margin around body and center it */
     line-height: 1.6; /* Set line height for readability */
     padding: 20px 30px; /* Adjust padding for better readability */
     text-align: justify; /* Justify the text alignment */
