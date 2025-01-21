@@ -1,19 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - Updates</title>
+    
+    <style>
+        /* ------------------------------ 
+           GLOBAL STYLES
+        --------------------------------- */
 
-    <!-- Link to the external CSS file -->
-    <link rel="stylesheet" href="styles.css">
+        body {
+            font-family: 'MSUI GOTHIC', 'Times New Roman', Times, serif; /* Default font for body */
+            background-color: black; /* Set the background color of the body to black */
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
+            background-size: contain; /* Contain the image within the body */
+            background-repeat: no-repeat; /* Prevent the background image from repeating */
+            background-position: center; /* Center the background image */
+            background-attachment: fixed; /* Make the background image fixed */
 
-    <!-- Firebase App, Database, and Storage libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+            color: white; /* Set the default text color to white */
+            line-height: 1.6; /* Line height for better readability */
+            padding: 20px; /* Padding for the body */
+        }
+
+        /* ------------------------------ 
+           HEADER STYLES
+        --------------------------------- */
+
+        header {
+            position: relative; 
+            height: 300px; 
+            overflow: hidden; 
+            width: 100%; 
+        }
+
+        /* Header video background */
+        header video {
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            min-width: 130%; 
+            min-height: 130%; 
+            z-index: 0; 
+            transform: translate(-50%, -50%); 
+            width: 100%; /* Make video full width */
+        }
+
+        /* Header content styles */
+        .header-content {
+            position: relative; 
+            z-index: 1; 
+            display: flex; 
+            align-items: flex-end; 
+            height: 100%; 
+            justify-content: center; 
+            text-align: center; 
+        }
+
+        .title-container {
+            text-align: center; 
+        }
+
+        .title-container h1 {
+            margin: 0; 
+            font-size: 2.5rem; 
+            text-shadow: 
+                0 0 4px rgba(0, 0, 0, 1); /* Simplified shadow effect */
+        }
+
+        .title-container hr {
+            border: 0; 
+            height: 1px; 
+            background-color: white; 
+            margin: 10px 0; 
+        }
+
+        /* ------------------------------ 
+           NAVIGATION STYLES
+        --------------------------------- */
+
+        nav {
+            margin-top: 10px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 10px 0; 
+        }
+
+        nav a {
+            color: #ff007b; 
+            text-decoration: none; 
+            margin: 0 10px; 
+            text-upper: none; /* Regular case for links */
+            text-shadow: 
+                0 0 4px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
+        }
+
+        nav .separator {
+            color: white; 
+            margin: 0 5px; 
+        }
+
+        /* Hover effect for links */
+        nav a:hover {
+            color: white; 
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'LINDL', sans-serif; /* LINDL font for headers */
+        }
+
+        /* ------------------------------ 
+           FOOTER STYLES
+        --------------------------------- */
+
+        footer {
+            text-align: center; 
+            font-family: 'MSUI GOTHIC'; 
+            font-size: 1rem; 
+            padding: 10px 0; 
+        }
+
+        /* ------------------------------ 
+           MAIN CONTENT STYLES
+        --------------------------------- */
+
+        main {
+            text-align: justify; 
+            margin-left: 50px; /* Shift main content to the right */
+        }
+
+        /* ---------------------------------
+           UPDATE ITEM STYLES
+        --------------------------------- */
+
+        .gallery-item {
+            padding: 20px; 
+        }
+
+        .gallery-item .date {
+            color: white; 
+            font-size: 0.8rem; 
+            font-family: 'MSUI GOTHIC'; 
+        }
+
+        .line {
+            border: 0; 
+            height: 1px; 
+            background-color: white; 
+            margin: 10px 0; 
+        }
+
+        /* ------------------------------ 
+           TIMESTAMP STYLES
+        --------------------------------- */
+
+        .timestamp {
+            display: block; 
+            margin-bottom: 10px; 
+        }
+
+        .timestamp + hr {
+            margin: 0; 
+        }
+    </style>
 </head>
-
 <body>
     <header>
         <video autoplay muted loop>
@@ -23,37 +176,35 @@
         <div class="header-content">
             <div class="title-container">
                 <h1>Juri's Stuff</h1>
-             
-                 <nav>
-        <a href="index.html">Home</a>
-        <span class="separator">♥</span>
-        <a href="about.html">About</a>
-        <span class="separator">★</span>
-        <a href="gallery.html">Gallery</a>
-        <span class="separator">♛</span>
-        <a href="updates.html">Updates</a>
-        <span class="separator">♣</span>
-        <a href="visual-novels.html">Visual Novels</a>
-        <span class="separator">♪</span>
-        <a href="music.html">Music</a>
-        <span class="separator">♠</span>
-        <a href="art.html">Art</a>
-        <span class="separator">♦</span>
-        <a href="twitter.html">Twitter</a>
-        <span class="separator">♣</span>
-        <a href="bluesky.html">Bluesky</a>
-        <span class="separator">♣</span>
-        <a href="youtube.html">YouTube</a>
-        <span class="separator">★</span>
-        <a href="soundcloud.html">SoundCloud</a>
-        <span class="separator">♪</span>
-        <a href="vndb.html">VNDB</a>
-    </nav>
+                <hr>
+                <nav>
+                    <a href="index.html">Home</a>
+                    <span class="separator">♥</span>
+                    <a href="about.html">About</a>
+                    <span class="separator">★</span>
+                    <a href="gallery.html">Gallery</a>
+                    <span class="separator">♛</span>
+                    <a href="updates.html">Updates</a>
+                    <span class="separator">♣</span>
+                    <a href="visual-novels.html">Visual Novels</a>
+                    <span class="separator">♪</span>
+                    <a href="music.html">Music</a>
+                    <span class="separator">♠</span>
+                    <a href="art.html">Art</a>
+                    <span class="separator">♦</span>
+                    <a href="twitter.html">Twitter</a>
+                    <span class="separator">♣</span>
+                    <a href="bluesky.html">Bluesky</a>
+                    <span class="separator">♣</span>
+                    <a href="youtube.html">YouTube</a>
+                    <span class="separator">★</span>
+                    <a href="soundcloud.html">SoundCloud</a>
+                    <span class="separator">♪</span>
+                    <a href="vndb.html">VNDB</a>
+                </nav>
             </div>
         </div>
     </header>
-
-    
 
     <main>
         <h2>UPDATES</h2>
@@ -66,7 +217,6 @@
             <select id="sort" onchange="loadUpdates()">
                 <option value="desc">Sort by Newest</option>
                 <option value="asc">Sort by Oldest</option>
-            
             </select>
         </div>
 
@@ -81,12 +231,126 @@
         </div>
     </main>
 
-    <!-- Include the external JavaScript file -->
-    <script src="updates.js"></script>
-
     <footer>
         <h6>2024 - ???</h6>
     </footer>
-</body>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            databaseURL: "https://updates-e2454.firebaseio.com/",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let totalPages = 1;
+
+        function loadUpdates() {
+            const searchQuery = document.getElementById('search').value.toLowerCase();
+            const sortOrder = document.getElementById('sort').value || 'desc';
+
+            database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
+                let updates = [];
+                snapshot.forEach((childSnapshot) => {
+                    const updateData = childSnapshot.val();
+                    const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                        updates.push({ key: childSnapshot.key, ...updateData });
+                    }
+                });
+
+                if (sortOrder === 'desc') {
+                    updates.reverse();
+                }
+
+                totalPages = Math.ceil(updates.length / itemsPerPage);
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedUpdates = updates.slice(start, end);
+
+                displayUpdates(paginatedUpdates);
+                displayPagination();
+            }, (error) => {
+                console.error("Error fetching data: ", error);
+            });
+        }
+
+        function displayUpdates(updates) {
+            const updatesContainer = document.getElementById('updates');
+            updatesContainer.innerHTML = '';
+
+            if (updates.length === 0) {
+                updatesContainer.innerHTML = '<p>No updates found.</p>';
+                return;
+            }
+
+            updates.forEach((update) => {
+                const updateDiv = document.createElement('div');
+                updateDiv.className = 'gallery-item';
+
+                const titleElement = document.createElement('h2');
+                titleElement.textContent = update.title;
+                updateDiv.appendChild(titleElement);
+
+                // Create and append date element
+                const dateElement = document.createElement('span');
+                dateElement.className = 'date';
+                const date = new Date(update.timestamp);
+                dateElement.innerHTML = date.toLocaleString();
+                updateDiv.appendChild(dateElement);
+
+                const hrElement = document.createElement('div');
+                hrElement.className = 'line';
+                updateDiv.appendChild(hrElement);
+
+                const contentElement = document.createElement('p');
+                contentElement.innerHTML = update.content;
+                updateDiv.appendChild(contentElement);
+
+                updatesContainer.appendChild(updateDiv);
+            });
+        }
+
+        function displayPagination() {
+            const paginationElement = document.getElementById('pagination');
+            const pageNumbersElement = document.getElementById('page-numbers');
+            pageNumbersElement.innerHTML = '';
+
+            document.getElementById('prev').disabled = currentPage === 1;
+            document.getElementById('next').disabled = currentPage === totalPages;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = i === currentPage ? 'active' : '';
+                button.onclick = () => {
+                    currentPage = i;
+                    loadUpdates();
+                };
+                pageNumbersElement.appendChild(button);
+            }
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            loadUpdates();
+        }
+
+        // Load updates on window load
+        window.addEventListener('load', loadUpdates);
+    </script>
+</body>
 </html>
