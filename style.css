@@ -16,7 +16,7 @@
 
 /* Global Styles for Body */
 body {
-    font-family: 'Psychosis', sans-serif; /* Change body text font */
+    font-family: 'MS UI Gothic', sans-serif; /* Change body text font */
     background-color: black;
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
     background-repeat: no-repeat;
@@ -83,7 +83,7 @@ header {
 .search-sort input[type="text"],
 .search-sort select {
     margin: 20px 0; /* Add margin */
-    font-family: 'Psychosis', sans-serif; /* Match body text font */
+    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
 }
 
 /* Gallery Styling */
@@ -128,6 +128,16 @@ header {
     margin-top: 10px;
 }
 
+/* Hide Scrollbars */
+.gallery-item::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+.gallery-item {
+    -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
+
 /* Pagination Styling */
 .pagination {
     display: flex;
@@ -138,7 +148,7 @@ header {
 
 .pagination button {
     margin: 20px 0; /* Add margin */
-    font-family: 'Psychosis', sans-serif; /* Match body text font */
+    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
 }
 
 /* Footer Styling */
@@ -190,7 +200,7 @@ h5 {
 }
 
 p, a {
-    font-family: 'Psychosis', sans-serif; /* Font for content and links */
+    font-family: 'MS UI Gothic', sans-serif; /* Font for content and links */
     text-shadow:
         1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
         2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
