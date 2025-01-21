@@ -8,20 +8,14 @@
 body {
     font-family: 'MS Gothic', sans-serif;
     background-color: black;
-    background-image: repeating-linear-gradient(
-        135deg, /* Diagonal stripes from top left to bottom right */
-        #4b2e2e 0, /* Darker brown */
-        #4b2e2e 10px,
-        #99004d 10px, /* Darker magenta */
-        #99004d 20px
-    ); /* Darker brown and darker magenta stripes */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: contain;
     color: white;
     max-width: 600px; /* Ensure maximum width for easier viewing on a laptop */
-    margin: 20px auto; /* Center the body with uniform margins */
+    margin: 20px auto 20px 20px; /* Move the body towards the left side */
     line-height: 1.6;
     padding: 20px;
     text-align: justify;
@@ -99,7 +93,17 @@ header {
 .gallery-item {
     width: 100%;
     max-width: 600px;
-    background-color: #4b0082; /* Dark rich purple color */
+    background-image: repeating-linear-gradient(
+        135deg, /* 135 degrees for top left to bottom right */
+        #ff0000 0, /* Bright rich red */
+        #ff0000 10px,
+        #c71585 10px, /* Dark pink */
+        #c71585 20px,
+        #800080 20px, /* Purple */
+        #800080 30px,
+        #4b0082 30px, /* Dark purple */
+        #4b0082 40px
+    ); /* Bright rich red, dark pink, purple, and dark purple stripes */
     border: 1px solid #FF0099;
     border-radius: 10px;
     margin: 20px 0;
