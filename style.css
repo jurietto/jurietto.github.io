@@ -13,7 +13,7 @@ body {
     background-position: center center;
     background-attachment: fixed;
     background-size: contain;
-    color: white;
+    color: #FF0099; /* Main color set to magenta */
     max-width: 600px; /* Ensure maximum width for easier viewing on a laptop */
     margin: 20px auto 20px 20px; /* Move the body towards the left side */
     line-height: 1.6;
@@ -32,7 +32,7 @@ header {
     background: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg') no-repeat top center;
     background-size: cover;
     border-radius: 10px;
-    border: 1px solid #FF0099;
+    border: 1px solid #4b0082; /* Dark purple border */
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
 }
 
@@ -40,21 +40,21 @@ header {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    color: #f0f0f0;
+    color: #FF0099; /* Main color set to magenta */
     text-align: right;
     font-weight: bold;
     opacity: 1; /* Make header text opaque */
 }
 
 .header-text a {
-    color: white;
+    color: #FF0099; /* Main color set to magenta */
     font-weight: bold;
     text-decoration: none;
     opacity: 1; /* Make header text opaque */
 }
 
 .header-text a:hover {
-    color: #FF0099;
+    color: #4b0082; /* Dark purple hover color */
     text-decoration: underline;
     opacity: 1; /* Make header text opaque */
 }
@@ -67,7 +67,7 @@ header {
 
 .search-sort input[type="text"],
 .search-sort select {
-    border: 2px inset #FF0099;
+    border: 2px inset #4b0082; /* Dark purple border */
     padding: 4px;
     background-color: #fff;
     color: #000;
@@ -104,7 +104,7 @@ header {
         #4b0082 30px, /* Dark purple */
         #4b0082 40px
     ); /* Bright rich red, dark pink, purple, and dark purple stripes */
-    border: 1px solid #FF0099;
+    border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 20px 0;
     padding: 20px;
@@ -123,7 +123,7 @@ header {
     margin: 0 5px;
     padding: 4px 10px; /* Match padding with search and sort */
     cursor: pointer;
-    border: 2px inset #FF0099;
+    border: 2px inset #4b0082; /* Dark purple border */
     background-color: #fff;
     color: #000;
     font-family: 'MS Gothic', sans-serif;
@@ -131,7 +131,7 @@ header {
 }
 
 .pagination button:hover {
-    background-color: #FF0000;
+    background-color: #FF0099; /* Main color set to magenta */
 }
 
 /* Footer Styling */
@@ -139,7 +139,7 @@ footer {
     text-align: center;
     margin-top: 20px;
     font-size: 0.9em;
-    color: white;
+    color: #FF0099; /* Main color set to magenta */
 }
 
 footer h6 {
@@ -162,7 +162,7 @@ h1 {
 
 h2 {
     font-size: 2.5em; /* Increase font size for H2 */
-    color: rgba(255, 0, 153, 0.75); /* Magenta color for H2 with 75% opacity */
+    color: rgba(255, 0, 153, 0.75); /* Original magenta color for H2 with 75% opacity */
 }
 
 h3 {
