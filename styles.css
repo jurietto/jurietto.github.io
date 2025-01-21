@@ -109,3 +109,38 @@ ul li a {
 ul li a:hover {
     text-decoration: underline;
 }
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    body {
+        margin: 10px;
+        padding: 10px;
+        max-width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    }
+
+    .sidebar a {
+        display: inline-block;
+        width: auto;
+        padding: 1rem;
+        border-bottom: none;
+    }
+
+    main {
+        margin: 10px 0;
+        margin-left: 0;
+        padding: 10px;
+        border: none;
+    }
+
+    footer {
+        position: relative;
+    }
+}
