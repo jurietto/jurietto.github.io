@@ -3,36 +3,47 @@ body {
     background-color: black; /* Set the body background to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
     background-size: cover; /* Cover the entire body */
+    background-attachment: fixed; /* Make the background image fixed */
     background-position: center; /* Center the background image */
-    color: white; /* Set text color to white */
+    color: white; /* Set default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
     margin: 20px; /* Apply balanced margins */
     max-width: 600px; /* Limit body width to 600px */
-    line-height: 1.6; /* Optional: improve readability */
+    line-height: 1.6; /* Improve readability */
     text-align: justify; /* Justify the text */
 }
 
-/* Style for all headings (H1 - H6) */
-h1, h2, h3, h4, h5, h6 {
-    color: #FF007F; /* Hot pink color */
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for headings */
-    text-align: justify; /* Justify heading text */
+/* Style for all headings (H2 specifically) and links */
+h2, a {
+    color: #FF007F; /* Hot pink color for H2 and links */
+}
+
+/* Add text shadow to all text */
+h1, h2, h3, h4, h5, h6, p, a {
+    text-shadow: 
+        1px 1px 0 rgba(0, 0, 0, 1),
+        -1px -1px 0 rgba(0, 0, 0, 1),
+        1px -1px 0 rgba(0, 0, 0, 1),
+        -1px 1px 0 rgba(0, 0, 0, 1); /* Four shadows for all text with 100% opacity */
 }
 
 /* Footer styles */
 footer {
     text-align: center; /* Center the footer content */
-    color: #FF007F; /* Hot pink for the footer text */
+    color: white; /* White for the footer text, to keep all text except h2 and links white */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
+    text-shadow: 
+        1px 1px 0 rgba(0, 0, 0, 1),
+        -1px -1px 0 rgba(0, 0, 0, 1),
+        1px -1px 0 rgba(0, 0, 0, 1),
+        -1px 1px 0 rgba(0, 0, 0, 1); /* Shadow for footer text with 100% opacity */
 }
 
 /* Custom styles for header and sidebar can be added here */
 header {
-    /* Styles for the header image can be added here */
     text-align: justify; /* Justify header text if applicable */
 }
 
 .sidebar {
-    /* Styles for the sidebar can be added here */
     text-align: justify; /* Justify sidebar text if applicable */
 }
