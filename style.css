@@ -97,14 +97,4 @@ ul li::before {
 @media screen and (max-width: 700px) {
     body {
         padding: 20px;
-    }
 
-    h1, h2, h3, h4, h5, h6, p, a, ul li, footer {
-        text-shadow: none;
-    }
-
-    .home-button {
-        bottom: 200px; /* Position the button 200px above the bottom */
-        right: 10px;
-    }
-}
