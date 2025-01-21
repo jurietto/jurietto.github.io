@@ -13,7 +13,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // Reference to the updates in the database
-const updatesRef = firebase.database().ref('updates');
+const updatesRef = firebase.database().ref('lifeupdates');
 
 // Function to load updates
 function loadUpdates() {
@@ -30,7 +30,7 @@ function displayUpdates(updates) {
 
     // Convert updates object to array and sort by date descending
     const updatesArray = Object.keys(updates).map(key => updates[key]);
-    updatesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+    updatesArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
     // Pagination
     const itemsPerPage = 10;
@@ -51,7 +51,7 @@ function displayUpdates(updates) {
             updateElement.appendChild(titleElement);
 
             const dateElement = document.createElement('p');
-            dateElement.innerText = new Date(update.date).toLocaleDateString();
+            dateElement.innerText = new Date(update.timestamp).toLocaleDateString();
             updateElement.appendChild(dateElement);
 
             const contentElement = document.createElement('p');
