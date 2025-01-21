@@ -52,7 +52,7 @@ a:hover {
 }
 
 footer {
-    text-align: left; /* Align footer text to the left */
+    text-align: center; /* Align footer text to the left */
     margin-top: 20px; /* Adjust margin for better spacing */
     font-size: 0.9em;
     color: white;
