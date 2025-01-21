@@ -16,6 +16,11 @@ body {
 /* Style for all headings (H2 specifically) and links */
 h2, a {
     color: #FF007F; /* Hot pink color for H2 and links */
+    text-transform: uppercase; /* Make H2 text uppercase */
+}
+
+p {
+    text-transform: uppercase; /* Make all paragraph text uppercase */
 }
 
 /* Add soft text shadow to all text */
@@ -49,6 +54,16 @@ footer {
 /* Custom styles for header and sidebar can be added here */
 header {
     text-align: justify; /* Justify header text if applicable */
+    background: rgba(255,255,255,0.1); /* Optional: add slight background for header */
+    padding: 20px; /* Add padding around header */
+}
+
+/* Additional header image styling */
+.header-image {
+    width: 100%; /* Full width */
+    height: auto; /* Keep aspect ratio */
+    max-height: 200px; /* Maximum height for the header image */
+    object-fit: cover; /* Cover to fill space well */
 }
 
 .sidebar {
