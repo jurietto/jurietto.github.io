@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff - About Me</title>
+    <title>Juri's Stuff - Gallery</title>
 
     <!-- Include external CSS for styling -->
     <link rel="stylesheet" href="styles.css">
@@ -16,28 +16,41 @@
 
 <body>
     <header>
-        <h1>Gallery</h1>
+        <h1>Juri's Stuff</h1>
     </header>
 
-    <!-- Search and Sort UI -->
-    <div>
-        <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
-        <select id="sort" onchange="loadImages()">
-            <option value="asc">Sort by Oldest</option>
-            <option value="desc">Sort by Newest</option>
-            <option value="shuffle">Shuffle</option>
-        </select>
+    <div class="sidebar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="updates.html">Updates</a>
     </div>
-    
-    <!-- Container for the gallery images -->
-    <div class="gallery" id="gallery"></div>
 
-    <!-- Pagination --> 
-    <div class="pagination" id="pagination">
-        <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
-        <span id="page-numbers"></span>
-        <button id="next" onclick="changePage(1)">Next &#62;</button>
-    </div>
+    <main>
+        <header>
+            <h2>Gallery</h2>
+        </header>
+
+        <!-- Search and Sort UI -->
+        <div>
+            <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
+            <select id="sort" onchange="loadImages()">
+                <option value="asc">Sort by Oldest</option>
+                <option value="desc">Sort by Newest</option>
+                <option value="shuffle">Shuffle</option>
+            </select>
+        </div>
+        
+        <!-- Container for the gallery images -->
+        <div class="gallery" id="gallery"></div>
+
+        <!-- Pagination --> 
+        <div class="pagination" id="pagination">
+            <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+            <span id="page-numbers"></span>
+            <button id="next" onclick="changePage(1)">Next &#62;</button>
+        </div>
+    </main>
 
     <!-- Include the external JavaScript file -->
     <script src="gallery.js"></script>
