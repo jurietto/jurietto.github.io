@@ -1,116 +1,72 @@
-/* Apply styles to the entire body */
-body {
-    background-color: black; /* Set the body background to black */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
-    background-size: cover; /* Cover the entire body */
-    background-attachment: fixed; /* Make the background image fixed */
-    background-position: center; /* Center the background image */
-    color: white; /* Set default text color to white */
-    font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
-    margin: 20px; /* Apply uniform margins only to the body */
-    padding: 10px; /* Apply some padding */
-    max-width: 800px; /* Limit body width to 800px */
-    width: 100%; /* Set the width to 100% of its parent */
-    line-height: 1.6; /* Improve readability */
-    text-align: justify; /* Justify the text */
-    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
-}
+<!DOCTYPE html>
+<html lang="en">
 
-/* Header styles */
-header {
-    position: relative; /* Position for containing content */
-    height: 300px; /* Increase header height */
-    overflow: hidden; /* Ensure no overflow */
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juri's Stuff - Updates</title>
 
-/* Header video background */
-header video {
-    position: absolute; /* Position it absolutely */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    min-width: 100%; /* Cover the entire area */
-    min-height: 100%; /* Cover the entire area */
-    width: auto; /* Auto width */
-    height: auto; /* Auto height */
-    z-index: 0; /* Send to the back */
-    transform: translate(-50%, -50%); /* Center it */
-}
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="styles.css">
 
-/* Header content styles */
-.header-content {
-    position: relative; /* Position relative for better control */
-    z-index: 1; /* Ensure the text is above the image */
-    color: white; /* Text color */
-    display: flex; /* Use flex to align h1 and h2 */
-    align-items: flex-end; /* Align items to the bottom */
-    height: 100%; /* Full height of the header */
-}
+    <!-- Firebase App, Database, and Storage libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
 
-/* Title styles */
-header h1 {
-    margin: 0; /* Remove margins for headers */
-    font-size: 2.5rem; /* Adjust font size */
-}
+<body>
+    <header>
+        <video autoplay muted loop>
+            <source src="https://file.garden/ZhTgSjrp5nAroRKq/videoplayback.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="header-content">
+            <h1>Juri's Stuff</h1>
+            <h2>Updates</h2>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="updates.html">Updates</a>
+        </nav>
+    </header>
 
-/* H2 styles in the header */
-header h2 {
-    color: #FF007F; /* Hot pink color for H2 */
-    text-transform: uppercase; /* Make H2 text uppercase */
-    display: inline-block; /* Ensure h2 is inline with h1 */
-    margin-left: 15px; /* Add space between h1 and h2 */
-}
+    <div class="sidebar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="updates.html">Updates</a>
+    </div>
 
-/* Navigation links styling */
-nav {
-    margin-top: 10px; /* Add some space above the navigation */
-}
+    <main>
+        <!-- Search and Sort UI -->
+        <div>
+            <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
+            <select id="sort" onchange="loadUpdates()">
+                <option value="desc">Sort by Newest</option>
+                <option value="asc">Sort by Oldest</option>
+                <option value="shuffle">Shuffle</option>
+            </select>
+        </div>
 
-nav a {
-    color: #FF007F; /* Magenta color for links */
-    text-decoration: none; /* Remove underline from links */
-    margin-right: 15px; /* Space between navigation links */
-    text-transform: uppercase; /* Capitalize links */
-}
+        <!-- Updates content -->
+        <div id="updates" class="updates"></div>
 
-/* Card symbols */
-nav a::after {
-    content: "♦"; /* Card symbol (change as needed) */
-    margin: 0 5px; /* Space around the symbols */
-}
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+            <span id="page-numbers"></span>
+            <button id="next" onclick="changePage(1)">Next &#62;</button>
+        </div>
+    </main>
 
-/* First link should not have a prefix symbol */
-nav a:first-child::after {
-    content: ""; /* Remove card symbol for first link */
-}
+    <!-- Include the external JavaScript file -->
+    <script src="updates.js"></script>
 
-/* Hover effect for links */
-nav a:hover {
-    color: white; /* Change link color to white on hover */
-}
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
+</body>
 
-/* Style for paragraph text */
-p {
-    color: white; /* Set default text color to white for paragraphs */
-    padding: 10px; /* Apply some padding to the paragraph */
-}
-
-/* Add intense text shadow to all text */
-h1, h2, p {
-    text-shadow: 
-        0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
-}
-
-/* Footer styles */
-footer {
-    text-align: center; /* Center the footer content */
-    color: white; /* White for the footer text */
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
-    text-shadow: 
-        0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
-    padding: 10px; /* Apply some padding to the footer */
-}
-
-/* Sidebar styles, if applicable */
-.sidebar {
-    text-align: justify; /* Justify sidebar text if applicable */
-}
+</html>
