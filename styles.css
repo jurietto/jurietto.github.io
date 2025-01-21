@@ -1,33 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css"> <!-- Link the CSS file -->
-    <title>Your Website Title</title>
-</head>
-<body>
-    <header>
-        <video autoplay muted loop>
-            <source src="https://file.garden/ZhTgSjrp5nAroRKq/videoplayback.mp4" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>
-        <div class="header-content">
-            <h1>Your Main Title</h1>
-            <h2>Your Subtitle</h2>
-        </div>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Gallery</a>
-            <a href="#">Updates</a>
-        </nav>
-    </header>
+/* Apply styles to the entire body */
+body {
+    background-color: black; /* Set the body background to black */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
+    background-size: cover; /* Cover the entire body */
+    background-attachment: fixed; /* Make the background image fixed */
+    background-position: center; /* Center the background image */
+    color: white; /* Set default text color to white */
+    font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
+    margin: 20px; /* Apply uniform margins only to the body */
+    padding: 10px; /* Apply some padding */
+    max-width: 800px; /* Limit body width to 800px */
+    width: 100%; /* Set the width to 100% of its parent */
+    line-height: 1.6; /* Improve readability */
+    text-align: justify; /* Justify the text */
+    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+}
 
-    <p>Your main content goes here...</p>
+/* Header styles */
+header {
+    position: relative; /* Position for containing content */
+    height: 300px; /* Increase header height */
+    overflow: hidden; /* Ensure no overflow */
+}
 
-    <footer>
-        <p>Your footer content goes here.</p>
-    </footer>
-</body>
-</html>
+/* Header video background */
+header video {
+    position: absolute; /* Position it absolutely */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    min-width: 100%; /* Cover the entire area */
+    min-height: 100%; /* Cover the entire area */
+    width: auto; /* Auto width */
+    height: auto; /* Auto height */
+    z-index: 0; /* Send to the back */
+    transform: translate(-50%, -50%); /* Center it */
+}
+
+/* Header content styles */
+.header-content {
+    position: relative; /* Position relative for better control */
+    z-index: 1; /* Ensure the text is above the image */
+    color: white; /* Text color */
+    display: flex; /* Use flex to align h1 and h2 */
+    align-items: flex-end; /* Align items to the bottom */
+    height: 100%; /* Full height of the header */
+}
+
+/* Title styles */
+header h1 {
+    margin: 0; /* Remove margins for headers */
+    font-size: 2.5rem; /* Adjust font size */
+}
+
+/* H2 styles in the header */
+header h2 {
+    color: #FF007F; /* Hot pink color for H2 */
+    text-transform: uppercase; /* Make H2 text uppercase */
+    display: inline-block; /* Ensure h2 is inline with h1 */
+    margin-left: 15px; /* Add space between h1 and h2 */
+}
+
+/* Navigation links styling */
+nav {
+    margin-top: 10px; /* Add some space above the navigation */
+}
+
+nav a {
+    color: #FF007F; /* Magenta color for links */
+    text-decoration: none; /* Remove underline from links */
+    margin-right: 15px; /* Space between navigation links */
+    text-transform: uppercase; /* Capitalize links */
+}
+
+/* Card symbols */
+nav a::after {
+    content: "♦"; /* Card symbol (change as needed) */
+    margin: 0 5px; /* Space around the symbols */
+}
+
+/* First link should not have a prefix symbol */
+nav a:first-child::after {
+    content: ""; /* Remove card symbol for first link */
+}
+
+/* Hover effect for links */
+nav a:hover {
+    color: white; /* Change link color to white on hover */
+}
+
+/* Style for paragraph text */
+p {
+    color: white; /* Set default text color to white for paragraphs */
+    padding: 10px; /* Apply some padding to the paragraph */
+}
+
+/* Add intense text shadow to all text */
+h1, h2, p {
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
+}
+
+/* Footer styles */
+footer {
+    text-align: center; /* Center the footer content */
+    color: white; /* White for the footer text */
+    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
+    padding: 10px; /* Apply some padding to the footer */
+}
+
+/* Sidebar styles, if applicable */
+.sidebar {
+    text-align: justify; /* Justify sidebar text if applicable */
+}
