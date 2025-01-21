@@ -52,7 +52,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            
+            padding: 20px;
         }
 
         .gallery-item {
@@ -63,8 +63,8 @@
             background-size: 20px 20px;
             border: 1px solid #FF0099;
             border-radius: 10px;
-            
-            
+            margin: 20px 0; /* Adjust margin for better spacing */
+            padding: 20px;
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
         }
 
@@ -97,8 +97,10 @@
             padding: 10px 15px;
             cursor: pointer;
         }
-        . divider {
-            padding: 60px
+
+        .divider {
+            margin: 20px 0;
+        }
 
         footer {
             text-align: center;
@@ -115,29 +117,6 @@
             z-index: 10000;
         }
 
-        @media screen and (max-width: 700px) {
-            body {
-                padding: 20px;
-            }
-
-            .home-button {
-                top: 10px;
-                bottom: auto;
-                width: 100px;
-                height: 100px;
-            }
-
-            h1,
-            h3,
-            h4,
-            h5,
-            h6,
-            a,
-            ul li,
-            footer {
-                text-shadow: none;
-            }
-        }
     </style>
 </head>
 
