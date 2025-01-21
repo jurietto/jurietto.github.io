@@ -27,8 +27,8 @@ header video {
     position: absolute; /* Position it absolutely */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
-    min-width: 100%; /* Cover the entire area */
-    min-height: 100%; /* Cover the entire area */
+    min-width: 110%; /* Zoom in the video by 10% */
+    min-height: 110%; /* Zoom in the video by 10% */
     width: auto; /* Auto width */
     height: auto; /* Auto height */
     z-index: 0; /* Send to the back */
@@ -56,6 +56,13 @@ header video {
     margin: 0; /* Remove margins for headers */
     font-size: 2.5rem; /* Adjust font size */
     text-transform: uppercase; /* Uppercase for h1 */
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
 .title-container hr {
@@ -66,9 +73,16 @@ header video {
 }
 
 .title-container h2 {
-    color: #FF007F; /* Hot pink color for H2 */
+    color: #FF007F; /* Magenta color for H2 */
     text-transform: uppercase; /* Uppercase for h2 */
     display: inline-block; /* Ensure h2 is inline with h1 */
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
 /* Navigation links styling */
@@ -85,6 +99,13 @@ nav a {
     text-decoration: none; /* Remove underline from links */
     margin: 0 5px; /* Space between navigation links */
     text-transform: uppercase; /* Capitalize links */
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
 nav .separator {
@@ -98,8 +119,14 @@ nav a:hover {
 }
 
 /* Add uniform shadow to all text */
-h1, h2, h3, h4, h5, p, nav a {
-    text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
+h1, h3, h4, h5, p, nav a {
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Uniform dark shadow effect */
 }
 
 /* Footer styles */
@@ -107,7 +134,13 @@ footer {
     text-align: center; /* Center the footer content */
     color: white; /* White for the footer text */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
-    text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
     padding: 10px; /* Apply some padding to the footer */
 }
 
@@ -123,6 +156,13 @@ footer {
     text-decoration: none; /* Remove underline */
     text-transform: uppercase; /* Uppercase for sidebar links */
     margin: 0.5rem 0; /* Space between sidebar links */
+    text-shadow: 
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
 /* Main content styles */
