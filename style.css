@@ -49,6 +49,7 @@ p, a {
 a {
     color: white; /* Default link color */
     text-decoration: underline;
+    font-weight: bold; /* Make header text bold */
 }
 
 a:hover {
