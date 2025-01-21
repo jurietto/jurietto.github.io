@@ -1,40 +1,194 @@
-/* Apply CSS styling to both gallery.html and updates.html */
+/* Color Variables */
+:root {
+    --maintext: #ddd;
+    --grayedout: #37a;
+    --standout: #e44;
+    --link: #7bd;
+    --statok: #0c0;
+    --statnok: #c00;
+    --footer: #247;
+    --maintitle: #135;
+    --boxtitle: #258;
+    --alttitle: #fff;
+    --bodybg: #000;
+    --boxbg: rgba(7, 28, 48, 0.737255);
+    --tabbg: #012;
+    --secbg: #0d2741;
+    --secborder: #35A;
+    --border: #258;
+    --diffadd: #354;
+    --diffdel: #534;
+    --warnbg: #534;
+    --warnborder: #c00;
+    --noticebg: #052d2e;
+    --noticeborder: #227688;
+    --helpbutton: #06ffc5;
+}
+
+/* Global Styles */
+*,
+*:before,
+*:after {
+    box-sizing: border-box; /* Box-Sizing Model */
+}
+
+html {
+    box-sizing: border-box; /* Inherit box-sizing from root */
+}
+
 body {
-    
-    background: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png') no-repeat center center fixed;
-    background-size: cover;
-    background-color: black; /* Fallback background color */
-    font-family: 'MS UI Gothic', sans-serif;
+    background: var(--bodybg) url(https://file.garden/ZhTgSjrp5nAroRKq/bloods.png) no-repeat center center fixed; /* Background with image */
+    background-size: cover; /* Cover the entire background */
+    font: 13px "Tahoma", "Arial", sans-serif; /* Font settings */
+    color: var(--maintext); /* Text color */
+    display: grid; /* Grid layout */
+    grid-template-columns: 200px minmax(0, 1fr); /* Define grid columns */
+    grid-template-rows: 100px auto; /* Define grid rows */
+    padding: 0 30px 30px 30px; /* Padding around the body */
 }
 
+/* Header Styles */
 header {
-    position: relative;
-    width: 100%;
-    height: 200px; /* Adjust the height as needed */
-    background: url('https://file.garden/ZhTgSjrp5nAroRKq/tinkuru.png') no-repeat center center;
-    background-size: cover;
+    grid-column: 1 / -1; /* Span across all columns */
+    background-color: var(--boxbg); /* Background color for header */
+    padding: 20px; /* Padding inside the header */
+    text-align: center; /* Centered text */
+    font-size: 24px; /* Font size for header */
+    font-weight: bold; /* Bold font */
+    color: var(--alttitle); /* Text color */
+    border-bottom: 1px solid var(--secborder); /* Border at the bottom */
 }
 
-header a {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    font-family: 'MS UI Gothic', sans-serif;
+/* Sidebar Styles */
+.sidebar {
+    grid-row: 2 / -1; /* Span from second row to the end */
+    background-color: var(--tabbg); /* Background color for sidebar */
+    padding: 20px; /* Padding inside the sidebar */
+    border-right: 1px solid var(--secborder); /* Border on the right */
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: 'LINDL', serif;
+.sidebar a {
+    display: block; /* Block display for links */
+    color: var(--link); /* Link color in sidebar */
+    text-decoration: none; /* No underline */
+    padding: 10px 0; /* Padding for links */
+    border-bottom: 1px solid var(--border); /* Bottom border for links */
 }
 
-h2 {
-    color: #FF69B4; /* Rich magenta bubble gum pink */
+.sidebar a:hover {
+    background-color: var(--secbg); /* Background color on hover */
 }
 
-/* Additional styling for general text */
-p {
-    font-family: 'MS UI Gothic', sans-serif;
-    color: white; /* Ensure text is visible on a black background */
+/* Main Content Styles */
+main {
+    padding: 20px; /* Padding inside the main content area */
+}
+
+/* Table Styles */
+table {
+    border-collapse: collapse; /* Collapsing table borders */
+}
+
+table td,
+table th {
+    vertical-align: top; /* Vertical alignment */
+    padding: 3px; /* Cell padding */
+}
+
+/* Image Styles */
+img {
+    border: none; /* No border around images */
+    box-sizing: content-box; /* Ensure images respect content box sizing */
+}
+
+svg {
+    fill: currentColor; /* SVG fill with current color */
+}
+
+/* Text Styles */
+b, strong, h1, h2, h3, h4, h5 {
+    font-weight: bold; /* Bold text */
+}
+
+i, em {
+    font-style: italic; /* Italic text */
+}
+
+a, .fake_link {
+    color: var(--link); /* Link color */
+    text-decoration: none; /* No underline */
+    cursor: pointer; /* Pointer cursor for links */
+    border-bottom: 1px solid transparent; /* Bottom border */
+}
+
+a:hover, .fake_link:hover {
+    border-bottom: 1px dotted var(--maintext); /* Underline on hover */
+}
+
+/* Warning and Notice Styles */
+div.warning,
+div.notice {
+    margin: 5px 10%; /* Margin for warning and notice boxes */
+    padding: 15px; /* Padding inside the boxes */
+    background-color: var(--warnbg); /* Background color */
+    border: 1px solid var(--warnborder); /* Border */
+}
+
+div.notice {
+    background-color: var(--noticebg); /* Different background for notices */
+    border: 1px solid var(--noticeborder); /* Different border for notices */
+}
+
+/* Miscellaneous Styles */
+p.center {
+    text-align: center; /* Centered text */
+}
+
+.hidden {
+    display: none !important; /* Hide element */
+}
+
+.invisible {
+    visibility: hidden; /* Make element invisible */
+}
+
+/* Button Styles */
+button {
+    padding: 1px 5px; /* Button padding */
+    cursor: pointer; /* Pointer cursor for buttons */
+}
+
+/* Form Styles */
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=button],
+input[type=submit],
+select,
+textarea,
+button {
+    background-color: var(--boxbg); /* Background color for inputs */
+    color: var(--maintext); /* Text color */
+    border: 1px solid var(--secborder); /* Border for inputs */
+    padding: 1px; /* Padding for inputs */
+    margin: 1px; /* Margin for inputs */
+}
+
+/* Footer Styles */
+main > footer {
+    margin: -7px auto 0; /* Margin for footer */
+    text-align: center; /* Centered footer text */
+    color: var(--footer); /* Footer text color */
+}
+
+main > footer a {
+    color: inherit; /* Inherit color for footer links */
+    text-decoration: underline; /* Underline for footer links */
+}
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+    body {
+        padding: 0 10px; /* Less padding on small screens */
+    }
 }
