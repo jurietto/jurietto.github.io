@@ -2,7 +2,7 @@
 body {
     background-color: black; /* Set the body background to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
-    background-size: cover; /* Cover the entire body */
+    background-size: contain; /* Cover the entire body */
     background-attachment: fixed; /* Make the background image fixed */
     background-position: center; /* Center the background image */
     color: white; /* Set default text color to white */
