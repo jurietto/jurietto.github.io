@@ -15,9 +15,9 @@ body {
     background-size: contain;
     color: white;
     max-width: 500px;
-    margin: 20px auto 20px 60px; /* Center with a bit more space on the left */
+    margin: 20px 10% 20px 10%; /* Make the margins more uniform */
     line-height: 1.6;
-    padding: 10px 
+    padding: 20px;
     text-align: justify;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1);
 }
@@ -79,6 +79,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 20px 0; /* Add margin for better spacing */
 }
 
 .line {
@@ -101,7 +102,8 @@ header {
     );
     border: 1px solid #FF0099;
     border-radius: 10px;
-   
+    margin: 20px 0;
+    padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
 }
 
@@ -115,11 +117,11 @@ header {
 
 .pagination button {
     margin: 0 5px;
-    padding: 10px 15px;
+    padding: 4px 10px; /* Match padding with search and sort */
     cursor: pointer;
-    border: 2px outset #FF0099;
-    background-color: #8B0000;
-    color: white;
+    border: 2px inset #FF0099;
+    background-color: #fff;
+    color: #000;
     font-family: 'MS Gothic', sans-serif;
     text-shadow: none; /* Remove text shadow */
 }
@@ -138,6 +140,16 @@ footer {
 
 footer h6 {
     text-align: center;
+}
+
+/* Header Styles */
+h1, h2, h3, h4, h5 {
+    font-family: 'Lindley', sans-serif; /* Font for headers */
+    text-shadow:
+        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
+        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
+    margin: 20px 0; /* Add margin for headers */
 }
 
 /* Responsive Styles */
