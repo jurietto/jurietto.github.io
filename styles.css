@@ -37,6 +37,8 @@ header {
     position: relative; /* Position relative for better control */
     z-index: 1; /* Ensure the text is above the image */
     color: white; /* Text color */
+    display: flex; /* Use flex to align h1 and h2 */
+    align-items: flex-end; /* Align items to the bottom */
 }
 
 /* Title styles */
