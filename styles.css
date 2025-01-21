@@ -28,8 +28,8 @@ header video {
     position: absolute; /* Position it absolutely */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
-    min-width: 110%; /* Zoom in the video by 10% */
-    min-height: 110%; /* Zoom in the video by 10% */
+    min-width: 130%; /* Zoom in the video by 10% */
+    min-height: 130%; /* Zoom in the video by 10% */
     width: auto; /* Auto width */
     height: auto; /* Auto height */
     z-index: 0; /* Send to the back */
