@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - Updates</title>
-    
+
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
 
     <style>
@@ -25,11 +25,10 @@
             background-repeat: no-repeat; /* Prevent the background image from repeating */
             background-position: center; /* Center the background image */
             background-attachment: fixed; /* Make the background image fixed */
-
             color: white; /* Set the default text color to white */
             line-height: 1.6; /* Line height for better readability */
+            width: 90%; /* Adjusted width for better fit */
             max-width: 600px; /* Maximum width of the body */
-            width: 100%; /* Full width relative to its container */
             margin: 50px auto; /* Center the body with a top margin */
             padding: 10px; /* Padding for the body */
         }
@@ -45,6 +44,7 @@
             margin: 20px; /* Margins for header */
             width: calc(100% - 40px); /* Full width of its container minus margins */
             max-width: 600px; /* Make header width the same as body width */
+            text-align: left; /* Align header text to the left */
         }
 
         /* Header video background */
@@ -66,13 +66,13 @@
             display: flex; 
             align-items: flex-end; 
             height: 100%; 
-            justify-content: center; 
-            text-align: center; 
+            justify-content: left; /* Align content to the left */
+            text-align: left; /* Align text to the left */
             padding: 10px; /* Added padding for header content */
         }
 
         .title-container {
-            text-align: center; 
+            text-align: left; 
             max-width: 100%; /* Ensure it does not exceed header width */
         }
 
@@ -81,7 +81,9 @@
             font-family: 'Apple Chancery', cursive; /* Custom font for h1 */
             font-size: 2.5rem; 
             text-shadow: 
-                0 0 4px rgba(0, 0, 0, 0.8); /* Very dark shadow effect */
+                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
+                0 0 20px rgba(0, 0, 0, 0.9),
+                0 0 30px rgba(0, 0, 0, 0.8); 
         }
 
         .title-container hr {
@@ -99,7 +101,7 @@
             margin-top: 10px; 
             display: flex; 
             flex-wrap: wrap; 
-            justify-content: center; 
+            justify-content: flex-start; /* Align links to the left */
             align-items: center; 
             padding: 10px 0; 
         }
@@ -108,8 +110,11 @@
             color: #ff007b; 
             text-decoration: none; 
             margin: 0 10px; 
+            font-family: 'Apple Chancery'; /* Font for nav links */
             text-shadow: 
-                0 0 4px rgba(0, 0, 0, 0.8); /* Very dark shadow effect */
+                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
+                0 0 20px rgba(0, 0, 0, 0.9), 
+                0 0 30px rgba(0, 0, 0, 0.8); 
         }
 
         nav .separator {
@@ -125,6 +130,10 @@
         h2, h3, h4, h5 {
             font-family: 'Apple Chancery', cursive; /* Custom font for h2-h5 */
             text-transform: capitalize; /* Capitalize the first letter of each word */
+            text-shadow: 
+                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
+                0 0 20px rgba(0, 0, 0, 0.9),
+                0 0 30px rgba(0, 0, 0, 0.8); 
         }
 
         /* ------------------------------ 
@@ -136,6 +145,10 @@
             font-family: 'MSUI GOTHIC'; 
             font-size: 1rem; 
             padding: 10px 0; 
+            text-shadow: 
+                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
+                0 0 20px rgba(0, 0, 0, 0.9),
+                0 0 30px rgba(0, 0, 0, 0.8); 
         }
 
         /* ------------------------------ 
@@ -144,7 +157,7 @@
 
         main {
             text-align: justify; 
-            padding: 0 20px; /* To ensure inner content has some padding */
+            padding: 0; /* No padding for main to fit snug */
         }
 
         /* ---------------------------------
@@ -153,10 +166,15 @@
 
         .gallery-item {
             padding: 20px; 
+            margin: 0; /* No margins on the sides */
         }
 
         .gallery-item h2 {
             text-transform: capitalize; /* Capitalize individual words for gallery titles */
+            text-shadow: 
+                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
+                0 0 20px rgba(0, 0, 0, 0.9),
+                0 0 30px rgba(0, 0, 0, 0.8); 
         }
 
         .gallery-item .date {
