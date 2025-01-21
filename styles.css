@@ -1,13 +1,13 @@
 /* Apply styles to the entire body */
 body {
-    background-color: #282828; /* Set the background-color to a deeper black */
+    background-color: black; /* Set the body background to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
     background-size: cover; /* Cover the entire body */
     background-attachment: fixed; /* Make the background image fixed */
     background-position: center; /* Center the background image */
     color: white; /* Set default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
-    margin: 20px; /* Apply balanced margins */
+    margin: 20px; /* Apply uniform margins */
     padding: 10px; /* Apply some padding */
     max-width: 800px; /* Limit body width to 800px */
     width: 100%; /* Set the width to 100% of its parent */
@@ -22,11 +22,16 @@ header {
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif'); /* Header background image */
     background-size: cover; /* Cover header area */
     padding: 20px; /* Add some padding to the header */
-    border: 0; /* Remove the border */
+    border: 1px solid white; /* White border */
     border-radius: 3px; /* Rounded corners */
-    text-align: justified; /* Center align text inside the header */
-    margin-bottom: 20px; /* Space below the header */
-    background-color: #444; /* A slightly darker background to contrast with the text */
+    text-align: justify; /* Justify text inside the header */
+    margin: 20px 0; /* Uniform margin above and below the header */
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for better text visibility */
+    box-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 1), /* Shadow below */
+        -2px -2px 4px rgba(0, 0, 0, 1),
+        2px -2px 4px rgba(0, 0, 0, 1),
+        -2px 2px 4px rgba(0, 0, 0, 1); /* Darker shadow effect to match text */
 }
 
 /* Header content styles */
@@ -47,6 +52,7 @@ h2 {
     color: #FF007F; /* Hot pink color for H2 */
     text-transform: uppercase; /* Make H2 text uppercase */
     padding: 10px; /* Add some padding to the H2 */
+    margin: 20px 0; /* Uniform margin for H2 */
 }
 
 /* H2 after pseudo-element */
@@ -62,7 +68,7 @@ h2::after {
 p {
     color: white; /* Set default text color to white for paragraphs */
     padding: 10px; /* Apply some padding to the paragraph */
-    margin: 10px 0; /* Apply some margin to the paragraph */
+    margin: 10px 0; /* Apply uniform margin to the paragraph */
 }
 
 /* Add intense text shadow to all text */
@@ -85,8 +91,7 @@ footer {
         2px -2px 4px rgba(0, 0, 0, 1),
         -2px 2px 4px rgba(0, 0, 0, 1); /* Shadow for footer text */
     padding: 10px; /* Apply some padding to the footer */
-    margin: 20px 0; /* Space above and below the footer */
-    background-color: #666; /* A slightly darker background to contrast with the text */
+    margin: 20px 0; /* Uniform margin above and below the footer */
 }
 
 /* Sidebar styles, if applicable */
