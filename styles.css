@@ -13,11 +13,44 @@ body {
     text-align: justify; /* Justify the text */
 }
 
-/* Style for all headings (H2 specifically) and links */
+/* Header styles with a darker overlay */
+header {
+    position: relative; /* Position relative for the overlay */
+    background-image: url('https://example.com/header-background.jpg'); /* Replace with your header image URL */
+    background-size: cover; /* Cover the header area */
+    background-position: center; /* Center the header image */
+    padding: 20px; /* Padding around header */
+    color: white; /* Header text color */
+    text-align: center; /* Center align text inside the header */
+}
+
+/* Dark overlay for the header */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with 70% opacity */
+    z-index: 0; /* Place it behind content */
+}
+
+/* Ensure text appears above the overlay */
+header h1 {
+    position: relative; /* Position relative to place it above the overlay */
+    z-index: 1; /* Bring the text above the overlay */
+}
+
+/* Styles for all H2 elements */
 h2 {
     color: #FF007F; /* Hot pink color for H2 */
     text-transform: uppercase; /* Make H2 text uppercase */
     position: relative; /* Position relative to allow absolute positioning of the hr */
+    background-image: url('https://example.com/h2-background.jpg'); /* Replace with your H2 background image URL */
+    background-size: cover; /* Cover the H2 area */
+    background-position: center; /* Center the H2 background image */
+    padding: 10px; /* Padding around each H2 */
 }
 
 h2::after {
@@ -34,13 +67,13 @@ p, a {
     text-transform: uppercase; /* Make all paragraph and link text uppercase */
 }
 
-/* Add soft text shadow to all text */
+/* Add intense text shadow to all text */
 h1, h2, h3, h4, h5, h6, p, a {
     text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 1), /* Soft shadow */
-        -1px -1px 3px rgba(0, 0, 0, 1),
-        1px -1px 3px rgba(0, 0, 0, 1),
-        -1px 1px 3px rgba(0, 0, 0, 1); /* Adjusted for softer effect */
+        2px 2px 4px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
+        -2px -2px 4px rgba(0, 0, 0, 1),
+        2px -2px 4px rgba(0, 0, 0, 1),
+        -2px 2px 4px rgba(0, 0, 0, 1); /* Adjusted for a darker effect */
 }
 
 /* Footer styles */
@@ -49,17 +82,14 @@ footer {
     color: white; /* White for the footer text */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
     text-shadow: 
-        1px 1px 3px rgba(0, 0, 0, 1),
-        -1px -1px 3px rgba(0, 0, 0, 1),
-        1px -1px 3px rgba(0, 0, 0, 1),
-        -1px 1px 3px rgba(0, 0, 0, 1); /* Shadow for footer text */
+        2px 2px 4px rgba(0, 0, 0, 1),
+        -2px -2px 4px rgba(0, 0, 0, 1),
+        2px -2px 4px rgba(0, 0, 0, 1),
+        -2px 2px 4px rgba(0, 0, 0, 1); /* Shadow for footer text */
 }
 
-/* Custom styles for header and sidebar can be added here */
-header {
-    text-align: justify; /* Justify header text if applicable */
-    background: rgba(255,255,255,0.1); /* Optional: add slight background for header */
-    padding: 20px; /* Add padding around header */
+.sidebar {
+    text-align: justify; /* Justify sidebar text if applicable */
 }
 
 /* Additional header image styling */
@@ -68,8 +98,4 @@ header {
     height: auto; /* Keep aspect ratio */
     max-height: 200px; /* Maximum height for the header image */
     object-fit: cover; /* Cover to fill space well */
-}
-
-.sidebar {
-    text-align: justify; /* Justify sidebar text if applicable */
 }
