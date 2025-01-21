@@ -21,7 +21,6 @@ header {
     background-position: center; /* Center the header image */
     padding: 20px; /* Padding around header */
     color: white; /* Header text color */
-    text-align: center; /* Center align text inside the header */
 }
 
 /* Dark overlay for the header */
