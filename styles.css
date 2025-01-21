@@ -1,63 +1,82 @@
-/* Apply styles to the entire body */
+/* ------------------------------ 
+   GLOBAL STYLES
+--------------------------------- */
+
 body {
-    background-color: black; /* Set the body background to black */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set your custom background image */
-    background-size: contain; /* Ensure the background image is contained within the body */
+    background-color: black; /* Set the background color of the body to black */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
+    background-size: contain; /* Ensure the image covers the body without stretching */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
-    background-attachment: fixed; /* Make the background image fixed */
-    color: white; /* Set default text color to white */
-    font-family: 'Times New Roman', Times, serif; /* Set the body font */
-    margin: 20px; /* Apply uniform margins only to the body */
-    padding: 10px; /* Apply some padding */
-    max-width: 600px; /* Limit body width to 600px */
-    width: 100%; /* Set the width to 100% of its parent */
-    text-transform: uppercase; /* Capitalize all text in the main area */
-    line-height: 1.6; /* Improve line spacing for better readability */
+    background-attachment: fixed; /* Keep the background image fixed on scroll */
+    
+    color: white; /* Set the default text color to white */
+    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman font */
+    
+    margin: 20px; /* Uniform margin around the body */
+    padding: 10px; /* Padding inside the body */
+    
+    max-width: 600px; /* Maximum width of the body */
+    width: 100%; /* Full width relative to its container */
+    
+    text-transform: uppercase; /* Capitalize all text */
+    
+    line-height: 1.6; /* Line height for better readability */
 }
 
-/* Header styles */
+/* ------------------------------ 
+   HEADER STYLES
+--------------------------------- */
+
 header {
-    position: relative; /* Position for containing content */
-    height: 300px; /* Increase header height */
-    overflow: hidden; /* Ensure no overflow */
-    border-radius: 3px; /* Border radius */
-    border: 1px solid white; /* White border */
+    position: relative; /* Allow absolute positioning of children elements */
+    height: 300px; /* Height of the header section */
+    overflow: hidden; /* Prevent overflow of inner content */
+    
+    border-radius: 3px; /* Slightly rounded corners */
+    border: 1px solid white; /* White border around the header */
 }
 
 /* Header video background */
 header video {
-    position: absolute; /* Position it absolutely */
+    position: absolute; /* Absolutely position the video */
     top: 50%; /* Center vertically */
     left: 50%; /* Center horizontally */
-    min-width: 130%; /* Zoom in the video by 30% */
-    min-height: 130%; /* Zoom in the video by 30% */
-    width: auto; /* Auto width */
-    height: auto; /* Auto height */
-    z-index: 0; /* Send to the back */
-    transform: translate(-50%, -50%); /* Center it */
+    
+    min-width: 130%; /* Zoom in by 30% */
+    min-height: 130%; /* Zoom in by 30% */
+    
+    width: auto; /* Maintain auto width */
+    height: auto; /* Maintain auto height */
+    
+    z-index: 0; /* Send the video to the background */
+    transform: translate(-50%, -50%); /* Center the video */
 }
 
 /* Header content styles */
 .header-content {
-    position: relative; /* Position relative for better control */
-    z-index: 1; /* Ensure the text is above the video */
-    color: white; /* Text color */
-    display: flex; /* Use flex to align h1 and h2 */
-    align-items: flex-end; /* Align items to the bottom */
+    position: relative; /* Relative positioning for z-index control */
+    z-index: 1; /* Ensure content is on top of the video */
+    
+    color: white; /* Set content color to white */
+    display: flex; /* Flexbox for alignment */
+    align-items: flex-end; /* Align items at the bottom */
+    
     height: 100%; /* Full height of the header */
     justify-content: center; /* Center content horizontally */
-    text-align: center; /* Center the text */
+    text-align: center; /* Center text */
 }
 
 /* Title container styles */
 .title-container {
-    text-align: center; /* Center the text */
+    text-align: center; /* Center title text */
 }
 
 .title-container h1 {
-    margin: 0; /* Remove margins for headers */
-    font-size: 2.5rem; /* Adjust font size */
-    text-transform: uppercase; /* Uppercase for h1 */
+    margin: 0; /* No margin around h1 */
+    font-size: 2.5rem; /* Font size for h1 */
+    
+    text-transform: uppercase; /* Uppercase for h1 text */
+    
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -69,15 +88,17 @@ header video {
 
 .title-container hr {
     border: 0; /* Remove default border */
-    height: 1px; /* Line height */
-    background-color: white; /* Line color */
-    margin: 10px 0; /* Margin for spacing */
+    height: 1px; /* Define the height of the line */
+    background-color: white; /* Color of the line */
+    margin: 10px 0; /* Margin around the line */
 }
 
 .title-container h2 {
-    color: #FF007F; /* Magenta color for H2 */
-    text-transform: uppercase; /* Uppercase for h2 */
-    display: inline-block; /* Ensure h2 is inline with h1 */
+    color: #FF2B79; /* Bubblegum pink color for h2 text (vibrant magenta) */
+    text-transform: uppercase; /* Uppercase for h2 text */
+    
+    display: inline-block; /* Allow h2 to be inline with h1 */
+    
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -87,20 +108,26 @@ header video {
         0 0 8px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
-/* Navigation links styling */
+/* ------------------------------ 
+   NAVIGATION STYLES
+--------------------------------- */
+
 nav {
-    margin-top: 10px; /* Add some space above the navigation */
-    display: flex; /* Use flex to align items horizontally */
-    flex-wrap: nowrap; /* Prevent wrapping to the next line */
-    justify-content: center; /* Center the navigation links */
-    align-items: center; /* Center the items vertically */
+    margin-top: 10px; /* Space above the navigation */
+    
+    display: flex; /* Flexbox for horizontal layout */
+    flex-wrap: nowrap; /* Prevent items from wrapping */
+    justify-content: center; /* Center navigation links */
+    align-items: center; /* Center items vertically */
 }
 
 nav a {
-    color: #FF007F; /* Magenta color for links */
+    color: #FF2B79; /* Bubblegum pink color for links */
     text-decoration: none; /* Remove underline from links */
+    
     margin: 0 5px; /* Space between navigation links */
-    text-transform: uppercase; /* Capitalize links */
+    text-transform: uppercase; /* Uppercase for links */
+    
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -111,31 +138,39 @@ nav a {
 }
 
 nav .separator {
-    color: white; /* Color of the separator symbols */
-    margin: 0 5px; /* Space around separator symbols */
+    color: white; /* Color of separator items */
+    margin: 0 5px; /* Spacing around separator symbols */
 }
 
 /* Hover effect for links */
 nav a:hover {
-    color: white; /* Change link color to white on hover */
+    color: white; /* Change color to white on hover */
 }
 
-/* Add uniform shadow to all text */
-h1, h3, h4, h5, p, nav a {
+/* ------------------------------ 
+   TEXT SHADOWS FOR CONSISTENCY
+--------------------------------- */
+
+h1, h2, h3, h4, h5, p, nav a {
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
         0 0 5px rgba(0, 0, 0, 1),
         0 0 6px rgba(0, 0, 0, 1),
         0 0 7px rgba(0, 0, 0, 1),
-        0 0 8px rgba(0, 0, 0, 1); /* Uniform dark shadow effect */
+        0 0 8px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
 }
 
-/* Footer styles */
+/* ------------------------------ 
+   FOOTER STYLES
+--------------------------------- */
+
 footer {
-    text-align: center; /* Center the footer content */
-    color: white; /* White for the footer text */
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
+    text-align: center; /* Center footer text */
+    color: white; /* White text color */
+    
+    font-family: 'Times New Roman', Times, serif; /* Consistent font for footer */
+    
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -143,21 +178,28 @@ footer {
         0 0 6px rgba(0, 0, 0, 1),
         0 0 7px rgba(0, 0, 0, 1),
         0 0 8px rgba(0, 0, 0, 1); /* Same shadow as above */
-    padding: 10px; /* Apply some padding to the footer */
+    
+    padding: 10px; /* Padding around the footer */
 }
 
-/* Sidebar styles */
+/* ------------------------------ 
+   SIDEBAR STYLES
+--------------------------------- */
+
 .sidebar {
-    margin-top: 20px; /* Add a margin for spacing */
-    text-align: center; /* Center the sidebar links */
+    margin-top: 20px; /* Space above the sidebar */
+    text-align: center; /* Center links in the sidebar */
 }
 
 .sidebar a {
-    display: block; /* Ensure each link is a block for better spacing */
-    color: #FF007F; /* Magenta color */
-    text-decoration: none; /* Remove underline */
-    text-transform: uppercase; /* Uppercase for sidebar links */
-    margin: 0.5rem 0; /* Space between sidebar links */
+    display: block; /* Block display for sidebar links */
+    color: #FF2B79; /* Bubblegum pink for sidebar links */
+    text-decoration: none; /* No underline */
+    
+    text-transform: uppercase; /* Uppercase links */
+    
+    margin: 0.5rem 0; /* Spacing between links */
+    
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -167,7 +209,26 @@ footer {
         0 0 8px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
-/* Main content styles */
+/* ------------------------------ 
+   MAIN CONTENT STYLES
+--------------------------------- */
+
 main {
-    text-align: justify; /* Justify text in the main area */
+    text-align: justify; /* Justify text in main section */
+}
+
+/* Apply specific styles for h2 elements */
+h2 {
+    color: #FF2B79; /* Again, bubblegum pink color for h2 */
+    text-transform: uppercase; /* Uppercase styling */
+    
+    display: inline-block; /* For alignment with h1 */
+    
+    text-shadow: 
+        0 0 3px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 5px rgba(0, 0, 0, 1),
+        0 0 6px rgba(0, 0, 0, 1),
+        0 0 7px rgba(0, 0, 0, 1),
+        0 0 8px rgba(0, 0, 0, 1); /* Ensure consistency with other heading styles */
 }
