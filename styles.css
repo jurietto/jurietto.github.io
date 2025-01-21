@@ -74,12 +74,12 @@ header video {
     margin: 0; /* No margin around h1 */
     font-size: 2.5rem; /* Font size for h1 */
     text-shadow: 
-        0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
-        0 0 5px rgba(0, 0, 0, 1),
-        0 0 6px rgba(0, 0, 0, 1),
-        0 0 7px rgba(0, 0, 0, 1),
-        0 0 8px rgba(0, 0, 0, 1); /* Dark shadow effect */
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
 .title-container hr {
@@ -111,7 +111,7 @@ nav a {
     text-transform: none; /* Regular case for links */
     
     text-shadow: 
-        0 0 3px rgba(0, 0, 0, 1),
+        0 0 px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
         0 0 5px rgba(0, 0, 0, 1),
         0 0 6px rgba(0, 0, 0, 1),
@@ -135,12 +135,12 @@ nav a:hover {
 
 h1, h2, h3, h4, h5, p, nav a {
     text-shadow: 
-        0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
-        0 0 5px rgba(0, 0, 0, 1),
-        0 0 6px rgba(0, 0, 0, 1),
-        0 0 7px rgba(0, 0, 0, 1),
-        0 0 8px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
 }
 
 /* ------------------------------ 
@@ -154,12 +154,12 @@ footer {
     font-family: 'Times New Roman', Times, serif; /* Consistent font for footer */
     
     text-shadow: 
-        0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
-        0 0 5px rgba(0, 0, 0, 1),
-        0 0 6px rgba(0, 0, 0, 1),
-        0 0 7px rgba(0, 0, 0, 1),
-        0 0 8px rgba(0, 0, 0, 1); /* Same shadow as above */
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
     
     padding: 10px; /* Padding around the footer */
 }
@@ -208,10 +208,10 @@ h2 {
     display: inline-block; /* For alignment with h1 */
     
     text-shadow: 
-        0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
-        0 0 5px rgba(0, 0, 0, 1),
-        0 0 6px rgba(0, 0, 0, 1),
-        0 0 7px rgba(0, 0, 0, 1),
-        0 0 8px rgba(0, 0, 0, 1); /* Ensure consistency with other heading styles */
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1),
+        0 0 4px rgba(0, 0, 0, 1); /* Ensure consistency with other heading styles */
 }
