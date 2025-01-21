@@ -16,7 +16,7 @@ body {
     margin: 20px; /* Add uniform margin */
     line-height: 1.6;
     padding: 20px 30px; /* Adjust padding for better readability */
-    text-align: left; /* Align text to the left */
+    text-align: justified; /* Align text to the left */
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
 }
 
