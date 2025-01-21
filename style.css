@@ -8,7 +8,13 @@
 body {
     font-family: 'MS Gothic', sans-serif;
     background-color: black;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+    background-image: repeating-linear-gradient(
+        135deg, /* Diagonal stripes from top left to bottom right */
+        brown 0,
+        brown 10px,
+        rgba(75, 0, 130, 1) 10px,
+        rgba(75, 0, 130, 1) 20px
+    ); /* Brown and dark purplish magenta stripes */
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
