@@ -5,20 +5,75 @@
     box-sizing: border-box;
 }
 
+/* Color Scheme Variables */
+:root {
+    --black: black;
+    --rich-bright-red: #ff3b30; /* Rich Bright Red */
+    --magenta-cherry-pink: #ff69b4; /* Magenta Cherry Pink */
+    --dark-purple: #6c5ce7; /* Dark Purple */
+    --purplish-pink: #cc00cc; /* Purplish Pink */
+    --white: white;
+}
+
 /* Body Styling */
 body {
     font-family: 'MS UI Gothic', 'Times New Roman', sans-serif;
-    background-color: black;
+    background-color: var(--black);
     background-image: url('path/to/your/background-image.jpg'); /* Replace with your image path */
     background-size: cover;
     background-position: center;
-    color: white;
-    margin: 20px;
+    background-attachment: fixed;
+    color: var(--white);
+    margin: 20px auto;
     max-width: 600px;
-    margin: auto; /* Center the body content */
-    text-align: justify; /* Justify text */
-    border: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    text-align: justify;
     padding: 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Custom Margin Utility */
+.margin-small {
+    margin: 10px;
+}
+
+.margin-medium {
+    margin: 20px;
+}
+
+.margin-large {
+    margin: 30px;
+}
+
+/* Heading Styles */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--magenta-cherry-pink);
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Responsive Headings */
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
 }
 
 /* Header Styling */
@@ -26,29 +81,30 @@ header {
     background-image: url('path/to/your/header-image.jpg'); /* Replace with your image path */
     text-align: center;
     padding: 1rem 0;
-    color: white;
-    border-bottom: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    color: var(--white);
+    border-bottom: 5px solid var(--magenta-cherry-pink);
 }
 
 /* Sidebar Styling */
 .sidebar {
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    background-color: rgba(255, 255, 255, 0.1);
     padding: 1rem;
     width: 200px;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    overflow: auto; /* Ensure it scrolls if content overflows */
-    border-right: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    overflow: auto;
+    border-right: 5px solid var(--magenta-cherry-pink);
 }
 
+/* Sidebar Links */
 .sidebar a {
-    color: white;
+    color: var(--white);
     display: block;
     padding: 0.5rem 0;
     text-decoration: none;
-    border-bottom: 2px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    transition: background-color 0.3s;
 }
 
 .sidebar a:hover {
@@ -59,39 +115,25 @@ header {
 main {
     margin-left: 220px;
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+    background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    border: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
-}
-
-/* Header and Footer Heading Styling */
-h1, h2, h3, h4, h5, h6 {
-    color: #ff69b4; /* Bubblegum Pink Magenta */
-    text-align: center;
+    border: 5px solid var(--magenta-cherry-pink);
 }
 
 /* Footer Styling */
 footer {
     text-align: center;
-    color: white;
+    color: var(--white);
     padding: 1rem 0;
-    background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
-    border-top: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
 
 footer h6 {
     margin: 0;
-    color: white; /* Ensure footer text is white */
+    color: var(--white);
     font-size: 1rem;
 }
 
-/* Specific Styling for Different Pages */
-h2 {
-    margin-top: 1rem;
-    border-bottom: 2px solid #ff69b4; /* Bubblegum Pink Magenta border */
-    padding-bottom: 0.5rem;
-}
-
+/* List Styles */
 ul {
     list-style-type: none;
     padding: 0;
@@ -103,14 +145,15 @@ ul li {
 
 ul li a {
     text-decoration: none;
-    color: #ff69b4; /* Bubblegum Pink Magenta */
+    color: var(--magenta-cherry-pink);
+    transition: text-decoration 0.3s;
 }
 
 ul li a:hover {
     text-decoration: underline;
 }
 
-/* Mobile Responsive Design */
+/* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     body {
         margin: 10px;
@@ -123,12 +166,10 @@ ul li a:hover {
         height: auto;
         position: relative;
         border-right: none;
-        border-bottom: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
     }
 
     .sidebar a {
         display: inline-block;
-        width: auto;
         padding: 1rem;
         border-bottom: none;
     }
@@ -144,3 +185,301 @@ ul li a:hover {
         position: relative;
     }
 }
+
+/* Button Styles */
+.button {
+    background-color: var(--rich-bright-red);
+    color: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: darken(var(--rich-bright-red), 10%);
+}
+
+/* Card Component Styles */
+.card {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--magenta-cherry-pink);
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Input Styles */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--white);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: var(--magenta-cherry-pink);
+    outline: none;
+}
+
+/* Custom Select Styles */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--white);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+/* Custom Textarea Styles */
+textarea {
+    height: 100px;
+}
+
+/* Additional Text Styles */
+p {
+    margin-bottom: 15px;
+}
+
+.small-text {
+    font-size: 0.8rem;
+    color: var(--white);
+}
+
+.highlighted {
+    background-color: var(--magenta-cherry-pink);
+    color: var(--black);
+    padding: 5px;
+    border-radius: 4px;
+}
+
+/* Notable Quotes */
+blockquote {
+    border-left: 5px solid var(--magenta-cherry-pink);
+    color: var(--white);
+    font-style: italic;
+    margin: 1rem 0;
+    padding-left: 15px;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+/* Decorative Styles */
+.border-radius {
+    border-radius: 10px;
+}
+
+.box-shadow {
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* Footer Links */
+.footer-links {
+    padding: 10px 0;
+}
+
+.footer-links a {
+    color: var(--magenta-cherry-pink);
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Alert Styles */
+.alert {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 1px solid green;
+}
+
+.alert-error {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid red;
+}
+
+.alert-warning {
+    background-color: rgba(255, 165, 0, 0.1);
+    border: 1px solid orange;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid var(--magenta-cherry-pink);
+    text-align: left;
+}
+
+th {
+    background-color: var(--dark-purple);
+    color: var(--white);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--magenta-cherry-pink);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darken(var(--magenta-cherry-pink), 10%);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animation Utility */
+.animate-fade {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Form Styles for Validation Messages */
+.form-validation {
+    font-size: 0.9rem;
+    color: var(--white);
+}
+
+/* Responsive Card Styling */
+.card-responsive {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+/* Flexbox Utilities */
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+/* Extra Utility Classes */
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* Custom Loading Spinner */
+.loading-spinner {
+    border: 5px solid var(--dark-purple);
+    border-top: 5px solid var(--white);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Card Hover Effect */
+.card:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s;
+}
+
+/* Section Styles */
+.section {
+    padding: 40px 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Responsive Form Styles */
+@media (max-width: 600px) {
+    .button {
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
+
+    main {
+        margin-left: 0;
+    }
+}
+
+/* End of CSS */
