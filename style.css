@@ -17,11 +17,11 @@ body {
     line-height: 1.6;
     padding: 20px 30px; /* Adjust padding for better readability */
     text-align: justify; /* Justify text alignment */
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0), 1px 1px 4px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
+    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0), 1px 1px 4px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
+    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
     text-align: left; /* Align headers to the left */
     margin: 20px 0; /* Add margin for headers */
 }
@@ -34,7 +34,7 @@ h1 {
 h2 {
     font-family: 'Lindley', sans-serif;
     font-size: 2em; /* Adjust font size for better readability */
-    color: #FF0099;
+    color: rgba(255, 0, 153, 0.75); /* Magenta color with 75% opacity */
 }
 
 h3, h4, h5, h6 {
@@ -43,7 +43,7 @@ h3, h4, h5, h6 {
 }
 
 p, a {
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0), 1px 1px 4px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
+    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
 }
 
 a {
@@ -53,7 +53,7 @@ a {
 }
 
 a:hover {
-    color: #FF0099; /* Revert link hover color */
+    color: rgba(255, 0, 153, 0.75); /* Magenta hover color with 75% opacity */
 }
 
 footer {
@@ -73,7 +73,7 @@ ul li {
     display: flex;
     align-items: baseline;
     gap: 10px;
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0), 1px 1px 4px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
+    text-shadow: 8px 8px 16px rgba(0, 0, 0, 1.0), 4px 4px 12px rgba(0, 0, 0, 1.0), 2px 2px 8px rgba(0, 0, 0, 1.0); /* Increased shadow intensity */
     line-height: 1.4; /* Adjust line height for better readability */
     margin-bottom: 10px; /* Add margin between list items */
 }
@@ -97,4 +97,5 @@ ul li::before {
 @media screen and (max-width: 700px) {
     body {
         padding: 20px;
-
+    }
+}
