@@ -1,12 +1,22 @@
-/* Font Face Declaration */
+/* Font Face Declarations */
 @font-face {
     font-family: 'Lindley';
     src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
 }
 
+@font-face {
+    font-family: 'Mobsters';
+    src: url('https://file.garden/ZhTgSjrp5nAroRKq/Mobsters.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Psychosis';
+    src: url('https://file.garden/ZhTgSjrp5nAroRKq/psychosis.ttf') format('truetype');
+}
+
 /* Global Styles for Body */
 body {
-    font-family: 'MS UI Gothic', sans-serif; /* Change body text font */
+    font-family: 'Psychosis', sans-serif; /* Change body text font */
     background-color: black;
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
     background-repeat: no-repeat;
@@ -73,7 +83,7 @@ header {
 .search-sort input[type="text"],
 .search-sort select {
     margin: 20px 0; /* Add margin */
-    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
+    font-family: 'Psychosis', sans-serif; /* Match body text font */
 }
 
 /* Gallery Styling */
@@ -94,7 +104,7 @@ header {
 .gallery-item {
     width: 100%;
     max-width: 600px;
-    max-height: 400px; /* Set max height for gallery items */
+    height: 350px; /* Set height for gallery items */
     overflow-y: auto; /* Enable vertical scrolling */
     background-color: black; /* Background of gallery items set to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
@@ -107,7 +117,7 @@ header {
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
     color: white; /* Ensure text color is white */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1), 4px 4px 8px rgba(0, 0, 0, 1), 5px 5px 10px rgba(0, 0, 0, 1), 6px 6px 12px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
-    font-size: 1.2em; /* Increase text size */
+    font-size: 1em; /* Reduce text size */
 }
 
 .gallery-item .content-box {
@@ -128,7 +138,7 @@ header {
 
 .pagination button {
     margin: 20px 0; /* Add margin */
-    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
+    font-family: 'Psychosis', sans-serif; /* Match body text font */
 }
 
 /* Footer Styling */
@@ -162,7 +172,8 @@ h1 {
 }
 
 h2 {
-    font-size: 2.5em; /* Increase font size for H2 */
+    font-family: 'Mobsters', sans-serif; /* Change h2 font */
+    font-size: 2em; /* Decrease font size for H2 */
     color: #FF0099; /* Main color set to magenta */
 }
 
@@ -179,7 +190,7 @@ h5 {
 }
 
 p, a {
-    font-family: 'MS UI Gothic', sans-serif; /* Font for content and links */
+    font-family: 'Psychosis', sans-serif; /* Font for content and links */
     text-shadow:
         1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
         2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
