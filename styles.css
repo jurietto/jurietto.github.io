@@ -44,13 +44,17 @@ header video {
 header h1 {
     margin: 0; /* Remove margins for headers */
     font-size: 2.5rem; /* Adjust font size */
-    text-transform: uppercase; /* Uppercase for title */
+}
+
+/* H2-H5 styles in the header and body */
+header h2, header h3, header h4, header h5, 
+body h2, body h3, body h4, body h5, body p {
+    text-transform: uppercase; /* Capitalize all h2-h5 and paragraphs */
 }
 
 /* H2 styles in the header */
 .header-content h2 {
     color: #FF007F; /* Hot pink color for H2 */
-    text-transform: uppercase; /* Uppercase for subtitle */
     display: inline-block; /* Ensure h2 is inline with h1 */
     margin-left: 15px; /* Add space between h1 and h2 */
 }
@@ -63,14 +67,7 @@ nav {
 nav a {
     color: #FF007F; /* Magenta color for links */
     text-decoration: none; /* Remove underline from links */
-    margin-right: 15px; /* Space between navigation links */
-    text-transform: uppercase; /* Capitalize links */
-}
-
-/* Card symbols */
-nav a:not(:first-child):before {
-    content: "♦"; /* Card symbol */
-    margin-right: 10px; /* Space around the symbols */
+    margin-right: 5px; /* Space between navigation links */
 }
 
 /* Hover effect for links */
@@ -79,7 +76,7 @@ nav a:hover {
 }
 
 /* Add uniform shadow to all text */
-h1, h2, p, nav a {
+h1, h2, h3, h4, h5, p, nav a {
     text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
 }
 
@@ -104,7 +101,6 @@ footer {
     display: block; /* Ensure each link is a block for better spacing */
     color: #FF007F; /* Magenta color */
     text-decoration: none; /* Remove underline */
-    text-transform: uppercase; /* Uppercase for sidebar links */
     margin: 0.5rem 0; /* Space between sidebar links */
 }
 
