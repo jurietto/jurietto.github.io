@@ -1,9 +1,10 @@
-// Initialize Firebase
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
     authDomain: "comments-ff6c9.firebaseapp.com",
+    databaseURL: "https://updates-e2454.firebaseio.com/",
     projectId: "comments-ff6c9",
-    storageBucket: "comments-ff6c9.firebasestorage.app",
+    storageBucket: "comments-ff6c9.appspot.com",
     messagingSenderId: "778548096311",
     appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
     measurementId: "G-T8QFHWJDB5"
@@ -11,96 +12,116 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-// Reference to the updates in the database
-const updatesRef = firebase.database().ref('lifeupdates');
+let currentPage = 1;
+const itemsPerPage = 5;
+let totalPages = 1;
 
-// Function to load updates
+// Load updates from Firebase
 function loadUpdates() {
-    updatesRef.once('value', function(snapshot) {
-        const updates = snapshot.val();
-        if (updates) {
-            displayUpdates(updates);
-        } else {
-            console.error('No updates found in the database.');
+    const searchQuery = document.getElementById('search').value.toLowerCase();
+    const sortOrder = document.getElementById('sort').value || 'desc';
+
+    database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
+        let updates = [];
+        snapshot.forEach((childSnapshot) => {
+            const updateData = childSnapshot.val();
+            const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
+            if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                updates.push({ key: childSnapshot.key, ...updateData });
+            }
+        });
+
+        if (sortOrder === 'desc') {
+            updates.reverse();
+        } else if (sortOrder === 'shuffle') {
+            updates = shuffle(updates);
         }
-    }).catch(error => {
-        console.error('Error fetching updates:', error);
+
+        totalPages = Math.ceil(updates.length / itemsPerPage);
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedUpdates = updates.slice(start, end);
+
+        displayUpdates(paginatedUpdates);
+        displayPagination();
+    }, (error) => {
+        console.error("Error fetching data: ", error);
     });
 }
 
-// Function to display updates
+// Display updates
 function displayUpdates(updates) {
     const updatesContainer = document.getElementById('updates');
     updatesContainer.innerHTML = '';
 
-    if (!updates) {
-        console.error('No updates to display.');
+    if (updates.length === 0) {
+        updatesContainer.innerHTML = '<p>No updates found.</p>';
         return;
     }
 
-    // Convert updates object to array and sort by date descending
-    const updatesArray = Object.keys(updates).map(key => updates[key]);
-    updatesArray.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    updates.forEach((update) => {
+        const updateDiv = document.createElement('div');
+        updateDiv.className = 'gallery-item';
 
-    // Pagination
-    const itemsPerPage = 10;
-    let currentPage = 1;
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = update.title;
+        updateDiv.appendChild(titleElement);
 
-    function renderPage(page) {
-        updatesContainer.innerHTML = '';
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const pageUpdates = updatesArray.slice(start, end);
+        const dateElement = document.createElement('span');
+        dateElement.className = 'date';
+        const date = new Date(update.timestamp);
+        dateElement.innerHTML = date.toLocaleString();
+        updateDiv.appendChild(dateElement);
 
-        pageUpdates.forEach(update => {
-            const updateElement = document.createElement('div');
-            updateElement.className = 'update';
+        const hrElement = document.createElement('div');
+        hrElement.className = 'line';
+        updateDiv.appendChild(hrElement);
 
-            const titleElement = document.createElement('h2');
-            titleElement.innerText = update.title;
-            updateElement.appendChild(titleElement);
+        const contentElement = document.createElement('p');
+        contentElement.innerHTML = update.content;
+        updateDiv.appendChild(contentElement);
 
-            const dateElement = document.createElement('p');
-            dateElement.innerText = new Date(update.timestamp).toLocaleDateString();
-            updateElement.appendChild(dateElement);
-
-            const contentElement = document.createElement('p');
-            contentElement.innerText = update.content;
-            updateElement.appendChild(contentElement);
-
-            updatesContainer.appendChild(updateElement);
-        });
-
-        displayPagination(updatesArray.length);
-    }
-
-    function displayPagination(totalItems) {
-        const pagination = document.getElementById('pagination');
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        const pageNumbers = document.getElementById('page-numbers');
-
-        pageNumbers.innerHTML = `Page ${currentPage} of ${totalPages}`;
-        document.getElementById('prev').disabled = currentPage === 1;
-        document.getElementById('next').disabled = currentPage === totalPages;
-    }
-
-    document.getElementById('prev').onclick = function() {
-        if (currentPage > 1) {
-            currentPage--;
-            renderPage(currentPage);
-        }
-    };
-
-    document.getElementById('next').onclick = function() {
-        if (currentPage < Math.ceil(updatesArray.length / itemsPerPage)) {
-            currentPage++;
-            renderPage(currentPage);
-        }
-    };
-
-    renderPage(currentPage);
+        updatesContainer.appendChild(updateDiv);
+    });
 }
 
-// Initial load
-loadUpdates();
+// Display pagination
+function displayPagination() {
+    const paginationElement = document.getElementById('pagination');
+    const pageNumbersElement = document.getElementById('page-numbers');
+    pageNumbersElement.innerHTML = '';
+
+    document.getElementById('prev').disabled = currentPage === 1;
+    document.getElementById('next').disabled = currentPage === totalPages;
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.className = i === currentPage ? 'active' : '';
+        button.onclick = () => {
+            currentPage = i;
+            loadUpdates();
+        };
+        pageNumbersElement.appendChild(button);
+    }
+}
+
+// Change page
+function changePage(direction) {
+    currentPage += direction;
+    loadUpdates();
+}
+
+// Shuffle array
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Load updates on window load
+window.addEventListener('load', loadUpdates);
