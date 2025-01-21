@@ -104,7 +104,7 @@ nav {
 }
 
 nav a {
-    color: #FF2B79; /* Bubblegum pink color for links */
+    color: #ff007b; /* Bubblegum pink color for links */
     text-decoration: none; /* Remove underline from links */
     
     margin: 0 10px; /* Space between navigation links */
@@ -175,7 +175,7 @@ footer {
 
 .sidebar a {
     display: block; /* Block display for sidebar links */
-    color: #FF2B79; /* Bubblegum pink for sidebar links */
+    color: #ff007b /* Bubblegum pink for sidebar links */
     text-decoration: none; /* No underline */
     
     text-transform: none; /* Regular case for sidebar links */
@@ -202,7 +202,7 @@ main {
 
 /* Apply specific styles for h2 elements */
 h2 {
-    color: #FF2B79; /* Bubblegum pink color for h2 */
+    color: #ff007b; /* Bubblegum pink color for h2 */
     text-transform: none; /* Regular case styling */
     
     display: inline-block; /* For alignment with h1 */
