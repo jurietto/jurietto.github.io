@@ -9,7 +9,7 @@ body {
     font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
     margin: 20px; /* Apply uniform margins */
     padding: 10px; /* Apply some padding */
-    max-width: 800px; /* Limit body width to 800px */
+    max-width: 575px; /* Limit body width to 800px */
     width: 100%; /* Set the width to 100% of its parent */
     line-height: 1.6; /* Improve readability */
     text-align: justify; /* Justify the text */
