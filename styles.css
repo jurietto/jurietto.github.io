@@ -1,7 +1,7 @@
 /* Apply CSS styling to both gallery.html and updates.html */
 body {
-    margin-left: 10%; /* Adjust this value to position the body towards the left */
-    background: url('path/to/your/background-image.jpg') no-repeat center center fixed;
+    
+    background: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png') no-repeat center center fixed;
     background-size: cover;
     background-color: black; /* Fallback background color */
     font-family: 'MS UI Gothic', sans-serif;
