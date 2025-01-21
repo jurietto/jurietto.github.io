@@ -6,16 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
 
+    <!-- Include external CSS for styling -->
+    <link rel="stylesheet" href="styles.css">
+
     <!-- Firebase App, Database, and Storage libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
-
-    <h1>Gallery</h1>
+    <header>
+        <h1>Gallery</h1>
+    </header>
 
     <!-- Search and Sort UI -->
     <div>
@@ -27,7 +29,8 @@
         </select>
     </div>
     
-    <div class="gallery" id="gallery"></div> <!-- Container for the gallery images -->
+    <!-- Container for the gallery images -->
+    <div class="gallery" id="gallery"></div>
 
     <!-- Pagination --> 
     <div class="pagination" id="pagination">
@@ -42,7 +45,6 @@
     <footer>
         <h6>2024 - ???</h6>
     </footer>
-    
 </body>
 
 </html>
