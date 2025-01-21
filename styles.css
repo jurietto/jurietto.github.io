@@ -16,42 +16,72 @@ body {
 /* Header styles with a darker overlay */
 header {
     position: relative; /* Position relative for the overlay */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif'); /* Replace with your header image URL */
-    background-size: cover; /* Cover the header area */
-    background-position: center; /* Center the header image */
-    padding: 20px; /* Padding around header */
-    color: white; /* Header text color */
+    text-align: center; /* Center align text inside the header */
 }
 
-/* Dark overlay for the header */
-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay with 70% opacity */
-    z-index: 0; /* Place it behind content */
+.header-links {
+    position: absolute; /* Position links relative to header */
+    top: 20px; /* Space from top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Offset to make it truly centered */
+    z-index: 2; /* Bring links above the header image */
 }
 
-/* Ensure text appears above the overlay */
+/* List styles for navigation */
+.header-links ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+}
+
+.header-links li {
+    display: inline; /* Display links inline */
+    margin: 0 15px; /* Spacing between links */
+}
+
+.header-links a {
+    color: white; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Link hover effect */
+.header-links a:hover {
+    color: #FF007F; /* Change link color on hover to magenta */
+}
+
+.header-image {
+    width: 100%; /* Full width */
+    height: auto; /* Keep aspect ratio */
+    max-height: 200px; /* Maximum height for the header image */
+    object-fit: cover; /* Cover to fill space well */
+}
+
+/* Title styles */
+.header-title {
+    position: relative; /* Position relative for better control */
+    z-index: 1; /* Ensure the title is above the image */
+    padding: 20px 10px; /* Padding around titles */
+}
+
+/* Header h1 styles */
 header h1 {
-    position: relative; /* Position relative to place it above the overlay */
-    z-index: 1; /* Bring the text above the overlay */
+    margin: 0; /* Reset margins */
 }
 
-/* Styles for all H2 elements */
+/* H2 specifically for the header */
+.header-h2 {
+    color: #FF007F; /* Hot pink color for header h2 */
+    text-transform: uppercase; /* Make H2 text uppercase */
+    margin: 0; /* Reset margins */
+}
+
+/* Styles for general H2 elements in the body */
 h2 {
     color: #FF007F; /* Hot pink color for H2 */
     text-transform: uppercase; /* Make H2 text uppercase */
-    position: relative; /* Position relative to allow absolute positioning of the hr */
-    background-image: url('https://example.com/h2-background.jpg'); /* Replace with your H2 background image URL */
-    background-size: cover; /* Cover the H2 area */
-    background-position: center; /* Center the H2 background image */
     padding: 10px; /* Padding around each H2 */
 }
 
+/* H2 after pseudo-element */
 h2::after {
     content: ''; /* Create an empty content for the pseudo-element */
     display: block; /* Make it a block to take up space */
@@ -67,14 +97,12 @@ p, a {
 }
 
 /* Add intense text shadow to all text */
-h1, h2, h3, h4, h5, h6, p, a {
+h1, .header-h2, h2, h3, h4, h5, h6, p, a {
     text-shadow: 
-        0px 0px 5px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
-        0px 0px 5px rgba(0, 0, 0, 1),
-        0px 0px 3px rgba(0, 0, 0, 1),
-        0px 0px 3px rgba(0, 0, 0, 1), /* Adjusted for a darker effect */
-        0px 0px 3px rgba(0, 0, 0, 1), /* Adjusted for a darker effect */
-        0px 0px 3px rgba(0, 0, 0, 1); /* Adjusted for a darker effect */
+        2px 2px 4px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
+        -2px -2px 4px rgba(0, 0, 0, 1),
+        2px -2px 4px rgba(0, 0, 0, 1),
+        -2px 2px 4px rgba(0, 0, 0, 1); /* Darker shadow effect */
 }
 
 /* Footer styles */
@@ -91,12 +119,4 @@ footer {
 
 .sidebar {
     text-align: justify; /* Justify sidebar text if applicable */
-}
-
-/* Additional header image styling */
-.header-image {
-    width: 100%; /* Full width */
-    height: auto; /* Keep aspect ratio */
-    max-height: 200px; /* Maximum height for the header image */
-    object-fit: cover; /* Cover to fill space well */
 }
