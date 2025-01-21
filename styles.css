@@ -73,10 +73,9 @@ header video {
 
 .title-container h1 {
     margin: 0; /* No margin around h1 */
-    font-size: 2.5rem; /* Font size for h1 */
-    
+    font-size: 2.5rem; /* Font size for h1 */    
     text-transform: uppercase; /* Uppercase for h1 text */
-    
+
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -116,17 +115,17 @@ nav {
     margin-top: 10px; /* Space above the navigation */
 
     display: flex; /* Flexbox for horizontal layout */
-    flex-wrap: wrap; /* Allow wrapping if needed */
+    flex-wrap: wrap; /* Allow wrapping in small screens */
     justify-content: center; /* Center navigation links */
     align-items: center; /* Center items vertically */
-    padding: 10px 0; /* Add padding to the navigation for better spacing */
+    padding: 10px 0; /* Padding for better spacing */
 }
 
 nav a {
     color: #FF2B79; /* Bubblegum pink color for links */
     text-decoration: none; /* Remove underline from links */
     
-    margin: 0 10px; /* Increase space between navigation links */
+    margin: 0 10px; /* Space between navigation links */
     text-transform: uppercase; /* Uppercase for links */
     
     text-shadow: 
@@ -145,7 +144,7 @@ nav .separator {
 
 /* Hover effect for links */
 nav a:hover {
-    color: white; /* Change color to white on hover for better contrast */
+    color: white; /* Change color to white on hover */
 }
 
 /* ------------------------------ 
