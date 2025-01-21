@@ -11,7 +11,7 @@ body {
     background-attachment: fixed; /* Make the background image fixed */
     
     color: white; /* Set the default text color to white */
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman font */
+    font-family: 'MSUI GOTHIC', 'Times New Roman', Times, serif; /* Use MSUI GOTHIC font */
     
     margin: 20px; /* Uniform margin around the body */
     padding: 10px; /* Padding inside the body */
@@ -143,6 +143,11 @@ h1, h2, h3, h4, h5, p, nav a {
         0 0 4px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
 }
 
+/* Set the font for headers to LINDL */
+h1, h2, h3, h4, h5 {
+    font-family: 'LINDL', sans-serif; /* Use LINDL font for headers */
+}
+
 /* ------------------------------ 
    FOOTER STYLES
 --------------------------------- */
@@ -198,6 +203,7 @@ footer {
 main {
     text-align: justify; /* Justify text in main section */
     text-transform: none; /* Regular case for main content */
+    margin-left: 50px; /* Shift main content to the right */
 }
 
 /* Apply specific styles for h2 elements */
@@ -214,4 +220,17 @@ h2 {
         0 0 4px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1); /* Ensure consistency with other heading styles */
+}
+
+/* ------------------------------ 
+   TIMESTAMP STYLES
+--------------------------------- */
+
+.timestamp {
+    display: block; /* Ensure timestamp is on its own line */
+    margin-bottom: 10px; /* Space below timestamp */
+}
+
+.timestamp + hr {
+    margin: 0; /* No margin around the horizontal line */
 }
