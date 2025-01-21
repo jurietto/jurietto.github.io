@@ -17,11 +17,11 @@ body {
     line-height: 1.6;
     padding: 20px 30px; /* Adjust padding for better readability */
     text-align: left; /* Align text to the left */
-    text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
     text-align: left; /* Align headers to the left */
     margin: 20px 0; /* Add margin for headers */
 }
@@ -40,6 +40,10 @@ h2 {
 h3, h4, h5, h6 {
     font-family: 'Verdana', sans-serif;
     font-weight: bold;
+}
+
+p, a {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
 }
 
 a {
@@ -68,7 +72,7 @@ ul li {
     display: flex;
     align-items: baseline;
     gap: 10px;
-    text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1.0); /* Super soft high contrast black glow */
     line-height: 1.4; /* Adjust line height for better readability */
     margin-bottom: 10px; /* Add margin between list items */
 }
@@ -94,7 +98,7 @@ ul li::before {
         padding: 20px;
     }
 
-    h1, h2, h3, h4, h5, h6, a, ul li, footer {
+    h1, h2, h3, h4, h5, h6, p, a, ul li, footer {
         text-shadow: none;
     }
 
