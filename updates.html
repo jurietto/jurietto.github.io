@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - Updates</title>
     
+    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
+
     <style>
         /* ------------------------------ 
            GLOBAL STYLES
         --------------------------------- */
 
+        @font-face {
+            font-family: 'Apple Chancery';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
+        }
+
         body {
-            font-family: 'MSUI GOTHIC', 'Times New Roman', Times, serif; /* Default font for body */
+            font-family: 'MSUI GOTHIC', 'Times New Roman', Times, serif;
             background-color: black; /* Set the background color of the body to black */
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
             background-size: contain; /* Contain the image within the body */
@@ -21,7 +28,11 @@
 
             color: white; /* Set the default text color to white */
             line-height: 1.6; /* Line height for better readability */
+            max-width: 600px; /* Maximum width of the body */
+            width: 95%; /* Full width relative to its container, with a 5% margin */
+            margin: 0 auto; /* Center the body */
             padding: 20px; /* Padding for the body */
+            box-sizing: border-box; /* Include padding in the element's total width and height */
         }
 
         /* ------------------------------ 
@@ -32,7 +43,8 @@
             position: relative; 
             height: 300px; 
             overflow: hidden; 
-            width: 100%; 
+            margin: 20px; /* Margins for header */
+            width: 100%; /* Full width of its container */
         }
 
         /* Header video background */
@@ -60,10 +72,12 @@
 
         .title-container {
             text-align: center; 
+            max-width: 100%; /* Ensure it does not exceed header width */
         }
 
         .title-container h1 {
             margin: 0; 
+            font-family: 'Apple Chancery', cursive; /* Custom font for h1 */
             font-size: 2.5rem; 
             text-shadow: 
                 0 0 4px rgba(0, 0, 0, 1); /* Simplified shadow effect */
@@ -93,7 +107,6 @@
             color: #ff007b; 
             text-decoration: none; 
             margin: 0 10px; 
-            text-upper: none; /* Regular case for links */
             text-shadow: 
                 0 0 4px rgba(0, 0, 0, 1); /* Uniform dark shadow for readability */
         }
@@ -108,8 +121,8 @@
             color: white; 
         }
 
-        h1, h2, h3, h4, h5 {
-            font-family: 'LINDL', sans-serif; /* LINDL font for headers */
+        h2, h3, h4, h5 {
+            font-family: 'Apple Chancery', cursive; /* Custom font for h2-h5 */
         }
 
         /* ------------------------------ 
@@ -129,7 +142,7 @@
 
         main {
             text-align: justify; 
-            margin-left: 50px; /* Shift main content to the right */
+            padding: 0 20px; /* To ensure inner content has some padding */
         }
 
         /* ---------------------------------
@@ -164,6 +177,20 @@
 
         .timestamp + hr {
             margin: 0; 
+        }
+
+        @media (max-width: 600px) {
+            body {
+                width: 95%; /* Adjust width on smaller screens */
+            }
+
+            .header-content {
+                padding: 10px; /* Adjust padding for header content on smaller screens */
+            }
+
+            .title-container h1 {
+                font-size: 2rem; /* Reduce font size for h1 on smaller screens */
+            }
         }
     </style>
 </head>
