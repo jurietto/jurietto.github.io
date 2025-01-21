@@ -14,12 +14,32 @@
             height: 200px; /* Set height of the header */
             overflow: hidden; /* Ensure content stays within the border-radius */
             position: relative; /* For positioning the overlay */
-         
             background: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg') no-repeat top center;
             background-size: cover;
             border-radius: 10px; /* Add border radius */
             border: 1px solid magenta; /* Add border */
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
+        }
+
+        .header-text {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-family: 'MS Gothic', sans-serif;
+            font-size: 1em;
+            color: #f0f0f0;
+            text-align: right;
+        }
+
+        .header-text a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .header-text a:hover {
+            color: #FF0099;
+            text-decoration: underline;
         }
 
         .search-sort {
@@ -45,13 +65,16 @@
             margin: 40px 0;
             padding: 20px;
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
-    
+        }
+
+        .gallery-item h2 {
+            font-family: 'Lindley', sans-serif;
+            font-size: 2.5em;
+            color: #FF0099;
         }
 
         .date {
-      
             font-weight: bold;
-            color: #aaa;
             margin-bottom: 10px;
         }
 
