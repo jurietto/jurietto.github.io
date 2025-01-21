@@ -9,6 +9,31 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Font face for custom font */
+        @font-face {
+            font-family: 'Lindley';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'MS Gothic', sans-serif;
+            background-color: black;
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: contain;
+            color: white;
+            max-width: 500px; /* Maximum width for the content */
+            margin: 20px; /* Add uniform margin */
+            line-height: 1.6;
+            padding: 20px 30px; /* Adjust padding for better readability */
+            text-align: justify; /* Justify text alignment */
+            text-shadow: 0px 0px 16px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 0px rgba(0, 0, 0, 1); /* More intense and opaque shadows */
+        }
+
+        /* Header styling */
         header {
             width: 100%; /* Set width of the header */
             height: 200px; /* Set height of the header */
@@ -21,6 +46,7 @@
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
         }
 
+        /* Header text styling */
         .header-text {
             position: absolute;
             bottom: 10px;
@@ -41,39 +67,36 @@
             text-decoration: underline;
         }
 
+        /* Search and sort styling */
         .search-sort {
             text-align: center;
             margin: 20px 0;
         }
 
+        .search-sort input[type="text"] {
+            border: 2px inset #d4d0c8;
+            padding: 4px;
+            background-color: #fff;
+            color: #000;
+            font-family: 'MS Gothic', sans-serif;
+        }
+
+        .search-sort select {
+            border: 2px inset #d4d0c8;
+            padding: 4px;
+            background-color: #fff;
+            color: #000;
+            font-family: 'MS Gothic', sans-serif;
+        }
+
+        /* Gallery styling */
         .gallery {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        @font-face {
-            font-family: 'Lindley';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
-        }
-
-        body {
-            font-family: 'MS Gothic', sans-serif;
-            background-color: black;
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: contain;
-            color: white;
-            max-width: 500px; /* Maximum width for the content */
-            margin: 20px; /* Add uniform margin */
-            line-height: 1.6;
-            padding: 20px 30px; /* Adjust padding for better readability */
-            text-align: justify; /* Justify text alignment */
-            text-shadow: 0px 0px 16px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 0px rgba(0, 0, 0, 1); /* More intense and opaque shadows */
-        }
-
+        /* Line styling */
         .line {
             width: 100%;
             height: 1px;
@@ -81,14 +104,15 @@
             margin: 20px 0; /* Adjust margin as needed */
         }
 
+        /* Gallery item styling */
         .gallery-item {
             width: 90%;
             max-width: 600px;
             background-color: rgba(0, 0, 0, 0.9); /* More opaque background */
             background-image: repeating-linear-gradient(
                 225deg,
-                rgba(255, 0, 153, 0.1) 0,
-                rgba(255, 0, 153, 0.1) 10px,
+                rgba(255, 0, 153, 0.2) 0, /* Increased opacity */
+                rgba(255, 0, 153, 0.2) 10px,
                 transparent 10px,
                 transparent 20px
             ); /* Diagonal stripes */
@@ -99,11 +123,30 @@
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
         }
 
+        /* Pagination styling */
         .pagination {
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 20px 0;
+        }
+
+        .pagination button {
+            margin: 0 5px; /* Add space between buttons */
+            padding: 10px 15px;
+            cursor: pointer;
+            border: 2px outset #d4d0c8;
+            background-color: #fff;
+            color: #000;
+            font-family: 'MS Gothic', sans-serif;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center; /* Align footer text to the center */
+            margin-top: 20px; /* Adjust margin for better spacing */
+            font-size: 0.9em;
+            color: white;
         }
     </style>
 </head>
@@ -132,6 +175,7 @@
     </div>
 
     <script>
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
             authDomain: "comments-ff6c9.firebaseapp.com",
@@ -143,6 +187,7 @@
             measurementId: "G-T8QFHWJDB5"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
@@ -150,6 +195,7 @@
         const itemsPerPage = 5;
         let totalPages = 1;
 
+        // Load updates from Firebase
         function loadUpdates() {
             const searchQuery = document.getElementById('search').value.toLowerCase();
             const sortOrder = document.getElementById('sort').value || 'desc';
@@ -182,6 +228,7 @@
             });
         }
 
+        // Display updates
         function displayUpdates(updates) {
             const updatesContainer = document.getElementById('updates');
             updatesContainer.innerHTML = '';
@@ -224,6 +271,7 @@
             });
         }
 
+        // Display pagination
         function displayPagination() {
             const paginationElement = document.getElementById('pagination');
             const pageNumbersElement = document.getElementById('page-numbers');
@@ -244,11 +292,13 @@
             }
         }
 
+        // Change page
         function changePage(direction) {
             currentPage += direction;
             loadUpdates();
         }
 
+        // Shuffle array
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -257,6 +307,7 @@
             return array;
         }
 
+        // Load updates on window load
         window.addEventListener('load', loadUpdates);
     </script>
 
