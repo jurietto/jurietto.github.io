@@ -29,6 +29,18 @@
             font-size: 1em;
             color: #f0f0f0;
             text-align: right;
+            font-weight: bold; /* Make header text bold */
+        }
+
+        .header-text a {
+            color: white;
+            font-weight: bold; /* Make link bold */
+            text-decoration: none;
+        }
+
+        .header-text a:hover {
+            color: #FF0099;
+            text-decoration: underline;
         }
 
         .search-sort {
@@ -40,7 +52,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-  
+            padding: 20px;
         }
 
         .gallery-item {
@@ -51,8 +63,8 @@
             background-size: 20px 20px;
             border: 1px solid #FF0099;
             border-radius: 10px;
-     
-         
+            margin: 20px 0; /* Adjust margin for better spacing */
+            padding: 20px;
             box-shadow: 0 0 15px rgba(255, 0, 153, 0.5);
         }
 
@@ -99,7 +111,30 @@
             height: 150px;
             cursor: pointer;
             z-index: 10000;
+        }
 
+        @media screen and (max-width: 700px) {
+            body {
+                padding: 20px;
+            }
+
+            .home-button {
+                top: 10px;
+                bottom: auto;
+                width: 100px;
+                height: 100px;
+            }
+
+            h1,
+            h3,
+            h4,
+            h5,
+            h6,
+            a,
+            ul li,
+            footer {
+                text-shadow: none;
+            }
         }
     </style>
 </head>
@@ -159,8 +194,6 @@
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
-
-                console.log("Fetched updates: ", updates);
 
                 if (sortOrder === 'desc') {
                     updates.reverse();
