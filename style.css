@@ -84,6 +84,8 @@ header {
     flex-direction: column;
     align-items: center;
     margin: 20px 0; /* Add uniform margin */
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, 0.5)); /* 50% opacity gradient background for contrast */
+    mix-blend-mode: multiply; /* Blend mode for vibrancy */
 }
 
 .line {
@@ -96,17 +98,7 @@ header {
 .gallery-item {
     width: 100%;
     max-width: 600px;
-    background-image: repeating-linear-gradient(
-        135deg, /* 135 degrees for top left to bottom right */
-        #8b0000 0, /* Darker red */
-        #8b0000 10px,
-        #8b004d 10px, /* Darker pink */
-        #8b004d 20px,
-        #4b0082 20px, /* Dark purple */
-        #4b0082 30px,
-        #2e0854 30px, /* Darker dark purple */
-        #2e0854 40px
-    ); /* Darker red, darker pink, dark purple, and darker dark purple stripes */
+    background-color: black; /* Background of gallery items set to black */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 20px 0;
