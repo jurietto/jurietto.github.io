@@ -13,19 +13,22 @@
     --dark-purple: #6c5ce7; /* Dark Purple */
     --purplish-pink: #cc00cc; /* Purplish Pink */
     --white: white;
+    --grey: #ccc; /* Light Grey */
+    --light-grey: #f7f7f7; /* Light Grey for backgrounds */
+    --dark-grey: #555; /* Dark Grey for text */
 }
 
 /* Body Styling */
 body {
     font-family: 'MS UI Gothic', 'Times New Roman', sans-serif;
     background-color: var(--black);
-    background-image: url('path/to/your/background-image.jpg'); /* Replace with your image path */
+    background-image: url('path/to/your/background-image.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     color: var(--white);
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 800px;
     text-align: justify;
     padding: 20px;
     transition: background-color 0.3s ease;
@@ -78,7 +81,7 @@ h6 {
 
 /* Header Styling */
 header {
-    background-image: url('path/to/your/header-image.jpg'); /* Replace with your image path */
+    background-image: url('path/to/your/header-image.jpg');
     text-align: center;
     padding: 1rem 0;
     color: var(--white);
@@ -89,12 +92,12 @@ header {
 .sidebar {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 1rem;
-    width: 200px;
+    width: 250px;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
     border-right: 5px solid var(--magenta-cherry-pink);
 }
 
@@ -113,7 +116,7 @@ header {
 
 /* Main Content Styling */
 main {
-    margin-left: 220px;
+    margin-left: 270px;
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.8);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -184,6 +187,14 @@ ul li a:hover {
     footer {
         position: relative;
     }
+
+    h1 {
+        font-size: 2rem; /* adjust heading size */
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
 }
 
 /* Button Styles */
@@ -194,11 +205,12 @@ ul li a:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .button:hover {
     background-color: darken(var(--rich-bright-red), 10%);
+    transform: scale(1.05);
 }
 
 /* Card Component Styles */
@@ -209,6 +221,11 @@ ul li a:hover {
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.03);
 }
 
 /* Custom Input Styles */
@@ -221,7 +238,7 @@ textarea {
     border: 1px solid var(--white);
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--white);
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
 input[type="text"]:focus,
@@ -229,6 +246,7 @@ input[type="email"]:focus,
 textarea:focus {
     border-color: var(--magenta-cherry-pink);
     outline: none;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Custom Select Styles */
@@ -297,7 +315,7 @@ blockquote {
 /* Grid Layout */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
 
@@ -384,15 +402,27 @@ th {
     }
 }
 
-/* Animation Utility */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation utility */
 .animate-fade {
     animation: fadeIn 0.5s ease-in;
 }
 
-/* Form Styles for Validation Messages */
-.form-validation {
-    font-size: 0.9rem;
-    color: var(--white);
+.loading-spinner {
+    border: 5px solid var(--dark-purple);
+    border-top: 5px solid var(--white);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
 }
 
 /* Responsive Card Styling */
@@ -433,45 +463,121 @@ th {
     cursor: pointer;
 }
 
-/* Custom Loading Spinner */
-.loading-spinner {
-    border: 5px solid var(--dark-purple);
-    border-top: 5px solid var(--white);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
+/* Form Styles for Validation Messages */
+.form-validation {
+    font-size: 0.9rem;
+    color: var(--white);
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Card Hover Effect */
-.card:hover {
-    transform: scale(1.02);
-    transition: transform 0.3s;
-}
-
-/* Section Styles */
-.section {
-    padding: 40px 20px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-    margin-bottom: 20px;
+/* Add Custom Drop Shadow to Cards */
+.card-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Responsive Form Styles */
-@media (max-width: 600px) {
-    .button {
-        width: 100%;
-    }
+form {
+    margin: 20px 0;
+}
 
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--white);
+}
+
+form input,
+form select,
+form textarea {
+    margin-bottom: 15px;
+}
+
+/* Tabs Styles */
+.tabs {
+    display: flex;
+    cursor: pointer;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    background-color: var(--dark-purple);
+    color: var(--white);
+    border: 1px solid var(--magenta-cherry-pink);
+    transition: background-color 0.3s;
+}
+
+.tab:hover {
+    background-color: var(--magenta-cherry-pink);
+}
+
+/* Active Tab */
+.tab.active {
+    background-color: var(--magenta-cherry-pink);
+    color: var(--black);
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--dark-purple);
+    color: var(--white);
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the element */
+    left: 50%;
+    margin-left: -60px; /* Center tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: var(--magenta-cherry-pink);
+    padding: 8px 16px;
+    border: 1px solid var(--magenta-cherry-pink);
+    margin: 0 2px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: var(--magenta-cherry-pink);
+    color: var(--white);
+}
+
+/* Card Header Styles */
+.card-header {
+    font-size: 1.25rem;
+    background-color: var(--dark-purple);
+    color: var(--white);
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* Custom Breakpoints for Improved Responsiveness */
+@media (max-width: 480px) {
     .sidebar {
         width: 100%;
         position: relative;
@@ -479,7 +585,187 @@ th {
 
     main {
         margin-left: 0;
+        padding: 10px;
     }
+
+    h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Additional Media Queries for Tablets */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+
+    .button {
+        font-size: 0.9rem;
+    }
+
+    .pagination a {
+        padding: 4px 8px;
+    }
+}
+
+/* Button Active State */
+.button:active {
+    transform: scale(0.98);
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: none;
+        color: black;
+    }
+
+    .sidebar, footer {
+        display: none; /* Hide sidebar and footer on print */
+    }
+}
+
+/* Fixed Navbar */
+.fixed-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--dark-purple);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Dividers */
+.divider {
+    height: 2px;
+    background: var(--magenta-cherry-pink);
+    margin: 20px 0;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Progress Bar */
+.progress {
+    width: 100%;
+    background-color: var(--light-grey);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 30px;
+    background-color: var(--magenta-cherry-pink);
+    width: 0; /* Set to 0 by default and can be animated */
+    transition: width 0.5s;
+}
+
+/* Card Content Styles */
+.card-content {
+    padding: 15px;
+}
+
+/* Form Group Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+/* Custom Checkbox Styles */
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.custom-checkbox .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--grey);
+    border-radius: 4px; /* Rounded corners */
+}
+
+.custom-checkbox:hover input ~ .checkmark {
+    background-color: var(--light-grey);
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: var(--magenta-cherry-pink);
+}
+
+/* Checkbox Checked Indicator */
+.custom-checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.custom-checkbox .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Accordion Styles */
+.accordion {
+    background-color: var(--dark-purple);
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: background-color 0.3s;
+}
+
+.accordion.active, .accordion:hover {
+    background-color: var(--magenta-cherry-pink);
+}
+
+/* Accordion Panel */
+.panel {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* End of CSS */
