@@ -75,9 +75,6 @@ footer {
     text-align: center;
     color: white;
     padding: 1rem 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
     border-top: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
@@ -85,6 +82,7 @@ footer {
 footer h6 {
     margin: 0;
     color: white; /* Ensure footer text is white */
+    font-size: 1rem;
 }
 
 /* Specific Styling for Different Pages */
