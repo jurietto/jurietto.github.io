@@ -16,6 +16,9 @@ body {
     margin: 20px;
     max-width: 600px;
     margin: auto; /* Center the body content */
+    text-align: justify; /* Justify text */
+    border: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    padding: 20px;
 }
 
 /* Header Styling */
@@ -24,6 +27,7 @@ header {
     text-align: center;
     padding: 1rem 0;
     color: white;
+    border-bottom: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
 
 /* Sidebar Styling */
@@ -36,6 +40,7 @@ header {
     left: 0;
     height: 100%;
     overflow: auto; /* Ensure it scrolls if content overflows */
+    border-right: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
 
 .sidebar a {
@@ -43,6 +48,7 @@ header {
     display: block;
     padding: 0.5rem 0;
     text-decoration: none;
+    border-bottom: 2px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
 
 .sidebar a:hover {
@@ -55,11 +61,13 @@ main {
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
 
 /* Header and Footer Heading Styling */
 h1, h2, h3, h4, h5, h6 {
     color: #ff69b4; /* Bubblegum Pink Magenta */
+    text-align: center;
 }
 
 /* Footer Styling */
@@ -71,9 +79,35 @@ footer {
     bottom: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* Slightly transparent background */
+    border-top: 5px solid #ff69b4; /* Bubblegum Pink Magenta border */
 }
 
 footer h6 {
     margin: 0;
     color: white; /* Ensure footer text is white */
+}
+
+/* Specific Styling for Different Pages */
+h2 {
+    margin-top: 1rem;
+    border-bottom: 2px solid #ff69b4; /* Bubblegum Pink Magenta border */
+    padding-bottom: 0.5rem;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0.5rem 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #ff69b4; /* Bubblegum Pink Magenta */
+}
+
+ul li a:hover {
+    text-decoration: underline;
 }
