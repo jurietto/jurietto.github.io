@@ -19,8 +19,8 @@ header {
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif'); /* Header background image */
     background-size: cover; /* Cover header area */
     padding: 20px; /* Padding around the header content */
-    border: 4px solid #FF007F; /* Magenta border */
-    border-radius: 15px; /* Rounded corners */
+    border: 1px solid #FF007F; /* Magenta border */
+    border-radius: 3px; /* Rounded corners */
     text-align: justified; /* Center align text inside the header */
     margin-bottom: 20px; /* Space below the header */
 }
