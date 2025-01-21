@@ -1,12 +1,16 @@
 /* Apply styles to the entire body */
 body {
     background-color: black; /* Set the body background to black */
+    background-image: url('path/to/your/background-image.jpg'); /* Set your custom background image */
+    background-size: cover; /* Ensure the background image covers the entire area */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
     color: white; /* Set default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Set the body font */
     margin: 20px; /* Apply uniform margins only to the body */
     padding: 10px; /* Apply some padding */
-    max-width: 600px; /* Limit body width to 800px */
+    max-width: 600px; /* Limit body width to 600px */
     width: 100%; /* Set the width to 100% of its parent */
+    text-transform: uppercase; /* Capitalize all text in the main area */
 }
 
 /* Header styles */
@@ -70,24 +74,22 @@ header video {
 /* Navigation links styling */
 nav {
     margin-top: 10px; /* Add some space above the navigation */
+    display: flex; /* Use flex to align items horizontally */
+    flex-wrap: wrap; /* Wrap to the next line if necessary */
+    justify-content: center; /* Center the navigation links */
+    align-items: center; /* Center the items vertically */
 }
 
 nav a {
     color: #FF007F; /* Magenta color for links */
-    text-decoration: underline; /* Remove underline from links */
-    margin-right: 15px; /* Space between navigation links */
+    text-decoration: none; /* Remove underline from links */
+    margin: 0 5px; /* Space between navigation links */
     text-transform: uppercase; /* Capitalize links */
 }
 
-/* Card symbols */
-nav a::after {
-    content: "♦"; /* Card symbol */
-    margin: 0 5px; /* Space around the symbols */
-}
-
-/* First link should not have a prefix symbol */
-nav a:first-child::after {
-    content: ""; /* Remove card symbol for first link */
+nav .separator {
+    color: white; /* Color of the separator symbols */
+    margin: 0 5px; /* Space around separator symbols */
 }
 
 /* Hover effect for links */
@@ -96,7 +98,7 @@ nav a:hover {
 }
 
 /* Add uniform shadow to all text */
-h1, h2, p, nav a {
+h1, h2, h3, h4, h5, p, nav a {
     text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
 }
 
