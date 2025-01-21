@@ -19,8 +19,6 @@ body {
     max-width: 600px; /* Maximum width of the body */
     width: 100%; /* Full width relative to its container */
     
-    text-transform: uppercase; /* Capitalize all text */
-    
     line-height: 1.6; /* Line height for better readability */
 }
 
@@ -74,9 +72,7 @@ header video {
 
 .title-container h1 {
     margin: 0; /* No margin around h1 */
-    font-size: 2.5rem; /* Font size for h1 */    
-    text-transform: uppercase; /* Uppercase for h1 text */
-
+    font-size: 2.5rem; /* Font size for h1 */
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
         0 0 4px rgba(0, 0, 0, 1),
@@ -91,21 +87,6 @@ header video {
     height: 1px; /* Define the height of the line */
     background-color: white; /* Color of the line */
     margin: 10px 0; /* Margin around the line */
-}
-
-.title-container h2 {
-    color: #FF2B79; /* Bubblegum pink color for h2 text (vibrant magenta) */
-    text-transform: uppercase; /* Uppercase for h2 text */
-    
-    display: inline-block; /* Allow h2 to be inline with h1 */
-    
-    text-shadow: 
-        0 0 3px rgba(0, 0, 0, 1),
-        0 0 4px rgba(0, 0, 0, 1),
-        0 0 5px rgba(0, 0, 0, 1),
-        0 0 6px rgba(0, 0, 0, 1),
-        0 0 7px rgba(0, 0, 0, 1),
-        0 0 8px rgba(0, 0, 0, 1); /* Dark shadow effect */
 }
 
 /* ------------------------------ 
@@ -127,7 +108,7 @@ nav a {
     text-decoration: none; /* Remove underline from links */
     
     margin: 0 10px; /* Space between navigation links */
-    text-transform: uppercase; /* Uppercase for links */
+    text-transform: none; /* Regular case for links */
     
     text-shadow: 
         0 0 3px rgba(0, 0, 0, 1),
@@ -197,7 +178,7 @@ footer {
     color: #FF2B79; /* Bubblegum pink for sidebar links */
     text-decoration: none; /* No underline */
     
-    text-transform: uppercase; /* Uppercase links */
+    text-transform: none; /* Regular case for sidebar links */
     
     margin: 0.5rem 0; /* Spacing between links */
     
@@ -216,12 +197,13 @@ footer {
 
 main {
     text-align: justify; /* Justify text in main section */
+    text-transform: none; /* Regular case for main content */
 }
 
 /* Apply specific styles for h2 elements */
 h2 {
     color: #FF2B79; /* Bubblegum pink color for h2 */
-    text-transform: uppercase; /* Uppercase styling */
+    text-transform: none; /* Regular case styling */
     
     display: inline-block; /* For alignment with h1 */
     
