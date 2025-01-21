@@ -1,0 +1,776 @@
+/* styles.css */
+
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and Background */
+body {
+    background-color: black;
+    color: #ff66cc; /* Purplish-pinkish text color */
+    font-family: 'MS Gothic', Arial, sans-serif;
+    background-image: url('background-wallpaper.jpg'); /* Background wallpaper */
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Header Styles */
+header {
+    background-color: #660066; /* Dark purple */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #ff66cc;
+}
+
+header h1 {
+    color: #ffccff; /* Light pink */
+    font-size: 2em;
+}
+
+/* Navigation Menu */
+nav {
+    background-color: #330033; /* Darker purple */
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #ff66cc;
+}
+
+nav a {
+    color: #ffccff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ffffff;
+}
+
+/* Main Content Area */
+main {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    border: 2px solid #ff66cc;
+    margin: 20px;
+}
+
+/* Sidebar Styles */
+aside {
+    background-color: #330033; /* Darker purple */
+    padding: 10px;
+    border: 2px solid #ff66cc;
+    margin: 20px;
+    float: left;
+    width: 20%;
+}
+
+aside h2 {
+    color: #ffccff;
+    margin-bottom: 10px;
+}
+
+aside ul {
+    list-style-type: none;
+}
+
+aside ul li {
+    margin-bottom: 10px;
+}
+
+aside ul li a {
+    color: #ffccff;
+    text-decoration: none;
+}
+
+aside ul li a:hover {
+    color: #ffffff;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #660066;
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid #ff66cc;
+    color: #ffccff;
+}
+
+/* Specific Styles for Update and Gallery pages */
+.update-content, .gallery-content {
+    padding: 20px;
+    border: 2px solid #ff66cc;
+    background-color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 20px;
+}
+
+.update-content h2, .gallery-content h2 {
+    color: #ffccff;
+    margin-bottom: 10px;
+}
+
+.update-content p, .gallery-content p {
+    margin-bottom: 15px;
+}
+
+/* Gallery Specific Styles */
+.gallery-content .image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.gallery-content .image-grid img {
+    border: 2px solid #ff66cc;
+    width: calc(33.333% - 10px);
+    height: auto;
+}
+
+/* Form Styles */
+form {
+    background-color: #330033; /* Darker purple */
+    padding: 20px;
+    border: 2px solid #ff66cc;
+    margin: 20px;
+}
+
+form label {
+    color: #ffccff;
+    display: block;
+    margin-bottom: 10px;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff66cc;
+    background-color: black;
+    color: #ff66cc;
+    margin-bottom: 20px;
+}
+
+form input[type="submit"] {
+    background-color: #660066;
+    color: #ffccff;
+    border: 2px solid #ff66cc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'MS Gothic', Arial, sans-serif;
+}
+
+form input[type="submit"]:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+/* Buttons */
+button {
+    background-color: #660066;
+    color: #ffccff;
+    border: 2px solid #ff66cc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'MS Gothic', Arial, sans-serif;
+}
+
+button:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 2px solid #ff66cc;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #660066;
+    color: #ffccff;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+table tbody tr:nth-child(even) {
+    background-color: rgba(51, 0, 51, 0.8);
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #330033;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #660066;
+    border-radius: 20px;
+    border: 3px solid #330033;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #660066;
+    color: #ffccff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #330033;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 2px solid #ff66cc;
+    width: 80%; /* Could be more or less, depending on screen size */
+    color: #ffccff;
+}
+
+/* Close Button */
+.close {
+    color: #ffccff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Animation for Modal */
+@keyframes modalopen {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Custom List Styles */
+.list-custom {
+    list-style-type: square;
+    padding-left: 20px;
+}
+
+.list-custom li {
+    margin-bottom: 10px;
+    color: #ffccff;
+}
+
+/* Card Styles */
+.card {
+    background-color: #330033;
+    border: 2px solid #ff66cc;
+    padding: 20px;
+    margin: 20px 0;
+    color: #ffccff;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    margin-bottom: 15px;
+}
+
+/* Notification Styles */
+.notification {
+    background-color: #660066;
+    color: #ffccff;
+    padding: 10px;
+    border: 2px solid #ff66cc;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.notification.success {
+    background-color: #006600;
+}
+
+.notification.error {
+    background-color: #990000;
+}
+
+/* Accordion Styles */
+.accordion {
+    background-color: #660066;
+    color: #ffccff;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: 2px solid #ff66cc;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.accordion.active, .accordion:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+.accordion-content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #330033;
+    border-top: none;
+}
+
+/* Image Styles */
+.image {
+    border: 2px solid #ff66cc;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #330033;
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+}
+
+/* Video Styles */
+.video {
+    border: 2px solid #ff66cc;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #330033;
+}
+
+.video video {
+    width: 100%;
+    height: auto;
+}
+
+/* Audio Styles */
+.audio {
+    border: 2px solid #ff66cc;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #330033;
+}
+
+.audio audio {
+    width: 100%;
+}
+
+/* Progress Bar Styles */
+.progress-bar {
+    background-color: #330033;
+    border: 2px solid #ff66cc;
+    border-radius: 20px;
+    margin: 20px 0;
+    padding: 5px;
+}
+
+.progress-bar-inner {
+    background-color: #660066;
+    height: 20px;
+    border-radius: 20px;
+    width: 0%;
+    text-align: center;
+    color: #ffccff;
+    line-height: 20px;
+}
+
+/* Badge Styles */
+.badge {
+    background-color: #660066;
+    color: #ffccff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: 2px solid #ff66cc;
+    font-size: 12px;
+    display: inline-block;
+    margin: 5px;
+}
+
+/* Avatar Styles */
+.avatar {
+    display: inline-block;
+    border: 2px solid #ff66cc;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+
+.avatar img {
+    width: 100%;
+    height: auto;
+}
+
+/* Icon Styles */
+.icon {
+    color: #ff66cc;
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+/* Breadcrumb Styles */
+.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #660066;
+    border: 2px solid #ff66cc;
+    border-radius: 8px;
+    display: flex;
+}
+
+.breadcrumb li {
+    display: inline;
+    font-size: 18px;
+    color: #ffccff;
+}
+
+.breadcrumb li+li:before {
+    content: ">";
+    padding: 0 10px;
+    color: #ffccff;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.pagination a {
+    color: #ffccff;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 2px solid #ff66cc;
+    margin: 0 4px;
+}
+
+.pagination a:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+/* Label Styles */
+.label {
+    display: inline-block;
+    background-color: #660066;
+    color: #ffccff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid #ff66cc;
+    margin: 5px;
+}
+
+/* Tag Styles */
+.tag {
+    display: inline-block;
+    background-color: #660066;
+    color: #ffccff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid #ff66cc;
+    margin: 5px;
+}
+
+.tag:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+/* Search Bar Styles */
+.search-bar {
+    position: relative;
+    margin: 20px 0;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff66cc;
+    background-color: black;
+    color: #ff66cc;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background-color: #660066;
+    color: #ffccff;
+    border: 2px solid #ff66cc;
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+/* Carousel Styles */
+.carousel {
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+    overflow: hidden;
+    border: 2px solid #ff66cc;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffccff;
+    border: none;
+    font-size: 18px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.carousel-control.prev {
+    left: 10px;
+}
+
+.carousel-control.next {
+    right: 10px;
+}
+
+.carousel-control:hover {
+    background-color: rgba(255, 102, 204, 0.8);
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #660066;
+    color: #ffccff;
+    min-width: 160px;
+    border: 2px solid #ff66cc;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #ffccff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Tabs Styles */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ff66cc;
+    margin: 20px 0;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #660066;
+    color: #ffccff;
+    border: 2px solid #ff66cc;
+}
+
+.tab:hover,
+.tab.active {
+    background-color: #ff66cc;
+    color: #330033;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    background-color: #330033;
+    color: #ffccff;
+    border: 2px solid #ff66cc;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Footer Links */
+footer a {
+    color: #ffccff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    color: #ffffff;
+}
+
+/* Custom Checkbox and Radio Buttons */
+input[type="checkbox"]:not(:checked),
+input[type="checkbox"]:checked,
+input[type="radio"]:not(:checked),
+input[type="radio"]:checked {
+    position: absolute;
+    left: -9999px;
+}
+
+input[type="checkbox"]:not(:checked) + label,
+input[type="checkbox"]:checked + label,
+input[type="radio"]:not(:checked) + label,
+input[type="radio"]:checked + label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    display: inline-block;
+    color: #ffccff;
+}
+
+input[type="checkbox"]:not(:checked) + label:before,
+input[type="checkbox"]:checked + label:before,
+input[type="radio"]:not(:checked) + label:before,
+input[type="radio"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0;
+    width: 18px; height: 18px;
+    border: 2px solid #ff66cc;
+    background: #660066;
+    border-radius: 3px;
+}
+
+input[type="radio"]:not(:checked) + label:before,
+input[type="radio"]:checked + label:before {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked + label:before,
+input[type="radio"]:checked + label:before {
+    background: #ff66cc;
+    color: #330033;
+}
+
+input[type="checkbox"]:checked + label:after,
+input[type="radio"]:checked + label:after {
+    content: '✔';
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 16px;
+    color: #330033;
+}
+
+/* Custom File Input */
+.custom-file-input {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    cursor: pointer;
+    background-color: #660066;
+    color: #ffccff;
+    border: 2px solid #ff66cc;
+    text-align: center;
+    line-height: 45px;
+}
+
+.custom-file-input input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Custom Select */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select select {
+    display: none;
+}
+
+.custom-select::after {
