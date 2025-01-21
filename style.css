@@ -6,7 +6,7 @@
 
 /* Global Styles for Body */
 body {
-    font-family: 'MS Gothic', sans-serif;
+    font-family: 'MS UI Gothic', sans-serif; /* Change body text font */
     background-color: black;
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
     background-repeat: no-repeat;
@@ -74,7 +74,7 @@ header {
     padding: 4px;
     background-color: #fff;
     color: #000;
-    font-family: 'MS Gothic', sans-serif;
+    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
     text-shadow: none; /* Remove text shadow */
 }
 
@@ -84,8 +84,6 @@ header {
     flex-direction: column;
     align-items: center;
     margin: 20px 0; /* Add uniform margin */
-    background: linear-gradient(135deg, rgba(255, 0, 0, 0.5), rgba(0, 0, 255, 0.5)); /* 50% opacity gradient background for contrast */
-    mix-blend-mode: multiply; /* Blend mode for vibrancy */
 }
 
 .line {
@@ -99,6 +97,11 @@ header {
     width: 100%;
     max-width: 600px;
     background-color: black; /* Background of gallery items set to black */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    opacity: 0.5; /* 50% opacity for background image */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 20px 0;
@@ -123,7 +126,7 @@ header {
     border: 2px inset #FF0099; /* Main color set to magenta */
     background-color: #fff;
     color: #000;
-    font-family: 'MS Gothic', sans-serif;
+    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
     text-shadow: none; /* Remove text shadow */
 }
 
