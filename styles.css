@@ -19,7 +19,7 @@ body {
 /* Header styles */
 header {
     position: relative; /* Position for containing content */
-    height: 300px; /* Increase header height */
+    height: 400px; /* Increase header height */
     overflow: hidden; /* Ensure no overflow */
 }
 
@@ -50,6 +50,7 @@ header video {
 header h1 {
     margin: 0; /* Remove margins for headers */
     font-size: 2.5rem; /* Adjust font size */
+    text-transform: none; /* No transformation for h1 */
 }
 
 /* H2 styles in the header */
@@ -74,7 +75,7 @@ nav a {
 
 /* Card symbols */
 nav a::after {
-    content: "♦"; /* Card symbol (change as needed) */
+    content: "♦"; /* Card symbol */
     margin: 0 5px; /* Space around the symbols */
 }
 
@@ -94,10 +95,9 @@ p {
     padding: 10px; /* Apply some padding to the paragraph */
 }
 
-/* Add intense text shadow to all text */
-h1, h2, p {
-    text-shadow: 
-        0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
+/* Add uniform shadow to all text */
+h1, h2, p, nav a {
+    text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Uniform shadow for all text */
 }
 
 /* Footer styles */
@@ -105,8 +105,7 @@ footer {
     text-align: center; /* Center the footer content */
     color: white; /* White for the footer text */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
-    text-shadow: 
-        0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
+    text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
     padding: 10px; /* Apply some padding to the footer */
 }
 
