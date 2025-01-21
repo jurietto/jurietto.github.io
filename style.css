@@ -6,160 +6,59 @@
 
 /* Global Styles for Body */
 body {
-    font-family: 'MS Gothic', sans-serif; /* Set font family */
-    background-color: black; /* Set background color */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set background image */
-    background-repeat: no-repeat; /* Prevent background from repeating */
-    background-position: center center; /* Center the background image */
-    background-attachment: fixed; /* Fixed position for background image */
-    background-size: contain; /* Make background image contain within the body */
-    color: white; /* Default text color */
-    max-width: 500px; /* Maximum width for the content */
-    margin: 20px auto; /* Add uniform margin around body and center it */
-    line-height: 1.6; /* Set line height for readability */
-    padding: 20px 30px; /* Adjust padding for better readability */
-    text-align: justify; /* Justify the text alignment */
-
-    /* Text shadows for body text */
-    text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
-        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
+    font-family: 'MS Gothic', sans-serif;
+    background-color: black;
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: contain;
+    color: white;
+    max-width: 500px;
+    margin: 20px auto 20px 60px; /* Center with a bit more space on the left */
+    line-height: 1.6;
+    padding: 20px 30px;
+    text-align: justify;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1);
 }
 
 /* Header Styles */
-h1, h2, h3, h4, h5, h6 {
-    text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
-        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
-        
-    text-align: left; /* Align headers to the left */
-    margin: 20px 0; /* Add margin for headers */
-}
-
-/* Specific Heading Styles */
-h1 {
-    font-family: 'Lindley', sans-serif; /* Font for H1 */
-    font-size: 3em; /* Adjust font size for H1 */
-}
-
-h2 {
-    font-family: 'Lindley', sans-serif; /* Font for H2 */
-    font-size: 2em; /* Adjust font size for H2 */
-    color: rgba(255, 0, 153, 0.75); /* Magenta color for H2 with 75% opacity */
-}
-
-h3, h4, h5, h6 {
-    font-family: 'Verdana', sans-serif; /* Font family for H3-H6 */
-    font-weight: bold; /* Make text bold */
-}
-
-/* Paragraph and Link Styles */
-p, a {
-    text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
-        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
-}
-
-a {
-    color: white; /* Default link color */
-    text-decoration: underline; /* Underline links */
-    font-weight: bold; /* Make link text bold */
-}
-
-a:hover {
-    color: rgba(255, 0, 153, 0.75); /* Magenta hover color for links */
-}
-
-/* Footer Styles */
-footer {
-    text-align: center; /* Center align footer text */
-    margin-top: 20px; /* Margin for spacing above footer */
-    font-size: 0.9em; /* Font size for footer */
-    color: white; /* Footer text color */
-}
-
-/* Ensure h6 text in footer is always centered */
-footer h6 {
-    text-align: center;
-}
-
-/* List Styles */
-ul {
-    list-style: none; /* Remove default bullets */
-    padding: 0; /* No padding */
-    margin: 0 0 20px 0; /* Margin below the list */
-}
-
-ul li {
-    display: flex; /* Use flexbox for list items */
-    align-items: baseline; /* Align items within the list item */
-    gap: 10px; /* Space between items */
-    
-    /* Softer shadows for list items */
-    text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
-        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
-    
-    line-height: 1.4; /* Set line height for list items */
-    margin-bottom: 10px; /* Add margin between list items */
-}
-
-ul li::before {
-    content: ''; /* Use for custom list item bullets */
-    display: inline-block; /* Inline-block for custom bullet */
-    width: 20px; /* Width for the custom bullet */
-    height: 20px; /* Height for the custom bullet */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif'); /* Custom bullet image */
-    background-size: cover; /* Cover for the background image */
-}
-
-/* Line Elements */
-.line {
-    width: 100%; /* Take full width */
-    height: 1px; /* Line height */
-    background-color: grey; /* Line color */
-    margin: 20px 0; /* Margin for spacing */
-}
-
-/* Header styling */
 header {
-    width: 100%; /* Set width of the header */
-    height: 200px; /* Set height of the header */
-    overflow: hidden; /* Ensure content stays within the border-radius */
-    position: relative; /* For positioning the overlay */
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
     background: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg') no-repeat top center;
     background-size: cover;
-    border-radius: 10px; /* Add border radius */
-    border: 1px solid #FF0099; /* Add border */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0); /* Intense black shadow */
+    border-radius: 10px;
+    border: 1px solid #FF0099;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
 }
 
-/* Header text styling */
 .header-text {
     position: absolute;
     bottom: 10px;
     right: 10px;
     color: #f0f0f0;
     text-align: right;
-    font-weight: bold; /* Make header text bold */
+    font-weight: bold;
+    opacity: 1; /* Make header text opaque */
 }
 
 .header-text a {
     color: white;
-    font-weight: bold; /* Make link bold */
+    font-weight: bold;
     text-decoration: none;
+    opacity: 1; /* Make header text opaque */
 }
 
 .header-text a:hover {
     color: #FF0099;
     text-decoration: underline;
+    opacity: 1; /* Make header text opaque */
 }
 
-/* Search and sort styling */
+/* Search and Sort Styling */
 .search-sort {
     text-align: center;
     margin: 20px 0;
@@ -172,35 +71,42 @@ header {
     background-color: #fff;
     color: #000;
     font-family: 'MS Gothic', sans-serif;
+    text-shadow: none; /* Remove text shadow */
 }
 
-/* Gallery styling */
+/* Gallery Styling */
 .gallery {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Gallery item styling */
-.gallery-item {
-    width: 90%;
-    max-width: 600px;
-    background-color: rgba(0, 0, 0, 0.9); /* More opaque background */
-    background-image: repeating-linear-gradient(
-        225deg,
-        rgba(255, 0, 153, 0.2) 0, /* Increased opacity */
-        rgba(255, 0, 153, 0.2) 10px,
-        transparent 10px,
-        transparent 20px
-    ); /* Diagonal stripes */
-    border: 1px solid #FF0099; /* Same border color */
-    border-radius: 10px;
-    margin: 20px 0; /* Adjust margin for better spacing */
-    padding: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0); /* Intense black shadow */
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: grey;
+    margin: 20px 0;
 }
 
-/* Pagination styling */
+.gallery-item {
+    width: 100%;
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.9);
+    background-image: repeating-linear-gradient(
+        225deg,
+        rgba(0, 0, 0, 0.2) 0,
+        rgba(0, 0, 0, 0.2) 10px,
+        rgba(128, 0, 128, 0.2) 10px,
+        rgba(128, 0, 128, 0.2) 20px
+    );
+    border: 1px solid #FF0099;
+    border-radius: 10px;
+    margin: 20px 0;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
+}
+
+/* Pagination Styling */
 .pagination {
     display: flex;
     justify-content: center;
@@ -209,26 +115,35 @@ header {
 }
 
 .pagination button {
-    margin: 0 5px; /* Add space between buttons */
+    margin: 0 5px;
     padding: 10px 15px;
     cursor: pointer;
-    border: 2px outset #FF0099; /* Same border color */
-    background-color: #8B0000; /* Dark red background */
-    color: white; /* White text color */
+    border: 2px outset #FF0099;
+    background-color: #8B0000;
+    color: white;
     font-family: 'MS Gothic', sans-serif;
-    text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
-        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
+    text-shadow: none; /* Remove text shadow */
 }
 
 .pagination button:hover {
-    background-color: #FF0000; /* Bright red background on hover */
+    background-color: #FF0000;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: white;
+}
+
+footer h6 {
+    text-align: center;
 }
 
 /* Responsive Styles */
 @media screen and (max-width: 700px) {
     body {
-        padding: 20px; /* Adjust padding for smaller screens */
+        padding: 20px;
     }
 }
