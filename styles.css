@@ -33,15 +33,6 @@ h2 {
     color: #FF69B4; /* Rich magenta bubble gum pink */
 }
 
-/* Divider styling */
-.divider {
-    width: 20px;
-    height: 20px;
-    background: url('path/to/your/divider-image.jpg') no-repeat center center;
-    background-size: contain;
-    margin: 20px 0;
-}
-
 /* Additional styling for general text */
 p {
     font-family: 'MS UI Gothic', sans-serif;
