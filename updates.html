@@ -2,177 +2,54 @@
 <html lang="en">
 
 <head>
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Updates</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <link rel="stylesheet" href="styles.css">
+
+    <!-- Page Title -->
+    <title>Juri's Stuff - About Me</title>
 </head>
 
 <body>
-    <h1>Life Updates</h1>
-    <header>
-        <div class="header-text">
-            <a href="https://jurietto.github.org" target="_blank">JURI'S STUFF | JURIETTO.GITHUB.ORG</a>
-        </div>
-    </header>
-    <p>I’ve decided to start using this space a bit more consistently—though if I’m honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I’ve moved everything here. Life is very much a day-by-day thing for me, and I’m okay with that.</p>
-    <div class="search-sort">
-        <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
-        <select id="sort" onchange="loadUpdates()">
-            <option value="desc">Sort by Newest</option>
+
+    <!-- Decorative Image Above Header -->
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" alt="Decorative Image" width="200" height="150" />
+
+    <!-- Gallery Header Text -->
+    <h1>Gallery</h1>
+
+    <!-- Search and Sort UI -->
+    <div>
+        <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
+        <select id="sort" onchange="loadImages()">
             <option value="asc">Sort by Oldest</option>
+            <option value="desc">Sort by Newest</option>
             <option value="shuffle">Shuffle</option>
         </select>
     </div>
-    <div class="gallery" id="updates"></div>
-    <div class="pagination" id="pagination">
-        <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+
+    <!-- Gallery Container for Images -->
+    <div id="gallery"></div>
+
+    <!-- Pagination Section -->
+    <div id="pagination">
+        <button id="prev" onclick="changePage(-1)">&lt; Prev</button>
         <span id="page-numbers"></span>
-        <button id="next" onclick="changePage(1)">Next &#62;</button>
+        <button id="next" onclick="changePage(1)">Next &gt;</button>
     </div>
 
+    <!-- Home Button to Navigate to the Homepage -->
+    <a href="index.html">
+        <img id="home-button" title="Go Home" src="https://file.garden/ZhTgSjrp5nAroRKq/cooltext473430399612799.gif" alt="Home Button" />
+    </a>
+
+    <!-- Footer Section with Copyright Information -->
     <footer>
         <h6>2024 - ???</h6>
     </footer>
 
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-            authDomain: "comments-ff6c9.firebaseapp.com",
-            databaseURL: "https://updates-e2454.firebaseio.com/",
-            projectId: "comments-ff6c9",
-            storageBucket: "comments-ff6c9.appspot.com",
-            messagingSenderId: "778548096311",
-            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-            measurementId: "G-T8QFHWJDB5"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        let currentPage = 1;
-        const itemsPerPage = 5;
-        let totalPages = 1;
-
-        // Load updates from Firebase
-        function loadUpdates() {
-            const searchQuery = document.getElementById('search').value.toLowerCase();
-            const sortOrder = document.getElementById('sort').value || 'desc';
-
-            database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
-                let updates = [];
-                snapshot.forEach((childSnapshot) => {
-                    const updateData = childSnapshot.val();
-                    const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
-                        updates.push({ key: childSnapshot.key, ...updateData });
-                    }
-                });
-
-                if (sortOrder === 'desc') {
-                    updates.reverse();
-                } else if (sortOrder === 'shuffle') {
-                    updates = shuffle(updates);
-                }
-
-                totalPages = Math.ceil(updates.length / itemsPerPage);
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                const paginatedUpdates = updates.slice(start, end);
-
-                displayUpdates(paginatedUpdates);
-                displayPagination();
-            }, (error) => {
-                console.error("Error fetching data: ", error);
-            });
-        }
-
-        // Display updates
-        function displayUpdates(updates) {
-            const updatesContainer = document.getElementById('updates');
-            updatesContainer.innerHTML = '';
-
-            if (updates.length === 0) {
-                updatesContainer.innerHTML = '<p>No updates found.</p>';
-                return;
-            }
-
-            updates.forEach((update, index) => {
-                const updateDiv = document.createElement('div');
-                updateDiv.className = 'gallery-item';
-
-                const titleElement = document.createElement('h2');
-                titleElement.textContent = update.title;
-                updateDiv.appendChild(titleElement);
-
-                const dateElement = document.createElement('span');
-                dateElement.className = 'date';
-                const date = new Date(update.timestamp);
-                dateElement.innerHTML = date.toLocaleString();
-                updateDiv.appendChild(dateElement);
-
-                const hrElement = document.createElement('div');
-                hrElement.className = 'line';
-                updateDiv.appendChild(hrElement);
-
-                const contentElement = document.createElement('p');
-                contentElement.innerHTML = update.content;
-                updateDiv.appendChild(contentElement);
-
-                updatesContainer.appendChild(updateDiv);
-
-                if (index < updates.length - 1) {
-                    const divider = document.createElement('img');
-                    divider.className = 'divider';
-                    divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif';
-                    updatesContainer.appendChild(divider);
-                }
-            });
-        }
-
-        // Display pagination
-        function displayPagination() {
-            const paginationElement = document.getElementById('pagination');
-            const pageNumbersElement = document.getElementById('page-numbers');
-            pageNumbersElement.innerHTML = '';
-
-            document.getElementById('prev').disabled = currentPage === 1;
-            document.getElementById('next').disabled = currentPage === totalPages;
-
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.className = i === currentPage ? 'active' : '';
-                button.onclick = () => {
-                    currentPage = i;
-                    loadUpdates();
-                };
-                pageNumbersElement.appendChild(button);
-            }
-        }
-
-        // Change page
-        function changePage(direction) {
-            currentPage += direction;
-            loadUpdates();
-        }
-
-        // Shuffle array
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        // Load updates on window load
-        window.addEventListener('load', loadUpdates);
-    </script>
+    <!-- Include External JavaScript File -->
+    <script src="gallery.js"></script>
 </body>
 
 </html>
