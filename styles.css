@@ -18,7 +18,7 @@ header {
     position: relative; /* Position for containing content */
     height: 300px; /* Increase header height */
     overflow: hidden; /* Ensure no overflow */
-    border-radius: 3px; /* Border radius */
+    border-radius: 1px; /* Border radius */
     border: 1px solid white; /* White border */
 }
 
@@ -117,10 +117,3 @@ footer {
     text-align: center; /* Center the sidebar links */
 }
 
-.sidebar a {
-    display: block; /* Ensure each link is a block for better spacing */
-    color: #FF007F; /* Magenta color */
-    text-decoration: none; /* Remove underline */
-    text-transform: uppercase; /* Uppercase for sidebar links */
-    margin: 0.5rem 0; /* Space between sidebar links */
-}
