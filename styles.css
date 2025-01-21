@@ -1,106 +1,33 @@
-/* Apply styles to the entire body */
-body {
-    background-color: black; /* Set the body background to black */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
-    background-size: cover; /* Cover the entire body */
-    background-attachment: fixed; /* Make the background image fixed */
-    background-position: center; /* Center the background image */
-    color: white; /* Set default text color to white */
-    font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
-    margin: 20px; /* Apply uniform margins only to the body */
-    padding: 10px; /* Apply some padding */
-    max-width: 800px; /* Limit body width to 800px */
-    width: 100%; /* Set the width to 100% of its parent */
-    line-height: 1.6; /* Improve readability */
-    text-align: justify; /* Justify the text */
-    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Link the CSS file -->
+    <title>Your Website Title</title>
+</head>
+<body>
+    <header>
+        <video autoplay muted loop>
+            <source src="https://file.garden/ZhTgSjrp5nAroRKq/videoplayback.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="header-content">
+            <h1>Your Main Title</h1>
+            <h2>Your Subtitle</h2>
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Gallery</a>
+            <a href="#">Updates</a>
+        </nav>
+    </header>
 
-/* Header styles */
-header {
-    position: relative; /* Position for containing content */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif'); /* Header background image */
-    background-size: cover; /* Cover header area */
-    padding: 20px; /* Add some padding to the header */
-    border: 1px solid white; /* White border */
-    border-radius: 3px; /* Rounded corners */
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for better text visibility */
-    box-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 1), /* Shadow below */
-        -2px -2px 4px rgba(0, 0, 0, 1),
-        2px -2px 4px rgba(0, 0, 0, 1),
-        -2px 2px 4px rgba(0, 0, 0, 1); /* Darker shadow effect to match text */
-}
+    <p>Your main content goes here...</p>
 
-/* Header content styles */
-.header-content {
-    position: relative; /* Position relative for better control */
-    z-index: 1; /* Ensure the text is above the image */
-    color: white; /* Text color */
-    display: flex; /* Use flex to align h1 and h2 */
-    align-items: flex-end; /* Align items to the bottom */
-}
-
-/* Title styles */
-header h1 {
-    margin: 0; /* Remove margins for headers */
-    font-size: 2.5rem; /* Adjust font size */
-    display: inline-block; /* Ensure h1 is inline to align with h2 */
-}
-
-/* H2 styles in the header */
-header h2 {
-    color: #FF007F; /* Hot pink color for H2 */
-    text-transform: uppercase; /* Make H2 text uppercase */
-    display: inline-block; /* Ensure h2 is inline with h1 */
-    margin-left: 15px; /* Add space between h1 and h2 */
-}
-
-/* Navigation links styling */
-nav {
-    margin-top: 10px; /* Add some space above the navigation */
-}
-
-nav a {
-    color: #FF007F; /* Magenta color for links */
-    text-decoration: none; /* Remove underline from links */
-    margin-right: 15px; /* Space between navigation links */
-}
-
-/* Hover effect for links */
-nav a:hover {
-    color: white; /* Change link color to white on hover */
-}
-
-/* Style for paragraph text */
-p {
-    color: white; /* Set default text color to white for paragraphs */
-    padding: 10px; /* Apply some padding to the paragraph */
-}
-
-/* Add intense text shadow to all text */
-h1, h2, p {
-    text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
-        -2px -2px 4px rgba(0, 0, 0, 1),
-        2px -2px 4px rgba(0, 0, 0, 1),
-        -2px 2px 4px rgba(0, 0, 0, 1); /* Darker shadow effect */
-}
-
-/* Footer styles */
-footer {
-    text-align: center; /* Center the footer content */
-    color: white; /* White for the footer text */
-    font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
-    text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 1),
-        -2px -2px 4px rgba(0, 0, 0, 1),
-        2px -2px 4px rgba(0, 0, 0, 1),
-        -2px 2px 4px rgba(0, 0, 0, 1); /* Shadow for footer text */
-    padding: 10px; /* Apply some padding to the footer */
-}
-
-/* Sidebar styles, if applicable */
-.sidebar {
-    text-align: justify; /* Justify sidebar text if applicable */
-}
+    <footer>
+        <p>Your footer content goes here.</p>
+    </footer>
+</body>
+</html>
