@@ -5,9 +5,9 @@
 body {
     background-color: black; /* Set the background color of the body to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
-    background-size: contain; /* Ensure the image covers the body without stretching */
+    background-size: cover; /* Cover full body with the image */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
-    background-attachment: fixed; /* Keep the background image fixed on scroll */
+    background-position: center; /* Center the background image */
     
     color: white; /* Set the default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman font */
@@ -114,18 +114,19 @@ header video {
 
 nav {
     margin-top: 10px; /* Space above the navigation */
-    
+
     display: flex; /* Flexbox for horizontal layout */
-    flex-wrap: nowrap; /* Prevent items from wrapping */
+    flex-wrap: wrap; /* Allow wrapping if needed */
     justify-content: center; /* Center navigation links */
     align-items: center; /* Center items vertically */
+    padding: 10px 0; /* Add padding to the navigation for better spacing */
 }
 
 nav a {
     color: #FF2B79; /* Bubblegum pink color for links */
     text-decoration: none; /* Remove underline from links */
     
-    margin: 0 5px; /* Space between navigation links */
+    margin: 0 10px; /* Increase space between navigation links */
     text-transform: uppercase; /* Uppercase for links */
     
     text-shadow: 
@@ -144,7 +145,7 @@ nav .separator {
 
 /* Hover effect for links */
 nav a:hover {
-    color: white; /* Change color to white on hover */
+    color: white; /* Change color to white on hover for better contrast */
 }
 
 /* ------------------------------ 
