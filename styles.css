@@ -1,19 +1,13 @@
 /* Apply styles to the entire body */
 body {
     background-color: black; /* Set the body background to black */
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
-    background-size: cover; /* Cover the entire body */
-    background-attachment: fixed; /* Make the background image fixed */
-    background-position: center; /* Center the background image */
     color: white; /* Set default text color to white */
-    font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
-    margin: 20px; /* Apply uniform margins only to the body */
-    padding: 10px; /* Apply some padding */
+    font-family: 'Times New Roman', Times, serif; /* Set the body font */
+    margin: 0; /* Remove margins from body */
+    padding: 20px; /* Apply some padding */
     max-width: 800px; /* Limit body width to 800px */
     width: 100%; /* Set the width to 100% of its parent */
-    line-height: 1.6; /* Improve readability */
-    text-align: justify; /* Justify the text */
-    box-sizing: border-box; /* Ensure padding and border are included in the width and height */
+    box-sizing: border-box; /* Add padding and border to width */
 }
 
 /* Header styles */
@@ -50,20 +44,20 @@ header video {
 header h1 {
     margin: 0; /* Remove margins for headers */
     font-size: 2.5rem; /* Adjust font size */
-    text-transform: none; /* No transformation for h1 */
+    text-transform: uppercase; /* Uppercase for title */
 }
 
 /* H2 styles in the header */
-header h2 {
+.header-content h2 {
     color: #FF007F; /* Hot pink color for H2 */
-    text-transform: uppercase; /* Make H2 text uppercase */
+    text-transform: uppercase; /* Uppercase for subtitle */
     display: inline-block; /* Ensure h2 is inline with h1 */
     margin-left: 15px; /* Add space between h1 and h2 */
 }
 
 /* Navigation links styling */
 nav {
-    margin-top: 10px; /* Add some space above the navigation */
+    margin-top: 0; /* Remove extra margin */
 }
 
 nav a {
@@ -74,25 +68,14 @@ nav a {
 }
 
 /* Card symbols */
-nav a::after {
+nav a:not(:first-child):before {
     content: "♦"; /* Card symbol */
-    margin: 0 5px; /* Space around the symbols */
-}
-
-/* First link should not have a prefix symbol */
-nav a:first-child::after {
-    content: ""; /* Remove card symbol for first link */
+    margin-right: 10px; /* Space around the symbols */
 }
 
 /* Hover effect for links */
 nav a:hover {
     color: white; /* Change link color to white on hover */
-}
-
-/* Style for paragraph text */
-p {
-    color: white; /* Set default text color to white for paragraphs */
-    padding: 10px; /* Apply some padding to the paragraph */
 }
 
 /* Add uniform shadow to all text */
@@ -107,9 +90,53 @@ footer {
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for footer text */
     text-shadow: 0 0 4px rgba(0, 0, 0, 1); /* Same shadow as above */
     padding: 10px; /* Apply some padding to the footer */
+    margin: 0; /* Remove margins for footer */
+    clear: both; /* Clear float */
 }
 
-/* Sidebar styles, if applicable */
+/* Sidebar styles */
 .sidebar {
-    text-align: justify; /* Justify sidebar text if applicable */
+    margin-top: 0; /* Remove extra margin */
+    text-align: center; /* Center the sidebar links */
+}
+
+.sidebar a {
+    display: block; /* Ensure each link is a block for better spacing */
+    color: #FF007F; /* Magenta color */
+    text-decoration: none; /* Remove underline */
+    text-transform: uppercase; /* Uppercase for sidebar links */
+    margin: 0.5rem 0; /* Space between sidebar links */
+}
+
+/* Search and sort styles */
+.search-sort {
+    padding: 1rem;
+}
+
+#search {
+    padding: 0.5rem;
+    margin-right: 1rem;
+}
+
+#sort {
+    padding: 0.5rem;
+}
+
+/* Pagination styles */
+.pagination {
+    padding: 1rem;
+}
+
+button {
+    padding: 0.5rem;
+    margin: 0 1rem;
+}
+
+/* Updates and pagination content */
+#updates, #pagination span {
+    padding: 1rem;
+}
+
+body * {
+    box-sizing: border-box; /* Include padding and border in calculations */
 }
