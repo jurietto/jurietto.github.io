@@ -19,7 +19,7 @@ body {
     line-height: 1.6;
     padding: 20px;
     text-align: justify;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1), 4px 4px 8px rgba(0, 0, 0, 1), 5px 5px 10px rgba(0, 0, 0, 1), 6px 6px 12px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
     font-size: 1.2em; /* Increase body text size */
 }
 
@@ -45,7 +45,7 @@ header {
     text-align: right;
     font-weight: bold;
     opacity: 1; /* Make header text opaque */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1), 4px 4px 8px rgba(0, 0, 0, 1), 5px 5px 10px rgba(0, 0, 0, 1), 6px 6px 12px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
     font-size: 1.2em; /* Increase text size */
 }
 
@@ -54,14 +54,14 @@ header {
     font-weight: bold;
     text-decoration: none;
     opacity: 1; /* Make header text opaque */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1), 4px 4px 8px rgba(0, 0, 0, 1), 5px 5px 10px rgba(0, 0, 0, 1), 6px 6px 12px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
 }
 
 .header-text a:hover {
     color: #800080; /* Dark purple hover color */
     text-decoration: underline;
     opacity: 1; /* Make header text opaque */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1), 4px 4px 8px rgba(0, 0, 0, 1), 5px 5px 10px rgba(0, 0, 0, 1), 6px 6px 12px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
 }
 
 /* Search and Sort Styling */
@@ -73,6 +73,7 @@ header {
 .search-sort input[type="text"],
 .search-sort select {
     margin: 20px 0; /* Add margin */
+    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
 }
 
 /* Gallery Styling */
@@ -93,18 +94,29 @@ header {
 .gallery-item {
     width: 100%;
     max-width: 600px;
+    max-height: 400px; /* Set max height for gallery items */
+    overflow-y: auto; /* Enable vertical scrolling */
     background-color: black; /* Background of gallery items set to black */
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    opacity: 0.5; /* Reduce opacity of background image */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 40px 0; /* Add more space between posts */
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
     color: white; /* Ensure text color is white */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1), 4px 4px 8px rgba(0, 0, 0, 1), 5px 5px 10px rgba(0, 0, 0, 1), 6px 6px 12px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
     font-size: 1.2em; /* Increase text size */
+}
+
+.gallery-item .content-box {
+    background-color: rgba(0, 0, 0, 0.8); /* 80% black background */
+    border: 1px solid white; /* White border */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 /* Pagination Styling */
@@ -117,6 +129,7 @@ header {
 
 .pagination button {
     margin: 20px 0; /* Add margin */
+    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
 }
 
 /* Footer Styling */
@@ -125,7 +138,7 @@ footer {
     margin-top: 20px;
     font-size: 1em; /* Increase footer text size */
     color: #FF0099; /* Main color set to magenta */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Add 6 shadows with full opacity */
 }
 
 footer h6 {
@@ -133,12 +146,15 @@ footer h6 {
 }
 
 /* Text Styles */
-h1, h2, h3, h4, h5, p, a {
-    font-family: 'MS UI Gothic', sans-serif; /* Font for headers and content */
+h1, h2, h3, h4, h5 {
+    font-family: 'Lindley', sans-serif; /* Font for headers */
     text-shadow:
         1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
         2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: most diffuse */
+        3px 3px 6px rgba(0, 0, 0, 1),   /* Third shadow: most diffuse */
+        4px 4px 8px rgba(0, 0, 0, 1),   /* Fourth shadow */
+        5px 5px 10px rgba(0, 0, 0, 1),  /* Fifth shadow */
+        6px 6px 12px rgba(0, 0, 0, 1);  /* Sixth shadow */
     margin: 20px 0; /* Add margin for headers */
 }
 
@@ -161,6 +177,18 @@ h4 {
 
 h5 {
     font-size: 1.5em; /* Increase font size for H5 */
+}
+
+p, a {
+    font-family: 'MS UI Gothic', sans-serif; /* Font for content and links */
+    text-shadow:
+        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
+        3px 3px 6px rgba(0, 0, 0, 1),   /* Third shadow: most diffuse */
+        4px 4px 8px rgba(0, 0, 0, 1),   /* Fourth shadow */
+        5px 5px 10px rgba(0, 0, 0, 1),  /* Fifth shadow */
+        6px 6px 12px rgba(0, 0, 0, 1);  /* Sixth shadow */
+    margin: 20px 0; /* Add margin for content */
 }
 
 a {
