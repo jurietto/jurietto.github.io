@@ -72,13 +72,7 @@ header {
 
 .search-sort input[type="text"],
 .search-sort select {
-    border: 2px inset #FF0099; /* Main color set to magenta */
-    padding: 4px;
-    background-color: #fff;
-    color: #000;
-    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
-    text-shadow: none; /* Remove text shadow */
-    font-size: 1.2em; /* Increase input text size */
+    margin: 20px 0; /* Add margin */
 }
 
 /* Gallery Styling */
@@ -86,7 +80,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px 0; /* Add uniform margin */
+    margin: 40px 0; /* Add more space between posts */
 }
 
 .line {
@@ -103,11 +97,9 @@ header {
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-blend-mode: multiply;
-    opacity: 0.5; /* 50% opacity for background image */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
-    margin: 20px 0;
+    margin: 40px 0; /* Add more space between posts */
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
     color: white; /* Ensure text color is white */
@@ -124,19 +116,7 @@ header {
 }
 
 .pagination button {
-    margin: 0 5px;
-    padding: 4px 10px; /* Match padding with search and sort */
-    cursor: pointer;
-    border: 2px inset #FF0099; /* Main color set to magenta */
-    background-color: #fff;
-    color: #000;
-    font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
-    text-shadow: none; /* Remove text shadow */
-    font-size: 1.2em; /* Increase button text size */
-}
-
-.pagination button:hover {
-    background-color: #800080; /* Dark purple hover color */
+    margin: 20px 0; /* Add margin */
 }
 
 /* Footer Styling */
@@ -154,7 +134,7 @@ footer h6 {
 
 /* Text Styles */
 h1, h2, h3, h4, h5, p, a {
-    font-family: 'Lindley', sans-serif; /* Font for headers */
+    font-family: 'MS UI Gothic', sans-serif; /* Font for headers and content */
     text-shadow:
         1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
         2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
