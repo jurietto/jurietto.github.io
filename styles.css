@@ -1,7 +1,7 @@
 /* Apply styles to the entire body */
 body {
     background-color: black; /* Set the body background to black */
-    background-image: url('your-image-url.jpg'); /* Replace with your custom background image URL */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set the custom background image */
     background-size: cover; /* Cover the entire body */
     background-position: center; /* Center the background image */
     color: white; /* Set text color to white */
@@ -9,12 +9,14 @@ body {
     margin: 20px; /* Apply balanced margins */
     max-width: 600px; /* Limit body width to 600px */
     line-height: 1.6; /* Optional: improve readability */
+    text-align: justify; /* Justify the text */
 }
 
 /* Style for all headings (H1 - H6) */
 h1, h2, h3, h4, h5, h6 {
     color: #FF007F; /* Hot pink color */
     font-family: 'Times New Roman', Times, serif; /* Use Times New Roman for headings */
+    text-align: justify; /* Justify heading text */
 }
 
 /* Footer styles */
@@ -27,8 +29,10 @@ footer {
 /* Custom styles for header and sidebar can be added here */
 header {
     /* Styles for the header image can be added here */
+    text-align: justify; /* Justify header text if applicable */
 }
 
 .sidebar {
     /* Styles for the sidebar can be added here */
+    text-align: justify; /* Justify sidebar text if applicable */
 }
