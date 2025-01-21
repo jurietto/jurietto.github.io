@@ -10,11 +10,11 @@ body {
     background-color: black;
     background-image: repeating-linear-gradient(
         135deg, /* Diagonal stripes from top left to bottom right */
-        brown 0,
-        brown 10px,
-        rgba(75, 0, 130, 1) 10px,
-        rgba(75, 0, 130, 1) 20px
-    ); /* Brown and dark purplish magenta stripes */
+        #4b2e2e 0, /* Darker brown */
+        #4b2e2e 10px,
+        #99004d 10px, /* Darker magenta */
+        #99004d 20px
+    ); /* Darker brown and darker magenta stripes */
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
