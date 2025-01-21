@@ -13,15 +13,13 @@ body {
     background-position: center center;
     background-attachment: fixed;
     background-size: contain;
-    color: #FF0099; /* Main color set to magenta */
+    color: white;
     max-width: 600px; /* Ensure maximum width for easier viewing on a laptop */
     margin: 20px auto 20px 20px; /* Move the body towards the left side */
     line-height: 1.6;
     padding: 20px;
     text-align: justify;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 1px 1px 2px rgba(255, 255, 255, 0.5),
-                 2px 2px 4px rgba(0, 0, 0, 1), 2px 2px 4px rgba(255, 255, 255, 0.5),
-                 3px 3px 6px rgba(0, 0, 0, 1); /* Add multiple shadows for better readability */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
 
 /* Header Styles */
@@ -34,7 +32,7 @@ header {
     background: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg') no-repeat top center;
     background-size: cover;
     border-radius: 10px;
-    border: 1px solid #4b0082; /* Dark purple border */
+    border: 1px solid #FF0099; /* Main color set to magenta */
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
 }
 
@@ -42,13 +40,11 @@ header {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    color: #FF0099; /* Main color set to magenta */
+    color: #f0f0f0;
     text-align: right;
     font-weight: bold;
     opacity: 1; /* Make header text opaque */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 1px 1px 2px rgba(255, 255, 255, 0.5),
-                 2px 2px 4px rgba(0, 0, 0, 1), 2px 2px 4px rgba(255, 255, 255, 0.5),
-                 3px 3px 6px rgba(0, 0, 0, 1); /* Add multiple shadows */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
 
 .header-text a {
@@ -56,18 +52,14 @@ header {
     font-weight: bold;
     text-decoration: none;
     opacity: 1; /* Make header text opaque */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 1px 1px 2px rgba(255, 255, 255, 0.5),
-                 2px 2px 4px rgba(0, 0, 0, 1), 2px 2px 4px rgba(255, 255, 255, 0.5),
-                 3px 3px 6px rgba(0, 0, 0, 1); /* Add multiple shadows */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
 
 .header-text a:hover {
-    color: #4b0082; /* Dark purple hover color */
+    color: #800080; /* Dark purple hover color */
     text-decoration: underline;
     opacity: 1; /* Make header text opaque */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 1px 1px 2px rgba(255, 255, 255, 0.5),
-                 2px 2px 4px rgba(0, 0, 0, 1), 2px 2px 4px rgba(255, 255, 255, 0.5),
-                 3px 3px 6px rgba(0, 0, 0, 1); /* Add multiple shadows */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
 
 /* Search and Sort Styling */
@@ -78,7 +70,7 @@ header {
 
 .search-sort input[type="text"],
 .search-sort select {
-    border: 2px inset #4b0082; /* Dark purple border */
+    border: 2px inset #FF0099; /* Main color set to magenta */
     padding: 4px;
     background-color: #fff;
     color: #000;
@@ -106,24 +98,22 @@ header {
     max-width: 600px;
     background-image: repeating-linear-gradient(
         135deg, /* 135 degrees for top left to bottom right */
-        #ff0000 0, /* Bright rich red */
-        #ff0000 10px,
-        #c71585 10px, /* Dark pink */
-        #c71585 20px,
-        #800080 20px, /* Purple */
-        #800080 30px,
-        #4b0082 30px, /* Dark purple */
-        #4b0082 40px
-    ); /* Bright rich red, dark pink, purple, and dark purple stripes */
+        #8b0000 0, /* Darker red */
+        #8b0000 10px,
+        #8b004d 10px, /* Darker pink */
+        #8b004d 20px,
+        #4b0082 20px, /* Dark purple */
+        #4b0082 30px,
+        #2e0854 30px, /* Darker dark purple */
+        #2e0854 40px
+    ); /* Darker red, darker pink, dark purple, and darker dark purple stripes */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 20px 0;
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
     color: #FF0099; /* Ensure text color is consistent */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 1px 1px 2px rgba(255, 255, 255, 0.5),
-                 2px 2px 4px rgba(0, 0, 0, 1), 2px 2px 4px rgba(255, 255, 255, 0.5),
-                 3px 3px 6px rgba(0, 0, 0, 1); /* Add multiple shadows for better readability */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
 
 /* Pagination Styling */
@@ -138,7 +128,7 @@ header {
     margin: 0 5px;
     padding: 4px 10px; /* Match padding with search and sort */
     cursor: pointer;
-    border: 2px inset #4b0082; /* Dark purple border */
+    border: 2px inset #FF0099; /* Main color set to magenta */
     background-color: #fff;
     color: #000;
     font-family: 'MS Gothic', sans-serif;
@@ -146,7 +136,7 @@ header {
 }
 
 .pagination button:hover {
-    background-color: #FF0099; /* Main color set to magenta */
+    background-color: #800080; /* Dark purple hover color */
 }
 
 /* Footer Styling */
@@ -155,9 +145,7 @@ footer {
     margin-top: 20px;
     font-size: 0.9em;
     color: #FF0099; /* Main color set to magenta */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 1px 1px 2px rgba(255, 255, 255, 0.5),
-                 2px 2px 4px rgba(0, 0, 0, 1), 2px 2px 4px rgba(255, 255, 255, 0.5),
-                 3px 3px 6px rgba(0, 0, 0, 1); /* Add multiple shadows for better readability */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
 
 footer h6 {
@@ -169,10 +157,8 @@ h1, h2, h3, h4, h5, p, a {
     font-family: 'Lindley', sans-serif; /* Font for headers */
     text-shadow:
         1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
-        1px 1px 2px rgba(255, 255, 255, 0.5), /* Second shadow: slightly blurred */
-        2px 2px 4px rgba(0, 0, 0, 1),   /* Third shadow: slightly more blurred */
-        2px 2px 4px rgba(255, 255, 255, 0.5), /* Fourth shadow: more blurred */
-        3px 3px 6px rgba(0, 0, 0, 1);   /* Fifth shadow: most diffuse */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
+        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: most diffuse */
     margin: 20px 0; /* Add margin for headers */
 }
 
@@ -182,7 +168,7 @@ h1 {
 
 h2 {
     font-size: 2.5em; /* Increase font size for H2 */
-    color: rgba(255, 0, 153, 0.75); /* Original magenta color for H2 with 75% opacity */
+    color: #FF0099; /* Main color set to magenta */
 }
 
 h3 {
@@ -204,7 +190,7 @@ a {
 }
 
 a:hover {
-    color: #4b0082; /* Dark purple hover color */
+    color: #800080; /* Dark purple hover color */
     text-decoration: underline;
 }
 
