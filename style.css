@@ -96,11 +96,10 @@ header {
     max-width: 600px;
     max-height: 400px; /* Set max height for gallery items */
     overflow-y: auto; /* Enable vertical scrolling */
-    
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/tinkuru.png');
-    background-size: contain;
+    background-color: black; /* Background of gallery items set to black */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
+    background-size: cover; /* Stretch the background image */
     background-repeat: no-repeat;
-    opacity: 0.5; /* Reduce opacity of background image */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 40px 0; /* Add more space between posts */
