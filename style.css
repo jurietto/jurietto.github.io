@@ -22,17 +22,17 @@ body {
 
     /* Text shadows for body text */
     text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow: close and darker */
-        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow: slightly blurred and lighter */
-        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow: more diffuse and lighter */
+        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
+        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
 }
 
 /* Header Styles */
 h1, h2, h3, h4, h5, h6 {
     text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow for headers */
-        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow for headers */
-        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow for headers */
+        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
+        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
         
     text-align: left; /* Align headers to the left */
     margin: 20px 0; /* Add margin for headers */
@@ -58,9 +58,9 @@ h3, h4, h5, h6 {
 /* Paragraph and Link Styles */
 p, a {
     text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow for paragraphs and links */
-        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow for paragraphs and links */
-        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow for paragraphs and links */
+        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
+        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
 }
 
 a {
@@ -95,9 +95,9 @@ ul li {
     
     /* Softer shadows for list items */
     text-shadow:
-        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow for list items */
-        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow for list items */
-        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow for list items */
+        1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
+        3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
     
     line-height: 1.4; /* Set line height for list items */
     margin-bottom: 10px; /* Add margin between list items */
