@@ -16,7 +16,7 @@ body {
 /* Header styles with a darker overlay */
 header {
     position: relative; /* Position relative for the overlay */
-    background-image: url('https://example.com/header-background.jpg'); /* Replace with your header image URL */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/Excerpt_from_the_film_PEEP_TV_SHOW.gif'); /* Replace with your header image URL */
     background-size: cover; /* Cover the header area */
     background-position: center; /* Center the header image */
     padding: 20px; /* Padding around header */
@@ -70,10 +70,12 @@ p, a {
 /* Add intense text shadow to all text */
 h1, h2, h3, h4, h5, h6, p, a {
     text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
-        -2px -2px 4px rgba(0, 0, 0, 1),
-        2px -2px 4px rgba(0, 0, 0, 1),
-        -2px 2px 4px rgba(0, 0, 0, 1); /* Adjusted for a darker effect */
+        0px 0px 5px rgba(0, 0, 0, 1), /* Increase shadow distance and blur */
+        0px 0px 5px rgba(0, 0, 0, 1),
+        0px 0px 3px rgba(0, 0, 0, 1),
+        0px 0px 3px rgba(0, 0, 0, 1), /* Adjusted for a darker effect */
+        0px 0px 3px rgba(0, 0, 0, 1), /* Adjusted for a darker effect */
+        0px 0px 3px rgba(0, 0, 0, 1); /* Adjusted for a darker effect */
 }
 
 /* Footer styles */
