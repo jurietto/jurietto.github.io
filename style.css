@@ -93,7 +93,13 @@ header {
 .gallery-item {
     width: 100%;
     max-width: 600px;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(75, 0, 130, 1)); /* Black and dark rich lolita purple gradient */
+    background-image: repeating-linear-gradient(
+        135deg, /* 135 degrees for top left to bottom right */
+        rgba(0, 0, 0, 1) 0,
+        rgba(0, 0, 0, 1) 10px,
+        rgba(75, 0, 130, 1) 10px,
+        rgba(75, 0, 130, 1) 20px
+    ); /* Black and dark rich lolita purple stripes */
     border: 1px solid #FF0099;
     border-radius: 10px;
     margin: 20px 0;
