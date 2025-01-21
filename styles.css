@@ -7,7 +7,7 @@ body {
     background-position: center; /* Center the background image */
     color: white; /* Set default text color to white */
     font-family: 'Times New Roman', Times, serif; /* Set the body font to Times New Roman */
-    margin: 20px; /* Apply uniform margins */
+    margin: 20px; /* Apply uniform margins only to the body */
     padding: 10px; /* Apply some padding */
     max-width: 800px; /* Limit body width to 800px */
     width: 100%; /* Set the width to 100% of its parent */
@@ -24,7 +24,6 @@ header {
     padding: 20px; /* Add some padding to the header */
     border: 1px solid white; /* White border */
     border-radius: 3px; /* Rounded corners */
-    margin: 20px 0; /* Uniform margin above and below the header */
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background for better text visibility */
     box-shadow: 
         2px 2px 4px rgba(0, 0, 0, 1), /* Shadow below */
@@ -42,53 +41,39 @@ header {
 
 /* Title styles */
 header h1 {
-    margin: 0 0 10px 0; /* Apply a top and bottom margin to the header title */
+    margin: 0; /* Remove margins for headers */
     font-size: 2.5rem; /* Adjust font size */
+    display: inline-block; /* Ensure h1 is inline to align with h2 */
 }
 
 /* H2 styles in the header */
 header h2 {
     color: #FF007F; /* Hot pink color for H2 */
     text-transform: uppercase; /* Make H2 text uppercase */
-    position: absolute; /* Position it absolutely within the header */
-    bottom: 10px; /* Align to bottom */
-    right: 20px; /* Align to the right */
-    margin: 0; /* Remove default margin */
+    display: inline-block; /* Ensure h2 is inline with h1 */
+    margin-left: 15px; /* Add space between h1 and h2 */
 }
 
-/* H2 after pseudo-element */
-h2::after {
-    content: ''; /* Create an empty content for the pseudo-element */
-    display: block; /* Make it a block to take up space */
-    margin: 10px 0; /* Add some vertical space */
-    height: 2px; /* Height of the horizontal line */
-    background-color: #FF007F; /* Color of the horizontal line */
+/* Navigation links styling */
+nav {
+    margin-top: 10px; /* Add some space above the navigation */
 }
 
-/* Styles for general H2 elements in the body */
-h2 {
-    color: #FF007F; /* Hot pink color for H2 */
-    text-transform: uppercase; /* Make H2 text uppercase */
-    padding: 10px; /* Add some padding to the H2 */
-    margin: 20px 0; /* Uniform margin for H2 in the body */
-}
-
-/* Style for links */
-a {
+nav a {
     color: #FF007F; /* Magenta color for links */
     text-decoration: none; /* Remove underline from links */
+    margin-right: 15px; /* Space between navigation links */
 }
 
 /* Hover effect for links */
-a:hover {
+nav a:hover {
     color: white; /* Change link color to white on hover */
 }
 
-/* Style for links and paragraph text */
+/* Style for paragraph text */
 p {
     color: white; /* Set default text color to white for paragraphs */
     padding: 10px; /* Apply some padding to the paragraph */
-    margin: 10px 0; /* Apply uniform margin to the paragraph */
 }
 
 /* Add intense text shadow to all text */
@@ -111,7 +96,6 @@ footer {
         2px -2px 4px rgba(0, 0, 0, 1),
         -2px 2px 4px rgba(0, 0, 0, 1); /* Shadow for footer text */
     padding: 10px; /* Apply some padding to the footer */
-    margin: 20px 0; /* Uniform margin above and below the footer */
 }
 
 /* Sidebar styles, if applicable */
