@@ -13,26 +13,27 @@ body {
     background-size: contain;
     color: white; 
     max-width: 500px; /* Maximum width for the content */
-    margin: 20px 0; /* Vertical margin - no horizontal margin */
+    margin: 20px; /* Add uniform margin */
     line-height: 1.6;
-    padding: 50px;
-    text-align: justify;
+    padding: 20px 30px; /* Adjust padding for better readability */
+    text-align: left; /* Align text to the left */
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
 }
 
 h1, h2, h3, h4, h5, h6 {
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
-    text-align: center;
+    text-align: left; /* Align headers to the left */
+    margin: 20px 0; /* Add margin for headers */
 }
 
 h1 {
     font-family: 'Lindley', sans-serif;
-    font-size: 4em;
+    font-size: 3em; /* Adjust font size for better readability */
 }
 
 h2 {
     font-family: 'Lindley', sans-serif;
-    font-size: 2.5em;
+    font-size: 2em; /* Adjust font size for better readability */
     color: #FF0099;
 }
 
@@ -51,8 +52,8 @@ a:hover {
 }
 
 footer {
-    text-align: center;
-    margin-top: 40px;
+    text-align: left; /* Align footer text to the left */
+    margin-top: 20px; /* Adjust margin for better spacing */
     font-size: 0.9em;
     color: white;
 }
@@ -60,7 +61,7 @@ footer {
 ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 20px 0; /* Adjust margin for better spacing */
 }
 
 ul li {
@@ -68,7 +69,8 @@ ul li {
     align-items: baseline;
     gap: 10px;
     text-shadow: 2px 2px 4px #000, 3px 3px 6px #000, 1px 1px 2px #000;
-    line-height: 1.2;
+    line-height: 1.4; /* Adjust line height for better readability */
+    margin-bottom: 10px; /* Add margin between list items */
 }
 
 ul li::before {
@@ -79,7 +81,6 @@ ul li::before {
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
     background-size: cover;
 }
-
 
 .line {
     width: 100%;
