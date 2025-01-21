@@ -26,6 +26,7 @@ body {
 header {
     width: 100%;
     height: 200px;
+    margin: 20px 0; /* Add uniform margin */
     overflow: hidden;
     position: relative;
     background: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg') no-repeat top center;
@@ -92,14 +93,8 @@ header {
 .gallery-item {
     width: 100%;
     max-width: 600px;
-    background-color: rgba(0, 0, 0, 0.9);
-    background-image: repeating-linear-gradient(
-        225deg,
-        rgba(0, 0, 0, 0.2) 0,
-        rgba(0, 0, 0, 0.2) 10px,
-        rgba(128, 0, 128, 0.2) 10px,
-        rgba(128, 0, 128, 0.2) 20px
-    );
+    background-color: rgba(0, 0, 0, 1); /* Fully opaque background */
+    background-image: none; /* Remove background image */
     border: 1px solid #FF0099;
     border-radius: 10px;
     margin: 20px 0;
@@ -150,6 +145,27 @@ h1, h2, h3, h4, h5 {
         2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly blurred and lighter */
         3px 3px 6px rgba(0, 0, 0, 1);   /* Third shadow: more diffuse and lighter */
     margin: 20px 0; /* Add margin for headers */
+}
+
+h1 {
+    font-size: 3.5em; /* Increase font size for H1 */
+}
+
+h2 {
+    font-size: 2.5em; /* Increase font size for H2 */
+    color: rgba(255, 0, 153, 0.75); /* Magenta color for H2 with 75% opacity */
+}
+
+h3 {
+    font-size: 2em; /* Increase font size for H3 */
+}
+
+h4 {
+    font-size: 1.75em; /* Increase font size for H4 */
+}
+
+h5 {
+    font-size: 1.5em; /* Increase font size for H5 */
 }
 
 /* Responsive Styles */
