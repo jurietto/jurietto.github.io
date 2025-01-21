@@ -18,19 +18,20 @@
         }
 
         body {
-            font-family: 'MSUI GOTHIC', 'Times New Roman', Times, serif;
-            background-color: black; /* Set the background color of the body to black */
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set a custom background image */
-            background-size: contain; /* Contain the image within the body */
-            background-repeat: no-repeat; /* Prevent the background image from repeating */
-            background-position: center; /* Center the background image */
-            background-attachment: fixed; /* Make the background image fixed */
-            color: white; /* Set the default text color to white */
-            line-height: 1.6; /* Line height for better readability */
-            width: 90%; /* Adjusted width for better fit */
-            max-width: 600px; /* Maximum width of the body */
-            margin: 50px auto; /* Center the body with a top margin */
-            padding: 10px; /* Padding for the body */
+            font-family: 'MS UI Gothic', 'Times New Roman', Times, serif;
+            background-color: black;
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            line-height: 1.6;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 10px;
+            position: relative; /* Added for alignment */
         }
 
         /* ------------------------------ 
@@ -41,13 +42,13 @@
             position: relative; 
             height: 300px; 
             overflow: hidden; 
-            margin: 20px; /* Margins for header */
-            width: calc(100% - 40px); /* Full width of its container minus margins */
-            max-width: 600px; /* Make header width the same as body width */
-            text-align: left; /* Align header text to the left */
+            margin: 20px;
+            width: calc(100% - 40px);
+            max-width: 600px;
+            text-align: left;
+            border-radius: 10px; /* Small border-radius */
         }
 
-        /* Header video background */
         header video {
             position: absolute; 
             top: 50%; 
@@ -57,9 +58,9 @@
             z-index: 0; 
             transform: translate(-50%, -50%); 
             width: 100%; /* Make video full width */
+            border-radius: 10px; /* Matching border-radius for video */
         }
 
-        /* Header content styles */
         .header-content {
             position: relative; 
             z-index: 1; 
@@ -67,41 +68,31 @@
             align-items: flex-end; 
             height: 100%; 
             justify-content: left; /* Align content to the left */
-            text-align: left; /* Align text to the left */
-            padding: 10px; /* Added padding for header content */
+            padding: 10px; 
         }
 
         .title-container {
             text-align: left; 
-            max-width: 100%; /* Ensure it does not exceed header width */
+            max-width: 100%;
         }
 
         .title-container h1 {
             margin: 0; 
-            font-family: 'Apple Chancery', cursive; /* Custom font for h1 */
+            font-family: 'Apple Chancery', cursive; 
             font-size: 2.5rem; 
             text-shadow: 
-                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
-                0 0 20px rgba(0, 0, 0, 0.9),
-                0 0 30px rgba(0, 0, 0, 0.8); 
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
         }
-
-        .title-container hr {
-            border: 0; 
-            height: 1px; 
-            background-color: white; 
-            margin: 10px 0; 
-        }
-
-        /* ------------------------------ 
-           NAVIGATION STYLES
-        --------------------------------- */
 
         nav {
             margin-top: 10px; 
             display: flex; 
             flex-wrap: wrap; 
-            justify-content: flex-start; /* Align links to the left */
+            justify-content: flex-start; 
             align-items: center; 
             padding: 10px 0; 
         }
@@ -110,11 +101,13 @@
             color: #ff007b; 
             text-decoration: none; 
             margin: 0 10px; 
-            font-family: 'Apple Chancery'; /* Font for nav links */
+            font-family: 'Apple Chancery'; 
             text-shadow: 
-                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
-                0 0 20px rgba(0, 0, 0, 0.9), 
-                0 0 30px rgba(0, 0, 0, 0.8); 
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         nav .separator {
@@ -122,18 +115,19 @@
             margin: 0 5px; 
         }
 
-        /* Hover effect for links */
         nav a:hover {
             color: white; 
         }
 
         h2, h3, h4, h5 {
-            font-family: 'Apple Chancery', cursive; /* Custom font for h2-h5 */
-            text-transform: capitalize; /* Capitalize the first letter of each word */
+            font-family: 'Apple Chancery', cursive; 
+            text-transform: capitalize; 
             text-shadow: 
-                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
-                0 0 20px rgba(0, 0, 0, 0.9),
-                0 0 30px rgba(0, 0, 0, 0.8); 
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         /* ------------------------------ 
@@ -142,13 +136,15 @@
 
         footer {
             text-align: center; 
-            font-family: 'MSUI GOTHIC'; 
+            font-family: 'MS UI Gothic'; 
             font-size: 1rem; 
             padding: 10px 0; 
             text-shadow: 
-                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
-                0 0 20px rgba(0, 0, 0, 0.9),
-                0 0 30px rgba(0, 0, 0, 0.8); 
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         /* ------------------------------ 
@@ -166,28 +162,25 @@
 
         .gallery-item {
             padding: 20px; 
-            margin: 0; /* No margins on the sides */
+            margin: 10px 0; /* Margin between updates */
+            opacity: 0.8; /* Semi-transparent effect */
+            border: 1px solid white; /* White border for definition */
         }
 
         .gallery-item h2 {
-            text-transform: capitalize; /* Capitalize individual words for gallery titles */
+            text-transform: capitalize; 
             text-shadow: 
-                0 0 10px rgba(0, 0, 0, 1), /* Dramatic shadow */
-                0 0 20px rgba(0, 0, 0, 0.9),
-                0 0 30px rgba(0, 0, 0, 0.8); 
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         .gallery-item .date {
             color: white; 
             font-size: 0.8rem; 
-            font-family: 'MSUI GOTHIC'; 
-        }
-
-        .line {
-            border: 0; 
-            height: 1px; 
-            background-color: white; 
-            margin: 10px 0; 
+            font-family: 'MS UI Gothic'; 
         }
 
         /* ------------------------------ 
@@ -203,13 +196,36 @@
             margin: 0; 
         }
 
+        /* ------------------------------ 
+           BUTTON STYLES
+        --------------------------------- */
+
+        input[type="text"], select {
+            background: #C0C0C0; /* Light gray for retro look */
+            border: 1px solid #A0A0A0; /* Border for buttons */
+            padding: 5px; 
+            font-family: Tahoma; 
+            text-shadow: 1px 1px 0px #FFFFFF; /* Subtle text shadow */
+            margin: 10px 0; /* Some margin for spacing */
+        }
+
+        button {
+            background-color: #C0C0C0; /* Light gray for retro look */
+            border: 1px solid #A0A0A0; /* Button border */
+            padding: 5px 10px; 
+            font-family: Tahoma; 
+            text-shadow: 1px 1px 0px #FFFFFF; /* Subtle text shadow */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        button:hover {
+            background-color: #A0A0A0; /* Slight darker gray on hover */
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 600px) {
             body {
                 width: 95%; /* Adjust width on smaller screens */
-            }
-
-            .header-content {
-                padding: 10px; /* Adjust padding for header content on smaller screens */
             }
 
             .title-container h1 {
@@ -227,7 +243,6 @@
         <div class="header-content">
             <div class="title-container">
                 <h1>Juri's Stuff</h1>
-                <hr>
                 <nav>
                     <a href="index.html">Home</a>
                     <span class="separator">♥</span>
@@ -259,7 +274,6 @@
 
     <main>
         <h2>UPDATES</h2>
-        <hr>
         <p>I’ve decided to start using this space a bit more consistently—though if I’m honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I’ve moved everything here. Life is very much a day-by-day thing for me, and I’m okay with that.</p>
 
         <!-- Search and Sort UI -->
@@ -276,9 +290,9 @@
 
         <!-- Pagination -->
         <div class="pagination" id="pagination">
-            <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+            <button id="prev" onclick="changePage(-1)">Prev</button>
             <span id="page-numbers"></span>
-            <button id="next" onclick="changePage(1)">Next &#62;</button>
+            <button id="next" onclick="changePage(1)">Next</button>
         </div>
     </main>
 
@@ -365,10 +379,6 @@
                 const date = new Date(update.timestamp);
                 dateElement.innerHTML = date.toLocaleString();
                 updateDiv.appendChild(dateElement);
-
-                const hrElement = document.createElement('div');
-                hrElement.className = 'line';
-                updateDiv.appendChild(hrElement);
 
                 const contentElement = document.createElement('p');
                 contentElement.innerHTML = update.content;
