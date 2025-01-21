@@ -21,7 +21,7 @@ header {
     padding: 20px; /* Padding around the header content */
     border: 4px solid #FF007F; /* Magenta border */
     border-radius: 15px; /* Rounded corners */
-    text-align: center; /* Center align text inside the header */
+    text-align: justified; /* Center align text inside the header */
     margin-bottom: 20px; /* Space below the header */
 }
 
@@ -36,12 +36,6 @@ header {
 header h1 {
     margin: 0; /* Reset margins */
     font-size: 2.5rem; /* Adjust font size */
-}
-
-.header-h2 {
-    color: #FF007F; /* Hot pink color for header h2 */
-    text-transform: uppercase; /* Make H2 text uppercase */
-    margin: 5px 0; /* Small margin to separate titles */
 }
 
 /* Styles for general H2 elements in the body */
