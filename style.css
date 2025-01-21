@@ -20,6 +20,7 @@ body {
     padding: 20px;
     text-align: justify;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    font-size: 1.2em; /* Increase body text size */
 }
 
 /* Header Styles */
@@ -45,6 +46,7 @@ header {
     font-weight: bold;
     opacity: 1; /* Make header text opaque */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    font-size: 1.2em; /* Increase text size */
 }
 
 .header-text a {
@@ -76,6 +78,7 @@ header {
     color: #000;
     font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
     text-shadow: none; /* Remove text shadow */
+    font-size: 1.2em; /* Increase input text size */
 }
 
 /* Gallery Styling */
@@ -100,15 +103,16 @@ header {
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/1127165-2600x1800-tinkle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-blend-mode: ;
+    background-blend-mode: multiply;
     opacity: 0.5; /* 50% opacity for background image */
     border: 1px solid #FF0099; /* Main color set to magenta */
     border-radius: 10px;
     margin: 20px 0;
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0), 0 0 15px rgba(0, 0, 0, 1.0);
-    color: #FF0099; /* Ensure text color is consistent */
+    color: white; /* Ensure text color is white */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
+    font-size: 1.2em; /* Increase text size */
 }
 
 /* Pagination Styling */
@@ -128,6 +132,7 @@ header {
     color: #000;
     font-family: 'MS UI Gothic', sans-serif; /* Match body text font */
     text-shadow: none; /* Remove text shadow */
+    font-size: 1.2em; /* Increase button text size */
 }
 
 .pagination button:hover {
@@ -138,7 +143,7 @@ header {
 footer {
     text-align: center;
     margin-top: 20px;
-    font-size: 0.9em;
+    font-size: 1em; /* Increase footer text size */
     color: #FF0099; /* Main color set to magenta */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 1), 2px 2px 4px rgba(0, 0, 0, 1), 3px 3px 6px rgba(0, 0, 0, 1); /* Make all shadows black */
 }
@@ -149,7 +154,7 @@ footer h6 {
 
 /* Text Styles */
 h1, h2, h3, h4, h5, p, a {
-    font-family: 'MS UI Gothic', sans-serif; /* Font for headers */
+    font-family: 'Lindley', sans-serif; /* Font for headers */
     text-shadow:
         1px 1px 2px rgba(0, 0, 0, 1),  /* First shadow: close and darker */
         2px 2px 4px rgba(0, 0, 0, 1),   /* Second shadow: slightly more blurred */
