@@ -19,7 +19,6 @@ const updatesRef = firebase.database().ref('lifeupdates');
 function loadUpdates() {
     updatesRef.once('value', function(snapshot) {
         const updates = snapshot.val();
-        // Check if updates is defined
         if (updates) {
             displayUpdates(updates);
         } else {
@@ -34,6 +33,11 @@ function loadUpdates() {
 function displayUpdates(updates) {
     const updatesContainer = document.getElementById('updates');
     updatesContainer.innerHTML = '';
+
+    if (!updates) {
+        console.error('No updates to display.');
+        return;
+    }
 
     // Convert updates object to array and sort by date descending
     const updatesArray = Object.keys(updates).map(key => updates[key]);
