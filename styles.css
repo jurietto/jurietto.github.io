@@ -1,194 +1,845 @@
-/* Color Variables */
 :root {
-    --maintext: #ddd;
-    --grayedout: #37a;
-    --standout: #e44;
-    --link: #7bd;
-    --statok: #0c0;
-    --statnok: #c00;
-    --footer: #247;
-    --maintitle: #135;
-    --boxtitle: #258;
-    --alttitle: #fff;
-    --bodybg: #000;
-    --boxbg: rgba(7, 28, 48, 0.737255);
-    --tabbg: #012;
-    --secbg: #0d2741;
-    --secborder: #35A;
-    --border: #258;
-    --diffadd: #354;
-    --diffdel: #534;
-    --warnbg: #534;
-    --warnborder: #c00;
-    --noticebg: #052d2e;
-    --noticeborder: #227688;
-    --helpbutton: #06ffc5;
+    /* Color Variables */
+    --maintext: #fff; /* White */
+    --grayedout: #663399; /* Dark purple */
+    --standout: #ff1493; /* Deep pink */
+    --link: #ff69b4; /* Hot pink */
+    --statok: #ff4500; /* Rich bright red */
+    --statnok: #c00; /* Dark red */
+    --footer: #1e1e1e; /* Dark gray */
+    --maintitle: #9370db; /* Medium purple */
+    --boxtitle: #da70d6; /* Orchid */
+    --alttitle: #f0e68c; /* Khaki */
+    --bodybg: #000; /* Black background */
+    --boxbg: rgba(255, 0, 255, 0.2); /* Magenta with transparency */
+    --tabbg: #4b0082; /* Indigo */
+    --secbg: #800080; /* Purple */
+    --secborder: #ffffff; /* White border */
+    --border: #da70d6; /* Orchid border */
+    --diffadd: #d3ffce; /* Light green */
+    --diffdel: #f5d4d2; /* Light red */
+    --warnbg: #ffeb3b; /* Warning yellow */
+    --warnborder: #ff0000; /* Red warnings */
+    --noticebg: #ffb6c1; /* Light pink */
+    --noticeborder: #ff69b4; /* Hot pink border */
+    --helpbutton: #ff1493; /* Deep pink for help button */
 }
 
 /* Global Styles */
-*,
-*:before,
-*:after {
-    box-sizing: border-box; /* Box-Sizing Model */
+html {
+    box-sizing: border-box;
+    background: var(--bodybg);
 }
 
-html {
-    box-sizing: border-box; /* Inherit box-sizing from root */
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    color: inherit;
+    text-size-adjust: none;
 }
 
 body {
-    background: var(--bodybg) url(https://file.garden/ZhTgSjrp5nAroRKq/bloods.png) no-repeat center center fixed; /* Background with image */
-    background-size: cover; /* Cover the entire background */
-    font: 13px "Tahoma", "Arial", sans-serif; /* Font settings */
-    color: var(--maintext); /* Text color */
-    display: grid; /* Grid layout */
-    grid-template-columns: 200px minmax(0, 1fr); /* Define grid columns */
-    grid-template-rows: 100px auto; /* Define grid rows */
-    padding: 0 30px 30px 30px; /* Padding around the body */
+    color: var(--maintext);
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr); /* Sidebar + main content */
+    grid-template-rows: 189px auto; /* Header + main content */
+    padding: 0 30px 30px 30px;
+    background-color: var(--bodybg);
 }
 
 /* Header Styles */
 header {
-    grid-column: 1 / -1; /* Span across all columns */
-    background-color: var(--boxbg); /* Background color for header */
-    padding: 20px; /* Padding inside the header */
-    text-align: center; /* Centered text */
-    font-size: 24px; /* Font size for header */
-    font-weight: bold; /* Bold font */
-    color: var(--alttitle); /* Text color */
-    border-bottom: 1px solid var(--secborder); /* Border at the bottom */
+    grid-area: 1 / 1 / 2 / 3; /* Expand header across two columns */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 30px;
+}
+
+header h1 {
+    font: bold italic 24px 'Futura', 'Century New Gothic', 'Arial', serif;
+    color: var(--maintitle);
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    background: var(--secbg);
+    padding: 10px;
+}
+
+header nav a {
+    color: var(--maintext);
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+header nav a:hover {
+    background: var(--link);
 }
 
 /* Sidebar Styles */
-.sidebar {
-    grid-row: 2 / -1; /* Span from second row to the end */
-    background-color: var(--tabbg); /* Background color for sidebar */
-    padding: 20px; /* Padding inside the sidebar */
-    border-right: 1px solid var(--secborder); /* Border on the right */
-}
-
-.sidebar a {
-    display: block; /* Block display for links */
-    color: var(--link); /* Link color in sidebar */
-    text-decoration: none; /* No underline */
-    padding: 10px 0; /* Padding for links */
-    border-bottom: 1px solid var(--border); /* Bottom border for links */
-}
-
-.sidebar a:hover {
-    background-color: var(--secbg); /* Background color on hover */
+#bgright {
+    background: url(/s/angel-right.jpg) no-repeat;
+    width: 433px;
+    height: 140px;
 }
 
 /* Main Content Styles */
 main {
-    padding: 20px; /* Padding inside the main content area */
+    grid-area: 2 / 1 / 3 / 3; /* Main grid area */
+    padding: 20px;
+}
+
+article {
+    border: 1px solid var(--border);
+    background: var(--boxbg);
+}
+
+/* General Article Styles */
+article h2 {
+    color: var(--boxtitle);
+    margin-bottom: 15px;
+}
+
+article p {
+    margin-bottom: 10px;
 }
 
 /* Table Styles */
 table {
-    border-collapse: collapse; /* Collapsing table borders */
+    border-collapse: collapse;
+    width: 100%;
 }
 
-table td,
-table th {
-    vertical-align: top; /* Vertical alignment */
-    padding: 3px; /* Cell padding */
+table td, table th {
+    vertical-align: top;
+    padding: 3px;
+    border: 1px solid var(--border);
 }
 
-/* Image Styles */
-img {
-    border: none; /* No border around images */
-    box-sizing: content-box; /* Ensure images respect content box sizing */
+table tr.odd {
+    background: var(--boxbg);
 }
 
-svg {
-    fill: currentColor; /* SVG fill with current color */
+table tr:hover {
+    background: var(--standout);
+    color: var(--maintext);
 }
 
-/* Text Styles */
+/* General Text Styles */
 b, strong, h1, h2, h3, h4, h5 {
-    font-weight: bold; /* Bold text */
+    font-weight: bold;
 }
 
 i, em {
-    font-style: italic; /* Italic text */
+    font-style: italic;
 }
 
+summary {
+    cursor: pointer;
+}
+
+/* Link Styles */
 a, .fake_link {
-    color: var(--link); /* Link color */
-    text-decoration: none; /* No underline */
-    cursor: pointer; /* Pointer cursor for links */
-    border-bottom: 1px solid transparent; /* Bottom border */
+    color: var(--link);
+    text-decoration: none;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
 }
 
 a:hover, .fake_link:hover {
-    border-bottom: 1px dotted var(--maintext); /* Underline on hover */
+    border-bottom: 1px dotted var(--standout);
 }
 
 /* Warning and Notice Styles */
-div.warning,
-div.notice {
-    margin: 5px 10%; /* Margin for warning and notice boxes */
-    padding: 15px; /* Padding inside the boxes */
-    background-color: var(--warnbg); /* Background color */
-    border: 1px solid var(--warnborder); /* Border */
+div.warning, div.notice {
+    margin: 5px 10%;
+    padding: 15px;
+    background-color: var(--warnbg);
+    border: 1px solid var(--warnborder);
 }
 
 div.notice {
-    background-color: var(--noticebg); /* Different background for notices */
-    border: 1px solid var(--noticeborder); /* Different border for notices */
+    background-color: var(--noticebg);
+    border: 1px solid var(--noticeborder);
 }
 
-/* Miscellaneous Styles */
+/* Typography */
+p {
+    margin: 3px 20px;
+}
+
 p.center {
-    text-align: center; /* Centered text */
+    text-align: center;
 }
 
+p.itemmsg {
+    float: right;
+    color: var(--standout);
+    font-style: italic;
+}
+
+small, .grayedout {
+    color: var(--grayedout);
+}
+
+.description, div.description {
+    margin: 10px auto !important;
+    max-width: 800px;
+}
+
+/* Completed and To-Do Items */
+.done {
+    color: var(--statok);
+}
+
+.todo {
+    color: var(--statnok);
+}
+
+/* Clear Float */
+.clearfloat {
+    clear: both;
+    height: 0;
+}
+
+/* Feedback Message Styles */
 .hidden {
-    display: none !important; /* Hide element */
+    display: none !important;
 }
 
 .invisible {
-    visibility: hidden; /* Make element invisible */
+    visibility: hidden;
+}
+
+.linkradio {
+    padding: 2px;
+}
+
+.linkradio label {
+    color: var(--link);
+    cursor: pointer;
+}
+
+.linkradio input {
+    display: none;
+}
+
+.linkradio input:checked + label {
+    color: var(--maintext);
 }
 
 /* Button Styles */
 button {
-    padding: 1px 5px; /* Button padding */
-    cursor: pointer; /* Pointer cursor for buttons */
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    background: var(--link);
+    color: white;
+    border-radius: 5px;
 }
 
-/* Form Styles */
-input[type=text],
-input[type=password],
-input[type=email],
-input[type=button],
-input[type=submit],
-select,
-textarea,
-button {
-    background-color: var(--boxbg); /* Background color for inputs */
-    color: var(--maintext); /* Text color */
-    border: 1px solid var(--secborder); /* Border for inputs */
-    padding: 1px; /* Padding for inputs */
-    margin: 1px; /* Margin for inputs */
+button:hover {
+    background: var(--standout);
+}
+
+/* Form Element Styles */
+input.text, input[type=text], input[type=password], input[type=email], input[type=button],
+input[type=submit], select, textarea, button {
+    background-color: var(--boxbg);
+    color: var(--maintext);
+    border: 1px solid var(--secborder);
+    font: 14px "Tahoma", "Arial", sans-serif;
+    padding: 5px;
+    margin: 5px 0;
+    width: calc(100% - 12px);
+}
+
+/* Hover and Focus Styles for Inputs */
+input.text:hover, input.text:focus, input.submit:hover, input.submit:focus {
+    background-color: var(--secbg);
+}
+
+/* Tooltip and Popup Styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--standout);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the text */
+    left: 50%;
+    margin-left: -60px; /* Adjust to center */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 0 10px;
+    }
+
+    header nav {
+        flex-direction: column;
+    }
+
+    header nav a {
+        margin: 5px 0;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    article {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 0.8em;
+    }
+
+    table {
+        font-size: 0.75em;
+    }
 }
 
 /* Footer Styles */
 main > footer {
-    margin: -7px auto 0; /* Margin for footer */
-    text-align: center; /* Centered footer text */
-    color: var(--footer); /* Footer text color */
+    margin: -7px auto 0;
+    text-align: center;
+    color: var(--footer);
 }
 
 main > footer a {
-    color: inherit; /* Inherit color for footer links */
-    text-decoration: underline; /* Underline for footer links */
+    color: inherit;
+    text-decoration: underline;
 }
 
-/* Responsive Media Queries */
-@media (max-width: 900px) {
-    body {
-        padding: 0 10px; /* Less padding on small screens */
+/* Image Styles */
+img {
+    border: none;
+    box-sizing: content-box;
+}
+
+svg {
+    fill: currentColor;
+}
+
+/* Spinner Styles */
+.spinner {
+    content: '';
+    border: 3px solid #9eaebd;
+    border-bottom-color: transparent;
+    border-radius: 100%;
+    animation: spin 1s infinite linear;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: auto;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
+
+/* Quote Styles */
+blockquote {
+    padding: 1em;
+    border-left: 4px solid var(--border);
+    color: var(--maintext);
+}
+
+/* Code Blocks */
+pre {
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid var(--border);
+    background: var(--boxbg);
+    overflow: auto; /* Make block scrollable */
+}
+
+/* Quote Styles */
+.quote {
+    border: 1px solid var(--border);
+    background: var(--boxbg);
+}
+
+/* Forms and Input Styles */
+form, fieldset {
+    border: 0;
+    display: block;
+    margin: 20px 0;
+}
+
+/* Styled Checkboxes and Radios */
+input[type=checkbox], input[type=radio] {
+    appearance: none;
+    border: 2px solid var(--border);
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+    position: relative;
+}
+
+input[type=checkbox]:checked::before, input[type=radio]:checked::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: var(--link);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Additional Layouts */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Profile Card Styles */
+.profile-card {
+    background: var(--boxbg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+}
+
+.profile-pic {
+    width: 100%;
+    max-width: 120px;
+    border-radius: 50%;
+}
+
+.profile-name {
+    font-size: 1.2em;
+    color: var(--maintitle);
+}
+
+/* Comments Section */
+.comments {
+    padding: 15px;
+}
+
+.comment {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+/* Boxes with Shadow */
+.box {
+    background: var(--boxbg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Utility Classes */
+.u-margin {
+    margin: 10px 0;
+}
+
+.u-padding {
+    padding: 10px;
+}
+
+.u-centered {
+    text-align: center;
+}
+
+/* Additional Notifications and Messages */
+.notification {
+    background: var(--noticebg);
+    color: var(--maintext);
+    padding: 10px;
+    border: 1px solid var(--noticeborder);
+}
+
+/* Additional Typographic Styles */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 2em;
+    color: var(--boxtitle);
+}
+
+h2 {
+    font-size: 1.8em;
+    color: var(--maintitle);
+}
+
+h3 {
+    font-size: 1.6em;
+}
+
+/* Flex Grid Systems */
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--link);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--boxbg);
+}
+
+/* Animated Effects */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.bounce {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Responsive Cards */
+.card {
+    background: var(--boxbg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Customized badges */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.badge-success {
+    background-color: var(--statok);
+    color: #fff;
+}
+
+.badge-error {
+    background-color: var(--statnok);
+    color: #fff;
+}
+
+.badge-info {
+    background-color: var(--link);
+    color: #fff;
+}
+
+/* Custom Dropdown Menus */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--boxtitle);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Loader Styles */
+.loader {
+    border: 3px solid var(--border);
+    border-radius: 50%;
+    border-top: 3px solid var(--link);
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+/* Alert Box */
+.alert {
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid var(--statnok);
+    background-color: var(--warnbg);
+    color: var(--statnok);
+}
+
+/* Progress Bars */
+.progress {
+    background-color: var(--boxbg);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--standout);
+    width: 50%; /* Adjust this width dynamically */
+    transition: width 0.5s;
+}
+
+/* Add more sections, styles, and components as needed for expansion */
+/* Example: Additional Card Styles */
+.card-item {
+    margin: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--boxbg);
+    padding: 15px;
+}
+
+.card-item h4 {
+    color: var(--boxtitle);
+}
+
+/* External Links Styling */
+.external-link {
+    color: var(--link);
+}
+
+.external-link:hover {
+    text-decoration: underline;
+}
+
+/* Formatting Lists */
+ul.custom-list {
+    list-style-type: square; /* Different list style */
+    padding-left: 20px; /* Left padding to separate */
+}
+
+li {
+    margin-bottom: 5px; /* Space between list items */
+}
+
+/* Responsive Grid Items */
+.grid-item {
+    border: 1px solid var(--border);
+    margin: 10px;
+    padding: 10px;
+    flex: 1;
+    min-width: calc(33% - 20px); /* Responsive min width */
+}
+
+/* Shadowed Box Styles */
+.shadow-box {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* More Miscellaneous Styles */
+.u-align-center {
+    text-align: center;
+}
+
+.u-padding-small {
+    padding: 5px;
+}
+
+.u-margin-small {
+    margin: 5px 0;
+}
+
+/* Full Width Sections */
+.full-width {
+    width: 100%;
+}
+
+/* Specific Device Styles */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 0.9em;
+    }
+
+    .grid-item {
+        flex: 1 1 100%; /* Full-width on smaller devices */
+    }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    .grid-item {
+        flex: 1 1 48%; /* Two columns on tablets */
+    }
+}
+
+/* Desktops */
+@media only screen and (min-width: 1025px) {
+    .grid-item {
+        flex: 1 1 31%; /* Three columns on desktops */
+    }
+
+    header nav {
+        flex-direction: row;
+    }
+}
+
+/* Keyframes for transition effects */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Keyframes for scaling elements */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Customizing Tabs */
+.tabs {
+    display: flex;
+    cursor: pointer;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    background: var(--tabbg);
+    color: var(--maintext);
+}
+
+.tab.active {
+    background: var(--link);
+    color: var(--maintext);
+}
+
+/* Styling for sections */
+section {
+    margin: 20px 0;
+}
+
+/* Flexbox for layout */
+.flex {
+    display: flex;
+    gap: 20px;
+}
+
+/* Custom styling for specific sections */
+.hero {
+    background: url('/images/hero-bg.jpg') no-repeat center center / cover;
+    padding: 100px 20px;
+    text-align: center;
+    color: var(--maintext);
+}
+
+/* Progress Indicator Styles */
+.progress-indicator {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Final Styles */
+footer {
+    background: var(--footer);
+    color: var(--maintext);
+    padding: 10px;
+    text-align: center;
+}
+
+footer a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* Add any new additional elements, components, or utilities as needed. */
