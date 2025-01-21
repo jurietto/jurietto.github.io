@@ -1,7 +1,7 @@
 /* Apply styles to the entire body */
 body {
     background-color: black; /* Set the body background to black */
-    background-image: url('path/to/your/background-image.jpg'); /* Set your custom background image */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set your custom background image */
     background-size: cover; /* Ensure the background image covers the entire area */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
     color: white; /* Set default text color to white */
@@ -18,7 +18,7 @@ header {
     position: relative; /* Position for containing content */
     height: 300px; /* Increase header height */
     overflow: hidden; /* Ensure no overflow */
-    border-radius: 1px; /* Border radius */
+    border-radius: 3px; /* Border radius */
     border: 1px solid white; /* White border */
 }
 
@@ -75,7 +75,7 @@ header video {
 nav {
     margin-top: 10px; /* Add some space above the navigation */
     display: flex; /* Use flex to align items horizontally */
-    flex-wrap: wrap; /* Wrap to the next line if necessary */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
     justify-content: center; /* Center the navigation links */
     align-items: center; /* Center the items vertically */
 }
@@ -117,3 +117,15 @@ footer {
     text-align: center; /* Center the sidebar links */
 }
 
+.sidebar a {
+    display: block; /* Ensure each link is a block for better spacing */
+    color: #FF007F; /* Magenta color */
+    text-decoration: none; /* Remove underline */
+    text-transform: uppercase; /* Uppercase for sidebar links */
+    margin: 0.5rem 0; /* Space between sidebar links */
+}
+
+/* Main content styles */
+main {
+    text-align: justify; /* Justify text in the main area */
+}
