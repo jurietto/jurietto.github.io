@@ -1,123 +1,128 @@
+/* Font Face Declaration */
 @font-face {
     font-family: 'Lindley';
     src: url('https://file.garden/ZhTgSjrp5nAroRKq/LINDL___.TTF') format('truetype');
 }
 
+/* Global Styles for Body */
 body {
-    font-family: 'MS Gothic', sans-serif;
-    background-color: black;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-size: contain;
-    color: white; 
+    font-family: 'MS Gothic', sans-serif; /* Set font family */
+    background-color: black; /* Set background color */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Set background image */
+    background-repeat: no-repeat; /* Prevent background from repeating */
+    background-position: center center; /* Center the background image */
+    background-attachment: fixed; /* Fixed position for background image */
+    background-size: contain; /* Make background image contain within the body */
+    color: white; /* Default text color */
     max-width: 500px; /* Maximum width for the content */
-    margin: 20px; /* Add uniform margin */
-    line-height: 1.6;
+    margin: 20px; /* Add uniform margin around body */
+    line-height: 1.6; /* Set line height for readability */
     padding: 20px 30px; /* Adjust padding for better readability */
-    text-align: justify; /* Justify text alignment */
-    
-    /* Intense and opaque text shadows for body text */
+    text-align: justify; /* Justify the text alignment */
+
+    /* Text shadows for body text */
     text-shadow:
-        1px 1px 0px rgba(0, 0, 0, 1), 
-        2px 2px 0px rgba(0, 0, 0, 1), 
-        3px 3px 0px rgba(0, 0, 0, 1), 
-        4px 4px 0px rgba(0, 0, 0, 1); /* Very opaque shadows */
+        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow: close and darker */
+        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow: slightly blurred and lighter */
+        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow: more diffuse and lighter */
 }
 
+/* Header Styles */
 h1, h2, h3, h4, h5, h6 {
     text-shadow:
-        1px 1px 0px rgba(0, 0, 0, 1), 
-        2px 2px 0px rgba(0, 0, 0, 1), 
-        3px 3px 0px rgba(0, 0, 0, 1), 
-        4px 4px 0px rgba(0, 0, 0, 1); /* Very opaque shadows for headers */
+        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow for headers */
+        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow for headers */
+        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow for headers */
         
     text-align: left; /* Align headers to the left */
     margin: 20px 0; /* Add margin for headers */
 }
 
+/* Specific Heading Styles */
 h1 {
-    font-family: 'Lindley', sans-serif;
-    font-size: 3em; /* Adjust font size for better readability */
+    font-family: 'Lindley', sans-serif; /* Font for H1 */
+    font-size: 3em; /* Adjust font size for H1 */
 }
 
 h2 {
-    font-family: 'Lindley', sans-serif;
-    font-size: 2em; /* Adjust font size for better readability */
-    color: rgba(255, 0, 153, 0.75); /* Magenta color with 75% opacity */
+    font-family: 'Lindley', sans-serif; /* Font for H2 */
+    font-size: 2em; /* Adjust font size for H2 */
+    color: rgba(255, 0, 153, 0.75); /* Magenta color for H2 with 75% opacity */
 }
 
 h3, h4, h5, h6 {
-    font-family: 'Verdana', sans-serif;
-    font-weight: bold;
+    font-family: 'Verdana', sans-serif; /* Font family for H3-H6 */
+    font-weight: bold; /* Make text bold */
 }
 
+/* Paragraph and Link Styles */
 p, a {
     text-shadow:
-        1px 1px 0px rgba(0, 0, 0, 1), 
-        2px 2px 0px rgba(0, 0, 0, 1), 
-        3px 3px 0px rgba(0, 0, 0, 1), 
-        4px 4px 0px rgba(0, 0, 0, 1); /* Very opaque shadows for paragraphs and links */
+        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow for paragraphs and links */
+        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow for paragraphs and links */
+        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow for paragraphs and links */
 }
 
 a {
     color: white; /* Default link color */
-    text-decoration: underline;
-    font-weight: bold; /* Make header text bold */
+    text-decoration: underline; /* Underline links */
+    font-weight: bold; /* Make link text bold */
 }
 
 a:hover {
-    color: rgba(255, 0, 153, 0.75); /* Magenta hover color with 75% opacity */
+    color: rgba(255, 0, 153, 0.75); /* Magenta hover color for links */
 }
 
+/* Footer Styles */
 footer {
-    text-align: center; /* Align footer text to the center */
-    margin-top: 20px; /* Adjust margin for better spacing */
-    font-size: 0.9em;
-    color: white;
+    text-align: center; /* Center align footer text */
+    margin-top: 20px; /* Margin for spacing above footer */
+    font-size: 0.9em; /* Font size for footer */
+    color: white; /* Footer text color */
 }
 
+/* List Styles */
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0; /* Adjust margin for better spacing */
+    list-style: none; /* Remove default bullets */
+    padding: 0; /* No padding */
+    margin: 0 0 20px 0; /* Margin below the list */
 }
 
 ul li {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+    display: flex; /* Use flexbox for list items */
+    align-items: baseline; /* Align items within the list item */
+    gap: 10px; /* Space between items */
     
-    /* More intense and opaque shadows for list items */
+    /* Softer shadows for list items */
     text-shadow:
-        1px 1px 0px rgba(0, 0, 0, 1), 
-        2px 2px 0px rgba(0, 0, 0, 1), 
-        3px 3px 0px rgba(0, 0, 0, 1), 
-        4px 4px 0px rgba(0, 0, 0, 1); 
+        1px 1px 2px rgba(0, 0, 0, 0.75),  /* First shadow for list items */
+        2px 2px 4px rgba(0, 0, 0, 0.5),   /* Second shadow for list items */
+        3px 3px 6px rgba(0, 0, 0, 0.3);   /* Third shadow for list items */
     
-    line-height: 1.4; /* Adjust line height for better readability */
+    line-height: 1.4; /* Set line height for list items */
     margin-bottom: 10px; /* Add margin between list items */
 }
 
 ul li::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif');
-    background-size: cover;
+    content: ''; /* Use for custom list item bullets */
+    display: inline-block; /* Inline-block for custom bullet */
+    width: 20px; /* Width for the custom bullet */
+    height: 20px; /* Height for the custom bullet */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/20.gif'); /* Custom bullet image */
+    background-size: cover; /* Cover for the background image */
 }
 
+/* Line Elements */
 .line {
-    width: 100%;
-    height: 1px;
-    background-color: grey;
-    margin: 20px 0; /* Adjust margin as needed */
+    width: 100%; /* Take full width */
+    height: 1px; /* Line height */
+    background-color: grey; /* Line color */
+    margin: 20px 0; /* Margin for spacing */
 }
 
+/* Responsive Styles */
 @media screen and (max-width: 700px) {
     body {
-        padding: 20px;
+        padding: 20px; /* Adjust padding for smaller screens */
     }
 }
