@@ -14,6 +14,8 @@ header {
     position: relative; /* Position for containing content */
     height: 400px; /* Increase header height */
     overflow: hidden; /* Ensure no overflow */
+    border-radius: 3px; /* Border radius */
+    border: 1px solid white; /* White border */
 }
 
 /* Header video background */
@@ -32,26 +34,37 @@ header video {
 /* Header content styles */
 .header-content {
     position: relative; /* Position relative for better control */
-    z-index: 1; /* Ensure the text is above the image */
+    z-index: 1; /* Ensure the text is above the video */
     color: white; /* Text color */
     display: flex; /* Use flex to align h1 and h2 */
     align-items: flex-end; /* Align items to the bottom */
     height: 100%; /* Full height of the header */
+    justify-content: center; /* Center content horizontally */
+    text-align: center; /* Center the text */
 }
 
-/* Title styles */
-header h1 {
+/* Title container styles */
+.title-container {
+    text-align: center; /* Center the text */
+}
+
+.title-container h1 {
     margin: 0; /* Remove margins for headers */
     font-size: 2.5rem; /* Adjust font size */
-    text-transform: none; /* No transformation for h1 */
+    text-transform: uppercase; /* Uppercase for h1 */
 }
 
-/* H2 styles in the header */
-header h2 {
+.title-container hr {
+    border: 0; /* Remove default border */
+    height: 1px; /* Line height */
+    background-color: white; /* Line color */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+.title-container h2 {
     color: #FF007F; /* Hot pink color for H2 */
-    text-transform: uppercase; /* Make H2 text uppercase */
+    text-transform: uppercase; /* Uppercase for h2 */
     display: inline-block; /* Ensure h2 is inline with h1 */
-    margin-left: 15px; /* Add space between h1 and h2 */
 }
 
 /* Navigation links styling */
