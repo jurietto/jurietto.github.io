@@ -11,89 +11,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <link rel="stylesheet" href="styles.css">
 
-    <style>
-        /* Gallery container style */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap; /* Allow items to wrap on small screens */
-            gap: 20px; /* Space between images */
-            
-            justify-content: center;
-        }
-
-        .gallery-item {
-            width: 100%; /* Full width for each gallery item */
-            display: flex; /* Flex container for image and text */
-            flex-direction: column;
-            align-items: center; /* Center the content */
-            
-            user-select: none; /* Prevent text selection */
-        }
-
-        .gallery-item img {
-            width: 100%; /* Make photos 100% in width */
-            height: auto; /* Maintain aspect ratio */
-            border: 1px solid #FF0099; /* Border for images */
-            border-radius: 5px; /* Rounded corners */
-            pointer-events: none; /* Disable interactions */
-        }
-
-        .caption {
-            color: white; /* Caption text color */
-            text-align: center; /* Center caption text */
-            font-size: 14px; /* Caption text size */
-            margin-top: 5px; /* Margin above caption */
-        }
-
-        .divider {
-            width: 20px; /* Set width for divider image */
-            height: 20px; /* Set height for divider image */
-            border: none; /* No border for divider image */
-            
-            display: block; /* Ensure it's displayed as a block element */
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .pagination button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            background-color: #FF0099; /* Set background color to #FF0099 */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            user-select: none; /* Prevent text selection */
-        }
-
-        .pagination button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-
-        /* Ensure h2 and h3 elements are centered on mobile devices */
-        @media (max-width: 768px) {
-            h2, .caption, .timestamp {
-                text-align: center;
-            }
-        }
-    </style>
-
 </head>
 
 <body>
-    <img 
-        style="transform: rotate(-5deg); border: 1px solid;" 
-        src="https://file.garden/ZhTgSjrp5nAroRKq/Ggjhqk2XoAA9gZu.jpg" 
-        alt="Decorative Image" 
-        width="200" 
-        height="150" 
-    />
 
     <h1>Gallery</h1>
 
