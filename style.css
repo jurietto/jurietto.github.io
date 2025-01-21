@@ -17,11 +17,22 @@ body {
     line-height: 1.6;
     padding: 20px 30px; /* Adjust padding for better readability */
     text-align: justify; /* Justify text alignment */
-    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 0px rgba(0, 0, 0, 1); /* More intense and opaque shadows */
+    
+    /* Intense and opaque text shadows for body text */
+    text-shadow:
+        1px 1px 0px rgba(0, 0, 0, 1), 
+        2px 2px 0px rgba(0, 0, 0, 1), 
+        3px 3px 0px rgba(0, 0, 0, 1), 
+        4px 4px 0px rgba(0, 0, 0, 1); /* Very opaque shadows */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 0px rgba(0, 0, 0, 1); /* More intense and opaque shadows */
+    text-shadow:
+        1px 1px 0px rgba(0, 0, 0, 1), 
+        2px 2px 0px rgba(0, 0, 0, 1), 
+        3px 3px 0px rgba(0, 0, 0, 1), 
+        4px 4px 0px rgba(0, 0, 0, 1); /* Very opaque shadows for headers */
+        
     text-align: left; /* Align headers to the left */
     margin: 20px 0; /* Add margin for headers */
 }
@@ -43,8 +54,11 @@ h3, h4, h5, h6 {
 }
 
 p, a {
-        text-shadow: 0px 0px 16px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 0px rgba(0, 0, 0, 1); /* More intense and opaque shadows */
-
+    text-shadow:
+        1px 1px 0px rgba(0, 0, 0, 1), 
+        2px 2px 0px rgba(0, 0, 0, 1), 
+        3px 3px 0px rgba(0, 0, 0, 1), 
+        4px 4px 0px rgba(0, 0, 0, 1); /* Very opaque shadows for paragraphs and links */
 }
 
 a {
@@ -74,7 +88,14 @@ ul li {
     display: flex;
     align-items: baseline;
     gap: 10px;
-    text-shadow: 0px 0px 16px rgba(0, 0, 0, 1), 0px 0px 8px rgba(0, 0, 0, 1), 0px 0px 0px rgba(0, 0, 0, 1); /* More intense and opaque shadows */
+    
+    /* More intense and opaque shadows for list items */
+    text-shadow:
+        1px 1px 0px rgba(0, 0, 0, 1), 
+        2px 2px 0px rgba(0, 0, 0, 1), 
+        3px 3px 0px rgba(0, 0, 0, 1), 
+        4px 4px 0px rgba(0, 0, 0, 1); 
+    
     line-height: 1.4; /* Adjust line height for better readability */
     margin-bottom: 10px; /* Add margin between list items */
 }
