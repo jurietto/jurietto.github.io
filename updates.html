@@ -6,7 +6,7 @@
     <title>Juri's Stuff - Updates</title>
 
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    <link rel="stylesheet" href="LINDL___.TTF" type="font/ttf" /> <!-- Path to LINDL font -->
+    <link rel="stylesheet" href="LINDL___.TTF" type="font/ttf" /> 
 
     <style>
         /* ------------------------------ 
@@ -165,86 +165,192 @@
             select {
                 width: 100%; /* Full width for inputs */
                 margin-bottom: 10px; /* Space between inputs for mobile */
-            }
-        }
+                font-size:.8rem;
+                padding:.5rem;
+                margin-left:.5rem;
+                margin-right:.5rem;
+                border-radius:.5rem;
+                background-color:.2;
+                border-color:.2;
+                color:white;
+                text-align:center;
+                text-shadow:none;
+                opacity:.7;
 
-        /* ------------------------------ 
-           UPDATE ITEM STYLES
-        --------------------------------- */
-        .gallery-item {
-            position: relative; 
-            padding: 20px; 
-            margin: 20px 0; 
-            border: 1px solid white; 
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 10px; 
-        }
+                animation-name:aqua-in-out-slow;
+                animation-duration:.7s;
+                animation-fill-mode:both;
 
-        .decor-gif-left {
-            position: absolute;
-            top: -10px;
-            left: -20px; 
-            width: 50px; 
-            height: auto;
-            z-index: 2; /* Ensure it is on top */
-        }
+                @keyframes aqua-in-out-slow{
+                    from{opacity:.2;}
+                    to{opacity:.7;}
+                    from{transform-scale(1);}
+                    to{transform-scale(1.1);}
+                    from{background-color:.2;}
+                    to{background-color:.7;}
+                    from{color:white;}
+                    to{color:white;}
+                    from{border-color:.2;}
+                    to{border-color:.7;}
+                }
+                
+                @media screen and (max-width:.6rem){input[type="text"],select{display:none;font-size:.3rem;width:auto;padding:.3rem;margin-left:.3rem;margin-right:.3rem;}}
 
-        .decor-gif-right {
-            position: absolute;
-            top: -10px;
-            right: -20px; 
-            width: 50px; 
-            height: auto; 
-            z-index: 2; /* Ensure it is on top */
-        }
+                @media screen and (max-height:.6rem){input[type="text"],select{display:none;font-size:.3rem;width:auto;padding:.3rem;margin-left:.3rem;margin-right:.3rem;}}
 
-        /* Symbol Divider */
-        .symbol-divider {
-            text-align: center; 
-            margin: 15px 0; 
-            font-size: 3rem; 
-            color: white; /* Change color if needed */
-            text-shadow: 
-                0 0 10px rgba(255, 0, 0, 1), /* Red glow */
-                0 0 20px rgba(255, 0, 0, 1),
-                0 0 30px rgba(255, 0, 0, 1);
-        }
+                @media screen and (max-height:.4rem){input[type="text"],select{display:none;font-size:.2rem;width:auto;padding:.2rem;margin-left:.2rem;margin-right:.2rem;}}
 
-        /* No symbol after last update post */
-        .gallery-item:last-child::after {
-            content: none;
-        }
+                @media screen and (max-height:.2rem){input[type="text"],select{display:none;font-size:.1rem;width:auto;padding:.1rem;margin-left:.1rem;margin-right:.1rem;}}
 
-        /* Pagination */
-        .pagination {
-            display: flex; 
-            justify-content: center; 
-            margin: 20px auto; /* centers the container */
-            width: 90%;  /* makes pagination container responsive */
-            max-width: 700px; /* consistent max width */
-            padding: 0 10px; /* adds padding for responsive design */
-        }
+                @media screen and (orientation:Landscape){input[type="text"],select{display:none;font-size:.2rem;width:auto;padding:.2rem;margin-left:.2rem;margin-right:.2rem;}}
 
-        button {
-            background-color: transparent; 
-            border: none; 
-            margin: 0 5px; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            color: white; /* Text color for buttons */
-            font-family: 'MS UI Gothic'; /* Use MS UI Gothic for buttons */
-            text-shadow: none; /* No glow for buttons */
-            flex: 1; /* Makes buttons fill available space */
-        }
+                @media screen and (orientation:Landscape){input[type="text"],select{display:block;font-size:.7rem;width:auto;padding:.7rem;margin-left:.7rem;margin-right:.7rem;}}
 
-        /* ------------------------------ 
-           FOOTER STYLES
-        --------------------------------- */
-        footer {
-            text-align: center; 
-            font-family: 'MS UI Gothic'; 
-            font-size: 1rem; 
-            padding: 20px 0; 
-        }
+                @media screen and (max-width:.5rem){input[type="text"],select{display:none;font-size:.2rem;width:auto;padding:.2rem;margin-left:.2rem;margin-right:.2rem;}}
+
+                @media screen and (max-width:.2rem){input[type="text"],select{display:none;font-size:.1rem;width:auto;padding:.1rem;margin-left:.1rem;margin-right:.1rem;}}
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+
+            
+            
+
+            
+            
+            
+
+
+
+            
+            
+            
+            
+
+            
+            
+
+            
+            
+            
+
+            
+            
+
+
+
+
+
+            
+              
+
+
+
+            
+            
+
+
+
+
+
+            
+
+
+
+            
+            
+
+            
+            
+
+            
+            
+
+            
+            
+
+            
+             
+            
+      }
     </style>
 </head>
+<body>
+    <!-- Header Section -->
+    <header class="title-container">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <span class="separator">|</span>
+      <a href="#">GitHub</a>
+      <a href="#">Blog</a>
+      <a href="#">Instagram</a>
+    </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class=".container">
+      <!-- Gallery Section -->
+      <div class="gallery">
+          <!-- Update Items go here -->
+          <!-- Update Item Example -->
+          <div class="gallery-item">
+              <div class="decor-gif-left">
+                  <img src="decor.gif" alt="Decor Gif Left">
+              </div>
+              <div class="symbol-divider">
+                  &#128681;&#65039;&#9869;&#9927;&#9839;&#9853;&#9829;&#9834;&#9838;&#9858;&#9848;&#9854;&#9864;&#9836;&#9847;&#9866;&#9831;&#9856;&#9828;
+              </div>
+              <div class="decor-gif-right">
+                  <img src="decor.gif" alt="Decor Gif Right">
+              </div>
+              <h2>Update Item Title</h2>
+              <p>Update Item Description</p>
+          </div>
+      </div>
+
+      <!-- Search and Sort Section -->
+      <div class="search-sort-container">
+          <input type="text" placeholder="Search...">
+          <select>
+              <option value="">Sort by:</option>
+              <option value="date">Date</option>
+              <option value="title">Title</option>
+          </select>
+      </div>
+
+      <!-- Pagination Section -->
+      <div class="pagination">
+          <button>&laquo;</button>
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>&raquo;</button>
+      </div>
+
+      <!-- Footer Section -->
+      <footer>&copy; Juri's Stuff - All Rights Reserved</footer>
+
+    </main>
+
+</body>
+</html>
