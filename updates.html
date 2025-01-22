@@ -6,6 +6,7 @@
     <title>Juri's Stuff - Updates</title>
 
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
+    <link rel="stylesheet" href="path/to/LINDL___.TTF" type="font/ttf" /> <!-- Change this path to your font -->
 
     <style>
         /* ------------------------------ 
@@ -17,8 +18,13 @@
             src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
         }
 
+        @font-face {
+            font-family: 'Lindl';
+            src: url('path/to/LINDL___.TTF'); /* Change this path to your font */
+        }
+
         body {
-            font-family: 'MS UI Gothic', 'Times New Roman', Times, serif;
+            font-family: 'Apple Chancery', 'Times New Roman', Times, serif;
             background-color: black;
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
             background-size: contain;
@@ -28,11 +34,11 @@
             color: white;
             line-height: 1.6;
             width: 90%;
-            max-width: 700px; /* Increased max-width for better visibility */
-            margin: 50px auto;
+            max-width: 700px; 
+            margin: 0 auto; /* Removed top margin for no spacing */
             padding: 10px;
-            position: relative; /* Added for alignment */
-            text-align: left; /* Align text to left */
+            position: relative; 
+            text-align: left;
         }
 
         /* ------------------------------ 
@@ -45,6 +51,7 @@
             overflow: hidden; 
             width: 100%;
             max-width: 700px;
+            margin: 0; /* Removed top margin */
         }
 
         header video {
@@ -55,7 +62,7 @@
             min-height: 130%; 
             z-index: 0; 
             transform: translate(-50%, -50%); 
-            width: 100%; /* Make video full width */
+            width: 100%; 
         }
 
         .header-content {
@@ -74,14 +81,14 @@
 
         .title-container h1 {
             margin: 0; 
-            font-family: 'Apple Chancery', cursive; 
+            font-family: 'Lindl';
             font-size: 2.5rem; 
             text-shadow: 
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1);
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         nav {
@@ -97,13 +104,13 @@
             color: #ff007b; 
             text-decoration: none; 
             margin: 0 10px; 
-            font-family: 'Apple Chancery'; 
+            font-family: 'Lindl'; 
             text-shadow: 
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1);
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         nav .separator {
@@ -116,14 +123,14 @@
         }
 
         h2, h3, h4, h5 {
-            font-family: 'Apple Chancery', cursive; 
+            font-family: 'Lindl'; 
             text-transform: capitalize; 
             text-shadow: 
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1);
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         /* ------------------------------ 
@@ -136,11 +143,11 @@
             font-size: 1rem; 
             padding: 10px 0; 
             text-shadow: 
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1);
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         /* ------------------------------ 
@@ -149,7 +156,7 @@
 
         main {
             text-align: justify; 
-            padding: 0; /* No padding for main to fit snug */
+            padding: 0; 
         }
 
         /* ---------------------------------
@@ -158,18 +165,20 @@
 
         .gallery-item {
             padding: 20px; 
-            margin: 10px 0; /* Margin between updates */
+            margin: 20px 0; /* Increased margin for more spacing between updates */
             border: 1px solid white; /* White border for definition */
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+            border-radius: 10px; /* Added rounded corners for aesthetic appeal */
         }
 
         .gallery-item h2 {
             text-transform: capitalize; 
             text-shadow: 
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1),
-                2px 2px 5px rgba(0, 0, 0, 1);
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1),
+                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         .gallery-item .date {
@@ -220,25 +229,25 @@
         /* Search and Pagination styles */
         .search-sort-container {
             display: flex;
-            justify-content: space-between; /* Adjusts according to screen size */
-            align-items: center; /* Vertically aligns elements */
-            margin: 20px 0; /* Space around the elements */
+            justify-content: space-between; 
+            align-items: center; 
+            margin: 20px 0; 
         }
 
         .pagination {
-            display: flex; /* Flex container for pagination */
-            justify-content: center; /* Center pagination buttons */
-            margin: 20px 0; /* Space around pagination */
+            display: flex; 
+            justify-content: center; 
+            margin: 20px 0; 
         }
 
         /* Responsive adjustments */
         @media (max-width: 600px) {
             body {
-                width: 95%; /* Adjust width on smaller screens */
+                width: 95%; 
             }
 
             .title-container h1 {
-                font-size: 2rem; /* Reduce font size for h1 on smaller screens */
+                font-size: 2rem; 
             }
         }
     </style>
