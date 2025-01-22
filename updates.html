@@ -1,292 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff - Updates</title>
+/* Replace the existing .search-sort-container and .pagination styles with these: */
 
-    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="updates.js"></script>
-    
-    <style>
-        @font-face {
-            font-family: 'Apple Chancery';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
-        }
+.search-sort-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 100%;
+    gap: 20px;
+    max-width: 600px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Apple Chancery', serif;
-            background-color: black;
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            line-height: 1.6;
-            width: 90%;
-            max-width: 700px; 
-            margin: 0 auto; 
-            padding: 10px;
-            position: relative; 
-            text-align: left;
-        }
+input[type="text"], 
+select {
+    padding: 8px 15px;
+    margin: 0;
+    font-size: 0.9rem;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    text-shadow: none;
+    box-sizing: border-box;
+    width: 200px;
+    border-radius: 5px;
+}
 
-        * {
-            text-shadow: 
-                0 0 10px rgba(255, 0, 0, 1),
-                0 0 20px rgba(255, 0, 0, 1),
-                0 0 30px rgba(255, 0, 0, 1);
-        }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
 
-        h1, h2, h3, h4, h5 {
-            text-shadow: none;
-        }
+#page-numbers {
+    display: flex;
+    gap: 5px;
+}
 
-        header {
-            position: relative; 
-            height: 200px; 
-            margin-bottom: 40px;
-            padding: 0 10px;
-            text-align: center;
-        }
+button {
+    background-color: black;
+    border: 1px solid white;
+    padding: 8px 15px;
+    margin: 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: white;
+    font-family: 'MS UI Gothic', sans-serif;
+    text-shadow: none;
+    border-radius: 5px;
+    min-width: 40px;
+}
 
-        .title-container {
-            max-width: 100%;
-        }
+button.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
 
-        .title-container h1 {
-            margin: 0; 
-            font-family: 'Apple Chancery';
-            font-size: 3rem;
-        }
+button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
 
-        nav {
-            margin-top: 15px; 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 10px 0; 
-        }
+/* Update the media query for mobile responsiveness */
+@media (max-width: 600px) {
+    .search-sort-container {
+        flex-direction: column;
+        padding: 0 10px;
+        gap: 10px;
+    }
 
-        nav a {
-            color: white;
-            text-decoration: none; 
-            margin: 0 10px; 
-            font-family: 'Apple Chancery'; 
-        }
+    input[type="text"], 
+    select {
+        width: 100%;
+    }
 
-        nav .separator {
-            color: white; 
-            margin: 0 5px; 
-        }
+    .pagination {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
 
-        nav a:hover {
-            color: #ff007b;
-        }
-
-        main {
-            text-align: justify; 
-            padding: 0 20px;
-        }
-
-        h2 {
-            margin: 20px 0; 
-            text-align: center; 
-        }
-
-        .divider {
-            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
-            height: 24px; 
-            background-repeat: repeat-x; 
-            border: none; 
-            margin: 15px 0; 
-            width: 100%; 
-            display: block; 
-        }
-
-        .search-sort-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px auto;
-            width: 100%;
-            gap: 10px;
-            max-width: 700px;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"], 
-        select {
-            padding: 8px;
-            margin: 0;
-            font-size: 0.9rem;
-            background-color: black;
-            color: white;
-            border: 1px solid white;
-            text-shadow: none;
-            box-sizing: border-box;
-        }
-
-        .gallery-item {
-            position: relative; 
-            padding: 20px; 
-            margin: 20px 0; 
-            border: 1px solid white; 
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 10px; 
-        }
-
-        .gallery-item p {
-            font-family: 'MS UI Gothic', sans-serif;
-        }
-
-        .decor-gif-left {
-            position: absolute;
-            top: -10px;
-            left: -20px; 
-            width: 50px; 
-            height: auto;
-            z-index: 2;
-        }
-
-        .decor-gif-right {
-            position: absolute;
-            top: -10px;
-            right: -20px; 
-            width: 50px; 
-            height: auto; 
-            z-index: 2;
-        }
-
-        .symbol-divider {
-            text-align: center; 
-            margin: 15px 0; 
-            font-size: 3rem; 
-            color: white;
-        }
-
-        .pagination {
-            display: flex; 
-            justify-content: center; 
-            margin: 20px 0; 
-            width: 90%;
-            max-width: 700px;
-        }
-
-        button {
-            background-color: transparent; 
-            border: none; 
-            margin: 0 5px; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            color: white;
-            font-family: 'MS UI Gothic', sans-serif;
-            text-shadow: none;
-        }
-
-        footer {
-            text-align: center; 
-            font-family: 'MS UI Gothic', sans-serif; 
-            font-size: 1rem; 
-            padding: 20px 0; 
-        }
-
-        @media (max-width: 600px) {
-            body {
-                width: 95%;
-            }
-
-            .title-container h1 {
-                font-size: 2rem; 
-            }
-
-            .search-sort-container {
-                flex-direction: column;
-                padding: 0 10px;
-            }
-
-            input[type="text"], 
-            select {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .decor-gif-left,
-            .decor-gif-right {
-                width: 30px; 
-            }
-
-            .gallery-item {
-                padding: 15px;
-            }
-
-            .symbol-divider {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="title-container">
-            <h1>Juri's Stuff</h1>
-            <nav>
-                <a href="index.html">Home</a>
-                <span class="separator">♥</span>
-                <a href="about.html">About</a>
-                <span class="separator">★</span>
-                <a href="gallery.html">Gallery</a>
-                <span class="separator">♛</span>
-                <a href="updates.html">Updates</a>
-                <span class="separator">♣</span>
-                <a href="visual-novels.html">Visual Novels</a>
-                <span class="separator">♦</span>
-                <a href="music.html">Music</a>
-                <span class="separator">♠</span>
-                <a href="art.html">Art</a>
-                <span class="separator">♥</span>
-                <a href="twitter.html">Twitter</a>
-                <span class="separator">♣</span>
-                <a href="bluesky.html">Bluesky</a>
-                <span class="separator">♣</span>
-                <a href="youtube.html">YouTube</a>
-                <span class="separator">★</span>
-                <a href="soundcloud.html">SoundCloud</a>
-                <span class="separator">♪</span>
-                <a href="vndb.html">VNDB</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <h2>UPDATES</h2>
-        <div class="divider"></div>
-        <p style="text-align: center;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me, and I'm okay with that.</p>
-
-        <div class="search-sort-container">
-            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
-            <select id="sort" onchange="loadUpdates()">
-                <option value="desc">Sort by Newest</option>
-                <option value="asc">Sort by Oldest</option>
-            </select>
-        </div>
-
-        <div id="updates" class="updates"></div>
-
-        <div class="pagination" id="pagination">
-            <button id="prev" onclick="changePage(-1)">Prev</button>
-            <span id="page-numbers"></span>
-            <button id="next" onclick="changePage(1)">Next</button>
-        </div>
-    </main>
-
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
-</body>
-</html>
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
