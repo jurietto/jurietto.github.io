@@ -1,4 +1,3 @@
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
     authDomain: "comments-ff6c9.firebaseapp.com",
@@ -10,7 +9,6 @@ const firebaseConfig = {
     measurementId: "G-T8QFHWJDB5"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
@@ -18,7 +16,6 @@ let currentPage = 1;
 const itemsPerPage = 5;
 let totalPages = 1;
 
-// Load updates from Firebase
 function loadUpdates() {
     const searchQuery = document.getElementById('search').value.toLowerCase();
     const sortOrder = document.getElementById('sort').value || 'desc';
@@ -28,15 +25,15 @@ function loadUpdates() {
         snapshot.forEach((childSnapshot) => {
             const updateData = childSnapshot.val();
             const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-            if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+            if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || 
+                updateData.title.toLowerCase().includes(searchQuery) || 
+                date.includes(searchQuery)) {
                 updates.push({ key: childSnapshot.key, ...updateData });
             }
         });
 
         if (sortOrder === 'desc') {
             updates.reverse();
-        } else if (sortOrder === 'shuffle') {
-            updates = shuffle(updates);
         }
 
         totalPages = Math.ceil(updates.length / itemsPerPage);
@@ -51,7 +48,6 @@ function loadUpdates() {
     });
 }
 
-// Display updates
 function displayUpdates(updates) {
     const updatesContainer = document.getElementById('updates');
     updatesContainer.innerHTML = '';
@@ -61,7 +57,9 @@ function displayUpdates(updates) {
         return;
     }
 
-    updates.forEach((update) => {
+    const symbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪'];
+
+    updates.forEach((update, index) => {
         const updateDiv = document.createElement('div');
         updateDiv.className = 'gallery-item';
 
@@ -75,19 +73,31 @@ function displayUpdates(updates) {
         dateElement.innerHTML = date.toLocaleString();
         updateDiv.appendChild(dateElement);
 
-        const hrElement = document.createElement('div');
-        hrElement.className = 'line';
-        updateDiv.appendChild(hrElement);
-
         const contentElement = document.createElement('p');
         contentElement.innerHTML = update.content;
         updateDiv.appendChild(contentElement);
 
+        const decorGifLeft = document.createElement('img');
+        decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
+        decorGifLeft.className = 'decor-gif-left';
+        updateDiv.appendChild(decorGifLeft);
+
+        const decorGifRight = document.createElement('img');
+        decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
+        decorGifRight.className = 'decor-gif-right';
+        updateDiv.appendChild(decorGifRight);
+
         updatesContainer.appendChild(updateDiv);
+
+        if (index < updates.length - 1) {
+            const symbolDivider = document.createElement('div');
+            symbolDivider.className = 'symbol-divider';
+            symbolDivider.textContent = symbols[index % symbols.length];
+            updatesContainer.appendChild(symbolDivider);
+        }
     });
 }
 
-// Display pagination
 function displayPagination() {
     const paginationElement = document.getElementById('pagination');
     const pageNumbersElement = document.getElementById('page-numbers');
@@ -99,7 +109,7 @@ function displayPagination() {
     for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement('button');
         button.textContent = i;
-        button.className = i === currentPage ? 'active' : '';
+        button.className = (i === currentPage ? 'active' : '');
         button.onclick = () => {
             currentPage = i;
             loadUpdates();
@@ -108,20 +118,9 @@ function displayPagination() {
     }
 }
 
-// Change page
 function changePage(direction) {
     currentPage += direction;
     loadUpdates();
 }
 
-// Shuffle array
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Load updates on window load
 window.addEventListener('load', loadUpdates);
