@@ -19,8 +19,8 @@
         }
 
         @font-face {
-            font-family: 'Lindl';
-            src: url('LINDL___.TTF'); /* Updated path to just the file name */
+            font-family: 'MS UI Gothic';
+            src: url('https://path_to_MS_UI_Gothic.ttf'); /* Ensure you have the correct path for MS UI Gothic */
         }
 
         body {
@@ -35,7 +35,7 @@
             line-height: 1.6;
             width: 90%;
             max-width: 700px; 
-            margin: 0 auto; /* Removed top margin for no spacing */
+            margin: 0 auto; 
             padding: 10px;
             position: relative; 
             text-align: left;
@@ -45,12 +45,15 @@
            GLOW EFFECT STYLES
         --------------------------------- */
 
-        .header-text,
-        h2, h3, h4, h5 {
+        * {
             text-shadow: 
-                0 0 10px rgba(255, 0, 0, 1), /* black glow */
+                0 0 10px rgba(255, 0, 0, 1), /* Red glow */
                 0 0 20px rgba(255, 0, 0, 1),
                 0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        h1, h2, h3, h4, h5 {
+            text-shadow: none; /* No glow for headings */
         }
 
         /* ------------------------------ 
@@ -63,6 +66,8 @@
             overflow: hidden; 
             width: 100%;
             max-width: 700px;
+            margin-bottom: 40px; /* Space below header */
+            padding: 0 10px; /* Uniform padding around header content */
         }
 
         header video {
@@ -82,34 +87,33 @@
             display: flex; 
             align-items: flex-end; 
             height: 100%; 
-            padding: 10px; 
         }
 
         .title-container {
-            text-align: left; 
+            text-align: center; /* Center title text */
             max-width: 100%;
         }
 
         .title-container h1 {
             margin: 0; 
-            font-family: 'Lindl';
+            font-family: 'Apple Chancery';
             font-size: 2.5rem;
         }
 
         nav {
-            margin-top: 10px; 
+            margin-top: 15px; 
             display: flex; 
             flex-wrap: wrap; 
-            justify-content: flex-start; 
+            justify-content: center; 
             align-items: center; 
             padding: 10px 0; 
         }
 
         nav a {
-            color: #ff007b; 
+            color: white; /* Default white color for links */
             text-decoration: none; 
             margin: 0 10px; 
-            font-family: 'Lindl'; 
+            font-family: 'Apple Chancery'; 
         }
 
         nav .separator {
@@ -118,7 +122,98 @@
         }
 
         nav a:hover {
-            color: white; 
+            color: #ff007b; /* Magenta hover color */
+        }
+
+        /* ------------------------------ 
+           MAIN CONTENT STYLES
+        --------------------------------- */
+
+        main {
+            text-align: justify; 
+            padding: 0 20px; /* Horizontal padding for main */
+        }
+
+        h2 {
+            margin: 20px 0; 
+            text-align: center; 
+        }
+
+        .divider {
+            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
+            height: 24px;
+            background-repeat: repeat-x; 
+            border: none; 
+            margin: 15px 0; 
+            width: 100%; 
+            display: block; 
+        }
+
+        /* Search and Sort UI Container */
+        .search-sort-container {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            margin: 20px 0; 
+        }
+
+        input[type="text"], 
+        select {
+            padding: 5px; 
+            margin: 0 5px; 
+            font-size: 1rem; 
+        }
+
+        /* ------------------------------ 
+           UPDATE ITEM STYLES
+        --------------------------------- */
+
+        .gallery-item {
+            position: relative; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border: 1px solid white; 
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 10px; 
+        }
+
+        .decor-gif-left {
+            position: absolute;
+            top: -10px;
+            left: -20px; 
+            width: 50px; 
+            height: auto;
+        }
+
+        .decor-gif-right {
+            position: absolute;
+            top: -10px;
+            right: -20px; 
+            width: 50px; 
+            height: auto; 
+        }
+
+        /* Symbol Divider */
+        .symbol-divider {
+            text-align: center; 
+            margin: 15px 0; 
+            font-size: 3rem; 
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex; 
+            justify-content: center; 
+            margin: 20px 0; 
+        }
+
+        button {
+            background-color: transparent; 
+            border: none; 
+            margin: 0 5px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            color: white; /* Text color for buttons */
         }
 
         /* ------------------------------ 
@@ -129,101 +224,7 @@
             text-align: center; 
             font-family: 'MS UI Gothic'; 
             font-size: 1rem; 
-            padding: 10px 0; 
-        }
-
-        /* ------------------------------ 
-           MAIN CONTENT STYLES
-        --------------------------------- */
-
-        main {
-            text-align: justify; 
-            padding: 0; 
-        }
-
-        /* ---------------------------------
-           UPDATE ITEM STYLES
-        --------------------------------- */
-
-        .gallery-item {
-            position: relative; /* for absolute positioning of decor GIF */
-            padding: 20px; 
-            margin: 20px 0; /* Increased margin for more spacing between updates */
-            border: 1px solid white; /* White border for definition */
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-            border-radius: 10px; /* Added rounded corners for aesthetic appeal */
-        }
-
-        .decor-gif {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            width: 50px; /* Adjust size as needed */
-            height: auto;
-        }
-
-        /* Symbol Divider */
-        .symbol-divider {
-            text-align: center; 
-            margin: 20px 0; 
-            font-size: 2rem; /* Adjust font size for visibility */ 
-        }
-
-        /* ------------------------------ 
-           BUTTON AND FORM STYLES
-        --------------------------------- */
-
-        input[type="text"], 
-        select {
-            background: #C0C0C0; /* Light gray for retro look */
-            border: 1px solid #A0A0A0; /* Border for buttons */
-            padding: 5px; 
-            font-family: Tahoma; 
-            text-shadow: 1px 1px 0px #FFFFFF; /* Subtle text shadow */
-            margin: 10px 0; /* Some margin for spacing */
-            border-radius: 5px; /* Rounded corners */
-        }
-
-        button {
-            background-color: #C0C0C0; /* Light gray for retro look */
-            border: 1px solid #A0A0A0; /* Button border */
-            padding: 5px 10px; 
-            font-family: Tahoma; 
-            text-shadow: 1px 1px 0px #FFFFFF; /* Subtle text shadow */
-            cursor: pointer; /* Pointer cursor on hover */
-            margin-left: 10px; /* Space between buttons */
-            border-radius: 5px; /* Rounded corners */
-        }
-
-        button:hover {
-            background-color: #A0A0A0; /* Slightly darker gray on hover */
-        }
-
-        /* Search and Pagination styles */
-        .search-sort-container {
-            display: flex;
-            justify-content: space-between; 
-            align-items: center; 
-            margin: 20px 0; 
-        }
-
-        .pagination {
-            display: flex; 
-            justify-content: center; 
-            margin: 20px 0; 
-        }
-
-        /* ------------------------------ 
-           CUSTOM DIVIDER STYLES
-        --------------------------------- */
-
-        .divider {
-            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/82.gif');
-            height: 10px; /* Height of the divider */
-            background-repeat: repeat-x; /* Repeat horizontally */
-            border: none; /* Remove any border */
-            margin: 20px 0; /* Space around the divider */
-            width: 100%; /* Width of the divider */
+            padding: 20px 0; 
         }
 
         /* Responsive adjustments */
@@ -236,16 +237,28 @@
                 font-size: 2rem; 
             }
 
-            .decor-gif {
-                width: 30px; /* Smaller decorative GIF on mobile */
+            .search-sort-container {
+                flex-direction: column; /* Stack elements for mobile */
+                align-items: flex-start; /* Align to start */
+            }
+
+            input[type="text"], 
+            select {
+                width: 100%; /* Full width for inputs */
+                margin-bottom: 10px; /* Space between inputs for mobile */
+            }
+
+            .decor-gif-left,
+            .decor-gif-right {
+                width: 30px; 
+            }
+
+            .gallery-item {
+                padding: 15px; /* Reduce padding for mobile */
             }
 
             .symbol-divider {
-                font-size: 1.5rem; /* Reduce symbol size on mobile */
-            }
-
-            button {
-                font-size: 0.9rem; /* Smaller buttons on mobile */
+                font-size: 2rem; /* Slightly smaller on mobile */
             }
         }
     </style>
@@ -258,7 +271,7 @@
         </video>
         <div class="header-content">
             <div class="title-container">
-                <h1 class="header-text">Juri's Stuff</h1>
+                <h1>Juri's Stuff</h1>
                 <nav>
                     <a href="index.html">Home</a>
                     <span class="separator">♥</span>
@@ -290,8 +303,8 @@
 
     <main>
         <h2>UPDATES</h2>
-        <div class="divider"></div> <!-- Custom horizontal divider -->
-        <p>I’ve decided to start using this space a bit more consistently—though if I’m honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I’ve moved everything here. Life is very much a day-by-day thing for me, and I’m okay with that.</p>
+        <div class="divider"></div>
+        <p style="text-align: center;">I’ve decided to start using this space a bit more consistently—though if I’m honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I’ve moved everything here. Life is very much a day-by-day thing for me, and I’m okay with that.</p>
 
         <!-- Search and Sort UI -->
         <div class="search-sort-container">
@@ -389,10 +402,9 @@
                 titleElement.textContent = update.title
                     .split(' ')
                     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                    .join(' '); // Capitalizes each word
+                    .join(' '); 
                 updateDiv.appendChild(titleElement);
 
-                // Create and append date element
                 const dateElement = document.createElement('span');
                 dateElement.className = 'date';
                 const date = new Date(update.timestamp);
@@ -403,18 +415,21 @@
                 contentElement.innerHTML = update.content;
                 updateDiv.appendChild(contentElement);
 
-                // Add decorative GIF to the top left of the update
-                const decorGif = document.createElement('img');
-                decorGif.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
-                decorGif.className = 'decor-gif';
-                updateDiv.appendChild(decorGif);
+                const decorGifLeft = document.createElement('img');
+                decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
+                decorGifLeft.className = 'decor-gif-left';
+                updateDiv.appendChild(decorGifLeft);
+
+                const decorGifRight = document.createElement('img');
+                decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
+                decorGifRight.className = 'decor-gif-right';
+                updateDiv.appendChild(decorGifRight);
 
                 updatesContainer.appendChild(updateDiv);
 
-                // Create and append symbol divider
                 const symbolDivider = document.createElement('div');
                 symbolDivider.className = 'symbol-divider';
-                symbolDivider.innerHTML = symbols[index % symbols.length]; // Cycle through symbols
+                symbolDivider.innerHTML = symbols[index % symbols.length];
                 updatesContainer.appendChild(symbolDivider);
             });
         }
@@ -430,7 +445,7 @@
             for (let i = 1; i <= totalPages; i++) {
                 const button = document.createElement('button');
                 button.textContent = i;
-                button.className = i === currentPage ? 'active' : '';
+                button.className = (i === currentPage ? 'active' : '');
                 button.onclick = () => {
                     currentPage = i;
                     loadUpdates();
