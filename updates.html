@@ -62,42 +62,20 @@
 
         header {
             position: relative; 
-            height: 300px; 
-            overflow: hidden; 
-            width: 100%;
-            max-width: 700px;
+            height: 200px; 
             margin-bottom: 40px; /* Space below header */
             padding: 0 10px; /* Uniform padding around header content */
-        }
-
-        header video {
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            min-width: 130%; 
-            min-height: 130%; 
-            z-index: 0; 
-            transform: translate(-50%, -50%); 
-            width: 100%; 
-        }
-
-        .header-content {
-            position: relative; 
-            z-index: 1; 
-            display: flex; 
-            align-items: flex-end; 
-            height: 100%; 
+            text-align: center; /* Center title text */
         }
 
         .title-container {
-            text-align: center; /* Center title text */
             max-width: 100%;
         }
 
         .title-container h1 {
             margin: 0; 
             font-family: 'Apple Chancery';
-            font-size: 2.5rem;
+            font-size: 3rem;
         }
 
         nav {
@@ -159,7 +137,7 @@
 
         input[type="text"], 
         select {
-            padding: 5px; 
+            padding: 10px; 
             margin: 0 5px; 
             font-size: 1rem; 
             font-family: 'MS UI Gothic'; /* Use MS UI Gothic for inputs */
@@ -272,39 +250,33 @@
 </head>
 <body>
     <header>
-        <video autoplay muted loop>
-            <source src="https://file.garden/ZhTgSjrp5nAroRKq/videoplayback.mp4" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>
-        <div class="header-content">
-            <div class="title-container">
-                <h1>Juri's Stuff</h1>
-                <nav>
-                    <a href="index.html">Home</a>
-                    <span class="separator">♥</span>
-                    <a href="about.html">About</a>
-                    <span class="separator">★</span>
-                    <a href="gallery.html">Gallery</a>
-                    <span class="separator">♛</span>
-                    <a href="updates.html">Updates</a>
-                    <span class="separator">♣</span>
-                    <a href="visual-novels.html">Visual Novels</a>
-                    <span class="separator">♦</span>
-                    <a href="music.html">Music</a>
-                    <span class="separator">♠</span>
-                    <a href="art.html">Art</a>
-                    <span class="separator">♥</span>
-                    <a href="twitter.html">Twitter</a>
-                    <span class="separator">♣</span>
-                    <a href="bluesky.html">Bluesky</a>
-                    <span class="separator">♣</span>
-                    <a href="youtube.html">YouTube</a>
-                    <span class="separator">★</span>
-                    <a href="soundcloud.html">SoundCloud</a>
-                    <span class="separator">♪</span>
-                    <a href="vndb.html">VNDB</a>
-                </nav>
-            </div>
+        <div class="title-container">
+            <h1>Juri's Stuff</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <span class="separator">♥</span>
+                <a href="about.html">About</a>
+                <span class="separator">★</span>
+                <a href="gallery.html">Gallery</a>
+                <span class="separator">♛</span>
+                <a href="updates.html">Updates</a>
+                <span class="separator">♣</span>
+                <a href="visual-novels.html">Visual Novels</a>
+                <span class="separator">♦</span>
+                <a href="music.html">Music</a>
+                <span class="separator">♠</span>
+                <a href="art.html">Art</a>
+                <span class="separator">♥</span>
+                <a href="twitter.html">Twitter</a>
+                <span class="separator">♣</span>
+                <a href="bluesky.html">Bluesky</a>
+                <span class="separator">♣</span>
+                <a href="youtube.html">YouTube</a>
+                <span class="separator">★</span>
+                <a href="soundcloud.html">SoundCloud</a>
+                <span class="separator">♪</span>
+                <a href="vndb.html">VNDB</a>
+            </nav>
         </div>
     </header>
 
