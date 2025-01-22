@@ -1,6 +1,6 @@
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-    authDomain: "comments-ff6c9.firebaseapp.com",
+    authDomain: "comments-ff6c9.firebaseapp.com", 
     databaseURL: "https://updates-e2454.firebaseio.com/",
     projectId: "comments-ff6c9",
     storageBucket: "comments-ff6c9.appspot.com",
