@@ -28,10 +28,11 @@
             color: white;
             line-height: 1.6;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px; /* Increased max-width for better visibility */
             margin: 50px auto;
             padding: 10px;
             position: relative; /* Added for alignment */
+            text-align: left; /* Align text to left */
         }
 
         /* ------------------------------ 
@@ -42,11 +43,8 @@
             position: relative; 
             height: 300px; 
             overflow: hidden; 
-
             width: 100%;
-            max-width: 600px;
-            text-align: left;
-
+            max-width: 700px;
         }
 
         header video {
@@ -58,7 +56,6 @@
             z-index: 0; 
             transform: translate(-50%, -50%); 
             width: 100%; /* Make video full width */
-            
         }
 
         .header-content {
@@ -67,7 +64,6 @@
             display: flex; 
             align-items: flex-end; 
             height: 100%; 
-            justify-content: left; /* Align content to the left */
             padding: 10px; 
         }
 
@@ -163,7 +159,6 @@
         .gallery-item {
             padding: 20px; 
             margin: 10px 0; /* Margin between updates */
-            
             border: 1px solid white; /* White border for definition */
         }
 
@@ -222,6 +217,20 @@
             background-color: #A0A0A0; /* Slight darker gray on hover */
         }
 
+        /* Search and Pagination styles */
+        .search-sort-container {
+            display: flex;
+            justify-content: space-between; /* Adjusts according to screen size */
+            align-items: center; /* Vertically aligns elements */
+            margin: 20px 0; /* Space around the elements */
+        }
+
+        .pagination {
+            display: flex; /* Flex container for pagination */
+            justify-content: center; /* Center pagination buttons */
+            margin: 20px 0; /* Space around pagination */
+        }
+
         /* Responsive adjustments */
         @media (max-width: 600px) {
             body {
@@ -274,10 +283,11 @@
 
     <main>
         <h2>UPDATES</h2>
+        <hr> <!-- Horizontal line under updates -->
         <p>I’ve decided to start using this space a bit more consistently—though if I’m honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I’ve moved everything here. Life is very much a day-by-day thing for me, and I’m okay with that.</p>
 
         <!-- Search and Sort UI -->
-        <div>
+        <div class="search-sort-container">
             <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
             <select id="sort" onchange="loadUpdates()">
                 <option value="desc">Sort by Newest</option>
