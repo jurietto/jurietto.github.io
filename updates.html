@@ -23,10 +23,10 @@
         }
 
         body {
-            font-family: 'Apple Chancery', serif;
+            font-family: 'Apple Chancery', 'Times New Roman', serif;
             background-color: black;
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             background-attachment: fixed;
@@ -128,7 +128,9 @@
             display: flex;
             justify-content: center; 
             align-items: center; 
-            margin: 20px 0; 
+            margin: 20px auto; /* centers the container */
+            width: 90%; /* ensures it doesn't overflow */
+            max-width: 700px; /* consistent max width */
         }
 
         input[type="text"], 
@@ -141,6 +143,7 @@
             color: white; /* Text color for input and select */
             border: 1px solid white; /* Border color */
             text-shadow: none; /* No glow for inputs */
+            flex: 1; /* Makes input and select fill available space */
         }
 
         /* ------------------------------ 
@@ -190,6 +193,8 @@
             display: flex; 
             justify-content: center; 
             margin: 20px 0; 
+            width: 90%;  /* makes pagination container responsive */
+            max-width: 700px; /* consistent max width */
         }
 
         button {
@@ -201,6 +206,7 @@
             color: white; /* Text color for buttons */
             font-family: 'MS UI Gothic'; /* Use MS UI Gothic for buttons */
             text-shadow: none; /* No glow for buttons */
+            flex: 1; /* Makes buttons fill available space */
         }
 
         /* ------------------------------ 
@@ -225,7 +231,9 @@
 
             .search-sort-container {
                 flex-direction: column; /* Stack elements for mobile */
-                align-items: flex-start; /* Align to start */
+                align-items: stretch; /* Stretch to fill container */
+                width: 90%; /* Ensure the container fits within the margins */
+                margin: 0 auto; /* Center the container */
             }
 
             input[type="text"], 
