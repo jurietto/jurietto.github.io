@@ -12,7 +12,6 @@
         /* ------------------------------ 
            GLOBAL STYLES
         --------------------------------- */
-
         @font-face {
             font-family: 'Apple Chancery';
             src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
@@ -20,14 +19,14 @@
 
         @font-face {
             font-family: 'MS UI Gothic';
-            src: url('https://path_to_MS_UI_Gothic.ttf'); /* Ensure you have the correct path for MS UI Gothic */
+            src: url('https://path_to_MS_UI_Gothic.ttf'); /* Correct path for MS UI Gothic */
         }
 
         body {
             font-family: 'Apple Chancery', 'Times New Roman', Times, serif;
             background-color: black;
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             background-attachment: fixed;
@@ -44,7 +43,6 @@
         /* ------------------------------ 
            GLOW EFFECT STYLES
         --------------------------------- */
-
         * {
             text-shadow: 
                 0 0 10px rgba(255, 0, 0, 1), /* Red glow */
@@ -59,7 +57,6 @@
         /* ------------------------------ 
            HEADER STYLES
         --------------------------------- */
-
         header {
             position: relative; 
             height: 200px; 
@@ -106,7 +103,6 @@
         /* ------------------------------ 
            MAIN CONTENT STYLES
         --------------------------------- */
-
         main {
             text-align: justify; 
             padding: 0 20px; /* Horizontal padding for main */
@@ -150,7 +146,6 @@
         /* ------------------------------ 
            UPDATE ITEM STYLES
         --------------------------------- */
-
         .gallery-item {
             position: relative; 
             padding: 20px; 
@@ -166,6 +161,7 @@
             left: -20px; 
             width: 50px; 
             height: auto;
+            z-index: 2; /* Ensure it is on top */
         }
 
         .decor-gif-right {
@@ -174,6 +170,7 @@
             right: -20px; 
             width: 50px; 
             height: auto; 
+            z-index: 2; /* Ensure it is on top */
         }
 
         /* Symbol Divider */
@@ -181,6 +178,11 @@
             text-align: center; 
             margin: 15px 0; 
             font-size: 3rem; 
+            color: white; /* Change color if needed */
+            text-shadow: 
+                0 0 10px rgba(255, 0, 0, 1), /* Red glow */
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
         }
 
         /* Pagination */
@@ -204,7 +206,6 @@
         /* ------------------------------ 
            FOOTER STYLES
         --------------------------------- */
-
         footer {
             text-align: center; 
             font-family: 'MS UI Gothic'; 
@@ -392,6 +393,7 @@
 
                 const contentElement = document.createElement('p');
                 contentElement.innerHTML = update.content;
+                contentElement.style.fontFamily = 'MS UI Gothic'; // Set content text font to MS UI Gothic
                 updateDiv.appendChild(contentElement);
 
                 const decorGifLeft = document.createElement('img');
@@ -408,7 +410,7 @@
 
                 const symbolDivider = document.createElement('div');
                 symbolDivider.className = 'symbol-divider';
-                symbolDivider.innerHTML = symbols[index % symbols.length];
+                symbolDivider.innerHTML = symbols[index % symbols.length]; // Use one symbol cyclically
                 updatesContainer.appendChild(symbolDivider);
             });
         }
