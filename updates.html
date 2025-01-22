@@ -102,8 +102,7 @@
         nav a:hover {
             color: #ff007b;
         }
-
-        /* ------------------------------ 
+/* ------------------------------ 
            MAIN CONTENT STYLES
         --------------------------------- */
         main {
@@ -149,7 +148,6 @@
             border: 1px solid white;
             text-shadow: none;
             box-sizing: border-box;
-            font-family: 'MS UI Gothic', sans-serif;
         }
 
         /* ------------------------------ 
@@ -222,12 +220,11 @@
             font-size: 1rem; 
             padding: 20px 0; 
         }
-
         /* Responsive adjustments */
         @media (max-width: 600px) {
             body {
                 width: 95%;
-                font-family: 'MS UI Gothic', 'Yu Gothic', 'Meiryo', sans-serif;
+                font-family: 'MS UI Gothic', sans-serif;
             }
 
             .title-container h1 {
@@ -254,10 +251,6 @@
                 padding: 15px;
             }
 
-            .gallery-item p {
-                font-family: 'MS UI Gothic', sans-serif;
-            }
-
             .symbol-divider {
                 font-size: 2rem;
             }
@@ -265,9 +258,35 @@
     </style>
 </head>
 <body>
-    <!-- Header section remains unchanged -->
     <header>
-        <!-- Your existing header content -->
+        <div class="title-container">
+            <h1>Juri's Stuff</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <span class="separator">♥</span>
+                <a href="about.html">About</a>
+                <span class="separator">★</span>
+                <a href="gallery.html">Gallery</a>
+                <span class="separator">♛</span>
+                <a href="updates.html">Updates</a>
+                <span class="separator">♣</span>
+                <a href="visual-novels.html">Visual Novels</a>
+                <span class="separator">♦</span>
+                <a href="music.html">Music</a>
+                <span class="separator">♠</span>
+                <a href="art.html">Art</a>
+                <span class="separator">♥</span>
+                <a href="twitter.html">Twitter</a>
+                <span class="separator">♣</span>
+                <a href="bluesky.html">Bluesky</a>
+                <span class="separator">♣</span>
+                <a href="youtube.html">YouTube</a>
+                <span class="separator">★</span>
+                <a href="soundcloud.html">SoundCloud</a>
+                <span class="separator">♪</span>
+                <a href="vndb.html">VNDB</a>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -295,17 +314,20 @@
     <footer>
         <h6>2024 - ???</h6>
     </footer>
-
-    <!-- Firebase scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
-        // Firebase configuration remains unchanged
         const firebaseConfig = {
-            // Your existing Firebase config
+            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+            authDomain: "comments-ff6c9.firebaseapp.com",
+            databaseURL: "https://updates-e2454.firebaseio.com/",
+            projectId: "comments-ff6c9",
+            storageBucket: "comments-ff6c9.appspot.com",
+            messagingSenderId: "778548096311",
+            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+            measurementId: "G-T8QFHWJDB5"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
@@ -322,9 +344,7 @@
                 snapshot.forEach((childSnapshot) => {
                     const updateData = childSnapshot.val();
                     const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || 
-                        updateData.title.toLowerCase().includes(searchQuery) || 
-                        date.includes(searchQuery)) {
+                    if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || updateData.title.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
                         updates.push({ key: childSnapshot.key, ...updateData });
                     }
                 });
@@ -425,7 +445,6 @@
             loadUpdates();
         }
 
-        // Load updates on window load
         window.addEventListener('load', loadUpdates);
     </script>
 </body>
