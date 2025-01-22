@@ -6,7 +6,7 @@
     <title>Juri's Stuff - Updates</title>
 
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    <link rel="stylesheet" href="path/to/LINDL___.TTF" type="font/ttf" /> <!-- Change this path to your font -->
+    <link rel="stylesheet" href="LINDL___.TTF" type="font/ttf" /> <!-- Simplified path to the LINDL font -->
 
     <style>
         /* ------------------------------ 
@@ -20,7 +20,7 @@
 
         @font-face {
             font-family: 'Lindl';
-            src: url('path/to/LINDL___.TTF'); /* Change this path to your font */
+            src: url('LINDL___.TTF'); /* Updated path to just the file name */
         }
 
         body {
@@ -42,6 +42,18 @@
         }
 
         /* ------------------------------ 
+           GLOW EFFECT STYLES
+        --------------------------------- */
+
+        .header-text,
+        h2, h3, h4, h5 {
+            text-shadow: 
+                0 0 10px rgba(255, 0, 0, 1), /* black glow */
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        /* ------------------------------ 
            HEADER STYLES
         --------------------------------- */
 
@@ -51,7 +63,6 @@
             overflow: hidden; 
             width: 100%;
             max-width: 700px;
-            margin: 0; /* Removed top margin */
         }
 
         header video {
@@ -82,13 +93,7 @@
         .title-container h1 {
             margin: 0; 
             font-family: 'Lindl';
-            font-size: 2.5rem; 
-            text-shadow: 
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1);
+            font-size: 2.5rem;
         }
 
         nav {
@@ -105,12 +110,6 @@
             text-decoration: none; 
             margin: 0 10px; 
             font-family: 'Lindl'; 
-            text-shadow: 
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         nav .separator {
@@ -122,17 +121,6 @@
             color: white; 
         }
 
-        h2, h3, h4, h5 {
-            font-family: 'Lindl'; 
-            text-transform: capitalize; 
-            text-shadow: 
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1);
-        }
-
         /* ------------------------------ 
            FOOTER STYLES
         --------------------------------- */
@@ -142,12 +130,6 @@
             font-family: 'MS UI Gothic'; 
             font-size: 1rem; 
             padding: 10px 0; 
-            text-shadow: 
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1);
         }
 
         /* ------------------------------ 
@@ -164,6 +146,7 @@
         --------------------------------- */
 
         .gallery-item {
+            position: relative; /* for absolute positioning of decor GIF */
             padding: 20px; 
             margin: 20px 0; /* Increased margin for more spacing between updates */
             border: 1px solid white; /* White border for definition */
@@ -171,46 +154,34 @@
             border-radius: 10px; /* Added rounded corners for aesthetic appeal */
         }
 
-        .gallery-item h2 {
-            text-transform: capitalize; 
-            text-shadow: 
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1),
-                0px 0px 5px rgba(0, 0, 0, 1);
+        .decor-gif {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 50px; /* Adjust size as needed */
+            height: auto;
         }
 
-        .gallery-item .date {
-            color: white; 
-            font-size: 0.8rem; 
-            font-family: 'MS UI Gothic'; 
-        }
-
-        /* ------------------------------ 
-           TIMESTAMP STYLES
-        --------------------------------- */
-
-        .timestamp {
-            display: block; 
-            margin-bottom: 10px; 
-        }
-
-        .timestamp + hr {
-            margin: 0; 
+        /* Symbol Divider */
+        .symbol-divider {
+            text-align: center; 
+            margin: 20px 0; 
+            font-size: 2rem; /* Adjust font size for visibility */ 
         }
 
         /* ------------------------------ 
-           BUTTON STYLES
+           BUTTON AND FORM STYLES
         --------------------------------- */
 
-        input[type="text"], select {
+        input[type="text"], 
+        select {
             background: #C0C0C0; /* Light gray for retro look */
             border: 1px solid #A0A0A0; /* Border for buttons */
             padding: 5px; 
             font-family: Tahoma; 
             text-shadow: 1px 1px 0px #FFFFFF; /* Subtle text shadow */
             margin: 10px 0; /* Some margin for spacing */
+            border-radius: 5px; /* Rounded corners */
         }
 
         button {
@@ -220,10 +191,12 @@
             font-family: Tahoma; 
             text-shadow: 1px 1px 0px #FFFFFF; /* Subtle text shadow */
             cursor: pointer; /* Pointer cursor on hover */
+            margin-left: 10px; /* Space between buttons */
+            border-radius: 5px; /* Rounded corners */
         }
 
         button:hover {
-            background-color: #A0A0A0; /* Slight darker gray on hover */
+            background-color: #A0A0A0; /* Slightly darker gray on hover */
         }
 
         /* Search and Pagination styles */
@@ -240,6 +213,19 @@
             margin: 20px 0; 
         }
 
+        /* ------------------------------ 
+           CUSTOM DIVIDER STYLES
+        --------------------------------- */
+
+        .divider {
+            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/82.gif');
+            height: 10px; /* Height of the divider */
+            background-repeat: repeat-x; /* Repeat horizontally */
+            border: none; /* Remove any border */
+            margin: 20px 0; /* Space around the divider */
+            width: 100%; /* Width of the divider */
+        }
+
         /* Responsive adjustments */
         @media (max-width: 600px) {
             body {
@@ -248,6 +234,18 @@
 
             .title-container h1 {
                 font-size: 2rem; 
+            }
+
+            .decor-gif {
+                width: 30px; /* Smaller decorative GIF on mobile */
+            }
+
+            .symbol-divider {
+                font-size: 1.5rem; /* Reduce symbol size on mobile */
+            }
+
+            button {
+                font-size: 0.9rem; /* Smaller buttons on mobile */
             }
         }
     </style>
@@ -260,7 +258,7 @@
         </video>
         <div class="header-content">
             <div class="title-container">
-                <h1>Juri's Stuff</h1>
+                <h1 class="header-text">Juri's Stuff</h1>
                 <nav>
                     <a href="index.html">Home</a>
                     <span class="separator">♥</span>
@@ -271,11 +269,11 @@
                     <a href="updates.html">Updates</a>
                     <span class="separator">♣</span>
                     <a href="visual-novels.html">Visual Novels</a>
-                    <span class="separator">♪</span>
+                    <span class="separator">♦</span>
                     <a href="music.html">Music</a>
                     <span class="separator">♠</span>
                     <a href="art.html">Art</a>
-                    <span class="separator">♦</span>
+                    <span class="separator">♥</span>
                     <a href="twitter.html">Twitter</a>
                     <span class="separator">♣</span>
                     <a href="bluesky.html">Bluesky</a>
@@ -292,12 +290,12 @@
 
     <main>
         <h2>UPDATES</h2>
-        <hr> <!-- Horizontal line under updates -->
+        <div class="divider"></div> <!-- Custom horizontal divider -->
         <p>I’ve decided to start using this space a bit more consistently—though if I’m honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I’ve moved everything here. Life is very much a day-by-day thing for me, and I’m okay with that.</p>
 
         <!-- Search and Sort UI -->
         <div class="search-sort-container">
-            <input type="text" id="search" placeholder="Search..." oninput="loadUpdates()">
+            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
             <select id="sort" onchange="loadUpdates()">
                 <option value="desc">Sort by Newest</option>
                 <option value="asc">Sort by Oldest</option>
@@ -381,7 +379,9 @@
                 return;
             }
 
-            updates.forEach((update) => {
+            const symbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪'];
+
+            updates.forEach((update, index) => {
                 const updateDiv = document.createElement('div');
                 updateDiv.className = 'gallery-item';
 
@@ -403,7 +403,19 @@
                 contentElement.innerHTML = update.content;
                 updateDiv.appendChild(contentElement);
 
+                // Add decorative GIF to the top left of the update
+                const decorGif = document.createElement('img');
+                decorGif.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
+                decorGif.className = 'decor-gif';
+                updateDiv.appendChild(decorGif);
+
                 updatesContainer.appendChild(updateDiv);
+
+                // Create and append symbol divider
+                const symbolDivider = document.createElement('div');
+                symbolDivider.className = 'symbol-divider';
+                symbolDivider.innerHTML = symbols[index % symbols.length]; // Cycle through symbols
+                updatesContainer.appendChild(symbolDivider);
             });
         }
 
