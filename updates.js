@@ -1,12 +1,13 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+    authDomain: "comments-ff6c9.firebaseapp.com",
+    databaseURL: "https://updates-e2454.firebaseio.com",
+    projectId: "comments-ff6c9",
+    storageBucket: "comments-ff6c9.appspot.com",
+    messagingSenderId: "778548096311",
+    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+    measurementId: "G-T8QFHWJDB5"
 };
 
 // Initialize Firebase
@@ -103,4 +104,60 @@ function displayUpdates(updates) {
         decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
         decorGifRight.className = 'decor-gif-right';
         decorGifRight.alt = '';
-        updateDiv.appendChild(decorG
+        updateDiv.appendChild(decorGifRight);
+
+        updatesContainer.appendChild(updateDiv);
+
+        if (index < updates.length - 1) {
+            const symbolDivider = document.createElement('div');
+            symbolDivider.className = 'symbol-divider';
+            symbolDivider.innerHTML = symbols[index % symbols.length];
+            updatesContainer.appendChild(symbolDivider);
+        }
+    });
+}
+
+function displayPagination() {
+    const pageNumbersElement = document.getElementById('page-numbers');
+    pageNumbersElement.innerHTML = '';
+
+    document.getElementById('prev').disabled = currentPage === 1;
+    document.getElementById('next').disabled = currentPage === totalPages;
+
+    if (totalPages > 1) {
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.className = i === currentPage ? 'active' : '';
+            button.onclick = () => {
+                currentPage = i;
+                loadUpdates();
+                window.scrollTo(0, 0);
+            };
+            pageNumbersElement.appendChild(button);
+        }
+    }
+}
+
+function changePage(direction) {
+    const newPage = currentPage + direction;
+    if (newPage >= 1 && newPage <= totalPages) {
+        currentPage = newPage;
+        loadUpdates();
+        window.scrollTo(0, 0);
+    }
+}
+
+// Initialize on page load
+window.addEventListener('load', loadUpdates);
+
+// Add event listeners for search and sort
+document.getElementById('search').addEventListener('input', () => {
+    currentPage = 1;
+    loadUpdates();
+});
+
+document.getElementById('sort').addEventListener('change', () => {
+    currentPage = 1;
+    loadUpdates();
+});
