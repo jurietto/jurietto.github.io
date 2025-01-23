@@ -177,7 +177,6 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.75);
-            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -371,7 +370,6 @@
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
     <script>
         // Firebase configuration
         const firebaseConfig = {
