@@ -119,8 +119,7 @@ function showModal(item) {
     img.src = item.url;
     img.alt = item.text; // provide a meaningful description
     img.style.width = '100%';
-    img.style.height = '500px'; // Set fixed height
-    img.style.objectFit = 'cover'; // Maintain aspect ratio
+    img.style.height = 'auto'; // Maintain original aspect ratio
     img.style.borderRadius = '10px'; // Add border radius to the image
     modalContent.appendChild(img);
 
