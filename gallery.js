@@ -163,3 +163,8 @@ document.getElementById('search').addEventListener('input', () => {
     currentPage = 1;
     loadImages();
 });
+
+document.getElementById('sort').addEventListener('change', () => {
+    currentPage = 1;
+    loadImages();
+});
