@@ -149,9 +149,9 @@
             height: 150px; /* Make each item square */
             border-radius: 10px; /* Add border radius to the image */
         }
-        .gallery-item: hover {
-            color: #ff007b;
 
+        .gallery-item:hover {
+            border-color: #ff007b; /* Change border color on hover */
         }
 
         .gallery-item img {
@@ -159,38 +159,38 @@
             height: 100%;
             object-fit: cover; /* Cover the inside of the square */
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 10px; /* Ensure the image matches the border radius */
         }
 
         .modal {
             display: none;
             position: fixed;
             z-index: 10;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 600px;
             background-color: rgba(0, 0, 0, 0.9);
-            padding: 20px; /* Adjusted for better mobile fit */
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
         }
 
         .modal-content {
-            background-color: rgba(0, 0, 0, 0.7);
-            margin: auto;
-            padding: 20px;
-            border: 1px solid white;
-            width: 90%; /* Adjusted for better mobile fit */
-            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
             position: relative;
             color: white;
             border-radius: 10px; /* Add border radius */
-            text-align: center; /* Center align text */
         }
 
         .modal-content img {
             width: 100%;
             height: auto; /* Maintain original aspect ratio */
+            max-height: 500px; /* Ensure image height does not exceed 500px */
             border-radius: 10px; /* Add border radius to the image */
         }
 
@@ -200,11 +200,11 @@
 
         .close {
             color: white;
-            position: relative; /* Changed to relative for easier positioning */
-            margin-top: 20px; /* Space above the close button */
+            position: relative;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 20px; /* Place the close button at the bottom */
         }
 
         .close:hover, .close:focus {
@@ -213,22 +213,74 @@
             cursor: pointer;
         }
 
-        .decor-gif-left {
-            position: absolute;
-            top: -10px;
-            left: -20px;
-            width: 30px; /* Adjusted size */
-            height: auto;
-            z-index: 2;
-        }
-
+        .decor-gif-left,
         .decor-gif-right {
             position: absolute;
             top: -10px;
-            right: -20px;
-            width: 30px; /* Adjusted size */
-            height: auto;
             z-index: 2;
+        }
+
+        .decor-gif-left {
+            left: -20px;
+            width: 50px;
+        }
+
+        .decor-gif-right {
+            right: -20px;
+            width: 50px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                width: 95%;
+            }
+
+            .title-container h1 {
+                font-size: 2rem;
+            }
+
+            .search-sort-container {
+                flex-direction: column;
+                padding: 0 10px;
+                gap: 10px;
+            }
+
+            input[type="text"],
+            select {
+                width: 100%;
+            }
+
+            .gallery-item {
+                height: 120px; /* Adjust for smaller screens */
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .fireworks-container {
+                display: none; /* Hide fireworks on mobile */
+            }
+
+            .modal {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .modal-content {
+                padding: 10px;
+            }
+
+            .decor-gif-left,
+            .decor-gif-right {
+                width: 30px;
+            }
         }
 
         .pagination {
@@ -304,45 +356,6 @@
                 opacity: 0;
             }
         }
-
-        @media (max-width: 600px) {
-            body {
-                width: 95%;
-            }
-
-            .title-container h1 {
-                font-size: 2rem;
-            }
-
-            .search-sort-container {
-                flex-direction: column;
-                padding: 0 10px;
-                gap: 10px;
-            }
-
-            input[type="text"],
-            select {
-                width: 100%;
-            }
-
-            .gallery-item {
-                height: 120px; /* Adjust for smaller screens */
-            }
-
-            .pagination {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-
-            button {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-
-            .fireworks-container {
-                display: none; /* Hide fireworks on mobile */
-            }
-        }
     </style>
 </head>
 <body>
@@ -353,11 +366,11 @@
                 <a href="index.html">Home</a>
                 <span class="separator">&#9829;</span>
                 <a href="about.html">About</a>
-                <span class="separator">&#9733;</span>
+                <span class="separator">&#9733;"></span>
                 <a href="gallery.html">Gallery</a>
-                <span class="separator">&#9819;</span>
+                <span class="separator">&#9819;"></span>
                 <a href="updates.html">Updates</a>
-                <span class="separator">&#9827;</span>
+                <span class="separator">&#9827;"></span>
                 <a href="visual-novels.html">Visual Novels</a>
                 <span class="separator">&#9830;"></span>
                 <a href="music.html">Music</a>
