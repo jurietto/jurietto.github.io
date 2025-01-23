@@ -1,200 +1,219 @@
-document.addEventListener('DOMContentLoaded', function () {
-    let currentPage = 1;
-    const itemsPerPage = 12;
-    let totalPages = 1;
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+    authDomain: "comments-ff6c9.firebaseapp.com",
+    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+    projectId: "comments-ff6c9",
+    storageBucket: "comments-ff6c9.appspot.com",
+    messagingSenderId: "778548096311",
+    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+    measurementId: "G-T8QFHWJDB5"
+};
 
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-        authDomain: "comments-ff6c9.firebaseapp.com",
-        databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
-        projectId: "comments-ff6c9",
-        storageBucket: "comments-ff6c9.appspot.com",
-        messagingSenderId: "778548096311",
-        appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-        measurementId: "G-T8QFHWJDB5"
-    };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-    // Initialize Firebase
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+let currentPage = 1;
+const itemsPerPage = 20;
+let totalPages = 1;
 
-    const database = firebase.database();
+// Function to fetch images and captions from Firebase Realtime Database
+function loadImages() {
+    const searchQuery = document.getElementById('search').value.toLowerCase();
+    const sortOrder = document.getElementById('sort').value;
 
-    function loadImages() {
-        const searchQuery = document.getElementById('search').value.toLowerCase();
-        const sortOrder = document.getElementById('sort').value;
-
-        console.log("Fetching data from Firebase...");
-
-        database.ref('gallery').orderByChild('timestamp').once('value')
-            .then((snapshot) => {
-                console.log("Data snapshot received:", snapshot.val()); // Debug log
-                let images = [];
-                snapshot.forEach((childSnapshot) => {
-                    const imageData = childSnapshot.val();
-                    console.log("Processing image data:", imageData); // Debug log
-                    if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
-                        images.push({
-                            key: childSnapshot.key,
-                            ...imageData
-                        });
-                    }
-                });
-
-                console.log("Filtered images:", images); // Debug log
-
-                if (sortOrder === 'desc') {
-                    images.reverse();
-                } else if (sortOrder === 'shuffle') {
-                    images = images.sort(() => Math.random() - 0.5);
-                }
-
-                totalPages = Math.ceil(images.length / itemsPerPage);
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                const paginatedImages = images.slice(start, end);
-
-                displayImages(paginatedImages);
-                displayPagination();
-            })
-            .catch((error) => {
-                console.error("Error fetching data: ", error);
-                document.getElementById('gallery').innerHTML = 
-                    '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">Error loading images. Please try again later.</p>';
-            });
-    }
-
-    function displayImages(images) {
-        const galleryContainer = document.getElementById('gallery');
-        galleryContainer.innerHTML = '';
-
-        if (images.length === 0) {
-            galleryContainer.innerHTML = '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">No images found.</p>';
-            return;
-        }
-
-        images.forEach(image => {
-            const imageDiv = document.createElement('div');
-            imageDiv.className = 'gallery-item';
-
-            const imgElement = document.createElement('img');
-            imgElement.src = image.url;
-            imgElement.alt = image.text;
-            imgElement.onclick = () => showModal(image);
-            imageDiv.appendChild(imgElement);
-
-            galleryContainer.appendChild(imageDiv);
+    database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
+        let items = [];
+        snapshot.forEach((childSnapshot) => {
+            const imageData = childSnapshot.val();
+            const date = new Date(imageData.timestamp).toLocaleString().toLowerCase();
+            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || childSnapshot.key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                items.push({ key: childSnapshot.key, ...imageData });
+            }
         });
 
-        console.log("Displayed images:", images); // Debug log
-    }
-
-    function displayPagination() {
-        const pageNumbersElement = document.getElementById('page-numbers');
-        pageNumbersElement.innerHTML = '';
-
-        document.getElementById('prev').disabled = currentPage === 1;
-        document.getElementById('next').disabled = currentPage === totalPages;
-
-        if (totalPages > 1) {
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.className = i === currentPage ? 'active' : '';
-                button.onclick = () => {
-                    currentPage = i;
-                    loadImages();
-                    window.scrollTo(0, 0);
-                };
-                pageNumbersElement.appendChild(button);
-            }
+        // Sort items
+        if (sortOrder === 'desc') {
+            items.reverse();
+        } else if (sortOrder === 'shuffle') {
+            items = shuffle(items);
         }
 
-        console.log("Displayed pagination buttons."); // Debug log
-    }
+        // Pagination logic
+        totalPages = Math.ceil(items.length / itemsPerPage);
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedItems = items.slice(start, end);
 
-    function changePage(direction) {
-        const newPage = currentPage + direction;
-        if (newPage >= 1 && newPage <= totalPages) {
-            currentPage = newPage;
+        // Display items
+        displayItems(paginatedItems);
+
+        // Display pagination
+        displayPagination();
+    }, (error) => {
+        console.error("Error fetching data: ", error);
+    });
+}
+
+function displayItems(items) {
+    const galleryElement = document.getElementById('gallery');
+    galleryElement.innerHTML = ''; // Clear previous images
+
+    items.forEach(item => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = item.text; // provide a meaningful description
+        img.onclick = () => showModal(item);
+        galleryItem.appendChild(img);
+
+        galleryElement.appendChild(galleryItem);
+    });
+}
+
+function displayPagination() {
+    const pageNumbersElement = document.getElementById('page-numbers');
+    pageNumbersElement.innerHTML = ''; // Clear previous page numbers
+
+    document.getElementById('prev').disabled = currentPage === 1;
+    document.getElementById('next').disabled = currentPage === totalPages;
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.className = i === currentPage ? 'active' : '';
+        button.onclick = () => {
+            currentPage = i;
             loadImages();
-            window.scrollTo(0, 0);
-        }
+        };
+        pageNumbersElement.appendChild(button);
     }
+}
 
-    // Modal functionality
-    const modal = document.getElementById("myModal");
-    const span = document.getElementsByClassName("close")[0];
+function changePage(direction) {
+    currentPage += direction;
+    loadImages();
+}
 
-    function showModal(image) {
-        document.getElementById("modal-title").textContent = image.key;
-        document.getElementById("modal-metadata").textContent = `Uploaded on: ${new Date(image.timestamp).toLocaleDateString()}`;
-        document.getElementById("modal-caption").textContent = image.text || 'No description available.';
-        modal.style.display = "block";
+// Helper function to shuffle an array
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+}
 
-    span.onclick = function() {
+function showModal(item) {
+    const modalContent = document.getElementById('modal-content');
+    modalContent.innerHTML = ''; // Clear previous content
+
+    const titleElement = document.createElement('h2');
+    titleElement.textContent = item.key;
+    modalContent.appendChild(titleElement);
+
+    const img = document.createElement('img');
+    img.src = item.url;
+    img.alt = item.text; // provide a meaningful description
+    img.style.width = '100%';
+    img.style.height = '500px'; // Set fixed height
+    img.style.objectFit = 'cover'; // Maintain aspect ratio
+    img.style.borderRadius = '10px'; // Add border radius to the image
+    modalContent.appendChild(img);
+
+    const timestampElement = document.createElement('p');
+    timestampElement.className = 'timestamp';
+    timestampElement.style.fontFamily = "'MS UI Gothic', sans-serif";
+    timestampElement.style.fontWeight = 'normal'; // Make the date text not bold
+    timestampElement.innerHTML = `Uploaded on: ${new Date(item.timestamp).toLocaleString()}`;
+    modalContent.appendChild(timestampElement);
+
+    const captionElement = document.createElement('p');
+    captionElement.className = 'caption';
+    captionElement.style.fontFamily = "'MS UI Gothic', sans-serif";
+    captionElement.textContent = item.text;
+    modalContent.appendChild(captionElement);
+
+    const decorGifLeft = document.createElement('img');
+    decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
+    decorGifLeft.className = 'decor-gif-left';
+    decorGifLeft.alt = '';
+    modalContent.appendChild(decorGifLeft);
+
+    const decorGifRight = document.createElement('img');
+    decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
+    decorGifRight.className = 'decor-gif-right';
+    decorGifRight.alt = '';
+    modalContent.appendChild(decorGifRight);
+
+    document.getElementById('myModal').style.display = "block";
+}
+
+// Modal functionality
+const modal = document.getElementById("myModal");
+const closeButton = document.getElementsByClassName("close")[0];
+
+closeButton.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
         modal.style.display = "none";
     }
+}
 
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+// Fireworks animation
+const fireworksContainer = document.querySelector('.fireworks-container');
+const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+
+function createFireworkParticle(symbol) {
+    const particle = document.createElement('span');
+    particle.className = 'firework-particle';
+    particle.textContent = symbol;
+
+    // Randomize the start position and explosion direction
+    const angle = Math.random() * Math.PI * 2; // Random angle in radians
+    const distance = Math.random() * 300; // Distance from the start point
+    const translateX = Math.cos(angle) * distance;
+    const translateY = Math.sin(angle) * distance;
+
+    particle.style.setProperty('--translateX', `${translateX}px`);
+    particle.style.setProperty('--translateY', `${translateY}px`);
+    particle.style.left = `${Math.random() * window.innerWidth}px`;
+    particle.style.top = `${Math.random() * window.innerHeight}px`;
+    fireworksContainer.appendChild(particle);
+
+    // Remove the particle after the animation finishes
+    setTimeout(() => {
+        particle.remove();
+    }, 1500); // Particle lifetime
+}
+
+// Event listener for mouseover on navigation links to trigger fireworks
+const headerLinks = document.querySelectorAll('nav a');
+headerLinks.forEach((link) => {
+    link.addEventListener('mouseover', () => {
+        for (let i = 0; i < 15; i++) { // Increase number of particles
+            const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
+            createFireworkParticle(symbol);
         }
-    }
-
-    // Create a container for the fireworks particles
-    const fireworksContainer = document.querySelector('.fireworks-container');
-
-    const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
-
-    function createFireworkParticle(symbol) {
-        const particle = document.createElement('span');
-        particle.className = 'firework-particle';
-        particle.textContent = symbol;
-
-        // Randomize the start position and explosion direction
-        const angle = Math.random() * Math.PI * 2; // Random angle in radians
-        const distance = Math.random() * 300; // Distance from the start point
-        const translateX = Math.cos(angle) * distance;
-        const translateY = Math.sin(angle) * distance;
-
-        particle.style.setProperty('--translateX', `${translateX}px`);
-        particle.style.setProperty('--translateY', `${translateY}px`);
-        particle.style.left = `${Math.random() * window.innerWidth}px`;
-        particle.style.top = `${Math.random() * window.innerHeight}px`;
-        fireworksContainer.appendChild(particle);
-
-        // Remove the particle after the animation finishes
-        setTimeout(() => {
-            particle.remove();
-        }, 1500); // Particle lifetime
-    }
-
-    // Event listener for mouseover on navigation links to trigger fireworks
-    const headerLinks = document.querySelectorAll('nav a');
-    headerLinks.forEach((link) => {
-        link.addEventListener('mouseover', () => {
-            for (let i = 0; i < 15; i++) { // Increase number of particles
-                const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
-                createFireworkParticle(symbol);
-            }
-        });
     });
+});
 
-    // Initialize on page load
+// Initialize on page load
+window.addEventListener('load', loadImages);
+
+// Add event listeners for search and sort
+document.getElementById('search').addEventListener('input', () => {
+    currentPage = 1;
     loadImages();
+});
 
-    // Add event listeners for search and sort
-    document.getElementById('search').addEventListener('input', () => {
-        currentPage = 1;
-        loadImages();
-    });
-
-    document.getElementById('sort').addEventListener('change', () => {
-        currentPage = 1;
-        loadImages();
-    });
+document.getElementById('sort').addEventListener('change', () => {
+    currentPage = 1;
+    loadImages();
 });
