@@ -146,7 +146,15 @@ function nextImage() {
 }
 
 // Initialize
-window.addEventListener('load', loadImages);
+window.addEventListener('load', () => {
+    loadImages();
+    // Close modal if clicking outside of the image
+    document.getElementById('myModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeModal();
+        }
+    });
+});
 
 // Add event listeners for search and sort
 document.getElementById('search').addEventListener('input', () => {
