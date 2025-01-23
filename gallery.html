@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="format-detection" content="telephone=no">
     <title>Juri's Stuff - Gallery</title>
     
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
@@ -24,10 +26,10 @@
             color: white;
             line-height: 1.6;
             width: 90%;
-            max-width: 700px; 
-            margin: 0 auto; 
+            max-width: 700px;
+            margin: 0 auto;
             padding: 10px;
-            position: relative; 
+            position: relative;
             text-align: left;
         }
 
@@ -36,8 +38,8 @@
         }
 
         header {
-            position: relative; 
-            height: 200px; 
+            position: relative;
+            height: 200px;
             margin-bottom: 40px;
             padding: 0 10px;
             text-align: center;
@@ -48,29 +50,29 @@
         }
 
         .title-container h1 {
-            margin: 0; 
+            margin: 0;
             font-family: 'Apple Chancery';
             font-size: 3rem;
         }
 
         nav {
-            margin-top: 15px; 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 10px 0; 
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
         }
 
         nav a {
             color: white;
-            text-decoration: none; 
-            margin: 0 10px; 
-            font-family: 'Apple Chancery'; 
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: 'Apple Chancery';
         }
 
         .separator {
-            color: white; 
+            color: white;
             margin: 0 5px;
             font-family: serif;
             -webkit-font-feature-settings: "liga" 0;
@@ -88,23 +90,23 @@
         }
 
         main {
-            text-align: justify; 
+            text-align: justify;
             padding: 0 20px;
         }
 
         h2 {
-            margin: 20px 0; 
-            text-align: center; 
+            margin: 20px 0;
+            text-align: center;
         }
 
         .divider {
             background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
-            height: 24px; 
-            background-repeat: repeat-x; 
-            border: none; 
-            margin: 15px 0; 
-            width: 100%; 
-            display: block; 
+            height: 24px;
+            background-repeat: repeat-x;
+            border: none;
+            margin: 15px 0;
+            width: 100%;
+            display: block;
         }
 
         .search-sort-container {
@@ -120,7 +122,7 @@
             font-family: 'MS UI Gothic', sans-serif;
         }
 
-        input[type="text"], 
+        input[type="text"],
         select {
             padding: 8px 15px;
             margin: 0;
@@ -142,18 +144,18 @@
         }
 
         .gallery-item {
-            position: relative; 
-            padding: 10px; 
-            border: 1px solid white; 
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 10px; 
-            text-align: center;
+            position: relative;
+            border: 1px solid white; /* Add border */
+            height: 150px; /* Make each item square */
+            border-radius: 10px; /* Add border radius */
         }
 
         .gallery-item img {
             width: 100%;
-            border-radius: 10px;
+            height: 100%;
+            object-fit: cover; /* Cover the inside of the square */
             cursor: pointer;
+            border-radius: 10px;
         }
 
         .modal {
@@ -170,30 +172,57 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: rgba(0, 0, 0, 0.7);
             margin: 5% auto;
             padding: 20px;
-            border: 1px solid #888;
+            border: 1px solid white;
             width: 80%;
             max-width: 600px;
             position: relative;
-            color: black;
+            color: white;
+            border-radius: 10px; /* Add border radius */
+            text-align: center; /* Center align text */
+        }
+
+        .modal-content img {
+            border-radius: 10px; /* Add border radius to the image */
+        }
+
+        .modal-content p {
+            font-family: 'MS UI Gothic', sans-serif;
         }
 
         .close {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 25px;
+            color: white;
+            position: relative; /* Changed to relative for easier positioning */
+            margin-top: 20px; /* Space above the close button */
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
         }
 
         .close:hover, .close:focus {
-            color: #000;
+            color: #ff007b;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .decor-gif-left {
+            position: absolute;
+            top: -10px;
+            left: -20px;
+            width: 50px;
+            height: auto;
+            z-index: 2;
+        }
+
+        .decor-gif-right {
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            width: 50px;
+            height: auto;
+            z-index: 2;
         }
 
         .pagination {
@@ -237,10 +266,10 @@
         }
 
         footer {
-            text-align: center; 
-            font-family: 'MS UI Gothic', sans-serif; 
-            font-size: 1rem; 
-            padding: 20px 0; 
+            text-align: center;
+            font-family: 'MS UI Gothic', sans-serif;
+            font-size: 1rem;
+            padding: 20px 0;
         }
 
         .fireworks-container {
@@ -276,7 +305,7 @@
             }
 
             .title-container h1 {
-                font-size: 2rem; 
+                font-size: 2rem;
             }
 
             .search-sort-container {
@@ -285,13 +314,13 @@
                 gap: 10px;
             }
 
-            input[type="text"], 
+            input[type="text"],
             select {
                 width: 100%;
             }
 
             .gallery-item {
-                padding: 10px;
+                height: 120px; /* Adjust for smaller screens */
             }
 
             .pagination {
@@ -367,10 +396,8 @@
     <!-- Modal for displaying image details -->
     <div id="myModal" class="modal">
         <div class="modal-content">
+            <div id="modal-content"></div>
             <span class="close">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-metadata"></p>
-            <p id="modal-caption"></p>
         </div>
     </div>
 
@@ -379,7 +406,6 @@
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
     <script src="gallery.js"></script>
 </body>
 </html>
