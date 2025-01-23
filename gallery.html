@@ -1,63 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="format-detection" content="telephone=no">
     <title>Juri's Stuff - Gallery</title>
 
-    <!-- Include external CSS for styling -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
+    <link rel="stylesheet" href="gallery.css">
 
-    <!-- Firebase App, Database, and Storage libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
-
 <body>
     <header>
-        <h1>Juri's Stuff</h1>
+        <div class="title-container">
+            <h1>Juri's Stuff</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <span class="separator">&#9829;</span>
+                <a href="about.html">About</a>
+                <span class="separator">&#9733;</span>
+                <a href="gallery.html">Gallery</a>
+                <span class="separator">&#9819;</span>
+                <a href="updates.html">Updates</a>
+                <span class="separator">&#9827;</span>
+                <a href="visual-novels.html">Visual Novels</a>
+                <span class="separator">&#9830;</span>
+                <a href="music.html">Music</a>
+                <span class="separator">&#9824;</span>
+                <a href="art.html">Art</a>
+                <span class="separator">&#9829;</span>
+                <a href="twitter.html">Twitter</a>
+                <span class="separator">&#9827;</span>
+                <a href="bluesky.html">Bluesky</a>
+                <span class="separator">&#9827;</span>
+                <a href="youtube.html">YouTube</a>
+                <span class="separator">&#9733;</span>
+                <a href="soundcloud.html">SoundCloud</a>
+                <span class="separator">&#9834;</span>
+                <a href="vndb.html">VNDB</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="sidebar">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="updates.html">Updates</a>
-    </div>
-
     <main>
-        <header>
-            <h2>Gallery</h2>
-        </header>
-
-        <!-- Search and Sort UI -->
-        <div>
-            <input type="text" id="search" placeholder="Search..." oninput="loadImages()">
+        <h2>GALLERY</h2>
+        <div class="divider"></div>
+        
+        <div class="search-sort-container">
+            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadImages()">
             <select id="sort" onchange="loadImages()">
-                <option value="asc">Sort by Oldest</option>
                 <option value="desc">Sort by Newest</option>
+                <option value="asc">Sort by Oldest</option>
                 <option value="shuffle">Shuffle</option>
             </select>
         </div>
-        
-        <!-- Container for the gallery images -->
+
         <div class="gallery" id="gallery"></div>
 
-        <!-- Pagination --> 
         <div class="pagination" id="pagination">
-            <button id="prev" onclick="changePage(-1)">&#60; Prev</button>
+            <button id="prev" onclick="changePage(-1)">Prev</button>
             <span id="page-numbers"></span>
-            <button id="next" onclick="changePage(1)">Next &#62;</button>
+            <button id="next" onclick="changePage(1)">Next</button>
         </div>
     </main>
-
-    <!-- Include the external JavaScript file -->
-    <script src="gallery.js"></script>
 
     <footer>
         <h6>2024 - ???</h6>
     </footer>
-</body>
 
+    <!-- Modal for displaying image details -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-metadata"></p>
+            <p id="modal-caption"></p>
+        </div>
+    </div>
+
+    <script src="gallery.js"></script>
+</body>
 </html>
