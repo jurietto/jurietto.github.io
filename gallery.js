@@ -15,13 +15,10 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 let currentPage = 1;
-const itemsPerPage = 6;
+const itemsPerPage = 9; // 9 items per page
 let totalPages = 1;
 let currentModalIndex = 0;
 let paginatedItems = [];
-
-// Unicode symbols for the dividers
-const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;'];
 
 // Function to fetch images and captions from Firebase Realtime Database
 function loadImages() {
@@ -31,10 +28,11 @@ function loadImages() {
     database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
         let items = [];
         snapshot.forEach((childSnapshot) => {
+            const key = childSnapshot.key;
             const imageData = childSnapshot.val();
             const date = new Date(imageData.timestamp).toLocaleString().toLowerCase();
-            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || childSnapshot.key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
-                items.push({ key: childSnapshot.key, ...imageData });
+            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                items.push({ key: key, ...imageData });
             }
         });
 
@@ -73,34 +71,10 @@ function displayItems(items) {
         img.src = item.url;
         img.alt = item.text; // provide a meaningful description
         img.onclick = () => showModal(index);
+        img.oncontextmenu = () => false; // Disable right-click
         galleryItem.appendChild(img);
 
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = item.title;
-        galleryItem.appendChild(titleElement);
-
-        const dateElement = document.createElement('p');
-        dateElement.className = 'date';
-        dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        dateElement.style.fontWeight = 'normal'; // Make the date text not bold
-        dateElement.textContent = `Uploaded on: ${new Date(item.timestamp).toLocaleString()}`;
-        galleryItem.appendChild(dateElement);
-
-        const captionElement = document.createElement('p');
-        captionElement.className = 'caption';
-        captionElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        captionElement.textContent = item.text;
-        galleryItem.appendChild(captionElement);
-
         galleryElement.appendChild(galleryItem);
-
-        // Add symbol divider
-        if (index < items.length - 1) {
-            const symbolDivider = document.createElement('div');
-            symbolDivider.className = 'symbol-divider';
-            symbolDivider.innerHTML = symbols[index % symbols.length];
-            galleryElement.appendChild(symbolDivider);
-        }
     });
 }
 
@@ -140,28 +114,47 @@ function shuffle(array) {
 function showModal(index) {
     currentModalIndex = index;
     const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDate = document.getElementById('modal-date');
+    const modalCaption = document.getElementById('modal-caption');
+    const imageCount = document.getElementById('image-count');
+
     modalImg.src = paginatedItems[index].url;
     modalImg.alt = paginatedItems[index].text; // provide a meaningful description
+    modalTitle.textContent = paginatedItems[index].key; // Use the key as the title
+    modalDate.textContent = new Date(paginatedItems[index].timestamp).toLocaleString();
+    modalCaption.textContent = paginatedItems[index].text;
+    imageCount.textContent = `Image ${index + 1} of ${paginatedItems.length}`;
 
-    document.getElementById('myModal').style.display = "block";
+    document.getElementById('myModal').style.display = "flex";
 }
 
-function changeModalImage(direction) {
-    currentModalIndex += direction;
-    if (currentModalIndex >= 0 && currentModalIndex < paginatedItems.length) {
-        const modalImg = document.getElementById('modal-img');
-        modalImg.src = paginatedItems[currentModalIndex].url;
-        modalImg.alt = paginatedItems[currentModalIndex].text; // provide a meaningful description
+function closeModal() {
+    document.getElementById('myModal').style.display = "none";
+}
+
+function prevImage() {
+    if (currentModalIndex > 0) {
+        showModal(currentModalIndex - 1);
     }
 }
 
-// Modal functionality
-const modal = document.getElementById("myModal");
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+function nextImage() {
+    if (currentModalIndex < paginatedItems.length - 1) {
+        showModal(currentModalIndex + 1);
     }
 }
 
-// Fireworks
+// Initialize
+window.addEventListener('load', loadImages);
+
+// Add event listeners for search and sort
+document.getElementById('search').addEventListener('input', () => {
+    currentPage = 1;
+    loadImages();
+});
+
+document.getElementById('sort').addEventListener('change', () => {
+    currentPage = 1;
+    loadImages();
+});
