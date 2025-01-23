@@ -144,55 +144,117 @@
         }
 
         .gallery-item {
-            position: relative; 
-            padding: 10px; 
-            border: 1px solid white; 
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 10px; 
-            width: calc(33.333% - 20px); /* Three items per row with 20px gap */
+            width: calc(33.333% - 20px); /* Three items per row */
+            padding-top: 33.333%; /* Maintain square aspect ratio */
+            position: relative;
+            border: 1px solid white;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
             box-sizing: border-box;
             overflow: hidden;
-            z-index: 1;
             cursor: pointer;
-            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .gallery-item:hover {
+            border-color: magenta;
         }
 
         .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 10px;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.3s;
         }
 
         .gallery-item img:hover {
             transform: scale(1.05);
-            border-color: white;
         }
 
-        .gallery-item h2 {
-            font-size: 1.2rem;
-            margin: 10px 0 5px;
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 100; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.9); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .gallery-item .date,
-        .gallery-item .caption {
-            font-family: 'MS UI Gothic', sans-serif;
-            margin: 5px 0;
+        .modal-content {
+            margin: 20px; 
+            display: block; 
+            height: 300px;
+            max-width: 90%;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid white;
         }
 
-        .symbol-divider {
-            text-align: center; 
-            margin: 15px 0; 
-            font-size: 3rem; 
+        .modal-title {
+            font-family: 'Apple Chancery';
             color: white;
-            font-family: serif;
-            -webkit-font-feature-settings: "liga" 0;
-            font-feature-settings: "liga" 0;
-            -webkit-font-variant-ligatures: none;
-            font-variant-ligatures: none;
-            text-shadow: 
-                0 0 10px rgba(255, 0, 0, 1),
-                0 0 20px rgba(255, 0, 0, 1),
-                0 0 30px rgba(255, 0, 0, 1);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .modal-date {
+            font-family: 'MS UI Gothic', sans-serif;
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .modal-caption {
+            font-family: 'MS UI Gothic', sans-serif;
+            color: white;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .close, .prev, .next {
+            color: white;
+            font-size: 30px; 
+            font-weight: bold; 
+            background-color: black;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .close {
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            transform: none;
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        .image-count {
+            font-family: 'MS UI Gothic', sans-serif;
+            color: white;
+            text-align: center;
+            margin-top: 10px;
         }
 
         .pagination {
@@ -241,6 +303,7 @@
             font-size: 1rem; 
             padding: 20px 0; 
         }
+
         .fireworks-container {
             position: fixed;
             top: 0;
@@ -289,12 +352,8 @@
             }
 
             .gallery-item {
-                padding: 15px;
                 width: 100%; /* Single item per row */
-            }
-
-            .symbol-divider {
-                font-size: 2rem;
+                padding-top: 100%; /* Maintain square aspect ratio */
             }
 
             .pagination {
@@ -369,9 +428,21 @@
 
     <div class="fireworks-container"></div>
 
+    <!-- Modal for displaying images -->
+    <div id="myModal" class="modal">
+        <button class="close" onclick="closeModal()">×</button>
+        <button class="prev" onclick="prevImage()">❮</button>
+        <button class="next" onclick="nextImage()">❯</button>
+        <div class="modal-title" id="modal-title"></div>
+        <img class="modal-content" id="modal-img" oncontextmenu="return false;">
+        <div class="modal-date" id="modal-date"></div>
+        <div class="modal-caption" id="modal-caption"></div>
+        <div class="image-count" id="image-count"></div>
+    </div>
+
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="gallery.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
