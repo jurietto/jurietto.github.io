@@ -29,23 +29,31 @@ function formatDate(timestamp) {
 }
 
 function loadUpdates() {
+    console.log('Loading updates...'); // Debug log
     const searchQuery = document.getElementById('search').value.toLowerCase();
     const sortOrder = document.getElementById('sort').value;
 
-    database.ref('updates').orderByChild('timestamp').once('value')
+    // Change the reference path to match your Firebase database structure
+    database.ref('/').once('value')
         .then((snapshot) => {
+            console.log('Data received:', snapshot.val()); // Debug log
             let updates = [];
             snapshot.forEach((childSnapshot) => {
                 const updateData = childSnapshot.val();
-                if (!searchQuery || 
-                    updateData.content.toLowerCase().includes(searchQuery) || 
-                    updateData.title.toLowerCase().includes(searchQuery)) {
-                    updates.push({
-                        key: childSnapshot.key,
-                        ...updateData
-                    });
+                console.log('Processing update:', updateData); // Debug log
+                if (updateData.title && updateData.content) { // Make sure we have valid data
+                    if (!searchQuery || 
+                        updateData.content.toLowerCase().includes(searchQuery) || 
+                        updateData.title.toLowerCase().includes(searchQuery)) {
+                        updates.push({
+                            key: childSnapshot.key,
+                            ...updateData
+                        });
+                    }
                 }
             });
+
+            console.log('Processed updates:', updates); // Debug log
 
             if (sortOrder === 'desc') {
                 updates.reverse();
@@ -62,7 +70,7 @@ function loadUpdates() {
         .catch((error) => {
             console.error("Error loading updates:", error);
             document.getElementById('updates').innerHTML = 
-                '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">Error loading updates. Please try again later.</p>';
+                '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">Error loading updates: ' + error.message + '</p>';
         });
 }
 
@@ -78,6 +86,8 @@ function displayUpdates(updates) {
     updates.forEach((update, index) => {
         const updateDiv = document.createElement('div');
         updateDiv.className = 'gallery-item';
+        updateDiv.style.width = '100%'; // Ensure full width
+        updateDiv.style.boxSizing = 'border-box'; // Include padding in width
 
         const titleElement = document.createElement('h2');
         titleElement.textContent = update.title;
@@ -87,11 +97,12 @@ function displayUpdates(updates) {
         dateElement.style.textAlign = 'center';
         dateElement.style.marginBottom = '15px';
         dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        dateElement.textContent = formatDate(update.timestamp);
+        dateElement.textContent = formatDate(update.timestamp || Date.now());
         updateDiv.appendChild(dateElement);
 
         const contentElement = document.createElement('p');
         contentElement.innerHTML = update.content;
+        contentElement.style.fontFamily = "'MS UI Gothic', sans-serif";
         updateDiv.appendChild(contentElement);
 
         const decorGifLeft = document.createElement('img');
