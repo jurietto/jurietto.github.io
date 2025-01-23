@@ -71,49 +71,53 @@ function displayItems(items) {
     items.forEach((item, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'gallery-item';
-        itemDiv.onclick = () => showImageModal(item);
 
-        const imageElement = document.createElement('img');
-        imageElement.src = item.url;
-        imageElement.alt = item.text;
-        itemDiv.appendChild(imageElement);
+        // Ensure itemDiv is created before setting properties
+        if (itemDiv) {
+            itemDiv.onclick = () => showImageModal(item);
 
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = item.title;
-        itemDiv.appendChild(titleElement);
+            const imageElement = document.createElement('img');
+            imageElement.src = item.url;
+            imageElement.alt = item.text;
+            itemDiv.appendChild(imageElement);
 
-        const dateElement = document.createElement('p');
-        dateElement.className = 'date';
-        dateElement.textContent = new Date(item.timestamp).toLocaleString();
-        dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        itemDiv.appendChild(dateElement);
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = item.title;
+            itemDiv.appendChild(titleElement);
 
-        const captionElement = document.createElement('p');
-        captionElement.innerHTML = item.text;
-        captionElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        itemDiv.appendChild(captionElement);
+            const dateElement = document.createElement('p');
+            dateElement.className = 'date';
+            dateElement.textContent = new Date(item.timestamp).toLocaleString();
+            dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
+            itemDiv.appendChild(dateElement);
 
-        const decorGifLeft = document.createElement('img');
-        decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
-        decorGifLeft.className = 'decor-gif-left';
-        decorGifLeft.alt = '';
-        itemDiv.appendChild(decorGifLeft);
+            const captionElement = document.createElement('p');
+            captionElement.innerHTML = item.text;
+            captionElement.style.fontFamily = "'MS UI Gothic', sans-serif";
+            itemDiv.appendChild(captionElement);
 
-        const decorGifRight = document.createElement('img');
-        decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
-        decorGifRight.className = 'decor-gif-right';
-        decorGifRight.alt = '';
-        itemDiv.appendChild(decorGifRight);
+            const decorGifLeft = document.createElement('img');
+            decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
+            decorGifLeft.className = 'decor-gif-left';
+            decorGifLeft.alt = '';
+            itemDiv.appendChild(decorGifLeft);
 
-        galleryContainer.appendChild(itemDiv);
+            const decorGifRight = document.createElement('img');
+            decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
+            decorGifRight.className = 'decor-gif-right';
+            decorGifRight.alt = '';
+            itemDiv.appendChild(decorGifRight);
 
-        if (index < items.length - 1) {
-            const symbolDivider = document.createElement('div');
-            symbolDivider.className = 'symbol-divider';
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = symbols[index % symbols.length];
-            symbolDivider.textContent = tempDiv.textContent;
-            galleryContainer.appendChild(symbolDivider);
+            galleryContainer.appendChild(itemDiv);
+
+            if (index < items.length - 1) {
+                const symbolDivider = document.createElement('div');
+                symbolDivider.className = 'symbol-divider';
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = symbols[index % symbols.length];
+                symbolDivider.textContent = tempDiv.textContent;
+                galleryContainer.appendChild(symbolDivider);
+            }
         }
     });
 }
