@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="format-detection" content="telephone=no">
     <title>Juri's Stuff - Updates</title>
 
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
@@ -60,6 +62,15 @@
             font-size: 3rem;
         }
 
+        .current-info {
+            text-align: center;
+            font-family: 'MS UI Gothic', sans-serif;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: none;
+        }
+
         nav {
             margin-top: 15px; 
             display: flex; 
@@ -76,9 +87,14 @@
             font-family: 'Apple Chancery'; 
         }
 
-        nav .separator {
+        .separator {
             color: white; 
-            margin: 0 5px; 
+            margin: 0 5px;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
         }
 
         nav a:hover {
@@ -131,14 +147,6 @@
             border-radius: 5px;
         }
 
-        .updates {
-            display: block;
-            width: 100%;
-            margin: 20px 0;
-            min-height: 100px;
-            position: relative;
-        }
-
         .gallery-item {
             position: relative; 
             padding: 20px; 
@@ -146,10 +154,6 @@
             border: 1px solid white; 
             background: rgba(0, 0, 0, 0.7); 
             border-radius: 10px; 
-            width: 100%;
-            box-sizing: border-box;
-            overflow: visible;
-            z-index: 1;
         }
 
         .gallery-item p {
@@ -179,6 +183,11 @@
             margin: 15px 0; 
             font-size: 3rem; 
             color: white;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
         }
 
         .pagination {
@@ -216,14 +225,11 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
         footer {
             text-align: center; 
             font-family: 'MS UI Gothic', sans-serif; 
             font-size: 1rem; 
+            padding: 20px 0; 
         }
 
         @media (max-width: 600px) {
@@ -275,29 +281,30 @@
     <header>
         <div class="title-container">
             <h1>Juri's Stuff</h1>
+           
             <nav>
                 <a href="index.html">Home</a>
-                <span class="separator">♥</span>
+                <span class="separator">&#9829;</span>
                 <a href="about.html">About</a>
-                <span class="separator">★</span>
+                <span class="separator">&#9733;</span>
                 <a href="gallery.html">Gallery</a>
-                <span class="separator">♛</span>
+                <span class="separator">&#9819;</span>
                 <a href="updates.html">Updates</a>
-                <span class="separator">♣</span>
+                <span class="separator">&#9827;</span>
                 <a href="visual-novels.html">Visual Novels</a>
-                <span class="separator">♦</span>
+                <span class="separator">&#9830;</span>
                 <a href="music.html">Music</a>
-                <span class="separator">♠</span>
+                <span class="separator">&#9824;</span>
                 <a href="art.html">Art</a>
-                <span class="separator">♥</span>
+                <span class="separator">&#9829;</span>
                 <a href="twitter.html">Twitter</a>
-                <span class="separator">♣</span>
+                <span class="separator">&#9827;</span>
                 <a href="bluesky.html">Bluesky</a>
-                <span class="separator">♣</span>
+                <span class="separator">&#9827;</span>
                 <a href="youtube.html">YouTube</a>
-                <span class="separator">★</span>
+                <span class="separator">&#9733;</span>
                 <a href="soundcloud.html">SoundCloud</a>
-                <span class="separator">♪</span>
+                <span class="separator">&#9834;</span>
                 <a href="vndb.html">VNDB</a>
             </nav>
         </div>
@@ -306,7 +313,7 @@
     <main>
         <h2>UPDATES</h2>
         <div class="divider"></div>
-        <p style="text-align: center;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me.</p>
+        <p style="text-align: center;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me, and I'm okay with that.</p>
 
         <div class="search-sort-container">
             <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
