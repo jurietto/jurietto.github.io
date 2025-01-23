@@ -183,10 +183,8 @@
         }
 
         .modal-content {
-            margin: 20px;
-            display: block;
+            height: 400px;
             max-width: 90%;
-            max-height: 80%;
             object-fit: cover;
             border-radius: 10px;
             border: 2px solid white;
@@ -211,12 +209,13 @@
             color: white;
             font-size: 30px;
             font-weight: bold;
-            background-color: black;
+            background-color: transparent;
             border: none;
             cursor: pointer;
             padding: 10px;
             position: absolute;
-            top: 20px;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .prev { left: 20px; }
@@ -294,6 +293,10 @@
                 padding: 6px 12px;
                 font-size: 0.8rem;
             }
+
+            .close, .prev, .next {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -360,10 +363,10 @@
         <button class="close" onclick="closeModal()">×</button>
         <button class="prev" onclick="prevImage()">❮</button>
         <button class="next" onclick="nextImage()">❯</button>
-        <div class="modal-title" id="modal-title"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
         <img class="modal-content" id="modal-img" oncontextmenu="return false;">
-        <div class="modal-date" id="modal-date"></div>
         <div class="modal-caption" id="modal-caption"></div>
+        <div class="modal-date" id="modal-date"></div>
         <div class="image-count" id="image-count"></div>
     </div>
 
@@ -521,7 +524,7 @@
         // Initialize
         window.addEventListener('load', () => {
             loadImages();
-            // Close modal if clicking outside of the image
+            // Close modal if clicking outside of the image or on the close button
             document.getElementById('myModal').addEventListener('click', function(event) {
                 if (event.target === this || event.target.classList.contains("close")) {
                     closeModal();
