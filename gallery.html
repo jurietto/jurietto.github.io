@@ -6,10 +6,307 @@
     <meta http-equiv="Content-Style-Type" content="text/css">
     <meta name="format-detection" content="telephone=no">
     <title>Juri's Stuff - Gallery</title>
-
+    
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    <link rel="stylesheet" href="gallery.css">
 
+    <style>
+        @font-face {
+            font-family: 'Apple Chancery';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
+        }
+
+        body {
+            font-family: 'Apple Chancery', serif;
+            background-color: black;
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            line-height: 1.6;
+            width: 90%;
+            max-width: 700px; 
+            margin: 0 auto; 
+            padding: 10px;
+            position: relative; 
+            text-align: left;
+        }
+
+        h1, h2, h3, h4, h5, nav a, p, input[type="text"], select, button {
+            text-shadow: none;
+        }
+
+        header {
+            position: relative; 
+            height: 200px; 
+            margin-bottom: 40px;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .title-container {
+            max-width: 100%;
+        }
+
+        .title-container h1 {
+            margin: 0; 
+            font-family: 'Apple Chancery';
+            font-size: 3rem;
+        }
+
+        nav {
+            margin-top: 15px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 10px 0; 
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none; 
+            margin: 0 10px; 
+            font-family: 'Apple Chancery'; 
+        }
+
+        .separator {
+            color: white; 
+            margin: 0 5px;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+            text-shadow: 
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        nav a:hover {
+            color: #ff007b;
+        }
+
+        main {
+            text-align: justify; 
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin: 20px 0; 
+            text-align: center; 
+        }
+
+        .divider {
+            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
+            height: 24px; 
+            background-repeat: repeat-x; 
+            border: none; 
+            margin: 15px 0; 
+            width: 100%; 
+            display: block; 
+        }
+
+        .search-sort-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            width: 100%;
+            gap: 20px;
+            max-width: 600px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            font-family: 'MS UI Gothic', sans-serif;
+        }
+
+        input[type="text"], 
+        select {
+            padding: 8px 15px;
+            margin: 0;
+            font-size: 0.9rem;
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            text-shadow: none;
+            box-sizing: border-box;
+            width: 200px;
+            border-radius: 5px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            position: relative; 
+            padding: 10px; 
+            border: 1px solid white; 
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 10px; 
+            text-align: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            color: black;
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover, .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            font-family: 'MS UI Gothic', sans-serif;
+        }
+
+        #page-numbers {
+            display: flex;
+            gap: 5px;
+        }
+
+        button {
+            background-color: black;
+            border: 1px solid white;
+            padding: 8px 15px;
+            margin: 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: white;
+            font-family: 'MS UI Gothic', sans-serif;
+            text-shadow: none;
+            border-radius: 5px;
+            min-width: 40px;
+        }
+
+        button.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center; 
+            font-family: 'MS UI Gothic', sans-serif; 
+            font-size: 1rem; 
+            padding: 20px 0; 
+        }
+
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1; /* Place behind other content */
+        }
+
+        .firework-particle {
+            position: absolute;
+            font-size: 48px; /* Increase size of the particles */
+            animation: fireworks 1s forwards;
+        }
+
+        @keyframes fireworks {
+            0% {
+                transform: translate(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--translateX), var(--translateY)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                width: 95%;
+            }
+
+            .title-container h1 {
+                font-size: 2rem; 
+            }
+
+            .search-sort-container {
+                flex-direction: column;
+                padding: 0 10px;
+                gap: 10px;
+            }
+
+            input[type="text"], 
+            select {
+                width: 100%;
+            }
+
+            .gallery-item {
+                padding: 10px;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -78,6 +375,8 @@
             <p id="modal-caption"></p>
         </div>
     </div>
+
+    <div class="fireworks-container"></div>
 
     <script src="gallery.js"></script>
 </body>
