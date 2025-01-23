@@ -1,150 +1,365 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-    authDomain: "comments-ff6c9.firebaseapp.com",
-    databaseURL: "https://updates-e2454.firebaseio.com/",
-    projectId: "comments-ff6c9",
-    storageBucket: "comments-ff6c9.appspot.com",
-    messagingSenderId: "778548096311",
-    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-    measurementId: "G-T8QFHWJDB5"
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="format-detection" content="telephone=no">
+    <title>Juri's Stuff - Updates</title>
 
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
+    
+    <style>
+        @font-face {
+            font-family: 'Apple Chancery';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
+        }
 
-let currentPage = 1;
-const itemsPerPage = 5;
-let totalPages = 1;
+        body {
+            font-family: 'Apple Chancery', serif;
+            background-color: black;
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            line-height: 1.6;
+            width: 90%;
+            max-width: 700px; 
+            margin: 0 auto; 
+            padding: 10px;
+            position: relative; 
+            text-align: left;
+        }
 
-// Using HTML entities for symbols to prevent emoji conversion
-const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;'];
+        header {
+            position: relative; 
+            height: 200px; 
+            margin-bottom: 40px;
+            padding: 0 10px;
+            text-align: center;
+        }
 
-function updateDateTime() {
-    const now = new Date();
-    const formatted = now.toISOString().replace('T', ' ').substring(0, 19);
-    document.querySelector('.current-info span:first-child').textContent = `Current Time (UTC): ${formatted}`;
-}
+        .title-container {
+            max-width: 100%;
+        }
 
-function loadUpdates() {
-    const searchQuery = document.getElementById('search').value.toLowerCase();
-    const sortOrder = document.getElementById('sort').value || 'desc';
+        .title-container h1 {
+            margin: 0; 
+            font-family: 'Apple Chancery';
+            font-size: 3rem;
+        }
 
-    database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
-        let updates = [];
-        snapshot.forEach((childSnapshot) => {
-            const updateData = childSnapshot.val();
-            const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
-            if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || 
-                updateData.title.toLowerCase().includes(searchQuery) || 
-                date.includes(searchQuery)) {
-                updates.push({ key: childSnapshot.key, ...updateData });
+        .current-info {
+            text-align: center;
+            font-family: 'MS UI Gothic', sans-serif;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        nav {
+            margin-top: 15px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 10px 0; 
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none; 
+            margin: 0 10px; 
+            font-family: 'Apple Chancery'; 
+        }
+
+        .separator {
+            color: white; 
+            margin: 0 5px;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+        }
+
+        nav a:hover {
+            color: #ff007b;
+        }
+
+        main {
+            text-align: justify; 
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin: 20px 0; 
+            text-align: center; 
+            font-family: 'Apple Chancery';
+        }
+
+        .divider {
+            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
+            height: 24px; 
+            background-repeat: repeat-x; 
+            border: none; 
+            margin: 15px 0; 
+            width: 100%; 
+            display: block; 
+        }
+
+        .search-sort-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            width: 100%;
+            gap: 20px;
+            max-width: 600px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"], 
+        select {
+            padding: 8px 15px;
+            margin: 0;
+            font-size: 0.9rem;
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            box-sizing: border-box;
+            width: 200px;
+            border-radius: 5px;
+            font-family: 'MS UI Gothic', sans-serif;
+        }
+
+        .updates {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            position: relative; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border: 1px solid white; 
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 10px; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .gallery-item h2 {
+            font-family: 'Apple Chancery';
+            margin-bottom: 15px;
+        }
+
+        .gallery-item p {
+            font-family: 'MS UI Gothic', sans-serif;
+        }
+
+        .decor-gif-left {
+            position: absolute;
+            top: -10px;
+            left: -25px;
+            width: 50px; 
+            height: auto;
+            z-index: 2;
+        }
+
+        .decor-gif-right {
+            position: absolute;
+            top: -10px;
+            right: -25px;
+            width: 50px; 
+            height: auto; 
+            z-index: 2;
+        }
+
+        .symbol-divider {
+            text-align: center; 
+            margin: 15px 0; 
+            font-size: 3rem; 
+            color: white;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+            text-shadow: 
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        #page-numbers {
+            display: flex;
+            gap: 5px;
+        }
+
+        button {
+            background-color: black;
+            border: 1px solid white;
+            padding: 8px 15px;
+            margin: 0;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: white;
+            font-family: 'MS UI Gothic', sans-serif;
+            border-radius: 5px;
+            min-width: 40px;
+        }
+
+        button.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            text-align: center; 
+            font-family: 'MS UI Gothic', sans-serif; 
+            font-size: 1rem; 
+            padding: 20px 0; 
+        }
+
+        @media (max-width: 600px) {
+            body {
+                width: 95%;
+            }
+
+            .title-container h1 {
+                font-size: 2rem; 
+            }
+
+            .search-sort-container {
+                flex-direction: column;
+                padding: 0 10px;
+                gap: 10px;
+            }
+
+            input[type="text"], 
+            select {
+                width: 100%;
+            }
+
+            .decor-gif-left,
+            .decor-gif-right {
+                width: 30px; 
+            }
+
+            .gallery-item {
+                padding: 15px;
+            }
+
+            .symbol-divider {
+                font-size: 2rem;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title-container">
+            <h1>Juri's Stuff</h1>
+            <div class="current-info">
+                <span>Current Time (UTC): 2025-01-23 00:51:58</span>
+                <br>
+                <span>User: jurietto</span>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <span class="separator">&#9829;</span>
+                <a href="about.html">About</a>
+                <span class="separator">&#9733;</span>
+                <a href="gallery.html">Gallery</a>
+                <span class="separator">&#9819;</span>
+                <a href="updates.html">Updates</a>
+                <span class="separator">&#9827;</span>
+                <a href="visual-novels.html">Visual Novels</a>
+                <span class="separator">&#9830;</span>
+                <a href="music.html">Music</a>
+                <span class="separator">&#9824;</span>
+                <a href="art.html">Art</a>
+                <span class="separator">&#9829;</span>
+                <a href="twitter.html">Twitter</a>
+                <span class="separator">&#9827;</span>
+                <a href="bluesky.html">Bluesky</a>
+                <span class="separator">&#9827;</span>
+                <a href="youtube.html">YouTube</a>
+                <span class="separator">&#9733;</span>
+                <a href="soundcloud.html">SoundCloud</a>
+                <span class="separator">&#9834;</span>
+                <a href="vndb.html">VNDB</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h2>UPDATES</h2>
+        <div class="divider"></div>
+        <p style="text-align: center; font-family: 'MS UI Gothic', sans-serif;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me.</p>
+
+        <div class="search-sort-container">
+            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
+            <select id="sort" onchange="loadUpdates()">
+                <option value="desc">Sort by Newest</option>
+                <option value="asc">Sort by Oldest</option>
+            </select>
+        </div>
+
+        <div id="updates" class="updates"></div>
+
+        <div class="pagination" id="pagination">
+            <button id="prev" onclick="changePage(-1)">Prev</button>
+            <span id="page-numbers"></span>
+            <button id="next" onclick="changePage(1)">Next</button>
+        </div>
+    </main>
+
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="updates.js"></script>
+    <script>
+        console.log("Page loaded");
+        window.addEventListener('load', () => {
+            if (typeof firebase !== 'undefined') {
+                console.log("Firebase loaded");
+            } else {
+                console.log("Firebase not loaded");
             }
         });
-
-        if (sortOrder === 'desc') {
-            updates.reverse();
-        }
-
-        totalPages = Math.ceil(updates.length / itemsPerPage);
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const paginatedUpdates = updates.slice(start, end);
-
-        displayUpdates(paginatedUpdates);
-        displayPagination();
-    }, (error) => {
-        console.error("Error fetching data: ", error);
-        document.getElementById('updates').innerHTML = '<p>Error loading updates. Please try again later.</p>';
-    });
-}
-
-function displayUpdates(updates) {
-    const updatesContainer = document.getElementById('updates');
-    updatesContainer.innerHTML = '';
-
-    if (updates.length === 0) {
-        updatesContainer.innerHTML = '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">No updates found.</p>';
-        return;
-    }
-
-    updates.forEach((update, index) => {
-        const updateDiv = document.createElement('div');
-        updateDiv.className = 'gallery-item';
-
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = update.title;
-        updateDiv.appendChild(titleElement);
-
-        const dateElement = document.createElement('span');
-        dateElement.className = 'date';
-        const date = new Date(update.timestamp);
-        dateElement.innerHTML = date.toLocaleString();
-        dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        updateDiv.appendChild(dateElement);
-
-        const contentElement = document.createElement('p');
-        contentElement.innerHTML = update.content;
-        contentElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        updateDiv.appendChild(contentElement);
-
-        const decorGifLeft = document.createElement('img');
-        decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
-        decorGifLeft.className = 'decor-gif-left';
-        decorGifLeft.alt = '';
-        updateDiv.appendChild(decorGifLeft);
-
-        const decorGifRight = document.createElement('img');
-        decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
-        decorGifRight.className = 'decor-gif-right';
-        decorGifRight.alt = '';
-        updateDiv.appendChild(decorGifRight);
-
-        updatesContainer.appendChild(updateDiv);
-
-        if (index < updates.length - 1) {
-            const symbolDivider = document.createElement('div');
-            symbolDivider.className = 'symbol-divider';
-            // Create a temporary div to properly render HTML entities
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = symbols[index % symbols.length];
-            symbolDivider.textContent = tempDiv.textContent;
-            updatesContainer.appendChild(symbolDivider);
-        }
-    });
-}
-
-function displayPagination() {
-    const paginationElement = document.getElementById('pagination');
-    const pageNumbersElement = document.getElementById('page-numbers');
-    pageNumbersElement.innerHTML = '';
-
-    document.getElementById('prev').disabled = currentPage === 1;
-    document.getElementById('next').disabled = currentPage === totalPages;
-
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.className = i === currentPage ? 'active' : '';
-        button.onclick = () => {
-            currentPage = i;
-            loadUpdates();
-        };
-        pageNumbersElement.appendChild(button);
-    }
-}
-
-function changePage(direction) {
-    const newPage = currentPage + direction;
-    if (newPage >= 1 && newPage <= totalPages) {
-        currentPage = newPage;
-        loadUpdates();
-    }
-}
-
-// Initialize
-window.addEventListener('load', () => {
-    updateDateTime();
-    loadUpdates();
-    // Update time every minute
-    setInterval(updateDateTime, 60000);
-});
+    </script>
+</body>
+</html>
