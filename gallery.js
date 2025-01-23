@@ -1,142 +1,164 @@
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-    authDomain: "comments-ff6c9.firebaseapp.com",
-    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
-    projectId: "comments-ff6c9",
-    storageBucket: "comments-ff6c9.appspot.com",
-    messagingSenderId: "778548096311",
-    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-    measurementId: "G-T8QFHWJDB5"
-};
+document.addEventListener('DOMContentLoaded', function () {
+    let currentPage = 1;
+    const itemsPerPage = 12;
+    let totalPages = 1;
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+    function loadImages() {
+        // Simulating fetching data from a source
+        const images = [
+            // Example data
+            { url: 'path/to/image1.jpg', caption: 'Caption 1', timestamp: new Date().getTime(), description: 'Description 1' },
+            { url: 'path/to/image2.jpg', caption: 'Caption 2', timestamp: new Date().getTime(), description: 'Description 2' },
+            // Add more images as needed
+        ];
 
-let currentPage = 1;
-const itemsPerPage = 5;
-let totalPages = 1;
+        const searchQuery = document.getElementById('search').value.toLowerCase();
+        const sortOrder = document.getElementById('sort').value;
 
-// Function to fetch images and captions from Firebase Realtime Database
-function loadImages() {
-    const searchQuery = document.getElementById('search').value.toLowerCase();
-    const sortOrder = document.getElementById('sort').value;
+        let filteredImages = images.filter(image => 
+            !searchQuery || image.caption.toLowerCase().includes(searchQuery)
+        );
 
-    database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
-        let items = [];
-        snapshot.forEach((childSnapshot) => {
-            const imageData = childSnapshot.val();
-            const date = new Date(imageData.timestamp).toLocaleString().toLowerCase();
-            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || childSnapshot.key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
-                items.push({ key: childSnapshot.key, ...imageData });
-            }
-        });
-
-        // Sort items
         if (sortOrder === 'desc') {
-            items.reverse();
+            filteredImages.reverse();
         } else if (sortOrder === 'shuffle') {
-            items = shuffle(items);
+            filteredImages = filteredImages.sort(() => Math.random() - 0.5);
         }
 
-        // Pagination logic
-        totalPages = Math.ceil(items.length / itemsPerPage);
+        totalPages = Math.ceil(filteredImages.length / itemsPerPage);
         const start = (currentPage - 1) * itemsPerPage;
         const end = start + itemsPerPage;
-        const paginatedItems = items.slice(start, end);
+        const paginatedImages = filteredImages.slice(start, end);
 
-        // Display items
-        displayItems(paginatedItems);
-
-        // Display pagination
+        displayImages(paginatedImages);
         displayPagination();
-    }, (error) => {
-        console.error("Error fetching data: ", error);
-    });
-}
+    }
 
-function displayItems(items) {
-    const galleryElement = document.getElementById('gallery');
-    galleryElement.innerHTML = ''; // Clear previous images
+    function displayImages(images) {
+        const galleryContainer = document.getElementById('gallery');
+        galleryContainer.innerHTML = '';
 
-    items.forEach((item, index) => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = item.key;
-        galleryItem.appendChild(titleElement);
-
-        const timestampElement = document.createElement('p');
-        timestampElement.className = 'timestamp';
-        const date = new Date(item.timestamp);
-        timestampElement.innerHTML = `<b>Uploaded on: ${date.toLocaleString()}</b>`;
-        galleryItem.appendChild(timestampElement);
-
-        const img = document.createElement('img');
-        img.src = item.url;
-        img.alt = item.text; // provide a meaningful description
-        galleryItem.appendChild(img);
-
-        const captionElement = document.createElement('p');
-        captionElement.className = 'caption';
-        captionElement.textContent = item.text;
-        galleryItem.appendChild(captionElement);
-
-        galleryElement.appendChild(galleryItem);
-
-        // Add divider after each image except the last one
-        if (index < items.length - 1) {
-            const divider = document.createElement('img');
-            divider.src = 'https://file.garden/ZhTgSjrp5nAroRKq/20.gif';
-            divider.className = 'divider';
-            divider.alt = "Divider"; // add alt text for accessibility
-            galleryElement.appendChild(divider);
+        if (images.length === 0) {
+            galleryContainer.innerHTML = '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">No images found.</p>';
+            return;
         }
-    });
-}
 
-function displayPagination() {
-    const paginationElement = document.getElementById('pagination');
-    const pageNumbersElement = document.getElementById('page-numbers');
-    pageNumbersElement.innerHTML = ''; // Clear previous page numbers
+        images.forEach(image => {
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'gallery-item';
 
-    document.getElementById('prev').disabled = currentPage === 1;
-    document.getElementById('next').disabled = currentPage === totalPages;
+            const imgElement = document.createElement('img');
+            imgElement.src = image.url;
+            imgElement.alt = image.caption;
+            imgElement.onclick = () => showModal(image);
+            imageDiv.appendChild(imgElement);
 
-    for (let i = 1; i <= totalPages; i++) {
-        const button = document.createElement('button');
-        button.textContent = i;
-        button.className = i === currentPage ? 'active' : '';
-        button.onclick = () => {
-            currentPage = i;
+            galleryContainer.appendChild(imageDiv);
+        });
+    }
+
+    function displayPagination() {
+        const pageNumbersElement = document.getElementById('page-numbers');
+        pageNumbersElement.innerHTML = '';
+
+        document.getElementById('prev').disabled = currentPage === 1;
+        document.getElementById('next').disabled = currentPage === totalPages;
+
+        if (totalPages > 1) {
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = i === currentPage ? 'active' : '';
+                button.onclick = () => {
+                    currentPage = i;
+                    loadImages();
+                    window.scrollTo(0, 0);
+                };
+                pageNumbersElement.appendChild(button);
+            }
+        }
+    }
+
+    function changePage(direction) {
+        const newPage = currentPage + direction;
+        if (newPage >= 1 && newPage <= totalPages) {
+            currentPage = newPage;
             loadImages();
-        };
-        pageNumbersElement.appendChild(button);
+            window.scrollTo(0, 0);
+        }
     }
-}
 
-function changePage(direction) {
-    currentPage += direction;
+    // Modal functionality
+    const modal = document.getElementById("myModal");
+    const span = document.getElementsByClassName("close")[0];
+
+    function showModal(image) {
+        document.getElementById("modal-title").textContent = image.caption;
+        document.getElementById("modal-metadata").textContent = `Uploaded on: ${new Date(image.timestamp).toLocaleDateString()}`;
+        document.getElementById("modal-caption").textContent = image.description || 'No description available.';
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    // Create a container for the fireworks particles
+    const fireworksContainer = document.querySelector('.fireworks-container');
+
+    const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+
+    function createFireworkParticle(symbol) {
+        const particle = document.createElement('span');
+        particle.className = 'firework-particle';
+        particle.textContent = symbol;
+
+        // Randomize the start position and explosion direction
+        const angle = Math.random() * Math.PI * 2; // Random angle in radians
+        const distance = Math.random() * 300; // Distance from the start point
+        const translateX = Math.cos(angle) * distance;
+        const translateY = Math.sin(angle) * distance;
+
+        particle.style.setProperty('--translateX', `${translateX}px`);
+        particle.style.setProperty('--translateY', `${translateY}px`);
+        particle.style.left = `${Math.random() * window.innerWidth}px`;
+        particle.style.top = `${Math.random() * window.innerHeight}px`;
+        fireworksContainer.appendChild(particle);
+
+        // Remove the particle after the animation finishes
+        setTimeout(() => {
+            particle.remove();
+        }, 1500); // Particle lifetime
+    }
+
+    // Event listener for mouseover on navigation links to trigger fireworks
+    const headerLinks = document.querySelectorAll('nav a');
+    headerLinks.forEach((link) => {
+        link.addEventListener('mouseover', () => {
+            for (let i = 0; i < 15; i++) { // Increase number of particles
+                const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
+                createFireworkParticle(symbol);
+            }
+        });
+    });
+
+    // Initialize on page load
     loadImages();
-}
 
-// Helper function to shuffle an array
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Call loadImages to fetch and display the images when the script runs
-window.addEventListener('load', loadImages);
-
-// Add event listener to the sort dropdown to reload images on shuffle
-document.getElementById('sort').addEventListener('change', function() {
-    if (this.value === 'shuffle') {
+    // Add event listeners for search and sort
+    document.getElementById('search').addEventListener('input', () => {
+        currentPage = 1;
         loadImages();
-    }
+    });
+
+    document.getElementById('sort').addEventListener('change', () => {
+        currentPage = 1;
+        loadImages();
+    });
 });
