@@ -8,7 +8,7 @@
     <title>Juri's Stuff - Updates</title>
 
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    
+
     <style>
         @font-face {
             font-family: 'Apple Chancery';
@@ -265,8 +265,8 @@
             100% {
             transform: translate(var(--translateX), var(--translateY)) scale(0);
             opacity: 0;
-    }
-}
+            }
+        }
 
         @media (max-width: 600px) {
             body {
@@ -528,52 +528,52 @@
         function changePage(direction) {
             const newPage = currentPage + direction;
             if (newPage >= 1 && newPage <= totalPages) {
-                currentPage = newPage;
-                loadUpdates();
+                currentPage = newPage
+loadUpdates();
                 window.scrollTo(0, 0);
             }
-
-            // Create a container for the fireworks particles
-const fireworksContainer = document.createElement('div');
-fireworksContainer.className = 'fireworks-container';
-document.body.appendChild(fireworksContainer);
-
-const symbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
-
-function createFireworkParticle(symbol) {
-    const particle = document.createElement('span');
-    particle.className = 'firework-particle';
-    particle.textContent = symbol;
-
-    // Randomize the start position and explosion direction
-    const angle = Math.random() * Math.PI * 2; // Random angle in radians
-    const distance = Math.random() * 300; // Distance from the start point
-    const translateX = Math.cos(angle) * distance;
-    const translateY = Math.sin(angle) * distance;
-
-    particle.style.setProperty('--translateX', `${translateX}px`);
-    particle.style.setProperty('--translateY', `${translateY}px`);
-    particle.style.left = `${Math.random() * window.innerWidth}px`;
-    particle.style.top = `${Math.random() * window.innerHeight}px`;
-    fireworksContainer.appendChild(particle);
-
-    // Remove the particle after the animation finishes
-    setTimeout(() => {
-        particle.remove();
-    }, 1500); // Particle lifetime
-}
-
-// Event listener for mouseover on navigation links to trigger fireworks
-const headerLinks = document.querySelectorAll('nav a');
-headerLinks.forEach((link) => {
-    link.addEventListener('mouseover', () => {
-        for (let i = 0; i < 15; i++) { // Increase number of particles
-            const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-            createFireworkParticle(symbol);
         }
-    });
-});
+
+        // Create a container for the fireworks particles
+        const fireworksContainer = document.createElement('div');
+        fireworksContainer.className = 'fireworks-container';
+        document.body.appendChild(fireworksContainer);
+
+        const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+
+        function createFireworkParticle(symbol) {
+            const particle = document.createElement('span');
+            particle.className = 'firework-particle';
+            particle.textContent = symbol;
+
+            // Randomize the start position and explosion direction
+            const angle = Math.random() * Math.PI * 2; // Random angle in radians
+            const distance = Math.random() * 300; // Distance from the start point
+            const translateX = Math.cos(angle) * distance;
+            const translateY = Math.sin(angle) * distance;
+
+            particle.style.setProperty('--translateX', `${translateX}px`);
+            particle.style.setProperty('--translateY', `${translateY}px`);
+            particle.style.left = `${Math.random() * window.innerWidth}px`;
+            particle.style.top = `${Math.random() * window.innerHeight}px`;
+            fireworksContainer.appendChild(particle);
+
+            // Remove the particle after the animation finishes
+            setTimeout(() => {
+                particle.remove();
+            }, 1500); // Particle lifetime
         }
+
+        // Event listener for mouseover on navigation links to trigger fireworks
+        const headerLinks = document.querySelectorAll('nav a');
+        headerLinks.forEach((link) => {
+            link.addEventListener('mouseover', () => {
+                for (let i = 0; i < 15; i++) { // Increase number of particles
+                    const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
+                    createFireworkParticle(symbol);
+                }
+            });
+        });
 
         // Initialize on page load
         window.addEventListener('load', loadUpdates);
@@ -589,7 +589,6 @@ headerLinks.forEach((link) => {
             loadUpdates();
         });
 
-        
     </script>
 </body>
 </html>
