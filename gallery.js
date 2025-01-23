@@ -1,544 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <meta name="format-detection" content="telephone=no">
-    <title>Juri's Stuff - Gallery</title>
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+    authDomain: "comments-ff6c9.firebaseapp.com",
+    databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+    projectId: "comments-ff6c9",
+    storageBucket: "comments-ff6c9.appspot.com",
+    messagingSenderId: "778548096311",
+    appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+    measurementId: "G-T8QFHWJDB5"
+};
 
-    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-    <style>
-        @font-face {
-            font-family: 'Apple Chancery';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
-        }
+let currentPage = 1;
+const itemsPerPage = 9; // 9 items per page
+let totalPages = 1;
+let currentModalIndex = 0;
+let paginatedItems = [];
 
-        body {
-            font-family: 'Apple Chancery', serif;
-            background-color: black;
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            line-height: 1.6;
-            width: 90%;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 10px;
-            position: relative;
-            text-align: left;
-        }
+// Function to fetch images and captions from Firebase Realtime Database
+function loadImages() {
+    const searchQuery = document.getElementById('search').value.toLowerCase();
+    const sortOrder = document.getElementById('sort').value;
 
-        h1, h2, h3, h4, h5, nav a, p, input[type="text"], select, button {
-            text-shadow: none;
-        }
-
-        header {
-            position: relative;
-            height: 200px;
-            margin-bottom: 40px;
-            padding: 0 10px;
-            text-align: center;
-        }
-
-        .title-container {
-            max-width: 100%;
-        }
-
-        .title-container h1 {
-            margin: 0;
-            font-family: 'Apple Chancery';
-            font-size: 3rem;
-        }
-
-        nav {
-            margin-top: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 0;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-family: 'Apple Chancery';
-        }
-
-        .separator {
-            color: white;
-            margin: 0 5px;
-            font-family: serif;
-            text-shadow:
-                0 0 10px rgba(255, 0, 0, 1),
-                0 0 20px rgba(255, 0, 0, 1),
-                0 0 30px rgba(255, 0, 0, 1);
-        }
-
-        nav a:hover {
-            color: #ff007b;
-        }
-
-        main {
-            text-align: justify;
-            padding: 0 20px;
-        }
-
-        h2 {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .divider {
-            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
-            height: 24px;
-            background-repeat: repeat-x;
-            margin: 15px 0;
-            width: 100%;
-            display: block;
-        }
-
-        .search-sort-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            width: 100%;
-            gap: 20px;
-            max-width: 600px;
-            padding: 0 20px;
-            box-sizing: border-box;
-            font-family: 'MS UI Gothic', sans-serif;
-        }
-
-        input[type="text"],
-        select {
-            padding: 8px 15px;
-            margin: 0;
-            font-size: 0.9rem;
-            background-color: black;
-            color: white;
-            border: 1px solid white;
-            box-sizing: border-box;
-            width: 200px;
-            border-radius: 5px;
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .gallery-item {
-            width: calc(33.333% - 20px);
-            padding-top: 33.333%;
-            position: relative;
-            border: 1px solid white;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: border-color 0.3s;
-        }
-
-        .gallery-item:hover {
-            border-color: magenta;
-        }
-
-        .gallery-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 101;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            margin: 20px;
-            display: block;
-            max-width: 90%;
-            max-height: 80%;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid white;
-            z-index: 102;
-        }
-
-        .modal-title {
-            font-family: 'Apple Chancery';
-            color: white;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .modal-date, .modal-caption, .image-count {
-            font-family: 'MS UI Gothic', sans-serif;
-            color: white;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .close, .prev, .next {
-            color: white;
-            font-size: 30px;
-            font-weight: bold;
-            background-color: black;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            position: absolute;
-            top: 20px;
-        }
-
-        .prev { left: 20px; }
-        .next { right: 20px; }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            gap: 10px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        button {
-            background-color: black;
-            border: 1px solid white;
-            padding: 8px 15px;
-            margin: 0;
-            font-size: 0.9rem;
-            cursor: pointer;
-            color: white;
-            font-family: 'MS UI Gothic', sans-serif;
-            border-radius: 5px;
-            min-width: 40px;
-        }
-
-        button.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        footer {
-            text-align: center;
-            font-family: 'MS UI Gothic', sans-serif;
-            font-size: 1rem;
-            padding: 20px 0;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                width: 95%;
+    database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
+        let items = [];
+        snapshot.forEach((childSnapshot) => {
+            const key = childSnapshot.key;
+            const imageData = childSnapshot.val();
+            const date = new Date(imageData.timestamp).toLocaleString().toLowerCase();
+            if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
+                items.push({ key: key, ...imageData });
             }
+        });
 
-            .title-container h1 {
-                font-size: 2rem;
-            }
-
-            .search-sort-container {
-                flex-direction: column;
-                padding: 0 10px;
-                gap: 10px;
-            }
-
-            input[type="text"],
-            select {
-                width: 100%;
-            }
-
-            .gallery-item {
-                width: 100%; /* Single item per row */
-                padding-top: 100%; /* Maintain square aspect ratio */
-            }
-
-            .pagination {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-
-            button {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
+        // Sort items
+        if (sortOrder === 'desc') {
+            items.reverse();
+        } else if (sortOrder === 'shuffle') {
+            items = shuffle(items);
         }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="title-container">
-            <h1>Juri's Stuff</h1>
-            <nav>
-                <a href="index.html">Home</a>
-                <span class="separator">♥</span>
-                <a href="about.html">About</a>
-                <span class="separator">★</span>
-                <a href="gallery.html">Gallery</a>
-                <span class="separator">♛</span>
-                <a href="updates.html">Updates</a>
-                <span class="separator">♣</span>
-                <a href="visual-novels.html">Visual Novels</a>
-                <span class="separator">♦</span>
-                <a href="music.html">Music</a>
-                <span class="separator">♠</span>
-                <a href="art.html">Art</a>
-                <span class="separator">♥</span>
-                <a href="twitter.html">Twitter</a>
-                <span class="separator">♣</span>
-                <a href="bluesky.html">Bluesky</a>
-                <span class="separator">♣</span>
-                <a href="youtube.html">YouTube</a>
-                <span class="separator">★</span>
-                <a href="soundcloud.html">SoundCloud</a>
-                <span class="separator">♪</span>
-                <a href="vndb.html">VNDB</a>
-            </nav>
-        </div>
-    </header>
 
-    <main>
-        <h2>GALLERY</h2>
-        <div class="divider"></div>
-        
-        <div class="search-sort-container">
-            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadImages()">
-            <select id="sort" onchange="loadImages()">
-                <option value="desc">Sort by Newest</option>
-                <option value="asc">Sort by Oldest</option>
-                <option value="shuffle">Shuffle</option>
-            </select>
-        </div>
+        // Pagination logic
+        totalPages = Math.ceil(items.length / itemsPerPage);
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        paginatedItems = items.slice(start, end);
 
-        <div id="gallery" class="gallery"></div>
+        // Display items
+        displayItems(paginatedItems);
 
-        <div class="pagination" id="pagination">
-            <button id="prev" onclick="changePage(-1)">Prev</button>
-            <span id="page-numbers"></span>
-            <button id="next" onclick="changePage(1)">Next</button>
-        </div>
-    </main>
+        // Display pagination
+        displayPagination();
+    }, (error) => {
+        console.error("Error fetching data: ", error);
+    });
+}
 
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
+function displayItems(items) {
+    const galleryElement = document.getElementById('gallery');
+    galleryElement.innerHTML = ''; // Clear previous images
 
-    <!-- Modal for displaying images -->
-    <div id="myModal" class="modal">
-        <button class="close" onclick="closeModal()">×</button>
-        <button class="prev" onclick="prevImage()">❮</button>
-        <button class="next" onclick="nextImage()">❯</button>
-        <div class="modal-title" id="modal-title"></div>
-        <img class="modal-content" id="modal-img" oncontextmenu="return false;">
-        <div class="modal-date" id="modal-date"></div>
-        <div class="modal-caption" id="modal-caption"></div>
-        <div class="image-count" id="image-count"></div>
-    </div>
+    items.forEach((item, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
 
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
-            authDomain: "comments-ff6c9.firebaseapp.com",
-            databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
-            projectId: "comments-ff6c9",
-            storageBucket: "comments-ff6c9.appspot.com",
-            messagingSenderId: "778548096311",
-            appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
-            measurementId: "G-T8QFHWJDB5"
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = item.text; // provide a meaningful description
+        img.onclick = () => showModal(index);
+        img.oncontextmenu = () => false; // Disable right-click
+        galleryItem.appendChild(img);
+
+        galleryElement.appendChild(galleryItem);
+    });
+}
+
+function displayPagination() {
+    const pageNumbersElement = document.getElementById('page-numbers');
+    pageNumbersElement.innerHTML = ''; // Clear previous page numbers
+
+    document.getElementById('prev').disabled = currentPage === 1;
+    document.getElementById('next').disabled = currentPage === totalPages;
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.className = i === currentPage ? 'active' : '';
+        button.onclick = () => {
+            currentPage = i;
+            loadImages();
         };
+        pageNumbersElement.appendChild(button);
+    }
+}
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+function changePage(direction) {
+    currentPage += direction;
+    loadImages();
+}
 
-        let currentPage = 1;
-        const itemsPerPage = 9; // 9 items per page
-        let totalPages = 1;
-        let currentModalIndex = 0;
-        let paginatedItems = [];
+// Helper function to shuffle an array
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
-        // Function to fetch images and captions from Firebase Realtime Database
-        function loadImages() {
-            const searchQuery = document.getElementById('search').value.toLowerCase();
-            const sortOrder = document.getElementById('sort').value;
+function showModal(index) {
+    currentModalIndex = index;
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDate = document.getElementById('modal-date');
+    const modalCaption = document.getElementById('modal-caption');
+    const imageCount = document.getElementById('image-count');
 
-            database.ref('gallery').orderByChild('timestamp').once('value', (snapshot) => {
-                let items = [];
-                snapshot.forEach((childSnapshot) => {
-                    const key = childSnapshot.key;
-                    const imageData = childSnapshot.val();
-                    const date = new Date(imageData.timestamp).toLocaleString().toLowerCase();
-                    if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery) || key.toLowerCase().includes(searchQuery) || date.includes(searchQuery)) {
-                        items.push({ key: key, ...imageData });
-                    }
-                });
+    modalImg.src = paginatedItems[index].url;
+    modalImg.alt = paginatedItems[index].text; // provide a meaningful description
+    modalTitle.textContent = paginatedItems[index].key; // Use the key as the title
+    modalDate.textContent = new Date(paginatedItems[index].timestamp).toLocaleString();
+    modalCaption.textContent = paginatedItems[index].text;
+    imageCount.textContent = `Image ${index + 1} of ${paginatedItems.length}`;
 
-                // Sort items
-                if (sortOrder === 'desc') {
-                    items.reverse();
-                } else if (sortOrder === 'shuffle') {
-                    items = shuffle(items);
-                }
+    document.body.style.overflow = 'hidden'; // Restrict scrolling
+    document.getElementById('myModal').style.display = "flex";
+}
 
-                // Pagination logic
-                totalPages = Math.ceil(items.length / itemsPerPage);
-                const start = (currentPage - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                paginatedItems = items.slice(start, end);
+function closeModal() {
+    document.body.style.overflow = 'auto'; // Restore scrolling
+    document.getElementById('myModal').style.display = "none";
+}
 
-                // Display items
-                displayItems(paginatedItems);
+function prevImage() {
+    if (currentModalIndex > 0) {
+        showModal(currentModalIndex - 1);
+    }
+}
 
-                // Display pagination
-                displayPagination();
-            }, (error) => {
-                console.error("Error fetching data: ", error);
-            });
+function nextImage() {
+    if (currentModalIndex < paginatedItems.length - 1) {
+        showModal(currentModalIndex + 1);
+    }
+}
+
+// Initialize
+window.addEventListener('load', () => {
+    loadImages();
+    // Close modal if clicking outside of the image or on the close button
+    document.getElementById('myModal').addEventListener('click', function(event) {
+        if (event.target === this || event.target.classList.contains("close")) {
+            closeModal();
         }
+    });
+});
 
-        function displayItems(items) {
-            const galleryElement = document.getElementById('gallery');
-            galleryElement.innerHTML = ''; // Clear previous images
-
-            items.forEach((item, index) => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item';
-
-                const img = document.createElement('img');
-                img.src = item.url;
-                img.alt = item.text; // provide a meaningful description
-                img.onclick = () => showModal(index);
-                img.oncontextmenu = () => false; // Disable right-click
-                galleryItem.appendChild(img);
-
-                galleryElement.appendChild(galleryItem);
-            });
-        }
-
-        function displayPagination() {
-            const pageNumbersElement = document.getElementById('page-numbers');
-            pageNumbersElement.innerHTML = ''; // Clear previous page numbers
-
-            document.getElementById('prev').disabled = currentPage === 1;
-            document.getElementById('next').disabled = currentPage === totalPages;
-
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.className = i === currentPage ? 'active' : '';
-                button.onclick = () => {
-                    currentPage = i;
-                    loadImages();
-                };
-                pageNumbersElement.appendChild(button);
-            }
-        }
-
-        function changePage(direction) {
-            currentPage += direction;
-            loadImages();
-        }
-
-        // Helper function to shuffle an array
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function showModal(index) {
-            currentModalIndex = index;
-            const modalImg = document.getElementById('modal-img');
-            const modalTitle = document.getElementById('modal-title');
-            const modalDate = document.getElementById('modal-date');
-            const modalCaption = document.getElementById('modal-caption');
-            const imageCount = document.getElementById('image-count');
-
-            modalImg.src = paginatedItems[index].url;
-            modalImg.alt = paginatedItems[index].text; // provide a meaningful description
-            modalTitle.textContent = paginatedItems[index].key; // Use the key as the title
-            modalDate.textContent = new Date(paginatedItems[index].timestamp).toLocaleString();
-            modalCaption.textContent = paginatedItems[index].text;
-            imageCount.textContent = `Image ${index + 1} of ${paginatedItems.length}`;
-
-            document.getElementById('myModal').style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById('myModal').style.display = "none";
-        }
-
-        function prevImage() {
-            if (currentModalIndex > 0) {
-                showModal(currentModalIndex - 1);
-            }
-        }
-
-        function nextImage() {
-            if (currentModalIndex < paginatedItems.length - 1) {
-                showModal(currentModalIndex + 1);
-            }
-        }
-
-        // Initialize
-        window.addEventListener('load', () => {
-            loadImages();
-            // Close modal if clicking outside of the image
-            document.getElementById('myModal').addEventListener('click', function(event) {
-                if (event.target === this || event.target.classList.contains("close")) {
-                    closeModal();
-                }
-            });
-        });
-
-        // Add event listeners for search and sort
-        document.getElementById('search').addEventListener('input', () => {
-            currentPage = 1;
-            loadImages();
-        });
-
-        document.getElementById('sort').addEventListener('change', () => {
-            currentPage = 1;
-            loadImages();
-        });
-    </script>
-</body>
-</html>
+// Add event listeners for search and sort
+document.getElementById('search').addEventListener('input', () => {
+    currentPage = 1;
+    loadImages();
+});
