@@ -188,11 +188,12 @@
         .modal-content {
             height: 400px;
             width: 100%;
-            max-width: calc(100% - 60px); /* Ensure the image doesn't go past the arrows */
+            max-width: 300px;
             object-fit: cover;
             border-radius: 10px;
             border: 2px solid white;
             z-index: 102;
+            pointer-events: none; /* Prevent right-click save */
         }
 
         .modal-title {
@@ -209,21 +210,19 @@
             margin-top: 10px;
         }
 
-        .close, .prev, .next {
-            color: white;
-            font-size: 30px;
-            font-weight: bold;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
+        .modal-overlay {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 103;
+            cursor: pointer;
         }
 
-        .prev { left: 20px; }
-        .next { right: 20px; }
+        .modal-overlay.right {
+            left: 50%;
+        }
 
         .pagination {
             display: flex;
@@ -298,14 +297,18 @@
                 font-size: 0.8rem;
             }
 
-            .close, .prev, .next {
-                font-size: 24px;
-            }
-
             .modal-content {
                 height: auto;
                 max-height: 400px;
-                max-width: calc(100% - 40px);
+                max-width: 300px;
+            }
+
+            .modal-overlay {
+                width: 50%;
+            }
+
+            .modal-overlay.right {
+                left: 50%;
             }
         }
     </style>
@@ -370,9 +373,8 @@
 
     <!-- Modal for displaying images -->
     <div id="myModal" class="modal">
-        <button class="close" onclick="closeModal()">×</button>
-        <button class="prev" onclick="prevImage()">❮</button>
-        <button class="next" onclick="nextImage()">❯</button>
+        <div class="modal-overlay" onclick="prevImage()"></div>
+        <div class="modal-overlay right" onclick="nextImage()"></div>
         <h2 class="modal-title" id="modal-title"></h2>
         <img class="modal-content" id="modal-img" oncontextmenu="return false;">
         <div class="modal-caption" id="modal-caption"></div>
