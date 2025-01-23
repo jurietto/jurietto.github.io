@@ -3,35 +3,61 @@ document.addEventListener('DOMContentLoaded', function () {
     const itemsPerPage = 12;
     let totalPages = 1;
 
-    function loadImages() {
-        // Simulating fetching data from a source
-        const images = [
-            // Example data
-            { url: 'path/to/image1.jpg', caption: 'Caption 1', timestamp: new Date().getTime(), description: 'Description 1' },
-            { url: 'path/to/image2.jpg', caption: 'Caption 2', timestamp: new Date().getTime(), description: 'Description 2' },
-            // Add more images as needed
-        ];
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
+        authDomain: "comments-ff6c9.firebaseapp.com",
+        databaseURL: "https://comments-ff6c9-default-rtdb.firebaseio.com",
+        projectId: "comments-ff6c9",
+        storageBucket: "comments-ff6c9.appspot.com",
+        messagingSenderId: "778548096311",
+        appId: "1:778548096311:web:968b95a4fc97f13f21feb2",
+        measurementId: "G-T8QFHWJDB5"
+    };
 
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    const database = firebase.database();
+
+    function loadImages() {
         const searchQuery = document.getElementById('search').value.toLowerCase();
         const sortOrder = document.getElementById('sort').value;
 
-        let filteredImages = images.filter(image => 
-            !searchQuery || image.caption.toLowerCase().includes(searchQuery)
-        );
+        database.ref('gallery').orderByChild('timestamp').once('value')
+            .then((snapshot) => {
+                let images = [];
+                snapshot.forEach((childSnapshot) => {
+                    const imageData = childSnapshot.val();
+                    if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
+                        images.push({
+                            key: childSnapshot.key,
+                            ...imageData
+                        });
+                    }
+                });
 
-        if (sortOrder === 'desc') {
-            filteredImages.reverse();
-        } else if (sortOrder === 'shuffle') {
-            filteredImages = filteredImages.sort(() => Math.random() - 0.5);
-        }
+                if (sortOrder === 'desc') {
+                    images.reverse();
+                } else if (sortOrder === 'shuffle') {
+                    images = images.sort(() => Math.random() - 0.5);
+                }
 
-        totalPages = Math.ceil(filteredImages.length / itemsPerPage);
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const paginatedImages = filteredImages.slice(start, end);
+                totalPages = Math.ceil(images.length / itemsPerPage);
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const paginatedImages = images.slice(start, end);
 
-        displayImages(paginatedImages);
-        displayPagination();
+                displayImages(paginatedImages);
+                displayPagination();
+            })
+            .catch((error) => {
+                console.error("Error fetching data: ", error);
+                document.getElementById('gallery').innerHTML = 
+                    '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">Error loading images. Please try again later.</p>';
+            });
     }
 
     function displayImages(images) {
@@ -49,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const imgElement = document.createElement('img');
             imgElement.src = image.url;
-            imgElement.alt = image.caption;
+            imgElement.alt = image.text;
             imgElement.onclick = () => showModal(image);
             imageDiv.appendChild(imgElement);
 
@@ -93,9 +119,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const span = document.getElementsByClassName("close")[0];
 
     function showModal(image) {
-        document.getElementById("modal-title").textContent = image.caption;
+        document.getElementById("modal-title").textContent = image.key;
         document.getElementById("modal-metadata").textContent = `Uploaded on: ${new Date(image.timestamp).toLocaleDateString()}`;
-        document.getElementById("modal-caption").textContent = image.description || 'No description available.';
+        document.getElementById("modal-caption").textContent = image.text || 'No description available.';
         modal.style.display = "block";
     }
 
@@ -148,17 +174,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Initialize on page load
-    loadImages();
-
-    // Add event listeners for search and sort
-    document.getElementById('search').addEventListener('input', () => {
-        currentPage = 1;
-        loadImages();
-    });
-
-    document.getElementById('sort').addEventListener('change', () => {
-        currentPage = 1;
-        loadImages();
-    });
-});
+    // Initialize on page
