@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <meta name="format-detection" content="telephone=no">
     <title>Juri's Stuff - Updates</title>
 
-    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    
+    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf"/>
     <style>
         @font-face {
             font-family: 'Apple Chancery';
@@ -26,11 +23,12 @@
             color: white;
             line-height: 1.6;
             width: 90%;
-            max-width: 700px; 
-            margin: 0 auto; 
+            max-width: 700px;
+            margin: 0 auto;
             padding: 10px;
-            position: relative; 
+            position: relative;
             text-align: left;
+            overflow: hidden; /* Prevent scrollbars caused by overflow */
         }
 
         h1, h2, h3, h4, h5, nav a, p, input[type="text"], select, button {
@@ -38,8 +36,8 @@
         }
 
         header {
-            position: relative; 
-            height: 200px; 
+            position: relative;
+            height: 200px;
             margin-bottom: 40px;
             padding: 0 10px;
             text-align: center;
@@ -50,36 +48,32 @@
         }
 
         .title-container h1 {
-            margin: 0; 
+            margin: 0;
             font-family: 'Apple Chancery';
             font-size: 3rem;
         }
 
         nav {
-            margin-top: 15px; 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 10px 0; 
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
         }
 
         nav a {
             color: white;
-            text-decoration: none; 
-            margin: 0 10px; 
-            font-family: 'Apple Chancery'; 
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: 'Apple Chancery';
         }
 
         .separator {
-            color: white; 
+            color: white;
             margin: 0 5px;
             font-family: serif;
-            -webkit-font-feature-settings: "liga" 0;
-            font-feature-settings: "liga" 0;
-            -webkit-font-variant-ligatures: none;
-            font-variant-ligatures: none;
-            text-shadow: 
+            text-shadow:
                 0 0 10px rgba(255, 0, 0, 1),
                 0 0 20px rgba(255, 0, 0, 1),
                 0 0 30px rgba(255, 0, 0, 1);
@@ -90,23 +84,23 @@
         }
 
         main {
-            text-align: justify; 
+            text-align: justify;
             padding: 0 20px;
         }
 
         h2 {
-            margin: 20px 0; 
-            text-align: center; 
+            margin: 20px 0;
+            text-align: center;
         }
 
         .divider {
             background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
-            height: 24px; 
-            background-repeat: repeat-x; 
-            border: none; 
-            margin: 15px 0; 
-            width: 100%; 
-            display: block; 
+            height: 24px;
+            background-repeat: repeat-x;
+            border: none;
+            margin: 15px 0;
+            width: 100%;
+            display: block;
         }
 
         .search-sort-container {
@@ -122,7 +116,7 @@
             font-family: 'MS UI Gothic', sans-serif;
         }
 
-        input[type="text"], 
+        input[type="text"],
         select {
             padding: 8px 15px;
             margin: 0;
@@ -145,12 +139,12 @@
         }
 
         .gallery-item {
-            position: relative; 
-            padding: 20px; 
-            margin: 20px 0; 
-            border: 1px solid white; 
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 10px; 
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid white;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
             width: 100%;
             box-sizing: border-box;
             overflow: visible;
@@ -164,8 +158,8 @@
         .decor-gif-left {
             position: absolute;
             top: -10px;
-            left: -20px; 
-            width: 50px; 
+            left: -20px;
+            width: 50px;
             height: auto;
             z-index: 2;
         }
@@ -173,9 +167,9 @@
         .decor-gif-right {
             position: absolute;
             top: -10px;
-            right: -20px; 
-            width: 50px; 
-            height: auto; 
+            right: -20px;
+            width: 50px;
+            height: auto;
             z-index: 2;
         }
 
@@ -242,47 +236,30 @@
             padding: 20px 0; 
         }
 
-        @media (max-width: 600px) {
-            body {
-                width: 95%;
-            }
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1; /* Place behind other content */
+        }
 
-            .title-container h1 {
-                font-size: 2rem; 
-            }
+        .firework-particle {
+            position: absolute;
+            font-size: 48px; /* Increase size of the particles */
+            animation: fireworks 1s forwards;
+        }
 
-            .search-sort-container {
-                flex-direction: column;
-                padding: 0 10px;
-                gap: 10px;
+        @keyframes fireworks {
+            0% {
+                transform: translate(0) scale(1);
+                opacity: 1;
             }
-
-            input[type="text"], 
-            select {
-                width: 100%;
-            }
-
-            .decor-gif-left,
-            .decor-gif-right {
-                width: 30px; 
-            }
-
-            .gallery-item {
-                padding: 15px;
-            }
-
-            .symbol-divider {
-                font-size: 2rem;
-            }
-
-            .pagination {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-
-            button {
-                padding: 6px 12px;
-                font-size: 0.8rem;
+            100% {
+                transform: translate(var(--translateX), var(--translateY)) scale(0);
+                opacity: 0;
             }
         }
     </style>
@@ -293,27 +270,27 @@
             <h1>Juri's Stuff</h1>
             <nav>
                 <a href="index.html">Home</a>
-                <span class="separator">&#9829;</span>
+                <span class="separator">♥</span>
                 <a href="about.html">About</a>
-                <span class="separator">&#9733;</span>
+                <span class="separator">★</span>
                 <a href="gallery.html">Gallery</a>
-                <span class="separator">&#9819;</span>
+                <span class="separator">♛</span>
                 <a href="updates.html">Updates</a>
-                <span class="separator">&#9827;</span>
+                <span class="separator">♣</span>
                 <a href="visual-novels.html">Visual Novels</a>
-                <span class="separator">&#9830;</span>
+                <span class="separator">♦</span>
                 <a href="music.html">Music</a>
-                <span class="separator">&#9824;</span>
+                <span class="separator">♠</span>
                 <a href="art.html">Art</a>
-                <span class="separator">&#9829;</span>
+                <span class="separator">♥</span>
                 <a href="twitter.html">Twitter</a>
-                <span class="separator">&#9827;</span>
+                <span class="separator">♣</span>
                 <a href="bluesky.html">Bluesky</a>
-                <span class="separator">&#9827;</span>
+                <span class="separator">♣</span>
                 <a href="youtube.html">YouTube</a>
-                <span class="separator">&#9733;</span>
+                <span class="separator">★</span>
                 <a href="soundcloud.html">SoundCloud</a>
-                <span class="separator">&#9834;</span>
+                <span class="separator">♪</span>
                 <a href="vndb.html">VNDB</a>
             </nav>
         </div>
@@ -371,7 +348,7 @@
         const itemsPerPage = 5;
         let totalPages = 1;
 
-        const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;'];
+        const symbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪'];
 
         function formatDate(timestamp) {
             const date = new Date(timestamp);
@@ -379,18 +356,15 @@
         }
 
         function loadUpdates() {
-            console.log('Loading updates...'); // Debug log
             const searchQuery = document.getElementById('search').value.toLowerCase();
             const sortOrder = document.getElementById('sort').value;
 
             database.ref('lifeupdates').orderByChild('timestamp').once('value')
                 .then((snapshot) => {
-                    console.log('Data received:', snapshot.val()); // Debug log
                     let updates = [];
                     snapshot.forEach((childSnapshot) => {
                         const updateData = childSnapshot.val();
-                        console.log('Processing update:', updateData); // Debug log
-                        if (updateData.title && updateData.content) { // Make sure we have valid data
+                        if (updateData.title && updateData.content) {
                             if (!searchQuery || 
                                 updateData.content.toLowerCase().includes(searchQuery) || 
                                 updateData.title.toLowerCase().includes(searchQuery)) {
@@ -401,8 +375,6 @@
                             }
                         }
                     });
-
-                    console.log('Processed updates:', updates); // Debug log
 
                     if (sortOrder === 'desc') {
                         updates.reverse();
@@ -435,8 +407,6 @@
             updates.forEach((update, index) => {
                 const updateDiv = document.createElement('div');
                 updateDiv.className = 'gallery-item';
-                updateDiv.style.width = '100%'; // Ensure full width
-                updateDiv.style.boxSizing = 'border-box'; // Include padding in width
 
                 const titleElement = document.createElement('h2');
                 titleElement.textContent = update.title;
@@ -454,16 +424,15 @@
                 contentElement.style.fontFamily = "'MS UI Gothic', sans-serif";
                 updateDiv.appendChild(contentElement);
 
+                // Add decorative GIFs
                 const decorGifLeft = document.createElement('img');
-                decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
-                decorGifLeft.className = 'decor-gif-left';
-                decorGifLeft.alt = '';
+                decorGifLeft.src = "https://enchantingcastle.com/gifs%20&%20pixel%20art/rose.gif"; // Left decoration GIF
+                decorGifLeft.className = "decor-gif-left";
                 updateDiv.appendChild(decorGifLeft);
 
                 const decorGifRight = document.createElement('img');
-                decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
-                decorGifRight.className = 'decor-gif-right';
-                decorGifRight.alt = '';
+                decorGifRight.src = "https://enchantingcastle.com/gifs%20&%20pixel%20art/rose.gif"; // Right decoration GIF
+                decorGifRight.className = "decor-gif-right";
                 updateDiv.appendChild(decorGifRight);
 
                 updatesContainer.appendChild(updateDiv);
@@ -508,10 +477,48 @@
             }
         }
 
-        // Initialize on page load
+        // Fireworks Animation Script
+        const headerLinks = document.querySelectorAll('nav a');
+
+        // Create a container for the fireworks particles
+        const fireworksContainer = document.createElement('div');
+        fireworksContainer.className = 'fireworks-container';
+        document.body.appendChild(fireworksContainer);
+
+        function createFireworkParticle(symbol) {
+            const particle = document.createElement('span');
+            particle.className = 'firework-particle';
+            particle.textContent = symbol;
+
+            // Randomize the start position and explosion direction by generating random angles
+            const angle = Math.random() * Math.PI * 2; // Random angle in radians
+            const distance = Math.random() * 300; // Distance of particle from start point
+            const translateX = Math.cos(angle) * distance;
+            const translateY = Math.sin(angle) * distance;
+
+            particle.style.setProperty('--translateX', `${translateX}px`);
+            particle.style.setProperty('--translateY', `${translateY}px`);
+            particle.style.left = `${Math.random() * window.innerWidth}px`;
+            particle.style.top = `${Math.random() * window.innerHeight}px`;
+            fireworksContainer.appendChild(particle);
+
+            // Remove the particle after the animation finishes
+            setTimeout(() => {
+                particle.remove();
+            }, 1500); // Extended lifetime for the fireworks
+        }
+
+        headerLinks.forEach((link) => {
+            link.addEventListener('mouseover', () => {
+                for (let i = 0; i < 15; i++) { // Increase number of particles
+                    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                    createFireworkParticle(symbol);
+                }
+            });
+        });
+
         window.addEventListener('load', loadUpdates);
 
-        // Add event listeners for search and sort
         document.getElementById('search').addEventListener('input', () => {
             currentPage = 1;
             loadUpdates();
