@@ -1,361 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <meta name="format-detection" content="telephone=no">
-    <title>Juri's Stuff - Updates</title>
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
-    
-    <style>
-        @font-face {
-            font-family: 'Apple Chancery';
-            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
-        }
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
-        body {
-            font-family: 'Apple Chancery', serif;
-            background-color: black;
-            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            line-height: 1.6;
-            width: 90%;
-            max-width: 700px; 
-            margin: 0 auto; 
-            padding: 10px;
-            position: relative; 
-            text-align: left;
-        }
+const database = firebase.database();
 
-        header {
-            position: relative; 
-            height: 200px; 
-            margin-bottom: 40px;
-            padding: 0 10px;
-            text-align: center;
-        }
+let currentPage = 1;
+const itemsPerPage = 5;
+let totalPages = 1;
 
-        .title-container {
-            max-width: 100%;
-        }
+const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;'];
 
-        .title-container h1 {
-            margin: 0; 
-            font-family: 'Apple Chancery';
-            font-size: 3rem;
-        }
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    return date.toISOString().split('T')[0];
+}
 
-        .current-info {
-            text-align: center;
-            font-family: 'MS UI Gothic', sans-serif;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            color: rgba(255, 255, 255, 0.7);
-        }
+function loadUpdates() {
+    const searchQuery = document.getElementById('search').value.toLowerCase();
+    const sortOrder = document.getElementById('sort').value;
 
-        nav {
-            margin-top: 15px; 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 10px 0; 
-        }
+    database.ref('updates').orderByChild('timestamp').once('value')
+        .then((snapshot) => {
+            let updates = [];
+            snapshot.forEach((childSnapshot) => {
+                const updateData = childSnapshot.val();
+                if (!searchQuery || 
+                    updateData.content.toLowerCase().includes(searchQuery) || 
+                    updateData.title.toLowerCase().includes(searchQuery)) {
+                    updates.push({
+                        key: childSnapshot.key,
+                        ...updateData
+                    });
+                }
+            });
 
-        nav a {
-            color: white;
-            text-decoration: none; 
-            margin: 0 10px; 
-            font-family: 'Apple Chancery'; 
-        }
-
-        .separator {
-            color: white; 
-            margin: 0 5px;
-            font-family: serif;
-            -webkit-font-feature-settings: "liga" 0;
-            font-feature-settings: "liga" 0;
-            -webkit-font-variant-ligatures: none;
-            font-variant-ligatures: none;
-        }
-
-        nav a:hover {
-            color: #ff007b;
-        }
-
-        main {
-            text-align: justify; 
-            padding: 0 20px;
-        }
-
-        h2 {
-            margin: 20px 0; 
-            text-align: center; 
-            font-family: 'Apple Chancery';
-        }
-
-        .divider {
-            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
-            height: 24px; 
-            background-repeat: repeat-x; 
-            border: none; 
-            margin: 15px 0; 
-            width: 100%; 
-            display: block; 
-        }
-
-        .search-sort-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            width: 100%;
-            gap: 20px;
-            max-width: 600px;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"], 
-        select {
-            padding: 8px 15px;
-            margin: 0;
-            font-size: 0.9rem;
-            background-color: black;
-            color: white;
-            border: 1px solid white;
-            box-sizing: border-box;
-            width: 200px;
-            border-radius: 5px;
-            font-family: 'MS UI Gothic', sans-serif;
-        }
-
-        .updates {
-            width: 100%;
-            margin: 20px 0;
-        }
-
-        .gallery-item {
-            position: relative; 
-            padding: 20px; 
-            margin: 20px 0; 
-            border: 1px solid white; 
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 10px; 
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .gallery-item h2 {
-            font-family: 'Apple Chancery';
-            margin-bottom: 15px;
-        }
-
-        .gallery-item p {
-            font-family: 'MS UI Gothic', sans-serif;
-        }
-
-        .decor-gif-left {
-            position: absolute;
-            top: -10px;
-            left: -25px;
-            width: 50px; 
-            height: auto;
-            z-index: 2;
-        }
-
-        .decor-gif-right {
-            position: absolute;
-            top: -10px;
-            right: -25px;
-            width: 50px; 
-            height: auto; 
-            z-index: 2;
-        }
-
-        .symbol-divider {
-            text-align: center; 
-            margin: 15px 0; 
-            font-size: 3rem; 
-            color: white;
-            font-family: serif;
-            -webkit-font-feature-settings: "liga" 0;
-            font-feature-settings: "liga" 0;
-            -webkit-font-variant-ligatures: none;
-            font-variant-ligatures: none;
-            text-shadow: 
-                0 0 10px rgba(255, 0, 0, 1),
-                0 0 20px rgba(255, 0, 0, 1),
-                0 0 30px rgba(255, 0, 0, 1);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            gap: 10px;
-            width: 100%;
-            max-width: 600px;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        #page-numbers {
-            display: flex;
-            gap: 5px;
-        }
-
-        button {
-            background-color: black;
-            border: 1px solid white;
-            padding: 8px 15px;
-            margin: 0;
-            font-size: 0.9rem;
-            cursor: pointer;
-            color: white;
-            font-family: 'MS UI Gothic', sans-serif;
-            border-radius: 5px;
-            min-width: 40px;
-        }
-
-        button.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        footer {
-            text-align: center; 
-            font-family: 'MS UI Gothic', sans-serif; 
-            font-size: 1rem; 
-            padding: 20px 0; 
-        }
-
-        @media (max-width: 600px) {
-            body {
-                width: 95%;
+            if (sortOrder === 'desc') {
+                updates.reverse();
             }
 
-            .title-container h1 {
-                font-size: 2rem; 
-            }
+            totalPages = Math.ceil(updates.length / itemsPerPage);
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedUpdates = updates.slice(start, end);
 
-            .search-sort-container {
-                flex-direction: column;
-                padding: 0 10px;
-                gap: 10px;
-            }
-
-            input[type="text"], 
-            select {
-                width: 100%;
-            }
-
-            .decor-gif-left,
-            .decor-gif-right {
-                width: 30px; 
-            }
-
-            .gallery-item {
-                padding: 15px;
-            }
-
-            .symbol-divider {
-                font-size: 2rem;
-            }
-
-            .pagination {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-
-            button {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="title-container">
-            <h1>Juri's Stuff</h1>
-  
-            <nav>
-                <a href="index.html">Home</a>
-                <span class="separator">&#9829;</span>
-                <a href="about.html">About</a>
-                <span class="separator">&#9733;</span>
-                <a href="gallery.html">Gallery</a>
-                <span class="separator">&#9819;</span>
-                <a href="updates.html">Updates</a>
-                <span class="separator">&#9827;</span>
-                <a href="visual-novels.html">Visual Novels</a>
-                <span class="separator">&#9830;</span>
-                <a href="music.html">Music</a>
-                <span class="separator">&#9824;</span>
-                <a href="art.html">Art</a>
-                <span class="separator">&#9829;</span>
-                <a href="twitter.html">Twitter</a>
-                <span class="separator">&#9827;</span>
-                <a href="bluesky.html">Bluesky</a>
-                <span class="separator">&#9827;</span>
-                <a href="youtube.html">YouTube</a>
-                <span class="separator">&#9733;</span>
-                <a href="soundcloud.html">SoundCloud</a>
-                <span class="separator">&#9834;</span>
-                <a href="vndb.html">VNDB</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <h2>UPDATES</h2>
-        <div class="divider"></div>
-        <p style="text-align: center; font-family: 'MS UI Gothic', sans-serif;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me.</p>
-
-        <div class="search-sort-container">
-            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
-            <select id="sort" onchange="loadUpdates()">
-                <option value="desc">Sort by Newest</option>
-                <option value="asc">Sort by Oldest</option>
-            </select>
-        </div>
-
-        <div id="updates" class="updates"></div>
-
-        <div class="pagination" id="pagination">
-            <button id="prev" onclick="changePage(-1)">Prev</button>
-            <span id="page-numbers"></span>
-            <button id="next" onclick="changePage(1)">Next</button>
-        </div>
-    </main>
-
-    <footer>
-        <h6>2024 - ???</h6>
-    </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="updates.js"></script>
-    <script>
-        console.log("Page loaded");
-        window.addEventListener('load', () => {
-            if (typeof firebase !== 'undefined') {
-                console.log("Firebase loaded");
-            } else {
-                console.log("Firebase not loaded");
-            }
+            displayUpdates(paginatedUpdates);
+            displayPagination();
+        })
+        .catch((error) => {
+            console.error("Error loading updates:", error);
+            document.getElementById('updates').innerHTML = 
+                '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">Error loading updates. Please try again later.</p>';
         });
-    </script>
-</body>
-</html>
+}
+
+function displayUpdates(updates) {
+    const updatesContainer = document.getElementById('updates');
+    updatesContainer.innerHTML = '';
+
+    if (updates.length === 0) {
+        updatesContainer.innerHTML = '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">No updates found.</p>';
+        return;
+    }
+
+    updates.forEach((update, index) => {
+        const updateDiv = document.createElement('div');
+        updateDiv.className = 'gallery-item';
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = update.title;
+        updateDiv.appendChild(titleElement);
+
+        const dateElement = document.createElement('p');
+        dateElement.style.textAlign = 'center';
+        dateElement.style.marginBottom = '15px';
+        dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
+        dateElement.textContent = formatDate(update.timestamp);
+        updateDiv.appendChild(dateElement);
+
+        const contentElement = document.createElement('p');
+        contentElement.innerHTML = update.content;
+        updateDiv.appendChild(contentElement);
+
+        const decorGifLeft = document.createElement('img');
+        decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
+        decorGifLeft.className = 'decor-gif-left';
+        decorGifLeft.alt = '';
+        updateDiv.appendChild(decorGifLeft);
+
+        const decorGifRight = document.createElement('img');
+        decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
+        decorGifRight.className = 'decor-gif-right';
+        decorGifRight.alt = '';
+        updateDiv.appendChild(decorG
