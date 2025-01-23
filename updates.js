@@ -289,11 +289,7 @@
     <header>
         <div class="title-container">
             <h1>Juri's Stuff</h1>
-            <div class="current-info">
-                <span>Current Time (UTC): 2025-01-23 00:51:58</span>
-                <br>
-                <span>User: jurietto</span>
-            </div>
+  
             <nav>
                 <a href="index.html">Home</a>
                 <span class="separator">&#9829;</span>
