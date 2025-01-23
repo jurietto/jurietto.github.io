@@ -33,8 +33,7 @@ function loadUpdates() {
     const searchQuery = document.getElementById('search').value.toLowerCase();
     const sortOrder = document.getElementById('sort').value;
 
-    // Change the reference path to match your Firebase database structure
-    database.ref('/').once('value')
+    database.ref('updates').orderByChild('timestamp').once('value')
         .then((snapshot) => {
             console.log('Data received:', snapshot.val()); // Debug log
             let updates = [];
