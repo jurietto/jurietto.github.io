@@ -136,13 +136,23 @@
             font-family: 'MS UI Gothic', sans-serif;
         }
 
+        .updates {
+            display: block;
+            width: 100%;
+            margin: 20px 0;
+        }
+
         .gallery-item {
+            display: block;
             position: relative; 
             padding: 20px; 
             margin: 20px 0; 
             border: 1px solid white; 
             background: rgba(0, 0, 0, 0.7); 
             border-radius: 10px; 
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
         }
 
         .gallery-item h2 {
@@ -216,7 +226,14 @@
             font-family: 'MS UI Gothic', sans-serif;
             border-radius: 5px;
             min-width: 40px;
-        
+        }
+
+        button.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         footer {
@@ -275,7 +292,11 @@
     <header>
         <div class="title-container">
             <h1>Juri's Stuff</h1>
-        
+            <div class="current-info">
+                <span>Current Time (UTC): 2025-01-23 01:02:33</span>
+                <br>
+                <span>User: jurietto</span>
+            </div>
             <nav>
                 <a href="index.html">Home</a>
                 <span class="separator">&#9829;</span>
@@ -333,15 +354,5 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="updates.js"></script>
-    <script>
-        console.log("Page loaded");
-        window.addEventListener('load', () => {
-            if (typeof firebase !== 'undefined') {
-                console.log("Firebase loaded");
-            } else {
-                console.log("Firebase not loaded");
-            }
-        });
-    </script>
 </body>
 </html>
