@@ -51,14 +51,6 @@
             font-size: 3rem;
         }
 
-        .current-info {
-            text-align: center;
-            font-family: 'MS UI Gothic', sans-serif;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
         nav {
             margin-top: 15px; 
             display: flex; 
@@ -140,6 +132,8 @@
             display: block;
             width: 100%;
             margin: 20px 0;
+            min-height: 100px;
+            position: relative;
         }
 
         .gallery-item {
@@ -153,6 +147,7 @@
             width: 100%;
             box-sizing: border-box;
             overflow: visible;
+            z-index: 1;
         }
 
         .gallery-item h2 {
@@ -292,7 +287,6 @@
     <header>
         <div class="title-container">
             <h1>Juri's Stuff</h1>
-           
             <nav>
                 <a href="index.html">Home</a>
                 <span class="separator">&#9829;</span>
