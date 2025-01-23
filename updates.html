@@ -97,6 +97,7 @@
         h2 {
             margin: 20px 0; 
             text-align: center; 
+            font-family: 'Apple Chancery';
         }
 
         .divider {
@@ -132,6 +133,7 @@
             box-sizing: border-box;
             width: 200px;
             border-radius: 5px;
+            font-family: 'MS UI Gothic', sans-serif;
         }
 
         .gallery-item {
@@ -141,6 +143,11 @@
             border: 1px solid white; 
             background: rgba(0, 0, 0, 0.7); 
             border-radius: 10px; 
+        }
+
+        .gallery-item h2 {
+            font-family: 'MS UI Gothic', sans-serif;
+            margin-bottom: 15px;
         }
 
         .gallery-item p {
@@ -275,7 +282,11 @@
     <header>
         <div class="title-container">
             <h1>Juri's Stuff</h1>
-   
+            <div class="current-info">
+                <span>Current Time (UTC): 2025-01-23 00:36:31</span>
+                <br>
+                <span>User: jurietto</span>
+            </div>
             <nav>
                 <a href="index.html">Home</a>
                 <span class="separator">&#9829;</span>
@@ -307,12 +318,12 @@
     <main>
         <h2>UPDATES</h2>
         <div class="divider"></div>
-        <p style="text-align: center;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me, and I'm okay with that.</p>
+        <p style="text-align: center; font-family: 'MS UI Gothic', sans-serif;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me, and I'm okay with that.</p>
 
         <div class="search-sort-container">
             <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
             <select id="sort" onchange="loadUpdates()">
-                <option value="desc">Sort by Newest</option> 
+                <option value="desc">Sort by Newest</option>
                 <option value="asc">Sort by Oldest</option>
             </select>
         </div>
@@ -333,5 +344,15 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="updates.js"></script>
+    <script>
+        console.log("Page loaded");
+        window.addEventListener('load', () => {
+            if (typeof firebase !== 'undefined') {
+                console.log("Firebase loaded");
+            } else {
+                console.log("Firebase not loaded");
+            }
+        });
+    </script>
 </body>
 </html>
