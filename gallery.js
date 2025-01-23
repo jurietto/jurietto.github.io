@@ -26,11 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const searchQuery = document.getElementById('search').value.toLowerCase();
         const sortOrder = document.getElementById('sort').value;
 
+        console.log("Fetching data from Firebase...");
+
         database.ref('gallery').orderByChild('timestamp').once('value')
             .then((snapshot) => {
+                console.log("Data snapshot received:", snapshot.val()); // Debug log
                 let images = [];
                 snapshot.forEach((childSnapshot) => {
                     const imageData = childSnapshot.val();
+                    console.log("Processing image data:", imageData); // Debug log
                     if (!searchQuery || imageData.text.toLowerCase().includes(searchQuery)) {
                         images.push({
                             key: childSnapshot.key,
@@ -38,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         });
                     }
                 });
+
+                console.log("Filtered images:", images); // Debug log
 
                 if (sortOrder === 'desc') {
                     images.reverse();
@@ -81,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             galleryContainer.appendChild(imageDiv);
         });
+
+        console.log("Displayed images:", images); // Debug log
     }
 
     function displayPagination() {
@@ -103,6 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 pageNumbersElement.appendChild(button);
             }
         }
+
+        console.log("Displayed pagination buttons."); // Debug log
     }
 
     function changePage(direction) {
@@ -174,4 +184,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Initialize on page
+    // Initialize on page load
+    loadImages();
+
+    // Add event listeners for search and sort
+    document.getElementById('search').addEventListener('input', () => {
+        currentPage = 1;
+        loadImages();
+    });
+
+    document.getElementById('sort').addEventListener('change', () => {
+        currentPage = 1;
+        loadImages();
+    });
+});
