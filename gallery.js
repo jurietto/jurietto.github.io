@@ -120,6 +120,7 @@ function showModal(item) {
     img.alt = item.text; // provide a meaningful description
     img.style.width = '100%';
     img.style.height = 'auto'; // Maintain original aspect ratio
+    img.style.maxHeight = '500px'; // Ensure image height does not exceed 500px
     img.style.borderRadius = '10px'; // Add border radius to the image
     modalContent.appendChild(img);
 
@@ -127,7 +128,7 @@ function showModal(item) {
     timestampElement.className = 'timestamp';
     timestampElement.style.fontFamily = "'MS UI Gothic', sans-serif";
     timestampElement.style.fontWeight = 'normal'; // Make the date text not bold
-    timestampElement.innerHTML = `Uploaded on: ${new Date(item.timestamp).toLocaleString()}`;
+    timestampElement.textContent = `Uploaded on: ${new Date(item.timestamp).toLocaleString()}`;
     modalContent.appendChild(timestampElement);
 
     const captionElement = document.createElement('p');
@@ -136,23 +137,25 @@ function showModal(item) {
     captionElement.textContent = item.text;
     modalContent.appendChild(captionElement);
 
+    // Add decorative images
     const decorGifLeft = document.createElement('img');
     decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
     decorGifLeft.className = 'decor-gif-left';
     decorGifLeft.alt = '';
-    decorGifLeft.style.width = '30px'; // Adjust size for better mobile fit
-    decorGifLeft.style.height = 'auto';
     modalContent.appendChild(decorGifLeft);
 
     const decorGifRight = document.createElement('img');
     decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
     decorGifRight.className = 'decor-gif-right';
     decorGifRight.alt = '';
-    decorGifRight.style.width = '30px'; // Adjust size for better mobile fit
-    decorGifRight.style.height = 'auto';
     modalContent.appendChild(decorGifRight);
 
     document.getElementById('myModal').style.display = "block";
+
+    // Adjust the size of decorative images based on screen size
+    const isMobile = window.innerWidth <= 600;
+    decorGifLeft.style.width = isMobile ? '30px' : '50px';
+    decorGifRight.style.width = isMobile ? '30px' : '50px';
 }
 
 // Modal functionality
