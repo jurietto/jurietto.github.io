@@ -140,12 +140,16 @@ function showModal(item) {
     decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
     decorGifLeft.className = 'decor-gif-left';
     decorGifLeft.alt = '';
+    decorGifLeft.style.width = '30px'; // Adjust size for better mobile fit
+    decorGifLeft.style.height = 'auto';
     modalContent.appendChild(decorGifLeft);
 
     const decorGifRight = document.createElement('img');
     decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
     decorGifRight.className = 'decor-gif-right';
     decorGifRight.alt = '';
+    decorGifRight.style.width = '30px'; // Adjust size for better mobile fit
+    decorGifRight.style.height = 'auto';
     modalContent.appendChild(decorGifRight);
 
     document.getElementById('myModal').style.display = "block";
@@ -196,9 +200,11 @@ function createFireworkParticle(symbol) {
 const headerLinks = document.querySelectorAll('nav a');
 headerLinks.forEach((link) => {
     link.addEventListener('mouseover', () => {
-        for (let i = 0; i < 15; i++) { // Increase number of particles
-            const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
-            createFireworkParticle(symbol);
+        if (window.innerWidth > 600) { // Disable fireworks on mobile
+            for (let i = 0; i < 15; i++) { // Increase number of particles
+                const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
+                createFireworkParticle(symbol);
+            }
         }
     });
 });
