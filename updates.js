@@ -1,8 +1,7 @@
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCfrP-AaY1cGuj5zQ-ygPBp_SI0oT4zA7s",
     authDomain: "comments-ff6c9.firebaseapp.com",
-    databaseURL: "https://updates-e2454.firebaseio.com",
+    databaseURL: "https://updates-e2454.firebaseio.com/",
     projectId: "comments-ff6c9",
     storageBucket: "comments-ff6c9.appspot.com",
     messagingSenderId: "778548096311",
@@ -10,67 +9,53 @@ const firebaseConfig = {
     measurementId: "G-T8QFHWJDB5"
 };
 
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-
+firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 let currentPage = 1;
 const itemsPerPage = 5;
 let totalPages = 1;
 
+// Using HTML entities for symbols to prevent emoji conversion
 const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;'];
 
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toISOString().split('T')[0];
+function updateDateTime() {
+    const now = new Date();
+    const formatted = now.toISOString().replace('T', ' ').substring(0, 19);
+    document.querySelector('.current-info span:first-child').textContent = `Current Time (UTC): ${formatted}`;
 }
 
 function loadUpdates() {
-    console.log('Loading updates...'); // Debug log
     const searchQuery = document.getElementById('search').value.toLowerCase();
-    const sortOrder = document.getElementById('sort').value;
+    const sortOrder = document.getElementById('sort').value || 'desc';
 
-    database.ref('updates').orderByChild('timestamp').once('value')
-        .then((snapshot) => {
-            console.log('Data received:', snapshot.val()); // Debug log
-            let updates = [];
-            snapshot.forEach((childSnapshot) => {
-                const updateData = childSnapshot.val();
-                console.log('Processing update:', updateData); // Debug log
-                if (updateData.title && updateData.content) { // Make sure we have valid data
-                    if (!searchQuery || 
-                        updateData.content.toLowerCase().includes(searchQuery) || 
-                        updateData.title.toLowerCase().includes(searchQuery)) {
-                        updates.push({
-                            key: childSnapshot.key,
-                            ...updateData
-                        });
-                    }
-                }
-            });
-
-            console.log('Processed updates:', updates); // Debug log
-
-            if (sortOrder === 'desc') {
-                updates.reverse();
+    database.ref('lifeupdates').orderByChild('timestamp').once('value', (snapshot) => {
+        let updates = [];
+        snapshot.forEach((childSnapshot) => {
+            const updateData = childSnapshot.val();
+            const date = new Date(updateData.timestamp).toLocaleString().toLowerCase();
+            if (!searchQuery || updateData.content.toLowerCase().includes(searchQuery) || 
+                updateData.title.toLowerCase().includes(searchQuery) || 
+                date.includes(searchQuery)) {
+                updates.push({ key: childSnapshot.key, ...updateData });
             }
-
-            totalPages = Math.ceil(updates.length / itemsPerPage);
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedUpdates = updates.slice(start, end);
-
-            displayUpdates(paginatedUpdates);
-            displayPagination();
-        })
-        .catch((error) => {
-            console.error("Error loading updates:", error);
-            document.getElementById('updates').innerHTML = 
-                '<p style="text-align: center; font-family: \'MS UI Gothic\', sans-serif;">Error loading updates: ' + error.message + '</p>';
         });
+
+        if (sortOrder === 'desc') {
+            updates.reverse();
+        }
+
+        totalPages = Math.ceil(updates.length / itemsPerPage);
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const paginatedUpdates = updates.slice(start, end);
+
+        displayUpdates(paginatedUpdates);
+        displayPagination();
+    }, (error) => {
+        console.error("Error fetching data: ", error);
+        document.getElementById('updates').innerHTML = '<p>Error loading updates. Please try again later.</p>';
+    });
 }
 
 function displayUpdates(updates) {
@@ -85,18 +70,16 @@ function displayUpdates(updates) {
     updates.forEach((update, index) => {
         const updateDiv = document.createElement('div');
         updateDiv.className = 'gallery-item';
-        updateDiv.style.width = '100%'; // Ensure full width
-        updateDiv.style.boxSizing = 'border-box'; // Include padding in width
 
         const titleElement = document.createElement('h2');
         titleElement.textContent = update.title;
         updateDiv.appendChild(titleElement);
 
-        const dateElement = document.createElement('p');
-        dateElement.style.textAlign = 'center';
-        dateElement.style.marginBottom = '15px';
+        const dateElement = document.createElement('span');
+        dateElement.className = 'date';
+        const date = new Date(update.timestamp);
+        dateElement.innerHTML = date.toLocaleString();
         dateElement.style.fontFamily = "'MS UI Gothic', sans-serif";
-        dateElement.textContent = formatDate(update.timestamp || Date.now());
         updateDiv.appendChild(dateElement);
 
         const contentElement = document.createElement('p');
@@ -121,31 +104,32 @@ function displayUpdates(updates) {
         if (index < updates.length - 1) {
             const symbolDivider = document.createElement('div');
             symbolDivider.className = 'symbol-divider';
-            symbolDivider.innerHTML = symbols[index % symbols.length];
+            // Create a temporary div to properly render HTML entities
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = symbols[index % symbols.length];
+            symbolDivider.textContent = tempDiv.textContent;
             updatesContainer.appendChild(symbolDivider);
         }
     });
 }
 
 function displayPagination() {
+    const paginationElement = document.getElementById('pagination');
     const pageNumbersElement = document.getElementById('page-numbers');
     pageNumbersElement.innerHTML = '';
 
     document.getElementById('prev').disabled = currentPage === 1;
     document.getElementById('next').disabled = currentPage === totalPages;
 
-    if (totalPages > 1) {
-        for (let i = 1; i <= totalPages; i++) {
-            const button = document.createElement('button');
-            button.textContent = i;
-            button.className = i === currentPage ? 'active' : '';
-            button.onclick = () => {
-                currentPage = i;
-                loadUpdates();
-                window.scrollTo(0, 0);
-            };
-            pageNumbersElement.appendChild(button);
-        }
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.className = i === currentPage ? 'active' : '';
+        button.onclick = () => {
+            currentPage = i;
+            loadUpdates();
+        };
+        pageNumbersElement.appendChild(button);
     }
 }
 
@@ -154,20 +138,13 @@ function changePage(direction) {
     if (newPage >= 1 && newPage <= totalPages) {
         currentPage = newPage;
         loadUpdates();
-        window.scrollTo(0, 0);
     }
 }
 
-// Initialize on page load
-window.addEventListener('load', loadUpdates);
-
-// Add event listeners for search and sort
-document.getElementById('search').addEventListener('input', () => {
-    currentPage = 1;
+// Initialize
+window.addEventListener('load', () => {
+    updateDateTime();
     loadUpdates();
-});
-
-document.getElementById('sort').addEventListener('change', () => {
-    currentPage = 1;
-    loadUpdates();
+    // Update time every minute
+    setInterval(updateDateTime, 60000);
 });
