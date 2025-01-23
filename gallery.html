@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Style-Type" content="text/css">
-    <meta name="format-detection" content="telephone=no">
     <title>Juri's Stuff - Gallery</title>
     
     <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
@@ -349,4 +347,39 @@
             <select id="sort" onchange="loadImages()">
                 <option value="desc">Sort by Newest</option>
                 <option value="asc">Sort by Oldest</option>
-                <option value="
+                <option value="shuffle">Shuffle</option>
+            </select>
+        </div>
+
+        <div class="gallery" id="gallery"></div>
+
+        <div class="pagination" id="pagination">
+            <button id="prev" onclick="changePage(-1)">Prev</button>
+            <span id="page-numbers"></span>
+            <button id="next" onclick="changePage(1)">Next</button>
+        </div>
+    </main>
+
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
+
+    <!-- Modal for displaying image details -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-metadata"></p>
+            <p id="modal-caption"></p>
+        </div>
+    </div>
+
+    <div class="fireworks-container"></div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script src="gallery.js"></script>
+</body>
+</html>
