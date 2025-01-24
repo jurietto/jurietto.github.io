@@ -93,6 +93,7 @@
         h2 {
             margin: 20px 0;
             text-align: center;
+            
         }
 
         .divider {
@@ -150,7 +151,7 @@
         }
 
         .gallery-item:hover {
-            border-color: magenta;
+            color: #ff1770;
         }
 
         .gallery-item img {
@@ -264,7 +265,7 @@
         }
 
         button:hover {
-            background-color: 
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         footer {
@@ -272,6 +273,33 @@
             font-family: 'MS UI Gothic', sans-serif;
             font-size: 1rem;
             padding: 20px 0;
+        }
+
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1; /* Place behind other content */
+        }
+
+        .firework-particle {
+            position: absolute;
+            font-size: 48px; /* Increase size of the particles */
+            animation: fireworks 1s forwards;
+        }
+
+        @keyframes fireworks {
+            0% {
+                transform: translate(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--translateX), var(--translateY)) scale(0);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 600px) {
@@ -399,5 +427,48 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="gallery.js"></script>
+
+    <script>
+        // Create a container for the fireworks particles
+        const fireworksContainer = document.createElement('div');
+        fireworksContainer.className = 'fireworks-container';
+        document.body.appendChild(fireworksContainer);
+
+        const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+
+        function createFireworkParticle(symbol) {
+            const particle = document.createElement('span');
+            particle.className = 'firework-particle';
+            particle.textContent = symbol;
+
+            // Randomize the start position and explosion direction
+            const angle = Math.random() * Math.PI * 2; // Random angle in radians
+            const distance = Math.random() * 300; // Distance from the start point
+            const translateX = Math.cos(angle) * distance;
+            const translateY = Math.sin(angle) * distance;
+
+            particle.style.setProperty('--translateX', `${translateX}px`);
+            particle.style.setProperty('--translateY', `${translateY}px`);
+            particle.style.left = `${Math.random() * window.innerWidth}px`;
+            particle.style.top = `${Math.random() * window.innerHeight}px`;
+            fireworksContainer.appendChild(particle);
+
+            // Remove the particle after the animation finishes
+            setTimeout(() => {
+                particle.remove();
+            }, 1500); // Particle lifetime
+        }
+
+        // Event listener for mouseover on navigation links to trigger fireworks
+        const headerLinks = document.querySelectorAll('nav a');
+        headerLinks.forEach((link) => {
+            link.addEventListener('mouseover', () => {
+                for (let i = 0; i < 15; i++) { // Increase number of particles
+                    const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
+                    createFireworkParticle(symbol);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
