@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Style-Type" content="text/css">
     <meta name="format-detection" content="telephone=no">
-    <title>Juri's Stuff - Gallery</title>
+    <title>Juri's Stuff - Updates</title>
 
-    <link rel="stylesheet" type="text/css" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf"/>
+    <link rel="stylesheet" href="https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf" type="font/ttf" />
 
     <style>
         @font-face {
@@ -26,10 +26,10 @@
             color: white;
             line-height: 1.6;
             width: 90%;
-            max-width: 700px;
-            margin: 0 auto;
+            max-width: 700px; 
+            margin: 0 auto; 
             padding: 10px;
-            position: relative;
+            position: relative; 
             text-align: left;
         }
 
@@ -38,8 +38,8 @@
         }
 
         header {
-            position: relative;
-            height: 200px;
+            position: relative; 
+            height: 200px; 
             margin-bottom: 40px;
             padding: 0 10px;
             text-align: center;
@@ -50,32 +50,36 @@
         }
 
         .title-container h1 {
-            margin: 0;
+            margin: 0; 
             font-family: 'Apple Chancery';
             font-size: 3rem;
         }
 
         nav {
-            margin-top: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 0;
+            margin-top: 15px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 10px 0; 
         }
 
         nav a {
             color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-family: 'Apple Chancery';
+            text-decoration: none; 
+            margin: 0 10px; 
+            font-family: 'Apple Chancery'; 
         }
 
         .separator {
-            color: white;
+            color: white; 
             margin: 0 5px;
             font-family: serif;
-            text-shadow:
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+            text-shadow: 
                 0 0 10px rgba(255, 0, 0, 1),
                 0 0 20px rgba(255, 0, 0, 1),
                 0 0 30px rgba(255, 0, 0, 1);
@@ -86,23 +90,24 @@
         }
 
         main {
-            text-align: justify;
+            text-align: justify; 
             padding: 0 20px;
         }
 
         h2 {
-            margin: 20px 0;
-            text-align: center;
+            margin: 20px 0; 
+            text-align: center; 
             color: #ff1770; /* Hover color */
         }
 
         .divider {
             background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
-            height: 24px;
-            background-repeat: repeat-x;
-            margin: 15px 0;
-            width: 100%;
-            display: block;
+            height: 24px; 
+            background-repeat: repeat-x; 
+            border: none; 
+            margin: 15px 0; 
+            width: 100%; 
+            display: block; 
         }
 
         .search-sort-container {
@@ -118,7 +123,7 @@
             font-family: 'MS UI Gothic', sans-serif;
         }
 
-        input[type="text"],
+        input[type="text"], 
         select {
             padding: 8px 15px;
             margin: 0;
@@ -126,27 +131,31 @@
             background-color: black;
             color: white;
             border: 1px solid white;
+            text-shadow: none;
             box-sizing: border-box;
             width: 200px;
             border-radius: 5px;
         }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+        .updates {
+            display: block;
+            width: 100%;
             margin: 20px 0;
+            min-height: 100px;
+            position: relative;
         }
 
         .gallery-item {
-            width: calc(33.333% - 20px);
-            padding-top: 33.333%;
-            position: relative;
-            border: 1px solid white;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
+            position: relative; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border: 1px solid white; 
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 10px; 
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
+            z-index: 1;
             transition: border-color 0.3s;
         }
 
@@ -154,91 +163,24 @@
             border-color: #ff1770; /* Hover color */
         }
 
-        .gallery-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .gallery-item img:hover {
-            transform: scale(1.05);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 101;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: black; /* 100% black on mobile */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .modal-content {
-            height: 400px;
-            width: 100%;
-            max-width: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid white;
-            z-index: 102;
-            pointer-events: none; /* Prevent right-click save */
-        }
-
-        .modal-title {
-            font-family: 'Apple Chancery';
-            color: white;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .modal-date, .modal-caption, .image-count {
+        .gallery-item p {
             font-family: 'MS UI Gothic', sans-serif;
+        }
+
+        .symbol-divider {
+            text-align: center; 
+            margin: 15px 0; 
+            font-size: 3rem; 
             color: white;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 100%;
-            z-index: 103;
-            cursor: pointer;
-        }
-
-        .modal-overlay.right {
-            left: 50%;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2rem;
-            color: magenta;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 104;
-        }
-
-        .close-modal:hover {
-            color: #ff1770; /* Hover color */
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+            text-shadow: 
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
         }
 
         .pagination {
@@ -251,6 +193,11 @@
             max-width: 600px;
             font-family: 'Apple Chancery';
             font-size: 1rem;
+        }
+
+        #page-numbers {
+            display: flex;
+            gap: 5px;
         }
 
         button {
@@ -275,10 +222,10 @@
         }
 
         footer {
-            text-align: center;
-            font-family: 'MS UI Gothic', sans-serif;
-            font-size: 1rem;
-            padding: 20px 0;
+            text-align: center; 
+            font-family: 'MS UI Gothic', sans-serif; 
+            font-size: 1rem; 
+            padding: 20px 0; 
         }
 
         .fireworks-container {
@@ -299,12 +246,12 @@
 
         @keyframes fireworks {
             0% {
-                transform: translate(0) scale(1);
-                opacity: 1;
-            }
+            transform: translate(0) scale(1);
+            opacity: 1;
+        }
             100% {
-                transform: translate(var(--translateX), var(--translateY)) scale(0);
-                opacity: 0;
+            transform: translate(var(--translateX), var(--translateY)) scale(0);
+            opacity: 0;
             }
         }
 
@@ -314,7 +261,7 @@
             }
 
             .title-container h1 {
-                font-size: 2rem;
+                font-size: 2rem; 
             }
 
             .search-sort-container {
@@ -323,14 +270,22 @@
                 gap: 10px;
             }
 
-            input[type="text"],
+            input[type="text"], 
             select {
                 width: 100%;
             }
 
+            .decor-gif-left,
+            .decor-gif-right {
+                width: 30px; 
+            }
+
             .gallery-item {
-                width: 100%; /* Single item per row */
-                padding-top: 100%; /* Maintain square aspect ratio */
+                padding: 15px;
+            }
+
+            .symbol-divider {
+                font-size: 2rem;
             }
 
             .pagination {
@@ -341,20 +296,6 @@
             button {
                 padding: 6px 12px;
                 font-size: 0.8rem;
-            }
-
-            .modal-content {
-                height: auto;
-                max-height: 400px;
-                max-width: 300px;
-            }
-
-            .modal-overlay {
-                width: 50%;
-            }
-
-            .modal-overlay.right {
-                left: 50%;
             }
         }
     </style>
@@ -392,19 +333,19 @@
     </header>
 
     <main>
-        <h2>GALLERY</h2>
+        <h2>UPDATES</h2>
         <div class="divider"></div>
-        
+        <p style="text-align: center;">I've decided to start using this space a bit more consistently—though if I'm honest, I still post pretty infrequently. I started logging things back in 2024 on a different hosting site, but now I've moved everything here. Life is very much a day-by-day thing for me, and I'm okay with that.</p>
+
         <div class="search-sort-container">
-            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadImages()">
-            <select id="sort" onchange="loadImages()">
+            <input type="text" id="search" placeholder="Search... (type here)" oninput="loadUpdates()">
+            <select id="sort" onchange="loadUpdates()">
                 <option value="desc">Sort by Newest</option>
                 <option value="asc">Sort by Oldest</option>
-                <option value="shuffle">Shuffle</option>
             </select>
         </div>
 
-        <div id="gallery" class="gallery"></div>
+        <div id="updates" class="updates"></div>
 
         <div class="pagination" id="pagination">
             <button id="prev" onclick="changePage(-1)">Prev</button>
@@ -417,64 +358,8 @@
         <h6>2024 - ???</h6>
     </footer>
 
-    <!-- Modal for displaying images -->
-    <div id="myModal" class="modal">
-        <div class="modal-overlay" onclick="prevImage()"></div>
-        <div class="modal-overlay right" onclick="nextImage()"></div>
-        <h2 class="modal-title" id="modal-title"></h2>
-        <img class="modal-content" id="modal-img" oncontextmenu="return false;">
-        <div class="modal-caption" id="modal-caption"></div>
-        <div class="modal-date" id="modal-date"></div>
-        <div class="image-count" id="image-count"></div>
-        <button type="button" class="close-modal" aria-label="Close" onclick="closeModal()">×</button>
-    </div>
-
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="gallery.js"></script>
-
-    <script>
-        // Create a container for the fireworks particles
-        const fireworksContainer = document.createElement('div');
-        fireworksContainer.className = 'fireworks-container';
-        document.body.appendChild(fireworksContainer);
-
-        const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
-
-        function createFireworkParticle(symbol) {
-            const particle = document.createElement('span');
-            particle.className = 'firework-particle';
-            particle.textContent = symbol;
-
-            // Randomize the start position and explosion direction
-            const angle = Math.random() * Math.PI * 2; // Random angle in radians
-            const distance = Math.random() * 300; // Distance from the start point
-            const translateX = Math.cos(angle) * distance;
-            const translateY = Math.sin(angle) * distance;
-
-            particle.style.setProperty('--translateX', `${translateX}px`);
-            particle.style.setProperty('--translateY', `${translateY}px`);
-            particle.style.left = `${Math.random() * window.innerWidth}px`;
-            particle.style.top = `${Math.random() * window.innerHeight}px`;
-            fireworksContainer.appendChild(particle);
-
-            // Remove the particle after the animation finishes
-            setTimeout(() => {
-                particle.remove();
-            }, 1500); // Particle lifetime
-        }
-
-        // Event listener for mouseover on navigation links to trigger fireworks
-        const headerLinks = document.querySelectorAll('nav a');
-        headerLinks.forEach((link) => {
-            link.addEventListener('mouseover', () => {
-                for (let i = 0; i < 15; i++) { // Increase number of particles
-                    const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
-                    createFireworkParticle(symbol);
-                }
-            });
-        });
-    </script>
+    <script src="updates.js"></script>
 </body>
 </html>
