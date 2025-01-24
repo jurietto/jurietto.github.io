@@ -139,24 +139,6 @@
             font-family: 'MS UI Gothic', sans-serif;
         }
 
-        .decor-gif-left {
-            position: absolute;
-            top: -10px;
-            left: -20px;
-            width: 50px;
-            height: auto;
-            z-index: 2;
-        }
-
-        .decor-gif-right {
-            position: absolute;
-            top: -10px;
-            right: -20px;
-            width: 50px;
-            height: auto;
-            z-index: 2;
-        }
-
         .symbol-divider {
             text-align: center;
             margin: 15px 0;
@@ -183,15 +165,13 @@
         @media (max-width: 600px) {
             body {
                 width: 95%;
+                background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods2.PNG'); /* Use the specified background for mobile */
+                background-size: cover; /* Ensure the background covers the entire screen */
+                background-position: center; /* Center the background */
             }
 
             .title-container h1 {
                 font-size: 2rem;
-            }
-
-            .decor-gif-left,
-            .decor-gif-right {
-                width: 30px;
             }
 
             .gallery-item {
