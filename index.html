@@ -5,25 +5,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff</title>
-    <script src="scripts.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'Apple Chancery';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Apple Chancery', serif;
+            color: white;
+            overflow: hidden;
+            position: relative;
+            background-color: black;
+        }
+
+        main {
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            font-family: 'MS UI Gothic', sans-serif;
+            font-size: 1rem;
+            padding: 20px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 130%;
+            height: 130%;
+            transform: translate(-15%, -15%);
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Black color with 50% opacity */
+            z-index: 2;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            font-family: 'Apple Chancery';
+        }
+
+        ul li {
+            margin: 10px 0;
+            font-size: 1.5rem;
+        }
+
+        ul li h2 {
+            display: inline;
+        }
+
+        ul li::before {
+            content: attr(data-symbol);
+            margin-right: 10px;
+            font-size: 1.5rem;
+            text-shadow:
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        @media (max-width: 600px) {
+            .video-background {
+                transform: translate(-50%, -50%);
+                width: 150%;
+                height: 150%;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <video autoplay muted loop class="video-background">
+        <source src="https://file.garden/ZhTgSjrp5nAroRKq/videoplayback.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-    <h1>Juri's Stuff</h1>
-    <p>Note: Under Construction :)</p>
-
-    <ul>
-        <li><h2><a href="about.html">About</a></h2></li>
-        <li><h2><a href="https://x.com/sotokomorii">Twitter</a></h2></li>
-        <li><h2><a href="https://bsky.app/profile/sotokomori.bsky.social">Bluesky</a></h2></li>
-        <li><h2><a href="https://www.youtube.com/@juriscafe">YouTube</a></h2></li>
-        <li><h2><a href="https://soundcloud.com/jetsetjuri">Sound​Cloud</a></h2></li>
-        <li><h2><a href="gallery.html">Gallery</a></h2></li>
-        <li><h2><a href="vns.html">Visual Novels</a></h2></li>
-        <li><h2><a href="updates.html">Updates</a></h2></li>
-    </ul>
+    <div class="overlay"></div>
+    
+    <main>
+        <div class="content-wrapper">
+            <h1>Welcome to Juri's Stuff</h1>
+            <p>Note: Under Construction :)</p>
+            <ul>
+                <li data-symbol="&#9829;"><h2><a href="about.html">About</a></h2></li>
+                <li data-symbol="&#9733;"><h2><a href="https://x.com/sotokomorii">Twitter</a></h2></li>
+                <li data-symbol="&#9819;"><h2><a href="https://bsky.app/profile/sotokomori.bsky.social">Bluesky</a></h2></li>
+                <li data-symbol="&#9827;"><h2><a href="https://www.youtube.com/@juriscafe">YouTube</a></h2></li>
+                <li data-symbol="&#9830;"><h2><a href="https://soundcloud.com/jetsetjuri">Sound​Cloud</a></h2></li>
+                <li data-symbol="&#9824;"><h2><a href="gallery.html">Gallery</a></h2></li>
+                <li data-symbol="&#9834;"><h2><a href="vns.html">Visual Novels</a></h2></li>
+                <li data-symbol="&#9829;"><h2><a href="updates.html">Updates</a></h2></li>
+            </ul>
+        </div>
+    </main>
 
     <footer>
         <h6>2024 - ???</h6>
