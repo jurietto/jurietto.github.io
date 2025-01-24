@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff - About Me</title>
+    <title>Juri's Stuff - Introduction</title>
     
     <style>
         @font-face {
@@ -31,9 +31,6 @@
 
         h1, h3, h4, h5, nav a, p, input[type="text"], select, button {
             text-shadow: none;
-        }
-        h2 {
-            color: #ff1770; 
         }
 
         header {
@@ -97,6 +94,14 @@
             margin: 20px 0;
             text-align: center;
             font-family: 'Apple Chancery';
+        }
+
+        h2.introduction {
+            color: white;
+        }
+
+        .gallery-item h2 {
+            color: #ff1770; 
         }
 
         .divider {
@@ -202,6 +207,34 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* Fireworks CSS */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1; /* Place behind other content */
+        }
+
+        .firework-particle {
+            position: absolute;
+            font-size: 48px; /* Increase size of the particles */
+            animation: fireworks 1s forwards;
+        }
+
+        @keyframes fireworks {
+            0% {
+                transform: translate(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--translateX), var(--translateY)) scale(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -211,7 +244,7 @@
             <nav>
                 <a href="index.html">Home</a>
                 <span class="separator">&#9829;</span>
-                <a href="about.html">About</a>
+                <a href="about.html">Introduction</a>
                 <span class="separator">&#9733;</span>
                 <a href="gallery.html">Gallery</a>
                 <span class="separator">&#9819;</span>
@@ -237,7 +270,7 @@
     </header>
 
     <main>
-        <h2>About Me</h2>
+        <h2 class="introduction">Introduction</h2>
         <div class="divider"></div>
         <p style="text-align: center;">
             I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!
@@ -295,7 +328,8 @@
             </ul>
         </div>
     </main>
- <script>
+
+    <script>
         // Create a container for the fireworks particles
         const fireworksContainer = document.createElement('div');
         fireworksContainer.className = 'fireworks-container';
@@ -337,6 +371,7 @@
             });
         });
     </script>
+
     <footer>
         <h6>2024 - ???</h6>
     </footer>
