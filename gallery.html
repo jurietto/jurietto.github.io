@@ -311,6 +311,9 @@
         @media (max-width: 600px) {
             body {
                 width: 95%;
+                background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods2.png'); /* Use the specified background for mobile */
+                background-size: contain; /* Ensure the background is contained */
+                background-position: top center; /* Focus on the top center */
             }
 
             .title-container h1 {
@@ -440,7 +443,8 @@
         fireworksContainer.className = 'fireworks-container';
         document.body.appendChild(fireworksContainer);
 
-        const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+        // Use Unicode symbols for firework particles
+        const fireworkSymbols = ['\u2665', '\u2605', '\u265B', '\u2663', '\u2666', '\u2660', '\u266A']; // Unicode symbols
 
         function createFireworkParticle(symbol) {
             const particle = document.createElement('span');
