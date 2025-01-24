@@ -87,6 +87,7 @@
         }
 
         ul li::before {
+            content: '\265B'; /* Unicode for ♛ */
             font-size: 1.2rem; /* Symbol size */
             color: white;
             text-shadow:
@@ -96,20 +97,10 @@
             margin-right: 10px; /* Space between symbol and link */
         }
 
-        .heart::before { content: '♥'; }
-        .star::before { content: '★'; }
-        .king::before { content: '♛'; }
-        .club::before { content: '♣'; }
-        .diamond::before { content: '♦'; }
-        .spade::before { content: '♠'; }
-        .note::before { content: '♪'; }
-
         @media (max-width: 600px) {
             .video-background {
                 display: none; /* Hide the video background on mobile */
-                background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods2.PNG'); /* Use the specified background for mobile */
-                background-size: contain; /* Ensure the background is contained */
-                background-position: top center; /* Focus on the top center */
+                
             }
 
             .overlay {
@@ -118,10 +109,10 @@
 
             body {
                 background-color: black;
-                background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png'); /* Use the same background as updates.html */
-                background-size: contain;
+                background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods2.PNG'); /* Use the specified background for mobile */
+                background-size: contain; /* Ensure the background is contained */
+                background-position: top; /* Focus on the top center */
                 background-repeat: no-repeat;
-                background-position: center;
                 background-attachment: fixed;
             }
         }
@@ -141,14 +132,14 @@
             <h1>Welcome to Juri's Stuff</h1>
             <p>Note: Under Construction :)</p>
             <ul>
-                <li class="heart"><h2><a href="about.html">Introduction</a></h2></li>
-                <li class="star"><h2><a href="https://x.com/sotokomorii">Twitter</a></h2></li>
-                <li class="king"><h2><a href="https://bsky.app/profile/sotokomori.bsky.social">Bluesky</a></h2></li>
-                <li class="club"><h2><a href="https://www.youtube.com/@juriscafe">YouTube</a></h2></li>
-                <li class="diamond"><h2><a href="https://soundcloud.com/jetsetjuri">SoundCloud</a></h2></li>
-                <li class="spade"><h2><a href="gallery.html">Gallery</a></h2></li>
-                <li class="note"><h2><a href="vns.html">Visual Novels</a></h2></li>
-                <li class="heart"><h2><a href="updates.html">Updates</a></h2></li>
+                <li><h2><a href="about.html">Introduction</a></h2></li>
+                <li><h2><a href="https://x.com/sotokomorii">Twitter</a></h2></li>
+                <li><h2><a href="https://bsky.app/profile/sotokomori.bsky.social">Bluesky</a></h2></li>
+                <li><h2><a href="https://www.youtube.com/@juriscafe">YouTube</a></h2></li>
+                <li><h2><a href="https://soundcloud.com/jetsetjuri">SoundCloud</a></h2></li>
+                <li><h2><a href="gallery.html">Gallery</a></h2></li>
+                <li><h2><a href="vns.html">Visual Novels</a></h2></li>
+                <li><h2><a href="updates.html">Updates</a></h2></li>
             </ul>
         </div>
     </main>
