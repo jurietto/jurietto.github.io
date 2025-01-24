@@ -225,12 +225,15 @@
         }
 
         .close-modal {
-            font-family: Arial, sans-serif;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
             color: magenta;
-            text-align: center;
-            font-size: 1.5rem;
-            margin-top: 10px;
+            background: transparent;
+            border: none;
             cursor: pointer;
+            z-index: 104;
         }
 
         .pagination {
@@ -389,7 +392,7 @@
         <div class="modal-caption" id="modal-caption"></div>
         <div class="modal-date" id="modal-date"></div>
         <div class="image-count" id="image-count"></div>
-        <button type="button" class="close-modal btn-close" aria-label="Close" onclick="closeModal()"></button>
+        <button type="button" class="close-modal" aria-label="Close" onclick="closeModal()">×</button>
     </div>
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
