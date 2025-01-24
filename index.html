@@ -71,8 +71,8 @@
         }
 
         ul li {
-            margin: 10px 0;
-            font-size: 1.5rem;
+            margin: 5px 0; /* Reduced margin for smaller spacing */
+            font-size: 1.2rem; /* Smaller font size */
             display: flex;
             align-items: center;
         }
@@ -88,13 +88,13 @@
 
         ul li::before {
             content: attr(data-symbol);
-            font-size: 1.5rem;
+            font-size: 1.2rem; /* Smaller symbol size */
             color: white;
             text-shadow:
                 0 0 10px rgba(255, 0, 0, 1),
                 0 0 20px rgba(255, 0, 0, 1),
                 0 0 30px rgba(255, 0, 0, 1);
-            margin-right: 10px;
+            margin-right: 5px; /* Reduced spacing between symbol and text */
         }
 
         @media (max-width: 600px) {
