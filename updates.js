@@ -21,7 +21,7 @@ let currentPage = 1;
 const itemsPerPage = 5;
 let totalPages = 1;
 
-const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;']; // Unicode symbols
+const symbols = ['&#9829;', '&#9733;', '&#9819;', '&#9827;', '&#9830;', '&#9824;', '&#9834;']; // Using HTML entities for symbols to prevent emoji conversion
 
 function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -104,24 +104,15 @@ function displayUpdates(updates) {
         contentElement.style.fontFamily = "'MS UI Gothic', sans-serif";
         updateDiv.appendChild(contentElement);
 
-        const decorGifLeft = document.createElement('img');
-        decorGifLeft.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif';
-        decorGifLeft.className = 'decor-gif-left';
-        decorGifLeft.alt = '';
-        updateDiv.appendChild(decorGifLeft);
-
-        const decorGifRight = document.createElement('img');
-        decorGifRight.src = 'https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif';
-        decorGifRight.className = 'decor-gif-right';
-        decorGifRight.alt = '';
-        updateDiv.appendChild(decorGifRight);
-
         updatesContainer.appendChild(updateDiv);
 
         if (index < updates.length - 1) {
             const symbolDivider = document.createElement('div');
             symbolDivider.className = 'symbol-divider';
-            symbolDivider.innerHTML = symbols[index % symbols.length];
+            // Create a temporary div to properly render HTML entities
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = symbols[index % symbols.length];
+            symbolDivider.textContent = tempDiv.textContent;
             updatesContainer.appendChild(symbolDivider);
         }
     });
