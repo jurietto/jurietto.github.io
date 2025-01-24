@@ -315,7 +315,8 @@
         fireworksContainer.className = 'fireworks-container';
         document.body.appendChild(fireworksContainer);
 
-        const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+        // Use Unicode symbols for firework particles
+        const fireworkSymbols = ['\u2665', '\u2605', '\u265B', '\u2663', '\u2666', '\u2660', '\u266A']; // Unicode symbols
 
         function createFireworkParticle(symbol) {
             const particle = document.createElement('span');
