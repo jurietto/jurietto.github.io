@@ -128,11 +128,20 @@ function showModal(index) {
 
     document.body.style.overflow = 'hidden'; // Restrict scrolling
     document.getElementById('myModal').style.display = "flex";
+
+    // Add touch event listeners for swipe functionality
+    modalImg.addEventListener('touchstart', handleTouchStart, false);
+    modalImg.addEventListener('touchmove', handleTouchMove, false);
 }
 
 function closeModal() {
     document.body.style.overflow = 'auto'; // Restore scrolling
     document.getElementById('myModal').style.display = "none";
+
+    // Remove touch event listeners
+    const modalImg = document.getElementById('modal-img');
+    modalImg.removeEventListener('touchstart', handleTouchStart, false);
+    modalImg.removeEventListener('touchmove', handleTouchMove, false);
 }
 
 function prevImage() {
@@ -147,11 +156,43 @@ function nextImage() {
     }
 }
 
+// Swipe handling
+let xDown = null;
+let yDown = null;
+
+function handleTouchStart(evt) {
+    const firstTouch = evt.touches[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+}
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    const xUp = evt.touches[0].clientX;
+    const yUp = evt.touches[0].clientY;
+
+    const xDiff = xDown - xUp;
+    const yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+            nextImage(); // Swipe left
+        } else {
+            prevImage(); // Swipe right
+        }
+    }
+    xDown = null;
+    yDown = null;
+}
+
 // Initialize
 window.addEventListener('load', () => {
     loadImages();
     // Close modal if clicking outside of the image or on the close button
-    document.getElementById('myModal').addEventListener('click', function(event) {
+    document.getElementById('myModal').addEventListener('click', function (event) {
         if (event.target === this || event.target.classList.contains("close-modal")) {
             closeModal();
         }
