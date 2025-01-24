@@ -224,6 +224,15 @@
             left: 50%;
         }
 
+        .close-modal {
+            font-family: 'Apple Chancery';
+            color: magenta;
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -380,6 +389,7 @@
         <div class="modal-caption" id="modal-caption"></div>
         <div class="modal-date" id="modal-date"></div>
         <div class="image-count" id="image-count"></div>
+        <div class="close-modal" onclick="closeModal()">x</div>
     </div>
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
