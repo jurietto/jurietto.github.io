@@ -1,72 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff - About Me</title>
-    <script src="scripts.js" defer></script>
     <link rel="stylesheet" href="styles.css">
-</head>
+    <style>
+        @font-face {
+            font-family: 'Apple Chancery';
+            src: url('https://file.garden/ZhTgSjrp5nAroRKq/apple-chancery.ttf');
+        }
 
+        body {
+            font-family: 'Apple Chancery', serif;
+            background-color: black;
+            background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bloods.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            line-height: 1.6;
+            width: 90%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 10px;
+            position: relative;
+            text-align: left;
+        }
+
+        h1, h2, h3, h4, h5, nav a, p, input[type="text"], select, button {
+            text-shadow: none;
+        }
+
+        header {
+            position: relative;
+            height: 200px;
+            margin-bottom: 40px;
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .title-container {
+            max-width: 100%;
+        }
+
+        .title-container h1 {
+            margin: 0;
+            font-family: 'Apple Chancery';
+            font-size: 3rem;
+        }
+
+        nav {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: 'Apple Chancery';
+        }
+
+        .separator {
+            color: white;
+            margin: 0 5px;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+            text-shadow:
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        nav a:hover {
+            color: #ff007b;
+        }
+
+        main {
+            text-align: justify;
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin: 20px 0;
+            text-align: center;
+            font-family: 'Apple Chancery';
+        }
+
+        .divider {
+            background-image: url('https://enchantingcastle.com/gifs%20&%20pixel%20art/dividers/84.gif');
+            height: 24px;
+            background-repeat: repeat-x;
+            border: none;
+            margin: 15px 0;
+            width: 100%;
+            display: block;
+        }
+
+        .about-section {
+            display: block;
+            width: 100%;
+            margin: 20px 0;
+            min-height: 100px;
+            position: relative;
+        }
+
+        .gallery-item {
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid white;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        .gallery-item p {
+            font-family: 'MS UI Gothic', sans-serif;
+        }
+
+        .decor-gif-left {
+            position: absolute;
+            top: -10px;
+            left: -20px;
+            width: 50px;
+            height: auto;
+            z-index: 2;
+        }
+
+        .decor-gif-right {
+            position: absolute;
+            top: -10px;
+            right: -20px;
+            width: 50px;
+            height: auto;
+            z-index: 2;
+        }
+
+        .symbol-divider {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 3rem;
+            color: white;
+            font-family: serif;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+            -webkit-font-variant-ligatures: none;
+            font-variant-ligatures: none;
+            text-shadow:
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 20px rgba(255, 0, 0, 1),
+                0 0 30px rgba(255, 0, 0, 1);
+        }
+
+        footer {
+            text-align: center;
+            font-family: 'MS UI Gothic', sans-serif;
+            font-size: 1rem;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                width: 95%;
+            }
+
+            .title-container h1 {
+                font-size: 2rem;
+            }
+
+            .decor-gif-left,
+            .decor-gif-right {
+                width: 30px;
+            }
+
+            .gallery-item {
+                padding: 15px;
+            }
+
+            .symbol-divider {
+                font-size: 2rem;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
 <body>
     <header>
-        <h1>Juri's Stuff</h1>
+        <div class="title-container">
+            <h1>Juri's Stuff</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <span class="separator">&#9829;</span>
+                <a href="about.html">About</a>
+                <span class="separator">&#9733;</span>
+                <a href="gallery.html">Gallery</a>
+                <span class="separator">&#9819;</span>
+                <a href="updates.html">Updates</a>
+                <span class="separator">&#9827;</span>
+                <a href="visual-novels.html">Visual Novels</a>
+                <span class="separator">&#9830;</span>
+                <a href="music.html">Music</a>
+                <span class="separator">&#9824;</span>
+                <a href="art.html">Art</a>
+                <span class="separator">&#9829;</span>
+                <a href="twitter.html">Twitter</a>
+                <span class="separator">&#9827;</span>
+                <a href="bluesky.html">Bluesky</a>
+                <span class="separator">&#9827;</span>
+                <a href="youtube.html">YouTube</a>
+                <span class="separator">&#9733;</span>
+                <a href="soundcloud.html">SoundCloud</a>
+                <span class="separator">&#9834;</span>
+                <a href="vndb.html">VNDB</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="sidebar">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="updates.html">Updates</a>
-    </div>
-
     <main>
-        <h1>About Me</h1>
-        <p>I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!</p>
-        <p>I'm sometimes on social media like Twitter or Bluesky, but I deactivate from time to time. I'm most active lurking on Discord—add me @sotokomori. Kindly reach out, but I may or may not be accepting friend requests.</p>
-        <p><strong>Recommendation:</strong> Use a desktop to access this site.</p>
+        <h2>About Me</h2>
+        <div class="divider"></div>
+        <p style="text-align: center;">
+            I like to code useless things, DJ, make music, bake, and I love old visual novels and retro computing. I also have a random Charmmy Kitty obsession. I created this site back in 2024. Hell yeah!
+            <br><br>
+            I'm sometimes on social media like Twitter or Bluesky, but I deactivate from time to time. I'm most active lurking on Discord—add me @sotokomori. Kindly reach out, but I may or may not be active.
+            <br><br>
+            <strong>Recommendation:</strong> Use a desktop to access this site.
+        </p>
 
-        <h2>Coding Projects</h2>
-        <hr />
-        <p>I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re not very ambitious. I’d like to get better at web design eventually, but it’s not my main focus. One day, I’d love to teach myself how to create a visual novel or a game.</p>
+        <div class="about-section gallery-item">
+            <h2>Coding Projects</h2>
+            <p>I'm teaching myself how to code and program. Most of my projects are for learning purposes, so they’re not very ambitious. I’d like to get better at web design eventually, but it’s not my main focus right now.</p>
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif" class="decor-gif-left" alt="">
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif" class="decor-gif-right" alt="">
+        </div>
+        
+        <div class="symbol-divider">&#9829;</div>
 
-        <h2>DJing & Music</h2>
-        <hr />
-        <p>I've been producing music since 2017 and DJing since 2021. My music mainly falls into electronic dance genres—people often describe it as happy hardcore or hard dance. You can check out my music on SoundCloud and decide for yourself!</p>
-        <p>I listen to all kinds of music, but my favorite genres are EBM, electro-industrial, trance, hardstyle, and happy hardcore. There’s something to appreciate about all music.</p>
-        <p>My favorite artist is Velvet Acid Christ. Other favorites include Goreshit, Lords of Acid, Eisenfunk, DJ Billybool, God Module, and Ladytron.</p>
+        <div class="about-section gallery-item">
+            <h2>DJing & Music</h2>
+            <p>I've been producing music since 2017 and DJing since 2021. My music mainly falls into electronic dance genres—people often describe it as happy hardcore or hard dance. You can check out my tracks online.</p>
+            <p>I listen to all kinds of music, but my favorite genres are EBM, electro-industrial, trance, hardstyle, and happy hardcore. There’s something to appreciate about all music.</p>
+            <p>My favorite artist is Velvet Acid Christ. Other favorites include Goreshit, Lords of Acid, Eisenfunk, DJ Billybool, God Module, and Ladytron.</p>
+            <h3>Artists worth supporting...</h3>
+            <ul>
+                <li><a href="https://velvetacidchrist.com/" target="_blank">Velvet Acid Christ</a></li>
+                <li><a href="https://open.spotify.com/artist/5BYTM7ej0bnE7XNgtlMhGR" target="_blank">Dippers</a></li>
+                <li><a href="https://open.spotify.com/artist/2hqIZImqlWKsasi0CMdtAX" target="_blank">DJ Nusagi</a></li>
+            </ul>
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif" class="decor-gif-left" alt="">
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif" class="decor-gif-right" alt="">
+        </div>
 
-        <h3>Artists worth supporting...</h3>
-        <ul>
-            <li><a href="https://velvetacidchrist.com/" target="_blank">Velvet Acid Christ</a></li>
-            <li><a href="https://open.spotify.com/artist/5BYTM7ej0bnE7XNgtlMhGR" target="_blank">Dippers</a></li>
-            <li><a href="https://open.spotify.com/artist/2hqIZImqlWKsasi0CMdtAX" target="_blank">DJ Nusagi</a></li>
-        </ul>
+        <div class="symbol-divider">&#9733;</div>
 
-        <h2>Baking</h2>
-        <hr />
-        <p>Baking rocks! I used to be an overnight baker, and during that time, I read a lot about it and maintained an entire kitchen. In my free time, I like reading about pastries from around the world.</p>
+        <div class="about-section gallery-item">
+            <h2>Baking</h2>
+            <p>Baking rocks! I used to be an overnight baker, and during that time, I read a lot about it and maintained an entire kitchen. In my free time, I like reading about pastries from around the world and experimenting with new recipes.</p>
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif" class="decor-gif-left" alt="">
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif" class="decor-gif-right" alt="">
+        </div>
 
-        <h2>Visual Novels</h2>
-        <hr />
-        <p>My favorite visual novel is <em>Monochrome</em>, and my first was <em>Cafe Little Wish</em>. I also collect old PS2 and PSX NTSC-J titles. I archive playthroughs and am learning how to translate them.</p>
+        <div class="symbol-divider">&#9819;</div>
 
-        <h2>Personality</h2>
-        <hr />
-        <ul>
-            <li>Asocial</li>
-            <li>Introverted</li>
-            <li>Silly</li>
-            <li>Charming</li>
-            <li>Depressive</li>
-            <li>Psychotic</li>
-        </ul>
+        <div class="about-section gallery-item">
+            <h2>Visual Novels</h2>
+            <p>My favorite visual novel is <em>Monochrome</em>, and my first was <em>Cafe Little Wish</em>. I also collect old PS2 and PSX NTSC-J titles. I archive playthroughs and am learning how to translate them.</p>
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif" class="decor-gif-left" alt="">
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif" class="decor-gif-right" alt="">
+        </div>
 
-        <footer>
-            <h6>2024 - ???</h6>
-        </footer>
+        <div class="symbol-divider">&#9827;</div>
+
+        <div class="about-section gallery-item">
+            <h2>Personality</h2>
+            <ul>
+                <li>Asocial</li>
+                <li>Introverted</li>
+                <li>Silly</li>
+                <li>Charming</li>
+                <li>Depressive</li>
+                <li>Psychotic</li>
+            </ul>
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/444.gif" class="decor-gif-left" alt="">
+            <img src="https://enchantingcastle.com/gifs%20&%20pixel%20art/pendaglini/300.gif" class="decor-gif-right" alt="">
+        </div>
     </main>
-</body>
 
+    <footer>
+        <h6>2024 - ???</h6>
+    </footer>
+</body>
 </html>
