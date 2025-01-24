@@ -192,7 +192,7 @@ function handleTouchMove(evt) {
 window.addEventListener('load', () => {
     loadImages();
     // Close modal if clicking outside of the image or on the close button
-    document.getElementById('myModal').addEventListener('click', function (event) {
+    document.getElementById('myModal').addEventListener('click', function(event) {
         if (event.target === this || event.target.classList.contains("close-modal")) {
             closeModal();
         }
