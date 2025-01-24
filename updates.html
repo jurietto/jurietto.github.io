@@ -246,12 +246,12 @@
 
         @keyframes fireworks {
             0% {
-            transform: translate(0) scale(1);
-            opacity: 1;
-        }
+                transform: translate(0) scale(1);
+                opacity: 1;
+            }
             100% {
-            transform: translate(var(--translateX), var(--translateY)) scale(0);
-            opacity: 0;
+                transform: translate(var(--translateX), var(--translateY)) scale(0);
+                opacity: 0;
             }
         }
 
@@ -275,11 +275,6 @@
                 width: 100%;
             }
 
-            .decor-gif-left,
-            .decor-gif-right {
-                width: 30px; 
-            }
-
             .gallery-item {
                 padding: 15px;
             }
@@ -296,6 +291,10 @@
             button {
                 padding: 6px 12px;
                 font-size: 0.8rem;
+            }
+
+            .overlay {
+                display: none; /* Hide the black overlay on mobile */
             }
         }
     </style>
@@ -357,6 +356,8 @@
     <footer>
         <h6>2024 - ???</h6>
     </footer>
+
+    <div class="fireworks-container"></div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
