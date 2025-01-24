@@ -150,45 +150,46 @@ function changePage(direction) {
 }
 
 // Create a container for the fireworks particles
-const fireworksContainer = document.createElement('div');
-fireworksContainer.className = 'fireworks-container';
-document.body.appendChild(fireworksContainer);
+        const fireworksContainer = document.createElement('div');
+        fireworksContainer.className = 'fireworks-container';
+        document.body.appendChild(fireworksContainer);
 
-const fireworkSymbols = ['♥', '★', '♛', '♣', '♦', '♠', '♪']; // Symbols for fireworks particles
+        // Use Unicode symbols for firework particles
+        const fireworkSymbols = ['\u2665', '\u2605', '\u265B', '\u2663', '\u2666', '\u2660', '\u266A']; // Unicode symbols
 
-function createFireworkParticle(symbol) {
-    const particle = document.createElement('span');
-    particle.className = 'firework-particle';
-    particle.textContent = symbol;
+        function createFireworkParticle(symbol) {
+            const particle = document.createElement('span');
+            particle.className = 'firework-particle';
+            particle.textContent = symbol;
 
-    // Randomize the start position and explosion direction
-    const angle = Math.random() * Math.PI * 2; // Random angle in radians
-    const distance = Math.random() * 300; // Distance from the start point
-    const translateX = Math.cos(angle) * distance;
-    const translateY = Math.sin(angle) * distance;
+            // Randomize the start position and explosion direction
+            const angle = Math.random() * Math.PI * 2; // Random angle in radians
+            const distance = Math.random() * 300; // Distance from the start point
+            const translateX = Math.cos(angle) * distance;
+            const translateY = Math.sin(angle) * distance;
 
-    particle.style.setProperty('--translateX', `${translateX}px`);
-    particle.style.setProperty('--translateY', `${translateY}px`);
-    particle.style.left = `${Math.random() * window.innerWidth}px`;
-    particle.style.top = `${Math.random() * window.innerHeight}px`;
-    fireworksContainer.appendChild(particle);
+            particle.style.setProperty('--translateX', `${translateX}px`);
+            particle.style.setProperty('--translateY', `${translateY}px`);
+            particle.style.left = `${Math.random() * window.innerWidth}px`;
+            particle.style.top = `${Math.random() * window.innerHeight}px`;
+            fireworksContainer.appendChild(particle);
 
-    // Remove the particle after the animation finishes
-    setTimeout(() => {
-        particle.remove();
-    }, 1500); // Particle lifetime
-}
-
-// Event listener for mouseover on navigation links to trigger fireworks
-const headerLinks = document.querySelectorAll('nav a');
-headerLinks.forEach((link) => {
-    link.addEventListener('mouseover', () => {
-        for (let i = 0; i < 15; i++) { // Increase number of particles
-            const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
-            createFireworkParticle(symbol);
+            // Remove the particle after the animation finishes
+            setTimeout(() => {
+                particle.remove();
+            }, 1500); // Particle lifetime
         }
-    });
-});
+
+        // Event listener for mouseover on navigation links to trigger fireworks
+        const headerLinks = document.querySelectorAll('nav a');
+        headerLinks.forEach((link) => {
+            link.addEventListener('mouseover', () => {
+                for (let i = 0; i < 15; i++) { // Increase number of particles
+                    const symbol = fireworkSymbols[Math.floor(Math.random() * fireworkSymbols.length)];
+                    createFireworkParticle(symbol);
+                }
+            });
+        });
 
 // Initialize on page load
 window.addEventListener('load', loadUpdates);
