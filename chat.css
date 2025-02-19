@@ -99,32 +99,3 @@ button:hover {
 .notification-settings input[type="checkbox"] {
     margin-right: 5px;
 }
-
-.notification-settings input[type="range"] {
-    margin-left: 10px;
-}
-
-/* Emoji picker styling */
-#emoji-picker {
-    display: none;
-    position: fixed;
-    bottom: 0; /* Drawer style */
-    left: 0;
-    right: 0;
-    background-color: #000;
-    border: 1px solid grey;
-    padding: 10px;
-    border-radius: 5px 5px 0 0;
-}
-
-#emoji-picker .emoji {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    margin: 5px;
-    transition: transform 0.2s;
-}
-
-#emoji-picker .emoji:hover {
-    transform: scale(1.2);
-}
