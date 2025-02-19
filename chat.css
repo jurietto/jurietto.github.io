@@ -27,6 +27,12 @@
     margin-bottom: 5px;
 }
 
+.chat-box p time {
+    color: grey;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
 .chat-box p strong,
 .chat-box p b {
     color: #7f007f;
@@ -101,8 +107,8 @@ button:hover {
 #emoji-picker {
     display: none;
     position: absolute;
-    bottom: 60px;
-    left: 10px;
+    bottom: 100px; /* Adjusted to drop down below the emoji button */
+    left: 0; /* Align with the emoji button */
     background-color: #000;
     border: 1px solid grey;
     padding: 10px;
