@@ -47,8 +47,7 @@ function sendMessage() {
 chatRef.on("child_added", function(snapshot) {
     let data = snapshot.val();
     let newMessage = document.createElement("p");
-    let time = new Date(data.timestamp).toLocaleTimeString();
-    newMessage.innerHTML = `<strong>${data.username} [${time}]:</strong> ${data.text}`;
+    newMessage.innerHTML = `<strong>${data.username}:</strong> ${data.text}`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 });
