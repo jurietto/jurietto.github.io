@@ -5,6 +5,14 @@
 
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: url('pix/starrybg.gif') repeat center center fixed;
+    background-size: cover;
+    padding: 10px;
+    color: black;
 }
 
 /* Apply HARRINGT font */
@@ -36,30 +44,9 @@ a:hover {
     text-decoration: underline;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: url('pix/starrybg.gif') repeat center center fixed;
-    background-size: cover;
-    padding: 10px;
-    color: black;
-}
-
-/* 🖥️ Desktop Layout */
-.container {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Side columns flex, center column fixed */
-    grid-template-rows: auto 1fr auto;
-    gap: 10px;
-    width: 100%;
-    max-width: 1000px;
-}
-
 /* General Styling */
 .header {
-    grid-column: 1 / 4;
+    width: 100%;
     color: white;
     text-align: center;
     padding: 20px;
@@ -67,7 +54,7 @@ body {
 
 /* Navigation Styling */
 .navigation {
-    grid-column: 1 / 4;
+    width: 100%;
     text-align: center;
     padding: 10px 0;
 }
@@ -94,29 +81,27 @@ body {
 /* Ensure chat and main are centered */
 .chat, .main {
     width: 100%; /* Ensures they don't exceed available space */
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
 }
 
 /* Chat Section */
 .chat {
-    padding: 20px;
-    text-align: center;
     max-height: 100%;
     overflow: hidden;
 }
 
 /* Main Section */
 .main {
-    padding: 20px;
-    text-align: center;
     max-height: 100%;
     overflow-y: auto;
 }
 
 /* Footer */
 .footer {
-    grid-column: 1 / 4;
+    width: 100%;
     color: white;
     text-align: center;
     padding: 10px;
 }
-
