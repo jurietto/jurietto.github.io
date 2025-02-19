@@ -73,9 +73,6 @@ messageInput.addEventListener("keypress", function (event) {
 });
 
 emojiButton.addEventListener("click", function() {
-    const rect = emojiButton.getBoundingClientRect();
-    emojiPicker.style.top = `${rect.bottom}px`;
-    emojiPicker.style.left = `${rect.left}px`;
     emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
 });
 
