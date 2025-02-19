@@ -30,6 +30,7 @@ header h1 {
 }
 
 .navbar a {
+    font-weight: bold;
     color: #7f007f;
     text-decoration: none;
     margin: 0 10px;
