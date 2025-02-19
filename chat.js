@@ -19,12 +19,11 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const sendButton = document.getElementById("send-button");
-const audio = new Audio("https://ia601007.us.archive.org/9/items/im_20191103/IM.mp3"); // Sound effect
-
-// Load username from local storage
-if (localStorage.getItem("username")) {
-    usernameInput.value = localStorage.getItem("username");
-}
+const notificationToggle = document.getElementById("notification-toggle");
+const volumeControl = document.getElementById("volume-control");
+const notificationSound = document.getElementById("notification-sound");
+const emojiButton = document.getElementById("emoji-button");
+const emojiPicker = document.getElementById("emoji-picker");
 
 // Function to Send Messages
 function sendMessage() {
@@ -37,7 +36,6 @@ function sendMessage() {
     }
 
     if (message !== "") {
-        localStorage.setItem("username", username); // Save username to local storage
         let newMessage = {
             username: username,
             text: message,
@@ -54,10 +52,16 @@ function sendMessage() {
 chatRef.on("child_added", function(snapshot) {
     let data = snapshot.val();
     let newMessage = document.createElement("p");
-    newMessage.innerHTML = `<strong>${data.username}:</strong> ${data.text}`;
+    let time = new Date(data.timestamp).toLocaleTimeString();
+    newMessage.innerHTML = `<strong>${data.username} [${time}]:</strong> ${data.text}`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
-    audio.play(); // Play sound effect for new message
+
+    // Play notification sound
+    if (notificationToggle.checked) {
+        notificationSound.volume = volumeControl.value;
+        notificationSound.play();
+    }
 });
 
 // Event Listeners
@@ -65,5 +69,23 @@ sendButton.addEventListener("click", sendMessage);
 messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         sendMessage();
+    }
+});
+
+emojiButton.addEventListener("click", function() {
+    emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
+});
+
+emojiPicker.addEventListener("click", function(event) {
+    if (event.target.classList.contains("emoji")) {
+        messageInput.value += `<img src="${event.target.src}" alt="${event.target.alt}" width="24" height="24">`;
+        emojiPicker.style.display = "none";
+    }
+});
+
+// Close emoji picker when clicking outside
+document.addEventListener("click", function(event) {
+    if (!emojiPicker.contains(event.target) && event.target !== emojiButton) {
+        emojiPicker.style.display = "none";
     }
 });
