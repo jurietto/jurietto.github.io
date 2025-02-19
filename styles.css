@@ -8,6 +8,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white; /* Ensures all text is white */
 }
 
 /* Apply HARRINGT font */
