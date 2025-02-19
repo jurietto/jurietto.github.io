@@ -19,6 +19,7 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const sendButton = document.getElementById("send-button");
+const audio = new Audio("https://ia601007.us.archive.org/9/items/im_20191103/IM.mp3"); // Sound effect
 
 // Function to Send Messages
 function sendMessage() {
@@ -50,6 +51,7 @@ chatRef.on("child_added", function(snapshot) {
     newMessage.innerHTML = `<strong>${data.username}:</strong> ${data.text}`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
+    audio.play(); // Play sound effect for new message
 });
 
 // Event Listeners
