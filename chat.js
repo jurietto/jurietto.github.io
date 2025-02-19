@@ -19,7 +19,12 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const sendButton = document.getElementById("send-button");
-const audio = new Audio("sound/IM.mp3"); // Sound effect
+const audio = new Audio("https://ia601007.us.archive.org/9/items/im_20191103/IM.mp3"); // Sound effect
+
+// Load username from local storage
+if (localStorage.getItem("username")) {
+    usernameInput.value = localStorage.getItem("username");
+}
 
 // Function to Send Messages
 function sendMessage() {
@@ -32,6 +37,7 @@ function sendMessage() {
     }
 
     if (message !== "") {
+        localStorage.setItem("username", username); // Save username to local storage
         let newMessage = {
             username: username,
             text: message,
