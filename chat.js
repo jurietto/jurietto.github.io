@@ -20,10 +20,7 @@ const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const sendButton = document.getElementById("send-button");
 const notificationToggle = document.getElementById("notification-toggle");
-const volumeControl = document.getElementById("volume-control");
 const notificationSound = document.getElementById("notification-sound");
-const emojiButton = document.getElementById("emoji-button");
-const emojiPicker = document.getElementById("emoji-picker");
 
 // Function to Send Messages
 function sendMessage() {
@@ -59,7 +56,6 @@ chatRef.on("child_added", function(snapshot) {
 
     // Play notification sound
     if (notificationToggle.checked) {
-        notificationSound.volume = volumeControl.value;
         notificationSound.play();
     }
 });
@@ -69,23 +65,5 @@ sendButton.addEventListener("click", sendMessage);
 messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         sendMessage();
-    }
-});
-
-emojiButton.addEventListener("click", function() {
-    emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
-});
-
-emojiPicker.addEventListener("click", function(event) {
-    if (event.target.classList.contains("emoji")) {
-        messageInput.value += `<img src="${event.target.src}" alt="${event.target.alt}" width="24" height="24">`;
-        emojiPicker.style.display = "none";
-    }
-});
-
-// Close emoji picker when clicking outside
-document.addEventListener("click", function(event) {
-    if (!emojiPicker.contains(event.target) && event.target !== emojiButton) {
-        emojiPicker.style.display = "none";
     }
 });
