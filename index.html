@@ -15,7 +15,7 @@
         <h1>Juri's Stuff</h1>
         <nav>
             <div class="navbar">
-                <strong><a href="updates.html">Updates</a></strong>
+                <strong><a href="#">Updates</a></strong>
                 <strong><a href="#">VN's</a></strong>
                 <strong><a href="#">Music</a></strong>
                 <strong><a href="#">Art</a></strong>
@@ -30,7 +30,20 @@
                 <input type="text" id="username-input" placeholder="Enter your name">
                 <div id="chat-box" class="chat-box"></div>
                 <input type="text" id="message-input" placeholder="Type a message">
+                <button id="emoji-button">☠️</button>
                 <button id="send-button">Send</button>
+                <div class="notification-settings">
+                    <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
+                    <label>Volume: <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1"></label>
+                </div>
+            </div>
+            <audio id="notification-sound" src="notification.mp3"></audio>
+            <div id="emoji-picker" class="emoji-picker">
+                <!-- Custom emoji images -->
+                <img src="emojis/emoji1.png" class="emoji" alt="emoji1">
+                <img src="emojis/emoji2.png" class="emoji" alt="emoji2">
+                <img src="emojis/emoji3.png" class="emoji" alt="emoji3">
+                <!-- Add more emojis as needed -->
             </div>
         </section>
         <section>
@@ -44,7 +57,7 @@
             <p><strong>YouTube:</strong> <strong><a href="https://www.youtube.com/@juriscafe" target="_blank" style="color: #7f007f;">@juri'scafe</a></strong></p><br>
         </section>
         <section>
-            <img src="pix/charmmy-kitty.gif" alt="Image description">
+            <img src="pix/yourimage.jpg" alt="Image description">
         </section>
     </main>
     <footer>
