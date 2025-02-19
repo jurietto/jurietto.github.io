@@ -59,4 +59,3 @@ messageInput.addEventListener("keypress", function (event) {
         sendMessage();
     }
 });
-
