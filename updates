@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juri's Updates</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Juri's Updates</h1>
+        <nav>
+            <div class="navbar">
+                <strong><a href="index.html">Home</a></strong>
+                <strong><a href="updates.html">Updates</a></strong>
+                <strong><a href="#">VN's</a></strong>
+                <strong><a href="#">Music</a></strong>
+                <strong><a href="#">Art</a></strong>
+                <strong><a href="#">Comment</a></strong>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Updates</h2>
+            <div>
+                <p><strong>2024-09-11 12:00 AM</strong></p>
+                <p>I know I always change my site, but this Rilakkuma theme is just so cozy omo... colors.</p>
+            </div>
+            <div>
+                <p><strong>2024-09-11 12:00 AM</strong></p>
+                <p>I'm glad the summer is over. It was hot and I had a very scary surgery. I'm good now, I have to go to follow-up appointments and stuff. So glad fall is here!</p>
+            </div>
+            <div>
+                <p><strong>2024-05-28 12:00 PM</strong></p>
+                <p>I stayed up all night doing drugs and reading about music tech stuff. I feel too depressed to produce anything, so I'm just going to try to learn a few things here and there. I really want to fix my sleep problems and reprioritize how I allocate my time. Today I have to call my doctor, pick up my meds, and fill out these annoying forms. Not really looking forward to it, but it has to be done.</p>
+            </div>
+            <div>
+                <p><strong>2024-05-04 12:00 PM</strong></p>
+                <p>I just started my day and it's like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I'll have for dinner probably nothing special or something simple. Right now I'm just figuring out my next update &ndash; I'll include a message saying something about how I'm not really going to be updating this like all the time. It's just kinda there when I want to use it. (⌒&omega;⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>jurietto.github.io 2024 - ???</p>
+    </footer>
+</body>
+</html>
