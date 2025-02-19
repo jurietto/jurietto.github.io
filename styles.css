@@ -22,7 +22,7 @@ header {
 header h1 {
     font-family: 'CustomFont', Verdana, Tahoma, sans-serif;
     color: white;
-    font-size: 3em;
+    font-size: 4em;
 }
 
 .navbar {
@@ -36,12 +36,37 @@ header h1 {
     font-weight: bold; /* Make navbar text bold */
 }
 
-h1, h2 {
+.navbar a:hover {
+    color: white; /* White hover on navbar links */
+}
+
+h1, h2, h3, h4, h5, h6 {
     font-family: 'CustomFont', Verdana, Tahoma, sans-serif;
 }
 
 h2 {
     color: #7f007f;
+    font-size: 3.5em; /* Larger header font sizes */
+}
+
+h3 {
+    color: #7f007f;
+    font-size: 3em; /* Larger header font sizes */
+}
+
+h4 {
+    color: #7f007f;
+    font-size: 2.5em; /* Larger header font sizes */
+}
+
+h5 {
+    color: #7f007f;
+    font-size: 2em; /* Larger header font sizes */
+}
+
+h6 {
+    color: #7f007f;
+    font-size: 1.5em; /* Larger header font sizes */
 }
 
 p {
