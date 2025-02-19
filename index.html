@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Site</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chat.css"> <!-- Chat Stylesheet -->
+
+    <!-- Firebase v8 (Works in Browser) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Juri's Stuff</h1>
+        </header>
+
+        <nav class="navigation">
+            <ul>
+                <li><a href="#updates">Updates</a></li>
+                <li><a href="#vns">VN's</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#art">Art</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Chat Section -->
+        <aside class="chat">
+            <div class="chat-container">
+                <h2>Live Chat</h2>
+                
+                <!-- Username Input -->
+                <input type="text" id="username-input" placeholder="Enter your name...">
+        
+                <div class="chat-box" id="chat-box"></div>
+                
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </aside>
+
+        <!-- Main Section (Dynamically Loads main.html) -->
+        <main class="main" id="main-content">
+            <h2>Loading content...</h2>
+        </main>
+
+        <footer class="footer">
+            jurietto.github.io 2024 - ???
+        </footer>
+    </div>
+
+    <script src="chat.js"></script> <!-- Chat JavaScript -->
+
+    <!-- Script to Load main.html into the Main Section -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("main.html")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById("main-content").innerHTML = data;
+                })
+                .catch(error => {
+                    console.error("Error loading main.html:", error);
+                    document.getElementById("main-content").innerHTML = "<p>Failed to load content. Please try again later.</p>";
+                });
+        });
+    </script>
+</body>
+</html>
