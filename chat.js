@@ -53,7 +53,7 @@ chatRef.on("child_added", function(snapshot) {
     let data = snapshot.val();
     let newMessage = document.createElement("p");
     let time = new Date(data.timestamp).toLocaleTimeString();
-    newMessage.innerHTML = `<strong>${data.username} [${time}]:</strong> ${data.text}`;
+    newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 
@@ -73,6 +73,9 @@ messageInput.addEventListener("keypress", function (event) {
 });
 
 emojiButton.addEventListener("click", function() {
+    const rect = emojiButton.getBoundingClientRect();
+    emojiPicker.style.top = `${rect.bottom}px`;
+    emojiPicker.style.left = `${rect.left}px`;
     emojiPicker.style.display = emojiPicker.style.display === "none" ? "block" : "none";
 });
 
