@@ -15,8 +15,9 @@
     background: black;
     background-size: cover;
     color: white;
-    text-align: left; /* Ensure chat text is left-aligned */
-    line-height: 1.2; /* More compact line height */
+    text-align: left;
+    padding-left: 5px; /* Ensure chat text is left-aligned */
+    line-height: 1.0; /* More compact line height */
     max-height: 400px; /* Prevents it from taking too much space */
 }
 
