@@ -56,10 +56,12 @@ function sendMessage() {
 
 // Function to Display Messages with Embedded Media
 function displayMessage(data) {
-    let newMessage = document.createElement("p");
+    let newMessage = document.createElement("div");
+    newMessage.classList.add("message-container");
     let time = new Date(data.timestamp).toLocaleTimeString();
+    let messageHeader = `<p><time>${time}</time> <strong>${data.username}:</strong></p>`;
     let formattedText = embedMedia(data.text);
-    newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${formattedText}`;
+    newMessage.innerHTML = `${messageHeader}<div class='embedded-content'>${formattedText}</div>`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
     newMessageSound.play(); // Play sound when new message arrives
@@ -69,7 +71,7 @@ function displayMessage(data) {
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     return text.replace(urlRegex, (url) => {
-        let embedStyle = "max-width: 100%; height: auto; display: block; border: 1px solid grey; padding: 5px;";
+        let embedStyle = "max-width: 100%; height: auto; display: block; border: 1px solid grey; padding: 5px; margin-top: 5px;";
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
             return `<img src="${url}" alt="Image" style="${embedStyle}">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
