@@ -99,3 +99,23 @@ button:hover {
 .notification-settings input[type="checkbox"] {
     margin-right: 5px;
 }
+
+/* Style for file upload input */
+#upload-input {
+    display: none;
+}
+
+.upload-label {
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.upload-label:hover {
+    background-color: #8d2696;
+}
