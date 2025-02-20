@@ -22,6 +22,11 @@ const sendButton = document.getElementById("send-button");
 const notificationToggle = document.getElementById("notification-toggle");
 const notificationSound = document.getElementById("notification-sound");
 
+// Load username from localStorage if available
+if (localStorage.getItem("username")) {
+    usernameInput.value = localStorage.getItem("username");
+}
+
 // Function to Send Messages
 function sendMessage() {
     let username = usernameInput.value.trim();
@@ -31,6 +36,9 @@ function sendMessage() {
         alert("Please enter your name before sending messages!");
         return;
     }
+
+    // Save username to localStorage
+    localStorage.setItem("username", username);
 
     if (message !== "") {
         let newMessage = {
@@ -46,6 +54,7 @@ function sendMessage() {
 }
 
 // Listen for Messages from Firebase
+let lastTimestamp = null;
 chatRef.on("child_added", function(snapshot) {
     let data = snapshot.val();
     let newMessage = document.createElement("p");
@@ -56,10 +65,12 @@ chatRef.on("child_added", function(snapshot) {
 
     let currentUsername = usernameInput.value.trim();
     
-    // Play notification sound if the new message is from another user
-    if (notificationToggle.checked && data.username !== currentUsername) {
+    // Play notification sound if the new message is from another user and it's a new message
+    if (notificationToggle.checked && data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp)) {
         notificationSound.play();
     }
+
+    lastTimestamp = data.timestamp;
 });
 
 // Event Listeners
