@@ -19,6 +19,9 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
+const chatTab = document.getElementById("chat-tab");
+const emoticonsTab = document.getElementById("emoticons-tab");
+const emoticonsContainer = document.getElementById("emoticons-container");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -155,4 +158,34 @@ chatRef.once("value", (snapshot) => {
             }
         }
     });
+});
+
+// Emoticon tab functionality
+const emoticons = [
+    'pix/sb1.gif',
+    // Add more emoticon file names here
+];
+
+emoticons.forEach(emoticon => {
+    let img = document.createElement('img');
+    img.src = emoticon;
+    img.alt = emoticon;
+    img.addEventListener('click', () => {
+        messageInput.value += ` ${img.src} `;
+    });
+    emoticonsContainer.appendChild(img);
+});
+
+chatTab.addEventListener('click', () => {
+    chatBox.classList.remove('hidden');
+    emoticonsContainer.classList.add('hidden');
+    chatTab.classList.add('active');
+    emoticonsTab.classList.remove('active');
+});
+
+emoticonsTab.addEventListener('click', () => {
+    chatBox.classList.add('hidden');
+    emoticonsContainer.classList.remove('hidden');
+    chatTab.classList.remove('active');
+    emoticonsTab.classList.add('active');
 });
