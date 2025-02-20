@@ -29,16 +29,23 @@
                 <div class="tabs">
                     <button id="chat-tab" class="tab-button active">Chat</button>
                     <button id="emoticons-tab" class="tab-button">Emoticons</button>
+                    <button id="settings-tab" class="tab-button">Settings</button>
                 </div>
                 <div id="chat-box" class="chat-box"></div>
                 <div id="emoticons-container" class="emoticons-container hidden">
                     <!-- Emoticons will be loaded here -->
                 </div>
+                <div id="settings-container" class="settings-container hidden">
+                    <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
+                    <br>
+                    <label for="chat-bg-color">Chat Background Color:</label>
+                    <input type="color" id="chat-bg-color" name="chat-bg-color" value="#000000">
+                    <br>
+                    <label for="chat-text-color">Chat Text Color:</label>
+                    <input type="color" id="chat-text-color" name="chat-text-color" value="#ffffff">
+                </div>
                 <input type="text" id="username-input" placeholder="Enter your name">
                 <textarea id="message-input" placeholder="Type a message" rows="1"></textarea>
-                <div class="notification-settings">
-                    <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
-                </div>
             </div>
             <audio id="notification-sound" src="sound/IM.mp3"></audio>
         </section>
@@ -49,7 +56,7 @@
 
             <h2>Find me here:</h2>
             <p><strong>Discord:</strong> sotokomori</p>
-            <p><strong>Twitter:</strong> <strong><a href="https://x.com/sotokomorii" target="_blank">@sotokomorii</a></strong></p>
+            <p><strong>Twitter/X:</strong> <strong><a href="https://x.com/sotokomorii" target="_blank">@sotokomorii</a></strong></p>
             <p><strong>YouTube:</strong> <strong><a href="https://www.youtube.com/@juriscafe" target="_blank">@juri'scafe</a></strong></p><br>
         </section>
         <section>
