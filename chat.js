@@ -18,7 +18,6 @@ const chatRef = database.ref("chat-messages");
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input");
-const postButton = document.getElementById("post-button");
 const notificationSound = document.getElementById("notification-sound");
 const uploadInput = document.getElementById("upload-input");
 
@@ -72,17 +71,29 @@ function displayMessage(data) {
     let time = new Date(data.timestamp).toLocaleTimeString();
     newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
 
-    // Embed YouTube
-    let youtubeMatch = data.text.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-    if (youtubeMatch) {
-        newMessage.innerHTML += `<br><iframe width="300" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
-    }
+    // Automatically linkify URLs
+    newMessage.innerHTML = newMessage.innerHTML.replace(/(https?:\/\/[^\s]+)/g, (url) => {
+        // Embed YouTube
+        let youtubeMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+        if (youtubeMatch) {
+            return `<br><iframe width="300" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
+        }
 
-    // Embed Spotify
-    let spotifyMatch = data.text.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
-    if (spotifyMatch) {
-        newMessage.innerHTML += `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
-    }
+        // Embed Spotify
+        let spotifyMatch = url.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
+        if (spotifyMatch) {
+            return `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+        }
+
+        // Embed Image Links
+        let imageMatch = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+        if (imageMatch) {
+            return `<br><img src="${url}" alt="Embedded Image" style="max-width: 100%; max-height: 200px;">`;
+        }
+
+        // Default clickable link
+        return `<a href="${url}" target="_blank">${url}</a>`;
+    });
 
     // Display uploaded images
     if (data.fileUrl) {
@@ -132,12 +143,6 @@ chatRef.once("value", (snapshot) => {
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
-    if (postButton) {
-        postButton.addEventListener("click", sendMessage);
-    } else {
-        console.error("postButton not found in DOM");
-    }
-
     if (messageInput) {
         messageInput.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
