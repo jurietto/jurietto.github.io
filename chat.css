@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: space-between;
     max-height: 600px; /* Increased height */
+    position: relative;
 } 
 
 .chat-box {
@@ -85,22 +86,24 @@ input:focus {
 /* Tabs styling */
 .tabs {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    justify-content: start;
+    margin-bottom: 10px;
 }
 
 .tab-button {
-    flex: 1;
     padding: 10px;
     background-color: black;
     color: white;
     border: 1px solid grey;
     cursor: pointer;
     text-align: center;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
 }
 
 .tab-button.active {
     background-color: #8d2696;
+    border-bottom: 1px solid #8d2696;
 }
 
 .emoticons-container {
