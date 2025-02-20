@@ -19,7 +19,9 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const postButton = document.getElementById("post-button");
-const notificationSound = document.getElementById("notification-sound"); // Audio element
+
+// Notification sound
+const newMessageSound = new Audio("sound/IM.mp3");
 
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
@@ -52,20 +54,44 @@ function sendMessage() {
     }
 }
 
-// Function to Display Messages
+// Function to Display Messages with Embedded Media
 function displayMessage(data) {
     let newMessage = document.createElement("p");
     let time = new Date(data.timestamp).toLocaleTimeString();
-    newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
+    let formattedText = embedMedia(data.text);
+    newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${formattedText}`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
+    newMessageSound.play(); // Play sound when new message arrives
 }
 
-// Prevent sound from playing on refresh
+// Function to Embed Media in Messages
+function embedMedia(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    return text.replace(urlRegex, (url) => {
+        if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
+            return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block;">`;
+        } else if (url.match(/\.(mp4|mov)$/i)) {
+            return `<video controls style="max-width: 100%; height: auto; display: block;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+        } else if (url.match(/\.(mp3)$/i)) {
+            return `<audio controls style="width: 100%;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+        } else if (url.includes("spotify.com")) {
+            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+        } else if (url.includes("soundcloud.com")) {
+            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}"></iframe>`;
+        } else if (url.includes("music.apple.com")) {
+            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}"></iframe>`;
+        } else {
+            return `<a href="${url}" target="_blank">${url}</a>`;
+        }
+    });
+}
+
+// Prevent duplicate message loading
 let lastTimestamp = null;
 let firstLoadComplete = false;
 
-// Load initial messages WITHOUT playing sound
+// Load initial messages
 chatRef.once("value", (snapshot) => {
     snapshot.forEach((child) => {
         let data = child.val();
@@ -83,16 +109,6 @@ chatRef.once("value", (snapshot) => {
         // Ensure it's a new message, not a duplicate
         if (!lastTimestamp || data.timestamp > lastTimestamp) {
             displayMessage(data);
-
-            let currentUsername = usernameInput.value.trim();
-
-            // Play notification sound only if the message is from another user
-            if (data.username !== currentUsername && firstLoadComplete) {
-                notificationSound.play().catch(error => {
-                    console.log("Audio playback failed:", error);
-                });
-            }
-
             lastTimestamp = data.timestamp;
         }
     });
