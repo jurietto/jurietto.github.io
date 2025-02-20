@@ -17,7 +17,7 @@ const chatRef = database.ref("chat-messages");
 // DOM Elements
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
-const usernameInput = document.getElementById("username-input"); // Username input field
+const usernameInput = document.getElementById("username-input");
 const postButton = document.getElementById("post-button");
 const enableNotifications = document.getElementById("enable-notifications");
 
@@ -49,7 +49,6 @@ function sendMessage() {
         return;
     }
 
-    // Save username to localStorage
     localStorage.setItem("username", username);
 
     if (message !== "") {
@@ -59,7 +58,6 @@ function sendMessage() {
             timestamp: Date.now()
         };
 
-        // Push message to Firebase
         chatRef.push(newMessage);
         messageInput.value = "";
     }
@@ -68,22 +66,27 @@ function sendMessage() {
 // Send message when "Enter" key is pressed
 messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
-        event.preventDefault(); // Prevents a new line in the input field
+        event.preventDefault();
         sendMessage();
     }
 });
 
 // Function to Display Messages with Embedded Media
-function displayMessage(data) {
+function displayMessage(data, playSound = false) {
     let newMessage = document.createElement("div");
     newMessage.classList.add("message-container");
+
     let time = new Date(data.timestamp).toLocaleTimeString();
     let messageContent = document.createElement("p");
-    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
-    newMessage.appendChild(messageContent);
     
+    // Embed media and remove the link from text
     let formattedText = embedMedia(data.text);
-    if (formattedText !== data.text) {
+    let displayText = data.text.replace(/(https?:\/\/[^\s]+)(?=\s|$)/g, "").trim();
+    
+    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
+    newMessage.appendChild(messageContent);
+
+    if (formattedText) {
         let embeddedContent = document.createElement("div");
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
@@ -92,10 +95,11 @@ function displayMessage(data) {
     
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
-    if (notificationsEnabled) newMessageSound.play(); // Play sound when new message arrives
+
+    if (playSound && notificationsEnabled) newMessageSound.play(); // Play sound only for new messages
 }
 
-// Function to Embed Media in Messages with Proper Aspect Ratios
+// Function to Embed Media in Messages
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     return text.replace(urlRegex, (url) => {
@@ -116,7 +120,7 @@ function embedMedia(text) {
         } else if (url.includes("music.apple.com")) {
             return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else {
-            return ""; // Hide links when embedding media
+            return "";
         }
     });
 }
@@ -129,20 +133,17 @@ let firstLoadComplete = false;
 chatRef.once("value", (snapshot) => {
     snapshot.forEach((child) => {
         let data = child.val();
-        displayMessage(data);
-        lastTimestamp = data.timestamp; // Save last known message timestamp
+        displayMessage(data, false); // Load old messages without sound
+        lastTimestamp = data.timestamp;
     });
 
-    // Now that old messages are loaded, we start listening for new ones
     firstLoadComplete = true;
 
     // Listen for new messages
     chatRef.on("child_added", (snapshot) => {
         let data = snapshot.val();
-
-        // Ensure it's a new message, not a duplicate
         if (!lastTimestamp || data.timestamp > lastTimestamp) {
-            displayMessage(data);
+            displayMessage(data, true); // Play sound only for new messages
             lastTimestamp = data.timestamp;
         }
     });
