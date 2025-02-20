@@ -17,8 +17,9 @@ const chatRef = database.ref("chat-messages");
 // DOM Elements
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
-const usernameInput = document.getElementById("username-input");
-const notificationSound = document.getElementById("notification-sound");
+const usernameInput = document.getElementById("username-input"); // Username input field
+const postButton = document.getElementById("post-button");
+const notificationSound = document.getElementById("notification-sound"); // Audio element
 
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
@@ -45,6 +46,7 @@ function sendMessage() {
             timestamp: Date.now()
         };
 
+        // Push message to Firebase
         chatRef.push(newMessage);
         messageInput.value = "";
     }
@@ -55,19 +57,6 @@ function displayMessage(data) {
     let newMessage = document.createElement("p");
     let time = new Date(data.timestamp).toLocaleTimeString();
     newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
-
-    // Embed YouTube
-    let youtubeMatch = data.text.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-    if (youtubeMatch) {
-        newMessage.innerHTML += `<br><iframe width="300" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    // Embed Spotify
-    let spotifyMatch = data.text.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
-    if (spotifyMatch) {
-        newMessage.innerHTML += `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
-    }
-
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 }
@@ -111,6 +100,12 @@ chatRef.once("value", (snapshot) => {
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
+    if (postButton) {
+        postButton.addEventListener("click", sendMessage);
+    } else {
+        console.error("postButton not found in DOM");
+    }
+
     if (messageInput) {
         messageInput.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
