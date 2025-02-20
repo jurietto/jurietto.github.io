@@ -31,7 +31,7 @@ header h1 {
 
 .navbar a {
     font-weight: bold;
-    color: #7f007f;
+    color: #af56bd;
     text-decoration: none;
     margin: 0 10px;
     font-weight: bold; /* Make navbar text bold */
@@ -46,27 +46,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
-    color: #7f007f;
+    color: #af56bd;
     font-size: 3.5em; /* Larger header font sizes */
 }
 
 h3 {
-    color: #7f007f;
+    color: #af56bd;
     font-size: 3em; /* Larger header font sizes */
 }
 
 h4 {
-    color: #7f007f;
+    color: #af56bd;
     font-size: 2.5em; /* Larger header font sizes */
 }
 
 h5 {
-    color: #7f007f;
+    color: #af56bd;
     font-size: 2em; /* Larger header font sizes */
 }
 
 h6 {
-    color: #7f007f;
+    color: #af56bd;
     font-size: 1.5em; /* Larger header font sizes */
 }
 
