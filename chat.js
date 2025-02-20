@@ -77,14 +77,16 @@ chatRef.on("child_added", function(snapshot) {
 });
 
 // Event Listeners
-postButton.addEventListener("click", sendMessage);
-messageInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
+document.addEventListener("DOMContentLoaded", function() {
+    postButton.addEventListener("click", sendMessage);
+    messageInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
 
-// Ensure user interaction to allow audio playback
-document.body.addEventListener('click', () => {
-    notificationSound.play().catch(() => {});
-}, { once: true });
+    // Ensure user interaction to allow audio playback
+    document.body.addEventListener('click', () => {
+        notificationSound.play().catch(() => {});
+    }, { once: true });
+});
