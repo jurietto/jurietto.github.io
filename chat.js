@@ -71,65 +71,69 @@ messageInput.addEventListener("keypress", function (event) {
     }
 });
 
-// Function to Display Messages with Embedded Media
+// Function to Display Messages with Embedded Media (Fixes Double Message Issue)
 function displayMessage(data, playSound = false) {
     let newMessage = document.createElement("div");
     newMessage.classList.add("message-container");
 
     let time = new Date(data.timestamp).toLocaleTimeString();
+    let rawText = data.text;
+
+    // Remove embeddable links from displayed text
+    let displayText = rawText.replace(/(https?:\/\/[^\s]+)(?=\s|$)/g, "").trim();
+    
     let messageContent = document.createElement("p");
-    
-    // Embed media and remove the link from text
-    let formattedText = embedMedia(data.text);
-    let displayText = data.text.replace(/(https?:\/\/[^\s]+)(?=\s|$)/g, "").trim();
-    
     messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
     newMessage.appendChild(messageContent);
 
+    // Embed media (only if applicable)
+    let formattedText = embedMedia(rawText);
     if (formattedText) {
         let embeddedContent = document.createElement("div");
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
     }
-    
+
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 
     if (playSound && notificationsEnabled) newMessageSound.play(); // Play sound only for new messages
 }
 
-// Function to Embed Media in Messages
+// Function to Embed Media Properly (Without Showing Links in Text)
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    return text.replace(urlRegex, (url) => {
+    let embeddedContent = "";
+
+    text.match(urlRegex)?.forEach((url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            return `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
-            return `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
-            return `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
-            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
-        } else {
-            return "";
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
         }
     });
+
+    return embeddedContent;
 }
 
 // Prevent duplicate message loading
 let lastTimestamp = null;
 let firstLoadComplete = false;
 
-// Load initial messages
+// Load initial messages (Fixes Duplicate Messages Issue)
 chatRef.once("value", (snapshot) => {
     snapshot.forEach((child) => {
         let data = child.val();
