@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="chat.css">
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
     <script defer src="chat.js"></script>
 </head>
 <body>
@@ -31,6 +32,9 @@
                 <div id="chat-box" class="chat-box"></div>
                 <input type="text" id="username-input" placeholder="Enter your name">
                 <input type="text" id="message-input" placeholder="Type a message">
+                <label for="upload-input" class="upload-label">Upload File</label>
+                <input type="file" id="upload-input">
+                <button id="post-button">Post</button>
                 <div class="notification-settings">
                     <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
                 </div>
