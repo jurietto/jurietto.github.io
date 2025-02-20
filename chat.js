@@ -67,7 +67,9 @@ chatRef.on("child_added", function(snapshot) {
     
     // Play notification sound if the new message is from another user and it's a new message
     if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp) && !initialLoad) {
-        notificationSound.play();
+        notificationSound.play().catch(error => {
+            console.log("Audio playback failed:", error);
+        });
     }
 
     lastTimestamp = data.timestamp;
@@ -81,3 +83,8 @@ messageInput.addEventListener("keypress", function (event) {
         sendMessage();
     }
 });
+
+// Ensure user interaction to allow audio playback
+document.body.addEventListener('click', () => {
+    notificationSound.play().catch(() => {});
+}, { once: true });
