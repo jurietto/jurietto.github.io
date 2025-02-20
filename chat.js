@@ -54,6 +54,7 @@ function sendMessage() {
 
 // Listen for Messages from Firebase
 let lastTimestamp = null;
+let initialLoad = true;
 chatRef.on("child_added", function(snapshot) {
     let data = snapshot.val();
     let newMessage = document.createElement("p");
@@ -65,11 +66,12 @@ chatRef.on("child_added", function(snapshot) {
     let currentUsername = usernameInput.value.trim();
     
     // Play notification sound if the new message is from another user and it's a new message
-    if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp)) {
+    if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp) && !initialLoad) {
         notificationSound.play();
     }
 
     lastTimestamp = data.timestamp;
+    initialLoad = false;
 });
 
 // Event Listeners
