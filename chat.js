@@ -21,7 +21,11 @@ const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
 const chatTab = document.getElementById("chat-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
+const settingsTab = document.getElementById("settings-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
+const settingsContainer = document.getElementById("settings-container");
+const chatBgColorInput = document.getElementById("chat-bg-color");
+const chatTextColorInput = document.getElementById("chat-text-color");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -40,6 +44,20 @@ if (enableNotifications) {
         notificationsEnabled = enableNotifications.checked;
         localStorage.setItem("notificationsEnabled", notificationsEnabled);
     });
+}
+
+// Load chat colors from localStorage if available
+if (localStorage.getItem("chatBgColor")) {
+    chatBox.style.backgroundColor = localStorage.getItem("chatBgColor");
+    emoticonsContainer.style.backgroundColor = localStorage.getItem("chatBgColor");
+    settingsContainer.style.backgroundColor = localStorage.getItem("chatBgColor");
+    chatBgColorInput.value = localStorage.getItem("chatBgColor");
+}
+if (localStorage.getItem("chatTextColor")) {
+    chatBox.style.color = localStorage.getItem("chatTextColor");
+    emoticonsContainer.style.color = localStorage.getItem("chatTextColor");
+    settingsContainer.style.color = localStorage.getItem("chatTextColor");
+    chatTextColorInput.value = localStorage.getItem("chatTextColor");
 }
 
 // Function to Send Messages
@@ -195,13 +213,42 @@ emoticons.forEach(emoticon => {
 chatTab.addEventListener('click', () => {
     chatBox.classList.remove('hidden');
     emoticonsContainer.classList.add('hidden');
+    settingsContainer.classList.add('hidden');
     chatTab.classList.add('active');
     emoticonsTab.classList.remove('active');
+    settingsTab.classList.remove('active');
 });
 
 emoticonsTab.addEventListener('click', () => {
     chatBox.classList.add('hidden');
     emoticonsContainer.classList.remove('hidden');
+    settingsContainer.classList.add('hidden');
     chatTab.classList.remove('active');
     emoticonsTab.classList.add('active');
+    settingsTab.classList.remove('active');
+});
+
+settingsTab.addEventListener('click', () => {
+    chatBox.classList.add('hidden');
+    emoticonsContainer.classList.add('hidden');
+    settingsContainer.classList.remove('hidden');
+    chatTab.classList.remove('active');
+    emoticonsTab.classList.remove('active');
+    settingsTab.classList.add('active');
+});
+
+// Change chat background color
+chatBgColorInput.addEventListener('input', () => {
+    chatBox.style.backgroundColor = chatBgColorInput.value;
+    emoticonsContainer.style.backgroundColor = chatBgColorInput.value;
+    settingsContainer.style.backgroundColor = chatBgColorInput.value;
+    localStorage.setItem("chatBgColor", chatBgColorInput.value);
+});
+
+// Change chat text color
+chatTextColorInput.addEventListener('input', () => {
+    chatBox.style.color = chatTextColorInput.value;
+    emoticonsContainer.style.color = chatTextColorInput.value;
+    settingsContainer.style.color = chatTextColorInput.value;
+    localStorage.setItem("chatTextColor", chatTextColorInput.value);
 });
