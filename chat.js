@@ -75,6 +75,10 @@ function embedMedia(text) {
             return `<video controls style="max-width: 100%; height: auto; display: block;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
             return `<audio controls style="width: 100%;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
+            let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
+            videoId = videoId.split("&")[0];
+            return `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
             return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
