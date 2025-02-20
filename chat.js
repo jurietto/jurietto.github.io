@@ -59,9 +59,18 @@ function displayMessage(data) {
     let newMessage = document.createElement("div");
     newMessage.classList.add("message-container");
     let time = new Date(data.timestamp).toLocaleTimeString();
-    let messageHeader = `<p><time>${time}</time> <strong>${data.username}:</strong></p>`;
+    let messageContent = document.createElement("p");
+    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
+    newMessage.appendChild(messageContent);
+    
     let formattedText = embedMedia(data.text);
-    newMessage.innerHTML = `${messageHeader}<div class='embedded-content'>${formattedText}</div>`;
+    if (formattedText !== data.text) {
+        let embeddedContent = document.createElement("div");
+        embeddedContent.classList.add("embedded-content");
+        embeddedContent.innerHTML = formattedText;
+        newMessage.appendChild(embeddedContent);
+    }
+    
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
     newMessageSound.play(); // Play sound when new message arrives
@@ -71,25 +80,25 @@ function displayMessage(data) {
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     return text.replace(urlRegex, (url) => {
-        let embedStyle = "max-width: 100%; height: auto; display: block; margin-top: 5px; overflow: hidden;";
+        let embedStyle = "max-width: 100%; aspect-ratio: 16/9; display: block; margin-top: 5px; overflow: hidden;";
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            return `<img src="${url}" alt="Image" style="${embedStyle}">`;
+            return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
             return `<video controls style="${embedStyle}"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
-            return `<audio controls style="${embedStyle}"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+            return `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
             return `<iframe width="100%" height="315" style="${embedStyle}" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="${embedStyle}"></iframe>`;
+            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
-            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="${embedStyle}"></iframe>`;
+            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="${embedStyle}"></iframe>`;
+            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else {
-            return `<a href="${url}" target="_blank">${url}</a>`;
+            return text;
         }
     });
 }
@@ -119,24 +128,4 @@ chatRef.once("value", (snapshot) => {
             lastTimestamp = data.timestamp;
         }
     });
-});
-
-// Event Listeners
-document.addEventListener("DOMContentLoaded", function() {
-    if (postButton) {
-        postButton.addEventListener("click", sendMessage);
-    } else {
-        console.error("postButton not found in DOM");
-    }
-
-    if (messageInput) {
-        messageInput.addEventListener("keypress", function (event) {
-            if (event.key === "Enter") {
-                event.preventDefault(); // Prevent form submission if inside a form
-                sendMessage();
-            }
-        });
-    } else {
-        console.error("messageInput not found in DOM");
-    }
 });
