@@ -1,12 +1,14 @@
 .chat-container {
     width: 100%;
+    max-width: 600px; /* Keep the chat box with messages at a maximum width of 600px */
+    margin: 0 auto; /* Center the chat container */
     height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     max-height: 600px; /* Increased height */
     position: relative;
-} 
+}
 
 .chat-box, .emoticons-container {
     flex-grow: 1;
@@ -52,6 +54,7 @@ input, textarea, #username-input, #message-input {
     font-size: 16px;
     border-radius: 0;
     resize: none; /* Prevent manual resizing */
+    overflow: hidden; /* Hide scroll bar */
 }
 
 /* Prevent chat input from zooming on mobile */
@@ -92,7 +95,7 @@ textarea:focus {
 }
 
 .tab-button {
-    padding: 10px;
+    
     background-color: black;
     color: white;
     border: 1px solid grey;
