@@ -36,7 +36,7 @@
 
 .chat-box p strong,
 .chat-box p b {
-    color: #af56bd;
+    color: #8d2696;
     font-weight: bold;
 }
 
@@ -79,7 +79,7 @@ button {
 }
 
 button:hover {
-    background-color: #af56bd;
+    background-color: #8d2696;
 }
 
 /* Notification settings styling */
