@@ -8,7 +8,7 @@
     position: relative;
 } 
 
-.chat-box {
+.chat-box, .emoticons-container {
     flex-grow: 1;
     overflow-y: auto;
     border: 1px solid grey;
@@ -99,21 +99,13 @@ input:focus {
     text-align: center;
     margin-right: 5px;
     border-radius: 5px 5px 0 0;
+    position: relative;
+    top: 1px;
 }
 
 .tab-button.active {
     background-color: #8d2696;
     border-bottom: 1px solid #8d2696;
-}
-
-.emoticons-container {
-    display: flex;
-    flex-wrap: wrap;
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid grey;
-    padding: 10px;
-    background-color: black;
 }
 
 .emoticons-container img {
