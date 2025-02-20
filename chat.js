@@ -69,22 +69,23 @@ function displayMessage(data) {
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     return text.replace(urlRegex, (url) => {
+        let embedStyle = "max-width: 100%; height: auto; display: block; border: 1px solid grey; padding: 5px;";
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block;">`;
+            return `<img src="${url}" alt="Image" style="${embedStyle}">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            return `<video controls style="max-width: 100%; height: auto; display: block;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            return `<video controls style="${embedStyle}"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
-            return `<audio controls style="width: 100%; max-width: 400px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+            return `<audio controls style="${embedStyle}"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
-            return `<iframe width="560" height="315" style="max-width: 100%;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            return `<iframe width="560" height="315" style="${embedStyle}" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="${embedStyle}"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
-            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}"></iframe>`;
+            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="${embedStyle}"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}"></iframe>`;
+            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="${embedStyle}"></iframe>`;
         } else {
             return `<a href="${url}" target="_blank">${url}</a>`;
         }
