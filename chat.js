@@ -63,6 +63,8 @@ function sendMessage() {
 
         chatRef.push(newMessage);
         messageInput.value = ""; // Clear input field
+        // Reset the height of the message input
+        messageInput.style.height = "auto";
     }
 }
 
@@ -183,6 +185,9 @@ emoticons.forEach(emoticon => {
     img.alt = emoticon;
     img.addEventListener('click', () => {
         messageInput.value += ` ${img.src} `;
+        // Auto-expand the message input box
+        messageInput.style.height = "auto";
+        messageInput.style.height = (messageInput.scrollHeight) + "px";
     });
     emoticonsContainer.appendChild(img);
 });
