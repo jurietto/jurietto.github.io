@@ -12,7 +12,7 @@ body {
     padding: 10px;
     background-image: url('pix/starrybg.gif');
     background-repeat: repeat;
-    background-attachment: fixed; /* Added this line to make the background fixed */
+    background-attachment: fixed; /* Ensure the background is fixed */
     text-align: center; /* Center all text in body */
 }
 
@@ -40,6 +40,15 @@ header h1 {
 
 .navbar a:hover {
     color: white; /* White hover on navbar links */
+}
+
+a {
+    color: #8d2696; /* Ensure all links have the specified color */
+    text-decoration: none;
+}
+
+a:hover {
+    color: white; /* White hover effect on all links */
 }
 
 h1, h2, h3, h4, h5, h6 {
