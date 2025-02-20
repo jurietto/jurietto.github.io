@@ -19,6 +19,7 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const postButton = document.getElementById("post-button");
+const enableNotifications = document.getElementById("enable-notifications");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -26,6 +27,16 @@ const newMessageSound = new Audio("sound/IM.mp3");
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
     usernameInput.value = localStorage.getItem("username");
+}
+
+// Load notification preference
+let notificationsEnabled = localStorage.getItem("notificationsEnabled") === "true";
+if (enableNotifications) {
+    enableNotifications.checked = notificationsEnabled;
+    enableNotifications.addEventListener("change", () => {
+        notificationsEnabled = enableNotifications.checked;
+        localStorage.setItem("notificationsEnabled", notificationsEnabled);
+    });
 }
 
 // Function to Send Messages
@@ -73,32 +84,31 @@ function displayMessage(data) {
     
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
-    newMessageSound.play(); // Play sound when new message arrives
+    if (notificationsEnabled) newMessageSound.play(); // Play sound when new message arrives
 }
 
-// Function to Embed Media in Messages
+// Function to Embed Media in Messages with Proper Aspect Ratios
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     return text.replace(urlRegex, (url) => {
-        let embedStyle = "max-width: 100%; aspect-ratio: 16/9; display: block; margin-top: 5px; overflow: hidden;";
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
             return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            return `<video controls style="${embedStyle}"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            return `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
             return `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
-            return `<iframe width="100%" height="315" style="${embedStyle}" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            return `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
             return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
             return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else {
-            return text;
+            return ""; // Hide links when embedding media
         }
     });
 }
