@@ -78,16 +78,21 @@ function displayMessage(data) {
     let newMessage = document.createElement("div");
     newMessage.classList.add("message-container");
     let time = new Date(data.timestamp).toLocaleTimeString();
-    let messageContent = document.createElement("p");
-    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
-    newMessage.appendChild(messageContent);
-    
     let formattedText = embedMedia(data.text);
+    
     if (formattedText !== "") {
+        let messageContent = document.createElement("p");
+        messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong>`;
+        newMessage.appendChild(messageContent);
+        
         let embeddedContent = document.createElement("div");
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
+    } else {
+        let messageContent = document.createElement("p");
+        messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
+        newMessage.appendChild(messageContent);
     }
     
     chatBox.appendChild(newMessage);
@@ -120,30 +125,3 @@ function embedMedia(text) {
         }
     });
 }
-
-// Prevent duplicate message loading
-let lastTimestamp = null;
-let firstLoadComplete = false;
-
-// Load initial messages
-chatRef.once("value", (snapshot) => {
-    snapshot.forEach((child) => {
-        let data = child.val();
-        displayMessage(data);
-        lastTimestamp = data.timestamp; // Save last known message timestamp
-    });
-
-    // Now that old messages are loaded, we start listening for new ones
-    firstLoadComplete = true;
-
-    // Listen for new messages
-    chatRef.on("child_added", (snapshot) => {
-        let data = snapshot.val();
-
-        // Ensure it's a new message, not a duplicate
-        if (!lastTimestamp || data.timestamp > lastTimestamp) {
-            displayMessage(data);
-            lastTimestamp = data.timestamp;
-        }
-    });
-});
