@@ -54,7 +54,13 @@ function sendMessage() {
 
 // Listen for Messages from Firebase
 let lastTimestamp = null;
-let initialLoad = true;
+let firstLoadComplete = false;
+
+// Ensure initial load doesn't trigger sounds
+chatRef.once("value", () => {
+    firstLoadComplete = true; // This prevents the first batch of messages from playing sounds
+});
+
 chatRef.on("child_added", function(snapshot) {
     let data = snapshot.val();
     let newMessage = document.createElement("p");
@@ -64,26 +70,35 @@ chatRef.on("child_added", function(snapshot) {
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 
     let currentUsername = usernameInput.value.trim();
-    
-    // Play notification sound if the new message is from another user and it's a new message
-    if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp) && !initialLoad) {
+
+    // Play notification sound only if the message is from another user and it's a new message
+    if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp) && firstLoadComplete) {
         notificationSound.play().catch(error => {
             console.log("Audio playback failed:", error);
         });
     }
 
     lastTimestamp = data.timestamp;
-    initialLoad = false;
 });
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
-    postButton.addEventListener("click", sendMessage);
-    messageInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-    });
+    if (postButton) {
+        postButton.addEventListener("click", sendMessage);
+    } else {
+        console.error("postButton not found in DOM");
+    }
+
+    if (messageInput) {
+        messageInput.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent form submission if inside a form
+                sendMessage();
+            }
+        });
+    } else {
+        console.error("messageInput not found in DOM");
+    }
 
     // Ensure user interaction to allow audio playback
     document.body.addEventListener('click', () => {
