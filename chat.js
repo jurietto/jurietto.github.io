@@ -17,9 +17,10 @@ const chatRef = database.ref("chat-messages");
 // DOM Elements
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
-const usernameInput = document.getElementById("username-input"); // Username input field
+const usernameInput = document.getElementById("username-input");
 const postButton = document.getElementById("post-button");
-const notificationSound = document.getElementById("notification-sound"); // Audio element
+const notificationSound = document.getElementById("notification-sound");
+const uploadInput = document.getElementById("upload-input");
 
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
@@ -30,6 +31,7 @@ if (localStorage.getItem("username")) {
 function sendMessage() {
     let username = usernameInput.value.trim();
     let message = messageInput.value.trim();
+    let file = uploadInput.files[0];
 
     if (username === "") {
         alert("Please enter your name before sending messages!");
@@ -39,16 +41,28 @@ function sendMessage() {
     // Save username to localStorage
     localStorage.setItem("username", username);
 
-    if (message !== "") {
+    if (message !== "" || file) {
         let newMessage = {
             username: username,
             text: message,
             timestamp: Date.now()
         };
 
-        // Push message to Firebase
-        chatRef.push(newMessage);
-        messageInput.value = "";
+        if (file) {
+            const storageRef = firebase.storage().ref();
+            const fileRef = storageRef.child(file.name);
+            fileRef.put(file).then(() => {
+                fileRef.getDownloadURL().then((url) => {
+                    newMessage.fileUrl = url;
+                    chatRef.push(newMessage);
+                    messageInput.value = "";
+                    uploadInput.value = "";
+                });
+            });
+        } else {
+            chatRef.push(newMessage);
+            messageInput.value = "";
+        }
     }
 }
 
@@ -57,6 +71,24 @@ function displayMessage(data) {
     let newMessage = document.createElement("p");
     let time = new Date(data.timestamp).toLocaleTimeString();
     newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
+
+    // Embed YouTube
+    let youtubeMatch = data.text.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+    if (youtubeMatch) {
+        newMessage.innerHTML += `<br><iframe width="300" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    // Embed Spotify
+    let spotifyMatch = data.text.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
+    if (spotifyMatch) {
+        newMessage.innerHTML += `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+    }
+
+    // Display uploaded images
+    if (data.fileUrl) {
+        newMessage.innerHTML += `<br><img src="${data.fileUrl}" alt="Uploaded Image" style="max-width: 100%; max-height: 200px;">`;
+    }
+
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 }
