@@ -65,6 +65,14 @@ function sendMessage() {
     }
 }
 
+// Event listener for Enter key
+messageInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent form submission if inside a form
+        sendMessage();
+    }
+});
+
 // Function to Display Messages with Embedded Media
 function displayMessage(data) {
     let newMessage = document.createElement("div");
@@ -75,7 +83,7 @@ function displayMessage(data) {
     newMessage.appendChild(messageContent);
     
     let formattedText = embedMedia(data.text);
-    if (formattedText !== data.text) {
+    if (formattedText !== "") {
         let embeddedContent = document.createElement("div");
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
