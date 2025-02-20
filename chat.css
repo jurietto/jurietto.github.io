@@ -64,24 +64,6 @@ input:focus {
     box-shadow: none;
 }
 
-/* Button styling */
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: black;
-    color: white;
-    border: 1px solid grey;
-    cursor: pointer;
-    font-family: monospace;
-    transition: background-color 0.2s ease;
-    box-sizing: border-box;
-    border-radius: 0;
-}
-
-button:hover {
-    background-color: #8d2696;
-}
-
 /* Notification settings styling */
 .notification-settings {
     display: flex;
@@ -98,24 +80,4 @@ button:hover {
 
 .notification-settings input[type="checkbox"] {
     margin-right: 5px;
-}
-
-/* Style for file upload input */
-#upload-input {
-    display: none;
-}
-
-.upload-label {
-    background-color: black;
-    color: white;
-    border: 1px solid grey;
-    padding: 10px;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.upload-label:hover {
-    background-color: #8d2696;
 }
