@@ -18,8 +18,7 @@ const chatRef = database.ref("chat-messages");
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
-const sendButton = document.getElementById("send-button");
-const notificationToggle = document.getElementById("notification-toggle");
+const postButton = document.getElementById("post-button");
 const notificationSound = document.getElementById("notification-sound");
 
 // Load username from localStorage if available
@@ -66,7 +65,7 @@ chatRef.on("child_added", function(snapshot) {
     let currentUsername = usernameInput.value.trim();
     
     // Play notification sound if the new message is from another user and it's a new message
-    if (notificationToggle.checked && data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp)) {
+    if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp)) {
         notificationSound.play();
     }
 
@@ -74,7 +73,7 @@ chatRef.on("child_added", function(snapshot) {
 });
 
 // Event Listeners
-sendButton.addEventListener("click", sendMessage);
+postButton.addEventListener("click", sendMessage);
 messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         sendMessage();
