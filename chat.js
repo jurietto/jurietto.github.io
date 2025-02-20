@@ -71,7 +71,18 @@ messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
         sendMessage();
+
+        // If in emoticons tab, switch back to chat tab after sending message
+        if (emoticonsTab.classList.contains('active')) {
+            chatTab.click();
+        }
     }
+});
+
+// Auto-expand the message input box based on content
+messageInput.addEventListener("input", function () {
+    this.style.height = "auto";
+    this.style.height = (this.scrollHeight) + "px";
 });
 
 // Function to Display Messages
