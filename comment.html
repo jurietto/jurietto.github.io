@@ -102,24 +102,6 @@
         button:hover {
             background-color: #8d2696;
         }
-
-        /* Notification settings styling */
-        .notification-settings {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            color: white;
-        }
-
-        .notification-settings label {
-            display: flex;
-            align-items: center;
-        }
-
-        .notification-settings input[type="checkbox"] {
-            margin-right: 5px;
-        }
     </style>
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
@@ -139,10 +121,7 @@
                 <input type="text" id="message-input" placeholder="Type a message">
                 <input type="file" id="image-input" accept="image/*">
                 <input type="text" id="youtube-link-input" placeholder="Enter YouTube link">
-                <button id="send-button">Send</button>
-                <div class="notification-settings">
-                    <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
-                </div>
+                <button id="post-button">Post</button>
                 <div id="chat-box" class="chat-box"></div>
             </div>
             <audio id="notification-sound" src="sound/IM.mp3"></audio>
@@ -168,12 +147,12 @@
 
         const chatBox = document.getElementById('chat-box');
         const messageInput = document.getElementById('message-input');
-        const sendButton = document.getElementById('send-button');
+        const postButton = document.getElementById('post-button');
         const usernameInput = document.getElementById('username-input');
         const imageInput = document.getElementById('image-input');
         const youtubeLinkInput = document.getElementById('youtube-link-input');
 
-        sendButton.addEventListener('click', async () => {
+        postButton.addEventListener('click', async () => {
             const message = messageInput.value;
             const username = usernameInput.value || 'Anonymous';
             const youtubeLink = youtubeLinkInput.value;
@@ -189,11 +168,11 @@
             }
 
             await db.collection('comments').add({
-                username,
-                message,
+                author: username,
+                content: message,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 imageUrl,
-                youtubeLink,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                videoLink: youtubeLink,
             });
 
             messageInput.value = '';
@@ -201,20 +180,20 @@
             imageInput.value = '';
         });
 
-        db.collection('comments').orderBy('timestamp', 'asc').onSnapshot(snapshot => {
+        db.collection('comments').orderBy('createdAt', 'asc').onSnapshot(snapshot => {
             chatBox.innerHTML = '';
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const p = document.createElement('p');
-                p.innerHTML = `<strong>${data.username}</strong>: ${data.message} <time>${data.timestamp.toDate().toLocaleTimeString()}</time>`;
+                p.innerHTML = `<strong>${data.author}</strong>: ${data.content} <time>${data.createdAt?.toDate().toLocaleTimeString()}</time>`;
                 if (data.imageUrl) {
                     const img = document.createElement('img');
                     img.src = data.imageUrl;
                     p.appendChild(img);
                 }
-                if (data.youtubeLink) {
+                if (data.videoLink) {
                     const iframe = document.createElement('iframe');
-                    iframe.src = `https://www.youtube.com/embed/${extractYouTubeID(data.youtubeLink)}`;
+                    iframe.src = `https://www.youtube.com/embed/${extractYouTubeID(data.videoLink)}`;
                     p.appendChild(iframe);
                 }
                 chatBox.appendChild(p);
