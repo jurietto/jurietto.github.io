@@ -19,7 +19,7 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input"); // Username input field
 const postButton = document.getElementById("post-button");
-const notificationSound = document.getElementById("notification-sound");
+const notificationSound = document.getElementById("notification-sound"); // Audio element
 
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
@@ -52,16 +52,25 @@ function sendMessage() {
     }
 }
 
+// Function to Display Messages
+function displayMessage(data) {
+    let newMessage = document.createElement("p");
+    let time = new Date(data.timestamp).toLocaleTimeString();
+    newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
+    chatBox.appendChild(newMessage);
+    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
+}
+
 // Prevent sound from playing on refresh
 let lastTimestamp = null;
 let firstLoadComplete = false;
 
-// First, Load Initial Messages Without Playing Sound
+// Load initial messages WITHOUT playing sound
 chatRef.once("value", (snapshot) => {
     snapshot.forEach((child) => {
         let data = child.val();
-        displayMessage(data); // Load messages but DO NOT trigger sound
-        lastTimestamp = data.timestamp; // Set the last known message timestamp
+        displayMessage(data);
+        lastTimestamp = data.timestamp; // Save last known message timestamp
     });
 
     // Now that old messages are loaded, we start listening for new ones
@@ -71,7 +80,7 @@ chatRef.once("value", (snapshot) => {
     chatRef.on("child_added", (snapshot) => {
         let data = snapshot.val();
 
-        // Ensure it's not a duplicate (in case of refresh)
+        // Ensure it's a new message, not a duplicate
         if (!lastTimestamp || data.timestamp > lastTimestamp) {
             displayMessage(data);
 
@@ -88,15 +97,6 @@ chatRef.once("value", (snapshot) => {
         }
     });
 });
-
-// Function to Display Messages
-function displayMessage(data) {
-    let newMessage = document.createElement("p");
-    let time = new Date(data.timestamp).toLocaleTimeString();
-    newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
-    chatBox.appendChild(newMessage);
-    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
-}
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
@@ -116,9 +116,4 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         console.error("messageInput not found in DOM");
     }
-
-    // Ensure user interaction to allow audio playback
-    document.body.addEventListener('click', () => {
-        notificationSound.play().catch(() => {});
-    }, { once: true });
 });
