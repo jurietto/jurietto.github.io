@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const messageInput = document.getElementById("message-input");
     const usernameInput = document.getElementById("username-input");
     const notificationSound = document.getElementById("notification-sound");
-    const searchInput = document.getElementById("search-input"); // New search input
     const uploadInput = document.getElementById("upload-input");
 
     if (messageInput) {
@@ -115,20 +114,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 lastTimestamp = data.timestamp;
             }
         });
-    });
-
-    // Search Functionality (Discord-style message search)
-    searchInput.addEventListener("input", function() {
-        let searchTerm = searchInput.value.toLowerCase();
-        let messages = chatBox.getElementsByTagName("p");
-
-        for (let message of messages) {
-            let text = message.innerText.toLowerCase();
-            if (text.includes(searchTerm)) {
-                message.style.display = "block";
-            } else {
-                message.style.display = "none";
-            }
-        }
     });
 });
