@@ -4,7 +4,7 @@ const firebaseConfig = {
     authDomain: "dungeon-forum.firebaseapp.com",
     databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
     projectId: "dungeon-forum",
-    storageBucket: "dungeon-forum.firebaseapp.com",
+    storageBucket: "dungeon-forum.appspot.com",
     messagingSenderId: "1073920232004",
     appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
 };
@@ -54,8 +54,10 @@ chatRef.on("child_added", function(snapshot) {
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 
-    // Play notification sound
-    if (notificationToggle.checked) {
+    let currentUsername = usernameInput.value.trim();
+    
+    // Play notification sound if the new message is from another user
+    if (notificationToggle.checked && data.username !== currentUsername) {
         notificationSound.play();
     }
 });
