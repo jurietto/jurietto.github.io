@@ -1,37 +1,134 @@
-function sendMessage() {
-    let username = usernameInput.value.trim();
-    let message = messageInput.value.trim();
-    let file = uploadInput ? uploadInput.files[0] : null; // Check if uploadInput exists
+document.addEventListener("DOMContentLoaded", function() {
+    const chatBox = document.getElementById("chat-box");
+    const messageInput = document.getElementById("message-input");
+    const usernameInput = document.getElementById("username-input");
+    const notificationSound = document.getElementById("notification-sound");
+    const searchInput = document.getElementById("search-input"); // New search input
+    const uploadInput = document.getElementById("upload-input");
 
-    if (username === "") {
-        alert("Please enter your name before sending messages!");
-        return;
+    if (messageInput) {
+        messageInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault(); // Prevent new lines
+                sendMessage();
+            }
+        });
+    } else {
+        console.error("messageInput not found in DOM");
     }
 
-    // Save username to localStorage
-    localStorage.setItem("username", username);
+    function sendMessage() {
+        let username = usernameInput.value.trim();
+        let message = messageInput.value.trim();
+        let file = uploadInput ? uploadInput.files[0] : null;
 
-    if (message !== "" || file) {
-        let newMessage = {
-            username: username,
-            text: message,
-            timestamp: Date.now()
-        };
+        if (username === "") {
+            alert("Please enter your name before sending messages!");
+            return;
+        }
 
-        if (file) {
-            const storageRef = firebase.storage().ref();
-            const fileRef = storageRef.child(file.name);
-            fileRef.put(file).then(() => {
-                fileRef.getDownloadURL().then((url) => {
-                    newMessage.fileUrl = url;
-                    chatRef.push(newMessage);
-                    messageInput.value = "";
-                    if (uploadInput) uploadInput.value = ""; // Reset file input safely
+        localStorage.setItem("username", username);
+
+        if (message !== "" || file) {
+            let newMessage = {
+                username: username,
+                text: message,
+                timestamp: Date.now()
+            };
+
+            if (file) {
+                const storageRef = firebase.storage().ref();
+                const fileRef = storageRef.child(file.name);
+                fileRef.put(file).then(() => {
+                    fileRef.getDownloadURL().then((url) => {
+                        newMessage.fileUrl = url;
+                        chatRef.push(newMessage);
+                        messageInput.value = "";
+                        if (uploadInput) uploadInput.value = "";
+                    });
                 });
-            });
-        } else {
-            chatRef.push(newMessage);
-            messageInput.value = "";
+            } else {
+                chatRef.push(newMessage);
+                messageInput.value = "";
+            }
         }
     }
-}
+
+    function displayMessage(data) {
+        let newMessage = document.createElement("p");
+        let time = new Date(data.timestamp).toLocaleTimeString();
+        newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
+
+        // Automatically embed links
+        newMessage.innerHTML = newMessage.innerHTML.replace(/(https?:\/\/[^\s]+)/g, (url) => {
+            let youtubeMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+            if (youtubeMatch) {
+                return `<br><iframe width="300" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
+            }
+
+            let spotifyMatch = url.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
+            if (spotifyMatch) {
+                return `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+            }
+
+            let imageMatch = url.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+            if (imageMatch) {
+                return `<br><img src="${url}" alt="Embedded Image" style="max-width: 100%; max-height: 200px;">`;
+            }
+
+            return `<a href="${url}" target="_blank">${url}</a>`;
+        });
+
+        if (data.fileUrl) {
+            newMessage.innerHTML += `<br><img src="${data.fileUrl}" alt="Uploaded Image" style="max-width: 100%; max-height: 200px;">`;
+        }
+
+        chatBox.appendChild(newMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    let lastTimestamp = null;
+    let firstLoadComplete = false;
+
+    chatRef.once("value", (snapshot) => {
+        snapshot.forEach((child) => {
+            let data = child.val();
+            displayMessage(data);
+            lastTimestamp = data.timestamp;
+        });
+
+        firstLoadComplete = true;
+
+        chatRef.on("child_added", (snapshot) => {
+            let data = snapshot.val();
+
+            if (!lastTimestamp || data.timestamp > lastTimestamp) {
+                displayMessage(data);
+
+                let currentUsername = usernameInput.value.trim();
+                if (data.username !== currentUsername && firstLoadComplete) {
+                    notificationSound.play().catch(error => {
+                        console.log("Audio playback failed:", error);
+                    });
+                }
+
+                lastTimestamp = data.timestamp;
+            }
+        });
+    });
+
+    // Search Functionality (Discord-style message search)
+    searchInput.addEventListener("input", function() {
+        let searchTerm = searchInput.value.toLowerCase();
+        let messages = chatBox.getElementsByTagName("p");
+
+        for (let message of messages) {
+            let text = message.innerText.toLowerCase();
+            if (text.includes(searchTerm)) {
+                message.style.display = "block";
+            } else {
+                message.style.display = "none";
+            }
+        }
+    });
+});
