@@ -80,19 +80,15 @@ function displayMessage(data) {
     let time = new Date(data.timestamp).toLocaleTimeString();
     let formattedText = embedMedia(data.text);
     
-    if (formattedText !== "") {
-        let messageContent = document.createElement("p");
-        messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong>`;
-        newMessage.appendChild(messageContent);
-        
+    let messageContent = document.createElement("p");
+    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${formattedText ? "" : data.text}`;
+    newMessage.appendChild(messageContent);
+    
+    if (formattedText) {
         let embeddedContent = document.createElement("div");
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
-    } else {
-        let messageContent = document.createElement("p");
-        messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
-        newMessage.appendChild(messageContent);
     }
     
     chatBox.appendChild(newMessage);
@@ -103,25 +99,33 @@ function displayMessage(data) {
 // Function to Embed Media in Messages with Proper Aspect Ratios
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    return text.replace(urlRegex, (url) => {
+    let containsMedia = false;
+    let formattedText = text.replace(urlRegex, (url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
+            containsMedia = true;
             return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
+            containsMedia = true;
             return `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
+            containsMedia = true;
             return `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
+            containsMedia = true;
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
             return `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
+            containsMedia = true;
             return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
+            containsMedia = true;
             return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
+            containsMedia = true;
             return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
-        } else {
-            return ""; // Hide links when embedding media
         }
+        return url;
     });
+    return containsMedia ? formattedText : "";
 }
