@@ -18,8 +18,7 @@ const chatRef = database.ref("chat-messages");
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input");
-const postButton = document.getElementById("post-button");
-const enableNotifications = document.getElementById("enable-notifications");
+const enableNotifications = document.getElementById("notification-toggle");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
