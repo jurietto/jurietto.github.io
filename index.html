@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chat.css">
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
     <script defer src="chat.js"></script>
 </head>
 <body>
@@ -20,7 +19,6 @@
                 <strong><a href="#">VN's</a></strong>
                 <strong><a href="#">Music</a></strong>
                 <strong><a href="#">Art</a></strong>
-        
             </div>
         </nav>
     </header>
@@ -28,13 +26,9 @@
         <section>
             <h2>Chatzone</h2>
             <div class="chat-container">
-                
                 <div id="chat-box" class="chat-box"></div>
                 <input type="text" id="username-input" placeholder="Enter your name">
                 <input type="text" id="message-input" placeholder="Type a message">
-                <label for="upload-input" class="upload-label">Upload File</label>
-                <input type="file" id="upload-input">
-                <button id="post-button">Post</button>
                 <div class="notification-settings">
                     <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
                 </div>
