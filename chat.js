@@ -18,9 +18,7 @@ const chatRef = database.ref("chat-messages");
 const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input");
-const postButton = document.getElementById("post-button");
 const notificationSound = document.getElementById("notification-sound");
-const uploadInput = document.getElementById("upload-input");
 
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
@@ -31,7 +29,6 @@ if (localStorage.getItem("username")) {
 function sendMessage() {
     let username = usernameInput.value.trim();
     let message = messageInput.value.trim();
-    let file = uploadInput.files[0];
 
     if (username === "") {
         alert("Please enter your name before sending messages!");
@@ -41,28 +38,15 @@ function sendMessage() {
     // Save username to localStorage
     localStorage.setItem("username", username);
 
-    if (message !== "" || file) {
+    if (message !== "") {
         let newMessage = {
             username: username,
             text: message,
             timestamp: Date.now()
         };
 
-        if (file) {
-            const storageRef = firebase.storage().ref();
-            const fileRef = storageRef.child(file.name);
-            fileRef.put(file).then(() => {
-                fileRef.getDownloadURL().then((url) => {
-                    newMessage.fileUrl = url;
-                    chatRef.push(newMessage);
-                    messageInput.value = "";
-                    uploadInput.value = "";
-                });
-            });
-        } else {
-            chatRef.push(newMessage);
-            messageInput.value = "";
-        }
+        chatRef.push(newMessage);
+        messageInput.value = "";
     }
 }
 
@@ -82,11 +66,6 @@ function displayMessage(data) {
     let spotifyMatch = data.text.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
     if (spotifyMatch) {
         newMessage.innerHTML += `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypte[...]
-    }
-
-    // Display uploaded images
-    if (data.fileUrl) {
-        newMessage.innerHTML += `<br><img src="${data.fileUrl}" alt="Uploaded Image" style="max-width: 100%; max-height: 200px;">`;
     }
 
     chatBox.appendChild(newMessage);
@@ -132,12 +111,6 @@ chatRef.once("value", (snapshot) => {
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
-    if (postButton) {
-        postButton.addEventListener("click", sendMessage);
-    } else {
-        console.error("postButton not found in DOM");
-    }
-
     if (messageInput) {
         messageInput.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
