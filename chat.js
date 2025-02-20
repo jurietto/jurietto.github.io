@@ -81,7 +81,7 @@ function displayMessage(data) {
     // Embed Spotify
     let spotifyMatch = data.text.match(/(?:https?:\/\/)?(?:open\.)?spotify\.com\/(track|playlist)\/([\w-]+)/);
     if (spotifyMatch) {
-        newMessage.innerHTML += `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+        newMessage.innerHTML += `<br><iframe src="https://open.spotify.com/embed/${spotifyMatch[1]}/${spotifyMatch[2]}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypte[...]
     }
 
     // Display uploaded images
