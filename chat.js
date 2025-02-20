@@ -23,6 +23,7 @@ const enableNotifications = document.getElementById("enable-notifications");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
+newMessageSound.preload = "auto"; // Preload the audio
 
 // Load username from localStorage if available
 if (localStorage.getItem("username")) {
@@ -148,6 +149,7 @@ chatRef.once("value", (snapshot) => {
 
             // Play the notification sound
             if (notificationsEnabled) {
+                console.log("Playing notification sound...");
                 newMessageSound.play().catch((error) => {
                     console.error("Error playing notification sound:", error);
                 });
