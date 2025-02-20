@@ -71,7 +71,7 @@ messageInput.addEventListener("keypress", function (event) {
     }
 });
 
-// Function to Display Messages with Embedded Media (Fixes Double Message Issue)
+// Function to Display Messages
 function displayMessage(data, playSound = false) {
     let newMessage = document.createElement("div");
     newMessage.classList.add("message-container");
@@ -86,7 +86,7 @@ function displayMessage(data, playSound = false) {
     messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
     newMessage.appendChild(messageContent);
 
-    // Embed media (only if applicable)
+    // Embed media (if applicable)
     let formattedText = embedMedia(rawText);
     if (formattedText) {
         let embeddedContent = document.createElement("div");
@@ -98,10 +98,13 @@ function displayMessage(data, playSound = false) {
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 
-    if (playSound && notificationsEnabled) newMessageSound.play(); // Play sound only for new messages
+    // Play sound only for new messages (not old ones)
+    if (playSound && notificationsEnabled) {
+        newMessageSound.play();
+    }
 }
 
-// Function to Embed Media Properly (Without Showing Links in Text)
+// Function to Embed Media
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     let embeddedContent = "";
@@ -130,7 +133,7 @@ function embedMedia(text) {
 }
 
 // Prevent duplicate message loading
-let lastTimestamp = null;
+let lastTimestamp = 0;
 let firstLoadComplete = false;
 
 // Load initial messages (Fixes Duplicate Messages Issue)
@@ -138,7 +141,9 @@ chatRef.once("value", (snapshot) => {
     snapshot.forEach((child) => {
         let data = child.val();
         displayMessage(data, false); // Load old messages without sound
-        lastTimestamp = data.timestamp;
+        if (data.timestamp > lastTimestamp) {
+            lastTimestamp = data.timestamp;
+        }
     });
 
     firstLoadComplete = true;
@@ -146,8 +151,8 @@ chatRef.once("value", (snapshot) => {
     // Listen for new messages
     chatRef.on("child_added", (snapshot) => {
         let data = snapshot.val();
-        if (!lastTimestamp || data.timestamp > lastTimestamp) {
-            displayMessage(data, true); // Play sound only for new messages
+        if (data.timestamp > lastTimestamp) {
+            displayMessage(data, firstLoadComplete); // Play sound only for new messages
             lastTimestamp = data.timestamp;
         }
     });
