@@ -36,16 +36,13 @@
                     <!-- Emoticons will be loaded here -->
                 </div>
                 <div id="settings-container" class="settings-container hidden">
-                    <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
-                    <br>
-                    <label for="chat-bg-color">Chat Background Color:</label>
-                    <input type="color" id="chat-bg-color" name="chat-bg-color" value="#000000">
-                    <br>
-                    <label for="chat-text-color">Chat Text Color:</label>
-                    <input type="color" id="chat-text-color" name="chat-text-color" value="#ffffff">
+                    <div class="notification-settings">
+                        <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
+                    </div>
+                    <!-- Add more settings here as needed -->
                 </div>
                 <input type="text" id="username-input" placeholder="Enter your name">
-                <textarea id="message-input" placeholder="Type a message" rows="1"></textarea>
+                <textarea id="message-input" placeholder="Don't be a loner bear <3" rows="1"></textarea>
             </div>
             <audio id="notification-sound" src="sound/IM.mp3"></audio>
         </section>
