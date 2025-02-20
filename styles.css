@@ -12,6 +12,7 @@ body {
     padding: 10px;
     background-image: url('pix/starrybg.gif');
     background-repeat: repeat;
+    background-attachment: fixed; /* Added this line to make the background fixed */
     text-align: center; /* Center all text in body */
 }
 
