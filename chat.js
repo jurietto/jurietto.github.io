@@ -9,7 +9,7 @@ const firebaseConfig = {
     appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
 };
 
-// Initialize Firebase (V8)
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 const chatRef = database.ref("chat-messages");
@@ -52,34 +52,51 @@ function sendMessage() {
     }
 }
 
-// Listen for Messages from Firebase
+// Prevent sound from playing on refresh
 let lastTimestamp = null;
 let firstLoadComplete = false;
 
-// Ensure initial load doesn't trigger sounds
-chatRef.once("value", () => {
-    firstLoadComplete = true; // This prevents the first batch of messages from playing sounds
+// First, Load Initial Messages Without Playing Sound
+chatRef.once("value", (snapshot) => {
+    snapshot.forEach((child) => {
+        let data = child.val();
+        displayMessage(data); // Load messages but DO NOT trigger sound
+        lastTimestamp = data.timestamp; // Set the last known message timestamp
+    });
+
+    // Now that old messages are loaded, we start listening for new ones
+    firstLoadComplete = true;
+
+    // Listen for new messages
+    chatRef.on("child_added", (snapshot) => {
+        let data = snapshot.val();
+
+        // Ensure it's not a duplicate (in case of refresh)
+        if (!lastTimestamp || data.timestamp > lastTimestamp) {
+            displayMessage(data);
+
+            let currentUsername = usernameInput.value.trim();
+
+            // Play notification sound only if the message is from another user
+            if (data.username !== currentUsername && firstLoadComplete) {
+                notificationSound.play().catch(error => {
+                    console.log("Audio playback failed:", error);
+                });
+            }
+
+            lastTimestamp = data.timestamp;
+        }
+    });
 });
 
-chatRef.on("child_added", function(snapshot) {
-    let data = snapshot.val();
+// Function to Display Messages
+function displayMessage(data) {
     let newMessage = document.createElement("p");
     let time = new Date(data.timestamp).toLocaleTimeString();
     newMessage.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${data.text}`;
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
-
-    let currentUsername = usernameInput.value.trim();
-
-    // Play notification sound only if the message is from another user and it's a new message
-    if (data.username !== currentUsername && (!lastTimestamp || data.timestamp > lastTimestamp) && firstLoadComplete) {
-        notificationSound.play().catch(error => {
-            console.log("Audio playback failed:", error);
-        });
-    }
-
-    lastTimestamp = data.timestamp;
-});
+}
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
