@@ -65,6 +65,14 @@ function sendMessage() {
     }
 }
 
+// Send message when "Enter" key is pressed
+messageInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevents a new line in the input field
+        sendMessage();
+    }
+});
+
 // Function to Display Messages with Embedded Media
 function displayMessage(data) {
     let newMessage = document.createElement("div");
