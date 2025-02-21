@@ -55,20 +55,13 @@ if (localStorage.getItem("theme")) {
 
 // Function to set theme
 function setTheme(theme) {
-    const chatContainer = document.querySelector('.chat-container');
     const tabButtons = document.querySelectorAll('.tab-button');
-    const containers = document.querySelectorAll('.chat-box, .music-container, .emoticons-container, .settings-container');
     const messageInputs = [usernameInput, messageInput];
     
-    // Apply theme to chat container, tab buttons, containers, and message inputs
-    chatContainer.className = `chat-container ${theme}`;
+    // Apply theme to tab buttons and message inputs
     tabButtons.forEach(tab => {
         tab.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
         tab.classList.add(theme);
-    });
-    containers.forEach(container => {
-        container.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
-        container.classList.add(theme);
     });
     messageInputs.forEach(input => {
         input.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
@@ -178,56 +171,4 @@ function embedMedia(text) {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
             embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video playback.</video>`;
-        } else if (url.match(/\.(mp3)$/i)) {
-            embeddedContent += `<audio controls style="width: 100%; display: inline-block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
-        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
-            let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
-            videoId = videoId.split("&")[0];
-            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: inline-block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-        } else if (url.includes("spotify.com")) {
-            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: inline-block; margin-top: 5px;"></iframe>`;
-        } else if (url.includes("soundcloud.com")) {
-            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true" style="display: inline-block; margin-top: 5px;"></iframe>`;
-        }
-    });
-
-    return embeddedContent;
-}
-
-// Listen for new messages
-chatRef.on("child_added", function(snapshot) {
-    displayMessage(snapshot.val());
-});
-
-// Tab functionality
-function switchTab(event) {
-    const tabId = event.target.id;
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const containers = document.querySelectorAll('.chat-box, .music-container, .emoticons-container, .settings-container');
-
-    tabButtons.forEach(button => {
-        button.classList.remove('active');
-    });
-
-    containers.forEach(container => {
-        container.classList.add('hidden');
-    });
-
-    event.target.classList.add('active');
-
-    if (tabId === 'main-tab') {
-        chatBox.classList.remove('hidden');
-    } else if (tabId === 'music-tab') {
-        musicContainer.classList.remove('hidden');
-    } else if (tabId === 'emoticons-tab') {
-        emoticonsContainer.classList.remove('hidden');
-    } else if (tabId === 'settings-tab') {
-        settingsContainer.classList.remove('hidden');
-    }
-}
-
-mainTab.addEventListener('click', switchTab);
-musicTab.addEventListener('click', switchTab);
-emoticonsTab.addEventListener('click', switchTab);
-settingsTab.addEventListener('click', switchTab);
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display:
