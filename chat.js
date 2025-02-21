@@ -69,7 +69,7 @@ function setTheme(theme) {
     });
 
     // Set strong tag color based on theme
-    const strongTags = document.querySelectorAll('strong');
+    const strongTags = chatBox.querySelectorAll('strong');
     strongTags.forEach(tag => {
         tag.style.color = '';
         if (theme === 'neon-purple') {
@@ -171,4 +171,24 @@ function embedMedia(text) {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
             embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display:
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">
+                                    <source src="${url}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>`;
+        } else {
+            embeddedContent += `<a href="${url}" target="_blank">${url}</a>`;
+        }
+    });
+
+    return embeddedContent;
+}
+
+// Listen for new chat messages
+chatRef.on("child_added", (snapshot) => {
+    displayMessage(snapshot.val());
+    
+    // Play notification sound if notifications are enabled
+    if (notificationsEnabled) {
+        newMessageSound.play();
+    }
+});
