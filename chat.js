@@ -61,8 +61,14 @@ function setTheme(theme) {
     
     // Apply theme to chat container, tab buttons, and message inputs
     chatContainer.className = `chat-container ${theme}`;
-    tabButtons.forEach(tab => tab.classList.add(theme));
-    messageInputs.forEach(input => input.className = theme);
+    tabButtons.forEach(tab => {
+        tab.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+        tab.classList.add(theme);
+    });
+    messageInputs.forEach(input => {
+        input.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+        input.classList.add(theme);
+    });
 
     localStorage.setItem("theme", theme);
 }
@@ -191,19 +197,4 @@ chatRef.once("value", (snapshot) => {
             if (notificationsEnabled) {
                 console.log("Playing notification sound...");
                 newMessageSound.play().catch((error) => {
-                    console.error("Error playing notification sound:", error);
-                });
-            }
-        }
-    });
-});
-
-// Emoticon tab functionality
-const emoticons = [
-    'pix/sb1.gif',
-    // Add more emoticon file names here
-];
-
-emoticons.forEach(emoticon => {
-    let img = document.createElement('img');
-   
+                    console.error("Error playing notification
