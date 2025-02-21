@@ -1,4 +1,3 @@
-```javascript
 // Ensure only one instance of Firebase is initialized
 if (!firebase.apps.length) {
     // Firebase Configuration
@@ -31,7 +30,10 @@ const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
-const uploadInput = document.getElementById("upload-input"); // Added Upload Input
+const uploadInput = document.createElement("input"); // Added Upload Input
+uploadInput.type = "file";
+uploadInput.accept = ".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif"; // Accept all media files
+document.body.appendChild(uploadInput); // Append to body
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -249,5 +251,3 @@ tabs.forEach(tab => {
         containers[tab.id].classList.remove('hidden');
     });
 });
-
-```
