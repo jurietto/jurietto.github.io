@@ -42,6 +42,7 @@ body {
 .chat-box p b {
     font-family: Verdana, sans-serif;
     font-weight: bold;
+    color: #8d2696; /* Default color for strong tags */
 }
 
 /* Style input fields */
@@ -139,6 +140,10 @@ textarea:focus, input:focus {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced 3D effect */
 }
 
+.tab-button:hover {
+    background-color: #8d2696; /* Hover color */
+}
+
 .emoticons-container img {
     width: 150px;
     height: auto;
@@ -204,6 +209,73 @@ textarea:focus, input:focus {
 
 .neon-blue strong {
     color: #1e90ff;
+}
+
+/* Apply themes to mini tabs and input boxes */
+.tabs .tab-button.neon-purple,
+#username-input.neon-purple,
+#message-input.neon-purple {
+    background-color: #1a0d2e;
+    border-color: #9b30ff;
+}
+
+.tabs .tab-button.neon-purple:hover {
+    background-color: #9b30ff;
+}
+
+.tabs .tab-button.magenta,
+#username-input.magenta,
+#message-input.magenta {
+    background-color: #330033;
+    border-color: #ff00ff;
+}
+
+.tabs .tab-button.magenta:hover {
+    background-color: #ff00ff;
+}
+
+.tabs .tab-button.neon-orange,
+#username-input.neon-orange,
+#message-input.neon-orange {
+    background-color: #331a00;
+    border-color: #ff4500;
+}
+
+.tabs .tab-button.neon-orange:hover {
+    background-color: #ff4500;
+}
+
+.tabs .tab-button.neon-yellow,
+#username-input.neon-yellow,
+#message-input.neon-yellow {
+    background-color: #333300;
+    border-color: #ffff00;
+}
+
+.tabs .tab-button.neon-yellow:hover {
+    background-color: #ffff00;
+}
+
+.tabs .tab-button.neon-green,
+#username-input.neon-green,
+#message-input.neon-green {
+    background-color: #0d3307;
+    border-color: #39ff14;
+}
+
+.tabs .tab-button.neon-green:hover {
+    background-color: #39ff14;
+}
+
+.tabs .tab-button.neon-blue,
+#username-input.neon-blue,
+#message-input.neon-blue {
+    background-color: #0d1a33;
+    border-color: #1e90ff;
+}
+
+.tabs .tab-button.neon-blue:hover {
+    background-color: #1e90ff;
 }
 
 /* Responsive design */
