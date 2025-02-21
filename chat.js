@@ -114,6 +114,7 @@ themeSelect.addEventListener("change", () => {
 function sendMessage() {
     let username = usernameInput.value.trim();
     let message = messageInput.value.trim();
+    let file = uploadInput.files[0];
 
     if (username === "") {
         alert("Please enter your name before sending messages!");
@@ -122,32 +123,37 @@ function sendMessage() {
 
     localStorage.setItem("username", username);
 
-    if (message !== "") {
+    if (message !== "" || file) {
         let newMessage = {
             username: username,
             text: message,
             timestamp: Date.now()
         };
 
-        chatRef.push(newMessage);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                newMessage.fileContent = e.target.result;
+                newMessage.fileName = file.name;
+                chatRef.push(newMessage);
+                uploadInput.value = ""; // Clear the file input
+            };
+            reader.readAsDataURL(file);
+        } else {
+            chatRef.push(newMessage);
+        }
+
         messageInput.value = ""; // Clear input field
         // Reset the height of the message input
         messageInput.style.height = "auto";
     }
 }
 
-// Function to handle file uploads
+// Function to handle file uploads via button
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const fileContent = e.target.result;
-            // You can handle the file content here, e.g., upload to Firebase storage and get the URL
-            // For now, we'll just log the file content
-            console.log(fileContent);
-        };
-        reader.readAsDataURL(file);
+        sendMessage();
     }
 }
 
@@ -189,6 +195,15 @@ function displayMessage(data) {
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
+    }
+
+    // Display file content if available
+    if (data.fileContent) {
+        let fileLink = document.createElement("a");
+        fileLink.href = data.fileContent;
+        fileLink.download = data.fileName;
+        fileLink.textContent = `Download ${data.fileName}`;
+        newMessage.appendChild(fileLink);
     }
 
     chatBox.appendChild(newMessage);
