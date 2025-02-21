@@ -73,4 +73,12 @@ input, textarea, #username-input, #message-input, #upload-input {
 
 textarea:focus, input:focus {
     outline: none;
-    box-shadow:
+    box-shadow: none;
+}
+
+/* Notification settings styling */
+.notification-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
