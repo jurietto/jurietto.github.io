@@ -49,9 +49,10 @@ body {
 .input-container {
     display: flex;
     flex-direction: column; /* Stack inputs vertically */
+    gap: 0; /* No gap between inputs */
 }
 
-input, textarea, #username-input, #message-input, #upload-input, #upload-link {
+input, textarea, #username-input, #message-input {
     background-color: #000;
     padding: 10px;
     color: white;
@@ -64,15 +65,9 @@ input, textarea, #username-input, #message-input, #upload-input, #upload-link {
     overflow: hidden; /* Hide scroll bar */
 }
 
-#upload-link {
-    text-align: center;
-    cursor: pointer;
-    color: #8d2696; /* Match the color with the strong tag */
-}
-
 /* Prevent chat input from zooming on mobile */
 @media screen and (max-width: 600px) {
-    input, textarea, #username-input, #message-input, #upload-input, #upload-link {
+    input, textarea, #username-input, #message-input {
         font-size: 16px;
     }
 }
@@ -115,3 +110,181 @@ textarea:focus, input:focus {
     background-color: black;
     color: white;
     border: 1px solid grey;
+    font-size: 16px;
+}
+
+/* Tabs styling */
+.tabs {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 0; /* Remove spacing between tabs and chat box */
+}
+
+.tab-button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 1px; /* Remove gap between tabs */
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    top: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 3D effect */
+}
+
+.tab-button.active {
+    background-color: #8d2696;
+    border-bottom: 1px solid #8d2696;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced 3D effect */
+}
+
+.tab-button:hover {
+    background-color: #8d2696; /* Hover color */
+}
+
+.emoticons-container img {
+    width: 150px;
+    height: auto;
+    margin: 5px;
+    cursor: pointer;
+    display: inline-block; /* Make emoticons display side by side */
+}
+
+.hidden {
+    display: none;
+}
+
+/* Neon themes */
+.chat-container .neon-purple {
+    border-color: #9b30ff;
+    background-color: #1a0d2e;
+}
+
+.chat-container .neon-purple strong {
+    color: #9b30ff;
+}
+
+.chat-container .magenta {
+    border-color: #ff00ff;
+    background-color: #330033;
+}
+
+.chat-container .magenta strong {
+    color: #ff00ff;
+}
+
+.chat-container .neon-orange {
+    border-color: #ff4500;
+    background-color: #331a00;
+}
+
+.chat-container .neon-orange strong {
+    color: #ff4500;
+}
+
+.chat-container .neon-yellow {
+    border-color: #ffff00;
+    background-color: #333300;
+}
+
+.chat-container .neon-yellow strong {
+    color: #ffff00;
+}
+
+.chat-container .neon-green {
+    border-color: #39ff14;
+    background-color: #0d3307;
+}
+
+.chat-container .neon-green strong {
+    color: #39ff14;
+}
+
+.chat-container .neon-blue {
+    border-color: #1e90ff;
+    background-color: #0d1a33;
+}
+
+.chat-container .neon-blue strong {
+    color: #1e90ff;
+}
+
+/* Apply themes to mini tabs and input boxes */
+.tabs .tab-button.neon-purple,
+#username-input.neon-purple,
+#message-input.neon-purple {
+    background-color: #1a0d2e;
+    border-color: #9b30ff;
+}
+
+.tabs .tab-button.neon-purple:hover {
+    background-color: #9b30ff;
+}
+
+.tabs .tab-button.magenta,
+#username-input.magenta,
+#message-input.magenta {
+    background-color: #330033;
+    border-color: #ff00ff;
+}
+
+.tabs .tab-button.magenta:hover {
+    background-color: #ff00ff;
+}
+
+.tabs .tab-button.neon-orange,
+#username-input.neon-orange,
+#message-input.neon-orange {
+    background-color: #331a00;
+    border-color: #ff4500;
+}
+
+.tabs .tab-button.neon-orange:hover {
+    background-color: #ff4500;
+}
+
+.tabs .tab-button.neon-yellow,
+#username-input.neon-yellow,
+#message-input.neon-yellow {
+    background-color: #333300;
+    border-color: #ffff00;
+}
+
+.tabs .tab-button.neon-yellow:hover {
+    background-color: #ffff00;
+}
+
+.tabs .tab-button.neon-green,
+#username-input.neon-green,
+#message-input.neon-green {
+    background-color: #0d3307;
+    border-color: #39ff14;
+}
+
+.tabs .tab-button.neon-green:hover {
+    background-color: #39ff14;
+}
+
+.tabs .tab-button.neon-blue,
+#username-input.neon-blue,
+#message-input.neon-blue {
+    background-color: #0d1a33;
+    border-color: #1e90ff;
+}
+
+.tabs .tab-button.neon-blue:hover {
+    background-color: #1e90ff;
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+    .chat-container {
+        height: auto;
+    }
+
+    .chat-box, .emoticons-container, .settings-container, .music-container {
+        height: 500px;
+    }
+}
