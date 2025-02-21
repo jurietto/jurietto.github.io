@@ -31,7 +31,6 @@ const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
 const uploadInput = document.getElementById("upload-input"); // Modified Upload Input
-const uploadLink = document.getElementById("upload-link"); // Added Upload Link
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -150,12 +149,6 @@ function sendMessage() {
     }
 }
 
-// Function to handle file uploads via link
-uploadLink.addEventListener("click", function (event) {
-    event.preventDefault();
-    sendMessage();
-});
-
 // Send message when "Enter" key is pressed
 messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -198,6 +191,26 @@ function displayMessage(data) {
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
+    }
+
+    // Display file content if available
+    if (data.fileContent) {
+        let fileType = data.fileName.split('.').pop().toLowerCase();
+        if (['jpeg', 'jpg', 'gif', 'png'].includes(fileType)) {
+            let img = document.createElement("img");
+            img.src = data.fileContent;
+            img.alt = data.fileName;
+            img.style.maxWidth = "100%";
+            img.style.height = "auto";
+            newMessage.appendChild(img);
+        } else if (['mp4', 'mov'].includes(fileType)) {
+            let video = document.createElement("video");
+            video.controls = true;
+            video.style.maxWidth = "100%";
+            video.style.height = "auto";
+            video.innerHTML = `<source src="${data.fileContent}" type="video/${fileType}">Your browser does not support the video tag.`;
+            newMessage.appendChild(video);
+        }
     }
 
     chatBox.appendChild(newMessage);
