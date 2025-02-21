@@ -44,7 +44,13 @@ const emoticons = [
     { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
     { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
     { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
+    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
+    { src: `${baseUrl}/pix/charmmykitty2.gif`, alt: 'Charmmy Kitty 2' },
+    { src: `${baseUrl}/pix/charmmykitty3.gif`, alt: 'Charmmy Kitty 3' },
+    { src: `${baseUrl}/pix/charmmykitty5.gif`, alt: 'Charmmy Kitty 5' },
+    { src: `${baseUrl}/pix/charmmykitty6.gif`, alt: 'Charmmy Kitty 6' },
+    { src: `${baseUrl}/pix/charmmykitty7.gif`, alt: 'Charmmy Kitty 7' },
+    { src: `${baseUrl}/pix/charmmykitty8.gif`, alt: 'Charmmy Kitty 8' }
 ];
 
 // Initialize emoticons container
