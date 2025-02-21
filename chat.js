@@ -1,8 +1,3 @@
-The error `Uncaught SyntaxError: Unexpected token '{'` is likely due to the misplaced triple backticks in the code. The JavaScript code block starts and ends with triple backticks, which should not be part of the JavaScript code itself.
-
-Here's the corrected version without the triple backticks:
-
-```javascript
 // Ensure only one instance of Firebase is initialized
 if (!firebase.apps.length) {
     // Firebase Configuration
@@ -256,6 +251,3 @@ tabs.forEach(tab => {
         containers[tab.id].classList.remove('hidden');
     });
 });
-```
-
-This should fix the syntax error. Make sure to update the code in your repository accordingly.
