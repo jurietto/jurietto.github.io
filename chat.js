@@ -56,7 +56,14 @@ if (localStorage.getItem("theme")) {
 // Function to set theme
 function setTheme(theme) {
     const chatContainer = document.querySelector('.chat-container');
-    chatContainer.className = `chat-container ${theme}`; // Apply the theme to the chat container
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const messageInputs = [usernameInput, messageInput];
+    
+    // Apply theme to chat container, tab buttons, and message inputs
+    chatContainer.className = `chat-container ${theme}`;
+    tabButtons.forEach(tab => tab.classList.add(theme));
+    messageInputs.forEach(input => input.className = theme);
+
     localStorage.setItem("theme", theme);
 }
 
@@ -199,28 +206,4 @@ const emoticons = [
 
 emoticons.forEach(emoticon => {
     let img = document.createElement('img');
-    img.src = emoticon;
-    img.alt = emoticon;
-    img.addEventListener('click', () => {
-        messageInput.value += ` ${img.src} `;
-        // Auto-expand the message input box
-        messageInput.style.height = "auto";
-        messageInput.style.height = (messageInput.scrollHeight) + "px";
-    });
-    emoticonsContainer.appendChild(img);
-});
-
-// Tab switching functionality
-function switchTab(activeTab, activeContainer) {
-    document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.chat-box, .emoticons-container, .settings-container, .music-container').forEach(container => container.classList.add('hidden'));
-
-    activeTab.classList.add('active');
-    activeContainer.classList.remove('hidden');
-}
-
-// Add event listeners for tab switching
-mainTab.addEventListener('click', () => switchTab(mainTab, chatBox));
-emoticonsTab.addEventListener('click', () => switchTab(emoticonsTab, emoticonsContainer));
-settingsTab.addEventListener('click', () => switchTab(settingsTab, settingsContainer));
-musicTab.addEventListener('click', () => switchTab(musicTab, musicContainer)); // Added event listener for Music Tab
+   
