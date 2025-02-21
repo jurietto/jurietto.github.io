@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 20:43:13 UTC by jurietto */
+/* Last updated: 2025-02-21 20:53:06 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -152,7 +152,7 @@ body {
     border-top: 0;
 }
 
-/* Input styles */
+/* Input styles - Updated to remove effects */
 input, textarea, #username-input, #message-input, #file-upload, select {
     background-color: #000;
     padding: 10px;
@@ -166,6 +166,19 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     resize: none;
     overflow: hidden;
     margin: 0;
+    outline: none;
+}
+
+/* Remove input focus effects */
+input:focus,
+textarea:focus,
+#username-input:focus,
+#message-input:focus,
+#file-upload:focus,
+select:focus {
+    outline: none;
+    border-color: grey;
+    box-shadow: none;
 }
 
 /* First input element */
@@ -254,11 +267,6 @@ input[type="file"]::-webkit-file-upload-button {
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-input[type="file"]::-webkit-file-upload-button:hover {
-    background: #444;
 }
 
 /* Embed specific styles */
