@@ -47,7 +47,8 @@ body {
 /* Style input fields */
 .input-container {
     display: flex;
-    gap: 5px;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 0; /* No gap between inputs */
 }
 
 input, textarea, #username-input, #message-input {
@@ -61,14 +62,6 @@ input, textarea, #username-input, #message-input {
     border-radius: 0;
     resize: none; /* Prevent manual resizing */
     overflow: hidden; /* Hide scroll bar */
-}
-
-#username-input {
-    flex: 1;
-}
-
-#message-input {
-    flex: 3;
 }
 
 /* Prevent chat input from zooming on mobile */
