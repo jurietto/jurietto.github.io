@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 09:48:58 UTC by jurietto */
+/* Last updated: 2025-02-21 10:20:00 UTC by jurietto */
 
 // Firebase initialization
 if (!firebase.apps.length) {
@@ -46,8 +46,8 @@ function initializeEmoticons() {
     gridContainer.style.cssText = `
         display: grid;
         grid-template-columns: repeat(auto-fill, 150px);
-        gap: 20px;
-        padding: 20px;
+        gap: 10px;
+        padding: 10px;
         justify-content: start;
         align-content: start;
     `;
@@ -126,7 +126,8 @@ function insertEmoticon(emoticonPath) {
     }
 
     const fullUrl = `${window.location.protocol}//${window.location.host}/${emoticonPath}`;
-    sendMessage(fullUrl);
+    messageInput.value += ` ${fullUrl}`;
+    messageInput.focus();
 }
 
 // Improved file upload with immediate handling
@@ -215,22 +216,27 @@ function displayMessage(data) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Improved media embedding
+// Function to Embed Media
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     let embeddedContent = "";
 
-    const matches = text.match(urlRegex);
-    if (!matches) return "";
-
-    matches.forEach((url) => {
-        if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            embeddedContent += `<img src="${url}" alt="Image">`;
-        } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls>
-                                    <source src="${url}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>`;
+    text.match(urlRegex)?.forEach((url) => {
+        if (/\.(jpeg|jpg|gif|png)$/i.test(url)) {
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+        } else if (/\.(mp4|mov)$/i.test(url)) {
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+        } else if (/\.(mp3)$/i.test(url)) {
+            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
+            const videoId = url.split("v=")[1]?.split("&")[0] || url.split("youtu.be/")[1];
+            embeddedContent += `<iframe width="100%" height="auto" style="aspect-ratio: 16/9; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+        } else if (url.includes("spotify.com")) {
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+        } else if (url.includes("soundcloud.com")) {
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
+        } else if (url.includes("music.apple.com")) {
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
         }
     });
 
