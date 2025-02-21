@@ -1,12 +1,6 @@
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
-    authDomain: "dungeon-forum.firebaseapp.com",
-    databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
-    projectId: "dungeon-forum",
-    storageBucket: "dungeon-forum.appspot.com",
-    messagingSenderId: "1073920232004",
-    appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
+    // Your firebase configuration
 };
 
 // Initialize Firebase
@@ -22,8 +16,10 @@ const enableNotifications = document.getElementById("notification-toggle");
 const mainTab = document.getElementById("main-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
 const settingsTab = document.getElementById("settings-tab");
+const musicTab = document.getElementById("music-tab"); // Added Music Tab
 const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
+const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
 
 // Notification sound
@@ -151,7 +147,7 @@ function embedMedia(text) {
         } else if (url.includes("soundcloud.com")) {
             embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts" style="display: inline-block; margin-top: 5px;" src="${url}"></iframe>`;
         }
     });
 
@@ -211,6 +207,14 @@ emoticons.forEach(emoticon => {
 // Tab switching functionality
 function switchTab(activeTab, activeContainer) {
     document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.chat-box, .emoticons-container, .settings-container').forEach(container => container.classList.add('hidden'));
+    document.querySelectorAll('.chat-box, .emoticons-container, .settings-container, .music-container').forEach(container => container.classList.add('hidden'));
 
     activeTab.classList.add('active');
+    activeContainer.classList.remove('hidden');
+}
+
+// Add event listeners for tab switching
+mainTab.addEventListener('click', () => switchTab(mainTab, chatBox));
+emoticonsTab.addEventListener('click', () => switchTab(emoticonsTab, emoticonsContainer));
+settingsTab.addEventListener('click', () => switchTab(settingsTab, settingsContainer));
+musicTab.addEventListener('click', () => switchTab(musicTab, musicContainer)); // Added event listener for Music Tab
