@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 14:46:22 UTC by jurietto */
+/* Last updated: 2025-02-21 15:05:49 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -96,13 +96,14 @@ body {
     align-items: center;
 }
 
-/* Image size rules */
+/* Updated image size rules */
 .message-container .embedded-content img {
     display: inline-block;
     margin: 0;
     vertical-align: middle;
 }
 
+/* Images from pix folder */
 .message-container .embedded-content img[src^="pix/"],
 .message-container .embedded-content img[src*="/pix/"] {
     width: 150px;
@@ -110,6 +111,14 @@ body {
     margin: 0;
 }
 
+/* Specific rule for Charmmy Kitty emoticons in chat messages */
+.message-container .embedded-content img[src*="charmmykitty"] {
+    width: auto !important;
+    height: auto !important;
+    margin: 0;
+}
+
+/* Other images */
 .message-container .embedded-content img:not([src^="pix/"]):not([src*="/pix/"]) {
     width: 500px;
     height: auto;
