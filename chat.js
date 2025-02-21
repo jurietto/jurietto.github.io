@@ -205,15 +205,4 @@ emoticons.forEach(emoticon => {
     img.src = emoticon;
     img.alt = emoticon;
     img.addEventListener('click', () => {
-        messageInput.value += ` ${img.src} `;
-        // Auto-expand the message input box
-        messageInput.style.height = "auto";
-        messageInput.style.height = (messageInput.scrollHeight) + "px";
-    });
-    emoticonsContainer.appendChild(img);
-});
-
-// Tab switching functionality
-function switchTab(activeTab, activeContainer) {
-    document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
-   
+        message
