@@ -49,7 +49,7 @@ body {
 .input-container {
     display: flex;
     flex-direction: column; /* Stack inputs vertically */
-    gap: 10px; /* Add gap between inputs */
+ 
 }
 
 input, textarea, #username-input, #message-input, #upload-input, #upload-button {
