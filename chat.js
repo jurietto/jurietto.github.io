@@ -30,10 +30,9 @@ const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
-const uploadInput = document.createElement("input"); // Added Upload Input
+const uploadInput = document.getElementById("upload-input"); // Modified Upload Input
 uploadInput.type = "file";
-uploadInput.accept = ".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif"; // Accept all media files
-document.body.appendChild(uploadInput); // Append to body
+uploadInput.accept = ".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif";
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -209,6 +208,13 @@ function embedMedia(text) {
                                     <source src="${url}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>`;
+        } else if (url.match(/(youtube\.com|youtu\.be)/i)) {
+            const videoId = url.split('v=')[1] || url.split('/')[3];
+            embeddedContent += `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        } else if (url.match(/soundcloud\.com/i)) {
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>`;
+        } else if (url.match(/spotify\.com/i)) {
+            embeddedContent += `<iframe src="https://open.spotify.com/embed/track/${url.split('/')[4]}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
         } else {
             embeddedContent += `<a href="${url}" target="_blank">${url}</a>`;
         }
