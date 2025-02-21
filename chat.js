@@ -197,4 +197,11 @@ chatRef.once("value", (snapshot) => {
             if (notificationsEnabled) {
                 console.log("Playing notification sound...");
                 newMessageSound.play().catch((error) => {
-                    console.error("Error playing notification
+                    console.error("Error playing notification sound:", error);
+                });
+            }
+        }
+    });
+});
+
+// Emot
