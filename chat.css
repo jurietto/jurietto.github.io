@@ -1,4 +1,5 @@
-
+body {
+    font-family: Arial, sans-serif;
 }
 
 .chat-container {
@@ -11,7 +12,7 @@
     position: relative;
 }
 
-.chat-box, .emoticons-container, .settings-container {
+.chat-box, .emoticons-container, .settings-container, .music-container {
     flex-grow: 1;
     overflow-y: auto;
     border: 1px solid grey;
@@ -53,6 +54,7 @@ input, textarea, #username-input, #message-input {
     border: 1px solid grey;
     box-sizing: border-box;
     font-size: 16px;
+    font-family: Arial, sans-serif; /* Match the font with the one in chat box */
     border-radius: 0;
     resize: none; /* Prevent manual resizing */
     overflow: hidden; /* Hide scroll bar */
@@ -118,6 +120,7 @@ textarea:focus, input:focus {
     height: auto;
     margin: 5px;
     cursor: pointer;
+    display: inline-block; /* Make emoticons display side by side */
 }
 
 .hidden {
@@ -130,7 +133,7 @@ textarea:focus, input:focus {
         height: auto;
     }
 
-    .chat-box, .emoticons-container, .settings-container {
+    .chat-box, .emoticons-container, .settings-container, .music-container {
         height: 500px;
     }
 }
