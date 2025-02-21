@@ -1,3 +1,4 @@
+```javascript
 // Ensure only one instance of Firebase is initialized
 if (!firebase.apps.length) {
     // Firebase Configuration
@@ -30,6 +31,7 @@ const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
+const uploadInput = document.getElementById("upload-input"); // Added Upload Input
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -54,6 +56,8 @@ if (enableNotifications) {
 if (localStorage.getItem("theme")) {
     setTheme(localStorage.getItem("theme"));
     themeSelect.value = localStorage.getItem("theme");
+} else {
+    setTheme("default"); // Set default theme
 }
 
 // Function to set theme
@@ -63,18 +67,18 @@ function setTheme(theme) {
     
     // Apply theme to tab buttons and message inputs
     tabButtons.forEach(tab => {
-        tab.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+        tab.classList.remove('default', 'neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
         tab.classList.add(theme);
     });
     messageInputs.forEach(input => {
-        input.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+        input.classList.remove('default', 'neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
         input.classList.add(theme);
     });
 
     // Apply theme to chat containers
     const chatContainers = [chatBox, emoticonsContainer, settingsContainer, musicContainer];
     chatContainers.forEach(container => {
-        container.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+        container.classList.remove('default', 'neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
         container.classList.add(theme);
     });
 
@@ -131,6 +135,21 @@ function sendMessage() {
     }
 }
 
+// Function to handle file uploads
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const fileContent = e.target.result;
+            // You can handle the file content here, e.g., upload to Firebase storage and get the URL
+            // For now, we'll just log the file content
+            console.log(fileContent);
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
 // Send message when "Enter" key is pressed
 messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -144,6 +163,9 @@ messageInput.addEventListener("input", function () {
     this.style.height = "auto";
     this.style.height = (this.scrollHeight) + "px";
 });
+
+// Handle file uploads
+uploadInput.addEventListener("change", handleFileUpload);
 
 // Function to Display Messages
 function displayMessage(data) {
@@ -227,3 +249,5 @@ tabs.forEach(tab => {
         containers[tab.id].classList.remove('hidden');
     });
 });
+
+```
