@@ -1,85 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="chat.css">
-    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    <script defer src="chat.js"></script>
-</head>
-<body>
-    <header>
-        <h1>Juri's Stuff</h1>
-        <nav>
-            <div class="navbar">
-                <strong><a href="updates.html">Updates</a></strong>
-                <strong><a href="#">VN's</a></strong>
-                <strong><a href="#">Music</a></strong>
-                <strong><a href="#">Art</a></strong>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Chatzone</h2>
-            <div class="chat-container">
-                <div class="tabs">
-                    <button id="main-tab" class="tab-button active">Main</button>
-                    <button id="music-tab" class="tab-button">Music</button>
-                    <button id="emoticons-tab" class="tab-button">Emoticons</button>
-                    <button id="settings-tab" class="tab-button">Settings</button>
-                </div>
-                <div id="chat-box" class="chat-box"></div>
-                <div id="music-container" class="music-container hidden">
-                    <!-- Add content for Music tab here -->
-                </div>
-                <div id="emoticons-container" class="emoticons-container hidden">
-                    <!-- Emoticons will be loaded here -->
-                </div>
-                <div id="settings-container" class="settings-container hidden">
-                    <div class="notification-settings">
-                        <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
-                    </div>
-                    <div class="theme-settings">
-                        <label for="theme-select">Choose Theme:</label>
-                        <select id="theme-select">
-                            <option value="neon-purple">Neon Purple</option>
-                            <option value="magenta">Magenta</option>
-                            <option value="neon-orange">Neon Orange</option>
-                            <option value="neon-yellow">Neon Yellow</option>
-                            <option value="neon-green">Neon Green</option>
-                            <option value="neon-blue">Neon Blue</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-container">
-                    <input type="text" id="username-input" placeholder="Enter your name">
-                    <textarea id="message-input" placeholder="Don't be a loner bear <3" rows="1"></textarea>
-                    <input type="file" id="upload-input" accept=".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif">
-                    <a href="#" id="upload-link">Upload</a>
-                </div>
-            </div>
-            <audio id="notification-sound" src="sound/IM.mp3"></audio>
-        </section>
-        <section>
-            <h2>Info</h2>
-            <p>Hi, this is just a space where I hang out with a few people online and explore coding and web design.</p>
-            <p>Nothing too ambitious, just learning and experimenting with different stuff.</p>
+body {
+    font-family: Arial, sans-serif;
+}
 
-            <h2>Find me here:</h2>
-            <p><strong>Discord:</strong> sotokomori</p>
-            <p><strong>Twitter/X:</strong> <strong><a href="https://x.com/sotokomorii" target="_blank">@sotokomorii</a></strong></p>
-            <p><strong>YouTube:</strong> <strong><a href="https://www.youtube.com/@juriscafe" target="_blank">@juri'scafe</a></strong></p><br>
-        </section>
-        <section>
-            <img src="pix/charmmy-kitty.gif" alt="Image description">
-        </section>
-    </main>
-    <footer>
-        <p>jurietto.github.io 2024 - ???</p>
-    </footer>
-</body>
-</html>
+.chat-container {
+    width: 100%;
+    margin: 0 auto; /* Center the chat container */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.chat-box, .emoticons-container, .settings-container, .music-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid grey;
+    padding: 10px;
+    background: black;
+    color: white;
+    text-align: left;
+    padding-left: 5px; /* Ensure chat text is left-aligned */
+    line-height: 1.0; /* More compact line height */
+    height: 500px; /* Fixed height */
+}
+
+.chat-box p {
+    color: inherit;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+    margin-bottom: 5px;
+    text-align: left; /* Ensure chat text is left-aligned */
+}
+
+.chat-box p time {
+    color: grey;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.chat-box p strong,
+.chat-box p b {
+    font-family: Verdana, sans-serif;
+    font-weight: bold;
+    color: #8d2696; /* Default color for strong tags */
+}
+
+/* Style input fields */
+.input-container {
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+}
+
+input, textarea, #username-input, #message-input, #upload-input, #upload-link {
+    background-color: #000;
+    padding: 10px;
+    color: white;
+    border: 1px solid grey;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Arial, sans-serif; /* Match the font with the one in chat box */
+    border-radius: 0;
+    resize: none; /* Prevent manual resizing */
+    overflow: hidden; /* Hide scroll bar */
+}
+
+#upload-link {
+    text-align: center;
+    cursor: pointer;
+    color: #8d2696; /* Match the color with the strong tag */
+}
+
+/* Prevent chat input from zooming on mobile */
+@media screen and (max-width: 600px) {
+    input, textarea, #username-input, #message-input, #upload-input, #upload-link {
+        font-size: 16px;
+    }
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Notification settings styling */
+.notification-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    color: white;
+}
+
+.notification-settings label {
+    display: flex;
+    align-items: center;
+}
+
+.notification-settings input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Theme settings styling */
+.theme-settings {
+    margin-top: 10px;
+    color: white;
+}
+
+.theme-settings label {
+    margin-right: 10px;
+}
+
+.theme-settings select {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
