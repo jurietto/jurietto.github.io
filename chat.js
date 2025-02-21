@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 12:24:02 UTC by jurietto */
+/* Last updated: 2025-02-21 12:32:32 UTC by jurietto */
 
 // Firebase initialization
 if (!firebase.apps.length) {
@@ -7,7 +7,7 @@ if (!firebase.apps.length) {
         authDomain: "dungeon-forum.firebaseapp.com",
         databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
         projectId: "dungeon-forum",
-        storageBucket: "dungeon-forum.appspot.com",
+        storageBucket: "dungeon-forum.firebasestorage.app",
         messagingSenderId: "1073920232004",
         appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
     };
@@ -47,41 +47,32 @@ const emoticons = [
 // Initialize emoticons container
 function initializeEmoticons() {
     emoticonsContainer.innerHTML = '';
-    const gridContainer = document.createElement('div');
-    gridContainer.style.cssText = `
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
-        padding: 10px;
-        justify-content: start;
-        align-content: start;
-    `;
-
     emoticons.forEach(emoticon => {
         const img = document.createElement('img');
         img.src = emoticon.src;
         img.alt = emoticon.alt;
         img.style.cssText = `
             width: 100%;
-            height: auto;
             max-width: 150px;
+            height: auto;
             display: block;
             cursor: pointer;
-            margin: 0 auto;
+            margin: 5px;
         `;
         img.addEventListener('click', () => insertEmoticon(emoticon.src));
         img.addEventListener('error', (e) => {
             console.error(`Failed to load emoticon: ${emoticon.src}`);
             e.target.style.display = 'none';
         });
-        gridContainer.appendChild(img);
+        emoticonsContainer.appendChild(img);
     });
-
-    emoticonsContainer.appendChild(gridContainer);
 }
 
-// Notification sound setup
+// Notification sound setup with error handling
 const newMessageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
+newMessageSound.addEventListener('error', (e) => {
+    console.error('Error loading notification sound:', e);
+});
 newMessageSound.preload = "auto";
 
 // Load saved user preferences
@@ -145,7 +136,7 @@ function insertEmoticon(emoticonPath) {
     messageInput.focus();
 }
 
-// File upload handling
+// File upload handling with progress and CORS
 async function handleFileUpload(file) {
     if (!file) return;
 
@@ -161,34 +152,64 @@ async function handleFileUpload(file) {
         return false;
     }
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
         alert('File size must be less than 5MB!');
         return false;
     }
 
     const loadingMessage = document.createElement("div");
-    loadingMessage.textContent = "Uploading...";
+    loadingMessage.className = 'upload-progress';
+    loadingMessage.textContent = "Preparing upload...";
     chatBox.appendChild(loadingMessage);
     chatBox.scrollTop = chatBox.scrollHeight;
 
     try {
-        const fileRef = storage.ref(`uploads/${Date.now()}_${file.name}`);
-        const snapshot = await fileRef.put(file);
-        const downloadURL = await snapshot.ref.getDownloadURL();
+        const metadata = {
+            contentType: file.type,
+            customMetadata: {
+                'Access-Control-Allow-Origin': window.location.origin
+            }
+        };
+
+        const fileName = `uploads/${Date.now()}_${file.name}`;
+        const fileRef = storage.ref(fileName);
+        
+        // Create upload task
+        const uploadTask = fileRef.put(file, metadata);
+
+        // Monitor upload progress
+        uploadTask.on('state_changed', 
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                loadingMessage.textContent = `Uploading... ${Math.round(progress)}%`;
+            },
+            (error) => {
+                console.error("Upload error:", error);
+                loadingMessage.textContent = "Upload failed! " + error.message;
+                setTimeout(() => chatBox.removeChild(loadingMessage), 3000);
+                return false;
+            }
+        );
+
+        // Wait for upload completion
+        await uploadTask;
+        const downloadURL = await fileRef.getDownloadURL();
         
         chatBox.removeChild(loadingMessage);
         await sendMessage(downloadURL);
         return true;
     } catch (error) {
         console.error("Error uploading file:", error);
-        alert("Error uploading file. Please try again.");
-        chatBox.removeChild(loadingMessage);
+        if (loadingMessage.parentNode) {
+            chatBox.removeChild(loadingMessage);
+        }
+        alert(`Upload failed: ${error.message}`);
         return false;
     }
 }
 
-// Media embedding
+// Media embedding with security checks
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     const urls = text.match(urlRegex);
@@ -197,59 +218,46 @@ function embedMedia(text) {
     let embeddedContent = "";
 
     urls.forEach(url => {
-        // Sanitize URL
         try {
-            url = new URL(url).toString();
-        } catch (e) {
-            console.error("Invalid URL:", url);
-            return;
-        }
-
-        if (/\.(jpeg|jpg|gif|png)$/i.test(url)) {
-            embeddedContent += `
-                <img src="${url}" alt="Image" loading="lazy" 
-                     onerror="this.style.display='none'"
-                     style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
-        } else if (/\.(mp4|mov|webm)$/i.test(url)) {
-            embeddedContent += `
-                <video controls playsinline style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
-                    <source src="${url}">
-                    Your browser does not support video playback.
-                </video>`;
-        } else if (/\.(mp3|wav|ogg)$/i.test(url)) {
-            embeddedContent += `
-                <audio controls style="width: 100%; display: block; margin-top: 5px;">
-                    <source src="${url}">
-                    Your browser does not support audio playback.
-                </audio>`;
-        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
-            const videoId = url.includes("youtube.com/watch") ? 
-                url.split("v=")[1]?.split("&")[0] : 
-                url.split("youtu.be/")[1];
-            if (videoId) {
+            const safeUrl = new URL(url).toString();
+            
+            if (/\.(jpeg|jpg|gif|png)$/i.test(safeUrl)) {
                 embeddedContent += `
-                    <iframe width="100%" height="auto" style="aspect-ratio: 16/9; display: block; margin-top: 5px;"
-                        src="https://www.youtube.com/embed/${videoId}" 
-                        frameborder="0" allowfullscreen loading="lazy"></iframe>`;
+                    <img src="${safeUrl}" alt="Image" loading="lazy" 
+                         onerror="this.style.display='none'"
+                         style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            } else if (/\.(mp4|mov|webm)$/i.test(safeUrl)) {
+                embeddedContent += `
+                    <video controls playsinline style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
+                        <source src="${safeUrl}">
+                        Your browser does not support video playback.
+                    </video>`;
+            } else if (/\.(mp3|wav|ogg)$/i.test(safeUrl)) {
+                embeddedContent += `
+                    <audio controls style="width: 100%; display: block; margin-top: 5px;">
+                        <source src="${safeUrl}">
+                        Your browser does not support audio playback.
+                    </audio>`;
+            } else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
+                const videoId = safeUrl.includes("youtube.com/watch") ? 
+                    safeUrl.split("v=")[1]?.split("&")[0] : 
+                    safeUrl.split("youtu.be/")[1];
+                if (videoId) {
+                    embeddedContent += `
+                        <iframe width="100%" height="auto" style="aspect-ratio: 16/9; display: block; margin-top: 5px;"
+                            src="https://www.youtube.com/embed/${videoId}" 
+                            frameborder="0" allowfullscreen loading="lazy"></iframe>`;
+                }
             }
-        } else if (url.includes("spotify.com")) {
-            embeddedContent += `
-                <iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" 
-                    width="100%" height="152" frameborder="0" allowtransparency="true" 
-                    allow="encrypted-media" style="display: block; margin-top: 5px;" loading="lazy"></iframe>`;
-        } else if (url.includes("soundcloud.com")) {
-            embeddedContent += `
-                <iframe width="100%" height="166" scrolling="no" frameborder="no" 
-                    allow="autoplay" loading="lazy"
-                    src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}" 
-                    style="display: block; margin-top: 5px;"></iframe>`;
+        } catch (error) {
+            console.error("Invalid URL:", url);
         }
     });
 
     return embeddedContent;
 }
 
-// Message display
+// Message display with sanitization
 function displayMessage(data) {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
@@ -257,7 +265,7 @@ function displayMessage(data) {
     const time = new Date(data.timestamp).toLocaleTimeString();
     const messageContent = document.createElement("p");
     
-    // Extract URLs from text to separate them from display text
+    // Extract URLs and sanitize text
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     const displayText = data.text.replace(urlRegex, "").trim();
     
@@ -279,61 +287,4 @@ function displayMessage(data) {
     chatBox.appendChild(messageContainer);
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Play notification sound if enabled and window is not focused
-    if (notificationsEnabled && !document.hasFocus()) {
-        newMessageSound.play().catch(error => {
-            console.warn("Audio play prevented:", error);
-        });
-    }
-}
-
-// Event Listeners
-messageInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-    }
-});
-
-messageInput.addEventListener("input", function() {
-    this.style.height = "auto";
-    this.style.height = `${this.scrollHeight}px`;
-});
-
-fileUpload.addEventListener("change", async (event) => {
-    event.preventDefault();
-    const file = event.target.files[0];
-    const success = await handleFileUpload(file);
-    if (success || !success) {
-        fileUpload.value = ''; // Clear input either way
-    }
-});
-
-// Tab management
-const tabs = document.querySelectorAll('.tab-button');
-const containers = {
-    'main-tab': chatBox,
-    'emoticons-tab': emoticonsContainer,
-    'settings-tab': settingsContainer,
-    'music-tab': musicContainer
-};
-
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(button => button.classList.remove('active'));
-        tab.classList.add('active');
-        
-        Object.values(containers).forEach(container => {
-            container.classList.add('hidden');
-        });
-        containers[tab.id].classList.remove('hidden');
-    });
-});
-
-// Message listener
-chatRef.on("child_added", (snapshot) => {
-    displayMessage(snapshot.val());
-});
-
-// Initialize emoticons on load
-initializeEmoticons();
+    // Play notification sound if enable
