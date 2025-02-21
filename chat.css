@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 21:25:49 UTC by jurietto */
+/* Last updated: 2025-02-21 21:36:20 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -128,22 +128,6 @@ body {
     flex: 0 1 auto;
 }
 
-/* Video and iframe content */
-.message-container .embedded-content video,
-.message-container .embedded-content iframe {
-    width: 100%;
-    max-width: 100%;
-    margin: 5px 0;
-    display: block;
-}
-
-/* Audio content */
-.message-container .embedded-content audio {
-    width: 100%;
-    margin: 5px 0;
-    display: block;
-}
-
 /* Input container styles */
 .input-container {
     display: flex;
@@ -228,37 +212,19 @@ input, textarea, #username-input, #message-input {
     display: none;
 }
 
-/* Notification settings */
+/* Notification settings - Simplified */
 .notification-settings {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 10px;
-    color: #999;
-    padding: 15px 0;
+    padding: 15px;
+    color: white;
 }
 
-.notification-settings label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.notification-settings input[type="checkbox"] {
-    margin: 0;
-    cursor: pointer;
-}
-
-/* Loading indicator */
+/* Loading and error states */
 .loading {
     text-align: center;
     padding: 20px;
     color: #888;
 }
 
-/* Error message */
 .error-message {
     color: #ff4444;
     padding: 10px;
@@ -267,24 +233,23 @@ input, textarea, #username-input, #message-input {
     border-radius: 4px;
 }
 
-/* File upload button */
-input[type="file"]::-webkit-file-upload-button {
-    background: #333;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 /* Embed specific styles */
-.message-container .embedded-content iframe[src*="youtube.com"] {
+.message-container .youtube-wrapper {
+    position: relative;
     width: 100%;
     max-width: 500px;
-    height: 281.25px; /* 16:9 ratio for 500px width */
-    background: #000;
-    display: block;
+    padding-bottom: 56.25%;
+    height: 0;
     margin: 5px auto;
+}
+
+.message-container .youtube-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
 }
 
 .message-container .embedded-content iframe[src*="spotify.com"] {
@@ -343,11 +308,6 @@ input[type="file"]::-webkit-file-upload-button {
         padding: 8px 15px;
         font-size: 14px;
     }
-
-    .message-container .embedded-content iframe[src*="youtube.com"] {
-        height: calc((100vw - 30px) * 0.5625); /* 16:9 ratio for mobile */
-        max-height: 281.25px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -379,10 +339,5 @@ input[type="file"]::-webkit-file-upload-button {
     .emoticons-grid {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
         gap: 10px;
-    }
-    
-    .message-container .embedded-content iframe[src*="youtube.com"] {
-        height: calc((100vw - 20px) * 0.5625); /* 16:9 ratio for smaller mobile */
-        max-height: 281.25px;
     }
 }
