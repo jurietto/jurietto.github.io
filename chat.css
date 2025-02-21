@@ -288,25 +288,6 @@ input, textarea, #username-input, #message-input {
     max-width: 100%;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-}
-
-::-webkit-scrollbar-track {
-    background: #111;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #444;
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
     .emoticons-grid {
