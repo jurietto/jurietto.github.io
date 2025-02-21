@@ -30,10 +30,10 @@ const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
-const uploadInput = document.createElement("input"); // Added Upload Input
-uploadInput.type = "file";
-uploadInput.accept = ".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif"; // Accept all media files
-document.body.appendChild(uploadInput); // Append to body
+const uploadInput = document.getElementById("upload-input"); // Modified Upload Input
+const uploadButton = document.createElement("button"); // Added Upload Button
+uploadButton.textContent = "Upload File";
+document.body.appendChild(uploadButton);
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -65,7 +65,7 @@ if (localStorage.getItem("theme")) {
 // Function to set theme
 function setTheme(theme) {
     const tabButtons = document.querySelectorAll('.tab-button');
-    const messageInputs = [usernameInput, messageInput];
+    const messageInputs = [usernameInput, messageInput, uploadInput];
     
     // Apply theme to tab buttons and message inputs
     tabButtons.forEach(tab => {
@@ -92,7 +92,7 @@ function setTheme(theme) {
         tag.style.color = '';
         if (theme === 'neon-purple') {
             tag.style.color = '#9b30ff';
-        } else if ( theme === 'magenta') {
+        } else if (theme === 'magenta') {
             tag.style.color = '#ff00ff';
         } else if (theme === 'neon-orange') {
             tag.style.color = '#ff4500';
@@ -117,6 +117,7 @@ themeSelect.addEventListener("change", () => {
 function sendMessage() {
     let username = usernameInput.value.trim();
     let message = messageInput.value.trim();
+    let file = uploadInput.files[0];
 
     if (username === "") {
         alert("Please enter your name before sending messages!");
@@ -125,34 +126,36 @@ function sendMessage() {
 
     localStorage.setItem("username", username);
 
-    if (message !== "") {
+    if (message !== "" || file) {
         let newMessage = {
             username: username,
             text: message,
             timestamp: Date.now()
         };
 
-        chatRef.push(newMessage);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                newMessage.fileContent = e.target.result;
+                newMessage.fileName = file.name;
+                chatRef.push(newMessage);
+                uploadInput.value = ""; // Clear the file input
+            };
+            reader.readAsDataURL(file);
+        } else {
+            chatRef.push(newMessage);
+        }
+
         messageInput.value = ""; // Clear input field
         // Reset the height of the message input
         messageInput.style.height = "auto";
     }
 }
 
-// Function to handle file uploads
-function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const fileContent = e.target.result;
-            // You can handle the file content here, e.g., upload to Firebase storage and get the URL
-            // For now, we'll just log the file content
-            console.log(fileContent);
-        };
-        reader.readAsDataURL(file);
-    }
-}
+// Function to handle file uploads via button
+uploadButton.addEventListener("click", function () {
+    sendMessage();
+});
 
 // Send message when "Enter" key is pressed
 messageInput.addEventListener("keypress", function (event) {
@@ -169,7 +172,11 @@ messageInput.addEventListener("input", function () {
 });
 
 // Handle file uploads
-uploadInput.addEventListener("change", handleFileUpload);
+uploadInput.addEventListener("change", function () {
+    if (uploadInput.files.length > 0) {
+        sendMessage();
+    }
+});
 
 // Function to Display Messages
 function displayMessage(data) {
@@ -192,6 +199,15 @@ function displayMessage(data) {
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
+    }
+
+    // Display file content if available
+    if (data.fileContent) {
+        let fileLink = document.createElement("a");
+        fileLink.href = data.fileContent;
+        fileLink.download = data.fileName;
+        fileLink.textContent = `Download ${data.fileName}`;
+        newMessage.appendChild(fileLink);
     }
 
     chatBox.appendChild(newMessage);
