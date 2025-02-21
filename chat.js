@@ -208,4 +208,38 @@ emoticons.forEach(emoticon => {
     let img = document.createElement('img');
     img.src = emoticon;
     img.alt = emoticon;
-    img.addEventListener('click', ()
+    img.addEventListener('click', () => {
+        messageInput.value += ` ${img.src} `;
+        // Auto-expand the message input box
+        messageInput.style.height = "auto";
+        messageInput.style.height = (messageInput.scrollHeight) + "px";
+    });
+    emoticonsContainer.appendChild(img);
+});
+
+// Tab switching functionality
+function switchTab(activeTab, activeContainer) {
+    document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.chat-box, .emoticons-container, .music-container, .settings-container').forEach(container => container.classList.add('hidden'));
+
+    activeTab.classList.add('active');
+    activeContainer.classList.remove('hidden');
+}
+
+// Event listeners for tabs
+mainTab.addEventListener('click', () => switchTab(mainTab, chatBox));
+emoticonsTab.addEventListener('click', () => switchTab(emoticonsTab, emoticonsContainer));
+musicTab.addEventListener('click', () => switchTab(musicTab, musicContainer));
+settingsTab.addEventListener('click', () => switchTab(settingsTab, settingsContainer));
+
+// Post music functionality
+postMusicButton.addEventListener('click', () => {
+    const musicUrl = musicUrlInput.value.trim();
+    if (musicUrl) {
+        const musicPost = document.createElement('div');
+        musicPost.classList.add('music-post');
+        musicPost.innerHTML = embedMedia(musicUrl);
+        musicPosts.appendChild(musicPost);
+        musicUrlInput.value = ''; // Clear the input field
+    }
+});
