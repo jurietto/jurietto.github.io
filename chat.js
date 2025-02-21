@@ -21,14 +21,9 @@ const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
 const mainTab = document.getElementById("main-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
-const musicTab = document.getElementById("music-tab");
 const settingsTab = document.getElementById("settings-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
-const musicContainer = document.getElementById("music-container");
 const settingsContainer = document.getElementById("settings-container");
-const postMusicButton = document.getElementById("post-music-button");
-const musicUrlInput = document.getElementById("music-url");
-const musicPosts = document.getElementById("music-posts");
 const themeSelect = document.getElementById("theme-select");
 
 // Notification sound
@@ -58,7 +53,8 @@ if (localStorage.getItem("theme")) {
 
 // Function to set theme
 function setTheme(theme) {
-    document.documentElement.className = theme; // Set the theme on the root element
+    const chatContainer = document.querySelector('.chat-container');
+    chatContainer.className = `chat-container ${theme}`; // Apply the theme to the chat container
     localStorage.setItem("theme", theme);
 }
 
@@ -220,26 +216,4 @@ emoticons.forEach(emoticon => {
 // Tab switching functionality
 function switchTab(activeTab, activeContainer) {
     document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.chat-box, .emoticons-container, .music-container, .settings-container').forEach(container => container.classList.add('hidden'));
-
-    activeTab.classList.add('active');
-    activeContainer.classList.remove('hidden');
-}
-
-// Event listeners for tabs
-mainTab.addEventListener('click', () => switchTab(mainTab, chatBox));
-emoticonsTab.addEventListener('click', () => switchTab(emoticonsTab, emoticonsContainer));
-musicTab.addEventListener('click', () => switchTab(musicTab, musicContainer));
-settingsTab.addEventListener('click', () => switchTab(settingsTab, settingsContainer));
-
-// Post music functionality
-postMusicButton.addEventListener('click', () => {
-    const musicUrl = musicUrlInput.value.trim();
-    if (musicUrl) {
-        const musicPost = document.createElement('div');
-        musicPost.classList.add('music-post');
-        musicPost.innerHTML = embedMedia(musicUrl);
-        musicPosts.appendChild(musicPost);
-        musicUrlInput.value = ''; // Clear the input field
-    }
-});
+   
