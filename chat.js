@@ -206,4 +206,4 @@ emoticons.forEach(emoticon => {
     emoticonsContainer.appendChild(img);
 });
 
-mainTab.addEventListener('click', ()
+mainTab
