@@ -1,9 +1,10 @@
-/* Last updated: 2025-02-21 15:05:49 UTC by jurietto */
+/* Last updated: 2025-02-21 19:55:47 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
 }
 
+/* Base container */
 .chat-container {
     width: 100%;
     margin: 0 auto;
@@ -13,14 +14,16 @@ body {
     justify-content: space-between;
     position: relative;
     gap: 0;
+    max-width: 1200px;
 }
 
 /* Base container styles */
 .chat-box, .emoticons-container, .settings-container, .music-container {
-    height: 500px;
+    height: calc(100vh - 300px);
+    min-height: 400px;
     overflow-y: auto;
     overflow-x: hidden;
-    flex: 0 0 500px;
+    flex: 1;
     border: 1px solid grey;
     background: black;
     color: white;
@@ -30,9 +33,10 @@ body {
     line-height: 1.2;
     text-align: left;
     margin: 0;
+    transition: all 0.3s ease;
 }
 
-/* Emoticons styles - Simplified */
+/* Emoticons styles */
 .emoticons-wrapper {
     height: 100%;
     overflow-y: auto;
@@ -96,6 +100,23 @@ body {
     align-items: center;
 }
 
+/* Music container specific styles */
+.music-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.music-message {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+.music-message.current {
+    background: rgba(141, 38, 150, 0.15);
+}
+
 /* Updated image size rules */
 .message-container .embedded-content img {
     display: inline-block;
@@ -111,7 +132,7 @@ body {
     margin: 0;
 }
 
-/* Specific rule for Charmmy Kitty emoticons in chat messages */
+/* Specific rule for Charmmy Kitty emoticons */
 .message-container .embedded-content img[src*="charmmykitty"] {
     width: auto !important;
     height: auto !important;
@@ -148,6 +169,10 @@ body {
     flex-direction: column;
     gap: 0;
     border-top: 0;
+    position: sticky;
+    bottom: 0;
+    background: black;
+    z-index: 10;
 }
 
 /* Input styles */
@@ -173,28 +198,27 @@ input, textarea, #username-input, #message-input, #file-upload, select {
 
 /* Tab styles */
 .tabs {
-    display: flex;
-    justify-content: start;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
     margin: 0;
+    background: grey;
+    padding: 1px;
 }
 
 .tab-button {
-    padding: 10px;
+    padding: 12px 8px;
     background-color: black;
     color: white;
-    border: 1px solid grey;
+    border: none;
     cursor: pointer;
     text-align: center;
-    margin-right: 1px;
-    border-radius: 5px 5px 0 0;
-    position: relative;
-    top: 1px;
-    transition: all 0.3s ease;
+    font-size: 14px;
+    transition: all 0.2s ease;
 }
 
 .tab-button.active {
     background-color: #333;
-    border-bottom: 1px solid grey;
 }
 
 .tab-button:hover {
@@ -205,7 +229,7 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     display: none;
 }
 
-/* Notification settings - Minimal */
+/* Notification settings */
 .notification-settings {
     display: flex;
     justify-content: flex-start;
@@ -242,21 +266,6 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     margin: 5px 0;
     background: rgba(255, 0, 0, 0.1);
     border-radius: 4px;
-}
-
-/* File upload button styling */
-input[type="file"]::-webkit-file-upload-button {
-    background: #333;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-input[type="file"]::-webkit-file-upload-button:hover {
-    background: #444;
 }
 
 /* Embed specific styles */
@@ -313,45 +322,45 @@ input[type="file"]::-webkit-file-upload-button:hover {
         width: 100%;
         max-width: 400px;
     }
-
-    .tab-button {
-        padding: 8px 15px;
-        font-size: 14px;
-    }
 }
 
 @media (max-width: 480px) {
-    .tabs {
-        flex-wrap: wrap;
-    }
-    
-    .tab-button {
-        flex: 1 1 calc(50% - 2px);
-        margin-bottom: 2px;
-        font-size: 12px;
-        padding: 6px 10px;
-    }
-
-    .chat-box,
-    .emoticons-container,
-    .settings-container,
-    .music-container {
-        height: 400px;
+    .chat-box, .emoticons-container, .settings-container, .music-container {
+        height: calc(100vh - 250px);
+        min-height: 300px;
         padding: 10px;
     }
 
-    .input-container input,
-    .input-container textarea {
+    .input-container {
+        position: sticky;
+        bottom: 0;
+        background: black;
+        z-index: 10;
+    }
+
+    #username-input, #message-input {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .message-container {
         font-size: 14px;
-        padding: 8px;
+        padding: 5px 0;
+    }
+
+    .message-container .embedded-content {
+        margin: 5px -5px;
+    }
+
+    .message-container .embedded-content img,
+    .message-container .embedded-content video,
+    .message-container .embedded-content iframe {
+        max-width: calc(100% + 10px);
+        margin: 5px 0;
     }
 
     .emoticons-grid {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
         gap: 10px;
-    }
-    
-    .message-container .embedded-content iframe {
-        height: 200px;
     }
 }
