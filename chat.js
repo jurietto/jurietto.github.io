@@ -187,7 +187,4 @@ function embedMedia(text) {
             embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: inline-block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
             embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: inline-block; margin-top: 5px;"></iframe>`;
-        } else if (url.includes("soundcloud.com")) {
-            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
-        } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow
+        } else if (url.includes("soundcloud
