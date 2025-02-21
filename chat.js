@@ -1,3 +1,4 @@
+```javascript
 // Ensure only one instance of Firebase is initialized
 if (!firebase.apps.length) {
     // Firebase Configuration
@@ -251,3 +252,4 @@ tabs.forEach(tab => {
         containers[tab.id].classList.remove('hidden');
     });
 });
+```
