@@ -27,9 +27,9 @@
             <h2>Chatzone</h2>
             <div class="chat-container">
                 <div class="tabs">
-                    <button id="chat-tab" class="tab-button active">Chat</button>
+                    <button id="main-tab" class="tab-button active">Main</button>
+                    <button id="music-tab" class="tab-button">Music Posting</button>
                     <button id="emoticons-tab" class="tab-button">Emoticons</button>
-                    <button id="music-tab" class="tab-button">Music</button>
                     <button id="settings-tab" class="tab-button">Settings</button>
                 </div>
                 <div id="chat-box" class="chat-box"></div>
@@ -49,7 +49,17 @@
                     <div class="notification-settings">
                         <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
                     </div>
-                    <!-- Add more settings here as needed -->
+                    <div class="theme-settings">
+                        <label for="theme-select">Choose Theme:</label>
+                        <select id="theme-select">
+                            <option value="neon-purple">Neon Purple</option>
+                            <option value="magenta">Magenta</option>
+                            <option value="neon-orange">Neon Orange</option>
+                            <option value="neon-yellow">Neon Yellow</option>
+                            <option value="neon-green">Neon Green</option>
+                            <option value="neon-blue">Neon Blue</option>
+                        </select>
+                    </div>
                 </div>
                 <input type="text" id="username-input" placeholder="Enter your name">
                 <textarea id="message-input" placeholder="Don't be a loner bear <3" rows="1"></textarea>
