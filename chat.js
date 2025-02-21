@@ -56,6 +56,17 @@ if (localStorage.getItem("theme")) {
     themeSelect.value = localStorage.getItem("theme");
 }
 
+// Function to set theme
+function setTheme(theme) {
+    document.documentElement.className = theme; // Set the theme on the root element
+    localStorage.setItem("theme", theme);
+}
+
+// Event listener for theme selection
+themeSelect.addEventListener("change", () => {
+    setTheme(themeSelect.value);
+});
+
 // Function to Send Messages
 function sendMessage() {
     let username = usernameInput.value.trim();
@@ -197,10 +208,4 @@ emoticons.forEach(emoticon => {
     let img = document.createElement('img');
     img.src = emoticon;
     img.alt = emoticon;
-    img.addEventListener('click', () => {
-        messageInput.value += ` ${img.src} `;
-        // Auto-expand the message input box
-        messageInput.style.height = "auto";
-        messageInput.style.height = (messageInput.scrollHeight) + "px";
-    });
-    emoticonsContainer.append
+    img.addEventListener('click', ()
