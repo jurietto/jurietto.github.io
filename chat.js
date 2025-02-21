@@ -1,6 +1,6 @@
-/* Last updated: 2025-02-21 12:47:58 UTC by jurietto */
+/* Last updated: 2025-02-21 12:52:57 UTC by jurietto */
 
-// Firebase initialization with error handling
+// Firebase initialization
 try {
     if (!firebase.apps.length) {
         const firebaseConfig = {
@@ -83,18 +83,18 @@ function initializeEmoticons() {
     emoticonsContainer.appendChild(gridContainer);
 }
 
-// Notification sound setup
+// Notification sound
 const newMessageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
 newMessageSound.addEventListener('error', (e) => {
     console.error('Error loading notification sound:', e);
 });
 newMessageSound.preload = "auto";
 
-// Load saved user preferences
+// Load user preferences
 let username = localStorage.getItem("username") || "";
 let notificationsEnabled = localStorage.getItem("notificationsEnabled") === "true";
 
-// Initialize user preferences
+// Initialize preferences
 if (username) {
     usernameInput.value = username;
 }
@@ -149,7 +149,7 @@ function insertEmoticon(emoticonPath) {
     messageInput.focus();
 }
 
-// Media embedding with improved handling
+// Media embedding
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     const urls = text.match(urlRegex);
@@ -164,14 +164,18 @@ function embedMedia(text) {
             // Image embedding
             if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
                 embeddedContent += `
-                    <img src="${safeUrl}" alt="Image" loading="lazy" 
+                    <img src="${safeUrl}" 
+                         alt="Shared Image" 
+                         loading="lazy" 
                          onerror="this.style.display='none'"
+                         crossorigin="anonymous"
                          style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
             }
             // Video embedding
             else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
                 embeddedContent += `
-                    <video controls playsinline style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
+                    <video controls playsinline crossorigin="anonymous"
+                           style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
                         <source src="${safeUrl}">
                         Your browser does not support video playback.
                     </video>`;
@@ -183,27 +187,51 @@ function embedMedia(text) {
                     safeUrl.split("youtu.be/")[1];
                 if (videoId) {
                     embeddedContent += `
-                        <iframe width="100%" height="auto" style="aspect-ratio: 16/9; display: block; margin-top: 5px;"
-                            src="https://www.youtube.com/embed/${videoId}" 
-                            frameborder="0" allowfullscreen loading="lazy"></iframe>`;
+                        <iframe 
+                            width="100%" 
+                            height="315"
+                            src="https://www.youtube-nocookie.com/embed/${videoId}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            style="display: block; margin-top: 5px;">
+                        </iframe>`;
                 }
             }
-            // Spotify embedding
-            else if (safeUrl.includes("spotify.com")) {
+            // Imgur handling
+            else if (safeUrl.match(/\b(imgur\.com|i\.imgur\.com)\b/i)) {
+                const imgurId = safeUrl.split('/').pop().split('.')[0];
+                const imgurUrl = `https://i.imgur.com/${imgurId}.gif`;
                 embeddedContent += `
-                    <iframe src="${safeUrl.replace("spotify.com/", "spotify.com/embed/")}" 
-                        width="100%" height="152" frameborder="0" allowtransparency="true" 
-                        allow="encrypted-media" style="display: block; margin-top: 5px;" loading="lazy"></iframe>`;
+                    <img src="${imgurUrl}"
+                         alt="Imgur Image"
+                         loading="lazy"
+                         onerror="this.src='${imgurUrl.replace('.gif', '.png')}'"
+                         crossorigin="anonymous"
+                         style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
             }
-            // Image URLs from common image hosts
-            else if (safeUrl.match(/\b(imgur\.com|i\.imgur\.com|tenor\.com|giphy\.com)\b/i)) {
+            // Tenor GIFs
+            else if (safeUrl.includes("tenor.com")) {
                 embeddedContent += `
-                    <img src="${safeUrl}" alt="Hosted Image" loading="lazy" 
+                    <img src="${safeUrl}"
+                         alt="Tenor GIF"
+                         loading="lazy"
                          onerror="this.style.display='none'"
+                         crossorigin="anonymous"
+                         style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            }
+            // GIPHY
+            else if (safeUrl.includes("giphy.com")) {
+                embeddedContent += `
+                    <img src="${safeUrl}"
+                         alt="GIPHY GIF"
+                         loading="lazy"
+                         onerror="this.style.display='none'"
+                         crossorigin="anonymous"
                          style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
             }
         } catch (error) {
-            console.error("Invalid URL:", url, error);
+            console.error("Error embedding media:", error);
         }
     });
 
@@ -262,41 +290,4 @@ messageInput.addEventListener("input", function() {
 });
 
 // Tab management
-const tabs = document.querySelectorAll('.tab-button');
-const containers = {
-    'main-tab': chatBox,
-    'emoticons-tab': emoticonsContainer,
-    'settings-tab': settingsContainer,
-    'music-tab': musicContainer
-};
-
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(button => button.classList.remove('active'));
-        tab.classList.add('active');
-        
-        Object.values(containers).forEach(container => {
-            container.classList.add('hidden');
-        });
-        containers[tab.id].classList.remove('hidden');
-    });
-});
-
-// Message listener
-chatRef.on("child_added", (snapshot) => {
-    try {
-        displayMessage(snapshot.val());
-    } catch (error) {
-        console.error("Error displaying message:", error);
-    }
-});
-
-// Initialize emoticons on load
-initializeEmoticons();
-
-// Handle page visibility changes
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        notificationsEnabled = true;
-    }
-});
+const tabs =
