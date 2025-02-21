@@ -57,17 +57,41 @@ if (localStorage.getItem("theme")) {
 function setTheme(theme) {
     const chatContainer = document.querySelector('.chat-container');
     const tabButtons = document.querySelectorAll('.tab-button');
+    const containers = document.querySelectorAll('.chat-box, .music-container, .emoticons-container, .settings-container');
     const messageInputs = [usernameInput, messageInput];
     
-    // Apply theme to chat container, tab buttons, and message inputs
+    // Apply theme to chat container, tab buttons, containers, and message inputs
     chatContainer.className = `chat-container ${theme}`;
     tabButtons.forEach(tab => {
         tab.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
         tab.classList.add(theme);
     });
+    containers.forEach(container => {
+        container.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+        container.classList.add(theme);
+    });
     messageInputs.forEach(input => {
         input.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
         input.classList.add(theme);
+    });
+
+    // Set strong tag color based on theme
+    const strongTags = document.querySelectorAll('strong');
+    strongTags.forEach(tag => {
+        tag.style.color = '';
+        if (theme === 'neon-purple') {
+            tag.style.color = '#9b30ff';
+        } else if (theme === 'magenta') {
+            tag.style.color = '#ff00ff';
+        } else if (theme === 'neon-orange') {
+            tag.style.color = '#ff4500';
+        } else if (theme === 'neon-yellow') {
+            tag.style.color = '#ffff00';
+        } else if (theme === 'neon-green') {
+            tag.style.color = '#39ff14';
+        } else if (theme === 'neon-blue') {
+            tag.style.color = '#1e90ff';
+        }
     });
 
     localStorage.setItem("theme", theme);
@@ -166,42 +190,4 @@ function embedMedia(text) {
         } else if (url.includes("soundcloud.com")) {
             embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts" style="display: inline-block; margin-top: 5px;" src="${url}"></iframe>`;
-        }
-    });
-
-    return embeddedContent;
-}
-
-// Prevent duplicate message loading
-let lastTimestamp = 0;
-
-// Load initial messages
-chatRef.once("value", (snapshot) => {
-    snapshot.forEach((child) => {
-        let data = child.val();
-        displayMessage(data); // Load old messages
-        if (data.timestamp > lastTimestamp) {
-            lastTimestamp = data.timestamp;
-        }
-    });
-
-    // Listen for new messages
-    chatRef.on("child_added", (snapshot) => {
-        let data = snapshot.val();
-        if (data.timestamp > lastTimestamp) {
-            displayMessage(data); // Display the new message
-            lastTimestamp = data.timestamp;
-
-            // Play the notification sound
-            if (notificationsEnabled) {
-                console.log("Playing notification sound...");
-                newMessageSound.play().catch((error) => {
-                    console.error("Error playing notification sound:", error);
-                });
-            }
-        }
-    });
-});
-
-// Emot
+            embeddedContent += `<iframe allow="aut
