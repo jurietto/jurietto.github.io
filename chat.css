@@ -157,57 +157,57 @@ textarea:focus, input:focus {
 }
 
 /* Neon themes */
-.neon-purple {
+.chat-container .neon-purple {
     border-color: #9b30ff;
     background-color: #1a0d2e;
 }
 
-.neon-purple strong {
+.chat-container .neon-purple strong {
     color: #9b30ff;
 }
 
-.magenta {
+.chat-container .magenta {
     border-color: #ff00ff;
     background-color: #330033;
 }
 
-.magenta strong {
+.chat-container .magenta strong {
     color: #ff00ff;
 }
 
-.neon-orange {
+.chat-container .neon-orange {
     border-color: #ff4500;
     background-color: #331a00;
 }
 
-.neon-orange strong {
+.chat-container .neon-orange strong {
     color: #ff4500;
 }
 
-.neon-yellow {
+.chat-container .neon-yellow {
     border-color: #ffff00;
     background-color: #333300;
 }
 
-.neon-yellow strong {
+.chat-container .neon-yellow strong {
     color: #ffff00;
 }
 
-.neon-green {
+.chat-container .neon-green {
     border-color: #39ff14;
     background-color: #0d3307;
 }
 
-.neon-green strong {
+.chat-container .neon-green strong {
     color: #39ff14;
 }
 
-.neon-blue {
+.chat-container .neon-blue {
     border-color: #1e90ff;
     background-color: #0d1a33;
 }
 
-.neon-blue strong {
+.chat-container .neon-blue strong {
     color: #1e90ff;
 }
 
