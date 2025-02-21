@@ -21,8 +21,10 @@ const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
 const mainTab = document.getElementById("main-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
+const musicTab = document.getElementById("music-tab");
 const settingsTab = document.getElementById("settings-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
+const musicContainer = document.getElementById("music-container");
 const settingsContainer = document.getElementById("settings-container");
 const themeSelect = document.getElementById("theme-select");
 
@@ -201,8 +203,4 @@ const emoticons = [
 ];
 
 emoticons.forEach(emoticon => {
-    let img = document.createElement('img');
-    img.src = emoticon;
-    img.alt = emoticon;
-    img.addEventListener('click', () => {
-        message
+    let img = document
