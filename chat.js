@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 12:39:16 UTC by jurietto */
+/* Last updated: 2025-02-21 12:47:58 UTC by jurietto */
 
 // Firebase initialization with error handling
 try {
@@ -21,7 +21,6 @@ try {
 
 // Initialize Firebase services
 const database = firebase.database();
-const storage = firebase.storage();
 const chatRef = database.ref("chat-messages");
 
 // DOM Elements
@@ -36,7 +35,6 @@ const musicTab = document.getElementById("music-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container");
-const fileUpload = document.getElementById("file-upload");
 
 // Get base URL for assets
 const baseUrl = window.location.origin;
@@ -49,7 +47,7 @@ const emoticons = [
     { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
 ];
 
-// Initialize emoticons container with error handling
+// Initialize emoticons container
 function initializeEmoticons() {
     emoticonsContainer.innerHTML = '';
     const gridContainer = document.createElement('div');
@@ -85,7 +83,7 @@ function initializeEmoticons() {
     emoticonsContainer.appendChild(gridContainer);
 }
 
-// Notification sound with error handling
+// Notification sound setup
 const newMessageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
 newMessageSound.addEventListener('error', (e) => {
     console.error('Error loading notification sound:', e);
@@ -109,11 +107,11 @@ if (enableNotifications) {
     });
 }
 
-// Message handling with error checking
-async function sendMessage(text = null) {
+// Message handling
+async function sendMessage() {
     try {
         const currentUsername = usernameInput.value.trim();
-        const messageText = text || messageInput.value.trim();
+        const messageText = messageInput.value.trim();
 
         if (!currentUsername) {
             alert("Please enter your name before sending messages!");
@@ -132,10 +130,8 @@ async function sendMessage(text = null) {
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
 
-            if (!text) {
-                messageInput.value = "";
-                messageInput.style.height = "auto";
-            }
+            messageInput.value = "";
+            messageInput.style.height = "auto";
         }
     } catch (error) {
         console.error("Error sending message:", error);
@@ -153,83 +149,7 @@ function insertEmoticon(emoticonPath) {
     messageInput.focus();
 }
 
-// File upload handling with progress tracking
-async function handleFileUpload(file) {
-    if (!file) return false;
-
-    console.log("Processing file:", file.name, file.type);
-
-    if (!usernameInput.value.trim()) {
-        alert("Please enter your name before uploading files!");
-        return false;
-    }
-
-    if (!file.type.match('image.*') && !file.type.match('video.*')) {
-        alert('Only image and video files are allowed!');
-        return false;
-    }
-
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    if (file.size > maxSize) {
-        alert('File size must be less than 5MB!');
-        return false;
-    }
-
-    const loadingMessage = document.createElement("div");
-    loadingMessage.className = 'upload-progress';
-    loadingMessage.textContent = "Preparing upload...";
-    chatBox.appendChild(loadingMessage);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    try {
-        const metadata = {
-            contentType: file.type,
-            customMetadata: {
-                'Access-Control-Allow-Origin': window.location.origin
-            }
-        };
-
-        const fileName = `uploads/${Date.now()}_${file.name}`;
-        const fileRef = storage.ref(fileName);
-        const uploadTask = fileRef.put(file, metadata);
-
-        // Monitor upload progress
-        uploadTask.on('state_changed', 
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                loadingMessage.textContent = `Uploading... ${Math.round(progress)}%`;
-            },
-            (error) => {
-                console.error("Upload error:", error);
-                loadingMessage.textContent = "Upload failed! " + error.message;
-                setTimeout(() => {
-                    if (loadingMessage.parentNode) {
-                        chatBox.removeChild(loadingMessage);
-                    }
-                }, 3000);
-                return false;
-            }
-        );
-
-        await uploadTask;
-        const downloadURL = await fileRef.getDownloadURL();
-        
-        if (loadingMessage.parentNode) {
-            chatBox.removeChild(loadingMessage);
-        }
-        await sendMessage(downloadURL);
-        return true;
-    } catch (error) {
-        console.error("Error uploading file:", error);
-        if (loadingMessage.parentNode) {
-            chatBox.removeChild(loadingMessage);
-        }
-        alert(`Upload failed: ${error.message}`);
-        return false;
-    }
-}
-
-// Media embedding with security checks
+// Media embedding with improved handling
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     const urls = text.match(urlRegex);
@@ -241,24 +161,23 @@ function embedMedia(text) {
         try {
             const safeUrl = new URL(url).toString();
             
-            if (/\.(jpeg|jpg|gif|png)$/i.test(safeUrl)) {
+            // Image embedding
+            if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
                 embeddedContent += `
                     <img src="${safeUrl}" alt="Image" loading="lazy" 
                          onerror="this.style.display='none'"
                          style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
-            } else if (/\.(mp4|mov|webm)$/i.test(safeUrl)) {
+            }
+            // Video embedding
+            else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
                 embeddedContent += `
                     <video controls playsinline style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
                         <source src="${safeUrl}">
                         Your browser does not support video playback.
                     </video>`;
-            } else if (/\.(mp3|wav|ogg)$/i.test(safeUrl)) {
-                embeddedContent += `
-                    <audio controls style="width: 100%; display: block; margin-top: 5px;">
-                        <source src="${safeUrl}">
-                        Your browser does not support audio playback.
-                    </audio>`;
-            } else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
+            }
+            // YouTube embedding
+            else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
                 const videoId = safeUrl.includes("youtube.com/watch") ? 
                     safeUrl.split("v=")[1]?.split("&")[0] : 
                     safeUrl.split("youtu.be/")[1];
@@ -269,6 +188,20 @@ function embedMedia(text) {
                             frameborder="0" allowfullscreen loading="lazy"></iframe>`;
                 }
             }
+            // Spotify embedding
+            else if (safeUrl.includes("spotify.com")) {
+                embeddedContent += `
+                    <iframe src="${safeUrl.replace("spotify.com/", "spotify.com/embed/")}" 
+                        width="100%" height="152" frameborder="0" allowtransparency="true" 
+                        allow="encrypted-media" style="display: block; margin-top: 5px;" loading="lazy"></iframe>`;
+            }
+            // Image URLs from common image hosts
+            else if (safeUrl.match(/\b(imgur\.com|i\.imgur\.com|tenor\.com|giphy\.com)\b/i)) {
+                embeddedContent += `
+                    <img src="${safeUrl}" alt="Hosted Image" loading="lazy" 
+                         onerror="this.style.display='none'"
+                         style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            }
         } catch (error) {
             console.error("Invalid URL:", url, error);
         }
@@ -277,7 +210,7 @@ function embedMedia(text) {
     return embeddedContent;
 }
 
-// Message display with sanitization
+// Message display
 function displayMessage(data) {
     const messageContainer = document.createElement("div");
     messageContainer.classList.add("message-container");
@@ -328,13 +261,6 @@ messageInput.addEventListener("input", function() {
     this.style.height = `${this.scrollHeight}px`;
 });
 
-fileUpload.addEventListener("change", async (event) => {
-    event.preventDefault();
-    const file = event.target.files[0];
-    await handleFileUpload(file);
-    fileUpload.value = ''; // Clear input
-});
-
 // Tab management
 const tabs = document.querySelectorAll('.tab-button');
 const containers = {
@@ -356,17 +282,7 @@ tabs.forEach(tab => {
     });
 });
 
-// Firebase connection status monitoring
-const connectedRef = database.ref(".info/connected");
-connectedRef.on("value", (snap) => {
-    if (snap.val() === true) {
-        console.log("Connected to Firebase");
-    } else {
-        console.log("Disconnected from Firebase");
-    }
-});
-
-// Message listener with error handling
+// Message listener
 chatRef.on("child_added", (snapshot) => {
     try {
         displayMessage(snapshot.val());
@@ -377,14 +293,6 @@ chatRef.on("child_added", (snapshot) => {
 
 // Initialize emoticons on load
 initializeEmoticons();
-
-// Global error handler
-window.addEventListener('error', (e) => {
-    console.error('Global error:', e);
-    if (e.message.includes('firebase')) {
-        alert('There was an error connecting to the chat service. Please refresh the page.');
-    }
-});
 
 // Handle page visibility changes
 document.addEventListener('visibilitychange', () => {
