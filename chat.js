@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 19:55:47 UTC by jurietto */
+/* Last updated: 2025-02-21 20:09:33 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -113,6 +113,100 @@ if (enableNotifications) {
     });
 }
 
+// Media embedding function
+function embedMedia(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    const urls = text.match(urlRegex);
+    if (!urls) return "";
+
+    let embeddedContent = "";
+
+    urls.forEach(url => {
+        try {
+            const safeUrl = new URL(url).toString();
+            
+            // Image embedding
+            if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
+                embeddedContent += `
+                    <img src="${safeUrl}" 
+                         alt="Shared Image" 
+                         loading="lazy" 
+                         onerror="this.style.display='none'"
+                         crossorigin="anonymous"
+                         style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            }
+            // Video embedding
+            else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
+                embeddedContent += `
+                    <video controls playsinline crossorigin="anonymous"
+                           style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
+                        <source src="${safeUrl}">
+                        Your browser does not support video playback.
+                    </video>`;
+            }
+            // YouTube embedding
+            else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
+                const videoId = safeUrl.includes("youtube.com/watch") ? 
+                    safeUrl.split("v=")[1]?.split("&")[0] : 
+                    safeUrl.split("youtu.be/")[1];
+                if (videoId) {
+                    embeddedContent += `
+                        <iframe 
+                            width="100%" 
+                            height="315"
+                            src="https://www.youtube-nocookie.com/embed/${videoId}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            style="display: block; margin-top: 5px;">
+                        </iframe>`;
+                }
+            }
+            // Spotify embedding
+            else if (safeUrl.includes("spotify.com")) {
+                const spotifyType = safeUrl.includes("/track/") ? "track" :
+                                  safeUrl.includes("/album/") ? "album" :
+                                  safeUrl.includes("/playlist/") ? "playlist" :
+                                  safeUrl.includes("/artist/") ? "artist" : null;
+                
+                if (spotifyType) {
+                    const spotifyId = safeUrl.split(`/${spotifyType}/`)[1]?.split(/[/?#]/)[0];
+                    if (spotifyId) {
+                        embeddedContent += `
+                            <iframe
+                                src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}"
+                                width="100%"
+                                height="152"
+                                frameborder="0"
+                                allowtransparency="true"
+                                allow="encrypted-media"
+                                style="display: block; margin-top: 5px; border-radius: 12px;">
+                            </iframe>`;
+                    }
+                }
+            }
+            // SoundCloud embedding
+            else if (safeUrl.includes("soundcloud.com")) {
+                const encodedUrl = encodeURIComponent(safeUrl);
+                embeddedContent += `
+                    <iframe 
+                        width="100%" 
+                        height="166" 
+                        scrolling="no" 
+                        frameborder="no" 
+                        allow="autoplay" 
+                        src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+                        style="display: block; margin-top: 5px;">
+                    </iframe>`;
+            }
+        } catch (error) {
+            console.error("Error embedding media:", error);
+        }
+    });
+
+    return embeddedContent;
+}
+
 // Message handling
 async function sendMessage() {
     try {
@@ -137,4 +231,149 @@ async function sendMessage() {
             await messageRef.push({
                 username: username,
                 text: messageText,
-                timestamp: firebase
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+
+            messageInput.value = "";
+            messageInput.style.height = "auto";
+        }
+    } catch (error) {
+        console.error("Error sending message:", error);
+        alert("Failed to send message. Please try again.");
+    }
+}
+
+// Emoticon insertion
+function insertEmoticon(emoticonPath) {
+    if (!usernameInput.value.trim()) {
+        alert("Please enter your name before using emoticons!");
+        return;
+    }
+    messageInput.value += ` ${emoticonPath} `;
+    messageInput.focus();
+}
+
+// Display message in chat container
+function displayMessage(data) {
+    const messageContainer = document.createElement("div");
+    messageContainer.classList.add("message-container");
+
+    const time = new Date(data.timestamp).toLocaleTimeString();
+    const messageContent = document.createElement("p");
+    
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    const displayText = data.text.replace(urlRegex, "").trim();
+    
+    messageContent.innerHTML = `
+        <time>${time}</time> 
+        <strong>${data.username}:</strong> 
+        ${displayText}`;
+    
+    messageContainer.appendChild(messageContent);
+
+    const embeddedContent = embedMedia(data.text);
+    if (embeddedContent) {
+        const mediaContainer = document.createElement("div");
+        mediaContainer.classList.add("embedded-content");
+        mediaContainer.innerHTML = embeddedContent;
+        messageContainer.appendChild(mediaContainer);
+    }
+
+    chatBox.appendChild(messageContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    if (notificationsEnabled && !document.hasFocus()) {
+        newMessageSound.play().catch(error => {
+            console.warn("Audio play prevented:", error);
+        });
+    }
+}
+
+// Display message in music container
+function displayMusicMessage(data) {
+    const messageContainer = document.createElement("div");
+    messageContainer.classList.add("music-message");
+
+    const time = new Date(data.timestamp).toLocaleTimeString();
+    const messageContent = document.createElement("p");
+    
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    const displayText = data.text.replace(urlRegex, "").trim();
+    
+    messageContent.innerHTML = `
+        <time>${time}</time> 
+        <strong>${data.username}:</strong> 
+        ${displayText}`;
+    
+    messageContainer.appendChild(messageContent);
+
+    const embeddedContent = embedMedia(data.text);
+    if (embeddedContent) {
+        const mediaContainer = document.createElement("div");
+        mediaContainer.classList.add("embedded-content");
+        mediaContainer.innerHTML = embeddedContent;
+        messageContainer.appendChild(mediaContainer);
+    }
+
+    musicContainer.appendChild(messageContainer);
+    musicContainer.scrollTop = musicContainer.scrollHeight;
+
+    if (notificationsEnabled && !document.hasFocus()) {
+        newMessageSound.play().catch(error => {
+            console.warn("Audio play prevented:", error);
+        });
+    }
+}
+
+// Tab management
+const tabs = [
+    { button: mainTab, container: chatBox },
+    { button: emoticonsTab, container: emoticonsContainer },
+    { button: settingsTab, container: settingsContainer },
+    { button: musicTab, container: musicContainer }
+];
+
+tabs.forEach(tab => {
+    tab.button.addEventListener("click", () => {
+        tabs.forEach(t => {
+            t.button.classList.remove("active");
+            t.container.classList.add("hidden");
+        });
+        tab.button.classList.add("active");
+        tab.container.classList.remove("hidden");
+        
+        // Clear message input when switching tabs
+        messageInput.value = "";
+        messageInput.style.height = "auto";
+    });
+});
+
+// Event Listeners
+messageInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+messageInput.addEventListener("input", function() {
+    this.style.height = "auto";
+    this.style.height = `${this.scrollHeight}px`;
+});
+
+// Initialize chat
+document.addEventListener("DOMContentLoaded", () => {
+    initializeEmoticons();
+    
+    // Listen for new chat messages
+    chatRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        displayMessage(data);
+    });
+
+    // Listen for new music messages
+    musicRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        displayMusicMessage(data);
+    });
+});
