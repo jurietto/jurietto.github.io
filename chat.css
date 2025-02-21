@@ -48,8 +48,8 @@ body {
 /* Style input fields */
 .input-container {
     display: flex;
-    flex-direction: column; /* Stack inputs vertically */
-    gap: 0; /* No gap between inputs */
+    align-items: center; /* Align items horizontally */
+    gap: 10px; /* Add gap between inputs */
 }
 
 input, textarea, #username-input, #message-input {
@@ -111,6 +111,7 @@ textarea:focus, input:focus {
     color: white;
     border: 1px solid grey;
     font-size: 16px;
+    border-radius: 0; /* Remove border radius */
 }
 
 /* Tabs styling */
@@ -147,7 +148,7 @@ textarea:focus, input:focus {
 .emoticons-container img {
     width: 150px;
     height: auto;
-    margin: 10px 10px; /* More space between emoticons */
+    margin: 10px; /* More space between emoticons */
     cursor: pointer;
     display: inline-block; /* Make emoticons display side by side */
 }
@@ -287,4 +288,4 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-blue:hover {
-    background-color:
+    background-color: #1669b3
