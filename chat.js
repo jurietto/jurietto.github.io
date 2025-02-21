@@ -19,7 +19,7 @@ const chatBox = document.getElementById("chat-box");
 const messageInput = document.getElementById("message-input");
 const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
-const chatTab = document.getElementById("chat-tab");
+const mainTab = document.getElementById("main-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
 const musicTab = document.getElementById("music-tab");
 const settingsTab = document.getElementById("settings-tab");
@@ -29,6 +29,7 @@ const settingsContainer = document.getElementById("settings-container");
 const postMusicButton = document.getElementById("post-music-button");
 const musicUrlInput = document.getElementById("music-url");
 const musicPosts = document.getElementById("music-posts");
+const themeSelect = document.getElementById("theme-select");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -47,6 +48,12 @@ if (enableNotifications) {
         notificationsEnabled = enableNotifications.checked;
         localStorage.setItem("notificationsEnabled", notificationsEnabled);
     });
+}
+
+// Load theme preference
+if (localStorage.getItem("theme")) {
+    setTheme(localStorage.getItem("theme"));
+    themeSelect.value = localStorage.getItem("theme");
 }
 
 // Function to Send Messages
@@ -81,9 +88,9 @@ messageInput.addEventListener("keypress", function (event) {
         event.preventDefault();
         sendMessage();
 
-        // If in emoticons tab, switch back to chat tab after sending message
+        // If in emoticons tab, switch back to main tab after sending message
         if (emoticonsTab.classList.contains('active')) {
-            chatTab.click();
+            mainTab.click();
         }
     }
 });
@@ -199,58 +206,4 @@ emoticons.forEach(emoticon => {
     emoticonsContainer.appendChild(img);
 });
 
-chatTab.addEventListener('click', () => {
-    chatBox.classList.remove('hidden');
-    emoticonsContainer.classList.add('hidden');
-    settingsContainer.classList.add('hidden');
-    musicContainer.classList.add('hidden');
-    chatTab.classList.add('active');
-    emoticonsTab.classList.remove('active');
-    settingsTab.classList.remove('active');
-    musicTab.classList.remove('active');
-});
-
-emoticonsTab.addEventListener('click', () => {
-    chatBox.classList.add('hidden');
-    emoticonsContainer.classList.remove('hidden');
-    settingsContainer.classList.add('hidden');
-    musicContainer.classList.add('hidden');
-    chatTab.classList.remove('active');
-    emoticonsTab.classList.add('active');
-    settingsTab.classList.remove('active');
-    musicTab.classList.remove('active');
-});
-
-settingsTab.addEventListener('click', () => {
-    chatBox.classList.add('hidden');
-    emoticonsContainer.classList.add('hidden');
-    settingsContainer.classList.remove('hidden');
-    musicContainer.classList.add('hidden');
-    chatTab.classList.remove('active');
-    emoticonsTab.classList.remove('active');
-    settingsTab.classList.add('active');
-    musicTab.classList.remove('active');
-});
-
-musicTab.addEventListener('click', () => {
-    chatBox.classList.add('hidden');
-    emoticonsContainer.classList.add('hidden');
-    settingsContainer.classList.add('hidden');
-    musicContainer.classList.remove('hidden');
-    chatTab.classList.remove('active');
-    emoticonsTab.classList.remove('active');
-    settingsTab.classList.remove('active');
-    musicTab.classList.add('active');
-});
-
-// Post music functionality
-postMusicButton.addEventListener('click', () => {
-    const musicUrl = musicUrlInput.value.trim();
-    if (musicUrl) {
-        const musicPost = document.createElement('div');
-        musicPost.classList.add('music-post');
-        musicPost.innerHTML = embedMedia(musicUrl);
-        musicPosts.appendChild(musicPost);
-        musicUrlInput.value = ''; // Clear the input field
-    }
-});
+mainTab.addEventListener('click', ()
