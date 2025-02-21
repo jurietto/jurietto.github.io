@@ -21,10 +21,8 @@ const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
 const mainTab = document.getElementById("main-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
-const musicTab = document.getElementById("music-tab");
 const settingsTab = document.getElementById("settings-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
-const musicContainer = document.getElementById("music-container");
 const settingsContainer = document.getElementById("settings-container");
 const themeSelect = document.getElementById("theme-select");
 
@@ -96,11 +94,6 @@ messageInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
         sendMessage();
-
-        // If in emoticons tab, switch back to main tab after sending message
-        if (emoticonsTab.classList.contains('active')) {
-            mainTab.click();
-        }
     }
 });
 
@@ -203,4 +196,21 @@ const emoticons = [
 ];
 
 emoticons.forEach(emoticon => {
-    let img = document
+    let img = document.createElement('img');
+    img.src = emoticon;
+    img.alt = emoticon;
+    img.addEventListener('click', () => {
+        messageInput.value += ` ${img.src} `;
+        // Auto-expand the message input box
+        messageInput.style.height = "auto";
+        messageInput.style.height = (messageInput.scrollHeight) + "px";
+    });
+    emoticonsContainer.appendChild(img);
+});
+
+// Tab switching functionality
+function switchTab(activeTab, activeContainer) {
+    document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.chat-box, .emoticons-container, .settings-container').forEach(container => container.classList.add('hidden'));
+
+    activeTab.classList.add('active');
