@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 10:20:00 UTC by jurietto */
+/* Last updated: 2025-02-21 12:24:02 UTC by jurietto */
 
 // Firebase initialization
 if (!firebase.apps.length) {
@@ -13,6 +13,8 @@ if (!firebase.apps.length) {
     };
     firebase.initializeApp(firebaseConfig);
 }
+
+// Initialize Firebase services
 const database = firebase.database();
 const storage = firebase.storage();
 const chatRef = database.ref("chat-messages");
@@ -31,21 +33,24 @@ const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container");
 const fileUpload = document.getElementById("file-upload");
 
-// Define emoticons with fixed dimensions
+// Get base URL for assets
+const baseUrl = window.location.origin;
+
+// Define emoticons with absolute paths
 const emoticons = [
-    { src: 'pix/sb1.gif', alt: 'sb1' },
-    { src: 'pix/po1.gif', alt: 'po1' },
-    { src: 'pix/po2.gif', alt: 'po2' },
-    { src: 'pix/po3.gif', alt: 'po3' }
+    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
+    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
+    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
+    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
 ];
 
-// Initialize emoticons container with fixed sizing
+// Initialize emoticons container
 function initializeEmoticons() {
     emoticonsContainer.innerHTML = '';
     const gridContainer = document.createElement('div');
     gridContainer.style.cssText = `
         display: grid;
-        grid-template-columns: repeat(auto-fill, 150px);
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 10px;
         padding: 10px;
         justify-content: start;
@@ -57,32 +62,37 @@ function initializeEmoticons() {
         img.src = emoticon.src;
         img.alt = emoticon.alt;
         img.style.cssText = `
-            width: 150px;
+            width: 100%;
             height: auto;
+            max-width: 150px;
             display: block;
             cursor: pointer;
+            margin: 0 auto;
         `;
         img.addEventListener('click', () => insertEmoticon(emoticon.src));
+        img.addEventListener('error', (e) => {
+            console.error(`Failed to load emoticon: ${emoticon.src}`);
+            e.target.style.display = 'none';
+        });
         gridContainer.appendChild(img);
     });
 
     emoticonsContainer.appendChild(gridContainer);
 }
 
-// Initialize emoticons
-initializeEmoticons();
-
-// Notification sound
-const newMessageSound = new Audio("sound/IM.mp3");
+// Notification sound setup
+const newMessageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
 newMessageSound.preload = "auto";
 
-// Load saved username
-if (localStorage.getItem("username")) {
-    usernameInput.value = localStorage.getItem("username");
+// Load saved user preferences
+let username = localStorage.getItem("username") || "";
+let notificationsEnabled = localStorage.getItem("notificationsEnabled") === "true";
+
+// Initialize user preferences
+if (username) {
+    usernameInput.value = username;
 }
 
-// Load notification preference
-let notificationsEnabled = localStorage.getItem("notificationsEnabled") === "true";
 if (enableNotifications) {
     enableNotifications.checked = notificationsEnabled;
     enableNotifications.addEventListener("change", () => {
@@ -91,70 +101,70 @@ if (enableNotifications) {
     });
 }
 
-// Message sending function
-function sendMessage(text = null) {
-    let username = usernameInput.value.trim();
-    let message = text || messageInput.value.trim();
+// Message handling functions
+async function sendMessage(text = null) {
+    const currentUsername = usernameInput.value.trim();
+    const messageText = text || messageInput.value.trim();
 
-    if (username === "") {
+    if (!currentUsername) {
         alert("Please enter your name before sending messages!");
         return;
     }
 
-    localStorage.setItem("username", username);
+    if (currentUsername !== username) {
+        username = currentUsername;
+        localStorage.setItem("username", username);
+    }
 
-    if (message !== "") {
-        let newMessage = {
-            username: username,
-            text: message,
-            timestamp: Date.now()
-        };
+    if (messageText) {
+        try {
+            await chatRef.push({
+                username: username,
+                text: messageText,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
 
-        chatRef.push(newMessage);
-        if (!text) {
-            messageInput.value = "";
-            messageInput.style.height = "auto";
+            if (!text) {
+                messageInput.value = "";
+                messageInput.style.height = "auto";
+            }
+        } catch (error) {
+            console.error("Error sending message:", error);
+            alert("Failed to send message. Please try again.");
         }
     }
 }
 
 // Emoticon insertion
 function insertEmoticon(emoticonPath) {
-    if (usernameInput.value.trim() === "") {
+    if (!usernameInput.value.trim()) {
         alert("Please enter your name before using emoticons!");
         return;
     }
-
-    const fullUrl = `${window.location.protocol}//${window.location.host}/${emoticonPath}`;
-    messageInput.value += ` ${fullUrl}`;
+    messageInput.value += ` ${emoticonPath} `;
     messageInput.focus();
 }
 
-// Improved file upload with immediate handling
-fileUpload.addEventListener("change", async function(event) {
-    event.preventDefault();
-    
-    const file = event.target.files[0];
+// File upload handling
+async function handleFileUpload(file) {
     if (!file) return;
 
-    const username = usernameInput.value.trim();
-    if (username === "") {
+    console.log("Processing file:", file.name, file.type);
+
+    if (!usernameInput.value.trim()) {
         alert("Please enter your name before uploading files!");
-        fileUpload.value = '';
-        return;
+        return false;
     }
 
     if (!file.type.match('image.*') && !file.type.match('video.*')) {
         alert('Only image and video files are allowed!');
-        fileUpload.value = '';
-        return;
+        return false;
     }
 
-    const maxSize = 5 * 1024 * 1024;
+    const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
         alert('File size must be less than 5MB!');
-        fileUpload.value = '';
-        return;
+        return false;
     }
 
     const loadingMessage = document.createElement("div");
@@ -169,18 +179,117 @@ fileUpload.addEventListener("change", async function(event) {
         
         chatBox.removeChild(loadingMessage);
         await sendMessage(downloadURL);
+        return true;
     } catch (error) {
         console.error("Error uploading file:", error);
         alert("Error uploading file. Please try again.");
         chatBox.removeChild(loadingMessage);
+        return false;
+    }
+}
+
+// Media embedding
+function embedMedia(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    const urls = text.match(urlRegex);
+    if (!urls) return "";
+
+    let embeddedContent = "";
+
+    urls.forEach(url => {
+        // Sanitize URL
+        try {
+            url = new URL(url).toString();
+        } catch (e) {
+            console.error("Invalid URL:", url);
+            return;
+        }
+
+        if (/\.(jpeg|jpg|gif|png)$/i.test(url)) {
+            embeddedContent += `
+                <img src="${url}" alt="Image" loading="lazy" 
+                     onerror="this.style.display='none'"
+                     style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+        } else if (/\.(mp4|mov|webm)$/i.test(url)) {
+            embeddedContent += `
+                <video controls playsinline style="max-width: 100%; height: auto; display: block; margin-top: 5px;">
+                    <source src="${url}">
+                    Your browser does not support video playback.
+                </video>`;
+        } else if (/\.(mp3|wav|ogg)$/i.test(url)) {
+            embeddedContent += `
+                <audio controls style="width: 100%; display: block; margin-top: 5px;">
+                    <source src="${url}">
+                    Your browser does not support audio playback.
+                </audio>`;
+        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
+            const videoId = url.includes("youtube.com/watch") ? 
+                url.split("v=")[1]?.split("&")[0] : 
+                url.split("youtu.be/")[1];
+            if (videoId) {
+                embeddedContent += `
+                    <iframe width="100%" height="auto" style="aspect-ratio: 16/9; display: block; margin-top: 5px;"
+                        src="https://www.youtube.com/embed/${videoId}" 
+                        frameborder="0" allowfullscreen loading="lazy"></iframe>`;
+            }
+        } else if (url.includes("spotify.com")) {
+            embeddedContent += `
+                <iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" 
+                    width="100%" height="152" frameborder="0" allowtransparency="true" 
+                    allow="encrypted-media" style="display: block; margin-top: 5px;" loading="lazy"></iframe>`;
+        } else if (url.includes("soundcloud.com")) {
+            embeddedContent += `
+                <iframe width="100%" height="166" scrolling="no" frameborder="no" 
+                    allow="autoplay" loading="lazy"
+                    src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}" 
+                    style="display: block; margin-top: 5px;"></iframe>`;
+        }
+    });
+
+    return embeddedContent;
+}
+
+// Message display
+function displayMessage(data) {
+    const messageContainer = document.createElement("div");
+    messageContainer.classList.add("message-container");
+
+    const time = new Date(data.timestamp).toLocaleTimeString();
+    const messageContent = document.createElement("p");
+    
+    // Extract URLs from text to separate them from display text
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    const displayText = data.text.replace(urlRegex, "").trim();
+    
+    messageContent.innerHTML = `
+        <time>${time}</time> 
+        <strong>${data.username}:</strong> 
+        ${displayText}`;
+    
+    messageContainer.appendChild(messageContent);
+
+    const embeddedContent = embedMedia(data.text);
+    if (embeddedContent) {
+        const mediaContainer = document.createElement("div");
+        mediaContainer.classList.add("embedded-content");
+        mediaContainer.innerHTML = embeddedContent;
+        messageContainer.appendChild(mediaContainer);
     }
 
-    fileUpload.value = '';
-});
+    chatBox.appendChild(messageContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
 
-// Message input handlers
-messageInput.addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
+    // Play notification sound if enabled and window is not focused
+    if (notificationsEnabled && !document.hasFocus()) {
+        newMessageSound.play().catch(error => {
+            console.warn("Audio play prevented:", error);
+        });
+    }
+}
+
+// Event Listeners
+messageInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         sendMessage();
     }
@@ -188,69 +297,15 @@ messageInput.addEventListener("keypress", function(event) {
 
 messageInput.addEventListener("input", function() {
     this.style.height = "auto";
-    this.style.height = (this.scrollHeight) + "px";
+    this.style.height = `${this.scrollHeight}px`;
 });
 
-// Enhanced message display with proper media handling
-function displayMessage(data) {
-    const newMessage = document.createElement("div");
-    newMessage.classList.add("message-container");
-
-    const time = new Date(data.timestamp).toLocaleTimeString();
-    const rawText = data.text;
-
-    const displayText = rawText.replace(/(https?:\/\/[^\s]+)(?=\s|$)/g, "").trim();
-    const messageContent = document.createElement("p");
-    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
-    newMessage.appendChild(messageContent);
-
-    const formattedText = embedMedia(rawText);
-    if (formattedText) {
-        const embeddedContent = document.createElement("div");
-        embeddedContent.classList.add("embedded-content");
-        embeddedContent.innerHTML = formattedText;
-        newMessage.appendChild(embeddedContent);
-    }
-
-    chatBox.appendChild(newMessage);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// Function to Embed Media
-function embedMedia(text) {
-    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    let embeddedContent = "";
-
-    text.match(urlRegex)?.forEach((url) => {
-        if (/\.(jpeg|jpg|gif|png)$/i.test(url)) {
-            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
-        } else if (/\.(mp4|mov)$/i.test(url)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
-        } else if (/\.(mp3)$/i.test(url)) {
-            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
-        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
-            const videoId = url.split("v=")[1]?.split("&")[0] || url.split("youtu.be/")[1];
-            embeddedContent += `<iframe width="100%" height="auto" style="aspect-ratio: 16/9; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
-        } else if (url.includes("spotify.com")) {
-            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
-        } else if (url.includes("soundcloud.com")) {
-            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
-        } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
-        }
-    });
-
-    return embeddedContent;
-}
-
-// Message listener
-chatRef.on("child_added", (snapshot) => {
-    displayMessage(snapshot.val());
-    
-    if (notificationsEnabled && document.hasFocus()) {
-        newMessageSound.play().catch((error) => {
-            console.warn("Audio play prevented:", error);
-        });
+fileUpload.addEventListener("change", async (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    const success = await handleFileUpload(file);
+    if (success || !success) {
+        fileUpload.value = ''; // Clear input either way
     }
 });
 
@@ -268,7 +323,17 @@ tabs.forEach(tab => {
         tabs.forEach(button => button.classList.remove('active'));
         tab.classList.add('active');
         
-        Object.values(containers).forEach(container => container.classList.add('hidden'));
+        Object.values(containers).forEach(container => {
+            container.classList.add('hidden');
+        });
         containers[tab.id].classList.remove('hidden');
     });
 });
+
+// Message listener
+chatRef.on("child_added", (snapshot) => {
+    displayMessage(snapshot.val());
+});
+
+// Initialize emoticons on load
+initializeEmoticons();
