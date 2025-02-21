@@ -31,9 +31,7 @@ const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
 const uploadInput = document.getElementById("upload-input"); // Modified Upload Input
-const uploadButton = document.createElement("button"); // Added Upload Button
-uploadButton.textContent = "Upload File";
-document.body.appendChild(uploadButton);
+const uploadLink = document.getElementById("upload-link"); // Added Upload Link
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -152,8 +150,9 @@ function sendMessage() {
     }
 }
 
-// Function to handle file uploads via button
-uploadButton.addEventListener("click", function () {
+// Function to handle file uploads via link
+uploadLink.addEventListener("click", function (event) {
+    event.preventDefault();
     sendMessage();
 });
 
