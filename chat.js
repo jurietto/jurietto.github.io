@@ -200,15 +200,6 @@ function displayMessage(data) {
         newMessage.appendChild(embeddedContent);
     }
 
-    // Display file content if available
-    if (data.fileContent) {
-        let fileLink = document.createElement("a");
-        fileLink.href = data.fileContent;
-        fileLink.download = data.fileName;
-        fileLink.textContent = `Download ${data.fileName}`;
-        newMessage.appendChild(fileLink);
-    }
-
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 }
@@ -220,12 +211,19 @@ function embedMedia(text) {
 
     text.match(urlRegex)?.forEach((url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin: 10px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin: 10px;">
                                     <source src="${url}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>`;
+        } else if (url.match(/(youtube\.com|youtu\.be)/i)) {
+            const videoId = url.split('v=')[1] || url.split('/')[3];
+            embeddedContent += `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        } else if (url.match(/soundcloud\.com/i)) {
+            embeddedContent += `<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>`;
+        } else if (url.match(/spotify\.com/i)) {
+            embeddedContent += `<iframe src="https://open.spotify.com/embed/track/${url.split('/')[4]}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
         } else {
             embeddedContent += `<a href="${url}" target="_blank">${url}</a>`;
         }
@@ -267,4 +265,16 @@ tabs.forEach(tab => {
         Object.values(containers).forEach(container => container.classList.add('hidden'));
         containers[tab.id].classList.remove('hidden');
     });
+});
+
+// Add emoticons
+const emoticons = [
+    "pix/sb1.gif",
+    // Add more emoticon paths here if needed
+];
+emoticons.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.classList.add("emoticon");
+    emoticonsContainer.appendChild(img);
 });
