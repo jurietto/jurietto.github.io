@@ -1,17 +1,22 @@
-/* Last updated: 2025-02-21 12:32:32 UTC by jurietto */
+/* Last updated: 2025-02-21 12:39:16 UTC by jurietto */
 
-// Firebase initialization
-if (!firebase.apps.length) {
-    const firebaseConfig = {
-        apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
-        authDomain: "dungeon-forum.firebaseapp.com",
-        databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
-        projectId: "dungeon-forum",
-        storageBucket: "dungeon-forum.firebasestorage.app",
-        messagingSenderId: "1073920232004",
-        appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
-    };
-    firebase.initializeApp(firebaseConfig);
+// Firebase initialization with error handling
+try {
+    if (!firebase.apps.length) {
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
+            authDomain: "dungeon-forum.firebaseapp.com",
+            databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
+            projectId: "dungeon-forum",
+            storageBucket: "dungeon-forum.firebasestorage.app",
+            messagingSenderId: "1073920232004",
+            appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
+        };
+        firebase.initializeApp(firebaseConfig);
+    }
+} catch (error) {
+    console.error("Firebase initialization error:", error);
+    alert("Failed to initialize chat. Please refresh the page.");
 }
 
 // Initialize Firebase services
@@ -44,9 +49,19 @@ const emoticons = [
     { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
 ];
 
-// Initialize emoticons container
+// Initialize emoticons container with error handling
 function initializeEmoticons() {
     emoticonsContainer.innerHTML = '';
+    const gridContainer = document.createElement('div');
+    gridContainer.style.cssText = `
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+        justify-content: start;
+        align-content: start;
+    `;
+
     emoticons.forEach(emoticon => {
         const img = document.createElement('img');
         img.src = emoticon.src;
@@ -57,18 +72,20 @@ function initializeEmoticons() {
             height: auto;
             display: block;
             cursor: pointer;
-            margin: 5px;
+            margin: 0 auto;
         `;
         img.addEventListener('click', () => insertEmoticon(emoticon.src));
         img.addEventListener('error', (e) => {
             console.error(`Failed to load emoticon: ${emoticon.src}`);
             e.target.style.display = 'none';
         });
-        emoticonsContainer.appendChild(img);
+        gridContainer.appendChild(img);
     });
+
+    emoticonsContainer.appendChild(gridContainer);
 }
 
-// Notification sound setup with error handling
+// Notification sound with error handling
 const newMessageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
 newMessageSound.addEventListener('error', (e) => {
     console.error('Error loading notification sound:', e);
@@ -92,23 +109,23 @@ if (enableNotifications) {
     });
 }
 
-// Message handling functions
+// Message handling with error checking
 async function sendMessage(text = null) {
-    const currentUsername = usernameInput.value.trim();
-    const messageText = text || messageInput.value.trim();
+    try {
+        const currentUsername = usernameInput.value.trim();
+        const messageText = text || messageInput.value.trim();
 
-    if (!currentUsername) {
-        alert("Please enter your name before sending messages!");
-        return;
-    }
+        if (!currentUsername) {
+            alert("Please enter your name before sending messages!");
+            return;
+        }
 
-    if (currentUsername !== username) {
-        username = currentUsername;
-        localStorage.setItem("username", username);
-    }
+        if (currentUsername !== username) {
+            username = currentUsername;
+            localStorage.setItem("username", username);
+        }
 
-    if (messageText) {
-        try {
+        if (messageText) {
             await chatRef.push({
                 username: username,
                 text: messageText,
@@ -119,10 +136,10 @@ async function sendMessage(text = null) {
                 messageInput.value = "";
                 messageInput.style.height = "auto";
             }
-        } catch (error) {
-            console.error("Error sending message:", error);
-            alert("Failed to send message. Please try again.");
         }
+    } catch (error) {
+        console.error("Error sending message:", error);
+        alert("Failed to send message. Please try again.");
     }
 }
 
@@ -136,9 +153,9 @@ function insertEmoticon(emoticonPath) {
     messageInput.focus();
 }
 
-// File upload handling with progress and CORS
+// File upload handling with progress tracking
 async function handleFileUpload(file) {
-    if (!file) return;
+    if (!file) return false;
 
     console.log("Processing file:", file.name, file.type);
 
@@ -152,7 +169,7 @@ async function handleFileUpload(file) {
         return false;
     }
 
-    const maxSize = 5 * 1024 * 1024;
+    const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
         alert('File size must be less than 5MB!');
         return false;
@@ -174,8 +191,6 @@ async function handleFileUpload(file) {
 
         const fileName = `uploads/${Date.now()}_${file.name}`;
         const fileRef = storage.ref(fileName);
-        
-        // Create upload task
         const uploadTask = fileRef.put(file, metadata);
 
         // Monitor upload progress
@@ -187,16 +202,21 @@ async function handleFileUpload(file) {
             (error) => {
                 console.error("Upload error:", error);
                 loadingMessage.textContent = "Upload failed! " + error.message;
-                setTimeout(() => chatBox.removeChild(loadingMessage), 3000);
+                setTimeout(() => {
+                    if (loadingMessage.parentNode) {
+                        chatBox.removeChild(loadingMessage);
+                    }
+                }, 3000);
                 return false;
             }
         );
 
-        // Wait for upload completion
         await uploadTask;
         const downloadURL = await fileRef.getDownloadURL();
         
-        chatBox.removeChild(loadingMessage);
+        if (loadingMessage.parentNode) {
+            chatBox.removeChild(loadingMessage);
+        }
         await sendMessage(downloadURL);
         return true;
     } catch (error) {
@@ -250,7 +270,7 @@ function embedMedia(text) {
                 }
             }
         } catch (error) {
-            console.error("Invalid URL:", url);
+            console.error("Invalid URL:", url, error);
         }
     });
 
@@ -287,4 +307,88 @@ function displayMessage(data) {
     chatBox.appendChild(messageContainer);
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Play notification sound if enable
+    // Play notification sound if enabled and window is not focused
+    if (notificationsEnabled && !document.hasFocus()) {
+        newMessageSound.play().catch(error => {
+            console.warn("Audio play prevented:", error);
+        });
+    }
+}
+
+// Event Listeners
+messageInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+messageInput.addEventListener("input", function() {
+    this.style.height = "auto";
+    this.style.height = `${this.scrollHeight}px`;
+});
+
+fileUpload.addEventListener("change", async (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    await handleFileUpload(file);
+    fileUpload.value = ''; // Clear input
+});
+
+// Tab management
+const tabs = document.querySelectorAll('.tab-button');
+const containers = {
+    'main-tab': chatBox,
+    'emoticons-tab': emoticonsContainer,
+    'settings-tab': settingsContainer,
+    'music-tab': musicContainer
+};
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(button => button.classList.remove('active'));
+        tab.classList.add('active');
+        
+        Object.values(containers).forEach(container => {
+            container.classList.add('hidden');
+        });
+        containers[tab.id].classList.remove('hidden');
+    });
+});
+
+// Firebase connection status monitoring
+const connectedRef = database.ref(".info/connected");
+connectedRef.on("value", (snap) => {
+    if (snap.val() === true) {
+        console.log("Connected to Firebase");
+    } else {
+        console.log("Disconnected from Firebase");
+    }
+});
+
+// Message listener with error handling
+chatRef.on("child_added", (snapshot) => {
+    try {
+        displayMessage(snapshot.val());
+    } catch (error) {
+        console.error("Error displaying message:", error);
+    }
+});
+
+// Initialize emoticons on load
+initializeEmoticons();
+
+// Global error handler
+window.addEventListener('error', (e) => {
+    console.error('Global error:', e);
+    if (e.message.includes('firebase')) {
+        alert('There was an error connecting to the chat service. Please refresh the page.');
+    }
+});
+
+// Handle page visibility changes
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        notificationsEnabled = true;
+    }
+});
