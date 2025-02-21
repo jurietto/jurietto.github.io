@@ -90,6 +90,23 @@ textarea:focus, input:focus {
     margin-right: 5px;
 }
 
+/* Theme settings styling */
+.theme-settings {
+    margin-top: 10px;
+    color: white;
+}
+
+.theme-settings label {
+    margin-right: 10px;
+}
+
+.theme-settings select {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
+}
+
 /* Tabs styling */
 .tabs {
     display: flex;
@@ -125,6 +142,61 @@ textarea:focus, input:focus {
 
 .hidden {
     display: none;
+}
+
+/* Neon themes */
+.neon-purple {
+    border-color: #9b30ff;
+    background-color: #1a0d2e;
+}
+
+.neon-purple strong {
+    color: #9b30ff;
+}
+
+.magenta {
+    border-color: #ff00ff;
+    background-color: #330033;
+}
+
+.magenta strong {
+    color: #ff00ff;
+}
+
+.neon-orange {
+    border-color: #ff4500;
+    background-color: #331a00;
+}
+
+.neon-orange strong {
+    color: #ff4500;
+}
+
+.neon-yellow {
+    border-color: #ffff00;
+    background-color: #333300;
+}
+
+.neon-yellow strong {
+    color: #ffff00;
+}
+
+.neon-green {
+    border-color: #39ff14;
+    background-color: #0d3307;
+}
+
+.neon-green strong {
+    color: #39ff14;
+}
+
+.neon-blue {
+    border-color: #1e90ff;
+    background-color: #0d1a33;
+}
+
+.neon-blue strong {
+    color: #1e90ff;
 }
 
 /* Responsive design */
