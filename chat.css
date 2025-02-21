@@ -1,3 +1,4 @@
+```css
 body {
     font-family: Arial, sans-serif;
 }
@@ -141,13 +142,13 @@ textarea:focus, input:focus {
 }
 
 .tab-button:hover {
-    background-color: #8d2696; /* Hover color */
+    background-color: #6e1e78; /* Darker hover color */
 }
 
 .emoticons-container img {
     width: 150px;
     height: auto;
-    margin: 5px;
+    margin: 10px 10px; /* More space between emoticons */
     cursor: pointer;
     display: inline-block; /* Make emoticons display side by side */
 }
@@ -212,6 +213,13 @@ textarea:focus, input:focus {
 }
 
 /* Apply themes to mini tabs and input boxes */
+.tabs .tab-button.default,
+#username-input.default,
+#message-input.default {
+    background-color: black;
+    border-color: grey;
+}
+
 .tabs .tab-button.neon-purple,
 #username-input.neon-purple,
 #message-input.neon-purple {
@@ -220,7 +228,7 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-purple:hover {
-    background-color: #9b30ff;
+    background-color: #6e1e78; /* Darker hover color */
 }
 
 .tabs .tab-button.magenta,
@@ -231,7 +239,7 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.magenta:hover {
-    background-color: #ff00ff;
+    background-color: #cc00cc; /* Darker hover color */
 }
 
 .tabs .tab-button.neon-orange,
@@ -242,7 +250,7 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-orange:hover {
-    background-color: #ff4500;
+    background-color: #cc3500; /* Darker hover color */
 }
 
 .tabs .tab-button.neon-yellow,
@@ -253,7 +261,7 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-yellow:hover {
-    background-color: #ffff00;
+    background-color: #cccc00; /* Darker hover color */
 }
 
 .tabs .tab-button.neon-green,
@@ -264,7 +272,7 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-green:hover {
-    background-color: #39ff14;
+    background-color: #2db90f; /* Darker hover color */
 }
 
 .tabs .tab-button.neon-blue,
@@ -275,7 +283,7 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-blue:hover {
-    background-color: #1e90ff;
+    background-color: #1669b3; /* Darker hover color */
 }
 
 /* Responsive design */
@@ -288,3 +296,4 @@ textarea:focus, input:focus {
         height: 500px;
     }
 }
+```
