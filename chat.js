@@ -21,9 +21,14 @@ const usernameInput = document.getElementById("username-input");
 const enableNotifications = document.getElementById("notification-toggle");
 const chatTab = document.getElementById("chat-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
+const musicTab = document.getElementById("music-tab");
 const settingsTab = document.getElementById("settings-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
+const musicContainer = document.getElementById("music-container");
 const settingsContainer = document.getElementById("settings-container");
+const postMusicButton = document.getElementById("post-music-button");
+const musicUrlInput = document.getElementById("music-url");
+const musicPosts = document.getElementById("music-posts");
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -123,21 +128,21 @@ function embedMedia(text) {
 
     text.match(urlRegex)?.forEach((url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
-            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+            embeddedContent += `<audio controls style="width: 100%; display: inline-block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
-            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: inline-block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: inline-block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
-            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
         }
     });
 
@@ -198,25 +203,54 @@ chatTab.addEventListener('click', () => {
     chatBox.classList.remove('hidden');
     emoticonsContainer.classList.add('hidden');
     settingsContainer.classList.add('hidden');
+    musicContainer.classList.add('hidden');
     chatTab.classList.add('active');
     emoticonsTab.classList.remove('active');
     settingsTab.classList.remove('active');
+    musicTab.classList.remove('active');
 });
 
 emoticonsTab.addEventListener('click', () => {
     chatBox.classList.add('hidden');
     emoticonsContainer.classList.remove('hidden');
     settingsContainer.classList.add('hidden');
+    musicContainer.classList.add('hidden');
     chatTab.classList.remove('active');
     emoticonsTab.classList.add('active');
     settingsTab.classList.remove('active');
+    musicTab.classList.remove('active');
 });
 
 settingsTab.addEventListener('click', () => {
     chatBox.classList.add('hidden');
     emoticonsContainer.classList.add('hidden');
     settingsContainer.classList.remove('hidden');
+    musicContainer.classList.add('hidden');
     chatTab.classList.remove('active');
     emoticonsTab.classList.remove('active');
     settingsTab.classList.add('active');
+    musicTab.classList.remove('active');
+});
+
+musicTab.addEventListener('click', () => {
+    chatBox.classList.add('hidden');
+    emoticonsContainer.classList.add('hidden');
+    settingsContainer.classList.add('hidden');
+    musicContainer.classList.remove('hidden');
+    chatTab.classList.remove('active');
+    emoticonsTab.classList.remove('active');
+    settingsTab.classList.remove('active');
+    musicTab.classList.add('active');
+});
+
+// Post music functionality
+postMusicButton.addEventListener('click', () => {
+    const musicUrl = musicUrlInput.value.trim();
+    if (musicUrl) {
+        const musicPost = document.createElement('div');
+        musicPost.classList.add('music-post');
+        musicPost.innerHTML = embedMedia(musicUrl);
+        musicPosts.appendChild(musicPost);
+        musicUrlInput.value = ''; // Clear the input field
+    }
 });
