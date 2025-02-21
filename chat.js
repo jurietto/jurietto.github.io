@@ -190,4 +190,4 @@ function embedMedia(text) {
         } else if (url.includes("soundcloud.com")) {
             embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: inline-block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow="aut
+            embeddedContent += `<iframe allow
