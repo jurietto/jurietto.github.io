@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 14:27:44 UTC by jurietto */
+/* Last updated: 2025-02-21 14:46:22 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -32,7 +32,7 @@ body {
     margin: 0;
 }
 
-/* Updated Emoticons Container Styles */
+/* Emoticons styles - Simplified */
 .emoticons-wrapper {
     height: 100%;
     overflow-y: auto;
@@ -49,21 +49,9 @@ body {
 }
 
 .emoticon-item {
-    position: relative;
-    background: #111;
-    padding: 10px;
-    transition: all 0.2s ease;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #222;
-}
-
-.emoticon-item:hover {
-    transform: translateY(-2px);
-    background: #1a1a1a;
-    border-color: #333;
 }
 
 .emoticon-item img {
@@ -71,21 +59,6 @@ body {
     height: auto;
     max-width: 80px;
     display: block;
-    transition: transform 0.2s ease;
-}
-
-.emoticon-item:hover img {
-    transform: scale(1.1);
-}
-
-.emoticon-clicked {
-    animation: clickPulse 0.2s ease-out;
-}
-
-@keyframes clickPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
 }
 
 /* Chat messages and embedded content */
@@ -123,14 +96,13 @@ body {
     align-items: center;
 }
 
-/* Updated image size rules */
+/* Image size rules */
 .message-container .embedded-content img {
     display: inline-block;
     margin: 0;
     vertical-align: middle;
 }
 
-/* Images from pix folder */
 .message-container .embedded-content img[src^="pix/"],
 .message-container .embedded-content img[src*="/pix/"] {
     width: 150px;
@@ -138,7 +110,6 @@ body {
     margin: 0;
 }
 
-/* Other images */
 .message-container .embedded-content img:not([src^="pix/"]):not([src*="/pix/"]) {
     width: 500px;
     height: auto;
@@ -225,13 +196,13 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     display: none;
 }
 
-/* Updated Notification settings - more minimal */
+/* Notification settings - Minimal */
 .notification-settings {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-top: 10px;
-    color: white;
+    color: #999;
     padding: 15px 0;
 }
 
@@ -241,7 +212,6 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     gap: 8px;
     cursor: pointer;
     font-size: 14px;
-
 }
 
 .notification-settings input[type="checkbox"] {
@@ -280,38 +250,49 @@ input[type="file"]::-webkit-file-upload-button:hover {
     background: #444;
 }
 
-/* YouTube embed specific */
+/* Embed specific styles */
 .message-container .embedded-content iframe[src*="youtube.com"] {
     aspect-ratio: 16/9;
     height: auto;
     background: #000;
 }
 
-/* Spotify embed specific */
 .message-container .embedded-content iframe[src*="spotify.com"] {
     border-radius: 12px;
     background: #282828;
     height: 152px;
 }
 
-/* SoundCloud embed specific */
 .message-container .embedded-content iframe[src*="soundcloud.com"] {
     border-radius: 4px;
     background: #f5f5f5;
     height: 166px;
-    width: 100%;
 }
 
+/* Minimal scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
 
 /* Responsive design */
 @media (max-width: 768px) {
     .emoticons-grid {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         gap: 12px;
-    }
-
-    .emoticon-item {
-        padding: 8px;
     }
     
     .message-container .embedded-content img[src^="pix/"],
@@ -360,11 +341,7 @@ input[type="file"]::-webkit-file-upload-button:hover {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
         gap: 10px;
     }
-
-    .emoticon-item {
-        padding: 8px;
-    }
-
+    
     .message-container .embedded-content iframe {
         height: 200px;
     }
