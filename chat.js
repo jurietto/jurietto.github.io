@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 23:26:48 UTC by jurietto */
+/* Last updated: 2025-02-21 23:42:42 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -41,8 +41,8 @@ const notificationSound = document.getElementById("notification-sound");
 // Get base URL for assets
 const baseUrl = window.location.origin;
 
-// Define emoticons array
-const emoticons = [
+// Base emoticons array
+const baseEmoticons = [
     { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
     { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
     { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
@@ -54,6 +54,9 @@ const emoticons = [
     { src: `${baseUrl}/pix/charmmykitty7.gif`, alt: 'Charmmy Kitty 7' },
     { src: `${baseUrl}/pix/charmmykitty8.gif`, alt: 'Charmmy Kitty 8' }
 ];
+
+// Generate 40 emoticons by repeating the base emoticons
+const emoticons = Array(40).fill().map((_, index) => baseEmoticons[index % baseEmoticons.length]);
 
 // Initialize emoticons container
 function initializeEmoticons() {
@@ -166,15 +169,12 @@ function embedMedia(text) {
         try {
             const safeUrl = new URL(url).toString();
             
-            // Image embedding
             if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
                 embeddedContent += `<img src="${safeUrl}" alt="Shared Image" loading="lazy" onerror="this.style.display='none'" crossorigin="anonymous">`;
             }
-            // Video embedding
             else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
                 embeddedContent += `<video controls playsinline crossorigin="anonymous"><source src="${safeUrl}">Your browser does not support video playback.</video>`;
             }
-            // YouTube embedding
             else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
                 const videoId = safeUrl.includes("youtube.com/watch") ? 
                     safeUrl.split("v=")[1]?.split("&")[0] : 
@@ -192,7 +192,6 @@ function embedMedia(text) {
                         </div>`;
                 }
             }
-            // Spotify embedding
             else if (safeUrl.includes("spotify.com")) {
                 const spotifyType = safeUrl.includes("/track/") ? "track" :
                                   safeUrl.includes("/album/") ? "album" :
@@ -206,7 +205,6 @@ function embedMedia(text) {
                     }
                 }
             }
-            // SoundCloud embedding
             else if (safeUrl.includes("soundcloud.com")) {
                 const encodedUrl = encodeURIComponent(safeUrl);
                 embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>`;
@@ -220,20 +218,17 @@ function embedMedia(text) {
 }
 
 // Play notification sound
-async function playNotificationSound() {
+function playNotificationSound() {
     if (!notificationsEnabled) return;
 
     try {
-        if (notificationSound) {
-            notificationSound.currentTime = 0;
-            await notificationSound.play();
-        } else {
-            const audio = new Audio(`${baseUrl}/sound/IM.mp3`);
-            audio.volume = 1.0;
-            await audio.play();
-        }
+        const audio = new Audio(`${baseUrl}/sound/IM.mp3`);
+        audio.volume = 1.0;
+        audio.play().catch(error => {
+            console.warn("Audio play failed:", error);
+        });
     } catch (error) {
-        console.warn("Audio playback failed:", error);
+        console.error("Sound playback error:", error);
     }
 }
 
@@ -263,8 +258,7 @@ function displayMessage(data, container) {
 
     container.appendChild(messageContainer);
     container.scrollTop = container.scrollHeight;
-
-    // Play sound for new messages
+    
     playNotificationSound();
 }
 
@@ -310,7 +304,6 @@ if (messageInput) {
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
     
-    // Listen for new chat messages
     chatRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (chatBox) {
@@ -318,7 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Listen for new music messages
     musicRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (musicContainer) {
