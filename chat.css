@@ -1,4 +1,8 @@
-/* Last updated: 2025-02-21 21:46:19 UTC by jurietto */
+/* Last updated: 2025-02-21 21:54:32 UTC by jurietto */
+
+body {
+    font-family: Arial, sans-serif;
+}
 
 .chat-container {
     width: 100%;
@@ -224,6 +228,16 @@ input, textarea, #username-input, #message-input {
     display: none;
 }
 
+/* Notification settings - default styling */
+.notification-settings {
+    color: white;
+    padding: 15px;
+}
+
+.notification-settings input[type="checkbox"] {
+    all: revert;
+}
+
 /* Loading and error states */
 .loading {
     text-align: center;
@@ -291,11 +305,6 @@ input, textarea, #username-input, #message-input {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #444;
-}
-
-/* Notification settings */
-.notification-settings {
-    color: white;
 }
 
 /* Responsive design */
