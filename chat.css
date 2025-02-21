@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 21:10:33 UTC by jurietto */
+/* Last updated: 2025-02-21 21:25:49 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -279,11 +279,12 @@ input[type="file"]::-webkit-file-upload-button {
 
 /* Embed specific styles */
 .message-container .embedded-content iframe[src*="youtube.com"] {
-    aspect-ratio: 16/9;
-    height: auto;
     width: 100%;
-    max-width: 100%;
+    max-width: 500px;
+    height: 281.25px; /* 16:9 ratio for 500px width */
     background: #000;
+    display: block;
+    margin: 5px auto;
 }
 
 .message-container .embedded-content iframe[src*="spotify.com"] {
@@ -342,6 +343,11 @@ input[type="file"]::-webkit-file-upload-button {
         padding: 8px 15px;
         font-size: 14px;
     }
+
+    .message-container .embedded-content iframe[src*="youtube.com"] {
+        height: calc((100vw - 30px) * 0.5625); /* 16:9 ratio for mobile */
+        max-height: 281.25px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -375,7 +381,8 @@ input[type="file"]::-webkit-file-upload-button {
         gap: 10px;
     }
     
-    .message-container .embedded-content iframe {
-        height: 200px;
+    .message-container .embedded-content iframe[src*="youtube.com"] {
+        height: calc((100vw - 20px) * 0.5625); /* 16:9 ratio for smaller mobile */
+        max-height: 281.25px;
     }
 }
