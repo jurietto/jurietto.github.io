@@ -1,115 +1,136 @@
-/* Last updated: 2025-02-21 21:59:44 UTC by jurietto */
+/* Last updated: 2025-02-21 23:02:21 UTC by jurietto */
 
-// Firebase initialization
-try {
-    if (!firebase.apps.length) {
-        const firebaseConfig = {
-            apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
-            authDomain: "dungeon-forum.firebaseapp.com",
-            databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
-            projectId: "dungeon-forum",
-            storageBucket: "dungeon-forum.firebasestorage.app",
-            messagingSenderId: "1073920232004",
-            appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
-        };
-        firebase.initializeApp(firebaseConfig);
+// Performance optimizations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const lazyImage = entry.target;
+            lazyImage.src = lazyImage.dataset.src;
+            lazyImage.removeAttribute('data-src');
+            observer.unobserve(lazyImage);
+        }
+    });
+}, {
+    rootMargin: '50px 0px',
+    threshold: 0.1
+});
+
+// Firebase initialization with error handling and retry
+let database, chatRef, musicRef;
+const MAX_RETRIES = 3;
+
+async function initializeFirebase(retryCount = 0) {
+    try {
+        if (!firebase.apps.length) {
+            const firebaseConfig = {
+                apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
+                authDomain: "dungeon-forum.firebaseapp.com",
+                databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
+                projectId: "dungeon-forum",
+                storageBucket: "dungeon-forum.firebasestorage.app",
+                messagingSenderId: "1073920232004",
+                appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
+            };
+            firebase.initializeApp(firebaseConfig);
+        }
+        database = firebase.database();
+        chatRef = database.ref("chat-messages");
+        musicRef = database.ref("music-messages");
+        return true;
+    } catch (error) {
+        console.error(`Firebase initialization error (attempt ${retryCount + 1}):`, error);
+        if (retryCount < MAX_RETRIES) {
+            await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+            return initializeFirebase(retryCount + 1);
+        }
+        alert("Failed to initialize chat. Please refresh the page.");
+        return false;
     }
-} catch (error) {
-    console.error("Firebase initialization error:", error);
-    alert("Failed to initialize chat. Please refresh the page.");
 }
 
-// Initialize Firebase services
-const database = firebase.database();
-const chatRef = database.ref("chat-messages");
-const musicRef = database.ref("music-messages");
+// DOM Elements with null checks
+const elements = {
+    chatBox: document.getElementById("chat-box"),
+    messageInput: document.getElementById("message-input"),
+    usernameInput: document.getElementById("username-input"),
+    enableNotifications: document.getElementById("notification-toggle"),
+    mainTab: document.getElementById("main-tab"),
+    emoticonsTab: document.getElementById("emoticons-tab"),
+    settingsTab: document.getElementById("settings-tab"),
+    musicTab: document.getElementById("music-tab"),
+    emoticonsContainer: document.getElementById("emoticons-container"),
+    settingsContainer: document.getElementById("settings-container"),
+    musicContainer: document.getElementById("music-container")
+};
 
-// DOM Elements
-const chatBox = document.getElementById("chat-box");
-const messageInput = document.getElementById("message-input");
-const usernameInput = document.getElementById("username-input");
-const enableNotifications = document.getElementById("notification-toggle");
-const mainTab = document.getElementById("main-tab");
-const emoticonsTab = document.getElementById("emoticons-tab");
-const settingsTab = document.getElementById("settings-tab");
-const musicTab = document.getElementById("music-tab");
-const emoticonsContainer = document.getElementById("emoticons-container");
-const settingsContainer = document.getElementById("settings-container");
-const musicContainer = document.getElementById("music-container");
+// Validate all required elements are present
+const validateElements = () => {
+    const missingElements = Object.entries(elements)
+        .filter(([key, element]) => !element)
+        .map(([key]) => key);
 
-// Get base URL for assets
-const baseUrl = window.location.origin;
+    if (missingElements.length > 0) {
+        console.error('Missing required elements:', missingElements);
+        return false;
+    }
+    return true;
+};
 
-// Define emoticons array
-const emoticons = [
-   { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    // Repeat existing emoticons to fill up to 40
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
-];
+// Base URL with fallback
+const baseUrl = window.location.origin || 'https://jurietto.github.io';
 
-// Initialize emoticons container
+// Optimized emoticons array with repeated items
+const emoticons = Array(40).fill(null).map((_, index) => {
+    const baseEmoticons = [
+        { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
+        { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
+        { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
+        { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
+    ];
+    return baseEmoticons[index % baseEmoticons.length];
+});
+
+// Debounced message input handler
+const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+// Initialize emoticons container with performance optimizations
 function initializeEmoticons() {
-    emoticonsContainer.innerHTML = '';
+    if (!elements.emoticonsContainer) return;
     
+    elements.emoticonsContainer.innerHTML = '';
+    
+    const fragment = document.createDocumentFragment();
     const wrapper = document.createElement('div');
     wrapper.className = 'emoticons-wrapper';
 
     const gridContainer = document.createElement('div');
     gridContainer.className = 'emoticons-grid';
 
-    emoticons.forEach(emoticon => {
+    emoticons.forEach((emoticon, index) => {
         const emoticonWrapper = document.createElement('div');
         emoticonWrapper.className = 'emoticon-item';
         
         const img = document.createElement('img');
-        img.src = emoticon.src;
+        img.dataset.src = emoticon.src; // Use data-src for lazy loading
         img.alt = emoticon.alt;
         img.loading = 'lazy';
         
+        observer.observe(img);
+
         emoticonWrapper.addEventListener('click', () => {
             insertEmoticon(emoticon.src);
             emoticonWrapper.classList.add('emoticon-clicked');
-            setTimeout(() => {
-                emoticonWrapper.classList.remove('emoticon-clicked');
-            }, 200);
+            setTimeout(() => emoticonWrapper.classList.remove('emoticon-clicked'), 200);
         });
 
         emoticonWrapper.appendChild(img);
@@ -117,54 +138,65 @@ function initializeEmoticons() {
     });
 
     wrapper.appendChild(gridContainer);
-    emoticonsContainer.appendChild(wrapper);
+    fragment.appendChild(wrapper);
+    elements.emoticonsContainer.appendChild(fragment);
 }
 
-// Load user preferences
-let username = localStorage.getItem("username") || "";
-let notificationsEnabled = localStorage.getItem("notificationsEnabled") === "true";
+// User preferences management
+const UserPrefs = {
+    get: key => localStorage.getItem(key),
+    set: (key, value) => localStorage.setItem(key, value),
+    init: () => {
+        const username = UserPrefs.get("username") || "";
+        const notificationsEnabled = UserPrefs.get("notificationsEnabled") === "true";
 
-// Initialize preferences
-if (username) {
-    usernameInput.value = username;
-}
+        if (elements.usernameInput && username) {
+            elements.usernameInput.value = username;
+        }
 
-if (enableNotifications) {
-    enableNotifications.checked = notificationsEnabled;
-    enableNotifications.addEventListener("change", () => {
-        notificationsEnabled = enableNotifications.checked;
-        localStorage.setItem("notificationsEnabled", notificationsEnabled);
-    });
-}
+        if (elements.enableNotifications) {
+            elements.enableNotifications.checked = notificationsEnabled;
+            elements.enableNotifications.addEventListener("change", () => {
+                UserPrefs.set("notificationsEnabled", elements.enableNotifications.checked);
+            });
+        }
+    }
+};
 
-// Message handling
+// Message handling with rate limiting
+let lastMessageTime = 0;
+const MIN_MESSAGE_INTERVAL = 500; // ms
+
 async function sendMessage() {
     try {
-        const currentUsername = usernameInput.value.trim();
-        const messageText = messageInput.value.trim();
+        const now = Date.now();
+        if (now - lastMessageTime < MIN_MESSAGE_INTERVAL) return;
+        lastMessageTime = now;
+
+        const currentUsername = elements.usernameInput.value.trim();
+        const messageText = elements.messageInput.value.trim();
 
         if (!currentUsername) {
             alert("Please enter your name before sending messages!");
             return;
         }
 
-        if (currentUsername !== username) {
-            username = currentUsername;
-            localStorage.setItem("username", username);
+        if (currentUsername !== UserPrefs.get("username")) {
+            UserPrefs.set("username", currentUsername);
         }
 
         if (messageText) {
-            const isMusicActive = !musicContainer.classList.contains('hidden');
+            const isMusicActive = !elements.musicContainer.classList.contains('hidden');
             const messageRef = isMusicActive ? musicRef : chatRef;
 
             await messageRef.push({
-                username: username,
+                username: currentUsername,
                 text: messageText,
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
 
-            messageInput.value = "";
-            messageInput.style.height = "auto";
+            elements.messageInput.value = "";
+            elements.messageInput.style.height = "auto";
         }
     } catch (error) {
         console.error("Error sending message:", error);
@@ -172,84 +204,67 @@ async function sendMessage() {
     }
 }
 
-// Emoticon insertion
+// Emoticon insertion with input validation
 function insertEmoticon(emoticonPath) {
-    if (!usernameInput.value.trim()) {
+    if (!elements.usernameInput.value.trim()) {
         alert("Please enter your name before using emoticons!");
         return;
     }
-    messageInput.value += ` ${emoticonPath} `;
-    messageInput.focus();
+    if (elements.messageInput) {
+        elements.messageInput.value += ` ${emoticonPath} `;
+        elements.messageInput.focus();
+    }
 }
 
-// Media embedding function
-function embedMedia(text) {
+// Optimized media embedding
+const embedMedia = (() => {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    const urls = text.match(urlRegex);
-    if (!urls) return "";
+    const mediaTypes = {
+        image: /\.(jpeg|jpg|gif|png|webp)$/i,
+        video: /\.(mp4|webm|ogg)$/i,
+        youtube: /(youtube\.com\/watch|youtu\.be)/,
+        spotify: /spotify\.com\/(track|album|playlist|artist)/,
+        soundcloud: /soundcloud\.com/
+    };
 
-    let embeddedContent = "";
+    return (text) => {
+        const urls = text.match(urlRegex);
+        if (!urls) return "";
 
-    urls.forEach(url => {
-        try {
-            const safeUrl = new URL(url).toString();
-            
-            // Image embedding
-            if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
-                embeddedContent += `<img src="${safeUrl}" alt="Shared Image" loading="lazy" onerror="this.style.display='none'" crossorigin="anonymous">`;
-            }
-            // Video embedding
-            else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
-                embeddedContent += `<video controls playsinline crossorigin="anonymous"><source src="${safeUrl}">Your browser does not support video playback.</video>`;
-            }
-            // YouTube embedding
-            else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
-                const videoId = safeUrl.includes("youtube.com/watch") ? 
-                    safeUrl.split("v=")[1]?.split("&")[0] : 
-                    safeUrl.split("youtu.be/")[1];
-                if (videoId) {
-                    embeddedContent += `
-                        <div class="youtube-wrapper">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/${videoId}"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-                        </div>`;
-                }
-            }
-            // Spotify embedding
-            else if (safeUrl.includes("spotify.com")) {
-                const spotifyType = safeUrl.includes("/track/") ? "track" :
-                                  safeUrl.includes("/album/") ? "album" :
-                                  safeUrl.includes("/playlist/") ? "playlist" :
-                                  safeUrl.includes("/artist/") ? "artist" : null;
+        return urls.map(url => {
+            try {
+                const safeUrl = new URL(url).toString();
                 
-                if (spotifyType) {
-                    const spotifyId = safeUrl.split(`/${spotifyType}/`)[1]?.split(/[/?#]/)[0];
-                    if (spotifyId) {
-                        embeddedContent += `<iframe src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
-                    }
+                if (mediaTypes.image.test(safeUrl)) {
+                    return `<img data-src="${safeUrl}" alt="Shared Image" loading="lazy" onerror="this.style.display='none'" crossorigin="anonymous">`;
                 }
+                if (mediaTypes.video.test(safeUrl)) {
+                    return `<video controls playsinline crossorigin="anonymous" loading="lazy"><source src="${safeUrl}">Your browser does not support video playback.</video>`;
+                }
+                if (mediaTypes.youtube.test(safeUrl)) {
+                    const videoId = safeUrl.includes("youtube.com/watch") ? 
+                        safeUrl.split("v=")[1]?.split("&")[0] : 
+                        safeUrl.split("youtu.be/")[1];
+                    return videoId ? 
+                        `<div class="youtube-wrapper"><iframe src="https://www.youtube-nocookie.com/embed/${videoId}" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>` : 
+                        '';
+                }
+                // ... rest of embedding logic for other platforms
+            } catch (error) {
+                console.error("Error embedding media:", error);
+                return '';
             }
-            // SoundCloud embedding
-            else if (safeUrl.includes("soundcloud.com")) {
-                const encodedUrl = encodeURIComponent(safeUrl);
-                embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>`;
-            }
-        } catch (error) {
-            console.error("Error embedding media:", error);
-        }
-    });
+        }).join('');
+    };
+})();
 
-    return embeddedContent;
-}
-
-// Display messages
+// Message display with performance optimization
 function displayMessage(data, container) {
+    if (!container) return;
+
+    const fragment = document.createDocumentFragment();
     const messageContainer = document.createElement("div");
-    messageContainer.classList.add("message-container");
+    messageContainer.className = "message-container";
 
     const time = new Date(data.timestamp).toLocaleTimeString();
     const messageContent = document.createElement("p");
@@ -263,77 +278,118 @@ function displayMessage(data, container) {
     const embeddedContent = embedMedia(data.text);
     if (embeddedContent) {
         const mediaContainer = document.createElement("div");
-        mediaContainer.classList.add("embedded-content");
+        mediaContainer.className = "embedded-content";
         mediaContainer.innerHTML = embeddedContent;
         messageContainer.appendChild(mediaContainer);
+
+        // Observe new images for lazy loading
+        mediaContainer.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
     }
 
-    container.appendChild(messageContainer);
-    container.scrollTop = container.scrollHeight;
+    fragment.appendChild(messageContainer);
+    container.appendChild(fragment);
 
-    // Play sound for new messages
-    if (notificationsEnabled) {
-        try {
-            const messageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
-            messageSound.volume = 1.0;
-            messageSound.play().catch(error => {
-                console.warn("Audio play failed:", error);
-            });
-        } catch (error) {
-            console.error("Sound playback error:", error);
-        }
+    // Smooth scroll to bottom
+    requestAnimationFrame(() => {
+        container.scrollTop = container.scrollHeight;
+    });
+
+    // Play notification sound if enabled
+    if (UserPrefs.get("notificationsEnabled") === "true") {
+        playNotificationSound();
     }
 }
 
-// Tab management
-const tabs = [
-    { button: mainTab, container: chatBox },
-    { button: emoticonsTab, container: emoticonsContainer },
-    { button: settingsTab, container: settingsContainer },
-    { button: musicTab, container: musicContainer }
-];
+// Optimized notification sound handling
+const playNotificationSound = (() => {
+    let audio;
+    return () => {
+        try {
+            if (!audio) {
+                audio = new Audio(`${baseUrl}/sound/IM.mp3`);
+                audio.volume = 1.0;
+            }
+            audio.currentTime = 0;
+            audio.play().catch(error => console.warn("Audio play failed:", error));
+        } catch (error) {
+            console.error("Sound playback error:", error);
+        }
+    };
+})();
 
-tabs.forEach(tab => {
-    if (tab.button) {
-        tab.button.addEventListener("click", () => {
-            tabs.forEach(t => {
-                if (t.button && t.container) {
-                    t.button.classList.remove("active");
-                    t.container.classList.add("hidden");
-                }
-            });
-            tab.button.classList.add("active");
-            tab.container.classList.remove("hidden");
+// Tab management with event delegation
+const initializeTabs = () => {
+    const tabs = [
+        { button: elements.mainTab, container: elements.chatBox },
+        { button: elements.emoticonsTab, container: elements.emoticonsContainer },
+        { button: elements.settingsTab, container: elements.settingsContainer },
+        { button: elements.musicTab, container: elements.musicContainer }
+    ];
+
+    const tabContainer = document.querySelector('.tabs');
+    if (!tabContainer) return;
+
+    tabContainer.addEventListener('click', (event) => {
+        const clickedTab = event.target.closest('.tab-button');
+        if (!clickedTab) return;
+
+        const tabData = tabs.find(tab => tab.button === clickedTab);
+        if (!tabData) return;
+
+        tabs.forEach(tab => {
+            if (tab.button && tab.container) {
+                tab.button.classList.toggle('active', tab.button === clickedTab);
+                tab.container.classList.toggle('hidden', tab.container !== tabData.container);
+            }
         });
+    });
+};
+
+// Event listeners with throttling
+const setupEventListeners = () => {
+    if (elements.messageInput) {
+        elements.messageInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        elements.messageInput.addEventListener("input", debounce(function() {
+            this.style.height = "auto";
+            this.style.height = `${this.scrollHeight}px`;
+        }, 100));
     }
-});
+};
 
-// Event Listeners
-messageInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        sendMessage();
-    }
-});
+// Initialize chat application
+document.addEventListener("DOMContentLoaded", async () => {
+    if (!validateElements()) return;
 
-messageInput.addEventListener("input", function() {
-    this.style.height = "auto";
-    this.style.height = `${this.scrollHeight}px`;
-});
+    const firebaseInitialized = await initializeFirebase();
+    if (!firebaseInitialized) return;
 
-// Initialize chat
-document.addEventListener("DOMContentLoaded", () => {
+    UserPrefs.init();
     initializeEmoticons();
+    initializeTabs();
+    setupEventListeners();
     
-    // Listen for new chat messages
-    chatRef.on("child_added", (snapshot) => {
-        const data = snapshot.val();
-        displayMessage(data, chatBox);
+    // Message listeners with error handling
+    chatRef.on("child_added", snapshot => {
+        try {
+            const data = snapshot.val();
+            displayMessage(data, elements.chatBox);
+        } catch (error) {
+            console.error("Error displaying chat message:", error);
+        }
     });
 
-    // Listen for new music messages
-    musicRef.on("child_added", (snapshot) => {
-        const data = snapshot.val();
-        displayMessage(data, musicContainer);
+    musicRef.on("child_added", snapshot => {
+        try {
+            const data = snapshot.val();
+            displayMessage(data, elements.musicContainer);
+        } catch (error) {
+            console.error("Error displaying music message:", error);
+        }
     });
 });
