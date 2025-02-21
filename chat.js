@@ -30,10 +30,10 @@ const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container"); // Added Music Container
 const themeSelect = document.getElementById("theme-select");
-const uploadInput = document.getElementById("upload-input"); // Modified Upload Input
-const uploadButton = document.getElementById("upload-button"); // Added Upload Button
+const uploadInput = document.createElement("input"); // Added Upload Input
 uploadInput.type = "file";
-uploadInput.accept = ".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif";
+uploadInput.accept = ".txt,.mp4,.mov,.mp3,.wav,.jpeg,.jpg,.png,.gif"; // Accept all media files
+document.body.appendChild(uploadInput); // Append to body
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
@@ -65,7 +65,7 @@ if (localStorage.getItem("theme")) {
 // Function to set theme
 function setTheme(theme) {
     const tabButtons = document.querySelectorAll('.tab-button');
-    const messageInputs = [usernameInput, messageInput, uploadInput, uploadButton];
+    const messageInputs = [usernameInput, messageInput];
     
     // Apply theme to tab buttons and message inputs
     tabButtons.forEach(tab => {
@@ -73,8 +73,10 @@ function setTheme(theme) {
         tab.classList.add(theme);
     });
     messageInputs.forEach(input => {
-        input.classList.remove('default', 'neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
-        input.classList.add(theme);
+        if (input) {
+            input.classList.remove('default', 'neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
+            input.classList.add(theme);
+        }
     });
 
     // Apply theme to chat containers
@@ -90,7 +92,7 @@ function setTheme(theme) {
         tag.style.color = '';
         if (theme === 'neon-purple') {
             tag.style.color = '#9b30ff';
-        } else if (theme === 'magenta') {
+        } else if ( theme === 'magenta') {
             tag.style.color = '#ff00ff';
         } else if (theme === 'neon-orange') {
             tag.style.color = '#ff4500';
@@ -115,7 +117,6 @@ themeSelect.addEventListener("change", () => {
 function sendMessage() {
     let username = usernameInput.value.trim();
     let message = messageInput.value.trim();
-    let file = uploadInput.files[0];
 
     if (username === "") {
         alert("Please enter your name before sending messages!");
@@ -124,36 +125,34 @@ function sendMessage() {
 
     localStorage.setItem("username", username);
 
-    if (message !== "" || file) {
+    if (message !== "") {
         let newMessage = {
             username: username,
             text: message,
             timestamp: Date.now()
         };
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                newMessage.fileContent = e.target.result;
-                newMessage.fileName = file.name;
-                chatRef.push(newMessage);
-                uploadInput.value = ""; // Clear the file input
-            };
-            reader.readAsDataURL(file);
-        } else {
-            chatRef.push(newMessage);
-        }
-
+        chatRef.push(newMessage);
         messageInput.value = ""; // Clear input field
         // Reset the height of the message input
         messageInput.style.height = "auto";
     }
 }
 
-// Function to handle file uploads via button
-uploadButton.addEventListener("click", function () {
-    sendMessage();
-});
+// Function to handle file uploads
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const fileContent = e.target.result;
+            // You can handle the file content here, e.g., upload to Firebase storage and get the URL
+            // For now, we'll just log the file content
+            console.log(fileContent);
+        };
+        reader.readAsDataURL(file);
+    }
+}
 
 // Send message when "Enter" key is pressed
 messageInput.addEventListener("keypress", function (event) {
@@ -170,11 +169,7 @@ messageInput.addEventListener("input", function () {
 });
 
 // Handle file uploads
-uploadInput.addEventListener("change", function () {
-    if (uploadInput.files.length > 0) {
-        sendMessage();
-    }
-});
+uploadInput.addEventListener("change", handleFileUpload);
 
 // Function to Display Messages
 function displayMessage(data) {
@@ -199,15 +194,6 @@ function displayMessage(data) {
         newMessage.appendChild(embeddedContent);
     }
 
-    // Display file content if available
-    if (data.fileContent) {
-        let fileLink = document.createElement("a");
-        fileLink.href = data.fileContent;
-        fileLink.download = data.fileName;
-        fileLink.textContent = `Download ${data.fileName}`;
-        newMessage.appendChild(fileLink);
-    }
-
     chatBox.appendChild(newMessage);
     chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
 }
@@ -219,19 +205,12 @@ function embedMedia(text) {
 
     text.match(urlRegex)?.forEach((url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin: 5px;">`;
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin: 5px;">
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">
                                     <source src="${url}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>`;
-        } else if (url.match(/(youtube\.com|youtu\.be)/i)) {
-            const videoId = url.split('v=')[1] || url.split('/')[3];
-            embeddedContent += `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        } else if (url.match(/soundcloud\.com/i)) {
-            embeddedContent += `<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>`;
-        } else if (url.match(/spotify\.com/i)) {
-            embeddedContent += `<iframe src="https://open.spotify.com/embed/track/${url.split('/')[4]}" width="100%" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
         } else {
             embeddedContent += `<a href="${url}" target="_blank">${url}</a>`;
         }
@@ -250,6 +229,8 @@ chatRef.on("child_added", (snapshot) => {
             newMessageSound.play().catch((error) => {
                 console.warn("Audio play prevented:", error);
             });
+        } else {
+            alert('You have a new message!');
         }
     }
 });
