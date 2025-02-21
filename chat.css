@@ -51,7 +51,7 @@ body {
     flex-direction: column; /* Stack inputs vertically */
 }
 
-input, textarea, #username-input, #message-input, #upload-input {
+input, textarea, #username-input, #message-input, #upload-input, #upload-link {
     background-color: #000;
     padding: 10px;
     color: white;
@@ -64,9 +64,15 @@ input, textarea, #username-input, #message-input, #upload-input {
     overflow: hidden; /* Hide scroll bar */
 }
 
+#upload-link {
+    text-align: center;
+    cursor: pointer;
+    color: #8d2696; /* Match the color with the strong tag */
+}
+
 /* Prevent chat input from zooming on mobile */
 @media screen and (max-width: 600px) {
-    input, textarea, #username-input, #message-input, #upload-input {
+    input, textarea, #username-input, #message-input, #upload-input, #upload-link {
         font-size: 16px;
     }
 }
@@ -81,4 +87,31 @@ textarea:focus, input:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
+    margin-top: 10px;
+    color: white;
+}
+
+.notification-settings label {
+    display: flex;
+    align-items: center;
+}
+
+.notification-settings input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Theme settings styling */
+.theme-settings {
+    margin-top: 10px;
+    color: white;
+}
+
+.theme-settings label {
+    margin-right: 10px;
+}
+
+.theme-settings select {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
