@@ -178,13 +178,13 @@ function embedMedia(text) {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
             embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video[...]
         } else if (url.match(/\.(mp3)$/i)) {
             embeddedContent += `<audio controls style="width: 100%; display: inline-block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
-            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: inline-block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: inline-block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow[...]
         } else if (url.includes("spotify.com")) {
-            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: inline-block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="dis[...]
         } else if (url.includes("soundcloud
