@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 21:38:57 UTC by jurietto */
+/* Last updated: 2025-02-21 21:59:44 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -88,13 +88,6 @@ function initializeEmoticons() {
     wrapper.appendChild(gridContainer);
     emoticonsContainer.appendChild(wrapper);
 }
-
-// Notification sound
-const newMessageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
-newMessageSound.addEventListener('error', (e) => {
-    console.error('Error loading notification sound:', e);
-});
-newMessageSound.preload = "auto";
 
 // Load user preferences
 let username = localStorage.getItem("username") || "";
@@ -247,10 +240,17 @@ function displayMessage(data, container) {
     container.appendChild(messageContainer);
     container.scrollTop = container.scrollHeight;
 
-    if (notificationsEnabled && !document.hasFocus()) {
-        newMessageSound.play().catch(error => {
-            console.warn("Audio play prevented:", error);
-        });
+    // Play sound for new messages
+    if (notificationsEnabled) {
+        try {
+            const messageSound = new Audio(`${baseUrl}/sound/IM.mp3`);
+            messageSound.volume = 1.0;
+            messageSound.play().catch(error => {
+                console.warn("Audio play failed:", error);
+            });
+        } catch (error) {
+            console.error("Sound playback error:", error);
+        }
     }
 }
 
@@ -263,14 +263,18 @@ const tabs = [
 ];
 
 tabs.forEach(tab => {
-    tab.button.addEventListener("click", () => {
-        tabs.forEach(t => {
-            t.button.classList.remove("active");
-            t.container.classList.add("hidden");
+    if (tab.button) {
+        tab.button.addEventListener("click", () => {
+            tabs.forEach(t => {
+                if (t.button && t.container) {
+                    t.button.classList.remove("active");
+                    t.container.classList.add("hidden");
+                }
+            });
+            tab.button.classList.add("active");
+            tab.container.classList.remove("hidden");
         });
-        tab.button.classList.add("active");
-        tab.container.classList.remove("hidden");
-    });
+    }
 });
 
 // Event Listeners
