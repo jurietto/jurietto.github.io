@@ -1,6 +1,7 @@
-// Ensure only one instance of Firebase is initialized
+/* Last updated: 2025-02-21 09:48:58 UTC by jurietto */
+
+// Firebase initialization
 if (!firebase.apps.length) {
-    // Firebase Configuration
     const firebaseConfig = {
         apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
         authDomain: "dungeon-forum.firebaseapp.com",
@@ -10,11 +11,10 @@ if (!firebase.apps.length) {
         messagingSenderId: "1073920232004",
         appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
     };
-
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 }
 const database = firebase.database();
+const storage = firebase.storage();
 const chatRef = database.ref("chat-messages");
 
 // DOM Elements
@@ -25,17 +25,58 @@ const enableNotifications = document.getElementById("notification-toggle");
 const mainTab = document.getElementById("main-tab");
 const emoticonsTab = document.getElementById("emoticons-tab");
 const settingsTab = document.getElementById("settings-tab");
-const musicTab = document.getElementById("music-tab"); // Added Music Tab
+const musicTab = document.getElementById("music-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
-const musicContainer = document.getElementById("music-container"); // Added Music Container
-const themeSelect = document.getElementById("theme-select");
+const musicContainer = document.getElementById("music-container");
+const fileUpload = document.getElementById("file-upload");
+
+// Define emoticons with fixed dimensions
+const emoticons = [
+    { src: 'pix/sb1.gif', alt: 'sb1' },
+    { src: 'pix/po1.gif', alt: 'po1' },
+    { src: 'pix/po2.gif', alt: 'po2' },
+    { src: 'pix/po3.gif', alt: 'po3' }
+];
+
+// Initialize emoticons container with fixed sizing
+function initializeEmoticons() {
+    emoticonsContainer.innerHTML = '';
+    const gridContainer = document.createElement('div');
+    gridContainer.style.cssText = `
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 150px);
+        gap: 20px;
+        padding: 20px;
+        justify-content: start;
+        align-content: start;
+    `;
+
+    emoticons.forEach(emoticon => {
+        const img = document.createElement('img');
+        img.src = emoticon.src;
+        img.alt = emoticon.alt;
+        img.style.cssText = `
+            width: 150px;
+            height: auto;
+            display: block;
+            cursor: pointer;
+        `;
+        img.addEventListener('click', () => insertEmoticon(emoticon.src));
+        gridContainer.appendChild(img);
+    });
+
+    emoticonsContainer.appendChild(gridContainer);
+}
+
+// Initialize emoticons
+initializeEmoticons();
 
 // Notification sound
 const newMessageSound = new Audio("sound/IM.mp3");
-newMessageSound.preload = "auto"; // Preload the audio
+newMessageSound.preload = "auto";
 
-// Load username from localStorage if available
+// Load saved username
 if (localStorage.getItem("username")) {
     usernameInput.value = localStorage.getItem("username");
 }
@@ -50,65 +91,10 @@ if (enableNotifications) {
     });
 }
 
-// Load theme preference
-if (localStorage.getItem("theme")) {
-    setTheme(localStorage.getItem("theme"));
-    themeSelect.value = localStorage.getItem("theme");
-}
-
-// Function to set theme
-function setTheme(theme) {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const messageInputs = [usernameInput, messageInput];
-    
-    // Apply theme to tab buttons and message inputs
-    tabButtons.forEach(tab => {
-        tab.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
-        tab.classList.add(theme);
-    });
-    messageInputs.forEach(input => {
-        input.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
-        input.classList.add(theme);
-    });
-
-    // Apply theme to chat containers
-    const chatContainers = [chatBox, emoticonsContainer, settingsContainer, musicContainer];
-    chatContainers.forEach(container => {
-        container.classList.remove('neon-purple', 'magenta', 'neon-orange', 'neon-yellow', 'neon-green', 'neon-blue');
-        container.classList.add(theme);
-    });
-
-    // Set strong tag color based on theme
-    const strongTags = chatBox.querySelectorAll('strong');
-    strongTags.forEach(tag => {
-        tag.style.color = '';
-        if (theme === 'neon-purple') {
-            tag.style.color = '#9b30ff';
-        } else if (theme === 'magenta') {
-            tag.style.color = '#ff00ff';
-        } else if (theme === 'neon-orange') {
-            tag.style.color = '#ff4500';
-        } else if (theme === 'neon-yellow') {
-            tag.style.color = '#ffff00';
-        } else if (theme === 'neon-green') {
-            tag.style.color = '#39ff14';
-        } else if (theme === 'neon-blue') {
-            tag.style.color = '#1e90ff';
-        }
-    });
-
-    localStorage.setItem("theme", theme);
-}
-
-// Event listener for theme selection
-themeSelect.addEventListener("change", () => {
-    setTheme(themeSelect.value);
-});
-
-// Function to Send Messages
-function sendMessage() {
+// Message sending function
+function sendMessage(text = null) {
     let username = usernameInput.value.trim();
-    let message = messageInput.value.trim();
+    let message = text || messageInput.value.trim();
 
     if (username === "") {
         alert("Please enter your name before sending messages!");
@@ -125,91 +111,144 @@ function sendMessage() {
         };
 
         chatRef.push(newMessage);
-        messageInput.value = ""; // Clear input field
-        // Reset the height of the message input
-        messageInput.style.height = "auto";
+        if (!text) {
+            messageInput.value = "";
+            messageInput.style.height = "auto";
+        }
     }
 }
 
-// Send message when "Enter" key is pressed
-messageInput.addEventListener("keypress", function (event) {
+// Emoticon insertion
+function insertEmoticon(emoticonPath) {
+    if (usernameInput.value.trim() === "") {
+        alert("Please enter your name before using emoticons!");
+        return;
+    }
+
+    const fullUrl = `${window.location.protocol}//${window.location.host}/${emoticonPath}`;
+    sendMessage(fullUrl);
+}
+
+// Improved file upload with immediate handling
+fileUpload.addEventListener("change", async function(event) {
+    event.preventDefault();
+    
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const username = usernameInput.value.trim();
+    if (username === "") {
+        alert("Please enter your name before uploading files!");
+        fileUpload.value = '';
+        return;
+    }
+
+    if (!file.type.match('image.*') && !file.type.match('video.*')) {
+        alert('Only image and video files are allowed!');
+        fileUpload.value = '';
+        return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+        alert('File size must be less than 5MB!');
+        fileUpload.value = '';
+        return;
+    }
+
+    const loadingMessage = document.createElement("div");
+    loadingMessage.textContent = "Uploading...";
+    chatBox.appendChild(loadingMessage);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try {
+        const fileRef = storage.ref(`uploads/${Date.now()}_${file.name}`);
+        const snapshot = await fileRef.put(file);
+        const downloadURL = await snapshot.ref.getDownloadURL();
+        
+        chatBox.removeChild(loadingMessage);
+        await sendMessage(downloadURL);
+    } catch (error) {
+        console.error("Error uploading file:", error);
+        alert("Error uploading file. Please try again.");
+        chatBox.removeChild(loadingMessage);
+    }
+
+    fileUpload.value = '';
+});
+
+// Message input handlers
+messageInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         sendMessage();
     }
 });
 
-// Auto-expand the message input box based on content
-messageInput.addEventListener("input", function () {
+messageInput.addEventListener("input", function() {
     this.style.height = "auto";
     this.style.height = (this.scrollHeight) + "px";
 });
 
-// Function to Display Messages
+// Enhanced message display with proper media handling
 function displayMessage(data) {
-    let newMessage = document.createElement("div");
+    const newMessage = document.createElement("div");
     newMessage.classList.add("message-container");
 
-    let time = new Date(data.timestamp).toLocaleTimeString();
-    let rawText = data.text;
+    const time = new Date(data.timestamp).toLocaleTimeString();
+    const rawText = data.text;
 
-    // Remove embeddable links from displayed text
-    let displayText = rawText.replace(/(https?:\/\/[^\s]+)(?=\s|$)/g, "").trim();
-    let messageContent = document.createElement("p");
+    const displayText = rawText.replace(/(https?:\/\/[^\s]+)(?=\s|$)/g, "").trim();
+    const messageContent = document.createElement("p");
     messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
     newMessage.appendChild(messageContent);
 
-    // Embed media (if applicable)
-    let formattedText = embedMedia(rawText);
+    const formattedText = embedMedia(rawText);
     if (formattedText) {
-        let embeddedContent = document.createElement("div");
+        const embeddedContent = document.createElement("div");
         embeddedContent.classList.add("embedded-content");
         embeddedContent.innerHTML = formattedText;
         newMessage.appendChild(embeddedContent);
     }
 
     chatBox.appendChild(newMessage);
-    chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to latest message
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Function to Embed Media
+// Improved media embedding
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     let embeddedContent = "";
 
-    text.match(urlRegex)?.forEach((url) => {
+    const matches = text.match(urlRegex);
+    if (!matches) return "";
+
+    matches.forEach((url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">`;
+            embeddedContent += `<img src="${url}" alt="Image">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: inline-block; margin-top: 5px;">
+            embeddedContent += `<video controls>
                                     <source src="${url}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>`;
-        } else {
-            embeddedContent += `<a href="${url}" target="_blank">${url}</a>`;
         }
     });
 
     return embeddedContent;
 }
 
-// Listen for new chat messages
+// Message listener
 chatRef.on("child_added", (snapshot) => {
     displayMessage(snapshot.val());
     
-    // Play notification sound if notifications are enabled
-    if (notificationsEnabled) {
-        if (document.hasFocus()) {
-            newMessageSound.play().catch((error) => {
-                console.warn("Audio play prevented:", error);
-            });
-        } else {
-            alert('You have a new message!');
-        }
+    if (notificationsEnabled && document.hasFocus()) {
+        newMessageSound.play().catch((error) => {
+            console.warn("Audio play prevented:", error);
+        });
     }
 });
 
-// Tab functionality
+// Tab management
 const tabs = document.querySelectorAll('.tab-button');
 const containers = {
     'main-tab': chatBox,

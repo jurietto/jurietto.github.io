@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="chat.css">
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
     <script defer src="chat.js"></script>
 </head>
 <body>
@@ -34,30 +35,18 @@
                 </div>
                 <div id="chat-box" class="chat-box"></div>
                 <div id="music-container" class="music-container hidden">
-                    <!-- Add content for Music tab here -->
+                    <!-- Music content here -->
                 </div>
-                <div id="emoticons-container" class="emoticons-container hidden">
-                    <!-- Emoticons will be loaded here -->
-                </div>
+                <div id="emoticons-container" class="emoticons-container hidden"></div>
                 <div id="settings-container" class="settings-container hidden">
                     <div class="notification-settings">
                         <label><input type="checkbox" id="notification-toggle" checked> Enable Notifications</label>
-                    </div>
-                    <div class="theme-settings">
-                        <label for="theme-select">Choose Theme:</label>
-                        <select id="theme-select">
-                            <option value="neon-purple">Neon Purple</option>
-                            <option value="magenta">Magenta</option>
-                            <option value="neon-orange">Neon Orange</option>
-                            <option value="neon-yellow">Neon Yellow</option>
-                            <option value="neon-green">Neon Green</option>
-                            <option value="neon-blue">Neon Blue</option>
-                        </select>
                     </div>
                 </div>
                 <div class="input-container">
                     <input type="text" id="username-input" placeholder="Enter your name">
                     <textarea id="message-input" placeholder="Don't be a loner bear <3" rows="1"></textarea>
+                    <input type="file" id="file-upload" accept="image/*,video/*">
                 </div>
             </div>
             <audio id="notification-sound" src="sound/IM.mp3"></audio>
@@ -81,4 +70,3 @@
     </footer>
 </body>
 </html>
- 
