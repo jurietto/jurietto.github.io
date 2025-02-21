@@ -157,6 +157,11 @@ textarea:focus, input:focus {
 }
 
 /* Neon themes */
+.chat-container .default {
+    border-color: grey;
+    background-color: black;
+}
+
 .chat-container .neon-purple {
     border-color: #9b30ff;
     background-color: #1a0d2e;
@@ -282,16 +287,4 @@ textarea:focus, input:focus {
 }
 
 .tabs .tab-button.neon-blue:hover {
-    background-color: #1669b3; /* Darker hover color */
-}
-
-/* Responsive design */
-@media screen and (max-width: 600px) {
-    .chat-container {
-        height: auto;
-    }
-
-    .chat-box, .emoticons-container, .settings-container, .music-container {
-        height: 500px;
-    }
-}
+    background-color:
