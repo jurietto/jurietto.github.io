@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 20:39:24 UTC by jurietto */
+/* Last updated: 2025-02-21 21:38:57 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -130,7 +130,6 @@ async function sendMessage() {
         }
 
         if (messageText) {
-            // Determine which container is active
             const isMusicActive = !musicContainer.classList.contains('hidden');
             const messageRef = isMusicActive ? musicRef : chatRef;
 
@@ -185,7 +184,15 @@ function embedMedia(text) {
                     safeUrl.split("v=")[1]?.split("&")[0] : 
                     safeUrl.split("youtu.be/")[1];
                 if (videoId) {
-                    embeddedContent += `<iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                    embeddedContent += `
+                        <div class="youtube-wrapper">
+                            <iframe 
+                                src="https://www.youtube-nocookie.com/embed/${videoId}"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>`;
                 }
             }
             // Spotify embedding
