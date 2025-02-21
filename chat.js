@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 12:52:57 UTC by jurietto */
+/* Last updated: 2025-02-21 13:12:48 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -198,22 +198,43 @@ function embedMedia(text) {
                         </iframe>`;
                 }
             }
-
-                // SoundCloud embedding
-else if (safeUrl.includes("soundcloud.com")) {
-    const encodedUrl = encodeURIComponent(safeUrl);
-    embeddedContent += `
-        <iframe 
-            width="100%" 
-            height="166" 
-            scrolling="no" 
-            frameborder="no" 
-            allow="autoplay" 
-            src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
-            style="display: block; margin-top: 5px;">
-        </iframe>`;
-}
-    
+            // Spotify embedding
+            else if (safeUrl.includes("spotify.com")) {
+                const spotifyType = safeUrl.includes("/track/") ? "track" :
+                                  safeUrl.includes("/album/") ? "album" :
+                                  safeUrl.includes("/playlist/") ? "playlist" :
+                                  safeUrl.includes("/artist/") ? "artist" : null;
+                
+                if (spotifyType) {
+                    const spotifyId = safeUrl.split(`/${spotifyType}/`)[1]?.split(/[/?#]/)[0];
+                    if (spotifyId) {
+                        embeddedContent += `
+                            <iframe
+                                src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}"
+                                width="100%"
+                                height="152"
+                                frameborder="0"
+                                allowtransparency="true"
+                                allow="encrypted-media"
+                                style="display: block; margin-top: 5px; border-radius: 12px;">
+                            </iframe>`;
+                    }
+                }
+            }
+            // SoundCloud embedding
+            else if (safeUrl.includes("soundcloud.com")) {
+                const encodedUrl = encodeURIComponent(safeUrl);
+                embeddedContent += `
+                    <iframe 
+                        width="100%" 
+                        height="166" 
+                        scrolling="no" 
+                        frameborder="no" 
+                        allow="autoplay" 
+                        src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+                        style="display: block; margin-top: 5px;">
+                    </iframe>`;
+            }
             // Imgur handling
             else if (safeUrl.match(/\b(imgur\.com|i\.imgur\.com)\b/i)) {
                 const imgurId = safeUrl.split('/').pop().split('.')[0];
@@ -306,4 +327,31 @@ messageInput.addEventListener("input", function() {
 });
 
 // Tab management
-const tabs =
+const tabs = [
+    { button: mainTab, container: chatBox },
+    { button: emoticonsTab, container: emoticonsContainer },
+    { button: settingsTab, container: settingsContainer },
+    { button: musicTab, container: musicContainer }
+];
+
+tabs.forEach(tab => {
+    tab.button.addEventListener("click", () => {
+        tabs.forEach(t => {
+            t.button.classList.remove("active");
+            t.container.classList.add("hidden");
+        });
+        tab.button.classList.add("active");
+        tab.container.classList.remove("hidden");
+    });
+});
+
+// Initialize chat
+document.addEventListener("DOMContentLoaded", () => {
+    initializeEmoticons();
+    
+    // Listen for new messages
+    chatRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        displayMessage(data);
+    });
+});
