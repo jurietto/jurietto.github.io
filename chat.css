@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 23:26:45 UTC by jurietto */
+/* Last updated: 2025-02-21 23:36:48 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -41,10 +41,10 @@ body {
 
 .emoticons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 15px;
-    padding: 5px;
-    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 0;
+    justify-content: start;
     align-content: start;
 }
 
@@ -52,12 +52,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    aspect-ratio: 1;
+    border: 1px solid #333;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #111;
 }
 
 .emoticon-item img {
     width: 100%;
-    height: auto;
-    max-width: 80px;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
@@ -228,21 +233,6 @@ input, textarea, #username-input, #message-input {
     display: none;
 }
 
-/* Loading and error states */
-.loading {
-    text-align: center;
-    padding: 20px;
-    color: #888;
-}
-
-.error-message {
-    color: #ff4444;
-    padding: 10px;
-    margin: 5px 0;
-    background: rgba(255, 0, 0, 0.1);
-    border-radius: 4px;
-}
-
 /* Embed specific styles */
 .message-container .youtube-wrapper {
     position: relative;
@@ -281,10 +271,15 @@ input, textarea, #username-input, #message-input {
 /* Responsive design */
 @media (max-width: 768px) {
     .emoticons-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
     }
-    
+
+    .tab-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
     .message-container .embedded-content img[src^="pix/"],
     .message-container .embedded-content img[src*="/pix/"] {
         width: 120px;
@@ -293,11 +288,6 @@ input, textarea, #username-input, #message-input {
     .message-container .embedded-content img:not([src^="pix/"]):not([src*="/pix/"]) {
         width: 100%;
         max-width: 400px;
-    }
-
-    .tab-button {
-        padding: 8px 15px;
-        font-size: 14px;
     }
 
     .message-container .youtube-wrapper {
@@ -315,8 +305,8 @@ input, textarea, #username-input, #message-input {
     }
 
     .emoticons-grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
     }
 
     input, textarea, #username-input, #message-input {
