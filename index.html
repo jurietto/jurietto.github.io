@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.firebasestorage.app; img-src 'self' blob: data: https://*.firebasestorage.app; connect-src 'self' wss://*.firebaseio.com https://*.googleapis.com https://*.firebasestorage.app; script-src 'self' 'unsafe-inline' https://*.gstatic.com https://*.googleapis.com; style-src 'self' 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://*.gstatic.com https://*.googleapis.com;
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' https: data: blob:;
+        media-src 'self' https: blob:;
+        connect-src 'self' wss://*.firebaseio.com https://*.googleapis.com https://*.firebasestorage.app;
+        frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://*.spotify.com https://*.soundcloud.com;
+        font-src 'self';
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';">
     <title>Juri's Stuff</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chat.css">
-    <!-- Updated Firebase SDK -->
     <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-database-compat.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-storage-compat.js"></script>
     <script defer src="chat.js"></script>
 </head>
 <body>
@@ -35,21 +44,13 @@
                     <button id="emoticons-tab" class="tab-button">Emoticons</button>
                     <button id="settings-tab" class="tab-button">Settings</button>
                 </div>
-                
-                <!-- Chat Box -->
                 <div id="chat-box" class="chat-box"></div>
-                
-                <!-- Music Container -->
                 <div id="music-container" class="music-container hidden">
                     <!-- Music content will be dynamically added -->
                 </div>
-                
-                <!-- Emoticons Container -->
                 <div id="emoticons-container" class="emoticons-container hidden">
                     <!-- Emoticons will be dynamically added -->
                 </div>
-                
-                <!-- Settings Container -->
                 <div id="settings-container" class="settings-container hidden">
                     <div class="notification-settings">
                         <label>
@@ -58,17 +59,13 @@
                         </label>
                     </div>
                 </div>
-                
-                <!-- Input Container -->
                 <div class="input-container">
                     <input type="text" id="username-input" placeholder="Enter your name" autocomplete="username">
                     <textarea id="message-input" placeholder="Don't be a loner bear <3" rows="1"></textarea>
-                    <input type="file" id="file-upload" accept="image/*,video/*">
                 </div>
             </div>
             <audio id="notification-sound" src="sound/IM.mp3" preload="auto"></audio>
         </section>
-        
         <section>
             <h2>Info</h2>
             <p>Hi, this is just a space where I hang out with a few people online and explore coding and web design.</p>
@@ -79,12 +76,10 @@
             <p><strong>Twitter/X:</strong> <strong><a href="https://x.com/sotokomorii" target="_blank" rel="noopener noreferrer">@sotokomorii</a></strong></p>
             <p><strong>YouTube:</strong> <strong><a href="https://www.youtube.com/@juriscafe" target="_blank" rel="noopener noreferrer">@juri'scafe</a></strong></p><br>
         </section>
-        
         <section>
             <img src="pix/charmmy-kitty.gif" alt="Charmmy Kitty" loading="lazy">
         </section>
     </main>
-    
     <footer>
         <p>jurietto.github.io 2024 - ???</p>
     </footer>
