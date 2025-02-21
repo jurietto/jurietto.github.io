@@ -1,8 +1,4 @@
-/* Last updated: 2025-02-21 21:36:20 UTC by jurietto */
-
-body {
-    font-family: Arial, sans-serif;
-}
+/* Last updated: 2025-02-21 21:46:19 UTC by jurietto */
 
 .chat-container {
     width: 100%;
@@ -128,6 +124,22 @@ body {
     flex: 0 1 auto;
 }
 
+/* Video and iframe content */
+.message-container .embedded-content video,
+.message-container .embedded-content iframe {
+    width: 100%;
+    max-width: 100%;
+    margin: 5px 0;
+    display: block;
+}
+
+/* Audio content */
+.message-container .embedded-content audio {
+    width: 100%;
+    margin: 5px 0;
+    display: block;
+}
+
 /* Input container styles */
 .input-container {
     display: flex;
@@ -212,12 +224,6 @@ input, textarea, #username-input, #message-input {
     display: none;
 }
 
-/* Notification settings - Simplified */
-.notification-settings {
-    padding: 15px;
-    color: white;
-}
-
 /* Loading and error states */
 .loading {
     text-align: center;
@@ -238,9 +244,9 @@ input, textarea, #username-input, #message-input {
     position: relative;
     width: 100%;
     max-width: 500px;
-    padding-bottom: 56.25%;
+    padding-bottom: 28.125%;
     height: 0;
-    margin: 5px auto;
+    margin: 5px 0;
 }
 
 .message-container .youtube-wrapper iframe {
@@ -287,6 +293,11 @@ input, textarea, #username-input, #message-input {
     background: #444;
 }
 
+/* Notification settings */
+.notification-settings {
+    color: white;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .emoticons-grid {
@@ -307,6 +318,10 @@ input, textarea, #username-input, #message-input {
     .tab-button {
         padding: 8px 15px;
         font-size: 14px;
+    }
+
+    .message-container .youtube-wrapper {
+        padding-bottom: 56.25%;
     }
 }
 
