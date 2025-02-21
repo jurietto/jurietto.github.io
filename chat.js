@@ -203,7 +203,4 @@ emoticons.forEach(emoticon => {
         messageInput.style.height = "auto";
         messageInput.style.height = (messageInput.scrollHeight) + "px";
     });
-    emoticonsContainer.appendChild(img);
-});
-
-mainTab
+    emoticonsContainer.append
