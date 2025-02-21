@@ -198,6 +198,22 @@ function embedMedia(text) {
                         </iframe>`;
                 }
             }
+
+                // SoundCloud embedding
+else if (safeUrl.includes("soundcloud.com")) {
+    const encodedUrl = encodeURIComponent(safeUrl);
+    embeddedContent += `
+        <iframe 
+            width="100%" 
+            height="166" 
+            scrolling="no" 
+            frameborder="no" 
+            allow="autoplay" 
+            src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+            style="display: block; margin-top: 5px;">
+        </iframe>`;
+}
+    
             // Imgur handling
             else if (safeUrl.match(/\b(imgur\.com|i\.imgur\.com)\b/i)) {
                 const imgurId = safeUrl.split('/').pop().split('.')[0];
