@@ -35,8 +35,7 @@ body {
 /* Emoticons styles */
 .emoticons-wrapper {
     height: 100%;
-    overflow-y: auto;
-    padding: 15px;
+   
 }
 
 .emoticons-grid {
@@ -158,7 +157,7 @@ body {
 }
 
 /* Input styles */
-input, textarea, #username-input, #message-input, #file-upload, select {
+input, textarea, #username-input, #message-input, #file-upload, {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
