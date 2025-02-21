@@ -12,7 +12,7 @@ body {
     position: relative;
 }
 
-.chat-box, .emoticons-container, .settings-container {
+.chat-box, .emoticons-container, .settings-container, .music-container {
     flex-grow: 1;
     overflow-y: auto;
     border: 1px solid grey;
@@ -208,7 +208,7 @@ textarea:focus, input:focus {
         height: auto;
     }
 
-    .chat-box, .emoticons-container, .settings-container {
+    .chat-box, .emoticons-container, .settings-container, .music-container {
         height: 500px;
     }
 }
