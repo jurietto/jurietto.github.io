@@ -1,67 +1,290 @@
-/* Keep all existing CSS and update/add the following */
+body {
+    font-family: Arial, sans-serif;
+}
 
-/* Updated emoticons container styling */
-.emoticons-container {
+.chat-container {
+    width: 100%;
+    margin: 0 auto; /* Center the chat container */
+    height: auto;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 20px;
-    gap: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.chat-box, .emoticons-container, .settings-container, .music-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    border: 1px solid grey;
+    padding: 10px;
     background: black;
+    color: white;
+    text-align: left;
+    padding-left: 5px; /* Ensure chat text is left-aligned */
+    line-height: 1.0; /* More compact line height */
+    height: 500px; /* Fixed height */
+}
+
+.chat-box p {
+    color: inherit;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+    margin-bottom: 5px;
+    text-align: left; /* Ensure chat text is left-aligned */
+}
+
+.chat-box p time {
+    color: grey;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.chat-box p strong,
+.chat-box p b {
+    font-family: Verdana, sans-serif;
+    font-weight: bold;
+    color: #8d2696; /* Default color for strong tags */
+}
+
+/* Style input fields */
+.input-container {
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 0; /* No gap between inputs */
+}
+
+input, textarea, #username-input, #message-input {
+    background-color: #000;
+    padding: 10px;
+    color: white;
+    border: 1px solid grey;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Arial, sans-serif; /* Match the font with the one in chat box */
+    border-radius: 0;
+    resize: none; /* Prevent manual resizing */
+    overflow: hidden; /* Hide scroll bar */
+}
+
+/* Prevent chat input from zooming on mobile */
+@media screen and (max-width: 600px) {
+    input, textarea, #username-input, #message-input {
+        font-size: 16px;
+    }
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Notification settings styling */
+.notification-settings {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    color: white;
+}
+
+.notification-settings label {
+    display: flex;
+    align-items: center;
+}
+
+.notification-settings input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Theme settings styling */
+.theme-settings {
+    margin-top: 10px;
+    color: white;
+}
+
+.theme-settings label {
+    margin-right: 10px;
+}
+
+.theme-settings select {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
+    font-size: 16px;
+}
+
+/* Tabs styling */
+.tabs {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 0; /* Remove spacing between tabs and chat box */
+}
+
+.tab-button {
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid grey;
+    cursor: pointer;
+    text-align: center;
+    margin-right: 1px; /* Remove gap between tabs */
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    top: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 3D effect */
+}
+
+.tab-button.active {
+    background-color: #8d2696;
+    border-bottom: 1px solid #8d2696;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced 3D effect */
+}
+
+.tab-button:hover {
+    background-color: #8d2696; /* Hover color */
 }
 
 .emoticons-container img {
     width: 150px;
     height: auto;
-    margin: 15px;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    transition: all 0.3s ease;
-    border-radius: 5px;
-    border: 2px solid transparent;
-}
-
-.emoticons-container img:hover {
-    transform: scale(1.1);
-    border-color: #8d2696;
-    box-shadow: 0 0 15px rgba(141, 38, 150, 0.5);
-}
-
-/* Add styling for embedded emoticons in chat */
-.embedded-emoticon {
-    width: 150px;
-    height: auto;
     margin: 5px;
-    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block; /* Make emoticons display side by side */
 }
 
-/* Add loading animation for emoticons */
-.emoticon-loading {
-    opacity: 0.5;
-    animation: pulse 1.5s infinite;
+.hidden {
+    display: none;
 }
 
-@keyframes pulse {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
+/* Neon themes */
+.chat-container .neon-purple {
+    border-color: #9b30ff;
+    background-color: #1a0d2e;
 }
 
-/* Mobile optimization for emoticons */
+.chat-container .neon-purple strong {
+    color: #9b30ff;
+}
+
+.chat-container .magenta {
+    border-color: #ff00ff;
+    background-color: #330033;
+}
+
+.chat-container .magenta strong {
+    color: #ff00ff;
+}
+
+.chat-container .neon-orange {
+    border-color: #ff4500;
+    background-color: #331a00;
+}
+
+.chat-container .neon-orange strong {
+    color: #ff4500;
+}
+
+.chat-container .neon-yellow {
+    border-color: #ffff00;
+    background-color: #333300;
+}
+
+.chat-container .neon-yellow strong {
+    color: #ffff00;
+}
+
+.chat-container .neon-green {
+    border-color: #39ff14;
+    background-color: #0d3307;
+}
+
+.chat-container .neon-green strong {
+    color: #39ff14;
+}
+
+.chat-container .neon-blue {
+    border-color: #1e90ff;
+    background-color: #0d1a33;
+}
+
+.chat-container .neon-blue strong {
+    color: #1e90ff;
+}
+
+/* Apply themes to mini tabs and input boxes */
+.tabs .tab-button.neon-purple,
+#username-input.neon-purple,
+#message-input.neon-purple {
+    background-color: #1a0d2e;
+    border-color: #9b30ff;
+}
+
+.tabs .tab-button.neon-purple:hover {
+    background-color: #9b30ff;
+}
+
+.tabs .tab-button.magenta,
+#username-input.magenta,
+#message-input.magenta {
+    background-color: #330033;
+    border-color: #ff00ff;
+}
+
+.tabs .tab-button.magenta:hover {
+    background-color: #ff00ff;
+}
+
+.tabs .tab-button.neon-orange,
+#username-input.neon-orange,
+#message-input.neon-orange {
+    background-color: #331a00;
+    border-color: #ff4500;
+}
+
+.tabs .tab-button.neon-orange:hover {
+    background-color: #ff4500;
+}
+
+.tabs .tab-button.neon-yellow,
+#username-input.neon-yellow,
+#message-input.neon-yellow {
+    background-color: #333300;
+    border-color: #ffff00;
+}
+
+.tabs .tab-button.neon-yellow:hover {
+    background-color: #ffff00;
+}
+
+.tabs .tab-button.neon-green,
+#username-input.neon-green,
+#message-input.neon-green {
+    background-color: #0d3307;
+    border-color: #39ff14;
+}
+
+.tabs .tab-button.neon-green:hover {
+    background-color: #39ff14;
+}
+
+.tabs .tab-button.neon-blue,
+#username-input.neon-blue,
+#message-input.neon-blue {
+    background-color: #0d1a33;
+    border-color: #1e90ff;
+}
+
+.tabs .tab-button.neon-blue:hover {
+    background-color: #1e90ff;
+}
+
+/* Responsive design */
 @media screen and (max-width: 600px) {
-    .emoticons-container {
-        padding: 10px;
-        gap: 10px;
+    .chat-container {
+        height: auto;
     }
 
-    .emoticons-container img {
-        width: 100px;
-        margin: 8px;
-    }
-
-    .embedded-emoticon {
-        width: 100px;
+    .chat-box, .emoticons-container, .settings-container, .music-container {
+        height: 500px;
     }
 }
