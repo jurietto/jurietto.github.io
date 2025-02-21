@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 13:12:48 UTC by jurietto */
+/* Last updated: 2025-02-21 13:54:16 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -39,48 +39,73 @@ const musicContainer = document.getElementById("music-container");
 // Get base URL for assets
 const baseUrl = window.location.origin;
 
-// Define emoticons with absolute paths
-const emoticons = [
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
-    { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
-    { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
-    { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' }
-];
+// Define emoticons with categories
+const emoticons = {
+    emotions: [
+        { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1', title: 'Smile' },
+        { src: `${baseUrl}/pix/po1.gif`, alt: 'po1', title: 'Happy' },
+        { src: `${baseUrl}/pix/po2.gif`, alt: 'po2', title: 'Laugh' },
+        { src: `${baseUrl}/pix/po3.gif`, alt: 'po3', title: 'Love' }
+    ]
+};
 
 // Initialize emoticons container
 function initializeEmoticons() {
     emoticonsContainer.innerHTML = '';
-    const gridContainer = document.createElement('div');
-    gridContainer.style.cssText = `
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
-        padding: 10px;
-        justify-content: start;
-        align-content: start;
-    `;
+    
+    // Create wrapper for better scrolling and layout
+    const wrapper = document.createElement('div');
+    wrapper.className = 'emoticons-wrapper';
 
-    emoticons.forEach(emoticon => {
-        const img = document.createElement('img');
-        img.src = emoticon.src;
-        img.alt = emoticon.alt;
-        img.style.cssText = `
-            width: 100%;
-            max-width: 150px;
-            height: auto;
-            display: block;
-            cursor: pointer;
-            margin: 0 auto;
-        `;
-        img.addEventListener('click', () => insertEmoticon(emoticon.src));
-        img.addEventListener('error', (e) => {
-            console.error(`Failed to load emoticon: ${emoticon.src}`);
-            e.target.style.display = 'none';
+    // Create header
+    const header = document.createElement('div');
+    header.className = 'emoticons-header';
+    header.innerHTML = '<h3>Emoticons</h3>';
+    wrapper.appendChild(header);
+
+    // Create categories
+    Object.entries(emoticons).forEach(([category, emotes]) => {
+        const categorySection = document.createElement('div');
+        categorySection.className = 'emoticons-category';
+        
+        const categoryTitle = document.createElement('h4');
+        categoryTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+        categorySection.appendChild(categoryTitle);
+
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'emoticons-grid';
+
+        emotes.forEach(emoticon => {
+            const emoticonWrapper = document.createElement('div');
+            emoticonWrapper.className = 'emoticon-item';
+
+            const img = document.createElement('img');
+            img.src = emoticon.src;
+            img.alt = emoticon.alt;
+            img.title = emoticon.title;
+            
+            // Add hover effect and click functionality
+            emoticonWrapper.addEventListener('click', () => insertEmoticon(emoticon.src));
+            emoticonWrapper.addEventListener('mouseenter', () => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'emoticon-tooltip';
+                tooltip.textContent = emoticon.title;
+                emoticonWrapper.appendChild(tooltip);
+            });
+            emoticonWrapper.addEventListener('mouseleave', () => {
+                const tooltip = emoticonWrapper.querySelector('.emoticon-tooltip');
+                if (tooltip) tooltip.remove();
+            });
+
+            emoticonWrapper.appendChild(img);
+            gridContainer.appendChild(emoticonWrapper);
         });
-        gridContainer.appendChild(img);
+
+        categorySection.appendChild(gridContainer);
+        wrapper.appendChild(categorySection);
     });
 
-    emoticonsContainer.appendChild(gridContainer);
+    emoticonsContainer.appendChild(wrapper);
 }
 
 // Notification sound
