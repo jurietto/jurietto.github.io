@@ -1,6 +1,12 @@
 // Firebase Configuration
 const firebaseConfig = {
-    // Your firebase configuration
+    apiKey: "AIzaSyB5TPELxjl-qo9v8Zt2k6aO0VGnxOcrecw",
+    authDomain: "dungeon-forum.firebaseapp.com",
+    databaseURL: "https://dungeon-forum-default-rtdb.firebaseio.com",
+    projectId: "dungeon-forum",
+    storageBucket: "dungeon-forum.appspot.com",
+    messagingSenderId: "1073920232004",
+    appId: "1:1073920232004:web:15df0ccc5f3bf76a238a11"
 };
 
 // Initialize Firebase
