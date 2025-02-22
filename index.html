@@ -16,23 +16,30 @@
     base-uri 'self';
     form-action 'self';">
     <title>Juri's Stuff</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="chat.css">
+    
+    <style>
+        /* ASCII Art Formatting */
+        .ascii-art {
+            font-family: 'Courier New', Courier, monospace; /* Ensures monospace font */
+            font-size: 14px; /* Adjust font size */
+            white-space: pre; /* Keeps ASCII formatting */
+            display: block; /* Ensures proper layout */
+            text-align: left; /* Left align */
+            overflow-x: auto; /* Prevents wrapping issues */
+            padding: 10px; /* Adds spacing */
+            margin: 20px auto; /* Centers it */
+            max-width: fit-content; /* Prevents unwanted stretching */
+            line-height: 1.5; /* Keeps spacing between lines */
+            background: none; /* No background */
+            border: none; /* No border */
+        
+        }
+
+    </style>
+
     <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-database-compat.js"></script>
     <script defer src="chat.js"></script>
-    <style>
-        .ascii-art {
-            font-family: 'Consolas', 'Courier New', monospace;
-            white-space: pre;
-            overflow-x: auto;
-         
-            padding: 10px;
-        
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -65,6 +72,7 @@
             </div>
         </nav>
     </header>
+    
     <main>
         <section>
             <h2>Chatzone</h2>
@@ -93,6 +101,7 @@
             </div>
             <audio id="notification-sound" src="sound/IM.mp3" preload="auto"></audio>
         </section>
+        
         <section>
             <h2>Info</h2>
             <p>Hi, this is just a space where I hang out with a few people online and explore coding and web design.</p>
@@ -102,10 +111,12 @@
             <p><strong>Twitter/X:</strong> <strong><a href="https://x.com/sotokomorii" target="_blank" rel="noopener noreferrer">@sotokomorii</a></strong></p>
             <p><strong>YouTube:</strong> <strong><a href="https://www.youtube.com/@juriscafe" target="_blank" rel="noopener noreferrer">@juri'scafe</a></strong></p><br>
         </section>
+        
         <section>
             <img src="pix/charmmy-kitty.gif" alt="Charmmy Kitty" loading="lazy">
         </section>
     </main>
+    
     <footer>
         <h1>
             <img src="pix/juri.gif" alt="Charmmy Kitty">
