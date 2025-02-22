@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 08:38:52 UTC by jurietto */
+/* Last updated: 2025-02-22 08:45:04 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -190,12 +190,12 @@ function embedMedia(text) {
                 if (spotifyType) {
                     const spotifyId = safeUrl.split(`/${spotifyType}/`)[1]?.split(/[/?#]/)[0];
                     if (spotifyId) {
-                        embeddedContent += `<iframe src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted[...]
+                        embeddedContent += `<iframe src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
                     }
                 }
             } else if (safeUrl.includes("soundcloud.com")) {
                 const encodedUrl = encodeURIComponent(safeUrl);
-                embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play[...]
+                embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>`;
             }
         } catch (error) {
             console.error("Error embedding media:", error);
