@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 08:49:08 UTC by jurietto */
+/* Last updated: 2025-02-22 12:09:00 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -21,7 +21,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     flex: 0 0 500px;
-    border: 1px solid grey;
+    border: 2px solid grey; /* Changed to 2px */
     background: black;
     color: white;
     padding: 15px;
@@ -150,7 +150,7 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     background-color: #000;
     padding: 10px;
     color: white;
-    border: 1px solid grey;
+    border: 2px solid grey; /* Changed to 2px */
     border-top: none;
     box-sizing: border-box;
     font-size: 16px;
@@ -164,7 +164,7 @@ input, textarea, #username-input, #message-input, #file-upload, select {
 
 /* First input element */
 .input-container > *:first-child {
-    border-top: 1px solid grey;
+    border-top: 2px solid grey; /* Changed to 2px */
 }
 
 /* Remove tap highlight on mobile */
@@ -183,7 +183,7 @@ input, textarea, #username-input, #message-input {
     padding: 10px;
     background-color: black;
     color: white;
-    border: 1px solid grey;
+    border: 2px solid grey; /* Changed to 2px */
     cursor: pointer;
     text-align: center;
     margin-right: 1px;
@@ -195,7 +195,7 @@ input, textarea, #username-input, #message-input {
 
 .tab-button.active {
     background-color: #333;
-    border-bottom: 1px solid grey;
+    border-bottom: 2px solid grey; /* Changed to 2px */
 }
 
 .tab-button:hover {
@@ -277,4 +277,3 @@ input, textarea, #username-input, #message-input {
     width: 100%;
     max-width: 100%;
 }
-
