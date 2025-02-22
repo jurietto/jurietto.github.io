@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 09:20:17 UTC by jurietto */
+/* Last updated: 2025-02-22 09:45:04 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -149,56 +149,28 @@ function insertEmoticon(emoticonPath) {
     messageInput.focus();
 }
 
-// Media embedding function
+// Function to Embed Media
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    const urls = text.match(urlRegex);
-    if (!urls) return "";
-
     let embeddedContent = "";
 
-    urls.forEach(url => {
-        try {
-            const safeUrl = new URL(url).toString();
-
-            if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
-                embeddedContent += `<img src="${safeUrl}" alt="Shared Image" loading="lazy" onerror="this.style.display='none'" crossorigin="anonymous">`;
-            } else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
-                embeddedContent += `<video controls playsinline crossorigin="anonymous"><source src="${safeUrl}">Your browser does not support video playback.</video>`;
-            } else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
-                const videoId = safeUrl.includes("youtube.com/watch") ?
-                    safeUrl.split("v=")[1]?.split("&")[0] :
-                    safeUrl.split("youtu.be/")[1];
-                if (videoId) {
-                    embeddedContent += `
-                        <div class="youtube-wrapper">
-                            <iframe 
-                                src="https://www.youtube.com/embed/${videoId}"
-                                loading="lazy"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-                        </div>`;
-                }
-            } else if (safeUrl.includes("spotify.com")) {
-                const spotifyType = safeUrl.includes("/track/") ? "track" :
-                    safeUrl.includes("/album/") ? "album" :
-                        safeUrl.includes("/playlist/") ? "playlist" :
-                            safeUrl.includes("/artist/") ? "artist" : null;
-
-                if (spotifyType) {
-                    const spotifyId = safeUrl.split(`/${spotifyType}/`)[1]?.split(/[/?#]/)[0];
-                    if (spotifyId) {
-                        embeddedContent += `<iframe src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
-                    }
-                }
-            } else if (safeUrl.includes("soundcloud.com")) {
-                const encodedUrl = encodeURIComponent(safeUrl);
-                embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>`;
-            }
-        } catch (error) {
-            console.error("Error embedding media:", error);
+    text.match(urlRegex)?.forEach((url) => {
+        if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+        } else if (url.match(/\.(mp4|mov)$/i)) {
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+        } else if (url.match(/\.(mp3)$/i)) {
+            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
+            let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
+            videoId = videoId.split("&")[0];
+            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+        } else if (url.includes("spotify.com")) {
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+        } else if (url.includes("soundcloud.com")) {
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
+        } else if (url.includes("music.apple.com")) {
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
         }
     });
 
@@ -295,9 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (chatBox) {
             displayMessage(data, chatBox);
         }
-        if (document.hidden) {
-            playNotificationSound();
-        }
+        playNotificationSound();
     });
 
     musicRef.on("child_added", (snapshot) => {
@@ -305,8 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (musicContainer) {
             displayMessage(data, musicContainer);
         }
-        if (document.hidden) {
-            playNotificationSound();
-        }
+        playNotificationSound();
     });
 });
