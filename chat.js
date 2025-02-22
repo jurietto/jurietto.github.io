@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 23:42:42 UTC by jurietto */
+/* Last updated: 2025-02-22 08:38:52 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -48,33 +48,29 @@ const baseEmoticons = [
     { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
     { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
     { src: `${baseUrl}/pix/peep.gif`, alt: 'sb1' },
-    
 ];
-
-// Generate 40 emoticons by repeating the base emoticons
-const emoticons = Array(40).fill().map((_, index) => baseEmoticons[index % baseEmoticons.length]);
 
 // Initialize emoticons container
 function initializeEmoticons() {
     if (!emoticonsContainer) return;
-    
+
     emoticonsContainer.innerHTML = '';
-    
+
     const wrapper = document.createElement('div');
     wrapper.className = 'emoticons-wrapper';
 
     const gridContainer = document.createElement('div');
     gridContainer.className = 'emoticons-grid';
 
-    emoticons.forEach(emoticon => {
+    baseEmoticons.forEach(emoticon => {
         const emoticonWrapper = document.createElement('div');
         emoticonWrapper.className = 'emoticon-item';
-        
+
         const img = document.createElement('img');
         img.src = emoticon.src;
         img.alt = emoticon.alt;
         img.loading = 'lazy';
-        
+
         emoticonWrapper.addEventListener('click', () => {
             insertEmoticon(emoticon.src);
         });
@@ -144,7 +140,7 @@ async function sendMessage() {
 // Emoticon insertion
 function insertEmoticon(emoticonPath) {
     if (!usernameInput || !messageInput) return;
-    
+
     if (!usernameInput.value.trim()) {
         alert("Please enter your name before using emoticons!");
         return;
@@ -164,16 +160,14 @@ function embedMedia(text) {
     urls.forEach(url => {
         try {
             const safeUrl = new URL(url).toString();
-            
+
             if (/\.(jpeg|jpg|gif|png|webp)$/i.test(safeUrl)) {
                 embeddedContent += `<img src="${safeUrl}" alt="Shared Image" loading="lazy" onerror="this.style.display='none'" crossorigin="anonymous">`;
-            }
-            else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
+            } else if (/\.(mp4|webm|ogg)$/i.test(safeUrl)) {
                 embeddedContent += `<video controls playsinline crossorigin="anonymous"><source src="${safeUrl}">Your browser does not support video playback.</video>`;
-            }
-            else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
-                const videoId = safeUrl.includes("youtube.com/watch") ? 
-                    safeUrl.split("v=")[1]?.split("&")[0] : 
+            } else if (safeUrl.includes("youtube.com/watch") || safeUrl.includes("youtu.be")) {
+                const videoId = safeUrl.includes("youtube.com/watch") ?
+                    safeUrl.split("v=")[1]?.split("&")[0] :
                     safeUrl.split("youtu.be/")[1];
                 if (videoId) {
                     embeddedContent += `
@@ -187,23 +181,21 @@ function embedMedia(text) {
                             </iframe>
                         </div>`;
                 }
-            }
-            else if (safeUrl.includes("spotify.com")) {
+            } else if (safeUrl.includes("spotify.com")) {
                 const spotifyType = safeUrl.includes("/track/") ? "track" :
-                                  safeUrl.includes("/album/") ? "album" :
-                                  safeUrl.includes("/playlist/") ? "playlist" :
-                                  safeUrl.includes("/artist/") ? "artist" : null;
-                
+                    safeUrl.includes("/album/") ? "album" :
+                        safeUrl.includes("/playlist/") ? "playlist" :
+                            safeUrl.includes("/artist/") ? "artist" : null;
+
                 if (spotifyType) {
                     const spotifyId = safeUrl.split(`/${spotifyType}/`)[1]?.split(/[/?#]/)[0];
                     if (spotifyId) {
-                        embeddedContent += `<iframe src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+                        embeddedContent += `<iframe src="https://open.spotify.com/embed/${spotifyType}/${spotifyId}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted[...]
                     }
                 }
-            }
-            else if (safeUrl.includes("soundcloud.com")) {
+            } else if (safeUrl.includes("soundcloud.com")) {
                 const encodedUrl = encodeURIComponent(safeUrl);
-                embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>`;
+                embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play[...]
             }
         } catch (error) {
             console.error("Error embedding media:", error);
@@ -215,7 +207,7 @@ function embedMedia(text) {
 
 // Play notification sound
 function playNotificationSound() {
-    if (!notificationsEnabled) return;
+    if (!notificationsEnabled || !document.hidden) return;
 
     try {
         const audio = new Audio(`${baseUrl}/sound/IM.mp3`);
@@ -237,10 +229,10 @@ function displayMessage(data, container) {
 
     const time = new Date(data.timestamp).toLocaleTimeString();
     const messageContent = document.createElement("p");
-    
+
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
     const displayText = data.text.replace(urlRegex, "").trim();
-    
+
     messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
     messageContainer.appendChild(messageContent);
 
@@ -254,7 +246,7 @@ function displayMessage(data, container) {
 
     container.appendChild(messageContainer);
     container.scrollTop = container.scrollHeight;
-    
+
     playNotificationSound();
 }
 
@@ -290,7 +282,7 @@ if (messageInput) {
         }
     });
 
-    messageInput.addEventListener("input", function() {
+    messageInput.addEventListener("input", function () {
         this.style.height = "auto";
         this.style.height = `${this.scrollHeight}px`;
     });
@@ -299,7 +291,7 @@ if (messageInput) {
 // Initialize chat
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
-    
+
     chatRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (chatBox) {
