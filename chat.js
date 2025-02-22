@@ -47,7 +47,7 @@ const baseEmoticons = [
     { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
     { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
     { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/sb1.gif`, alt: 'sb1' },
+    { src: `${baseUrl}/pix/peep.gif`, alt: 'sb1' },
     { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
     { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
     { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
