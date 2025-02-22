@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 10:58:28 UTC by jurietto */
+/* Last updated: 2025-02-22 11:13:18 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -242,20 +242,8 @@ tabs.forEach(tab => {
     }
 });
 
-// Event Listeners
-if (messageInput) {
-    messageInput.addEventListener("keypress", (event) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            sendMessage();
-        }
-    });
-
-    messageInput.addEventListener("input", function () {
-        this.style.height = "auto";
-        this.style.height = `${this.scrollHeight}px`;
-    });
-}
+// Track the latest timestamp at page load
+let lastMessageTimestamp = Date.now();
 
 // Initialize chat
 document.addEventListener("DOMContentLoaded", () => {
@@ -265,7 +253,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = snapshot.val();
         if (chatBox) {
             displayMessage(data, chatBox);
-            playNotificationSound(); // Play sound only for chatBox
+
+            // Play sound only for new messages, not on page load
+            if (data.timestamp > lastMessageTimestamp) {
+                playNotificationSound();
+            }
         }
     });
 
@@ -273,7 +265,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = snapshot.val();
         if (musicContainer) {
             displayMessage(data, musicContainer);
-            playNotificationSound(); // Play sound only for musicContainer
+
+            // Play sound only for new messages, not on page load
+            if (data.timestamp > lastMessageTimestamp) {
+                playNotificationSound();
+            }
         }
     });
+
+    // Update lastMessageTimestamp after page load is complete
+    setTimeout(() => {
+        lastMessageTimestamp = Date.now();
+    }, 2000); // Delay to ensure old messages don't trigger the sound
 });
