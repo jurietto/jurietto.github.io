@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 23:52:34 UTC by jurietto */
+/* Last updated: 2025-02-21 23:59:45 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -35,13 +35,13 @@ body {
 /* Emoticons styles */
 .emoticons-wrapper {
     height: 100%;
-    overflow-y: auto;
+    overflow: hidden;
     padding: 15px;
 }
 
 .emoticons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     padding: 5px;
     justify-content: center;
@@ -141,47 +141,33 @@ body {
 .input-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    background: black;
-    border: 1px solid grey;
-    margin-top: -1px;
+    gap: 0;
+    border-top: 0;
 }
 
 /* Input styles */
 input, textarea, #username-input, #message-input, #file-upload, select {
-    width: 100%;
-    background-color: white;
-    color: black;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #000;
+    padding: 10px;
+    color: white;
     border: 1px solid grey;
-    padding: 8px;
-    font-size: 14px;
+    border-top: none;
     box-sizing: border-box;
+    font-size: 16px;
     font-family: Arial, sans-serif;
-    border-radius: 4px;
-    margin-bottom: 5px;
-}
-
-#username-input {
-    margin-bottom: 5px;
-}
-
-#message-input {
-    resize: vertical;
-    min-height: 40px;
-    max-height: 200px;
-}
-
-/* Remove input focus and hover effects */
-input:focus,
-textarea:focus,
-#username-input:focus,
-#message-input:focus,
-#file-upload:focus,
-select:focus {
+    border-radius: 0;
+    resize: none;
+    overflow: hidden;
+    margin: 0;
     outline: none;
-    border-color: grey;
-    box-shadow: none;
+}
+
+/* First input element */
+.input-container > *:first-child {
+    border-top: 1px solid grey;
 }
 
 /* Remove tap highlight on mobile */
@@ -221,16 +207,6 @@ input, textarea, #username-input, #message-input {
 
 .hidden {
     display: none;
-}
-
-/* Notification settings - default styling */
-.notification-settings {
-    color: white;
-    padding: 15px;
-}
-
-.notification-settings input[type="checkbox"] {
-    all: revert;
 }
 
 /* Loading and error states */
@@ -305,7 +281,7 @@ input, textarea, #username-input, #message-input {
 /* Responsive design */
 @media (max-width: 768px) {
     .emoticons-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 12px;
     }
     
@@ -356,7 +332,7 @@ input, textarea, #username-input, #message-input {
     }
 
     .emoticons-grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
     }
 }
