@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 11:13:18 UTC by jurietto */
+/* Last updated: 2025-02-22 11:20:54 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -278,3 +278,18 @@ document.addEventListener("DOMContentLoaded", () => {
         lastMessageTimestamp = Date.now();
     }, 2000); // Delay to ensure old messages don't trigger the sound
 });
+
+// Event Listeners
+if (messageInput) {
+    messageInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+
+    messageInput.addEventListener("input", function () {
+        this.style.height = "auto";
+        this.style.height = `${this.scrollHeight}px`;
+    });
+}
