@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-21 23:59:45 UTC by jurietto */
+/* Last updated: 2025-02-22 00:05:37 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -32,23 +32,22 @@ body {
     margin: 0;
 }
 
-/* Emoticons styles */
+/* Emoticons styles - Updated for square grid */
 .emoticons-wrapper {
     height: 100%;
     overflow: hidden;
-    padding: 15px;
+    padding: 0;
 }
 
 .emoticons-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    gap: 5px;
     padding: 5px;
-    justify-content: center;
-    align-content: start;
 }
 
 .emoticon-item {
+    aspect-ratio: 1/1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,9 +55,8 @@ body {
 
 .emoticon-item img {
     width: 100%;
-    height: auto;
-    max-width: 80px;
-    display: block;
+    height: 100%;
+    object-fit: contain;
 }
 
 /* Chat messages and embedded content */
@@ -282,7 +280,7 @@ input, textarea, #username-input, #message-input {
 @media (max-width: 768px) {
     .emoticons-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
+        gap: 5px;
     }
     
     .message-container .embedded-content img[src^="pix/"],
@@ -333,6 +331,6 @@ input, textarea, #username-input, #message-input {
 
     .emoticons-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        gap: 5px;
     }
 }
