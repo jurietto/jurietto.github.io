@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 00:05:37 UTC by jurietto */
+/* Last updated: 2025-02-22 00:21:38 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -32,10 +32,9 @@ body {
     margin: 0;
 }
 
-/* Emoticons styles - Updated for square grid */
+/* Emoticons styles */
 .emoticons-wrapper {
     height: 100%;
-    overflow: hidden;
     padding: 0;
 }
 
@@ -205,6 +204,28 @@ input, textarea, #username-input, #message-input {
 
 .hidden {
     display: none;
+}
+
+/* Notification settings - Simple, clean styling */
+.notification-settings {
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-settings label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.notification-settings input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
 }
 
 /* Loading and error states */
