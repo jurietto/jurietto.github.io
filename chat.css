@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 00:27:11 UTC by jurietto */
+/* Last updated: 2025-02-22 00:34:37 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -279,25 +279,6 @@ input, textarea, #username-input, #message-input {
     max-width: 100%;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-}
-
-::-webkit-scrollbar-track {
-    background: #111;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #444;
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
     .emoticons-grid {
@@ -316,7 +297,7 @@ input, textarea, #username-input, #message-input {
     }
 
     .tab-button {
-        padding: 8px 15px;
+        padding: 12px 15px;  /* Increased height */
         font-size: 14px;
     }
 
@@ -328,14 +309,14 @@ input, textarea, #username-input, #message-input {
 @media (max-width: 480px) {
     .tabs {
         flex-wrap: wrap;
-        height: 50px;
     }
     
     .tab-button {
         flex: 1 1 calc(50% - 2px);
         margin-bottom: 2px;
-        font-size: 12px;
-        padding: 6px 10px;
+        font-size: 14px;  /* Slightly larger font */
+        padding: 15px 10px;  /* Much taller for better touch targets */
+        min-height: 44px;  /* Minimum height for touch targets */
     }
 
     .chat-box,
