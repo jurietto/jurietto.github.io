@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 00:34:37 UTC by jurietto */
+/* Last updated: 2025-02-22 08:49:08 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -307,15 +307,17 @@ input, textarea, #username-input, #message-input {
 
 @media (max-width: 480px) {
     .tabs {
-        flex-wrap: wrap;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
     }
     
     .tab-button {
-        flex: 1 1 calc(50% - 2px);
-        margin-bottom: 2px;
+        flex: 1;
+        padding: 10px;
         font-size: 14px;  /* Slightly larger font */
-        padding: 15px 10px;  /* Much taller for better touch targets */
-        min-height: 44px;  /* Minimum height for touch targets */
+        margin-right: 1px;
+        text-align: center;
     }
 
     .chat-box,
