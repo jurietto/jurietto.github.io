@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 09:45:04 UTC by jurietto */
+/* Last updated: 2025-02-22 10:40:23 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -36,7 +36,6 @@ const musicTab = document.getElementById("music-tab");
 const emoticonsContainer = document.getElementById("emoticons-container");
 const settingsContainer = document.getElementById("settings-container");
 const musicContainer = document.getElementById("music-container");
-const notificationSound = document.getElementById("notification-sound");
 
 // Get base URL for assets
 const baseUrl = window.location.origin;
@@ -170,7 +169,7 @@ function embedMedia(text) {
         } else if (url.includes("soundcloud.com")) {
             embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" src="${url}" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts" style="display: block; margin-top: 5px;" src="${url}"></iframe>`;
         }
     });
 
@@ -183,7 +182,7 @@ function playNotificationSound() {
 
     try {
         const audio = new Audio(`${baseUrl}/sound/IM.mp3`);
-        audio.volume = 1.0;
+        audio.volume = 0.5; // Lower the volume
         audio.play().catch(error => {
             console.warn("Audio play failed:", error);
         });
@@ -266,15 +265,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = snapshot.val();
         if (chatBox) {
             displayMessage(data, chatBox);
+            playNotificationSound(); // Play sound only for chatBox
         }
-        playNotificationSound();
     });
 
     musicRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (musicContainer) {
             displayMessage(data, musicContainer);
+            playNotificationSound(); // Play sound only for musicContainer
         }
-        playNotificationSound();
     });
 });
