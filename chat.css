@@ -214,8 +214,7 @@ input, textarea, #username-input, #message-input {
     padding: 15px;
     color: white;
     background: black;
-    border: 1px solid grey;
-    border-top: none;
+    
 }
 
 .notification-settings input[type="checkbox"] {
