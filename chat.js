@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-22 08:45:04 UTC by jurietto */
+/* Last updated: 2025-02-22 09:20:17 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -173,7 +173,7 @@ function embedMedia(text) {
                     embeddedContent += `
                         <div class="youtube-wrapper">
                             <iframe 
-                                src="https://www.youtube-nocookie.com/embed/${videoId}"
+                                src="https://www.youtube.com/embed/${videoId}"
                                 loading="lazy"
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -207,7 +207,7 @@ function embedMedia(text) {
 
 // Play notification sound
 function playNotificationSound() {
-    if (!notificationsEnabled || !document.hidden) return;
+    if (!notificationsEnabled) return;
 
     try {
         const audio = new Audio(`${baseUrl}/sound/IM.mp3`);
@@ -246,8 +246,6 @@ function displayMessage(data, container) {
 
     container.appendChild(messageContainer);
     container.scrollTop = container.scrollHeight;
-
-    playNotificationSound();
 }
 
 // Tab management
@@ -297,12 +295,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (chatBox) {
             displayMessage(data, chatBox);
         }
+        if (document.hidden) {
+            playNotificationSound();
+        }
     });
 
     musicRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (musicContainer) {
             displayMessage(data, musicContainer);
+        }
+        if (document.hidden) {
+            playNotificationSound();
         }
     });
 });
