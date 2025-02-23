@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-23 10:33:58 UTC by jurietto */
+/* Last updated: 2025-02-23 10:42:02 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -273,11 +273,17 @@ document.addEventListener("DOMContentLoaded", () => {
     musicRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (musicContainer) {
+            const isAtBottom = musicContainer.scrollTop + musicContainer.clientHeight >= musicContainer.scrollHeight - 50;
             displayMessage(data, musicContainer);
 
             // Play sound only for new messages, not on page load
             if (data.timestamp > lastMessageTimestamp) {
                 playNotificationSound();
+            }
+
+            // Auto-scroll only if the user was already at the bottom
+            if (isAtBottom) {
+                musicContainer.scrollTop = musicContainer.scrollHeight;
             }
         }
     });
@@ -285,6 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ensure the chat starts at the bottom on page load
     setTimeout(() => {
         chatBox.scrollTop = chatBox.scrollHeight;
+        musicContainer.scrollTop = musicContainer.scrollHeight;
     }, 500); // Wait for messages to load
 
     // Update lastMessageTimestamp after page load is complete
