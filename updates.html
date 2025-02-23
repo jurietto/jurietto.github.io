@@ -20,10 +20,6 @@
             line-height: 1.5; /* Keeps spacing between lines */
             background: none; /* No background */
             border: none; /* No border */
-            box-sizing: border-box; /* Ensures proper padding and margin calculation */
-            position: relative; /* For centering scrollbar */
-            left: 50%; /* Moves content to the center */
-            transform: translateX(-50%); /* Adjusts position for centering */
         }
 
         /* Chatzone ASCII Styling */
@@ -39,13 +35,16 @@
             margin-bottom: 20px;
             max-width: 100%; /* Makes it responsive */
             overflow-x: auto; /* Prevents wrapping issues */
-            box-sizing: border-box; /* Ensures proper padding and margin calculation */
-            position: relative; /* For centering scrollbar */
-            left: 50%; /* Moves content to the center */
-            transform: translateX(-50%); /* Adjusts position for centering */
         }
     </style>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var asciiArts = document.querySelectorAll('.ascii-art, .ascii-chatzone');
+            asciiArts.forEach(function(art) {
+                art.scrollLeft = (art.scrollWidth - art.clientWidth) / 2;
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
