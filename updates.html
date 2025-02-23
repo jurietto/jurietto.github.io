@@ -20,6 +20,10 @@
             line-height: 1.5; /* Keeps spacing between lines */
             background: none; /* No background */
             border: none; /* No border */
+            box-sizing: border-box; /* Ensures proper padding and margin calculation */
+            position: relative; /* For centering scrollbar */
+            left: 50%; /* Moves content to the center */
+            transform: translateX(-50%); /* Adjusts position for centering */
         }
 
         /* Chatzone ASCII Styling */
@@ -35,6 +39,10 @@
             margin-bottom: 20px;
             max-width: 100%; /* Makes it responsive */
             overflow-x: auto; /* Prevents wrapping issues */
+            box-sizing: border-box; /* Ensures proper padding and margin calculation */
+            position: relative; /* For centering scrollbar */
+            left: 50%; /* Moves content to the center */
+            transform: translateX(-50%); /* Adjusts position for centering */
         }
     </style>
 
