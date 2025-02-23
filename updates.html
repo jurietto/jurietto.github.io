@@ -36,25 +36,12 @@
             max-width: 100%; /* Makes it responsive */
             overflow-x: auto; /* Prevents wrapping issues */
         }
-
-        .ascii-art-wrapper {
-            display: flex;
-            justify-content: center;
-            overflow-x: auto;
-        }
-
-        .ascii-art-wrapper::after {
-            content: "";
-            display: block;
-            min-width: 100%;
-        }
     </style>
 
 </head>
 <body>
     <header>
-        <div class="ascii-art-wrapper">
-            <pre class="ascii-art">
+        <pre class="ascii-art">
                   ooo OOO OOO ooo
                oOO                 OOo
            oOO                         OOo
@@ -76,8 +63,7 @@
            oOO          \   /         OOo
                oOO       \ /        OOo
                    ooo OOOvOOO ooo
-            </pre>
-        </div>
+        </pre>
         <nav>
             <div class="navbar">
                 <strong><a href="index.html">Home</a></strong>
@@ -122,15 +108,9 @@
     </main>
     <section>
             <img src="pix/charmmy-kitty.gif" alt="Charmmy Kitty" loading="lazy">
-    </section>
+        </section>
   <footer>
         <p>jurietto.github.io 2024 - ???</p>
     </footer>
-    <script>
-        window.addEventListener('load', function() {
-            var asciiArtWrapper = document.querySelector('.ascii-art-wrapper');
-            asciiArtWrapper.scrollLeft = (asciiArtWrapper.scrollWidth - asciiArtWrapper.clientWidth) / 2;
-        });
-    </script>
 </body>
 </html>
