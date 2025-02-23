@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-23 06:15:11 UTC by jurietto */
+/* Last updated: 2025-02-23 06:22:03 UTC by jurietto */
 
 body {
     font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@ body {
     overflow-x: hidden;
     flex: 0 0 500px;
     border: 1px solid #8d2696; /* Updated border color */
-    background: black;
+    background: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 15px;
     box-sizing: border-box;
@@ -30,6 +30,8 @@ body {
     line-height: 1.2;
     text-align: left;
     margin: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* Emoticons styles */
@@ -147,7 +149,7 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.8);
     padding: 10px;
     color: white;
     border: 1px solid #8d2696; /* Updated border color */
@@ -155,11 +157,12 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     box-sizing: border-box;
     font-size: 16px;
     font-family: Arial, sans-serif;
-    border-radius: 0;
+    border-radius: 10px;
     resize: none;
     overflow: hidden;
     margin: 0;
     outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* First input element */
