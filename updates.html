@@ -5,10 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juri's Stuff</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ASCII Art Formatting */
+        .ascii-art {
+            font-family: 'Courier New', Courier, monospace; /* Ensures monospace font */
+            font-size: 14px; /* Adjust font size */
+            white-space: pre; /* Keeps ASCII formatting */
+            display: block; /* Ensures proper layout */
+            text-align: left; /* Left align */
+            overflow-x: auto; /* Prevents wrapping issues */
+            padding: 10px; /* Adds spacing */
+            margin: 20px auto; /* Centers it */
+            max-width: fit-content; /* Prevents unwanted stretching */
+            line-height: 1.5; /* Keeps spacing between lines */
+            background: none; /* No background */
+            border: none; /* No border */
+        }
+
+        /* Chatzone ASCII Styling */
+        .ascii-chatzone {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            color: #8d2696; /* Purple text */
+            background-color: black;
+            border: 2px solid #808080; /* Grey border */
+            padding: 15px;
+            display: inline-block;
+            white-space: pre;
+            margin-bottom: 20px;
+            max-width: 100%; /* Makes it responsive */
+            overflow-x: auto; /* Prevents wrapping issues */
+        }
+    </style>
+
 </head>
 <body>
     <header>
-        <h1>stuff</h1>
+        <pre class="ascii-art">
+_      `-._     `-.     `.   \      :      /   .'     .-'     _.-'      _
+ `--._     `-._    `-.    `.  `.    :    .'  .'    .-'    _.-'     _.--'
+      `--._    `-._   `-.   `.  \   :   /  .'   .-'   _.-'    _.--'
+`--.__     `--._   `-._  `-.  `. `. : .' .'  .-'  _.-'   _.--'     __.--'
+__    `--.__    `--._  `-._ `-. `. \:/ .' .-' _.-'  _.--'    __.--'    __
+  `--..__   `--.__   `--._ `-._`-.`_=_'.-'_.-' _.--'   __.--'   __..--'
+--..__   `--..__  `--.__  `--._`-q(-_-)p-'_.--'  __.--'  __..--'   __..--
+      ``--..__  `--..__ `--.__ `-'_) (_`-' __.--' __..--'  __..--''
+...___        ``--..__ `--..__`--/__/  \--'__..--' __..--''        ___...
+      ```---...___    ``--..__`_(<_   _/)_'__..--''    ___...---'''
+```-----....._____```---...___(__\_\_|_/__)___...---'''_____.....-----'''
+ ___   __  ________   _______   _       _   _______    ___   __   _______
+|| \\  ||     ||     ||_____))  \\     //  ||_____||  || \\  ||  ||_____||
+||  \\_||  ___||___  ||     \\   \\___//   ||     ||  ||  \\_||  ||     ||
+        </pre>
         <nav>
             <div class="navbar">
                 <strong><a href="index.html">Home</a></strong>
