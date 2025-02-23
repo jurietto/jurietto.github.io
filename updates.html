@@ -126,5 +126,11 @@
   <footer>
         <p>jurietto.github.io 2024 - ???</p>
     </footer>
+    <script>
+        window.addEventListener('load', function() {
+            var asciiArtWrapper = document.querySelector('.ascii-art-wrapper');
+            asciiArtWrapper.scrollLeft = (asciiArtWrapper.scrollWidth - asciiArtWrapper.clientWidth) / 2;
+        });
+    </script>
 </body>
 </html>
