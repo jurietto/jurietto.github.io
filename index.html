@@ -53,7 +53,14 @@
             overflow-x: auto; /* Prevents wrapping issues */
         }
     </style>
-
+ <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var asciiArts = document.querySelectorAll('.ascii-art, .ascii-chatzone');
+            asciiArts.forEach(function(art) {
+                art.scrollLeft = (art.scrollWidth - art.clientWidth) / 2;
+            });
+        });
+    </script>
     <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/9.6.8/firebase-database-compat.js"></script>
     <script defer src="chat.js"></script>
