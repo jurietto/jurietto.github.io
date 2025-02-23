@@ -194,7 +194,7 @@ input, textarea, #username-input, #message-input {
 }
 
 .tab-button.active {
-    background-color: #333;
+    background-color: #8d2696;
     border-bottom: 1px solid #8d2696; /* Updated border color */
 }
 
