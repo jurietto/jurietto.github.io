@@ -213,10 +213,6 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     transition: 0.5s;
 }
 
-.tab-button:hover::after {
-    left: 100%;
-}
-
 .tab-button.active {
     background-color: #8d2696;
     border-bottom: 1px solid #8d2696; /* Updated border color */
