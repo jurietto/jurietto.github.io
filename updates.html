@@ -37,20 +37,24 @@
             overflow-x: auto; /* Prevents wrapping issues */
         }
 
-        @media (max-width: 768px) {
-            .ascii-art,
-            .ascii-chatzone {
-                text-align: center; /* Center align on smaller screens */
-                margin-left: auto; /* Center horizontally */
-                margin-right: auto; /* Center horizontally */
-            }
+        .ascii-art-wrapper {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        .ascii-art-wrapper::after {
+            content: "";
+            display: block;
+            min-width: 100%;
         }
     </style>
 
 </head>
 <body>
     <header>
-        <pre class="ascii-art">
+        <div class="ascii-art-wrapper">
+            <pre class="ascii-art">
                   ooo OOO OOO ooo
                oOO                 OOo
            oOO                         OOo
@@ -72,7 +76,8 @@
            oOO          \   /         OOo
                oOO       \ /        OOo
                    ooo OOOvOOO ooo
-        </pre>
+            </pre>
+        </div>
         <nav>
             <div class="navbar">
                 <strong><a href="index.html">Home</a></strong>
@@ -117,7 +122,7 @@
     </main>
     <section>
             <img src="pix/charmmy-kitty.gif" alt="Charmmy Kitty" loading="lazy">
-        </section>
+    </section>
   <footer>
         <p>jurietto.github.io 2024 - ???</p>
     </footer>
