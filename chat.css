@@ -21,7 +21,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     flex: 0 0 500px;
-    border: 1px #8d2696;
+    border: 1px solid #8d2696; /* Updated border color */
     background: black;
     color: white;
     padding: 15px;
@@ -150,7 +150,7 @@ input, textarea, #username-input, #message-input, #file-upload, select {
     background-color: #000;
     padding: 10px;
     color: white;
-    border: 1px #ff00ff;
+    border: 1px solid #8d2696; /* Updated border color */
     border-top: none;
     box-sizing: border-box;
     font-size: 16px;
@@ -164,7 +164,7 @@ input, textarea, #username-input, #message-input, #file-upload, select {
 
 /* First input element */
 .input-container > *:first-child {
-    border-top: 1px #ff00ff;
+    border-top: 1px solid #8d2696; /* Updated border color */
 }
 
 /* Remove tap highlight on mobile */
@@ -183,7 +183,7 @@ input, textarea, #username-input, #message-input {
     padding: 10px;
     background-color: black;
     color: white;
-    border: 1px #ff00ff;
+    border: 1px solid #8d2696; /* Updated border color */
     cursor: pointer;
     text-align: center;
     margin-right: 1px;
@@ -195,11 +195,11 @@ input, textarea, #username-input, #message-input {
 
 .tab-button.active {
     background-color: #333;
-    border-bottom: 1px #ff00ff;
+    border-bottom: 1px solid #8d2696; /* Updated border color */
 }
 
 .tab-button:hover {
-    background-color: ##8d2696;
+    background-color: #8d2696; /* Corrected duplicate '#' */
 }
 
 .hidden {
@@ -214,7 +214,6 @@ input, textarea, #username-input, #message-input {
     padding: 15px;
     color: white;
     background: black;
-    
 }
 
 .notification-settings input[type="checkbox"] {
