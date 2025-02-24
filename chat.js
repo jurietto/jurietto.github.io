@@ -163,7 +163,7 @@ function embedMedia(text) {
             videoId = videoId.split("&")[0];
             return `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparent="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
             return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
@@ -257,33 +257,43 @@ tabs.forEach(tab => {
 // Track the latest timestamp at page load
 let lastMessageTimestamp = Date.now();
 
+// Subscription Flags
+let chatRefSubscribed = false;
+let musicRefSubscribed = false;
+
 // Initialize chat
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
 
-    chatRef.orderByChild("timestamp").on("child_added", (snapshot) => {
-        const data = snapshot.val();
-        if (chatBox) {
-            displayMessage(data, chatBox);
+    if (!chatRefSubscribed) {
+        chatRef.orderByChild("timestamp").on("child_added", (snapshot) => {
+            const data = snapshot.val();
+            if (chatBox) {
+                displayMessage(data, chatBox);
 
-            // Play sound only for new messages, not on page load
-            if (data.timestamp > lastMessageTimestamp) {
-                playNotificationSound();
+                // Play sound only for new messages, not on page load
+                if (data.timestamp > lastMessageTimestamp) {
+                    playNotificationSound();
+                }
             }
-        }
-    });
+        });
+        chatRefSubscribed = true;
+    }
 
-    musicRef.orderByChild("timestamp").on("child_added", (snapshot) => {
-        const data = snapshot.val();
-        if (musicContainer) {
-            displayMessage(data, musicContainer);
+    if (!musicRefSubscribed) {
+        musicRef.orderByChild("timestamp").on("child_added", (snapshot) => {
+            const data = snapshot.val();
+            if (musicContainer) {
+                displayMessage(data, musicContainer);
 
-            // Play sound only for new messages, not on page load
-            if (data.timestamp > lastMessageTimestamp) {
-                playNotificationSound();
+                // Play sound only for new messages, not on page load
+                if (data.timestamp > lastMessageTimestamp) {
+                    playNotificationSound();
+                }
             }
-        }
-    });
+        });
+        musicRefSubscribed = true;
+    }
 
     // Ensure the chat starts at the bottom on page load
     setTimeout(() => {
