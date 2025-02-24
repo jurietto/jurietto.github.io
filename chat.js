@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-24 05:44:40 UTC by jurietto */
+/* Last updated: 2025-02-23 10:47:51 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -151,25 +151,25 @@ function insertEmoticon(emoticonPath) {
 // Function to Embed Media
 function embedMedia(text) {
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    let embeddedContent = text.replace(urlRegex, (url) => {
+    let embeddedContent = "";
+
+    text.match(urlRegex)?.forEach((url) => {
         if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            return `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
         } else if (url.match(/\.(mp4|mov)$/i)) {
-            return `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
         } else if (url.match(/\.(mp3)$/i)) {
-            return `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
         } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
             let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
             videoId = videoId.split("&")[0];
-            return `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
         } else if (url.includes("spotify.com")) {
-            return `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparent="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("soundcloud.com")) {
-            return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
         } else if (url.includes("music.apple.com")) {
-            return `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts" style="display: block; margin-top: 5px;" src="${url}"></iframe>`;
-        } else {
-            return `<a href="${url}" target="_blank">${url}</a>`;
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts" style="display: block; margin-top: 5px;" src="${url}"></iframe>`;
         }
     });
 
@@ -201,15 +201,8 @@ function displayMessage(data, container) {
     const time = new Date(data.timestamp).toLocaleTimeString();
     const messageContent = document.createElement("p");
 
-    // Escape any HTML tags in the message text
-    const escapeHtml = (string) => {
-        const div = document.createElement("div");
-        div.appendChild(document.createTextNode(string));
-        return div.innerHTML;
-    };
-
     const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    const displayText = escapeHtml(data.text.replace(urlRegex, "").trim());
+    const displayText = data.text.replace(urlRegex, "").trim();
 
     messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${displayText}`;
     messageContainer.appendChild(messageContent);
@@ -222,13 +215,11 @@ function displayMessage(data, container) {
         messageContainer.appendChild(mediaContainer);
     }
 
+    const shouldScroll = container.scrollTop + container.clientHeight >= container.scrollHeight - 50;
     container.appendChild(messageContainer);
-    scrollToBottom(container); // Ensure the container scrolls to the bottom after adding the message
-}
-
-// Scroll to bottom utility function
-function scrollToBottom(container) {
-    container.scrollTop = container.scrollHeight;
+    if (shouldScroll) {
+        container.scrollTop = container.scrollHeight;
+    }
 }
 
 // Tab management
@@ -257,48 +248,50 @@ tabs.forEach(tab => {
 // Track the latest timestamp at page load
 let lastMessageTimestamp = Date.now();
 
-// Subscription Flags
-let chatRefSubscribed = false;
-let musicRefSubscribed = false;
-
 // Initialize chat
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
 
-    if (!chatRefSubscribed) {
-        chatRef.orderByChild("timestamp").on("child_added", (snapshot) => {
-            const data = snapshot.val();
-            if (chatBox) {
-                displayMessage(data, chatBox);
+    chatRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        if (chatBox) {
+            const isAtBottom = chatBox.scrollTop + chatBox.clientHeight >= chatBox.scrollHeight - 50;
+            displayMessage(data, chatBox);
 
-                // Play sound only for new messages, not on page load
-                if (data.timestamp > lastMessageTimestamp) {
-                    playNotificationSound();
-                }
+            // Play sound only for new messages, not on page load
+            if (data.timestamp > lastMessageTimestamp) {
+                playNotificationSound();
             }
-        });
-        chatRefSubscribed = true;
-    }
 
-    if (!musicRefSubscribed) {
-        musicRef.orderByChild("timestamp").on("child_added", (snapshot) => {
-            const data = snapshot.val();
-            if (musicContainer) {
-                displayMessage(data, musicContainer);
-
-                // Play sound only for new messages, not on page load
-                if (data.timestamp > lastMessageTimestamp) {
-                    playNotificationSound();
-                }
+            // Auto-scroll only if the user was already at the bottom
+            if (isAtBottom) {
+                chatBox.scrollTop = chatBox.scrollHeight;
             }
-        });
-        musicRefSubscribed = true;
-    }
+        }
+    });
+
+    musicRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        if (musicContainer) {
+            const isAtBottom = musicContainer.scrollTop + musicContainer.clientHeight >= musicContainer.scrollHeight - 50;
+            displayMessage(data, musicContainer);
+
+            // Play sound only for new messages, not on page load
+            if (data.timestamp > lastMessageTimestamp) {
+                playNotificationSound();
+            }
+
+            // Auto-scroll only if the user was already at the bottom
+            if (isAtBottom) {
+                musicContainer.scrollTop = musicContainer.scrollHeight;
+            }
+        }
+    });
 
     // Ensure the chat starts at the bottom on page load
     setTimeout(() => {
-        scrollToBottom(chatBox);
-        scrollToBottom(musicContainer);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        musicContainer.scrollTop = musicContainer.scrollHeight;
     }, 500); // Wait for messages to load
 
     // Update lastMessageTimestamp after page load is complete
