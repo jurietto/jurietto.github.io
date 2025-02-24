@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-24 05:37:24 UTC by jurietto */
+/* Last updated: 2025-02-24 05:44:40 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -223,6 +223,7 @@ function displayMessage(data, container) {
     }
 
     container.appendChild(messageContainer);
+    scrollToBottom(container); // Ensure the container scrolls to the bottom after adding the message
 }
 
 // Scroll to bottom utility function
@@ -256,11 +257,11 @@ tabs.forEach(tab => {
 // Track the latest timestamp at page load
 let lastMessageTimestamp = Date.now();
 
-// Initialize chat and set event listeners once
+// Initialize chat
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
 
-    chatRef.on("child_added", (snapshot) => {
+    chatRef.orderByChild("timestamp").on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (chatBox) {
             displayMessage(data, chatBox);
@@ -269,13 +270,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.timestamp > lastMessageTimestamp) {
                 playNotificationSound();
             }
-
-            // Auto-scroll to the bottom
-            scrollToBottom(chatBox);
         }
     });
 
-    musicRef.on("child_added", (snapshot) => {
+    musicRef.orderByChild("timestamp").on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (musicContainer) {
             displayMessage(data, musicContainer);
@@ -284,9 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.timestamp > lastMessageTimestamp) {
                 playNotificationSound();
             }
-
-            // Auto-scroll to the bottom
-            scrollToBottom(musicContainer);
         }
     });
 
