@@ -326,3 +326,4 @@ if (messageInput) {
         this.style.height = `${this.scrollHeight}px`;
     });
 }
+ 
