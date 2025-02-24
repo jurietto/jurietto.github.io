@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-24 06:15:52 UTC by jurietto */
+/* Last updated: 2025-02-24 06:26:51 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -46,121 +46,15 @@ const baseEmoticons = [
     { src: `${baseUrl}/pix/po1.gif`, alt: 'po1' },
     { src: `${baseUrl}/pix/po2.gif`, alt: 'po2' },
     { src: `${baseUrl}/pix/po3.gif`, alt: 'po3' },
-    { src: `${baseUrl}/pix/peep.gif`, alt: 'peep' },
+    { src: `${baseUrl}/pix/peep.gif`, alt: 'sb1' },
 ];
 
-// Function to detect code in text
-function isCode(text) {
-    const codeIndicators = [
-        text.includes('{') && text.includes('}'),
-        text.includes('function'),
-        text.includes('const '),
-        text.includes('let '),
-        text.includes('var '),
-        /^\s*[#/]/.test(text), // Comments
-        text.includes('if '),
-        text.includes('for '),
-        text.includes('while '),
-        text.includes('class '),
-        text.match(/[{};]\n/), // Multiple lines with brackets/semicolons
-        text.match(/\n\s{2,}/), // Indented lines
-    ];
-    return codeIndicators.some(indicator => indicator === true);
-}
-
-// Function to create a clickable link
-function createClickableLink(url) {
-    const isMedia = url.match(/\.(jpeg|jpg|gif|png|mp4|webm|mp3|wav)$/i);
-    if (isMedia) {
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="media-link">${url}</a>`;
-    }
-    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-}
-
-// Function to format code
-function formatCode(code) {
-    return `<pre class="code-block"><code>${code
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;')}</code></pre>`;
-}
-
-// Function to embed media
-function embedMedia(text) {
-    // Check if the entire message is code
-    if (isCode(text)) {
-        return { processedText: '', embeddedContent: formatCode(text) };
-    }
-
-    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
-    let processedText = text;
-    let embeddedContent = '';
-    const urls = text.match(urlRegex) || [];
-
-    urls.forEach(url => {
-        if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
-            processedText = processedText.replace(url, '');
-            embeddedContent += `
-                <div class="media-container">
-                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="media-link">
-                        <img src="${url}" alt="Embedded Image" loading="lazy">
-                    </a>
-                </div>`;
-        } else if (url.match(/\.(mp4|webm|mov)$/i)) {
-            processedText = processedText.replace(url, '');
-            embeddedContent += `
-                <div class="video-container">
-                    <video controls preload="metadata">
-                        <source src="${url}" type="video/${url.split('.').pop()}">
-                        Your browser does not support video playback.
-                    </video>
-                </div>`;
-        } else if (url.match(/\.(mp3|wav|ogg)$/i)) {
-            processedText = processedText.replace(url, '');
-            embeddedContent += `
-                <div class="audio-container">
-                    <audio controls preload="metadata">
-                        <source src="${url}" type="audio/${url.split('.').pop()}">
-                        Your browser does not support audio playback.
-                    </audio>
-                </div>`;
-        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
-            processedText = processedText.replace(url, '');
-            const videoId = url.includes("youtube.com/watch") ? 
-                url.split("v=")[1]?.split("&")[0] : 
-                url.split("youtu.be/")[1]?.split("?")[0];
-            if (videoId) {
-                embeddedContent += `
-                    <div class="youtube-embed">
-                        <iframe 
-                            src="https://www.youtube.com/embed/${videoId}"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>`;
-            }
-        } else if (url.includes("spotify.com")) {
-            processedText = processedText.replace(url, '');
-            embeddedContent += `
-                <iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}"
-                    width="100%" height="152" frameborder="0" allowtransparency="true"
-                    allow="encrypted-media"></iframe>`;
-        } else {
-            processedText = processedText.replace(url, createClickableLink(url));
-        }
-    });
-
-    return { processedText, embeddedContent };
-}
-
-// Initialize emoticons
+// Initialize emoticons container
 function initializeEmoticons() {
     if (!emoticonsContainer) return;
 
     emoticonsContainer.innerHTML = '';
+
     const wrapper = document.createElement('div');
     wrapper.className = 'emoticons-wrapper';
 
@@ -254,13 +148,54 @@ function insertEmoticon(emoticonPath) {
     messageInput.focus();
 }
 
+// Function to Embed Media
+function embedMedia(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)(?=\s|$)/g;
+    let embeddedContent = "";
+    const urls = text.match(urlRegex) || [];
+    let processedText = text;
+
+    urls.forEach((url) => {
+        // Check if the URL is for embeddable media
+        if (url.match(/\.(jpeg|jpg|gif|png)$/i)) {
+            embeddedContent += `<img src="${url}" alt="Image" style="max-width: 100%; height: auto; display: block; margin-top: 5px;">`;
+            processedText = processedText.replace(url, '');
+        } else if (url.match(/\.(mp4|mov)$/i)) {
+            embeddedContent += `<video controls style="max-width: 100%; height: auto; display: block; margin-top: 5px;"><source src="${url}" type="video/mp4">Your browser does not support video.</video>`;
+            processedText = processedText.replace(url, '');
+        } else if (url.match(/\.(mp3)$/i)) {
+            embeddedContent += `<audio controls style="width: 100%; display: block; margin-top: 5px;"><source src="${url}" type="audio/mp3">Your browser does not support audio.</audio>`;
+            processedText = processedText.replace(url, '');
+        } else if (url.includes("youtube.com/watch") || url.includes("youtu.be")) {
+            let videoId = url.split("v=")[1] || url.split("youtu.be/")[1];
+            videoId = videoId.split("&")[0];
+            embeddedContent += `<iframe width="100%" height="360" style="max-width: 560px; display: block; margin-top: 5px;" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+            processedText = processedText.replace(url, '');
+        } else if (url.includes("spotify.com")) {
+            embeddedContent += `<iframe src="${url.replace("spotify.com/", "spotify.com/embed/")}" width="100%" height="152" frameborder="0" allowtransparency="true" allow="encrypted-media" style="display: block; margin-top: 5px;"></iframe>`;
+            processedText = processedText.replace(url, '');
+        } else if (url.includes("soundcloud.com")) {
+            embeddedContent += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${url}" style="display: block; margin-top: 5px;"></iframe>`;
+            processedText = processedText.replace(url, '');
+        } else if (url.includes("music.apple.com")) {
+            embeddedContent += `<iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" width="100%" height="150" sandbox="allow-forms allow-popups allow-same-origin allow-scripts" style="display: block; margin-top: 5px;" src="${url}"></iframe>`;
+            processedText = processedText.replace(url, '');
+        } else {
+            // For non-embeddable links, replace them with clickable links
+            processedText = processedText.replace(url, `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
+        }
+    });
+
+    return { text: processedText, embeddedContent };
+}
+
 // Play notification sound
 function playNotificationSound() {
     if (!notificationsEnabled) return;
 
     try {
         const audio = new Audio(`${baseUrl}/sound/IM.mp3`);
-        audio.volume = 0.5;
+        audio.volume = 0.5; // Lower the volume
         audio.play().catch(error => {
             console.warn("Audio play failed:", error);
         });
@@ -277,21 +212,19 @@ function displayMessage(data, container) {
     messageContainer.classList.add("message-container");
 
     const time = new Date(data.timestamp).toLocaleTimeString();
-    const { processedText, embeddedContent } = embedMedia(data.text);
+    const messageContent = document.createElement("p");
 
-    const messageContent = document.createElement("div");
-    messageContent.classList.add("message-content");
-
-    messageContent.innerHTML = `
-        <div class="message-header">
-            <time>${time}</time>
-            <strong>${data.username}:</strong>
-        </div>
-        <div class="message-text">${processedText}</div>
-        ${embeddedContent}
-    `;
-
+    const { text, embeddedContent } = embedMedia(data.text);
+    
+    messageContent.innerHTML = `<time>${time}</time> <strong>${data.username}:</strong> ${text}`;
     messageContainer.appendChild(messageContent);
+
+    if (embeddedContent) {
+        const mediaContainer = document.createElement("div");
+        mediaContainer.classList.add("embedded-content");
+        mediaContainer.innerHTML = embeddedContent;
+        messageContainer.appendChild(mediaContainer);
+    }
 
     const shouldScroll = container.scrollTop + container.clientHeight >= container.scrollHeight - 50;
     container.appendChild(messageContainer);
@@ -330,55 +263,56 @@ let lastMessageTimestamp = Date.now();
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
 
-    // Listen for chat messages
     chatRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (chatBox) {
             const isAtBottom = chatBox.scrollTop + chatBox.clientHeight >= chatBox.scrollHeight - 50;
             displayMessage(data, chatBox);
 
+            // Play sound only for new messages, not on page load
             if (data.timestamp > lastMessageTimestamp) {
                 playNotificationSound();
             }
 
+            // Auto-scroll only if the user was already at the bottom
             if (isAtBottom) {
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
         }
     });
 
-    // Listen for music messages
     musicRef.on("child_added", (snapshot) => {
         const data = snapshot.val();
         if (musicContainer) {
             const isAtBottom = musicContainer.scrollTop + musicContainer.clientHeight >= musicContainer.scrollHeight - 50;
             displayMessage(data, musicContainer);
 
+            // Play sound only for new messages, not on page load
             if (data.timestamp > lastMessageTimestamp) {
                 playNotificationSound();
             }
 
+            // Auto-scroll only if the user was already at the bottom
             if (isAtBottom) {
                 musicContainer.scrollTop = musicContainer.scrollHeight;
             }
         }
     });
 
-    // Auto-scroll to bottom on page load
+    // Ensure the chat starts at the bottom on page load
     setTimeout(() => {
         if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
         if (musicContainer) musicContainer.scrollTop = musicContainer.scrollHeight;
-    }, 500);
+    }, 500); // Wait for messages to load
 
-    // Update lastMessageTimestamp after page load
+    // Update lastMessageTimestamp after page load is complete
     setTimeout(() => {
         lastMessageTimestamp = Date.now();
-    }, 2000);
+    }, 2000); // Delay to ensure old messages don't trigger the sound
 });
 
 // Event Listeners
 if (messageInput) {
-    // Send message on Enter (without shift)
     messageInput.addEventListener("keypress", (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
@@ -386,8 +320,7 @@ if (messageInput) {
         }
     });
 
-    // Auto-resize textarea
-    messageInput.addEventListener("input", function() {
+    messageInput.addEventListener("input", function () {
         this.style.height = "auto";
         this.style.height = `${this.scrollHeight}px`;
     });
