@@ -1,4 +1,4 @@
-/* Last updated: 2025-02-24 05:28:35 UTC by jurietto */
+/* Last updated: 2025-02-24 05:37:24 UTC by jurietto */
 
 // Firebase initialization
 try {
@@ -256,49 +256,39 @@ tabs.forEach(tab => {
 // Track the latest timestamp at page load
 let lastMessageTimestamp = Date.now();
 
-// Prevent multiple subscriptions
-let chatRefSubscribed = false;
-let musicRefSubscribed = false;
-
-// Initialize chat
+// Initialize chat and set event listeners once
 document.addEventListener("DOMContentLoaded", () => {
     initializeEmoticons();
 
-    if (!chatRefSubscribed) {
-        chatRef.on("child_added", (snapshot) => {
-            const data = snapshot.val();
-            if (chatBox) {
-                displayMessage(data, chatBox);
+    chatRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        if (chatBox) {
+            displayMessage(data, chatBox);
 
-                // Play sound only for new messages, not on page load
-                if (data.timestamp > lastMessageTimestamp) {
-                    playNotificationSound();
-                }
-
-                // Auto-scroll to the bottom
-                scrollToBottom(chatBox);
+            // Play sound only for new messages, not on page load
+            if (data.timestamp > lastMessageTimestamp) {
+                playNotificationSound();
             }
-        });
-        chatRefSubscribed = true;
-    }
 
-    if (!musicRefSubscribed) {
-        musicRef.on("child_added", (snapshot) => {
-            const data = snapshot.val();
-            if (musicContainer) {
-                displayMessage(data, musicContainer);
+            // Auto-scroll to the bottom
+            scrollToBottom(chatBox);
+        }
+    });
 
-                // Play sound only for new messages, not on page load
-                if (data.timestamp > lastMessageTimestamp) {
-                    playNotificationSound();
-                }
+    musicRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        if (musicContainer) {
+            displayMessage(data, musicContainer);
 
-                // Auto-scroll to the bottom
-                scrollToBottom(musicContainer);
+            // Play sound only for new messages, not on page load
+            if (data.timestamp > lastMessageTimestamp) {
+                playNotificationSound();
             }
-        });
-        musicRefSubscribed = true;
-    }
+
+            // Auto-scroll to the bottom
+            scrollToBottom(musicContainer);
+        }
+    });
 
     // Ensure the chat starts at the bottom on page load
     setTimeout(() => {
