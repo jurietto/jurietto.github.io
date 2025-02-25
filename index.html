@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,48 +16,47 @@
     base-uri 'self';
     form-action 'self';">
     <title>Juri's Stuff</title>
-
+    
     <!-- Link external CSS files -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="chat.css">
     <link rel="stylesheet" href="music-player.css">
-
     <style>
         /* ASCII Art Formatting */
         .ascii-art {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            white-space: pre;
-            display: block;
-            text-align: left;
-            overflow-x: auto;
-            padding: 10px;
-            margin: 20px auto;
-            max-width: fit-content;
-            line-height: 1.5;
-            background: none;
-            border: none;
+            font-family: 'Courier New', Courier, monospace; /* Ensures monospace font */
+            font-size: 14px; /* Adjust font size */
+            white-space: pre; /* Keeps ASCII formatting */
+            display: block; /* Ensures proper layout */
+            text-align: left; /* Left align */
+            overflow-x: auto; /* Prevents wrapping issues */
+            padding: 10px; /* Adds spacing */
+            margin: 20px auto; /* Centers it */
+            max-width: fit-content; /* Prevents unwanted stretching */
+            line-height: 1.5; /* Keeps spacing between lines */
+            background: none; /* No background */
+            border: none; /* No border */
         }
 
         /* Chatzone ASCII Styling */
         .ascii-chatzone {
             font-family: 'Courier New', Courier, monospace;
             font-size: 16px;
-            color: #8d2696;
+            color: #8d2696; /* Purple text */
             background-color: black;
-            border: 2px solid #808080;
+            border: 2px solid #808080; /* Grey border */
             padding: 15px;
             display: inline-block;
             white-space: pre;
             margin-bottom: 20px;
-            max-width: 100%;
-            overflow-x: auto;
+            max-width: 100%; /* Makes it responsive */
+            overflow-x: auto; /* Prevents wrapping issues */
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+ <script>
+        document.addEventListener("DOMContentLoaded", function() {
             var asciiArts = document.querySelectorAll('.ascii-art, .ascii-chatzone');
-            asciiArts.forEach(function (art) {
+            asciiArts.forEach(function(art) {
                 art.scrollLeft = (art.scrollWidth - art.clientWidth) / 2;
             });
         });
@@ -68,7 +66,6 @@
     <script defer src="chat.js"></script>
     <script defer src="music-player.js"></script>
 </head>
-
 <body>
     <header>
         <pre class="ascii-art">
@@ -100,9 +97,10 @@
             </div>
         </nav>
     </header>
-
+    
     <main>
         <section>
+            <section>
             <div class="chatzone-container">
                 <pre class="ascii-chatzone">
  ▄████▄   ██░ ██  ▄▄▄     ▄▄▄█████▓
@@ -116,7 +114,6 @@
 ░ ░       ░  ░  ░      ░  ░    
                 </pre>
             </div>
-
             <div class="chat-container">
                 <div class="tabs">
                     <button id="main-tab" class="tab-button active">Main</button>
@@ -140,10 +137,12 @@
                     <textarea id="message-input" placeholder="Don't be a loner bear <3" rows="1"></textarea>
                 </div>
             </div>
-
             <audio id="notification-sound" src="sound/IM.mp3" preload="auto"></audio>
         </section>
 
+<section> <h2>Music Player</h2> <div class="music-player"> <img src="album.jpg" alt="Album Art" class="album-art"> <div class="title">Velvet Acid Christ - Lust For Blood</div> <div class="artist">Velvet Acid Christ</div> <div class="controls"> <button id="prev" class="control-button">⏮</button> <button id="play-pause" class="control-button">▶</button> <button id="next" class="control-button">⏭</button> </div> <div class="progress-bar"> <div id="progress" class="progress"></div> </div> <ul class="playlist"> <li>1. Velvet Acid Christ - Lust For Blood</li> </ul> </div> </section>
+
+            
         <section>
             <h2>Info</h2>
             <p>Hi, this is where I hang out with a few netizens and explore coding and web design.</p>
@@ -153,35 +152,14 @@
             <p><strong>Twitter/X:</strong> <strong><a href="https://x.com/sotokomorii" target="_blank" rel="noopener noreferrer">@sotokomorii</a></strong></p>
             <p><strong>YouTube:</strong> <strong><a href="https://www.youtube.com/@juriscafe" target="_blank" rel="noopener noreferrer">@juri'scafe</a></strong></p><br>
         </section>
-
+        
         <section>
             <img src="pix/charmmy-kitty.gif" alt="Charmmy Kitty" loading="lazy">
         </section>
-
-        <section>
-            <h2>Music Player</h2>
-            <div class="music-player">
-                <img src="album.jpg" alt="Album Art" class="album-art">
-                <div class="title">Velvet Acid Christ - Lust For Blood</div>
-                <div class="artist">Velvet Acid Christ</div>
-                <div class="controls">
-                    <button id="prev" class="control-button">⏮</button>
-                    <button id="play-pause" class="control-button">▶</button>
-                    <button id="next" class="control-button">⏭</button>
-                </div>
-                <div class="progress-bar">
-                    <div id="progress" class="progress"></div>
-                </div>
-                <ul class="playlist">
-                    <li>1. Velvet Acid Christ - Lust For Blood</li>
-                </ul>
-            </div>
-        </section>
     </main>
-
+    
     <footer>
         <p>jurietto.github.io 2024 - ???</p>
     </footer>
 </body>
-
 </html>
