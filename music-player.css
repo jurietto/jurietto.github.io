@@ -1,0 +1,62 @@
+.music-player-container {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    gap: 0;
+    border: 1px solid #8d2696;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    box-sizing: border-box;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control-button {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-right: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    text-align: center;
+    margin-right: 1px;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.control-button:hover {
+    background-color: #8d2696;
+}
+
+.slider {
+    width: 100px;
+    margin: 0 10px;
+}
+
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.progress .slider {
+    width: 100%;
+}
