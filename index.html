@@ -26,6 +26,7 @@
             color: white;
             text-align: center;
             height: 350px;
+            width: 100%;
         }
         nav {
             background: black;
@@ -63,9 +64,11 @@
             flex: 1;
             margin: 20px;
             align-items: stretch;
+           
         }
         .sidebar {
-            width: 25%;
+            width: 100%;
+     
             background: rgba(0, 0, 0, 0.7);
             padding: 15px;
             text-align: justify;
@@ -81,16 +84,17 @@
             background-position: 0 center;
             background-size: 16px 16px;
             margin-bottom: 10px;
+            
         }
         .about-me img {
-            width: 150px;
-            height: 150px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             display: block;
             margin: 10px auto;
         }
         .content {
-            width: 75%;
+            width: 100%;
             padding: 20px;
             background: rgba(0, 0, 0, 0.7);
             display: flex;
@@ -104,12 +108,13 @@
             align-items: center;
             width: 100%;
             height: 100%;
-            padding: 20px;
+      
+        
             box-sizing: border-box;
         }
         .chat-box iframe {
             width: 100%;
-            height: 100%;
+            
             border: 3px solid #ff007f;
         }
         .gallery-wrapper {
@@ -118,11 +123,6 @@
             padding: 10px 0;
             display: flex;
             white-space: nowrap;
-            -ms-overflow-style: none;  /* Internet Explorer 10+ */
-            scrollbar-width: none;  /* Firefox */
-        }
-        .gallery-wrapper::-webkit-scrollbar { 
-            display: none;  /* Safari and Chrome */
         }
         .gallery {
             display: flex;
@@ -146,53 +146,11 @@
                 margin: 0;
                 padding: 10px;
             }
-            .sidebar, .content {
-                width: 100%;
-            }
-            .chat-box {
-                padding: 0;
-            }
             .chat-box iframe {
+                width: 100%;
                 height: 600px;
             }
-            .gallery img {
-                width: 99px;
-                height: 56px;
-            }
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-        @media screen and (max-width: 480px) {
-            header {
-                height: 200px;
-            }
-            h1 {
-                font-size: 1.5em;
-            }
-            h2 {
-                font-size: 1.2em;
-            }
-            nav a {
-                padding: 8px 10px;
-                font-size: 0.9em;
-            }
-            .about-me img {
-                width: 100px;
-                height: 100px;
-            }
-            .content {
-                padding: 10px;
-            }
-            .chat-box iframe {
-                height: 400px;
-            }
-            .gallery img {
-                width: 80px;
-                height: 45px;
-            }
-        }
+       
     </style>
 </head>
 <body>
