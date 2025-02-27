@@ -12,8 +12,7 @@
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/836knmhcc46w0.jpg');
             background-position: center;
             background-repeat: repeat;
-            background-attachment: fixed ;
-        
+            background-attachment: fixed;
             color: white;
             min-height: 100vh;
             display: flex;
@@ -39,7 +38,6 @@
 
         h1 {
             text-align: center;
-        
         }     
 
         h2 {
@@ -50,7 +48,6 @@
                 src: url('https://file.garden/ZhTgSjrp5nAroRKq/ballpark_weiner.ttf') format('truetype');
             }
             font-family: 'BallparkWeiner', Arial, sans-serif;
-
         }
 
         nav a, .sidebar a {
@@ -118,7 +115,6 @@
         .gallery-wrapper {
             width: 100%;
             overflow-x: auto;
-     
             padding: 10px 0;
             display: flex;
             white-space: nowrap;
@@ -163,14 +159,38 @@
                 gap: 10px;
             }
         }
+        @media screen and (max-width: 480px) {
+            header {
+                height: 200px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            nav a {
+                padding: 8px 10px;
+                font-size: 0.9em;
+            }
+            .about-me img {
+                width: 100px;
+                height: 100px;
+            }
+            .content {
+                padding: 10px;
+            }
+            .chat-box iframe {
+                height: 400px;
+            }
+            .gallery img {
+                width: 80px;
+                height: 45px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- SCM Music Player https://www.scmplayer.net -->
-<script type="text/javascript" src="https://www.scmplayer.net/script.js" 
-data-config="{'skin':'skins/tunes/skin.css','volume':50,'autoplay':false,'shuffle':false,'repeat':0,'placement':'top','showplaylist':true,'playlist':[{'title':'Fun With Drugs','url':'https://www.youtube.com/watch?v=j44lZ-JQS0k'}]}" ></script>
-<!-- SCM Music Player script end -->
-
     <header>
     </header>
     <nav>
