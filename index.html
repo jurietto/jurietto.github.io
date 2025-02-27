@@ -118,6 +118,11 @@
             padding: 10px 0;
             display: flex;
             white-space: nowrap;
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .gallery-wrapper::-webkit-scrollbar { 
+            display: none;  /* Safari and Chrome */
         }
         .gallery {
             display: flex;
