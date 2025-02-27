@@ -36,11 +36,17 @@
             justify-content: center;
             gap: 20px;
         }
-
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+        nav a:hover {
+            color: #ff007f;
+        }
         h1 {
             text-align: center;
-        }     
-
+        }
         h2 {
             text-align: center;
             color: #ff007f;
@@ -50,25 +56,14 @@
             }
             font-family: 'BallparkWeiner', Arial, sans-serif;
         }
-
-        nav a, .sidebar a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-        }
-        nav a:hover, .sidebar a:hover {
-            color: #ff007f;
-        }
         .container {
             display: flex;
             flex: 1;
             margin: 20px;
             align-items: stretch;
-           
         }
         .sidebar {
-            width: 100%;
-     
+            width: 25%;
             background: rgba(0, 0, 0, 0.7);
             padding: 15px;
             text-align: justify;
@@ -78,29 +73,28 @@
             padding: 0;
         }
         .sidebar ul li {
-            padding-left: 10px;
+            padding-left: 20px;
             background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/418.png');
             background-repeat: no-repeat;
             background-position: 0 center;
             background-size: 16px 16px;
             margin-bottom: 10px;
-            
         }
         .about-me img {
-            width: 100%;
-            height: 100%;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             display: block;
             margin: 10px auto;
         }
         .content {
-            width: 100%;
+            width: 75%;
             padding: 20px;
             background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 500px;
+            flex-direction: column;
         }
         .chat-box {
             display: flex;
@@ -108,13 +102,12 @@
             align-items: center;
             width: 100%;
             height: 100%;
-      
-        
+            padding: 20px;
             box-sizing: border-box;
         }
         .chat-box iframe {
             width: 100%;
-            
+            height: 100%;
             border: 3px solid #ff007f;
         }
         .gallery-wrapper {
@@ -123,6 +116,11 @@
             padding: 10px 0;
             display: flex;
             white-space: nowrap;
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .gallery-wrapper::-webkit-scrollbar { 
+            display: none;  /* Safari and Chrome */
         }
         .gallery {
             display: flex;
@@ -146,15 +144,51 @@
                 margin: 0;
                 padding: 10px;
             }
-            .chat-box iframe {
+            .sidebar, .content {
                 width: 100%;
-                height: 600px;
             }
-       
+            .chat-box iframe {
+                height: 400px;
+            }
+            .gallery img {
+                width: 80px;
+                height: 45px;
+            }
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            header {
+                height: 200px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            nav a {
+                padding: 8px 10px;
+                font-size: 0.9em;
+            }
+            .about-me img {
+                width: 100px;
+                height: 100px;
+            }
+            .content {
+                padding: 10px;
+            }
+            .chat-box iframe {
+                height: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
+        <!-- Header content can go here -->
     </header>
     <nav>
         <a href="#">Updates</a>
@@ -162,7 +196,6 @@
         <a href="#">Vampire Bloodlines</a>
         <a href="#">My Shitty Art</a>
     </nav>
-    <div class="banner"></div>
     <div class="container">
         <aside class="sidebar">
             <h2>Quick Links</h2>
@@ -197,19 +230,16 @@
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/125874.gif" alt="Stamp 3">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/d42974u-ea8cb39e-e03e-4b71-8b10-ffe981ce45c5.gif" alt="Stamp 4">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/4585369.gifv" alt="Stamp 5">
-
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/552266.gifv" alt="Stamp 1">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/54123.gif" alt="Stamp 2">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/446653" alt="Stamp 3">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/WEBSITE%20IMAGES/556622.gif" alt="Stamp 4">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/554486.pnj" alt="Stamp 5">
-
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/55641.jpg" alt="Stamp 1">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/195191.pnj" alt="Stamp 2">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/774411.pnj" alt="Stamp 3">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/down.gif" alt="Stamp 4">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/556622.pnj" alt="Stamp 5">
-
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/58632145.gifv" alt="Stamp 1">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/541256.jpg" alt="Stamp 2">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/552274.gifv" alt="Stamp 3">
