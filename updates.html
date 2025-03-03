@@ -1,128 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juri's Stuff</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* ASCII Art Formatting */
-        .ascii-art {
-            font-family: 'Courier New', Courier, monospace; /* Ensures monospace font */
-            font-size: 14px; /* Adjust font size */
-            white-space: pre; /* Keeps ASCII formatting */
-            display: block; /* Ensures proper layout */
-            text-align: left; /* Left align */
-            overflow-x: auto; /* Prevents wrapping issues */
-            padding: 10px; /* Adds spacing */
-            margin: 20px auto; /* Centers it */
-            max-width: fit-content; /* Prevents unwanted stretching */
-            line-height: 1.5; /* Keeps spacing between lines */
-            background: none; /* No background */
-            border: none; /* No border */
-        }
+<style>
 
-        /* Chatzone ASCII Styling */
-        .ascii-chatzone {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            color: #8d2696; /* Purple text */
-            background-color: black;
-            border: 2px solid #808080; /* Grey border */
-            padding: 15px;
-            display: inline-block;
-            white-space: pre;
-            margin-bottom: 20px;
-            max-width: 100%; /* Makes it responsive */
-            overflow-x: auto; /* Prevents wrapping issues */
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var asciiArts = document.querySelectorAll('.ascii-art, .ascii-chatzone');
-            asciiArts.forEach(function(art) {
-                art.scrollLeft = (art.scrollWidth - art.clientWidth) / 2;
-            });
-        });
-    </script>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/957te21ay24t9.jpg');
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  color: lime;
+}
+
+a {
+  color: lime;
+  text-decoration: none;
+  font-weight: bold;
+}
+a:hover {
+  color: white;
+}
+
+p {
+  color: white;
+  text-align: justify;
+}
+
+#statuscafe {
+  color: white;
+  text-align: justify;
+}
+
+/* Grid Layout */
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "nav nav"
+    "findtitle content"
+    "find content"
+    "abouttitle content"
+    "about content"
+    "statustitle content"
+    "status content"
+    "stampstitle stampstitle"
+    "stamps stamps"
+    "footer footer"; /* Footer is now properly aligned */
+  grid-template-columns: 1fr 3fr;
+  gap: 5px;
+  padding: 5px;
+}
+
+.container > div {
+  padding: 10px;
+  border: 1px solid lime;
+  background-color: black;
+}
+
+/* Header */
+.container > div.header {
+  grid-area: header;
+  text-align: center;
+  height: 200px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
+  background-repeat: no-repeat;
+  background-position: center 40%;
+  background-size: cover;
+}
+
+/* Navigation Bar */
+.container > div.navbar {
+  grid-area: nav;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid lime;
+}
+
+.navbar a {
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.navbar a:hover {
+  color: lime;
+}
+
+/* Sidebar & Main Content */
+.container > div.findtitle {
+  grid-area: findtitle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > div.find {
+  grid-area: find;
+}
+
+.container > div.abouttitle {
+  grid-area: abouttitle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > div.about {
+  grid-area: about;
+}
+
+.container > div.statustitle {
+  grid-area: statustitle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container > div.status {
+  grid-area: status;
+}
+
+.container > div.content {
+  grid-area: content;
+  overflow-y: auto;
+  max-height: 800px;
+}
+
+.container > div.content p {
+  max-width: 100%;
+  max-height: 792px;
+  overflow: auto;
+}
+
+/* Stamps Title */
+.container > div.stampstitle {
+  grid-area: stampstitle;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Stamps Gallery */
+.container > div.stamps {
+  grid-area: stamps;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(99px, 1fr)); /* Auto-layout */
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+/* Footer - Now fully visible */
+.container > div.footer {
+  grid-area: footer;
+  text-align: center;
+  padding: 15px; /* Increased padding for visibility */
+  font-weight: bold;
+}
+
+/* Stamps */
+.stamps img {
+  width: 99px;
+  height: 56px;
+  object-fit: cover; /* Ensures full coverage */
+  border: 1px solid lime;
+}
+
+p strong {
+  color: lime;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+  .container {
+    grid-template-areas:
+      "header"
+      "nav"
+      "content"
+      "findtitle"
+      "find"
+      "abouttitle"
+      "about"
+      "statustitle"
+      "status"
+      "stampstitle"
+      "stamps"
+      "footer";
+    grid-template-columns: 1fr;
+  }
+  .container > div.content {
+    overflow: auto;
+  }
+  .container > div.content p {
+    max-width: 100%;
+  }
+}
+</style>
 </head>
 <body>
-    <header>
-        <pre class="ascii-art">
-_      `-._     `-.     `.   \      :      /   .'     .-'     _.-'      _
- `--._     `-._    `-.    `.  `.    :    .'  .'    .-'    _.-'     _.--'
-      `--._    `-._   `-.   `.  \   :   /  .'   .-'   _.-'    _.--'
-`--.__     `--._   `-._  `-.  `. `. : .' .'  .-'  _.-'   _.--'     __.--'
-__    `--.__    `--._  `-._ `-. `. \:/ .' .-' _.-'  _.--'    __.--'    __
-  `--..__   `--.__   `--._ `-._`-.`_=_'.-'_.-' _.--'   __.--'   __..--'
---..__   `--..__  `--.__  `--._`-q(-_-)p-'_.--'  __.--'  __..--'   __..--
-      ``--..__  `--..__ `--.__ `-'_) (_`-' __.--' __..--'  __..--''
-...___        ``--..__ `--..__`--/__/  \--'__..--' __..--''        ___...
-      ```---...___    ``--..__`_(<_   _/)_'__..--''    ___...---'''
-```-----....._____```---...___(__\_\_|_/__)___...---'''_____.....-----'''
- ___   __  ________   _______   _       _   _______    ___   __   _______
-|| \\  ||     ||     ||_____))  \\     //  ||_____||  || \\  ||  ||_____||
-||  \\_||  ___||___  ||     \\   \\___//   ||     ||  ||  \\_||  ||     ||
-        </pre>
-        <nav>
-            <div class="navbar">
-                <strong><a href="index.html">Home</a></strong>
-                <strong><a href="updates.html">Updates</a></strong>
-                <strong><a href="#">VN's</a></strong>
-                <strong><a href="#">Music</a></strong>
-                <strong><a href="#">Art</a></strong>
-          
-            </div>
-        </nav>
-    </header>
-    <main>
-        <section>
-              <div class="chatzone-container">
-                <pre class="ascii-chatzone">
- ██▓     ▒█████    ▄████   ██████ 
-▓██▒    ▒██▒  ██▒ ██▒ ▀█▒▒██    ▒ 
-▒██░    ▒██░  ██▒▒██░▄▄▄░░ ▓██▄   
-▒██░    ▒██   ██░░▓█  ██▓  ▒   ██▒
-░██████▒░ ████▓▒░░▒▓███▀▒▒██████▒▒
-░ ▒░▓  ░░ ▒░▒░▒░  ░▒   ▒ ▒ ▒▓▒ ▒ ░
-░ ░ ▒  ░  ░ ▒ ▒░   ░   ░ ░ ░▒  ░ ░
-  ░ ░   ░ ░ ░ ▒  ░ ░   ░ ░  ░  ░  
-    ░  ░    ░ ░        ░       ░   
-                </pre>
-            </div>
-            <div class="chat-container">
-            <h2>2025</h2>
-            <div>
-                <p><strong>2025-02-20 01:13 AM </strong></p>
-<p data-start="75" data-end="292">I haven&rsquo;t posted an update since last fall, but a lot has happened since then. Over the past few months, I had a series of hospital visits and doctor&rsquo;s appointments, including spending Thanksgiving at UCLA Hospital.</p>
-<p data-start="294" data-end="855">For Christmas, I spent the day with my brothers. We had Thai food and cake, which was nice, but my mom wasn&rsquo;t home. Her brother, who was very close to her, passed away, so she traveled to Thailand for the funeral. She stayed in Asia for about a month and also visited Hong Kong. I missed her, but she sent me videos of New Year&rsquo;s celebrations in Hong Kong, the Philippines, and Thailand. I hadn&rsquo;t realized before how big of a holiday it is there. While she was in Hong Kong, she went to Disneyland, and when she returned, she brought back souvenirs and gifts.</p>
-<p data-start="857" data-end="1075">This winter wasn&rsquo;t as cold as previous ones in California, but I still got tired of the weather. The short days made me feel more sluggish. I still like winter, but each year, I find myself enjoying it a little less.</p>
-<p data-start="1077" data-end="1325">Recently, I&rsquo;ve been trying to adjust my schedule and routine. Coding at night has made it harder to stick to a regular sleep schedule, and I&rsquo;ve found myself getting too absorbed in projects. I&rsquo;ve had to remind myself to take breaks and step away.</p>
-<p data-start="1327" data-end="1552">One of the things I wanted to do early this year was to set up therapy, but I haven&rsquo;t done it yet. I know I need to, and I&rsquo;ve been frustrated with myself for putting it off, but as long as I get it done before late spring, I&rsquo;ll be fine.</p>
 
-            <h2>2024</h2>
+<div class="container">
+  <div class="header"><h2></h2></div>
 
-                
-                <p><strong>2024-09-11 12:00 AM</strong></p>
-                <p>I know I always change my site, but this Rilakkuma theme is just so cozy omo... colors.</p>
-            </div>
-            <div>
-                <p><strong>2024-09-11 12:00 AM</strong></p>
-                <p>I'm glad the summer is over. It was hot and I had a very scary surgery. I'm good now, I have to go to follow-up appointments and stuff. So glad fall is here!</p>
-            </div>
-            <div>
-                <p><strong>2024-05-28 12:00 PM</strong></p>
-                <p>I stayed up all night doing drugs and reading about music tech stuff. I feel too depressed to produce anything, so I'm just going to try to learn a few things here and there. I really want to fix my sleep problems and reprioritize how I allocate my time. Today I have to call my doctor, pick up my meds, and fill out these annoying forms. Not really looking forward to it, but it has to be done.</p>
-            </div>
-            <div>
-                <p><strong>2024-05-04 12:00 PM</strong></p>
-                <p>I just started my day and it's like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I'll have for dinner probably nothing special or something simple. Right now I'm just figuring out my next update &ndash; I'll include a message saying something about how I'm not really going to be updating this like all the time. It's just kinda there when I want to use it. (⌒&omega;⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)</p>
-            </div>
-        </section>
-    </main>
-  
-  <footer>
-        <p>jurietto.github.io 2024 - ???</p>
-    </footer>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="#">Updates</a>
+    <a href="#">VN's</a>
+    <a href="#">My Shitty Art</a>
+  </div>
+
+  <div class="findtitle"><h3>Find Me Here</h3></div>
+  <div class="find">
+    <a href="https://x.com/sotokomorii">Twitter</a><br>
+    <a href="https://www.youtube.com/@juriscafe">YouTube</a><br>
+    <a href="https://vndb.org/u274298">VNDB</a>
+  </div>
+
+  <div class="abouttitle"><h3>About Me</h3></div>
+  <div class="about">
+    <p>Hi, I'm Juri, and this is where I put my crap and hang out with a few honorable netizens.</p>
+    <p>Heads up: Desktop view is the recommended experience, but the site is optimized for mobile. It's hosted on GitHub Pages, and I built it on a 1920x1080 laptop. Hand-coded&mdash;if you don&rsquo;t count the formatting. Lately, I&rsquo;ve been learning how to code and program, so I see this place as both an archive and a homage to that. Yeah, it looks straight out of the '90s, but that&rsquo;s not about being stuck in the past&mdash;I just like the simplicity, and it&rsquo;s easier to maintain. For chat, I use Cbox now. I used to run my own backend, but I got tired of maintaining it. </p>
+    <p>My interests mostly revolve around tech, music, visual novels, self-isolation, and gothic lolita punk J-fashion &amp; subculture. I also have a random Charmmy Kitty obsession. My favorite artist of all time is Velvet Acid Christ. Anyway, not sure what else to add&mdash;happy browsing!</p>
+  </div>
+
+  <div class="statustitle"><h3>Status</h3></div>
+  <div class="status">
+    <div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div>
+    <script src="https://status.cafe/current-status.js?name=juri" defer></script>
+  </div>
+
+  <!-- Chat iframe fully covering its container -->
+  <div class="content">
+    <p><strong>2025-02-20 01:13 AM </strong></p>
+    <p>I haven&rsquo;t posted an update since last fall, but a lot has happened since then. Over the past few months, I had a series of hospital visits and doctor&rsquo;s appointments, including spending Thanksgiving at UCLA Hospital.</p>
+    <p>For Christmas, I spent the day with my brothers. We had Thai food and cake, which was nice, but my mom wasn&rsquo;t home. Her brother, who was very close to her, passed away, so she traveled to Thailand for the funeral. She stayed in Asia for about a month and also visited Hong Kong. I missed her, but she sent me videos of New Year&rsquo;s celebrations in Hong Kong, the Philippines, and Thailand. I hadn&rsquo;t realized before how big of a holiday it is there. While she was in Hong Kong, she went to Disneyland, and when she returned, she brought back souvenirs and gifts.</p>
+    <p>This winter wasn&rsquo;t as cold as previous ones in California, but I still got tired of the weather. The short days made me feel more sluggish. I still like winter, but each year, I find myself enjoying it a little less.</p>
+    <p>Recently, I&rsquo;ve been trying to adjust my schedule and routine. Coding at night has made it harder to stick to a regular sleep schedule, and I&rsquo;ve found myself getting too absorbed in projects. I&rsquo;ve had to remind myself to take breaks and step away.</p>
+    <p>One of the things I wanted to do early this year was to set up therapy, but I haven&rsquo;t done it yet. I know I need to, and I&rsquo;ve been frustrated with myself for putting it off, but as long as I get it done before late spring, I&rsquo;ll be fine.</p>
+
+    <p><strong>2024-09-11 12:00 AM</strong></p>
+    <p>I know I always change my site, but this Rilakkuma theme is just so cozy omo... colors.</p>
+    <div>
+      <p><strong>2024-09-11 12:00 AM</strong></p>
+      <p>I'm glad the summer is over. It was hot and I had a very scary surgery. I'm good now, I have to go to follow-up appointments and stuff. So glad fall is here!</p>
+    </div>
+    <div>
+      <p><strong>2024-05-28 12:00 PM</strong></p>
+      <p>I stayed up all night doing drugs and reading about music tech stuff. I feel too depressed to produce anything, so I'm just going to try to learn a few things here and there. I really want to fix my sleep problems and reprioritize how I allocate my time. Today I have to call my doctor, pick up my meds, and fill out these annoying forms. Not really looking forward to it, but it has to be done.</p>
+    </div>
+    <div>
+      <p><strong>2024-05-04 12:00 PM</strong></p>
+      <p>I just started my day and it's like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I'll have for dinner probably nothing special or something simple. Right now I'm just figuring out my next update &ndash; I'll include a message saying something about how I'm not really going to be updating this like all the time. It's just kinda there when I want to use it. (⌒&omega;⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)</p>
+    </div>
+  </div>
+
+  <!-- Stamps Title -->
+  <div class="stampstitle"><h3>Stamps</h3></div>
+
+  <!-- Stamps Gallery -->
+  <div class="stamps">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/638525.gif" alt="Stamp 1">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/586526" alt="Stamp 2">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/556622.pnj" alt="Stamp 3">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/195191.pnj" alt="Stamp 4">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/125874.gif" alt="Stamp 5">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/4585369.gifv" alt="Stamp 6">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/446653" alt="Stamp 7">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/535247.gifv" alt="Stamp 8">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/554486.pnj" alt="Stamp 9">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/741256.gif" alt="Stamp 10">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/524561.gifv" alt="Stamp 11">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/774411.pnj" alt="Stamp 13">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/222222" alt="Stamp 14">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/down.gif" alt="Stamp 15">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/159563.gifv" alt="Stamp 16">
+  </div>
+
+  <!-- Footer -->
+  <div class="footer"><h4>2024 - ??? jurietto.github.io</h4></div>
+</div>
+
 </body>
 </html>
