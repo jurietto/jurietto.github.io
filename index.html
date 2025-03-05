@@ -2,36 +2,25 @@
 <html>
 <head>
 <style>
-
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/957te21ay24t9.jpg');
+
+  color: white;
+  background-color: black;
 }
 
+/* Headings */
 h1, h2, h3, h4 {
   margin: 0;
   color: lime;
 }
 
 a {
-  color: lime;
-  text-decoration: none;
-  font-weight: bold;
-}
-a:hover {
   color: white;
-}
-
-p {
-  color: white;
-  text-align: justify;
-}
-
-#statuscafe {
-    color: white;
-    text-align: justify;
-}
+} 
 
 /* Grid Layout */
 .container {
@@ -47,16 +36,20 @@ p {
     "status content"
     "stampstitle stampstitle"
     "stamps stamps"
-    "footer footer"; /* Footer is now properly aligned */
+    "footer footer";
   grid-template-columns: 1fr 3fr;
   gap: 5px;
-  padding: 5px;
+  padding: 10px;
+  margin: auto;
+  min-height: 100vh;
+  width: 1200px;
 }
 
+/* Shared Box Styles */
 .container > div {
-  padding: 10px;
-  border: 1px solid lime;
   background-color: black;
+  padding: 15px;
+  border: 1px solid lime;
 }
 
 /* Header */
@@ -64,17 +57,20 @@ p {
   grid-area: header;
   text-align: center;
   height: 200px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/Preview_nXGjP7c_thumb.detail.png');
   background-repeat: no-repeat;
-  background-position: center 40%;
+  background-position: center 25%;
   background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Navigation Bar */
 .container > div.navbar {
   grid-area: nav;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   border: 1px solid lime;
 }
 
@@ -90,96 +86,94 @@ p {
   color: lime;
 }
 
-/* Sidebar & Main Content */
-.container > div.findtitle {
-  grid-area: findtitle;
-  text-align: center;
+/* Sidebar Titles */
+.container > div.findtitle, 
+.container > div.abouttitle, 
+.container > div.statustitle, 
+.container > div.stampstitle {
+  font-weight: bold;
   display: flex;
+  align-items: center; /* Vertically centers text */
   justify-content: center;
-  align-items: center;
 }
 
+/* Find Section - Left-aligned List */
 .container > div.find {
-  grid-area: find;
+  text-align: left; /* Aligns text to the left */
+  display: block; /* Ensures block-level structure */
+  padding: 15px;
 }
 
-.container > div.abouttitle {
-  grid-area: abouttitle;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.container > div.find ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.container > div.about {
-  grid-area: about;
+.container > div.find ul li {
+  padding: 5px 0;
+  text-align: left; /* Ensures text inside the list is also left-aligned */
 }
 
-.container > div.statustitle {
-  grid-area: statustitle;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* Sidebar */
+.container > div.about,
 .container > div.status {
-  grid-area: status;
+  padding: 15px;
+  text-align: justify;
 }
 
+/* Main Content */
 .container > div.content {
   grid-area: content;
   display: flex;
   overflow: auto;
-
-
+  padding: 15px;
+  align-items: center;
+  justify-content: center;
 }
 
 .container > div.content iframe {
-  flex-grow: 1; /* Makes iframe expand fully */
+  flex-grow: 1;
   width: 100%;
+  height: 100%;
   border: none;
-  
 }
 
 /* Stamps Title */
 .container > div.stampstitle {
   grid-area: stampstitle;
-  text-align: center;
   font-size: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-weight: bold;
 }
 
 /* Stamps Gallery */
 .container > div.stamps {
   grid-area: stamps;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(99px, 1fr)); /* Auto-layout */
+  grid-template-columns: repeat(auto-fit, minmax(99px, 1fr));
   gap: 5px;
-  justify-content: center;
-  align-items: center;
   padding: 10px;
-}
-
-/* Footer - Now fully visible */
-.container > div.footer {
-  grid-area: footer;
-  text-align: center;
-  padding: 15px; /* Increased padding for visibility */
-  font-weight: bold;
 }
 
 /* Stamps */
 .stamps img {
   width: 99px;
   height: 56px;
-  object-fit: cover; /* Ensures full coverage */
+  object-fit: cover;
   border: 1px solid lime;
 }
 
-/* Responsive for smaller screens */
+/* Footer */
+.container > div.footer {
+  grid-area: footer;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  border-top: 1px solid lime;
+  margin-top: auto;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .container {
     grid-template-areas:
@@ -197,42 +191,40 @@ p {
       "footer";
     grid-template-columns: 1fr;
   }
+
   .container > div.content iframe {
-    flex-grow: 1; /* Makes iframe expand fully */
+    flex-grow: 1;
     width: 100%;
-    height: 800px; /* Full viewport height */
-    border: none;
+    height: 100%;
   }
 }
-}
-
 </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header"><h2></h2></div>
+  <div class="header"></div>
 
-  <!-- Navigation Bar -->
   <div class="navbar">
     <a href="updates.html">Updates</a>
-    <a href="#">VN's</a>
-    <a href="#">My Shitty Art</a>
+    <a href="vn.html">VN's</a>
+    <a href="art.html">My Shitty Art</a>
   </div>
 
   <div class="findtitle"><h3>Find Me Here</h3></div>
   <div class="find">
-    <a href="https://x.com/sotokomorii">Twitter</a><br>
-    <a href="https://www.youtube.com/@juriscafe">YouTube</a><br>
-    <a href="https://vndb.org/u274298">VNDB</a>
+    <ul>
+      <li><a href="https://x.com/sotokomorii">Twitter</a></li>
+      <li><a href="https://www.youtube.com/@juriscafe">YouTube</a></li>
+      <li><a href="https://vndb.org/u274298">VNDB</a></li>
+    </ul>
   </div>
 
   <div class="abouttitle"><h3>About Me</h3></div>
   <div class="about">
     <p>Hi, I'm Juri, and this is where I put my crap and hang out with a few honorable netizens.</p>
-<p>Heads up: Desktop view is the recommended experience, but the site is optimized for mobile. It's hosted on GitHub Pages, and I built it on a 1920x1080 laptop. Hand-coded&mdash;if you don&rsquo;t count the formatting. Lately, I&rsquo;ve been learning how to code and program, so I see this place as both an archive and a homage to that. Yeah, it looks straight out of the '90s, but that&rsquo;s not about being stuck in the past&mdash;I just like the simplicity, and it&rsquo;s easier to maintain. For chat, I use Cbox now. I used to run my own backend, but I got tired of maintaining it. </p>
-<p>My interests mostly revolve around tech, music, visual novels, self-isolation, and gothic lolita punk J-fashion &amp; subculture. I also have a random Charmmy Kitty obsession. My favorite artist of all time is Velvet Acid Christ. Anyway, not sure what else to add&mdash;happy browsing!</p>
-  </div>
+    <p>Heads up: Desktop view is the recommended experience, but the site is optimized for mobile. It's hosted on GitHub Pages, and I built it on a 1920x1080 laptop. Hand-coded—if you don’t count the formatting. Lately, I’ve been learning how to code and program, so I see this place as both an archive and a homage to that. Yeah, it looks straight out of the '90s, but that’s not about being stuck in the past—I just like the simplicity, and it’s easier to maintain. For chat, I use Cbox now. I used to run my own backend, but I got tired of maintaining it.</p>
+    <p>My interests mostly revolve around tech, music, visual novels, self-isolation, and gothic lolita punk J-fashion & subculture. I also have a random Charmmy Kitty obsession. My favorite artist of all time is Velvet Acid Christ. Anyway, not sure what else to add—happy browsing!</p></div>
 
   <div class="statustitle"><h3>Status</h3></div>
   <div class="status">
@@ -240,34 +232,35 @@ p {
     <script src="https://status.cafe/current-status.js?name=juri" defer></script>
   </div>
 
-  <!-- Chat iframe fully covering its container -->
   <div class="content">
-    <iframe src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>  
+    <iframe src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm"></iframe>  
   </div>
 
-  <!-- Stamps Title -->
   <div class="stampstitle"><h3>Stamps</h3></div>
 
-  <!-- Stamps Gallery -->
   <div class="stamps">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/638525.gif" alt="Stamp 1">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/586526" alt="Stamp 2">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/556622.pnj" alt="Stamp 3">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/195191.pnj" alt="Stamp 4">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/125874.gif" alt="Stamp 5">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/4585369.gifv" alt="Stamp 6">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/446653" alt="Stamp 7">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/535247.gifv" alt="Stamp 8">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/554486.pnj" alt="Stamp 9">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/741256.gif" alt="Stamp 10">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/524561.gifv" alt="Stamp 11">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/774411.pnj" alt="Stamp 13">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/222222" alt="Stamp 14">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/down.gif" alt="Stamp 15">
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/159563.gifv" alt="Stamp 16">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/586526" alt="Stamp 1">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/7453984.png" alt="Stamp 2">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/125874.gif" alt="Stamp 3">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/d42974u-ea8cb39e-e03e-4b71-8b10-ffe981ce45c5.gif" alt="Stamp 4">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/4585369.gifv" alt="Stamp 5">
+
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/54123.gif" alt="Stamp 2">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/446653" alt="Stamp 3">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/WEBSITE%20IMAGES/556622.gif" alt="Stamp 4">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/554486.pnj" alt="Stamp 5">
+
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/55641.jpg" alt="Stamp 1">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/774411.pnj" alt="Stamp 3">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/down.gif" alt="Stamp 4">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/556622.pnj" alt="Stamp 5">
+
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/58632145.gifv" alt="Stamp 1">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/541256.jpg" alt="Stamp 2">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/552274.gifv" alt="Stamp 3">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/stampPlushies.gif" alt="Stamp 4">
   </div>
 
-  <!-- Footer -->
   <div class="footer"><h4>2024 - ??? jurietto.github.io</h4></div>
 </div>
 
