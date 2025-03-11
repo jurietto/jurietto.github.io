@@ -1,167 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-/* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/957te21ay24t9.jpg');
-
-  color: white;
-  background-color: black;
-}
-
-/* Headings */
-h1, h2, h3, h4 {
-  margin: 0;
-  color: lime;
-}
-
-/* Grid Layout */
-.container {
-  display: grid;
-  grid-template-areas:
-    "header header"
-    "nav nav"
-    "update5 update5"
-    "update4 update4"
-    "update3 update3"
-    "update2 update2"
-    "update1 update1"
-    "stampstitle stampstitle"
-    "stamps stamps"
-    "footer footer";
-  grid-template-rows: auto auto repeat(5, auto) auto auto auto;
-  gap: 5px;
-  padding: 10px;
-  margin: auto;
-  min-height: 100vh;
-  width: 1200px;
-}
-
-/* Shared Box Styles */
-.container > div {
-  background-color: black;
-  padding: 15px;
-  border: 1px solid lime;
-}
-
-/* Header */
-.container > div.header {
-  grid-area: header;
-  text-align: center;
-  height: 200px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
-  background-repeat: no-repeat;
-  background-position: center 20%;
-  background-size: cover;
-}
-
-/* Navigation Bar */
-.container > div.navbar {
-  grid-area: nav;
-  text-align: center;
-  padding: 15px;
-  border: 1px solid lime;
-}
-
-.navbar a {
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  font-weight: bold;
-  display: inline-block;
-}
-
-.navbar a:hover {
-  color: lime;
-}
-
-/* Each Update Box */
-.update-box {
-  padding: 15px;
-  border: 1px solid lime;
-  text-align: center;
-  line-height: 1.6;
-
-}
-
-/* Assign each update box to its own grid area */
-.update-box:nth-child(3) { grid-area: update5; }
-.update-box:nth-child(4) { grid-area: update4; }
-.update-box:nth-child(5) { grid-area: update3; }
-.update-box:nth-child(6) { grid-area: update2; }
-.update-box:nth-child(7) { grid-area: update1; }
-
-/* Stamps Title */
-.container > div.stampstitle {
-  grid-area: stampstitle;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Stamps Gallery */
-.container > div.stamps {
-  grid-area: stamps;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(99px, 1fr));
-  gap: 5px;
-  padding: 10px;
-}
-
-/* Stamps */
-.stamps img {
-  width: 99px;
-  height: 56px;
-  object-fit: cover;
-  border: 1px solid lime;
-}
-
-/* Footer */
-.container > div.footer {
-  grid-area: footer;
-  text-align: center;
-  padding: 15px;
-  font-weight: bold;
-  border-top: 1px solid lime;
-  margin-top: auto;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    grid-template-areas:
-      "header"
-      "nav"
-      "update5"
-      "update4"
-      "update3"
-      "update2"
-      "update1"
-      "stampstitle"
-      "stamps"
-      "footer";
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juri's Dungeon</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body, html { color: white; background-color: black; background-image: url(https://file.garden/ZhTgSjrp5nAroRKq/giphy.gif); font-family: Arial, sans-serif; }
+    header nav ul { list-style: none; padding: 0; text-align: center; }
+    header nav ul li { display: inline-block; margin: 0 15px; }
+    header nav ul li a { text-decoration: none; color: white; }
+    .goodbye-text { text-align: center; color: #ff007f; font-size: 24px; }
+    footer { color: #ff007f; text-align: center; margin-top: auto;}
+    .date { color: #ff007f; text- ;}
+  </style>
 </head>
 <body>
-
-<div class="container">
-  <div class="header"></div>
-
-  <div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="#">VN's</a>
-    <a href="#">My Shitty Art</a>
-  </div>
-
-  <!-- Each Update as a Separate Box -->
-  <div class="update-box">
-    <h3>2025-02-20 01:13 AM</h3>
+  <header><nav>
+    <ul>
+      <li><a href="index2.html">Back</a></li>
+      <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+      <li><a href="https://youtube.com" target="_blank">Youtube</a></li>
+      <li><a href="https://vndb.org" target="_blank">VNDB</a></li>
+    </ul>
+  </nav></header>
+  <section>
+    <p class="date"><strong>2025-02-20 01:13 AM</strong></p>
     <p>I haven’t posted an update since last fall, but a lot has happened since then. Over the past few months, I had a series of hospital visits and doctor’s appointments, including spending Thanksgiving at UCLA Hospital.</p>
 
     <p>For Christmas, I spent the day with my brothers. We had Thai food and cake, which was nice, but my mom wasn’t home. Her brother, who was very close to her, passed away, so she traveled to Thailand for the funeral. She stayed in Asia for about a month and also visited Hong Kong. I missed her, but she sent me videos of New Year’s celebrations in Hong Kong, the Philippines, and Thailand. I hadn’t realized before how big of a holiday it is there. While she was in Hong Kong, she went to Disneyland, and when she returned, she brought back souvenirs and gifts.</p>
@@ -171,57 +35,28 @@ h1, h2, h3, h4 {
     <p>Recently, I’ve been trying to adjust my schedule and routine. Coding at night has made it harder to stick to a regular sleep schedule, and I’ve found myself getting too absorbed in projects. I’ve had to remind myself to take breaks and step away.</p>
 
     <p>One of the things I wanted to do early this year was to set up therapy, but I haven’t done it yet. I know I need to, and I’ve been frustrated with myself for putting it off, but as long as I get it done before late spring, I’ll be fine.</p>
-  </div>
 
-  <div class="update-box">
-    <h3>2024-09-11 12:00 AM</h3>
+    <p class="date"><strong>2024-09-11 12:00 AM</strong></p>
     <p>I know I always change my site, but this Rilakkuma theme is just so cozy omo... colors.</p>
-  </div>
 
-  <div class="update-box">
-    <h3>2024-09-11 12:00 AM</h3>
+    <p class="date"><strong>2024-09-11 12:00 AM</strong></p>
     <p>I'm glad the summer is over. It was hot and I had a very scary surgery. I'm good now, I have to go to follow-up appointments and stuff. So glad fall is here!</p>
-  </div>
 
-  <div class="update-box">
-    <h3>2024-05-28 12:00 PM</h3>
+    <p class="date"><strong>2024-05-28 12:00 PM</strong></p>
     <p>I stayed up all night doing drugs and reading about music tech stuff. I feel too depressed to produce anything, so I'm just going to try to learn a few things here and there. I really want to fix my sleep problems and reprioritize how I allocate my time. Today I have to call my doctor, pick up my meds, and fill out these annoying forms. Not really looking forward to it, but it has to be done.</p>
-  </div>
 
-  <div class="update-box">
-    <h3>2024-05-04 12:00 PM
-
-    </h3>
+    <p class="date"><strong>2024-05-04 12:00 PM</strong></p>
     <p>I just started my day and it's like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I'll have for dinner probably nothing special or something simple. Right now I'm just figuring out my next update – I'll include a message saying something about how I'm not really going to be updating this like all the time. It's just kinda there when I want to use it. (⌒ω⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)</p>
-  </div>
+  </section>
 
-  <div class="stampstitle"><h3>Stamps</h3></div>
+  <section class="goodbye-text"> 
+    <p>glad u made it. good job or whatever...</p>
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/p" alt="Image 4">
+</section>
 
-  <div class="stamps">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/586526" alt="Stamp 1">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/7453984.png" alt="Stamp 2">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/125874.gif" alt="Stamp 3">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/d42974u-ea8cb39e-e03e-4b71-8b10-ffe981ce45c5.gif" alt="Stamp 4">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/4585369.gifv" alt="Stamp 5">
-
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/54123.gif" alt="Stamp 2">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/446653" alt="Stamp 3">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/WEBSITE%20IMAGES/556622.gif" alt="Stamp 4">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/554486.pnj" alt="Stamp 5">
-
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/55641.jpg" alt="Stamp 1">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/774411.pnj" alt="Stamp 3">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/down.gif" alt="Stamp 4">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/556622.pnj" alt="Stamp 5">
-
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/58632145.gifv" alt="Stamp 1">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/541256.jpg" alt="Stamp 2">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/552274.gifv" alt="Stamp 3">
-    <img src="https://file.garden/ZhTgSjrp5nAroRKq/other%20site/stampPlushies.gif" alt="Stamp 4">
-  </div>
-
-  <div class="footer"><h4>2024 - ??? jurietto.github.io</h4></div>
-</div>
-
+  <footer>
+    2024 - ??? jurietto.github.io
+  </footer>
 </body>
 </html>
+
