@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juri's Dungeon</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body, html { 
+      background: url('https://file.garden/ZhTgSjrp5nAroRKq/giphy.gif');  
+      font-family: Arial, sans-serif; 
+    }
+    header nav ul { list-style: none; padding: 0; text-align: center; }
+    header nav ul li { display: inline-block; margin: 0 15px; }
+    header nav ul li a { text-decoration: none; color: white; }
+    .main img, .linked-img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+    .ipod { display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .welcome-text { color: #ff007f; text-align: center; margin: 20px 0; font-size: 24px; }
+    .image-links { display: flex; flex-direction: column; align-items: center; gap: 20px; margin: 30px 0; }
+    .image-links a img { height: 300px; width: auto; }
+    .side-by-side { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
+    .side-by-side img { height: 500px; width: auto; }
+    .goodbye-text { text-align: center; color: #ff007f; font-size: 24px; }
+    footer { color: #ff007f; text-align: center; margin-top: auto;}
+    @media (max-width: 768px) {
+      .side-by-side {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .side-by-side img {
+        height: auto;
+      }
+
+      .image-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .image-links a img {
+        height: 250px;
+      }
+
+    /* Footer style */
+    footer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
+        <li><a href="https://youtube.com" target="_blank">Youtube</a></li>
+        <li><a href="https://vndb.org" target="_blank">VNDB</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <section class="welcome-text">
+    WELCOME TO THE VOID.<br>
+    The iPod is now your problem.<br>
+    There is no customer support. Enjoy.<br>
+    (¬‿¬)
+  </section>
+
+  <section class="main">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/618w_steve_jobs_career_gallery_8-e1349705872804.jpg" alt="Steve Jobs">
+  </section>
+
+  <section class="image-links">
+    <a href="updates.html"><img src="https://file.garden/ZhTgSjrp5nAroRKq/IMG_3952.jpg" alt="Image 1"></a>
+    <a href="gallery.html"><img src="https://file.garden/ZhTgSjrp5nAroRKq/IMG_3953.jpg" alt="Image 2"></a>
+    <a href="vns.html"><img src="https://file.garden/ZhTgSjrp5nAroRKq/IMG_3954.jpg" alt="Image 3"></a>
+  </section>
+
+  <section class="side-by-side">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/IMG_3961.jpg" alt="Side Image 1">
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/IMG_3962.jpg" alt="Side Image 2">
+  </section>
+
+<section class="goodbye-text"> 
+    <p>you have arrived. you will leave. such is the way. go in peace or in pieces.</p>
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/p" alt="Image 4">
+</section>
+
+  <footer>
+    2024 - ??? jurietto.github.io
+  </footer>
+
+</body>
+</html>
