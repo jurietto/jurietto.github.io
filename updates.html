@@ -1,30 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juri's Dungeon</title>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    body, html { color: white; black; background-image: url(https://file.garden/ZhTgSjrp5nAroRKq/giphy.gif); font-family: Arial, sans-serif; }
-    header nav ul { list-style: none; text-align: center; margin: 20px 0; padding: 0; }
-    header nav ul li { display: inline-block; margin: 0 15px; }
-    header nav ul li a { text-decoration: none; color: white; }
-    .goodbye-text { text-align: center; color: #ff007f; font-size: 24px; }
-    .date { color: #ff007f; text- ;}
-    footer { color: #ff007f; margin-top: 30px; text-align: center; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juri's Page</title>
+    <style>
+        body {
+            background-color: black;
+            color: #b0b0b0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+        .nav a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        h1 {
+            font-size: 28px;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .chatbox {
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+            padding-bottom: 20px;
+        }
+        .site-specs {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #888;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-  <header><nav>
-    <ul>
-      <li><a href="index2.html">Back</a></li>
-      <li><a href="https://twitter.com" target="_blank">Twitter</a></li>
-      <li><a href="https://youtube.com" target="_blank">Youtube</a></li>
-      <li><a href="https://vndb.org" target="_blank">VNDB</a></li>
-    </ul>
-  </nav></header>
-  <section>
+    <div class="container">
+        <img class="profile-pic" src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026_cropped.png" alt="Juri's Profile Picture">
+        
+        <div class="nav">
+            <a href="index.html">BACK</a>
+            <a href="https://twitter.com/">TWITTER</a>
+            <a href="https://youtube.com/">YOUTUBE</a>
+            <a href="https://vndb.org/">VNDB</a>
+            
+        </div>
+        
+          <section>
     <p class="date"><strong>2025-03-14 02:17 PM</strong></p>
      <p>Things have been a bit off, but I’m managing. Things could be worse, but I’ve been feeling mentally numb and uninterested—mostly just bored. It’s been raining a lot, which I like. The weather still feels like winter, though spring has probably already started. I’m not sure of the exact date for the first day of spring in California.</p>
 
@@ -60,15 +127,10 @@
     <p class="date"><strong>2024-05-04 12:00 PM</strong></p>
     <p>I just started my day and it's like 4pm... probably not going to bed for like 8-12 hours or so maybe. For some reason on the weekend I always struggle taking my meds, but I took them before it got dark at least. IDK what I'll have for dinner probably nothing special or something simple. Right now I'm just figuring out my next update – I'll include a message saying something about how I'm not really going to be updating this like all the time. It's just kinda there when I want to use it. (⌒ω⌒) Anyway, I forgot to mention I bought a couple of VNs from JP for my PlayStation, a MLP, and two Charmmy Kitty figures. (◕‿◕)</p>
   </section>
-
-  <section class="goodbye-text"> 
-    <div id="statuscafe"><div id="statuscafe-username"></div><div id="statuscafe-content"></div></div><script src="https://status.cafe/current-status.js?name=juri" defer></script>
-    <br><img src="https://file.garden/ZhTgSjrp5nAroRKq/p.gif" alt="Image 4">
-  </section>
-
-  <footer>
-    2024 - ??? jurietto.github.io
-  </footer>
+        
+        <div class="footer">
+            <p>2024 - ??? <a href="https://juritetto.github.io" style="color: #888; text-decoration: none;">juritetto.github.io</a></p>
+        </div>
+    </div>
 </body>
 </html>
-
