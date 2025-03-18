@@ -54,10 +54,13 @@
             margin-top: 20px;
             animation: fadeIn 1s ease-in-out;
         }
+        h2 {
+            font-size: 24px;
+            margin-top: 10px;
+        }
         p {
             font-size: 18px;
             line-height: 1.6;
-            text-align: justify; /* Justified text */
         }
         .chatbox {
             margin-top: 20px;
@@ -74,15 +77,6 @@
             margin-top: 40px;
             font-size: 14px;
             color: #888;
-        }
-        .more {
-            display: none; /* Hide extra text initially */
-            margin: 15px 0;
-        }
-        .show-more {
-            color: #b0b0b0;
-            cursor: pointer;
-            text-decoration: underline;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -104,13 +98,25 @@
         <section>
             <h1>2025-03-14 02:17 PM</h1>
             <p>Things have been a bit off, but I’m managing. Things could be worse, but I’ve been feeling mentally numb and uninterested—mostly just bored. It’s been raining a lot, which I like. The weather still feels like winter, though spring has probably already started. I’m not sure of the exact date for the first day of spring in California.</p>
-            <span class="show-more" onclick="toggleShowMore(this)">Show more</span>
-            <p class="more">I recently met VAC (Velvet Acid Christ), who is my favorite artist. I listen to his music multiple times a day. It was an interesting experience, though there’s not much to say other than he’s working on a new album, which is exciting since it’s been a while since his last release. I’ve been drawing a lot, mainly as a form of art therapy. I use Paint.NET and Microsoft Paint. I want to make drawing a more regular habit to help with stress. I also watch Bob Ross on public access around 8:30 PM. His approach to art is relaxing, and it helps me wind down at night. I have a few things coming in the mail, including a Riko Korie curtain. I’ve been wanting one for a long time, but it was out of stock everywhere. I finally found a used one in good condition, so I’m looking forward to updating some of my décor when it arrives. I have a doctor’s appointment on Monday, but I may just go in for my lab work and follow up with a call instead. I also have a psychiatrist appointment later in the month. Lately, I’ve been struggling with my routine, especially on weekends, where I haven’t been taking my medication consistently. I need to adjust my schedule to stay on track.</p>
+
+            <p>I recently met VAC (Velvet Acid Christ), who is my favorite artist. I listen to his music multiple times a day. It was an interesting experience, though there’s not much to say other than he’s working on a new album, which is exciting since it’s been a while since his last release.</p>
+
+            <p>I’ve been drawing a lot, mainly as a form of art therapy. I use Paint.NET and Microsoft Paint. I want to make drawing a more regular habit to help with stress. I also watch Bob Ross on public access around 8:30 PM. His approach to art is relaxing, and it helps me wind down at night.</p>
+
+            <p>I have a few things coming in the mail, including a Riko Korie curtain. I’ve been wanting one for a long time, but it was out of stock everywhere. I finally found a used one in good condition, so I’m looking forward to updating some of my décor when it arrives.</p>
+
+            <p>I have a doctor’s appointment on Monday, but I may just go in for my lab work and follow up with a call instead. I also have a psychiatrist appointment later in the month. Lately, I’ve been struggling with my routine, especially on weekends, where I haven’t been taking my medication consistently. I need to adjust my schedule to stay on track.</p>
 
             <h1>2025-02-20 01:13 AM</h1>
             <p>I haven’t posted an update since last fall, but a lot has happened since then. Over the past few months, I had a series of hospital visits and doctor’s appointments, including spending Thanksgiving at UCLA Hospital.</p>
-            <span class="show-more" onclick="toggleShowMore(this)">Show more</span>
-            <p class="more">For Christmas, I spent the day with my brothers. We had Thai food and cake, which was nice, but my mom wasn’t home. Her brother, who was very close to her, passed away, so she traveled to Thailand for the funeral. She stayed in Asia for about a month and also visited Hong Kong. I missed her, but she sent me videos of New Year’s celebrations in Hong Kong, the Philippines, and Thailand. I hadn’t realized before how big of a holiday it is there. While she was in Hong Kong, she went to Disneyland, and when she returned, she brought back souvenirs and gifts. This winter wasn’t as cold as previous ones in California, but I still got tired of the weather. The short days made me feel more sluggish. I still like winter, but each year, I find myself enjoying it a little less. Recently, I’ve been trying to adjust my schedule and routine. Coding at night has made it harder to stick to a regular sleep schedule, and I’ve found myself getting too absorbed in projects. I’ve had to remind myself to take breaks and step away. One of the things I wanted to do early this year was to set up therapy, but I haven’t done it yet. I know I need to, and I’ve been frustrated with myself for putting it off, but as long as I get it done before late spring, I’ll be fine.</p>
+
+            <p>For Christmas, I spent the day with my brothers. We had Thai food and cake, which was nice, but my mom wasn’t home. Her brother, who was very close to her, passed away, so she traveled to Thailand for the funeral. She stayed in Asia for about a month and also visited Hong Kong. I missed her, but she sent me videos of New Year’s celebrations in Hong Kong, the Philippines, and Thailand. I hadn’t realized before how big of a holiday it is there. While she was in Hong Kong, she went to Disneyland, and when she returned, she brought back souvenirs and gifts.</p>
+
+            <p>This winter wasn’t as cold as previous ones in California, but I still got tired of the weather. The short days made me feel more sluggish. I still like winter, but each year, I find myself enjoying it a little less.</p>
+
+            <p>Recently, I’ve been trying to adjust my schedule and routine. Coding at night has made it harder to stick to a regular sleep schedule, and I’ve found myself getting too absorbed in projects. I’ve had to remind myself to take breaks and step away.</p>
+
+            <p>One of the things I wanted to do early this year was to set up therapy, but I haven’t done it yet. I know I need to, and I’ve been frustrated with myself for putting it off, but as long as I get it done before late spring, I’ll be fine.</p>
 
             <h1>2024-09-11 12:00 AM</h1>
             <p>I know I always change my site, but this Rilakkuma theme is just so cozy omo... colors.</p>
@@ -126,18 +132,8 @@
         </section>
         
         <div class="footer">
-            <p>2024 - ??? <a href="https://juritetto.github.io" style="color: #888; text-decoration: none;">juritetto.github.io</a></p>
+            2024 - ??? juritetto.github.io</a></p>
         </div>
-    </div>
-
-    <script>
-        function toggleShowMore(element) {
-            const moreText = element.nextElementSibling; // updated to target the next sibling
-            const isMoreVisible = moreText.style.display === 'block';
-
-            moreText.style.display = isMoreVisible ? 'none' : 'block';
-            element.textContent = isMoreVisible ? 'Show more' : 'Show less';
-        }
-    </script>
+ 
 </body>
 </html>
