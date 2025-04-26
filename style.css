@@ -1,16 +1,32 @@
 body {
-  background-color: #f0f0f0;
+  background-color: #c1d3c0; /* soft sage green */
   color: #000000;
   font-family: Arial, sans-serif;
   margin: 20px;
-  text-align: justify;
+  text-align: left;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 a {
-  color: #3333aa;
+  color: #107c10; /* Microsoft/Xbox dark green */
   text-decoration: underline;
 }
 
 a:hover {
-  color: #ffffff;
+  color: #7fff00; /* bright lime green */
+}
+
+h1, h3 {
+  color: #2d2d2d; /* deep gray, almost silver */
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #a9a9a9; /* soft silver line */
+  margin: 20px 0;
 }
