@@ -50,19 +50,3 @@ p {
   margin-top: 20px;
 }
 
-/* Mobile */
-@media (max-width: 800px) {
-  body {
-    background-color: #000000;
-    background-image: none;
-    padding: 10px;
-  }
-  .container {
-    width: 95%;
-    margin: 10px auto;
-    background-color: #001a33;
-    border: 2px solid #ff3399;
-    padding: 15px;
-    text-align: left;
-  }
-}
