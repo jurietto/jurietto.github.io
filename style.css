@@ -1,40 +1,49 @@
 body {
-  background-color: #ffffff; /* soft white background */
-  color: #222222; /* dark gray text for readability */
+  background-color: #87ceeb; 
+  background-image: 
+    linear-gradient(45deg, #1e90ff 25%, transparent 25%),
+    linear-gradient(-45deg, #1e90ff 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1e90ff 75%),
+    linear-gradient(-45deg, transparent 75%, #1e90ff 75%);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  color: #e0f0ff; /* LIGHT blue text (easy to read on dark) */
   font-family: 'Times New Roman', Times, serif;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: flex-start;
+  min-height: 100vh;
 }
 
 .container {
-  width: 400px; /* fixed width */
-  max-width: 100%;
+  width: 600px;
   padding: 20px;
-  background-color: #f2faff; /* pale blue backdrop */
-  border-left: 5px solid #88cfff; /* baby blue accent */
-  box-shadow: 0 0 10px #ffb6c1; /* soft pink glow */
+  background-color: #001a33;
+  border-left: 5px solid #ff3399;
   box-sizing: border-box;
+  text-align: justify;
+  box-shadow: 0 0 20px #8800ff;
 }
 
 a {
-  color: #0077cc; /* bright blue links */
+  color: #66ccff; /* lighter bright blue link */
   text-decoration: underline;
 }
 
 a:hover {
-  color: #ff69b4; /* hot pink hover */
+  color: #ff3399;
 }
 
 h1, h3 {
-  color: #333366; /* deep muted blue */
+  color: #99ccff; /* lighter blue for headings */
 }
 
 hr {
   border: none;
   height: 1px;
-  background-color: #cccccc;
+  background-color: #333;
   margin: 20px 0;
 }
 
@@ -42,16 +51,38 @@ p {
   margin-top: 20px;
 }
 
-/* Mobile styles */
-@media (max-width: 480px) {
+/* Tablet */
+@media (max-width: 1024px) {
   body {
     display: block;
+    background-color: #87ceeb;
+    background-image: none;
+    padding: 10px;
   }
-
   .container {
-    width: 95%;
-    padding: 15px;
+    width: 90%;
+    margin: 20px auto;
+    background-color: #001a33;
     border-left: none;
+    border-top: 5px solid #ff3399;
     box-shadow: none;
   }
 }
+
+/* Mobile */
+@media (max-width: 600px) {
+  body {
+    background-color: #000000;
+    background-image: none;
+    padding: 10px;
+  }
+  .container {
+    width: 95%;
+    margin: 10px auto;
+    background-color: #001a33;
+    border: 2px solid #ff3399;
+    padding: 15px;
+    text-align: left;
+  }
+}
+
