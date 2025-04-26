@@ -51,26 +51,8 @@ p {
   margin-top: 20px;
 }
 
-/* Tablet */
-@media (max-width: 1024px) {
-  body {
-    display: block;
-    background-color: #87ceeb;
-    background-image: none;
-    padding: 10px;
-  }
-  .container {
-    width: 90%;
-    margin: 20px auto;
-    background-color: #001a33;
-    border-left: none;
-    border-top: 5px solid #ff3399;
-    box-shadow: none;
-  }
-}
-
 /* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   body {
     background-color: #000000;
     background-image: none;
