@@ -17,14 +17,14 @@ a:visited, a:hover, a:active {
     box-sizing: border-box;
     padding: 5px 0;
     font-weight: bold;
-    font-family: "MS UI Gothic", sans-serif;
     font-size: 18px;
+    /* No font-family here */
 }
 
 .ticker-text {
     display: inline-block;
     padding-left: 100%;
-    animation: ticker 10s linear infinite;
+    animation: ticker 25s linear infinite;
     color: black;
 }
 
@@ -39,12 +39,17 @@ a:visited, a:hover, a:active {
     height: 20px;
     margin-right: 8px;
 }
+
+/* Main body font */
+body {
+    font-family: "MS UI Gothic", sans-serif;
+}
 </style>
 
 <div class="ticker">
-    <div class="ticker-text">
+    <div class="ticker-text" id="ticker-text">
         <img src="https://file.garden/ZhTgSjrp5nAroRKq/338.gif" alt="Icon">
-        WELCOME FELLOW NETIZENS!!! :3
+        WELCOME NETIZENS!!! CURRENT TIME: LOADING... ★ typing with squishy paws on my keyboard :3
     </div>
 </div>
 
@@ -60,6 +65,28 @@ a:visited, a:hover, a:active {
     ⛧ <a href="https://jurietto.github.io/menhera">Menhera</a><br>
     ⛧ <a href="https://jurietto.github.io/recordings">Recordings</a>
 </div>
+
+<script>
+// Function to get PST time and update the ticker
+function updatePSTTime() {
+    const now = new Date();
+    const pstOffset = now.getTimezoneOffset() + 480; // adjust to PST
+    const pst = new Date(now.getTime() + pstOffset * 60000);
+    const hours = pst.getHours().toString().padStart(2, '0');
+    const minutes = pst.getMinutes().toString().padStart(2, '0');
+
+    const ticker = document.getElementById('ticker-text');
+    ticker.innerHTML = `
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/338.gif" alt="Icon">
+        WELCOME NETIZENS!!! CURRENT TIME: ${hours}:${minutes} PST ★ typing with squishy paws on my keyboard :3
+    `;
+}
+
+// Update time now and every 30 seconds
+updatePSTTime();
+setInterval(updatePSTTime, 30000);
+</script>
+
 
 
 
