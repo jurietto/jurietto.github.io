@@ -4,24 +4,85 @@
     <meta charset="UTF-8">
     <title>Juri's Stuff</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+    /* Inline CSS for quick adjustments, but ideally should move to style.css */
+
+    /* Keep links black and underlined always */
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+    a:visited, a:hover, a:active {
+        color: black;
+        text-decoration: underline;
+    }
+
+    /* News ticker container */
+    .ticker {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        box-sizing: border-box;
+        padding: 5px 0;
+    }
+
+    /* Ticker text */
+    .ticker-text {
+        display: inline-block;
+        padding-left: 100%;
+        animation: ticker 25s linear infinite;
+        color: black;
+    }
+
+    /* Scroll animation */
+    @keyframes ticker {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+    </style>
 </head>
+
 <body>
 
-    <!-- Load header dynamically -->
-    <div id="header"></div>
+    <!-- News ticker -->
+    <div class="ticker">
+        <div class="ticker-text">
+            WELCOME NETIZENS!!! ★ typing with squishy paws on my keyboard :3
+        </div>
+    </div>
 
+    <!-- Hello Kitty image -->
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/318.gif" alt="Hello Kitty" style="width:100px; display:block; margin-bottom:20px;">
+    
+    <!-- Links section -->
+    <div>
+        ⛧ <a href="https://jurietto.github.io/"><strong>HOME</strong></a><br>
+        ⛧ Discord – sotokomori<br>
+        ⛧ <a href="https://x.com/sotokomorii" target="_blank">Twitter</a><br>
+        ⛧ <a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a><br>
+        ⛧ <a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a><br>
+        ⛧ <a href="https://jurietto.github.io/updates">Updates</a><br>
+        ⛧ <a href="https://jurietto.github.io/menhera">Menhera</a><br>
+        ⛧ <a href="https://jurietto.github.io/recordings">Recordings</a>
+    </div>
+    
+    <!-- Main heading and intro -->
     <h1>Juri's Stuff</h1>
 
     <p>Hi, I'm Juri — I'm based in California and passionate about old tech, audio production, visual novels, and gothic lolita punk J-fashion. Mental and psychiatric health are very important to me; as someone who's neurodivergent, the world sometimes feels a little different to navigate. I try to take things one day at a time and give myself the space to grow. In my free time, I enjoy coding, hiking, making music, DJing, baking, journaling, and getting lost in something. I tend to keep to myself, but I'm always open to conversation if you ever feel like reaching out. As for work, I’ve done a bit of everything — from food service and hospitality to computer repair.</p>
 
+    <!-- Cbox chat embed -->
     <iframe src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" width="100%" height="450" frameborder="1" marginwidth="0" marginheight="0" scrolling="auto"></iframe>
 
     <!-- Load footer dynamically -->
     <div id="footer"></div>
 
-    <!-- Link to the external JavaScript file -->
-    <script src="loadcontent.js"></script> <!-- Link to the new JS file -->
-    <script src="script.js"></script> <!-- Other JS file, if needed -->
+    <!-- Link to external JS files -->
+    <script src="loadcontent.js"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
+
 
