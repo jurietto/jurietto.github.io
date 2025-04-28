@@ -1,10 +1,12 @@
-/* Global body styling */
 body {
-    background-color: skyblue; /* cozy background */
-    font-family: 'Times New Roman', Times, serif;
+    background-color: skyblue;
+    color: black;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
 }
-
-/* Keep links black and underlined always */
 a {
     color: black;
     text-decoration: underline;
@@ -13,4 +15,16 @@ a:visited, a:hover, a:active {
     color: black;
     text-decoration: underline;
 }
-
+img {
+    display: block;
+    margin: 20px 0;
+}
+#header, #footer, #posts {
+    margin-bottom: 20px;
+}
+.post {
+    margin-bottom: 40px;
+}
+#controls {
+    margin-bottom: 20px;
+}
