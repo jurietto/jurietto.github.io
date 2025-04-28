@@ -35,7 +35,9 @@ a:visited, a:hover, a:active {
     padding-left: 100%;
     animation: ticker 25s linear infinite;
     color: black;
-    font-size: 14px;
+    font-family: "Times New Roman", Times, serif; /* <<< ADD THIS */
+   
+
 }
 
 /* Scroll animation */
