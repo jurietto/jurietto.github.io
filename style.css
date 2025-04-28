@@ -1,6 +1,7 @@
 /* Global body styling */
 body {
     background-color: skyblue; /* cozy background */
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* Keep links black and underlined always */
