@@ -7,7 +7,7 @@ body {
 a {
     color: black;
     text-decoration: underline;
-    transition: color 0.3s ease; /* smooth color transition */
+
 }
 
 a:visited {
