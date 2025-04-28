@@ -40,13 +40,12 @@ a:visited, a:hover, a:active {
     height: 20px;
     margin-right: 8px;
 }
-
 </style>
 
 <div class="ticker">
-    <div class="ticker-text" id="ticker-text">
+    <div class="ticker-text">
         <img src="https://file.garden/ZhTgSjrp5nAroRKq/338.gif" alt="Icon">
-        WELCOME NETIZENS!!! CURRENT TIME: LOADING... ★ typing with squishy paws on my keyboard :3
+        WELCOME NETIZENS!!! ★ typing with squishy paws on my keyboard :3 ★ ネット市民のみなさん、ようこそ！★ ふわふわの肉球でキーボードをぽちぽちしてるよ :3
     </div>
 </div>
 
@@ -62,29 +61,6 @@ a:visited, a:hover, a:active {
     ⛧ <a href="https://jurietto.github.io/menhera">Menhera</a><br>
     ⛧ <a href="https://jurietto.github.io/recordings">Recordings</a>
 </div>
-
-<script>
-// Function to get PST time correctly
-function updatePSTTime() {
-    const now = new Date();
-    const pstTime = now.toLocaleTimeString('en-US', {
-        timeZone: 'America/Los_Angeles',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    });
-
-    const ticker = document.getElementById('ticker-text');
-    ticker.innerHTML = `
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/338.gif" alt="Icon">
-        WELCOME NETIZENS!!! CURRENT TIME: ${pstTime} PST ★ typing with squishy paws on my keyboard :3
-    `;
-}
-
-// Update time now and every 30 seconds
-updatePSTTime();
-setInterval(updatePSTTime, 30000);
-</script>
 
 
 
