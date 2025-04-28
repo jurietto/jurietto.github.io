@@ -2,14 +2,20 @@ body {
     background-color: skyblue;
     color: black;
     font-family: "Times New Roman", Times, serif;
-   
 }
+
 a {
     color: black;
     text-decoration: underline;
+    transition: color 0.3s ease; /* smooth color transition */
 }
-a:visited, a:hover, a:active {
-    color: black;
-    text-decoration: underline;
 
+a:visited {
+    color: black;
 }
+
+a:hover, a:active {
+    color: #ff3ea5; /* rich magenta bubblegum pink */
+    text-decoration: underline;
+}
+
