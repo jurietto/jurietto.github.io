@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     const tickerHTML = `
         <div class="ticker">
             <div class="ticker-text">
@@ -8,3 +8,4 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.insertAdjacentHTML('afterbegin', tickerHTML);
 });
+
