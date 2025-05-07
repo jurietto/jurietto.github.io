@@ -1,11 +1,32 @@
 <h1>jurietto.mp4</h1>
-    <p>
+<p>
     This is a short video titled <strong>jurietto.mp4</strong>. I made it because I was bored, felt like relearning some After Effects basics, and didn’t really have anything else to do at the time. 
     The video is 23 seconds long and was exported at 1920x1080 resolution (Full HD), encoded in H.264 format. It runs at 30 frames per second with a video bitrate of approximately 5400 kbps. 
     The audio is stereo at 188 kbps, sampled at 48 kHz.
 </p>
+
 <div class="video-container">
-        <video controls>
-            <source src="https://file.garden/ZhTgSjrp5nAroRKq/jurietto.mp4" type="video/mp4">
-        </video>
-    </div>
+    <video controls>
+        <source src="https://file.garden/ZhTgSjrp5nAroRKq/jurietto.mp4" type="video/mp4">
+        
+    </video>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+}
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
