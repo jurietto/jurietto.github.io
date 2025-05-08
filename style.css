@@ -54,12 +54,9 @@ td {
     padding-left: 20px;
 }
 hr {
-  border: none;
   height: 24px; /* or match your GIF height */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/923721zve3k8mm7v.gif');
   background-repeat: repeat-x;
   background-position: center;
-  background-size: auto 100%;
-  margin: 2em 0;
 }
 
