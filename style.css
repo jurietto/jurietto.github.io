@@ -68,6 +68,68 @@ hr {
     background-repeat: repeat-x;
     background-position: center;
 }
+@media screen and (max-width: 768px) {
+
+  body {
+    background-attachment: scroll;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 1em;
+    text-shadow: none;
+    overflow-x: hidden;
+  }
+
+  table {
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    overflow-x: auto;
+  }
+
+  th, td {
+    display: block;
+    text-align: left;
+    padding: 6px 0;
+    border-bottom: none;
+  }
+
+  .detailsColumn {
+    font-size: 13px;
+    margin-bottom: 0.5em;
+  }
+
+  .file-cell {
+    padding-left: 0;
+    margin-bottom: 0.5em;
+  }
+
+  h1, h2, h3 {
+    font-size: 1.4em;
+    line-height: 1.3em;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  .iframe-wrapper {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  iframe {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  hr {
+    height: 12px;
+    background-size: auto 100%;
+    margin: 1.5em 0;
+  }
+
+}
+
 
 
 
