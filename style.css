@@ -4,7 +4,16 @@ body {
     background-attachment: fixed;
     color: black;
     font-family: "Comic Sans MS", "Comic Sans";
+
+    text-shadow:
+      0 0 1px #ff3ea5,
+      0 0 2px #ff3ea5,
+      0 0 3px #ff3ea5,
+      0 0 4px #ff3ea5,
+      0 0 5px #ff3ea5,
+      0 0 6px #ff3ea5;
 }
+
 
 a {
     color: black;
