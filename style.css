@@ -1,9 +1,21 @@
+@font-face {
+    font-family: 'Teen';
+    src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Teen Bold';
+    src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
 body {
     background-color: silver;
     background-image: url(https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif);
     background-attachment: fixed;
     color: black;
-    font-family: "Comic Sans MS", "Comic Sans";
+    font-family: 'Teen', sans-serif;
 
     text-shadow:
       0 0 1px #ffd6e7,
@@ -12,9 +24,13 @@ body {
       0 0 4px #ffd6e7,
       0 0 5px #ffd6e7,
       0 0 6px #ffd6e7;
-    
 }
 
+/* Force headers to use bold font */
+h1, h2, h3, h4, h5, h6, strong, b, th {
+    font-family: 'Teen Bold', sans-serif;
+    font-weight: bold;
+}
 
 a {
     color: black;
@@ -27,7 +43,7 @@ a:visited {
 
 a:hover,
 a:active {
-    color: #ff3ea5; /* rich magenta bubblegum pink */
+    color: #ff3ea5;
     text-decoration: underline;
 }
 
@@ -63,11 +79,12 @@ td {
 
 hr {
     border: none;
-    height: 24px; /* or match your GIF height */
+    height: 24px;
     background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/923721zve3k8mm7v.gif');
     background-repeat: repeat-x;
     background-position: center;
 }
+
 @media screen and (max-width: 768px) {
 
   body {
