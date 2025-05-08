@@ -20,6 +20,6 @@ a:hover, a:active {
 }
 .iframe-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     margin: 20px 0;
 }
