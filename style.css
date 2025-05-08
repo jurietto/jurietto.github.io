@@ -35,13 +35,13 @@ table {
 th {
     text-align: left;
     padding-bottom: 6px;
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid;
 }
 
 td {
     padding: 4px 8px;
     white-space: nowrap;
-    border-bottom: 1px dotted #ccc;
+    border-bottom: 1px dotted;
 }
 
 .detailsColumn {
