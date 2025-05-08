@@ -12,6 +12,7 @@ body {
       0 0 4px #ffd6e7,
       0 0 5px #ffd6e7,
       0 0 6px #ffd6e7;
+    padding-top: 32px; /* match banner height */
 }
 
 
