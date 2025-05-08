@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Life Updates</title>
-  <link rel="stylesheet" href="jurietto.github.io/style.css">
+
+  <!-- ✅ FIXED: correct path to style.css from /updates folder -->
+  <link rel="stylesheet" href="../style.css">
+
   <link rel="icon" href="https://file.garden/ZhTgSjrp5nAroRKq/282.gif" type="image/x-icon">
 </head>
 <body>
@@ -12,7 +15,7 @@
   <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="animated gif">
 
   <p>
-    <a href="https://jurietto.github.io/updates.html">
+    <a href="../index.html">
       <img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="parent directory icon" style="vertical-align: middle; margin-right: 6px;">
       [parent directory]
     </a>
@@ -69,18 +72,19 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ✅ Footer -->
   <div id="footer"></div>
   <script>
-    fetch('footer.html')
+    fetch('../footer.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('footer').innerHTML = data;
       });
   </script>
 
-  <!-- External JS files -->
-  <script src="script.js"></script>
+  <!-- ✅ JS -->
+  <script src="../script.js"></script>
 
 </body>
 </html>
+
