@@ -10,9 +10,9 @@
 <body>
 
 <h1>Index of jurietto.github.io/updates</h1>
-<img src="https://file.garden/ZhTgSjrp5nAroRKq/318.gif" alt="animated gif">
+<img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="animated gif">
 
-<p><a href="index.html">⬆ [parent directory]</a></p>
+<p><a href="index.html"><img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="updates icon" style="vertical-align: middle; margin-right: 6px;"> [parent directory]</a></p>
 
 <table>
   <thead>
@@ -50,7 +50,7 @@
 </table>
 
 
-    <h1>꒰ঌ₊˚⊹♡ Life Updates</h1>
+    <h1>Life Updates</h1>
 
     <!-- Sort control -->
     <div id="controls">
@@ -96,23 +96,23 @@
         </div>
     </section>
 
-   <footer> 
-    <hr>
-    <p>2024–??? jurietto.github.io</p> 
-    <div class="footer-links">
-        <a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a> |
-        <a href="https://vndb.org/u274298/edit" target="_blank">VNDB</a> |
-        <a href="https://jurietto.github.io/updates">Updates</a> |
-        <a href="https://jurietto.github.io/menhera">Menhera</a> |
-        <a href="https://jurietto.github.io/recordings">Recordings</a>
-    </div>
-</footer>
+   <!-- Footer -->
+<div id="footer"></div>
+<script>
+  fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
 
     <!-- External JS files -->
     <script src="script.js"></script> 
 
 </body>
 </html>
+
+
 
 
 
