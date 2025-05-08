@@ -2,22 +2,56 @@ body {
     background-color: skyblue;
     color: black;
     font-family: "Times New Roman", Times, serif;
+ 
 }
 
 a {
     color: black;
     text-decoration: underline;
-
 }
 
 a:visited {
     color: black;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
     color: #ff3ea5; /* rich magenta bubblegum pink */
     text-decoration: underline;
 }
+
 .iframe-wrapper {
     display: flex;
+    justify-content: center;
+ 
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Courier New", monospace;
+    background-color: white;
+    color: black;
+ 
+}
+
+th {
+    text-align: left;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #aaa;
+}
+
+td {
+    padding: 4px 8px;
+    white-space: nowrap;
+    border-bottom: 1px dotted #ccc;
+}
+
+.detailsColumn {
+    text-align: right;
+}
+
+.file-cell {
+    padding-left: 20px;
+}
+
