@@ -47,3 +47,16 @@
             <p>I just started my day and it's like 4pm... probably not going to bed for like 8-12 hours or so maybe. Bought a couple of VNs for my PlayStation, a MLP, and two Charmmy Kitty figures.</p>
         </div>
     </section>
+
+   <!-- Footer -->
+<div id="footer"></div>
+<script>
+  fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
+
+    <!-- External JS files -->
+    <script src="script.js"></script> 
