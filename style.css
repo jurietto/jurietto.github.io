@@ -3,8 +3,7 @@ body {
     background-image: url(https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif);
     background-attachment: fixed;
     color: black;
-    font-family: "Times New Roman", Times, serif;
- 
+    font-family: "Comic Sans MS", "Comic Sans";
 }
 
 a {
@@ -25,13 +24,11 @@ a:active {
 .iframe-wrapper {
     display: flex;
     justify-content: center;
- 
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
- 
 }
 
 th {
@@ -53,10 +50,10 @@ td {
 .file-cell {
     padding-left: 20px;
 }
-hr {
-  height: 24px; /* or match your GIF height */
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/923721zve3k8mm7v.gif');
-  background-repeat: repeat-x;
-  background-position: center;
-}
 
+hr {
+    height: 24px; /* or match your GIF height */
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/923721zve3k8mm7v.gif');
+    background-repeat: repeat-x;
+    background-position: center;
+}
