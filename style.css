@@ -17,13 +17,6 @@ body {
     color: black;
     font-family: 'Teen', sans-serif;
 
-    text-shadow:
-      0 0 1px #ff8cad,
-      0 0 2px #ff8cad,
-      0 0 3px #ff8cad,
-      0 0 4px #ff8cad,
-      0 0 5px #ff8cad,
-      0 0 6px #ff8cad;
 }
 
 /* Force headers to use bold font */
