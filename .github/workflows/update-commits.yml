@@ -2,21 +2,19 @@ name: Update Commits File
 
 on:
   push:
-  schedule:
-    - cron: '0 * * * *'  # every hour
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Required for pushing
+      contents: write  # Required to push
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: false
+          persist-credentials: false  # We'll use a PAT instead
 
       - name: Fetch recent commits and save to JSON
         run: |
@@ -31,11 +29,11 @@ jobs:
 
       - name: Commit and push commits.json
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
+          git config user.name "jurietto"
+          git config user.email "your-email@example.com"
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/jurietto/jurietto.github.io.git
+          git fetch origin main
+          git rebase origin/main
           git add commits.json
-          git diff --cached --quiet || git commit -m "Update commit log [bot]"
+          git diff --cached --quiet || git commit -m "Update commit log"
           git push origin main
-
-
