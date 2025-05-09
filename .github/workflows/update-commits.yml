@@ -2,6 +2,7 @@ name: Update Commits File
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   build:
