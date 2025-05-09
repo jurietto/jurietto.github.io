@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Required to push
+      contents: write  # Required to push changes
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: false  # We'll use a PAT instead
+          persist-credentials: false  # Disable default token
 
       - name: Fetch recent commits and save to JSON
         run: |
@@ -22,12 +22,10 @@ jobs:
                -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
                https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=50 \
           | jq '[.[] | select(.author.login == "jurietto") | {
-    author: .commit.author.name,
-    date: .commit.author.date,
-    message: .commit.message
-}]' > commits.json
-
-
+              author: .commit.author.name,
+              date: .commit.author.date,
+              message: .commit.message
+          }]' > commits.json
 
       - name: Commit and push commits.json
         run: |
