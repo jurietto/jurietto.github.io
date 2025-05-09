@@ -1,5 +1,17 @@
 [
   {
+    "message": "Update style.css",
+    "author": "Juri",
+    "date": "2025-05-09T03:04:50Z",
+    "url": "https://github.com/jurietto/jurietto.github.io/commit/9228129c60496de204b6feb00d34759928e16bb3"
+  },
+  {
+    "message": "Update commit log [bot]",
+    "author": "GitHub Action",
+    "date": "2025-05-09T03:04:46Z",
+    "url": "https://github.com/jurietto/jurietto.github.io/commit/6f4bc362da7d11e1838a6f5ab8c8bb90d51410f0"
+  },
+  {
     "message": "Update commit log [bot]",
     "author": "GitHub Action",
     "date": "2025-05-09T03:04:34Z",
@@ -46,17 +58,5 @@
     "author": "Juri",
     "date": "2025-05-09T03:03:21Z",
     "url": "https://github.com/jurietto/jurietto.github.io/commit/1f09be08060997eea2f7698e442d8454c91b7825"
-  },
-  {
-    "message": "Update commit log [bot]",
-    "author": "GitHub Action",
-    "date": "2025-05-09T03:03:11Z",
-    "url": "https://github.com/jurietto/jurietto.github.io/commit/7dc3fd552068bd3d3f7144a06cb327e5d09780ef"
-  },
-  {
-    "message": "Update commit log [bot]",
-    "author": "GitHub Action",
-    "date": "2025-05-09T03:03:00Z",
-    "url": "https://github.com/jurietto/jurietto.github.io/commit/71d4fbbec263db37d6051353c961cac80f216e06"
   }
 ]
