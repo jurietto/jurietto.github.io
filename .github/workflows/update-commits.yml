@@ -41,7 +41,7 @@ jobs:
       - name: Commit and push commits.json
         run: |
           git config user.name "jurietto"
-          git config user.email "your-email@example.com"
+          git config user.email "jurilikes2eatcurry@gmail.com"
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/jurietto/jurietto.github.io.git
           git fetch origin main
           git rebase origin/main
