@@ -69,5 +69,29 @@ td {
 .file-cell {
     padding-left: 20px;
 }
+<style>
+  #commit-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  #commit-list li {
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 22px;
+  }
+
+  #commit-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/skull.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+</style>
 
 
