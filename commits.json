@@ -1,5 +1,10 @@
 [
   {
+    "author": "GitHub Action",
+    "date": "2025-05-09T04:38:55Z",
+    "message": "Update commit log [bot]"
+  },
+  {
     "author": "Juri",
     "date": "2025-05-09T04:38:44Z",
     "message": "Update update-commits.yml"
@@ -242,11 +247,6 @@
   {
     "author": "GitHub Action",
     "date": "2025-05-09T03:55:53Z",
-    "message": "Update commit log [bot]"
-  },
-  {
-    "author": "GitHub Action",
-    "date": "2025-05-09T03:55:42Z",
     "message": "Update commit log [bot]"
   }
 ]
