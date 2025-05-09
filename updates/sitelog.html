@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Site Log – Juri</title>
+  <title>Site Log</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" href="https://file.garden/ZhTgSjrp5nAroRKq/282.gif" type="image/x-icon">
 </head>
 <body>
   <div class="main-content">
-    <h1>Site Log – Juri</h1>
-
+    <h1>Index of jurietto.github.io/updates/sitelog/</h1>
     <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="Heartrose icon">
 
     <p>
@@ -19,16 +18,13 @@
       </a>
     </p>
 
+    <h1>Site Log – Juri</h1>
+
     <!-- Sort dropdown -->
     <div>
       <label for="filter">Sort by:</label>
       <select id="filter">
         <option value="all">All Time</option>
-        <option value="2025-03">2025-03</option>
-        <option value="2025-02">2025-02</option>
-        <option value="2024-09">2024-09</option>
-        <option value="2024-05">2024-05</option>
-        <!-- Add more as needed -->
       </select>
     </div>
 
@@ -44,6 +40,16 @@
           const list = document.getElementById('commit-list');
           const filter = document.getElementById('filter');
 
+          // Generate list of unique YYYY-MM values
+          const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
+
+          months.forEach(month => {
+            const opt = document.createElement('option');
+            opt.value = month;
+            opt.textContent = month;
+            filter.appendChild(opt);
+          });
+
           function renderCommits(month) {
             list.innerHTML = '';
             commits
@@ -55,7 +61,7 @@
                 list.appendChild(li);
               });
 
-            if (list.innerHTML === '') {
+            if (!list.innerHTML) {
               list.innerHTML = '<li>No commits found for this period.</li>';
             }
           }
