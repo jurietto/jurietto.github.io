@@ -4,6 +4,30 @@
   <meta charset="UTF-8">
   <title>Site Updates</title>
   <link rel="stylesheet" href="../style.css">
+  <style>
+    #commit-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #commit-list li {
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 22px;
+    }
+
+    #commit-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 14px;
+      height: 14px;
+      background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/skull.gifv');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  </style>
 </head>
 <body>
   <h1>Recent Site Updates</h1>
@@ -18,7 +42,7 @@
         const list = document.getElementById('commit-list');
         commits.forEach(commit => {
           const li = document.createElement('li');
-          li.innerHTML = `<strong>${commit.author}</strong> - ${new Date(commit.date).toLocaleString()}<br>
+          li.innerHTML = `<strong>${commit.author}</strong> – ${new Date(commit.date).toLocaleString()}<br>
                           <a href="${commit.url}" target="_blank">${commit.message}</a>`;
           list.appendChild(li);
         });
