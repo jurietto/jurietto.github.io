@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Updates</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="main-content">
+    <h1>Site Log – jurietto.github.io/updates/sitelog/</h1>
+
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="Charmmy Kitty animation" />
+
+    <p>
+      <a href="../updates.html">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="Back icon" style="vertical-align: middle; margin-right: 6px;">
+        [parent directory]
+      </a>
+    </p>
+
+    <ul id="commit-list">
+      <li>Loading commit history...</li>
+    </ul>
+
+    <script>
+      async function loadCommits() {
+        try {
+          const res = await fetch('../commits.json');
+          const commits = await res.json();
+
+          const list = document.getElementById('commit-list');
+          list.innerHTML = ''; // Clear placeholder
+
+          commits.forEach(commit => {
+            const li = document.createElement('li');
+            const date = new Date(commit.date).toLocaleString();
+            li.innerHTML = `<strong>${commit.author}</strong> – ${date}<br>${commit.message}`;
+            list.appendChild(li);
+          });
+        } catch (err) {
+          const list = document.getElementById('commit-list');
+          list.innerHTML = '<li style="color: crimson;">Could not load commit history.</li>';
+          console.error(err);
+        }
+      }
+
+      loadCommits();
+    </script>
+
+    <div id="footer"></div>
+    <script>
+      fetch('../footer.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('footer').innerHTML = html;
+        });
+    </script>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
