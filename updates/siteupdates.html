@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Updates</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <h1>Recent Site Updates</h1>
+  <ul id="updates"></ul>
+
+  <script>
+    const updatesEl = document.getElementById('updates');
+
+    fetch("https://api.github.com/repos/jurietto/jurietto.github.io/commits")
+      .then(response => response.json())
+      .then(data => {
+        data.slice(0, 10).forEach(commit => {
+          const message = commit.commit.message;
+          const date = new Date(commit.commit.committer.date).toLocaleString();
+          const author = commit.commit.committer.name;
+
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${message}</strong><br><span>${author} — ${date}</span>`;
+          updatesEl.appendChild(li);
+        });
+      })
+      .catch(err => {
+        updatesEl.innerHTML = "<li>Failed to load updates. Please try again later.</li>";
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
 
