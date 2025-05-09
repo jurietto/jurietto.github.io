@@ -16,6 +16,11 @@
     fetch("https://api.github.com/repos/jurietto/jurietto.github.io/commits")
       .then(response => response.json())
       .then(data => {
+        if (!Array.isArray(data)) {
+          updatesEl.innerHTML = "<li>Unable to fetch updates. Please check your repository name.</li>";
+          return;
+        }
+
         data.slice(0, 10).forEach(commit => {
           const message = commit.commit.message;
           const date = new Date(commit.commit.committer.date).toLocaleString();
@@ -34,4 +39,5 @@
 
 </body>
 </html>
+
 
