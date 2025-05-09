@@ -84,22 +84,13 @@ table tr:hover {
 }
 .file-cell {
   padding-left: 20px;
-}
 
-/* Commit list */
-#commit-list {
-  list-style: none;
-  padding-left: 0;
-}
-#commit-list li {
-  margin-bottom: 12px;
-  position: relative;
-  padding-left: 22px;
 }
 #commit-list li::before {
   content: '';
   position: absolute;
-  left: 0;
+  vertical-align: middle; 
+  margin-right: 6px;;
   top: 2px;
   width: 20px;
   height: 20px;
