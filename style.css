@@ -106,24 +106,27 @@ img {
   border-radius: 0 !important;
 }
 
-/* Stamps container using CSS Grid */
+/* Stamps container with responsive grid layout */
 #stamps {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 10px;
-  justify-items: center;
   margin-top: 16px;
-  padding: 0 8px;
+  padding: 0;
+  width: 100%;
+  justify-content: center;
 }
 
 /* Stamp images */
 #stamps img {
-  width: 90px;
-  height: 56px;
+  width: 100%;
+  max-width: 100px;
+  height: auto;
   object-fit: contain;
-  margin: 0;
   display: block;
+  margin: 0 auto;
 }
+
 
 /* Make all iframes responsive */
 iframe {
