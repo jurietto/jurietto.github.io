@@ -14,8 +14,11 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Fetch recent commits and save to JSON
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          curl -s https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=10 \
+          curl -s -H "Authorization: token $GH_PAT" \
+            https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=10 \
           | jq '[.[] | select(type == "object" and has("commit")) | {
               message: .commit.message,
               author: .commit.author.name,
