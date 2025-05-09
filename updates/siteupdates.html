@@ -6,38 +6,40 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-
   <h1>Recent Site Updates</h1>
-  <ul id="updates"></ul>
+  <ul id="commit-list"></ul>
 
   <script>
-    const updatesEl = document.getElementById('updates');
-
-    fetch("https://api.github.com/repos/jurietto/jurietto.github.io/commits")
-      .then(response => response.json())
-      .then(data => {
-        if (!Array.isArray(data)) {
-          updatesEl.innerHTML = "<li>Unable to fetch updates. Please check your repository name.</li>";
-          return;
+    // Function to fetch and display commits
+    async function fetchCommits() {
+      try {
+        const response = await fetch('https://api.github.com/repos/jurietto/jurietto.github.io/commits');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        const commits = await response.json();
 
-        data.slice(0, 10).forEach(commit => {
-          const message = commit.commit.message;
-          const date = new Date(commit.commit.committer.date).toLocaleString();
-          const author = commit.commit.committer.name;
+        const commitList = document.getElementById('commit-list');
+        commits.slice(0, 10).forEach(commit => {
+          const listItem = document.createElement('li');
+          const commitMessage = commit.commit.message;
+          const author = commit.commit.author.name;
+          const date = new Date(commit.commit.author.date).toLocaleString();
+          const commitUrl = commit.html_url;
 
-          const li = document.createElement('li');
-          li.innerHTML = `<strong>${message}</strong><br><span>${author} — ${date}</span>`;
-          updatesEl.appendChild(li);
+          listItem.innerHTML = `<strong>${author}</strong> committed on ${date}: <a href="${commitUrl}" target="_blank">${commitMessage}</a>`;
+          commitList.appendChild(listItem);
         });
-      })
-      .catch(err => {
-        updatesEl.innerHTML = "<li>Failed to load updates. Please try again later.</li>";
-        console.error(err);
-      });
-  </script>
+      } catch (error) {
+        console.error('Error fetching commits:', error);
+      }
+    }
 
+    // Call the function to fetch commits when the page loads
+    fetchCommits();
+  </script>
 </body>
 </html>
+
 
 
