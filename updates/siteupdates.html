@@ -6,46 +6,27 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-
-  <h1>Recent Site Updates</h1>
-  <p>This log lists the most recent changes to the site, automatically pulled from the repository.</p>
-
-  <ul id="commit-list">
-    <li>Loading updates...</li>
-  </ul>
+  <h1>Site Updates</h1>
+  <ul id="commit-list">Loading updates...</ul>
 
   <script>
     fetch('../commits.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Commit data not found");
-        }
-        return response.json();
-      })
-      .then(commits => {
-        const list = document.getElementById('commit-list');
-        list.innerHTML = ''; // Clear the "Loading..." placeholder
+      .then(response => response.json())
+      .then(data => {
+        const commitList = document.getElementById('commit-list');
+        commitList.innerHTML = ''; // Clear "Loading..." text
 
-        commits.forEach(commit => {
+        data.forEach(commit => {
           const li = document.createElement('li');
-          const date = new Date(commit.date).toLocaleString();
-
-          li.innerHTML = `
-            <strong>${commit.author}</strong> – ${date}<br>
-            <a href="${commit.url}" target="_blank">${commit.message}</a>
-          `;
-          list.appendChild(li);
+          li.innerHTML = `<strong>${commit.author}</strong> – ${new Date(commit.date).toLocaleString()}<br>
+            <a href="${commit.url}" target="_blank">${commit.message}</a>`;
+          commitList.appendChild(li);
         });
       })
       .catch(error => {
-        const list = document.getElementById('commit-list');
-        list.innerHTML = `<li>Error loading commits: ${error.message}</li>`;
-        console.error(error);
+        document.getElementById('commit-list').innerHTML = 'Failed to load updates.';
+        console.error('Error fetching commits:', error);
       });
   </script>
-
 </body>
 </html>
-
-
-
