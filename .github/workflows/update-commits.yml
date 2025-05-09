@@ -27,6 +27,11 @@ jobs:
               message: .commit.message
           }][0:50]' > commits.json
 
+      - name: Cleanup unstaged changes
+        run: |
+          git reset --hard
+          git clean -fd
+
       - name: Commit and push commits.json
         run: |
           git config user.name "jurietto"
