@@ -8,7 +8,96 @@
 </head>
 <body>
   <div class="main-content">
+    <h1>Index of jurietto.github.io/updates/site<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Site Log – Juri</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="https://file.garden/ZhTgSjrp5nAroRKq/282.gif" type="image/x-icon">
+</head>
+<body>
+  <div class="main-content">
     <h1>Index of jurietto.github.io/updates/sitelog/</h1>
+    <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="Heartrose icon">
+
+    <p>
+      <a href="../updates.html">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="Back icon" style="vertical-align: middle; margin-right: 6px;">
+        [parent directory]
+      </a>
+    </p>
+
+    <h1>Site Log – Juri</h1>
+
+    <!-- Sort dropdown -->
+    <div>
+      <label for="filter">Sort by:</label>
+      <select id="filter">
+        <option value="new">New</option>
+        <option value="old">Old</option>
+      </select>
+    </div>
+
+    <ul id="commit-list">
+      <li>Loading commit history...</li>
+    </ul>
+
+    <script>
+      async function loadCommits() {
+        try {
+          const res = await fetch('../commits.json');
+          const commits = await res.json();
+          const list = document.getElementById('commit-list');
+          const filter = document.getElementById('filter');
+
+          function renderCommits(order) {
+            list.innerHTML = '';
+
+            const sorted = [...commits].sort((a, b) => {
+              return order === 'old'
+                ? new Date(a.date) - new Date(b.date)
+                : new Date(b.date) - new Date(a.date);
+            });
+
+            sorted.forEach(commit => {
+              const li = document.createElement('li');
+              const date = new Date(commit.date).toLocaleString();
+              li.innerHTML = `<strong>${commit.author}</strong> – ${date}<br>${commit.message}`;
+              list.appendChild(li);
+            });
+
+            if (!list.innerHTML) {
+              list.innerHTML = '<li>No commits found.</li>';
+            }
+          }
+
+          filter.addEventListener('change', e => renderCommits(e.target.value));
+          renderCommits('new');
+        } catch (err) {
+          document.getElementById('commit-list').innerHTML =
+            '<li style="color: crimson;">Could not load updates.</li>';
+          console.error(err);
+        }
+      }
+
+      loadCommits();
+    </script>
+
+    <div id="footer"></div>
+    <script>
+      fetch('../footer.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('footer').innerHTML = html;
+        });
+    </script>
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
+log/</h1>
     <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="Heartrose icon">
 
     <p>
