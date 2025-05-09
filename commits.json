@@ -1,5 +1,8 @@
 [
   {
+    "message": "Update header.html"
+  },
+  {
     "message": "Update update-commits.yml"
   },
   {
@@ -145,8 +148,5 @@
   },
   {
     "message": "Update lifeupdates.html"
-  },
-  {
-    "message": "Update updates.html"
   }
 ]
