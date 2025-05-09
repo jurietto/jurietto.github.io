@@ -106,26 +106,23 @@ img {
   border-radius: 0 !important;
 }
 
-/* Stamps container with responsive grid layout */
+/* Stamps container - flex row layout like before */
 #stamps {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 10px;
-  margin-top: 16px;
-  padding: 0;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 /* Stamp images */
 #stamps img {
-  width: 100%;
-  max-width: 100px;
-  height: auto;
+  width: 99px;
+  height: 56px;
   object-fit: contain;
   display: block;
-  margin: 0 auto;
 }
+
 
 
 /* Make all iframes responsive */
