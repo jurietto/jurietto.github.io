@@ -106,13 +106,23 @@ img {
   border-radius: 0 !important;
 }
 
-/* Stamp layout */
+/* Stamps container using CSS Grid */
+#stamps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  justify-items: center;
+  margin-top: 16px;
+  padding: 0 8px;
+}
+
+/* Stamp images */
 #stamps img {
-  display: inline-block;
-  margin: 4px;
-  vertical-align: middle;
-  height: auto;
-  width: auto;
+  width: 90px;
+  height: 56px;
+  object-fit: contain;
+  margin: 0;
+  display: block;
 }
 
 /* Make all iframes responsive */
