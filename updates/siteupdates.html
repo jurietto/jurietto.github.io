@@ -9,27 +9,28 @@
   <h1>Recent Site Updates</h1>
   <ul id="commit-list"></ul>
 
-  <script>
-    async function loadCommits() {
-      try {
-        const response = await fetch('../commits.json');
-        const commits = await response.json();
+ <script>
+  async function loadCommits() {
+    try {
+      const response = await fetch('../commits.json');
+      const commits = await response.json();
 
-        const list = document.getElementById('commit-list');
-        commits.forEach(commit => {
-          const li = document.createElement('li');
-          li.innerHTML = `<strong>${commit.author}</strong> – ${new Date(commit.date).toLocaleString()}<br>
-                          <a href="${commit.url}" target="_blank">${commit.message}</a>`;
-          list.appendChild(li);
-        });
-      } catch (err) {
-        document.getElementById('commit-list').innerText = 'Failed to load commit data.';
-        console.error(err);
-      }
+      const list = document.getElementById('commit-list');
+      commits.forEach(commit => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${commit.author}</strong> – ${new Date(commit.date).toLocaleString()}<br>
+                        ${commit.message}`;
+        list.appendChild(li);
+      });
+    } catch (err) {
+      document.getElementById('commit-list').innerText = 'Failed to load commit data.';
+      console.error(err);
     }
+  }
 
-    loadCommits();
-  </script>
+  loadCommits();
+</script>
+
 </body>
 </html>
 
