@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="main-content">
-    <h1>Site Log</h1>
+    <h1>Index of jurietto.github.io/updates/sitelogs/</h1>
 
     <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="Charmmy Kitty animation">
 
@@ -19,10 +19,23 @@
       </a>
     </p>
 
+    <h1>Site Logs</h1>
+
+    
+    <!-- Sort control (unstyled) -->
+    <div id="controls">
+      <label for="filter">Sort by:</label>
+      <select id="filter">
+        <option value="new">New</option>
+        <option value="old">Old</option>
+      </select>
+    </div>
+
     <section id="commit-list">
       <p>Loading commit history...</p>
     </section>
 
+    <!-- Footer -->
     <div id="footer"></div>
     <script>
       fetch('../footer.html')
@@ -37,30 +50,41 @@
     async function loadCommits() {
       try {
         const res = await fetch('../commits.json');
-        const commits = await res.json();
+        let commits = await res.json();
 
-        const container = document.getElementById('commit-list');
-        container.innerHTML = '';
+        const filter = document.getElementById('filter');
+        const list = document.getElementById('commit-list');
 
-        commits.forEach(commit => {
-          const div = document.createElement('div');
-          div.classList.add('post');
+        const renderCommits = () => {
+          const sorted = [...commits];
+          if (filter.value === 'old') {
+            sorted.reverse();
+          }
 
-          const date = new Date(commit.date).toLocaleString();
+          list.innerHTML = '';
+          sorted.forEach(commit => {
+            const div = document.createElement('div');
+            div.classList.add('post');
 
-          div.innerHTML = `
-            <p>
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/butter.gifv" alt="update icon" style="vertical-align: middle; margin-right: 6px;">
-              <strong>${date}</strong>
-            </p>
-            <p>${commit.message}</p>
-          `;
+            const date = new Date(commit.date).toLocaleString();
 
-          container.appendChild(div);
-        });
+            div.innerHTML = `
+              <p>
+                <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="log icon" style="vertical-align: middle; margin-right: 6px;">
+                <strong>${date}</strong> – ${commit.author}
+              </p>
+              <p>${commit.message}</p>
+            `;
+
+            list.appendChild(div);
+          });
+        };
+
+        // Listen for dropdown changes
+        filter.addEventListener('change', renderCommits);
+        renderCommits();
       } catch (err) {
-        const container = document.getElementById('commit-list');
-        container.innerHTML = '<p style="color: crimson;">Could not load commit history.</p>';
+        document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load commit history.</p>';
         console.error(err);
       }
     }
