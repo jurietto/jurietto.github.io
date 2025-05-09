@@ -8,24 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Required to push changes
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          persist-credentials: false  # Disable default token
+          persist-credentials: false
 
-      - name: Fetch recent commits and save to JSON
+      - name: Fetch recent commits by jurietto and save to JSON
         run: |
           curl -s -H "Accept: application/vnd.github+json" \
                -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=50 \
+               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100 \
           | jq '[.[] | select(.author.login == "jurietto") | {
               author: .commit.author.name,
               date: .commit.author.date,
               message: .commit.message
-          }]' > commits.json
+          }][0:50]' > commits.json
 
       - name: Commit and push commits.json
         run: |
