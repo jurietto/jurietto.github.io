@@ -21,11 +21,12 @@ jobs:
           curl -s -H "Accept: application/vnd.github+json" \
                -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
                https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=50 \
-          | jq '[.[] | select(.commit.author.name == "jurietto") | {
+          | jq '[.[] | select(.author.login == "jurietto") | {
     author: .commit.author.name,
     date: .commit.author.date,
     message: .commit.message
 }]' > commits.json
+
 
 
       - name: Commit and push commits.json
