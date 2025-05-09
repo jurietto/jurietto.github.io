@@ -18,14 +18,20 @@ jobs:
 
       - name: Fetch recent commits by jurietto and save to JSON
         run: |
+          echo "Fetching commits from GitHub API..."
           curl -s -H "Accept: application/vnd.github+json" \
                -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100 \
-          | jq '[.[] | select(.author.login == "jurietto") | {
-              author: .commit.author.name,
-              date: .commit.author.date,
-              message: .commit.message
+               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100 > raw_commits.json
+
+          echo "Filtering commits by author 'jurietto'..."
+          cat raw_commits.json | jq '[.[] | select(.author != null and .author.login == "jurietto") | {
+            author: .commit.author.name,
+            date: .commit.author.date,
+            message: .commit.message
           }][0:50]' > commits.json
+
+          echo "Resulting JSON content:"
+          cat commits.json
 
       - name: Cleanup unstaged changes
         run: |
@@ -35,7 +41,7 @@ jobs:
       - name: Commit and push commits.json
         run: |
           git config user.name "jurietto"
-          git config user.email "jurietto@users.noreply.github.com"
+          git config user.email "your-email@example.com"
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/jurietto/jurietto.github.io.git
           git fetch origin main
           git rebase origin/main
