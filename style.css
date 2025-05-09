@@ -1,102 +1,118 @@
-@font-face { 
-    font-family: 'Teen';
-    src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
-    font-weight: normal;
+@font-face {
+  font-family: 'Teen';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
+  font-weight: normal;
 }
 
 @font-face {
-    font-family: 'Teen Bold';
-    src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
-    font-weight: bold;
+  font-family: 'Teen Bold';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
+  font-weight: bold;
 }
 
 body {
-    background-color: silver;
-    background-image: url(https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif);
-    background-attachment: fixed;
-    color: black;
-    font-family: 'Teen', sans-serif;
-
+  background-color: silver;
+  background-image: url(https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif);
+  background-attachment: fixed;
+  color: black;
+  font-family: 'Teen', sans-serif;
+  padding: 20px;
+  line-height: 1.6;
 }
 
-/* Force headers to use bold font */
+/* Headers */
 h1, h2, h3, h4, h5, h6, strong, b, th {
-    font-family: 'Teen Bold', sans-serif;
-    font-weight: bold;
+  font-family: 'Teen Bold', sans-serif;
+  font-weight: bold;
 }
 
+/* Links */
 a {
-    color: black;
-    text-decoration: underline;
+  color: black;
+  text-decoration: underline;
 }
-
 a:visited {
-    color: black;
+  color: black;
 }
-
 a:hover,
 a:active {
-    color: #ff3ea5;
-    text-decoration: underline;
+  color: #ff3ea5;
+  text-decoration: underline;
 }
 
-.iframe-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th {
-    text-align: left;
-    padding-bottom: 6px;
-    border-bottom: 1px solid;
-}
-
-td {
-    padding: 4px 8px;
-    white-space: nowrap;
-    border-bottom: 1px dotted;
-}
-
-.detailsColumn {
-    text-align: right;
-}
-
-.file-cell {
-    padding-left: 20px;
-}
-  #commit-list {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  #commit-list li {
-    margin-bottom: 12px;
-    position: relative;
-    padding-left: 22px;
-  }
-
-  #commit-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 2px;
-    width: 14px;
-    height: 14px;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif');
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
+/* Wrapper for centered sections */
 .main-content {
-    background-color: rgba(255, 255, 255, 0.8); /* white with transparency */
-    padding: 16px;
-    border-radius: 12px;
-    max-width: 900px;
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: rgba(255, 255, 255, 0.85); /* slightly more opaque */
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  padding-bottom: 6px;
+  border-bottom: 1px solid;
+}
+td {
+  padding: 6px 10px;
+  white-space: nowrap;
+  border-bottom: 1px dotted;
+}
+table tr:hover {
+  background-color: rgba(255, 192, 203, 0.2); /* cute pink highlight */
+}
+
+/* Utilities */
+.detailsColumn {
+  text-align: right;
+}
+.file-cell {
+  padding-left: 20px;
+}
+
+/* Commit list bullets */
+#commit-list {
+  list-style: none;
+  padding-left: 0;
+}
+#commit-list li {
+  margin-bottom: 12px;
+  position: relative;
+  padding-left: 22px;
+}
+#commit-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Image styling */
+img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* Optional: Cute Scrollbar for WebKit */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff3ea5;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #ffe6f0;
+}
