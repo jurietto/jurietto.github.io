@@ -1,4 +1,10 @@
 [
+{"author":"Juri","date":"2025-05-09T23:25:10Z","message":"Add files via upload"}
+,
+{"author":"Juri","date":"2025-05-09T23:24:51Z","message":"Delete commits.json"}
+,
+{"author":"jurietto","date":"2025-05-09T23:20:55Z","message":"Update commit log"}
+,
 {"author":"Juri","date":"2025-05-09T23:20:39Z","message":"Update commits.json"}
 ,
 {"author":"jurietto","date":"2025-05-09T23:14:33Z","message":"Update commit log"}
@@ -192,7 +198,6 @@
 {"author":"Juri","date":"2025-05-09T06:47:58Z","message":"Update commits.json"}
 ,
 {"author":"Juri","date":"2025-05-09T06:24:19Z","message":"Update updates.html"}
-,
 {"author":"Juri","date":"2025-05-09T06:17:22Z","message":"Update siteupdates.html"}
 ,
 {"author":"Juri","date":"2025-05-09T06:14:33Z","message":"Update siteupdates.html"}
@@ -216,7 +221,6 @@
 {"author":"Juri","date":"2025-05-09T05:00:51Z","message":"Update siteupdates.html"}
 ,
 {"author":"Juri","date":"2025-05-09T04:59:13Z","message":"Update update-commits.yml"}
-,
 {"author":"Juri","date":"2025-05-09T04:38:44Z","message":"Update update-commits.yml"}
 ,
 {"author":"Juri","date":"2025-05-09T04:27:55Z","message":"Update update-commits.yml"}
@@ -242,13 +246,10 @@
 {"author":"Juri","date":"2025-05-09T03:53:55Z","message":"Update style.css"}
 ,
 {"author":"Juri","date":"2025-05-09T03:49:37Z","message":"Update style.css"}
-,
 {"author":"Juri","date":"2025-05-09T03:40:48Z","message":"Update style.css"}
-,
 {"author":"Juri","date":"2025-05-09T03:13:38Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-05-09T03:11:28Z","message":"Update index.html"}
-,
 {"author":"Juri","date":"2025-05-09T03:04:50Z","message":"Update style.css"}
 ,
 {"author":"Juri","date":"2025-05-09T03:03:40Z","message":"Update style.css"}
@@ -256,13 +257,10 @@
 {"author":"Juri","date":"2025-05-09T03:03:21Z","message":"Update siteupdates.html"}
 ,
 {"author":"Juri","date":"2025-05-09T02:51:56Z","message":"Update siteupdates.html"}
-,
 {"author":"Juri","date":"2025-05-09T02:38:34Z","message":"Update siteupdates.html"}
-,
 {"author":"Juri","date":"2025-05-09T02:27:45Z","message":"Update siteupdates.html"}
 ,
 {"author":"Juri","date":"2025-05-09T02:19:44Z","message":"Update siteupdates.html"}
-,
 {"author":"Juri","date":"2025-05-09T01:54:42Z","message":"Update update-commits.yml"}
 ,
 {"author":"Juri","date":"2025-05-09T01:49:15Z","message":"Update update-commits.yml"}
@@ -384,7 +382,6 @@
 {"author":"Juri","date":"2025-05-08T17:13:55Z","message":"Update style.css"}
 ,
 {"author":"Juri","date":"2025-05-08T17:10:43Z","message":"Update style.css"}
-,
 {"author":"Juri","date":"2025-05-08T17:08:48Z","message":"Update style.css"}
 ,
 {"author":"Juri","date":"2025-05-08T17:08:14Z","message":"Update header.html"}
@@ -584,7 +581,6 @@
 {"author":"Juri","date":"2025-04-28T11:33:03Z","message":"Update style.css"}
 ,
 {"author":"Juri","date":"2025-04-28T11:29:37Z","message":"Update updates.html"}
-,
 {"author":"Juri","date":"2025-04-28T11:29:09Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-04-28T11:27:26Z","message":"Update style.css"}
@@ -784,7 +780,6 @@
 {"author":"Juri","date":"2025-03-18T07:45:26Z","message":"Update updates.html"}
 ,
 {"author":"Juri","date":"2025-03-18T07:45:11Z","message":"Update index.html"}
-,
 {"author":"Juri","date":"2025-03-18T07:43:56Z","message":"Update updates.html"}
 ,
 {"author":"Juri","date":"2025-03-18T07:40:18Z","message":"Update updates.html"}
@@ -984,7 +979,6 @@
 {"author":"Juri","date":"2025-02-23T10:43:47Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-23T10:37:30Z","message":"Update index.html"}
-,
 {"author":"Juri","date":"2025-02-23T10:35:16Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-23T06:49:48Z","message":"Update chat.css"}
@@ -1184,7 +1178,6 @@
 {"author":"Juri","date":"2025-02-21T22:27:37Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-21T22:25:01Z","message":"Update chat.css"}
-,
 {"author":"Juri","date":"2025-02-21T22:23:13Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-02-21T22:02:38Z","message":"Update chat.js"}
@@ -1384,7 +1377,6 @@
 {"author":"Juri","date":"2025-02-21T05:09:33Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-21T05:06:35Z","message":"Update chat.css"}
-,
 {"author":"Juri","date":"2025-02-21T05:06:14Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-21T04:38:31Z","message":"Update chat.js"}
@@ -1584,7 +1576,6 @@
 {"author":"Juri","date":"2025-02-20T21:11:06Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-20T20:57:14Z","message":"Update chat.js"}
-,
 {"author":"Juri","date":"2025-02-20T20:25:02Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-20T20:19:57Z","message":"Update chat.js"}
@@ -1784,7 +1775,6 @@
 {"author":"Juri","date":"2025-02-19T22:12:16Z","message":"Rename updates to updates.html"}
 ,
 {"author":"Juri","date":"2025-02-19T22:09:47Z","message":"Create updates"}
-,
 {"author":"Juri","date":"2025-02-19T22:00:31Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-19T21:54:16Z","message":"Update chat.js"}
