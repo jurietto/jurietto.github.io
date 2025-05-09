@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+
   <h1>Index of jurietto.github.io/updates/sitelog.html</h1>
   <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="animated gif">
 
@@ -15,7 +16,7 @@
       [parent directory]
     </a>
   </p>
-  
+
   <ul id="commit-list"></ul>
 
   <script>
@@ -25,7 +26,7 @@
         const commits = await response.json();
 
         const list = document.getElementById('commit-list');
-        list.innerHTML = ''; // Clear any fallback message
+        list.innerHTML = ''; // Clear fallback
 
         commits.forEach(commit => {
           const li = document.createElement('li');
@@ -43,15 +44,15 @@
   </script>
 
   <!-- Footer -->
-<div id="footer"></div>
-<script>
-  fetch('footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer').innerHTML = data;
-    });
-</script>
+  <div id="footer"></div>
+  <script>
+    fetch('../footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+  </script>
 
-<script src="script.js"></script>
+  <script src="../script.js"></script>
 </body>
 </html>
