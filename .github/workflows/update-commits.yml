@@ -1,0 +1,33 @@
+name: Update Commit Log
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-log:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch commits by jurietto
+        run: |
+          curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100 \
+          | jq '[.[] | select(.author.login == "jurietto") | {
+              author: .commit.author.name,
+              date: .commit.author.date,
+              message: .commit.message
+          }][0:50]' > commits.json
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "jurietto"
+          git config user.email "jurilikes2eatcurry@gmail.com"
+          git add commits.json
+          git diff --cached --quiet || git commit -m "Update commit log"
+          git push
