@@ -15,9 +15,11 @@ jobs:
 
       - name: Fetch recent commits and save to JSON
         run: |
-          curl -s https://api.github.com/repos/${{ github.repository }}/commits?per_page=10 \
-          | jq '[.[] | {message: .commit.message, author: .commit.author.name, date: .commit.author.date, url: .html_url}]' \
-          > commits.json
+          curl -s -H "Accept: application/vnd.github.v3+json" \
+               -H "User-Agent: github-actions" \
+               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=10 \
+            | jq 'if type=="array" then [.[] | {message: .commit.message, author: .commit.author.name, date: .commit.author.date, url: .html_url}] else {error: "Unexpected response"} end' \
+            > commits.json
 
       - name: Commit and push commits.json
         run: |
@@ -26,3 +28,4 @@ jobs:
           git add commits.json
           git diff --cached --quiet && echo "No changes" || git commit -m "Update commit log [bot]"
           git push
+
