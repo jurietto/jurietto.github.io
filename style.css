@@ -40,9 +40,9 @@ a:active {
   text-decoration: underline;
 }
 
-/* Wrapper for centered sections */
+/* Main content container */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.85); /* slightly more opaque */
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 24px;
   border-radius: 16px;
   max-width: 900px;
@@ -66,10 +66,10 @@ td {
   border-bottom: 1px dotted;
 }
 table tr:hover {
-  background-color: rgba(255, 192, 203, 0.2); /* cute pink highlight */
+  background-color: rgba(255, 192, 203, 0.2);
 }
 
-/* Utilities */
+/* Utility classes */
 .detailsColumn {
   text-align: right;
 }
@@ -77,7 +77,7 @@ table tr:hover {
   padding-left: 20px;
 }
 
-/* Commit list bullets */
+/* Commit list with icons */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -99,13 +99,31 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
-/* Image styling */
+/* Images */
 img {
   max-width: 100%;
-  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Optional: Cute Scrollbar for WebKit */
+/* Responsive iframe wrapper */
+.responsive-iframe {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+.responsive-iframe iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Cute scrollbar for WebKit browsers */
 ::-webkit-scrollbar {
   width: 10px;
 }
