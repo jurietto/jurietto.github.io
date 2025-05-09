@@ -14,22 +14,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch commits by jurietto
+      - name: Fetch all commits by jurietto
         run: |
           echo "[" > commits.json
-          for page in {1..10}; do
-            curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-              "https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100&page=$page" |
-              jq -c '.[]' | while read -r commit; do
-                echo "$commit" | jq 'select(.author.login == "jurietto") | {
-                  author: .commit.author.name,
-                  date: .commit.author.date,
-                  message: .commit.message
-                },' >> commits.json
-              done
+          page=1
+          first=true
+          while :; do
+            res=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+              "https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100&page=$page")
+            
+            count=$(echo "$res" | jq 'length')
+            [ "$count" -eq 0 ] && break
+
+            filtered=$(echo "$res" | jq '[.[] | select(.author.login == "jurietto") | {
+              author: .commit.author.name,
+              date: .commit.author.date,
+              message: .commit.message
+            }]')
+
+            if [ "$first" = true ]; then
+              echo "$filtered" | jq -c '.[]' >> commits.json
+              first=false
+            else
+              echo "," >> commits.json
+              echo "$filtered" | jq -c '.[]' >> commits.json
+            fi
+
+            page=$((page + 1))
           done
-          # Remove trailing comma and close array
-          sed -i '$ s/,$//' commits.json
           echo "]" >> commits.json
 
       - name: Commit and push if changed
