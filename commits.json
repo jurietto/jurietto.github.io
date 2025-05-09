@@ -1,8 +1,5 @@
 [
-{"author":"Juri","date":"2025-05-09T22:57:50Z","message":"Delete commits.json"}
-,
-{"author":"jurietto","date":"2025-05-09T22:49:26Z","message":"Update commit log"}
-,
+[
 {"author":"Juri","date":"2025-05-09T22:49:05Z","message":"Update commits.json"}
 ,
 {"author":"jurietto","date":"2025-05-09T22:44:35Z","message":"Update commit log"}
@@ -197,7 +194,6 @@
 ,
 {"author":"Juri","date":"2025-05-09T04:59:13Z","message":"Update update-commits.yml"}
 {"author":"Juri","date":"2025-05-09T04:38:44Z","message":"Update update-commits.yml"}
-,
 {"author":"Juri","date":"2025-05-09T04:27:55Z","message":"Update update-commits.yml"}
 ,
 {"author":"Juri","date":"2025-05-09T04:25:47Z","message":"Update update-commits.yml"}
@@ -383,10 +379,10 @@
 {"author":"Juri","date":"2025-05-08T06:26:46Z","message":"Update updates.html"}
 ,
 {"author":"Juri","date":"2025-05-08T06:25:48Z","message":"Update header.html"}
+,
 {"author":"Juri","date":"2025-05-08T06:11:43Z","message":"Update header.html"}
 ,
 {"author":"Juri","date":"2025-05-08T06:08:57Z","message":"Update header.html"}
-,
 {"author":"Juri","date":"2025-05-08T06:04:13Z","message":"Update header.html"}
 ,
 {"author":"Juri","date":"2025-05-08T05:56:57Z","message":"Update video.html"}
@@ -582,10 +578,10 @@
 {"author":"Juri","date":"2025-04-28T10:54:47Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-04-28T10:52:56Z","message":"Update style.css"}
+,
 {"author":"Juri","date":"2025-04-28T10:52:41Z","message":"Delete opengraph.html"}
 ,
 {"author":"Juri","date":"2025-04-28T10:28:10Z","message":"Update loadmeta.js"}
-,
 {"author":"Juri","date":"2025-04-28T10:22:25Z","message":"Update updates.html"}
 ,
 {"author":"Juri","date":"2025-04-28T10:20:00Z","message":"Update index.html"}
@@ -781,10 +777,10 @@
 {"author":"Juri","date":"2025-03-18T01:12:47Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-03-18T00:44:40Z","message":"Update index.html"}
+,
 {"author":"Juri","date":"2025-03-18T00:43:08Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-03-16T19:25:14Z","message":"Update chat.html"}
-,
 {"author":"Juri","date":"2025-03-16T19:10:08Z","message":"Update chat.html"}
 ,
 {"author":"Juri","date":"2025-03-16T19:05:41Z","message":"Update chat.html"}
@@ -980,10 +976,10 @@
 {"author":"Juri","date":"2025-02-23T06:04:20Z","message":"Update chat.css"}
 ,
 {"author":"Juri","date":"2025-02-23T05:53:41Z","message":"Update chat.css"}
+,
 {"author":"Juri","date":"2025-02-23T05:49:17Z","message":"Update chat.css"}
 ,
 {"author":"Juri","date":"2025-02-23T02:39:28Z","message":"Update chat.css"}
-,
 {"author":"Juri","date":"2025-02-23T01:51:12Z","message":"Update chat.css"}
 ,
 {"author":"Juri","date":"2025-02-23T01:25:41Z","message":"Update updates.html"}
@@ -1179,10 +1175,10 @@
 {"author":"Juri","date":"2025-02-21T20:41:39Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-21T20:40:56Z","message":"Update chat.css"}
+,
 {"author":"Juri","date":"2025-02-21T20:36:38Z","message":"Update chat.css"}
 ,
 {"author":"Juri","date":"2025-02-21T20:36:23Z","message":"Update index.html"}
-,
 {"author":"Juri","date":"2025-02-21T20:36:08Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-21T20:11:30Z","message":"Update chat.js"}
@@ -1378,10 +1374,10 @@
 {"author":"Juri","date":"2025-02-21T04:04:55Z","message":"Update chat.css"}
 ,
 {"author":"Juri","date":"2025-02-21T04:04:37Z","message":"Update index.html"}
+,
 {"author":"Juri","date":"2025-02-21T04:03:04Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-21T04:02:41Z","message":"Update chat.css"}
-,
 {"author":"Juri","date":"2025-02-21T04:02:11Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-02-21T03:40:35Z","message":"Update chat.js"}
@@ -1577,10 +1573,10 @@
 {"author":"Juri","date":"2025-02-20T19:19:14Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-20T19:11:07Z","message":"Update chat.js"}
+,
 {"author":"Juri","date":"2025-02-20T19:03:07Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-20T18:57:22Z","message":"Update chat.js"}
-,
 {"author":"Juri","date":"2025-02-20T18:48:04Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-02-20T18:46:31Z","message":"Update chat.css"}
@@ -1776,10 +1772,10 @@
 {"author":"Juri","date":"2025-02-19T17:52:03Z","message":"Update chat.js"}
 ,
 {"author":"Juri","date":"2025-02-19T17:51:35Z","message":"Update chat.css"}
+,
 {"author":"Juri","date":"2025-02-19T17:51:10Z","message":"Update index.html"}
 ,
 {"author":"Juri","date":"2025-02-19T17:50:06Z","message":"Update styles.css"}
-,
 {"author":"Juri","date":"2025-02-19T17:44:55Z","message":"Update chat.css"}
 ,
 {"author":"Juri","date":"2025-02-19T17:44:18Z","message":"Delete main.html"}
@@ -1871,4 +1867,6 @@
 {"author":"Juri","date":"2025-02-19T03:48:25Z","message":"Create styles.css"}
 ,
 {"author":"Juri","date":"2025-02-19T03:42:25Z","message":"Create index.html"}
+]
+}
 ]
