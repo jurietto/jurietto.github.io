@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,27 +6,30 @@
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-  <h1>Site Updates</h1>
-  <ul id="commit-list">Loading updates...</ul>
+  <h1>Recent Site Updates</h1>
+  <ul id="commit-list"></ul>
 
   <script>
-    fetch('../commits.json')
-      .then(response => response.json())
-      .then(data => {
-        const commitList = document.getElementById('commit-list');
-        commitList.innerHTML = ''; // Clear "Loading..." text
+    async function loadCommits() {
+      try {
+        const response = await fetch('../commits.json');
+        const commits = await response.json();
 
-        data.forEach(commit => {
+        const list = document.getElementById('commit-list');
+        commits.forEach(commit => {
           const li = document.createElement('li');
-          li.innerHTML = `<strong>${commit.author}</strong> – ${new Date(commit.date).toLocaleString()}<br>
-            <a href="${commit.url}" target="_blank">${commit.message}</a>`;
-          commitList.appendChild(li);
+          li.innerHTML = `<strong>${commit.author}</strong> - ${new Date(commit.date).toLocaleString()}<br>
+                          <a href="${commit.url}" target="_blank">${commit.message}</a>`;
+          list.appendChild(li);
         });
-      })
-      .catch(error => {
-        document.getElementById('commit-list').innerHTML = 'Failed to load updates.';
-        console.error('Error fetching commits:', error);
-      });
+      } catch (err) {
+        document.getElementById('commit-list').innerText = 'Failed to load commit data.';
+        console.error(err);
+      }
+    }
+
+    loadCommits();
   </script>
 </body>
 </html>
+
