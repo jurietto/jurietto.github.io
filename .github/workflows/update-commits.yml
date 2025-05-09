@@ -14,33 +14,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch all commits by jurietto
+      - name: Fetch all commits by jurietto and Juri
         run: |
           echo "[" > commits.json
           page=1
           first=true
-          while :; do
-            res=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          while : ; do
+            result=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
               "https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100&page=$page")
-            
-            count=$(echo "$res" | jq 'length')
-            [ "$count" -eq 0 ] && break
 
-            filtered=$(echo "$res" | jq '[.[] | select(.author.login == "jurietto") | {
+            count=$(echo "$result" | jq 'length')
+            if [ "$count" -eq 0 ]; then break; fi
+
+            echo "$result" | jq -c '.[] | select(.author.login == "jurietto" or .commit.author.name == "Juri") | {
               author: .commit.author.name,
               date: .commit.author.date,
               message: .commit.message
-            }]')
-
-            if [ "$first" = true ]; then
-              echo "$filtered" | jq -c '.[]' >> commits.json
-              first=false
-            else
-              echo "," >> commits.json
-              echo "$filtered" | jq -c '.[]' >> commits.json
-            fi
-
-            page=$((page + 1))
+            }' | while read -r line; do
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo "," >> commits.json
+              fi
+              echo "$line" >> commits.json
+            done
+            page=$((page+1))
           done
           echo "]" >> commits.json
 
@@ -49,5 +47,5 @@ jobs:
           git config user.name "jurietto"
           git config user.email "jurilikes2eatcurry@gmail.com"
           git add commits.json
-          git diff --cached --quiet || git commit -m "Update commit log"
+          git diff --cached --quiet || git commit -m "Update full commit log"
           git push
