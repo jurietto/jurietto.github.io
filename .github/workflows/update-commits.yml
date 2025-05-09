@@ -2,7 +2,6 @@ name: Update Commits File
 
 on:
   push:
-  workflow_dispatch:
 
 jobs:
   build:
@@ -19,19 +18,16 @@ jobs:
 
       - name: Fetch recent commits by jurietto and save to JSON
         run: |
-          echo "Fetching commits from GitHub API..."
-          curl -s -H "Accept: application/vnd.github+json" \
-               -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
-               https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100 > raw_commits.json
-
-          echo "Filtering commits by author 'jurietto'..."
-          cat raw_commits.json | jq '[.[] | select(.author != null and .author.login == "jurietto") | {
-            author: .commit.author.name,
-            date: .commit.author.date,
-            message: .commit.message
+          echo "Fetching recent commits authored by 'jurilikes2eatcurry@gmail.com'..."
+          curl -s -H "Authorization: Bearer ${{ secrets.GH_PAT }}" \
+            https://api.github.com/repos/jurietto/jurietto.github.io/commits?per_page=100 \
+          | jq '[.[] | select(.commit.author.email == "jurilikes2eatcurry@gmail.com") | {
+              author: .commit.author.name,
+              date: .commit.author.date,
+              message: .commit.message
           }][0:50]' > commits.json
 
-          echo "Resulting JSON content:"
+          echo "commits.json contents:"
           cat commits.json
 
       - name: Cleanup unstaged changes
@@ -49,3 +45,4 @@ jobs:
           git add commits.json
           git diff --cached --quiet || git commit -m "Update commit log"
           git push origin main
+
