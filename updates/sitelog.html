@@ -30,39 +30,47 @@
       </select>
     </div>
 
-    <ul id="commit-list">
-      <li>Loading commit history...</li>
-    </ul>
+    <section id="commit-list">
+      <p>Loading commit history...</p>
+    </section>
 
     <script>
       async function loadCommits() {
         try {
           const res = await fetch('../commits.json');
           const commits = await res.json();
-          const list = document.getElementById('commit-list');
-          const sort = document.getElementById('sort');
+          const container = document.getElementById('commit-list');
+          const sortSelect = document.getElementById('sort');
 
           function renderCommits(order) {
-            list.innerHTML = '';
-            const ordered = order === 'old' ? [...commits].reverse() : commits;
+            container.innerHTML = '';
+            const sorted = order === 'old' ? [...commits].reverse() : commits;
 
-            if (!ordered.length) {
-              list.innerHTML = '<li>No commits found for this period.</li>';
+            if (sorted.length === 0) {
+              container.innerHTML = '<p>No commits found for this period.</p>';
               return;
             }
 
-            ordered.forEach(commit => {
-              const li = document.createElement('li');
+            sorted.forEach(commit => {
               const date = new Date(commit.date).toLocaleString();
-              li.innerHTML = `<strong>${commit.author}</strong> – ${date}<br>${commit.message}`;
-              list.appendChild(li);
+              const entry = document.createElement('div');
+              entry.className = 'post';
+              entry.innerHTML = `
+                <p>
+                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="update icon"
+                       style="vertical-align: middle; margin-right: 6px;">
+                  <strong>${commit.author}</strong> – ${date}
+                </p>
+                <p>${commit.message}</p>
+              `;
+              container.appendChild(entry);
             });
           }
 
-          sort.addEventListener('change', e => renderCommits(e.target.value));
+          sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
           renderCommits('new');
         } catch (err) {
-          document.getElementById('commit-list').innerHTML = '<li style="color: crimson;">Could not load updates.</li>';
+          document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
           console.error(err);
         }
       }
