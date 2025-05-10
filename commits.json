@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-10T23:37:42Z",
+    "message": "Update index.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-10T23:36:44Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-10T23:36:31Z",
     "message": "Update lifeupdates.html"
   },
@@ -488,15 +498,5 @@
     "author": "Juri",
     "date": "2025-05-09T20:15:03Z",
     "message": "Update updates.html"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-09T20:13:08Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-09T20:12:57Z",
-    "message": "Create sitelog.html"
   }
 ]
