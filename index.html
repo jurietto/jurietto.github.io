@@ -44,6 +44,19 @@
 <!-- Stamps -->
 <h1>Stamps</h1>
 
+<!-- Video -->
+<h1>jurietto.mp4</h1>
+<div id="video"></div>
+<script>
+  fetch('video.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('video').innerHTML = data;
+    });
+</script>
+
+<!-- Stamps (Moved below video) -->
+<h1>Stamps</h1>
 <div id="stamps"></div>
 <script>
   fetch('stamps.html')
@@ -53,17 +66,6 @@
     });
 </script>
 
-<!-- Video -->
-<h1>jurietto.mp4</h1>
-
-<div id="video"></div>
-<script>
-  fetch('video.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('video').innerHTML = data;
-    });
-</script>
 
 <!-- Footer -->
 <div id="footer"></div>
