@@ -91,9 +91,9 @@ table tr:hover {
 #commit-list {
   list-style: none;
   padding-left: 0;
+  margin-bottom: 20px;
 }
 #commit-list li {
-  margin-bottom: 20px;
   position: relative;
   padding-left: 28px;
 }
@@ -156,3 +156,8 @@ video {
       display: block;
       margin-bottom: 20px;
     }
+
+.footer-links {
+    margin-top: 20px;
+}
+
