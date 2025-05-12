@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T14:53:26Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:52:59Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T14:52:46Z",
     "message": "Update updates.html"
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T02:07:19Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T02:07:06Z",
-    "message": "Update updates.html\n\nViewport meta with maximum-scale=1.0, user-scalable=no to prevent zooming."
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T02:01:47Z",
     "message": "Update commit log"
   }
 ]
