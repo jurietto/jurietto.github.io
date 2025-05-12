@@ -48,17 +48,6 @@
       const container = document.getElementById('commit-list');
       const sortSelect = document.getElementById('sort');
 
-      // Generate unique month-year options
-      const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
-
-      // Append month-year options
-      months.forEach(month => {
-        const opt = document.createElement('option');
-        opt.value = month;
-        opt.textContent = month;
-        sortSelect.appendChild(opt);
-      });
-
       function renderCommits(order) {
         container.innerHTML = '';
         let filteredCommits = commits;
