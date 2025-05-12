@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T16:18:56Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:16:33Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T16:16:21Z",
     "message": "Update style.css"
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T06:58:17Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T06:58:06Z",
-    "message": "Update lifeupdates.html\n\nUpdate post date formatting to a cleaner, more professional style with simplified comment labels."
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T06:44:03Z",
     "message": "Update commit log"
   }
 ]
