@@ -18,8 +18,8 @@
 }
 
 @font-face {
-  font-family: 'Teen Light';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
+  font-family: 'AdorableLady';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/AdorableLady.ttf') format('truetype');
   font-weight: normal;
 }
 
@@ -44,7 +44,7 @@ h1, h3, h4, h5, h6, strong, b, th {
 }
 
 h2 {
-  font-family: 'Teen Light', sans-serif;
+  font-family: 'AdorableLady', sans-serif;
   font-weight: normal;
   color: #d81b60;
   margin-bottom: 20px;
