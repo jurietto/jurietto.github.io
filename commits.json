@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T17:23:34Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T17:14:02Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T17:13:51Z",
     "message": "Update sitelog.html\n\nEnhance site log to show all commits and add monthly sort options."
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T07:24:31Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T07:24:19Z",
-    "message": "Update sitelog.html"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T07:19:43Z",
     "message": "Update commit log"
   }
 ]
