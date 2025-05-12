@@ -17,6 +17,12 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'Teen Light';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
+  font-weight: normal;
+}
+
 /* Body styling */
 body {
   background-color: #fce4ec;
@@ -30,9 +36,16 @@ body {
 }
 
 /* Headers styling */
-h1, h2, h3, h4, h5, h6, strong, b, th {
+h1, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   font-weight: bold;
+  color: #d81b60;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'Teen Light', sans-serif;
+  font-weight: normal;
   color: #d81b60;
   margin-bottom: 20px;
 }
@@ -168,28 +181,28 @@ video {
   display: block;
   margin-bottom: 20px;
 }
+
+/* ASCII art box */
 .ascii-box {
-    border: 1px solid #3e3e3e;
-    display: flex;
-    justify-content: center;
-    margin: 20px auto;
-    max-width: fit-content;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #3e3e3e;
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+  max-width: fit-content;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8);
 }
 
-/* Hide on screens smaller than 768px */
+/* Hide ASCII box on small screens */
 @media (max-width: 768px) {
-    .ascii-box {
-        display: none;
-    }
+  .ascii-box {
+    display: none;
+  }
 }
 
 .ascii-box pre {
-    margin: 0;
-    font-family: 'Consolas', monospace;
-    line-height: 1.2;
-    color: #3e3e3e;
+  margin: 0;
+  font-family: 'Consolas', monospace;
+  line-height: 1.2;
+  color: #3e3e3e;
 }
-
-
