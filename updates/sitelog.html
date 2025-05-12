@@ -41,48 +41,67 @@
     </section>
 
     <script>
-      async function loadCommits() {
-        try {
-          const res = await fetch('../commits.json');
-          const commits = await res.json();
-          const container = document.getElementById('commit-list');
-          const sortSelect = document.getElementById('sort');
+  async function loadCommits() {
+    try {
+      const res = await fetch('../commits.json');
+      const commits = await res.json();
+      const container = document.getElementById('commit-list');
+      const sortSelect = document.getElementById('sort');
 
-          function renderCommits(order) {
-            container.innerHTML = '';
-            const sorted = order === 'old' ? [...commits].reverse() : commits;
+      // Generate unique month-year options
+      const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
 
-            if (sorted.length === 0) {
-              container.innerHTML = '<p>No commits found for this period.</p>';
-              return;
-            }
+      // Append month-year options
+      months.forEach(month => {
+        const opt = document.createElement('option');
+        opt.value = month;
+        opt.textContent = month;
+        sortSelect.appendChild(opt);
+      });
 
-            sorted.forEach(commit => {
-              const date = new Date(commit.date).toLocaleString();
-              const entry = document.createElement('div');
-              entry.className = 'post';
-              entry.innerHTML = `
-                <p>
-                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="update icon"
-                       style="vertical-align: middle; margin-right: 6px;">
-                  <strong>${commit.author}</strong> – ${date}
-                </p>
-                <p>${commit.message}</p>
-              `;
-              container.appendChild(entry);
-            });
-          }
+      function renderCommits(order) {
+        container.innerHTML = '';
+        let filteredCommits = commits;
 
-          sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
-          renderCommits('new');
-        } catch (err) {
-          document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-          console.error(err);
+        if (order === 'old') {
+          filteredCommits = [...commits].reverse();
+        } else if (order !== 'new') {
+          // If a month is selected
+          filteredCommits = commits.filter(c => c.date.startsWith(order));
         }
+
+        if (filteredCommits.length === 0) {
+          container.innerHTML = '<p>No commits found for this period.</p>';
+          return;
+        }
+
+        filteredCommits.forEach(commit => {
+          const date = new Date(commit.date).toLocaleString();
+          const entry = document.createElement('div');
+          entry.className = 'post';
+          entry.innerHTML = `
+            <p>
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="update icon"
+                   style="vertical-align: middle; margin-right: 6px;">
+              <strong>${commit.author}</strong> – ${date}
+            </p>
+            <p>${commit.message}</p>
+          `;
+          container.appendChild(entry);
+        });
       }
 
-      loadCommits();
-    </script>
+      sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
+      renderCommits('new');
+    } catch (err) {
+      document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+      console.error(err);
+    }
+  }
+
+  loadCommits();
+</script>
+
 
     <div id="footer"></div>
     <script>
