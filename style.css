@@ -11,6 +11,12 @@
   font-weight: bold;
 }
 
+@font-face {
+  font-family: 'Teen Italic';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
+  font-style: italic;
+}
+
 /* Body styling */
 body {
   background-color: #fce4ec;
@@ -28,7 +34,13 @@ h1, h2, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   font-weight: bold;
   color: #d81b60;
-  margin-bottom: 20px; /* Ensures spacing consistency */
+  margin-bottom: 20px;
+}
+
+/* Italic text globally */
+em, i {
+  font-family: 'Teen Italic', sans-serif;
+  font-style: italic;
 }
 
 /* Links */
@@ -111,6 +123,8 @@ table tr:hover {
   position: absolute;
   top: 3px;
   left: 0;
+  width: 20px;
+  height: 20px;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif');
   background-size: cover;
   background-repeat: no-repeat;
