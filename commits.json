@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T15:09:23Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:09:21Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T15:09:06Z",
     "message": "Update index.html"
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T02:26:14Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T02:26:03Z",
-    "message": "Update style.css\n\nAdd overflow hidden to main content for cleaner box styling."
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T02:20:25Z",
     "message": "Update commit log"
   }
 ]
