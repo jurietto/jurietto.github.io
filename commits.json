@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T02:45:28Z",
+    "message": "Update footer.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T02:40:12Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T02:39:59Z",
     "message": "Update index.html\n\niframe."
   },
@@ -488,15 +498,5 @@
     "author": "Juri",
     "date": "2025-05-09T22:59:27Z",
     "message": "Update sitelog.html"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-09T22:58:37Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-09T22:58:19Z",
-    "message": "Add files via upload"
   }
 ]
