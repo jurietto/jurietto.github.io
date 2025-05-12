@@ -48,6 +48,7 @@ a:active {
   margin: 0 auto;
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
   border: 1px solid #ffc0cb;
+  overflow: hidden;
 }
 .main-content h1,
 .main-content h2,
@@ -92,7 +93,7 @@ table tr:hover {
   padding-left: 0;
 }
 #commit-list li {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   position: relative;
   padding-left: 28px;
 }
@@ -146,7 +147,7 @@ iframe {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 24px; /* Matches the header spacing */
+  margin-bottom: 20px; /* Matches the header spacing */
 }
 video {
       max-width: 100%;
