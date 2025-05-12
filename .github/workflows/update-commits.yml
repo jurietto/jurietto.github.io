@@ -3,7 +3,7 @@ name: Update Commit Log
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  workflow_dispatch: # allow you to trigger manually from GitHub Actions tab
 
 jobs:
   update-log:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch all 2024 commits by jurietto and save to commits.json
+      - name: Rebuild commits.json with all 2024 commits by jurietto
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
@@ -36,11 +36,12 @@ jobs:
               message: .commit.message
             }]' > temp_commits.json
 
-            # Merge into commits.json
             jq -s '.[0] + .[1]' commits.json temp_commits.json > temp_merged.json && mv temp_merged.json commits.json
 
             PAGE=$((PAGE + 1))
           done
+
+          cat commits.json # Optional: see output log
 
       - name: Commit and push if changed
         run: |
@@ -49,4 +50,3 @@ jobs:
           git add commits.json
           git diff --cached --quiet || git commit -m "Refresh commit log for 2024"
           git push
-
