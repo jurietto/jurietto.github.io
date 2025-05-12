@@ -168,3 +168,28 @@ video {
   display: block;
   margin-bottom: 20px;
 }
+.ascii-box {
+    border: 1px solid #3e3e3e;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: fit-content;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Hide on screens smaller than 768px */
+@media (max-width: 768px) {
+    .ascii-box {
+        display: none;
+    }
+}
+
+.ascii-box pre {
+    margin: 0;
+    font-family: 'Consolas', monospace;
+    line-height: 1.2;
+    color: #3e3e3e;
+}
+
+
