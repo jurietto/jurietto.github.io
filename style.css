@@ -1,4 +1,4 @@
-/* --- Fonts --- */
+/* Import custom fonts */
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
@@ -11,7 +11,7 @@
   font-weight: bold;
 }
 
-/* --- Base Styling --- */
+/* Body styling */
 body {
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
@@ -23,16 +23,15 @@ body {
   line-height: 1.6;
 }
 
-/* --- Headers --- */
+/* Headers styling */
 h1, h2, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   font-weight: bold;
   color: #d81b60;
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Ensures spacing consistency */
 }
 
-/* --- Links --- */
+/* Links */
 a {
   color: #b4004e;
   text-decoration: underline;
@@ -43,19 +42,28 @@ a:active {
   text-decoration: underline;
 }
 
-/* --- Main content container --- */
+/* Main content block */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 24px;
   border-radius: 24px;
   max-width: 900px;
-  margin: 0 auto 20px auto; /* Added bottom margin for spacing consistency */
+  margin: 0 auto;
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
   border: 1px solid #ffc0cb;
   overflow: hidden;
 }
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  text-align: left;
+  margin-top: 0;
+}
 
-/* --- Tables --- */
+/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -68,22 +76,26 @@ th {
 }
 td {
   padding: 6px 10px;
-  white-space: nowrap;
   border-bottom: 1px dotted #ffc0cb;
+  white-space: nowrap;
 }
 table tr:hover {
   background-color: rgba(255, 182, 193, 0.2);
 }
 
-/* --- Utility classes --- */
+/* Ensure icon next to text (like Discord, Twitter) is vertically centered */
+.file-cell img {
+  vertical-align: middle;
+  margin-right: 6px;
+  height: 16px;
+}
+
+/* Utility columns */
 .detailsColumn {
   text-align: right;
 }
-.file-cell {
-  padding-left: 20px;
-}
 
-/* --- Commit list with heartrose bullets --- */
+/* Commit list */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -106,14 +118,13 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
-/* --- Images --- */
+/* All images */
 img {
   max-width: 100%;
   display: inline-block;
-  margin-bottom: 20px;
 }
 
-/* --- Stamps area --- */
+/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -128,7 +139,7 @@ img {
   display: block;
 }
 
-/* --- Responsive iframes --- */
+/* Iframes */
 iframe {
   display: block;
   max-width: 100%;
@@ -139,7 +150,7 @@ iframe {
   margin-bottom: 20px;
 }
 
-/* --- Videos --- */
+/* Videos */
 video {
   max-width: 100%;
   height: auto;
