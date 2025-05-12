@@ -145,3 +145,9 @@ iframe {
   border: none;
   margin-bottom: 20px;
 }
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px; /* Matches the header spacing */
+}
