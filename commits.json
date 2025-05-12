@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T15:57:23Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:56:52Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T15:56:39Z",
     "message": "Update header.html\n\nAdd margin-top to header gif."
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T05:09:28Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T05:09:13Z",
-    "message": "Update style.css\n\nRefine layout spacing and consistency, clean up margins and paddings site-wide."
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T02:58:26Z",
     "message": "Update commit log"
   }
 ]
