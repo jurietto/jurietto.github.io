@@ -1,3 +1,4 @@
+/* Custom Font Definitions */
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
@@ -10,6 +11,7 @@
   font-weight: bold;
 }
 
+/* Body Styling */
 body {
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
@@ -19,13 +21,16 @@ body {
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
+  margin: 0;
 }
 
-/* Headers */
+/* Headings */
 h1, h2, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   font-weight: bold;
   color: #d81b60;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 /* Links */
@@ -36,10 +41,9 @@ a {
 a:hover,
 a:active {
   color: #ff3ea5;
-  text-decoration: underline;
 }
 
-/* Main content */
+/* Main Content Container */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 24px;
@@ -50,20 +54,12 @@ a:active {
   border: 1px solid #ffc0cb;
   overflow: hidden;
 }
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  text-align: left;
-  margin-top: 0;
-}
 
 /* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
 th {
   text-align: left;
@@ -79,7 +75,7 @@ table tr:hover {
   background-color: rgba(255, 182, 193, 0.2);
 }
 
-/* Utility */
+/* Utilities for layout */
 .detailsColumn {
   text-align: right;
 }
@@ -87,7 +83,7 @@ table tr:hover {
   padding-left: 20px;
 }
 
-/* Commit list with Charmmy Kitty bullet style */
+/* Commit List Styling */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -96,6 +92,7 @@ table tr:hover {
 #commit-list li {
   position: relative;
   padding-left: 28px;
+  margin-bottom: 16px;
 }
 #commit-list li::before {
   content: '';
@@ -109,21 +106,20 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
-/* Images */
+/* Images General */
 img {
   max-width: 100%;
-  display: inline-block;
-
+  display: block;
+  margin-bottom: 20px;
 }
 
-/* Stamps container - flex row layout */
+/* Stamps container */
 #stamps {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
   margin-bottom: 20px;
-  
 }
 
 /* Stamp images */
@@ -131,10 +127,9 @@ img {
   width: 99px;
   height: 56px;
   object-fit: contain;
-  display: block;
 }
 
-/* Make all iframes responsive */
+/* Responsive Iframes */
 iframe {
   display: block;
   max-width: 100%;
@@ -144,16 +139,17 @@ iframe {
   border: none;
   margin-bottom: 20px;
 }
-/* Tables */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px; /* Matches the header spacing */
-}
-video {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-bottom: 20px;
-    }
 
+/* Video Styling */
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 20px;
+}
+
+/* Footer */
+.footer-links {
+  margin-top: 20px;
+  text-align: center;
+}
