@@ -192,7 +192,7 @@ video {
   margin: 20px auto;
   max-width: fit-content;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center / cover no-repeat;
+  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
   background-blend-mode: lighten;
 }
 
