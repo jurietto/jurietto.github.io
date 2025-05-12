@@ -1,3 +1,4 @@
+/* --- Fonts --- */
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
@@ -10,6 +11,7 @@
   font-weight: bold;
 }
 
+/* --- Base Styling --- */
 body {
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
@@ -19,9 +21,9 @@ body {
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
-  margin: 0;
 }
 
+/* --- Headers --- */
 h1, h2, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   font-weight: bold;
@@ -30,6 +32,7 @@ h1, h2, h3, h4, h5, h6, strong, b, th {
   margin-bottom: 20px;
 }
 
+/* --- Links --- */
 a {
   color: #b4004e;
   text-decoration: underline;
@@ -37,20 +40,22 @@ a {
 a:hover,
 a:active {
   color: #ff3ea5;
+  text-decoration: underline;
 }
 
+/* --- Main content container --- */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 24px;
   border-radius: 24px;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 0 auto 20px auto; /* Added bottom margin for spacing consistency */
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
   border: 1px solid #ffc0cb;
   overflow: hidden;
-  margin-bottom: 20px;
 }
 
+/* --- Tables --- */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -70,6 +75,7 @@ table tr:hover {
   background-color: rgba(255, 182, 193, 0.2);
 }
 
+/* --- Utility classes --- */
 .detailsColumn {
   text-align: right;
 }
@@ -77,6 +83,7 @@ table tr:hover {
   padding-left: 20px;
 }
 
+/* --- Commit list with heartrose bullets --- */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -85,7 +92,7 @@ table tr:hover {
 #commit-list li {
   position: relative;
   padding-left: 28px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 #commit-list li::before {
   content: '';
@@ -99,20 +106,21 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
+/* --- Images --- */
 img {
   max-width: 100%;
-  display: block;
+  display: inline-block;
   margin-bottom: 20px;
 }
 
+/* --- Stamps area --- */
 #stamps {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px; 
+  gap: 8px;
   margin-bottom: 20px;
 }
-
 #stamps img {
   width: 99px;
   height: 56px;
@@ -120,6 +128,7 @@ img {
   display: block;
 }
 
+/* --- Responsive iframes --- */
 iframe {
   display: block;
   max-width: 100%;
@@ -130,14 +139,10 @@ iframe {
   margin-bottom: 20px;
 }
 
+/* --- Videos --- */
 video {
   max-width: 100%;
   height: auto;
   display: block;
   margin-bottom: 20px;
-}
-
-.footer-links {
-  margin-top: 20px;
-  text-align: center;
 }
