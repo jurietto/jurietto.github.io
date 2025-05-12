@@ -1,4 +1,3 @@
-/* Custom Font Definitions */
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
@@ -11,7 +10,6 @@
   font-weight: bold;
 }
 
-/* Body Styling */
 body {
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
@@ -24,7 +22,6 @@ body {
   margin: 0;
 }
 
-/* Headings */
 h1, h2, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   font-weight: bold;
@@ -33,7 +30,6 @@ h1, h2, h3, h4, h5, h6, strong, b, th {
   margin-bottom: 20px;
 }
 
-/* Links */
 a {
   color: #b4004e;
   text-decoration: underline;
@@ -43,7 +39,6 @@ a:active {
   color: #ff3ea5;
 }
 
-/* Main Content Container */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 24px;
@@ -53,9 +48,9 @@ a:active {
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
   border: 1px solid #ffc0cb;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 
-/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -75,7 +70,6 @@ table tr:hover {
   background-color: rgba(255, 182, 193, 0.2);
 }
 
-/* Utilities for layout */
 .detailsColumn {
   text-align: right;
 }
@@ -83,7 +77,6 @@ table tr:hover {
   padding-left: 20px;
 }
 
-/* Commit List Styling */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -106,14 +99,12 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
-/* Images General */
 img {
   max-width: 100%;
   display: block;
   margin-bottom: 20px;
 }
 
-/* Stamps container */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -122,14 +113,13 @@ img {
   margin-bottom: 20px;
 }
 
-/* Stamp images */
 #stamps img {
   width: 99px;
   height: 56px;
   object-fit: contain;
+  display: block;
 }
 
-/* Responsive Iframes */
 iframe {
   display: block;
   max-width: 100%;
@@ -140,7 +130,6 @@ iframe {
   margin-bottom: 20px;
 }
 
-/* Video Styling */
 video {
   max-width: 100%;
   height: auto;
@@ -148,7 +137,6 @@ video {
   margin-bottom: 20px;
 }
 
-/* Footer */
 .footer-links {
   margin-top: 20px;
   text-align: center;
