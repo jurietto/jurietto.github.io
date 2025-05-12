@@ -1,1 +1,502 @@
-
+[
+  {
+    "author": "Juri",
+    "date": "2025-05-12T17:58:15Z",
+    "message": "Update commits.json"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T17:23:47Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T17:23:34Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T17:14:02Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T17:13:51Z",
+    "message": "Update sitelog.html\n\nEnhance site log to show all commits and add monthly sort options."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T17:13:44Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T17:13:29Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:34:01Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:33:48Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:33:33Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:33:21Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:28:58Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:28:46Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:24:01Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:23:49Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:19:10Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:18:56Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:16:33Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:16:21Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:03:58Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:03:46Z",
+    "message": "Update style.css\n\nMargin."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:01:34Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:01:22Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:01:15Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:01:04Z",
+    "message": "Update lifeupdates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T16:00:35Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T16:00:21Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:57:37Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:57:23Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:56:52Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:56:39Z",
+    "message": "Update header.html\n\nAdd margin-top to header gif."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:50:53Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:50:40Z",
+    "message": "Update header.html\n\nSet margin-top to 5px for h1 title."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:27:54Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:27:41Z",
+    "message": "Update header.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:22:29Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:22:16Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:14:58Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:14:45Z",
+    "message": "Update header.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:10:34Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:10:22Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:10:03Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:09:51Z",
+    "message": "Update lifeupdates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:09:37Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:09:23Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:09:21Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:09:06Z",
+    "message": "Update index.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:08:23Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:08:11Z",
+    "message": "Update header.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:02:06Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:01:54Z",
+    "message": "Update lifeupdates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:01:09Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T15:00:56Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:00:10Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:59:58Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:54:16Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:54:03Z",
+    "message": "Update lifeupdates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:53:40Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:53:26Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:52:59Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:52:46Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:50:11Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:49:59Z",
+    "message": "Update updates.html\n\nUpdate site log page title."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:49:43Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:49:31Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:49:20Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:49:07Z",
+    "message": "Update lifeupdates.html\n\nUpdate site log page title."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:28:36Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:28:23Z",
+    "message": "Update index.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:26:47Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:26:33Z",
+    "message": "Update index.html\n\nMove stamps section below video."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:15:03Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T14:14:47Z",
+    "message": "Update lifeupdates.html\n\nAdd working sort feature to Life Updates page."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T09:20:40Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T09:20:25Z",
+    "message": "Update updates.html\n\nCenter ASCII art block and set font to Consolas."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T09:09:18Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T09:09:06Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T09:07:31Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T09:07:18Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T08:43:37Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T08:43:24Z",
+    "message": "Update lifeupdates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T08:02:15Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T08:02:04Z",
+    "message": "Update sitelog.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T08:01:48Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T08:01:36Z",
+    "message": "Update lifeupdates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T08:00:32Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T08:00:20Z",
+    "message": "Update header.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:57:15Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T07:56:53Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:56:30Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T07:56:16Z",
+    "message": "Update header.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:47:15Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T07:47:03Z",
+    "message": "Update header.html\n\nSkulls."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:38:30Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T07:38:17Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:35:35Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T07:35:24Z",
+    "message": "Update style.css"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:31:10Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-12T07:30:58Z",
+    "message": "Update header.html\n\nMake about paragraph italicized for emphasis."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:28:10Z",
+    "message": "Update commit log"
+  }
+]
