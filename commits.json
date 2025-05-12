@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T09:07:18Z",
+    "message": "Update updates.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T08:43:37Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T08:43:24Z",
     "message": "Update lifeupdates.html"
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-10T23:38:16Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-10T23:38:05Z",
-    "message": "Update header.html"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-10T23:37:54Z",
     "message": "Update commit log"
   }
 ]
