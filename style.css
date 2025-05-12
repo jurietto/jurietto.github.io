@@ -151,3 +151,8 @@ table {
   border-collapse: collapse;
   margin-bottom: 24px; /* Matches the header spacing */
 }
+video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
