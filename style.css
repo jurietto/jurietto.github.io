@@ -122,6 +122,7 @@ img {
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
+  margin-bottom: 20px;
   
 }
 
@@ -153,4 +154,5 @@ video {
       max-width: 100%;
       height: auto;
       display: block;
+      margin-bottom: 20px;
     }
