@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T07:30:58Z",
+    "message": "Update header.html\n\nMake about paragraph italicized for emphasis."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T07:28:10Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T07:27:58Z",
     "message": "Update style.css\n\nAdd Teen Italic font and update CSS to apply globally."
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-10T22:57:48Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-10T22:57:38Z",
-    "message": "Update sitelog.html"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-10T22:57:31Z",
     "message": "Update commit log"
   }
 ]
