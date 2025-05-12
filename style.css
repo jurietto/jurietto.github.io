@@ -41,6 +41,7 @@ h1, h2, h3, h4, h5, h6, strong, b, th {
 em, i {
   font-family: 'Teen Italic', sans-serif;
   font-style: italic;
+  color: #ff3ea5
 }
 
 /* Links */
