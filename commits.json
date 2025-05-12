@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T15:56:39Z",
+    "message": "Update header.html\n\nAdd margin-top to header gif."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T15:50:53Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T15:50:40Z",
     "message": "Update header.html\n\nSet margin-top to 5px for h1 title."
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T02:58:26Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T02:58:13Z",
-    "message": "Update style.css"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T02:54:56Z",
     "message": "Update commit log"
   }
 ]
