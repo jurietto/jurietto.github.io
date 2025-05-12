@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T14:26:33Z",
+    "message": "Update index.html\n\nMove stamps section below video."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T14:15:03Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T14:14:47Z",
     "message": "Update lifeupdates.html\n\nAdd working sort feature to Life Updates page."
   },
@@ -487,16 +497,6 @@
   {
     "author": "jurietto",
     "date": "2025-05-12T01:06:08Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-12T01:05:57Z",
-    "message": "Update footer.html"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-12T01:01:45Z",
     "message": "Update commit log"
   }
 ]
