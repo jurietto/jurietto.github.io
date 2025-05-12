@@ -3,7 +3,7 @@ name: Update Commit Log
 on:
   push:
     branches: [main]
-  workflow_dispatch: # allow you to trigger manually from GitHub Actions tab
+  workflow_dispatch: # allows manual trigger anytime
 
 jobs:
   update-log:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Rebuild commits.json with all 2024 commits by jurietto
+      - name: Rebuild commits.json with all 2025 commits by jurietto
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
@@ -23,7 +23,7 @@ jobs:
           echo "[]" > commits.json
           while : ; do
             RESPONSE=$(curl -s -H "Authorization: token $GH_PAT" \
-              "https://api.github.com/repos/jurietto/jurietto.github.io/commits?author=jurietto&since=2024-01-01T00:00:00Z&until=2024-12-31T23:59:59Z&per_page=100&page=$PAGE")
+              "https://api.github.com/repos/jurietto/jurietto.github.io/commits?author=jurietto&since=2025-01-01T00:00:00Z&until=2025-12-31T23:59:59Z&per_page=100&page=$PAGE")
             
             COUNT=$(echo "$RESPONSE" | jq length)
             if [ "$COUNT" -eq 0 ]; then
@@ -41,12 +41,11 @@ jobs:
             PAGE=$((PAGE + 1))
           done
 
-          cat commits.json # Optional: see output log
-
       - name: Commit and push if changed
         run: |
           git config user.name "jurietto"
           git config user.email "jurilikes2eatcurry@gmail.com"
           git add commits.json
-          git diff --cached --quiet || git commit -m "Refresh commit log for 2024"
+          git diff --cached --quiet || git commit -m "Refresh commit log for 2025"
           git push
+
