@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-12T02:33:08Z",
+    "message": "Update sitelog.html\n\nChange page header name."
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-12T02:26:14Z",
+    "message": "Update commit log"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-12T02:26:03Z",
     "message": "Update style.css\n\nAdd overflow hidden to main content for cleaner box styling."
   },
@@ -487,16 +497,6 @@
   {
     "author": "Juri",
     "date": "2025-05-09T22:49:05Z",
-    "message": "Update commits.json"
-  },
-  {
-    "author": "jurietto",
-    "date": "2025-05-09T22:44:35Z",
-    "message": "Update commit log"
-  },
-  {
-    "author": "Juri",
-    "date": "2025-05-09T22:44:18Z",
     "message": "Update commits.json"
   }
 ]
