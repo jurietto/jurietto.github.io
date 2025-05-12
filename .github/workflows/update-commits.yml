@@ -1,7 +1,7 @@
 name: Update Commit Log
 
 on:
-  push:
+  push: 
     branches: [main]
   workflow_dispatch: # allow you to trigger manually from GitHub Actions tab
 
