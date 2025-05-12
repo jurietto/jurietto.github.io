@@ -52,7 +52,6 @@ h2 {
 
 /* Italic text globally */
 em, i {
-  font-family: 'Teen Light Italic', sans-serif;
   font-style: italic;
   color: #b4004e;
 }
