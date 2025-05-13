@@ -33,7 +33,7 @@ body {
   line-height: 1.7;
 }
 
-/* Headers styling */
+/* Headings */
 h1 {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
@@ -63,7 +63,7 @@ p {
   margin-bottom: 1rem;
 }
 
-/* Italic text globally */
+/* Emphasis and italics */
 em, i {
   font-family: 'Teen Italic', sans-serif;
   color: #b4004e;
@@ -153,7 +153,7 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
-/* All images are inline by default (fixes icon placement issue) */
+/* All images default to inline-block for natural placement with text */
 img {
   max-width: 100%;
   height: auto;
@@ -162,7 +162,7 @@ img {
   margin: 0;
 }
 
-/* Use only when a large image needs to be block and centered */
+/* Full content images (banners, etc.) */
 .full-img {
   display: block;
   margin-bottom: 1rem;
