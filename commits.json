@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-13T18:16:38Z",
+    "message": "Update style.css\n\nRefactor: Improve typography, spacing, and layout balance\r\n\r\n- Switched to rem units for better scalability and accessibility\r\n- Unified line-height to 1.7 for smoother readability\r\n- Balanced all block spacing using consistent margins and paddings\r\n- Cleaned up image, list, and table handling for clearer, more spacious appearance\r\n- Ensured semantic structure with better visual hierarchy"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-13T18:12:40Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-13T18:12:18Z",
     "message": "Update lifeupdates.html"
   },
