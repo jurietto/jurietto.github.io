@@ -153,6 +153,12 @@ td {
   font-family: 'Teen Bold', sans-serif;
 }
 
+/* Commit header (author and date only) unified color and font */
+#commit-list .post p:first-of-type {
+  color: #b4004e;
+  font-family: 'Teen Bold', sans-serif;
+}
+
 /* Main content block */
 .main-content {
   background-color: white;
