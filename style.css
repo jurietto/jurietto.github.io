@@ -2,7 +2,6 @@
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
-  font-weight: normal;
 }
 
 @font-face {
@@ -20,7 +19,6 @@
 @font-face {
   font-family: 'Teen Light';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
-  font-weight: normal;
 }
 
 /* Body styling */
@@ -38,23 +36,17 @@ body {
 /* Headers styling */
 h1, h3, h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
-  font-weight: bold;
   color: #d81b60;
-  margin-bottom: 15px;
 }
 
 h2 {
   font-family: 'Teen Light', sans-serif;
-  font-weight: normal;
   color: #d81b60;
-  margin-bottom: 20px;
 }
-
 
 /* Italic text globally */
 em, i {
-  font-family: 'Teen Light';
-  font-style: italic;
+  font-family: 'Teen Italic', sans-serif;
   color: #b4004e;
 }
 
@@ -110,14 +102,12 @@ table tr:hover {
   background-color: rgba(255, 182, 193, 0.2);
 }
 
-/* Ensure icon next to text (like Discord, Twitter) is vertically centered */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Utility columns */
 .detailsColumn {
   text-align: right;
 }
@@ -197,7 +187,6 @@ video {
   background-blend-mode: lighten;
 }
 
-/* Hide ASCII box on small screens */
 @media (max-width: 768px) {
   .ascii-box {
     display: none;
@@ -214,6 +203,8 @@ video {
 .header-gif {
   margin-bottom: 5px;
 }
+
+/* Footer */
 #footer {
   font-family: 'Teen Light', sans-serif;
   font-size: 0.9em;
@@ -230,4 +221,3 @@ video {
 #footer .footer-links a:active {
   color: #ff3ea5;
 }
-
