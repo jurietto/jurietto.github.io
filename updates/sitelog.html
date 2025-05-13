@@ -5,20 +5,17 @@
   <title>Site Log</title>
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" href="https://file.garden/ZhTgSjrp5nAroRKq/296.gif" type="image/x-icon">
-</head>
-  <!-- Prevent zooming on mobile (especially iOS) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
 <body>
   <div class="main-content">
-    
+    <img class="header-gif" src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="animated gif">
 
-     <img class="header-gif" src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="animated gif">
+    <h1> Site Log <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" aria-hidden="true" style="vertical-align: middle; margin-left: 6px;"></h1>
 
- <h1> Site Log <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" aria-hidden="true" style="vertical-align: middle; margin-left: 6px;"></h1>
-
-    <div id="last-updated" style="font-size: 0.9em; color: gray;">
-  <p>Last Updated: Loading...</p>
-</div>
+    <div id="last-updated">
+      <p>Last Updated: Loading...</p>
+    </div>
     
     <p><em>This page keeps a record of updates and changes made to the site. It helps keep track of edits, adjustments, and improvements over time. The entries show who made the update (Juri is me — Jurietto is the site running in the background on GitHub), when it was done, and a short note about what changed. The list updates automatically and you can view updates in order from newest to oldest using the dropdown menu.</em></p>
     
@@ -27,16 +24,15 @@
         <img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="Back icon" style="vertical-align: middle; margin-right: 6px;">
         [parent directory]
       </a>
-    </p> 
-
-   
+    </p>
 
     <!-- Sort dropdown -->
     <div style="margin-bottom: 16px;">
       <label for="sort">Sort by:</label>
       <select id="sort">
-        <option value="new">New</option>
-        <option value="old">Old</option>
+        <option value="new">Newest</option>
+        <option value="old">Oldest</option>
+        <!-- Dynamically populated by script -->
       </select>
     </div>
 
@@ -45,56 +41,62 @@
     </section>
 
     <script>
-  async function loadCommits() {
-    try {
-      const res = await fetch('../commits.json');
-      const commits = await res.json();
-      const container = document.getElementById('commit-list');
-      const sortSelect = document.getElementById('sort');
+      async function loadCommits() {
+        try {
+          const res = await fetch('../commits.json');
+          const commits = await res.json();
+          const container = document.getElementById('commit-list');
+          const sortSelect = document.getElementById('sort');
 
-      function renderCommits(order) {
-        container.innerHTML = '';
-        let filteredCommits = commits;
+          // Populate months dynamically from commits
+          const months = new Set(commits.map(c => c.date.substring(0, 7)));
+          months.forEach(month => {
+            const option = document.createElement('option');
+            option.value = month;
+            option.textContent = month;
+            sortSelect.appendChild(option);
+          });
 
-        if (order === 'old') {
-          filteredCommits = [...commits].reverse();
-        } else if (order !== 'new') {
-          // If a month is selected
-          filteredCommits = commits.filter(c => c.date.startsWith(order));
+          function renderCommits(order) {
+            container.innerHTML = '';
+            let filteredCommits = commits;
+
+            if (order === 'old') {
+              filteredCommits = [...commits].reverse();
+            } else if (order !== 'new') {
+              filteredCommits = commits.filter(c => c.date.startsWith(order));
+            }
+
+            if (filteredCommits.length === 0) {
+              container.innerHTML = '<p>No commits found for this period.</p>';
+              return;
+            }
+
+            filteredCommits.forEach(commit => {
+              const date = new Date(commit.date).toLocaleString();
+              const entry = document.createElement('div');
+              entry.className = 'post';
+              entry.innerHTML = `
+                <p class="commit-header">
+                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="update icon" style="vertical-align: middle; margin-right: 6px;">
+                  <strong>${commit.author}</strong> – ${date}
+                </p>
+                <p>${commit.message}</p>
+              `;
+              container.appendChild(entry);
+            });
+          }
+
+          sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
+          renderCommits('new');
+        } catch (err) {
+          document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+          console.error(err);
         }
-
-        if (filteredCommits.length === 0) {
-          container.innerHTML = '<p>No commits found for this period.</p>';
-          return;
-        }
-
-        filteredCommits.forEach(commit => {
-          const date = new Date(commit.date).toLocaleString();
-          const entry = document.createElement('div');
-          entry.className = 'post';
-          entry.innerHTML = `
-            <p>
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="update icon"
-                   style="vertical-align: middle; margin-right: 6px;">
-              <strong>${commit.author}</strong> – ${date}
-            </p>
-            <p>${commit.message}</p>
-          `;
-          container.appendChild(entry);
-        });
       }
 
-      sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
-      renderCommits('new');
-    } catch (err) {
-      document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-      console.error(err);
-    }
-  }
-
-  loadCommits();
-</script>
-
+      loadCommits();
+    </script>
 
     <div id="footer"></div>
     <script>
@@ -106,8 +108,6 @@
     </script>
   </div>
 
-  <!-- Clean script link -->
-<script src="../script.js"></script>
-  
+  <script src="../script.js"></script>
 </body>
 </html>
