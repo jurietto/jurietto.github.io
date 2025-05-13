@@ -213,4 +213,21 @@ video {
 .header-gif {
   margin-bottom: 5px;
 }
+#footer {
+  font-family: 'Teen Light', sans-serif;
+  font-size: 0.9em;
+  text-align: center;
+  margin-top: 24px;
+  color: #3e3e3e;
+}
+
+#footer .footer-links a {
+  color: #b4004e;
+  text-decoration: underline;
+}
+
+#footer .footer-links a:hover,
+#footer .footer-links a:active {
+  color: #ff3ea5;
+}
 
