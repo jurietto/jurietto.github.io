@@ -122,7 +122,7 @@ td {
   display: inline-block;
 }
 
-/* Commit list */
+/* Commit list block */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -146,17 +146,20 @@ td {
   background-size: cover;
   background-repeat: no-repeat;
 }
-/* Commit list author and date unified color */
-#commit-list p strong,
-#commit-list p {
-  color: #b4004e;
-  font-family: 'Teen Bold', sans-serif;
-}
 
-/* Commit header (author and date only) unified color and font */
+/* Commit header (author and date) */
 #commit-list .post p:first-of-type {
   color: #b4004e;
   font-family: 'Teen Bold', sans-serif;
+  margin-bottom: 0.2rem;
+}
+
+/* Commit message (description only) */
+#commit-list .post p:nth-of-type(2) {
+  color: #3e3e3e;
+  font-family: 'Teen', sans-serif;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
 }
 
 /* Main content block */
