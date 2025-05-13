@@ -153,11 +153,20 @@ table tr:hover {
   background-repeat: no-repeat;
 }
 
-/* All images */
+/* All images are inline by default (fixes icon placement issue) */
 img {
   max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0;
+}
+
+/* Use only when a large image needs to be block and centered */
+.full-img {
   display: block;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 /* Stamps */
