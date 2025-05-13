@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-13T18:25:37Z",
+    "message": "Update style.css\n\nFix: Correct image behavior to restore inline icons and balanced layout\r\n\r\n- Removed display: block from global img rules to prevent icons breaking layout\r\n- Applied inline-block to all images for natural inline placement next to text\r\n- Added .full-img class for large header or decorative images where needed\r\n- Cleaned spacing, ensured all layout elements follow good design and semantic principles"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-13T18:16:56Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-13T18:16:38Z",
     "message": "Update style.css\n\nRefactor: Improve typography, spacing, and layout balance\r\n\r\n- Switched to rem units for better scalability and accessibility\r\n- Unified line-height to 1.7 for smoother readability\r\n- Balanced all block spacing using consistent margins and paddings\r\n- Cleaned up image, list, and table handling for clearer, more spacious appearance\r\n- Ensured semantic structure with better visual hierarchy"
   },
