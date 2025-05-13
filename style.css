@@ -1,37 +1,17 @@
-/* Import custom fonts */
-@font-face {
-  font-family: 'Teen';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Teen Bold';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Teen Italic';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Teen Light';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
-}
-
 /* Body styling */
 body {
-  background-color: #fce4ec;
+  background-color: #fff8f0; /* soft creamy ivory */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
   background-attachment: fixed;
   background-size: auto;
   color: #3e3e3e;
-  font-family: 'Teen Light', sans-serif;
+  font-family: 'Times New Roman', serif;
   padding: 1.5rem;
   line-height: 1.8;
   font-size: 1.05rem;
 }
 
+/* Links */
 a {
   color: #b4004e;
   text-decoration: underline;
@@ -43,35 +23,23 @@ a:focus {
   outline: none;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-  display: inline-block;
-  margin: 0;
-}
-
 /* Headings */
 h1 {
-  font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
   font-size: 2.5rem;
 }
 
 h2 {
-  font-family: 'Teen', sans-serif;
   color: #d81b60;
   font-size: 2rem;
 }
 
 h3 {
-  font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
   font-size: 1.75rem;
 }
 
 h4, h5, h6, strong, b, th {
-  font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
 }
 
@@ -79,12 +47,10 @@ h4, h5, h6, strong, b, th {
 p {
   text-align: justify;
   margin-bottom: 1rem;
-  font-family: 'Teen Light', sans-serif;
 }
 
 /* Emphasis */
 em, i {
-  font-family: 'Teen Italic', sans-serif;
   color: #b4004e;
 }
 
@@ -99,7 +65,6 @@ th {
   text-align: left;
   padding: 0.75rem 0.5rem;
   border-bottom: 1px solid #ffb6c1;
-  background: none;
 }
 
 tbody tr {
@@ -148,29 +113,16 @@ td {
 
 /* Main content block */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 240, 0.95); /* creamy ivory block */
   padding: 2rem;
   border-radius: 1.5rem;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
+  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.15);
   border: 1px solid #ffc0cb;
 }
 
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  text-align: left;
-}
-
-.header-gif {
-  margin-bottom: 1rem;
-}
-
-/* Stamps - centered and tidy */
+/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -179,13 +131,13 @@ td {
   margin-bottom: 1.5rem;
   text-align: center;
 }
+
 #stamps img {
   width: 99px;
   height: 56px;
   object-fit: contain;
   display: inline-block;
   border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: transform 0.3s ease;
 }
 
@@ -210,7 +162,7 @@ iframe, video {
   justify-content: center;
   margin: 2rem auto;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
+  background: rgba(255, 255, 240, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
   background-blend-mode: lighten;
 }
 
@@ -229,7 +181,6 @@ iframe, video {
 
 /* Footer */
 #footer {
-  font-family: 'Teen Light', sans-serif;
   font-size: 0.9rem;
   margin-top: 2rem;
   color: #3e3e3e;
