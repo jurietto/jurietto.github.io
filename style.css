@@ -122,44 +122,35 @@ td {
   display: inline-block;
 }
 
-/* Commit list block */
+/* Commit list container */
 #commit-list {
   list-style: none;
   padding-left: 0;
   margin-bottom: 1.5rem;
 }
 
-#commit-list li {
-  position: relative;
-  padding-left: 2rem;
-  margin-bottom: 1rem;
-}
-
-#commit-list li::before {
-  content: '';
-  position: absolute;
-  top: 0.2rem;
-  left: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
+/* Individual commit entry */
+#commit-list .post {
+  margin-bottom: 1.8rem;
 }
 
 /* Commit header (author and date) */
 #commit-list .post p:first-of-type {
   color: #b4004e;
   font-family: 'Teen Bold', sans-serif;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
-/* Commit message (description only) */
+/* Commit message (description) */
 #commit-list .post p:nth-of-type(2) {
   color: #3e3e3e;
   font-family: 'Teen', sans-serif;
-  margin-left: 2rem;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  margin: 0 0 0 2rem;
+  line-height: 1.7;
+  max-width: 80ch;
+  word-break: break-word;
 }
 
 /* Main content block */
