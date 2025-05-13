@@ -117,7 +117,8 @@ td {
   white-space: nowrap;
 }
 table tr:hover {
-  background-color: rgba(255, 182, 193, 0.2);
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/bytrue-luv-back2rosa.gif') center center repeat;
+
 }
 
 .file-cell img {
