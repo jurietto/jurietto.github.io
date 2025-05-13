@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-13T23:20:18Z",
+    "message": "Update commits.json"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-13T22:19:10Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-13T22:18:52Z",
     "message": "Update sitelog.html"
   },
@@ -223,6 +233,11 @@
     "author": "jurietto",
     "date": "2025-05-13T18:11:06Z",
     "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-13T18:10:50Z",
+    "message": "Update index.html\n\nRefactor: Wrap last-updated message inside <p> inside <div>\r\n\r\n- Moved text into a semantic <p> inside existing <div>\r\n- Keeps layout control via div while ensuring text remains semantic and accessible"
   },
   {
     "author": "jurietto",
