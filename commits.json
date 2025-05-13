@@ -1,6 +1,16 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-13T18:02:51Z",
+    "message": "Update style.css\n\nCleanup: Remove custom margins from headers and paragraphs\r\n\r\n- Removed all margin overrides for h1-h6 and p elements\r\n- Allow browser defaults to manage spacing\r\n- Kept paragraph text justified for cleaner block appearance\r\n- Cleaned CSS for simpler and more semantic layout control"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-13T17:50:36Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-13T17:50:13Z",
     "message": "Update style.css\n\nRefine typography and spacing\r\n\r\n- Justified all paragraph text for cleaner block alignment\r\n- Reduced margin under all headers for tighter, cleaner layout\r\n- Cleaned and streamlined CSS for better readability and consistency"
   },
