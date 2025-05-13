@@ -1,6 +1,25 @@
-/* ------------------
-    Global Enhancements
------------------- */
+/* Import custom fonts */
+@font-face {
+  font-family: 'Teen';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teen Bold';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teen Italic';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Teen Light';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
+}
+
+/* Body styling */
 body {
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
@@ -32,9 +51,7 @@ img {
   margin: 0;
 }
 
-/* ------------------
-    Typography
------------------- */
+/* Headings */
 h1 {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
@@ -42,7 +59,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Teen Light', sans-serif;
+  font-family: 'Teen', sans-serif;
   color: #d81b60;
   font-size: 2rem;
 }
@@ -62,16 +79,16 @@ h4, h5, h6, strong, b, th {
 p {
   text-align: justify;
   margin-bottom: 1rem;
+  font-family: 'Teen Light', sans-serif;
 }
 
+/* Emphasis */
 em, i {
   font-family: 'Teen Italic', sans-serif;
   color: #b4004e;
 }
 
-/* ------------------
-    Tables
------------------- */
+/* Table */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -86,11 +103,8 @@ th {
 }
 
 tbody tr {
+  background: none;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-tbody tr:hover {
-  box-shadow: 0 2px 10px rgba(243, 209, 255, 0.4);
 }
 
 tbody tr:nth-child(odd):hover {
@@ -107,9 +121,7 @@ td {
   white-space: nowrap;
 }
 
-/* ------------------
-    Commit list
------------------- */
+/* Commit list */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -134,9 +146,7 @@ td {
   background-repeat: no-repeat;
 }
 
-/* ------------------
-    Layout Elements
------------------- */
+/* Main content block */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 2rem;
@@ -160,9 +170,30 @@ td {
   margin-bottom: 1rem;
 }
 
-/* ------------------
-    Media and Decorative
------------------- */
+/* Stamps - centered and tidy */
+#stamps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+#stamps img {
+  width: 99px;
+  height: 56px;
+  object-fit: contain;
+  display: inline-block;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+#stamps img:hover {
+  transform: scale(1.05);
+}
+
+/* Media and decorative */
 iframe, video {
   display: block;
   max-width: 100%;
@@ -196,9 +227,7 @@ iframe, video {
   color: #3e3e3e;
 }
 
-/* ------------------
-    Footer
------------------- */
+/* Footer */
 #footer {
   font-family: 'Teen Light', sans-serif;
   font-size: 0.9rem;
