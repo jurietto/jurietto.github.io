@@ -3,60 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>Updates</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
   <link rel="icon" href="https://file.garden/ZhTgSjrp5nAroRKq/296.gif" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
-<!-- Prevent zooming on mobile (especially iOS) -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  
 <body>
-<div class="main-content"> 
-  
-<img class="header-gif" src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="animated gif">
+  <div class="main-content"> 
 
-<h1>Updates<img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" aria-hidden="true" style="vertical-align: middle; margin-left: 6px;"></h1>
+    <img class="header-gif" src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty.gif.gif" alt="Charmmy Kitty">
 
-  <div id="last-updated" style="font-size: 0.9em; color: gray;">
-  Last Updated: Loading...
-</div>
+    <h1>Updates <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" aria-hidden="true" style="vertical-align: middle; margin-left: 6px;"></h1>
 
-  <p><em>This section is where I keep track of both personal updates and site changes.  
-"Life Updates" is where I reflect on things happening in my daily life, personal growth, or anything on my mind.  
-"Site Log" is a record of technical updates, changes, and edits made to this site.  
-These logs help keep things organized, and let visitors follow along if they’re curious about what's new or what's changed.</em></p>
+    <div id="last-updated" style="font-size: 0.9em; color: gray;">
+      Last Updated: Loading...
+    </div>
 
-  
-<p><a href="index.html"><img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="updates icon" style="vertical-align: middle; margin-right: 6px;"> [parent directory]</a></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th class="detailsColumn">Type</th>
-    </tr>
-  </thead>
-  <tbody>
-   
-   
-    <tr>
-      <td class="file-cell">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/skull.gif" alt="icon" style="height: 14px; vertical-align: middle; margin-right: 4px;">
-        <a href="https://jurietto.github.io/updates/lifeupdates.html">Life Updates</a>
-      </td>
-      <td class="detailsColumn">HTML</td>
-    </tr>
-    <tr>
-      <td class="file-cell">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/skull.gif" alt="icon" style="height: 14px; vertical-align: middle; margin-right: 4px;">
-        <a href="https://jurietto.github.io/updates/sitelog.html">Site Log</a>
-      </td>
-      <td class="detailsColumn">HTML</td>
-    </tr>
-  </tbody>
-</table>
+    <p><em>
+      This section is where I keep track of both personal updates and site changes.<br>
+      "Life Updates" is where I reflect on things happening in my daily life, personal growth, or anything on my mind.<br>
+      "Site Log" is a record of technical updates, changes, and edits made to this site.<br>
+      These logs help keep things organized, and let visitors follow along if they’re curious about what's new or what's changed.
+    </em></p>
 
+    <p>
+      <a href="/"><img src="https://file.garden/ZhTgSjrp5nAroRKq/cross.gifv" alt="Back icon" style="vertical-align: middle; margin-right: 6px;"> [parent directory]</a>
+    </p>
 
-<div class="ascii-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="detailsColumn">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="file-cell">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/skull.gif" alt="icon" style="height: 14px; vertical-align: middle; margin-right: 4px;">
+            <a href="/updates/lifeupdates.html">Life Updates</a>
+          </td>
+          <td class="detailsColumn">HTML</td>
+        </tr>
+        <tr>
+          <td class="file-cell">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/skull.gif" alt="icon" style="height: 14px; vertical-align: middle; margin-right: 4px;">
+            <a href="/updates/sitelog.html">Site Log</a>
+          </td>
+          <td class="detailsColumn">HTML</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ascii-box">
 <pre>
 　　 彡 ⌒ ミ　　彡 ⌒ ミ
 　　(　´･ω･)　 (　´･ω･)
@@ -82,26 +81,19 @@ These logs help keep things organized, and let visitors follow along if they’r
 　　＼/　　　　/ ＼/　　　　/
 　　　　￣￣￣　　 ￣￣￣
 </pre>
-</div>
+    </div>
 
+    <!-- Footer -->
+    <div id="footer"></div>
+    <script src="/script.js"></script>
+    <script>
+      fetch('/footer.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('footer').innerHTML = data;
+        });
+    </script>
 
-   <!-- Footer -->
-<div id="footer"></div>
-<script>
-  fetch('footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer').innerHTML = data;
-    });
-</script>
-</div>
-    <!-- External JS files -->
-    <script src="script.js"></script> 
-
+  </div>
 </body>
 </html>
-
-
-
-
-
