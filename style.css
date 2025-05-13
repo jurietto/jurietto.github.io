@@ -107,7 +107,6 @@ table {
   margin-bottom: 1.5rem;
 }
 
-/* Table header remains default (no hover or background) */
 thead tr {
   background: none;
 }
@@ -118,25 +117,20 @@ th {
   border-bottom: 1px solid #ffb6c1;
 }
 
-/* Table rows alternate pink and purple using nth-child */
-tbody tr:nth-child(odd) {
+tbody tr {
+  background: none;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect only, no default alternating */
+tbody tr:nth-child(odd):hover {
   background-color: #ffe0ed; /* soft pink */
 }
 
-tbody tr:nth-child(even) {
+tbody tr:nth-child(even):hover {
   background-color: #f3d1ff; /* warm purple */
 }
 
-/* Hover effect: swap colors on hover */
-tbody tr:nth-child(odd):hover {
-  background-color: #f3d1ff; /* becomes purple on hover */
-}
-
-tbody tr:nth-child(even):hover {
-  background-color: #ffe0ed; /* becomes pink on hover */
-}
-
-/* Table cells */
 td {
   padding: 0.5rem;
   border-bottom: 1px dotted #ffc0cb;
