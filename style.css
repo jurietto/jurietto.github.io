@@ -38,23 +38,33 @@ h1 {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
   font-size: 40px;
+  margin: 0 0 12px 0;
 }
 
 h2 {
   font-family: 'Teen Light', sans-serif;
   color: #d81b60;
   font-size: 32px;
+  margin: 0 0 10px 0;
 }
 
 h3 {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
   font-size: 28px;
+  margin: 0 0 8px 0;
 }
 
 h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
+  margin: 0 0 6px 0;
+}
+
+/* Paragraphs */
+p {
+  text-align: justify;
+  margin: 0 0 16px 0;
 }
 
 /* Italic text globally */
@@ -92,7 +102,6 @@ a:active {
 .main-content h5,
 .main-content h6 {
   text-align: left;
-  margin-top: 0;
 }
 
 /* Tables */
