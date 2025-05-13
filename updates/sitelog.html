@@ -27,12 +27,12 @@
     </p>
 
     <!-- Sort dropdown -->
-    <div style="margin-bottom: 16px;">
+    <div class="sort-block">
       <label for="sort">Sort by:</label>
       <select id="sort">
         <option value="new">Newest</option>
         <option value="old">Oldest</option>
-        <!-- Dynamically populated by script -->
+        <!-- Dynamic options here -->
       </select>
     </div>
 
@@ -48,8 +48,8 @@
           const container = document.getElementById('commit-list');
           const sortSelect = document.getElementById('sort');
 
-          // Populate months dynamically from commits
-          const months = new Set(commits.map(c => c.date.substring(0, 7)));
+          // Get unique months, sorted newest first
+          const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
           months.forEach(month => {
             const option = document.createElement('option');
             option.value = month;
@@ -81,7 +81,7 @@
                   <img src="https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif" alt="update icon" style="vertical-align: middle; margin-right: 6px;">
                   <strong>${commit.author}</strong> – ${date}
                 </p>
-                <p>${commit.message}</p>
+                <p class="commit-message">${commit.message}</p>
               `;
               container.appendChild(entry);
             });
