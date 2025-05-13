@@ -1,39 +1,40 @@
-/* Import custom fonts */
-@font-face {
-  font-family: 'Teen';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Teen Bold';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: 'Teen Italic';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Teen Light';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
-}
-
-/* Body styling */
+/* ------------------
+    Global Enhancements
+------------------ */
 body {
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
   background-attachment: fixed;
   background-size: auto;
   color: #3e3e3e;
-  font-family: 'Teen', sans-serif;
+  font-family: 'Teen Light', sans-serif;
   padding: 1.5rem;
-  line-height: 1.7;
+  line-height: 1.8;
+  font-size: 1.05rem;
 }
 
-/* Headings */
+a {
+  color: #b4004e;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+a:hover,
+a:focus {
+  color: #ff3ea5;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0;
+}
+
+/* ------------------
+    Typography
+------------------ */
 h1 {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
@@ -63,24 +64,79 @@ p {
   margin-bottom: 1rem;
 }
 
-/* Emphasis and italics */
 em, i {
   font-family: 'Teen Italic', sans-serif;
   color: #b4004e;
 }
 
-/* Links */
-a {
-  color: #b4004e;
-  text-decoration: underline;
-}
-a:hover,
-a:active {
-  color: #ff3ea5;
-  text-decoration: underline;
+/* ------------------
+    Tables
+------------------ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
 }
 
-/* Main content block */
+th {
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #ffb6c1;
+  background: none;
+}
+
+tbody tr {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+tbody tr:hover {
+  box-shadow: 0 2px 10px rgba(243, 209, 255, 0.4);
+}
+
+tbody tr:nth-child(odd):hover {
+  background-color: #ffe0ed;
+}
+
+tbody tr:nth-child(even):hover {
+  background-color: #f3d1ff;
+}
+
+td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px dotted #ffc0cb;
+  white-space: nowrap;
+}
+
+/* ------------------
+    Commit list
+------------------ */
+#commit-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+#commit-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+#commit-list li::before {
+  content: '';
+  position: absolute;
+  top: 0.2rem;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* ------------------
+    Layout Elements
+------------------ */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   padding: 2rem;
@@ -100,98 +156,14 @@ a:active {
   text-align: left;
 }
 
-/* Table base styling */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
-}
-
-thead tr {
-  background: none;
-}
-
-th {
-  text-align: left;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ffb6c1;
-}
-
-tbody tr {
-  background: none;
-  transition: background-color 0.3s ease;
-}
-
-/* Hover effect only, no default alternating */
-tbody tr:nth-child(odd):hover {
-  background-color: #ffe0ed; /* soft pink */
-}
-
-tbody tr:nth-child(even):hover {
-  background-color: #f3d1ff; /* warm purple */
-}
-
-td {
-  padding: 0.5rem;
-  border-bottom: 1px dotted #ffc0cb;
-  white-space: nowrap;
-}
-
-/* Commit list */
-#commit-list {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 1.5rem;
-}
-#commit-list li {
-  position: relative;
-  padding-left: 2rem;
+.header-gif {
   margin-bottom: 1rem;
 }
-#commit-list li::before {
-  content: '';
-  position: absolute;
-  top: 0.2rem;
-  left: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/heartrose.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 
-/* All images default to inline-block for natural placement with text */
-img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-  display: inline-block;
-  margin: 0;
-}
-
-/* Full content images (banners, etc.) */
-.full-img {
-  display: block;
-  margin-bottom: 1rem;
-  width: 100%;
-}
-
-/* Stamps */
-#stamps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-#stamps img {
-  width: 99px;
-  height: 56px;
-  object-fit: contain;
-}
-
-/* Iframes */
-iframe {
+/* ------------------
+    Media and Decorative
+------------------ */
+iframe, video {
   display: block;
   max-width: 100%;
   width: 100%;
@@ -201,15 +173,6 @@ iframe {
   margin-bottom: 1.5rem;
 }
 
-/* Videos */
-video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1.5rem;
-}
-
-/* ASCII art box */
 .ascii-box {
   border: 1px solid #3e3e3e;
   display: flex;
@@ -233,11 +196,9 @@ video {
   color: #3e3e3e;
 }
 
-.header-gif {
-  margin-bottom: 1rem;
-}
-
-/* Footer */
+/* ------------------
+    Footer
+------------------ */
 #footer {
   font-family: 'Teen Light', sans-serif;
   font-size: 0.9rem;
@@ -249,6 +210,7 @@ video {
 #footer .footer-links a {
   color: #b4004e;
   text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
 #footer .footer-links a:hover,
