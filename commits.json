@@ -197,7 +197,7 @@
   {
     "author": "Juri",
     "date": "2025-05-13T18:10:50Z",
-    "message": "Update index.html\n\nRefactor: Wrap last-updated message inside <p> inside <div>\r\n\r\n- Moved text into a semantic <p> inside existing <div>\r\n- Keeps layout control via div while ensuring text remains semantic and accessible"
+    "message": "Update index.html\n\nRefactor: Wrap last-updated message inside <p> inside <div>\r\n\r\n- Moved text into a semantic p inside existing div Keeps layout control via div while ensuring text remains semantic and accessible"
   },
   {
     "author": "jurietto",
