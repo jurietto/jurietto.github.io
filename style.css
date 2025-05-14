@@ -93,6 +93,7 @@ a:active {
   border: 2px solid #ffc0cb;
   overflow: hidden;
   position: relative;
+  padding: 24px;
 }
 
 .main-content h1,
