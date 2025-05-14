@@ -90,7 +90,7 @@ a:active {
   max-width: 900px;
   margin: 0 auto;
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
-  border: 1px solid #ffc0cb;
+  border: 2px solid #ffc0cb;
   overflow: hidden;
   position: relative;
 }
@@ -99,7 +99,7 @@ a:active {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
   background-repeat: repeat-x;
   background-position: center top;
-  height: 60px; /* Adjust to your image's natural height if needed */
+  height: auto; /* Adjust to your image's natural height if needed */
   width: 100%;
 }
 
