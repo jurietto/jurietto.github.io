@@ -99,7 +99,7 @@ a:active {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
   background-repeat: repeat-x;
   background-position: center top;
-  height: auto; /* Adjust to your image's natural height if needed */
+  height: 100px; /* Adjust to your image's natural height if needed */
   width: 100%;
 }
 
