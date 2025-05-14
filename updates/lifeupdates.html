@@ -96,13 +96,13 @@
 
 
     <div id="footer"></div>
-    <script>
+   <script>
       // Footer loader
       fetch('../footer.html').then(res => res.text()).then(html => {
         document.getElementById('footer').innerHTML = html;
       });
 
-      // Sorting logic
+      // Sorting logic (fixed to correctly target #sort)
       function sortPosts(order) {
         const postsContainer = document.getElementById('posts');
         const posts = Array.from(postsContainer.getElementsByClassName('post'));
@@ -117,12 +117,11 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        const filter = document.getElementById('filter');
-        sortPosts(filter.value);
-        filter.addEventListener('change', () => sortPosts(filter.value));
+        const sortSelect = document.getElementById('sort');
+        sortPosts(sortSelect.value);
+        sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
       });
     </script>
-
     <script src="../script.js"></script>
   </div>
 </body>
