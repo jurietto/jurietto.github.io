@@ -95,29 +95,6 @@ a:active {
   position: relative;
 }
 
-.banner-top {
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
-  background-repeat: repeat-x;
-  background-position: center top;
-  height: 100px; /* Adjust to your image's natural height if needed */
-  width: 100%;
-}
-
-.inner-content {
-  padding: 24px;
-}
-
-.site-header {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.header-gif {
-  display: inline-block;
-  height: auto;
-  max-width: 150px; /* optional scaling */
-}
-
 .main-content h1,
 .main-content h2,
 .main-content h3,
