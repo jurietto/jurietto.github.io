@@ -239,9 +239,26 @@ video {
   color: #ff3ea5;
 }
 
-/* Mac OS style filter */
-#filter {
+/* Controls block styling */
+#controls {
+  margin-bottom: 1.5rem;
+}
+
+/* Label styling */
+#controls label {
+  font-family: 'Teen Bold', sans-serif;
+  margin-right: 0.5rem;
+  color: #3e3e3e;
+}
+
+/* Select (sort) styling - flat, no border-radius */
+#controls select#sort {
   font-family: 'Teen', sans-serif;
-  padding: 4px 10px;
   font-size: 1rem;
+  color: #3e3e3e;
+  background-color: white;
+  border: 1px solid #ffc0cb;
+  padding: 0.3rem 1rem;
+  border-radius: 0;
+
 }
