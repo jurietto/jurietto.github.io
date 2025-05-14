@@ -1,24 +1,16 @@
+
 /* Import custom fonts */
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
 }
-
 @font-face {
   font-family: 'Teen Bold';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
-  font-weight: bold;
 }
-
 @font-face {
   font-family: 'Teen Italic';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Teen Light';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
 /* Body styling */
@@ -39,19 +31,16 @@ h1 {
   color: #d81b60;
   font-size: 40px;
 }
-
 h2 {
-  font-family: 'Teen Light', sans-serif;
+  font-family: 'Teen', sans-serif;
   color: #d81b60;
   font-size: 32px;
 }
-
 h3 {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
   font-size: 28px;
 }
-
 h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
   color: #d81b60;
@@ -60,9 +49,9 @@ h4, h5, h6, strong, b, th {
 /* Paragraphs */
 p {
   text-align: justify;
+  margin-bottom: 1rem;
 }
 
-/* Italic text globally */
 em, i {
   font-family: 'Teen Italic', sans-serif;
   color: #b4004e;
@@ -90,14 +79,6 @@ a:active {
   border: 1px solid #ffc0cb;
   overflow: hidden;
 }
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  text-align: left;
-}
 
 /* Tables */
 table {
@@ -117,16 +98,6 @@ td {
 }
 table tr:hover {
   background-color: rgba(255, 182, 193, 0.2);
-}
-
-.file-cell img {
-  vertical-align: middle;
-  margin-right: 6px;
-  height: 16px;
-}
-
-.detailsColumn {
-  text-align: right;
 }
 
 /* Commit list */
@@ -223,7 +194,7 @@ video {
 
 /* Footer */
 #footer {
-  font-family: 'Teen Light', sans-serif;
+  font-family: 'Teen', sans-serif;
   font-size: 0.9em;
   margin-top: 24px;
   color: #3e3e3e;
@@ -239,22 +210,12 @@ video {
   color: #ff3ea5;
 }
 
-/* Mac OS style filter */
-#filter {
-  font-family: 'Teen', sans-serif;
-  padding: 4px 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.2);
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  color: #3e3e3e;
-  cursor: pointer;
+/* Clean reset for any filter, controls, or selects */
+#controls {
+  margin-bottom: 1.5rem;
 }
-#filter:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #ffb6c1;
+
+#controls label {
+  font-family: 'Teen Bold', sans-serif;
+  margin-right: 0.5rem;
 }
