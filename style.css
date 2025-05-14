@@ -84,10 +84,8 @@ a:active {
   text-decoration: underline;
 }
 
-/* Main content block */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 0 24px 24px 24px; /* Remove top padding only */
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
@@ -96,7 +94,19 @@ a:active {
   overflow: hidden;
   position: relative;
 }
+
+.banner-top {
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
+  background-repeat: repeat-x;
+  background-position: center top;
+  height: 60px; /* Adjust to your image's natural height if needed */
+  width: 100%;
 }
+
+.inner-content {
+  padding: 24px;
+}
+
 .main-content h1,
 .main-content h2,
 .main-content h3,
@@ -267,13 +277,6 @@ video {
   border: 1px solid #ffc0cb;
   padding: 0.3rem 1rem;
   border-radius: 0;
-
-}
-
-.banner-top {
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
-  background-repeat: repeat-x;
-  background-position: center top;
 
 }
 
