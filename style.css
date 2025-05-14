@@ -271,14 +271,9 @@ video {
 }
 
 .banner-top {
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed.png');
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
   background-repeat: repeat-x;
   background-position: center top;
-  background-size: auto;
-  height: 60px;
-  width: 100%;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-}
+
 }
 
