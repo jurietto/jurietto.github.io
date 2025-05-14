@@ -244,3 +244,39 @@ iframe, video {
 #footer .footer-links a:active {
   color: #ff3ea5;
 }
+
+/* Life Updates unified with Site Log style */
+#posts .post {
+  margin-bottom: 1.8rem;
+}
+
+#posts .post .commit-header {
+  color: #b4004e;
+  font-family: 'Teen Bold', sans-serif;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+#posts .post .commit-message {
+  color: #3e3e3e;
+  font-family: 'Teen', sans-serif;
+  font-size: 1rem;
+  margin: 0 0 0 2rem;
+  line-height: 1.7;
+  max-width: 80ch;
+  word-break: break-word;
+}
+#controls {
+  margin-bottom: 1.5rem;
+}
+
+#controls label {
+  font-family: 'Teen Bold', sans-serif;
+  margin-right: 0.5rem;
+}
+
+#filter {
+  font-family: 'Teen', sans-serif;
+}
+
+
