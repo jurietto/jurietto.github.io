@@ -64,6 +64,7 @@ p {
 
 .page-text {
     color: #d81b60;
+    font-weight: bold;
   }
 
 /* Italic text globally */
