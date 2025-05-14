@@ -18,126 +18,139 @@
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
+/* Body with dark purple background and hacker aesthetic */
 body {
   position: relative;
-  background-color: #f7deff; /* Keep your existing background image */
+  background-color: #2b006b; /* Dark purple for main background */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #222; /* Changed to dark gray for better readability */
+  color: #ccc; /* Light grey for text for contrast */
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Headers styling - darker purple for better readability */
-h1 {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b; /* Darker purple */
-  font-size: 40px;
-}
-
-h2 {
-  font-family: 'Teen Light', sans-serif;
-  color: #9b2c9b;
-  font-size: 32px;
-}
-
-h3 {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b;
-  font-size: 28px;
-}
-
-h4, h5, h6, strong, b, th {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b;
-}
-
-/* Paragraphs and page text - dark gray for readability */
-p {
-  text-align: justify;
-  color: #222;
-}
-
-.page-text {
-  color: #222;
-  font-family: 'Teen Bold';
-}
-
-/* Italic text */
-em, i {
-  font-family: 'Teen Italic', sans-serif;
-  color: #b4004e; /* Keep existing or adjust if needed for contrast */
-}
-
-/* Links - keep accent color for highlights */
-a {
-  color: #e79cff; /* Original accent color */
-  text-decoration: underline;
-}
-a:hover,
-a:active {
-  color: #a14dd7; /* Slightly darker for hover state */
-  text-decoration: underline;
-}
-
-/* Main content container */
+/* Main content container with dark purple background */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 24px;
+  background-color: #1a0033; /* Deep dark purple for content area */
+  border-radius: 12px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 6px 18px rgba(231, 156, 255, 0.25);
-  border: 2px solid #e79cff;
+  box-shadow: 0 0 20px #ff00ff; /* Neon magenta glow effect */
+  border: 2px solid #ff00ff; /* Neon magenta border */
   overflow: hidden;
-  position: relative;
   padding: 24px;
 }
 
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  text-align: left;
+/* Headings with neon colors */
+h1 {
+  font-family: 'Teen Bold', sans-serif;
+  color: #00ff00; /* Lime green */
+  font-size: 40px;
+  text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+}
+h2 {
+  font-family: 'Teen Light', sans-serif;
+  color: #ff69b4; /* Bubblegum pink */
+  font-size: 32px;
+  text-shadow: 0 0 8px #ff69b4, 0 0 15px #ff69b4;
+}
+h3 {
+  font-family: 'Teen Bold', sans-serif;
+  color: #ff00ff; /* Magenta */
+  font-size: 28px;
+  text-shadow: 0 0 8px #ff00ff, 0 0 15px #ff00ff;
 }
 
-/* Tables */
+/* Paragraphs and general text */
+p {
+  text-align: justify;
+  color: #ccc; /* Light grey for readability */
+}
+
+/* Accent color for links and highlights */
+a {
+  color: #ff69b4; /* Bubblegum pink */
+  text-decoration: underline;
+  text-shadow: 0 0 5px #ff69b4;
+}
+a:hover,
+a:active {
+  color: #00ff00; /* Lime green on hover for contrast */
+  text-shadow: 0 0 10px #00ff00;
+}
+
+/* Page text styling */
+.page-text {
+  color: #ccc;
+  font-family: 'Teen Bold';
+}
+
+/* Italic styling */
+em, i {
+  font-family: 'Teen Italic', sans-serif;
+  color: #999; /* Neutral grey for italics */
+}
+
+/* Main content styling */
+.main-content {
+  background-color: #1a0033; /* Dark purple */
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px #ff00ff;
+  border: 2px solid #ff00ff;
+  overflow: hidden;
+  padding: 24px;
+}
+
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  font-family: 'Teen', sans-serif;
 }
 th {
-  text-align: left;
   padding-bottom: 6px;
-  border-bottom: 1px solid #e79cff;
+  border-bottom: 1px solid #ff00ff;
+  color: #ccc;
 }
 td {
   padding: 6px 10px;
-  border-bottom: 1px dotted #e79cff;
+  border-bottom: 1px dotted #ff00ff;
+  color: #eee;
   white-space: nowrap;
 }
-table tr:hover {
-  background-color: rgba(231, 156, 255, 0.2);
+
+/* Remove hover effect on first row */
+table tbody tr:nth-child(1):hover {
+  background-color: transparent; /* No hover on first row */
+}
+table tbody tr:hover {
+  background-color: rgba(255, 0, 255, 0.2); /* Neon magenta hover for other rows */
 }
 
-/* Image styling inside table cells */
+/* Row hover effect for other rows only */
+table tbody tr:nth-child(n+2):hover {
+  background-color: rgba(255, 0, 255, 0.2);
+}
+
+/* Images in table cells */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Details column right-align */
+/* Details column right aligned */
 .detailsColumn {
   text-align: right;
 }
 
-/* Commit list styling */
+/* Commit list styles */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -200,16 +213,17 @@ video {
   margin-bottom: 20px;
 }
 
-/* ASCII art box */
+/* ASCII art box with neon glow */
 .ascii-box {
-  border: 1px solid #e79cff;
+  border: 1px solid #ff00ff; /* Magenta border */
   display: flex;
   justify-content: center;
   margin: 20px auto;
   max-width: fit-content;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
+  background: rgba(17, 0, 51, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
   background-blend-mode: lighten;
+  box-shadow: 0 0 20px #ff00ff, inset 0 0 10px #00ff00; /* Neon glow effect */
 }
 
 @media (max-width: 768px) {
@@ -222,7 +236,7 @@ video {
   margin: 0;
   font-family: 'Consolas', monospace;
   line-height: 1.2;
-  color: #3e3e3e;
+  color: #ccc; /* Light grey for code */
 }
 
 /* Header gif margin */
@@ -230,20 +244,20 @@ video {
   margin-bottom: 5px;
 }
 
-/* Footer */
+/* Footer styles */
 #footer {
   font-family: 'Teen Light', sans-serif;
   font-size: 0.9em;
   margin-top: 24px;
-  color: #3e3e3e;
+  color: #888; /* Slightly darker footer text for contrast */
 }
 #footer .footer-links a {
-  color: #e79cff;
+  color: #ff69b4; /* Bubblegum pink for links */
   text-decoration: underline;
 }
 #footer .footer-links a:hover,
 #footer .footer-links a:active {
-  color: #a14dd7;
+  color: #00ff00; /* Lime green hover for footer links */
 }
 
 /* Controls block styling */
@@ -251,20 +265,20 @@ video {
   margin-bottom: 1.5rem;
 }
 
-/* Label styling */
+/* Labels */
 #controls label {
   font-family: 'Teen Bold', sans-serif;
   margin-right: 0.5rem;
-  color: #3e3e3e;
+  color: #ccc;
 }
 
-/* Select (sort) styling - flat, no border-radius */
+/* Select styling */
 #controls select#sort {
   font-family: 'Teen', sans-serif;
   font-size: 1rem;
-  color: #3e3e3e;
-  background-color: #fff;
-  border: 1px solid #e79cff;
+  color: #ccc;
+  background-color: #222; /* Dark background for select */
+  border: 1px solid #ff00ff; /* Magenta border */
   padding: 0.3rem 1rem;
   border-radius: 0;
 }
