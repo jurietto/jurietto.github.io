@@ -26,13 +26,12 @@
       </a>
     </p>
 
-    <!-- Sort dropdown -->
-    <div class="sort-block">
+    <!-- Controls block -->
+    <div id="controls">
       <label for="sort">Sort by:</label>
       <select id="sort">
         <option value="new">Newest</option>
         <option value="old">Oldest</option>
-        <!-- Dynamic options here -->
       </select>
     </div>
 
@@ -48,7 +47,7 @@
           const container = document.getElementById('commit-list');
           const sortSelect = document.getElementById('sort');
 
-          // Get unique months, sorted newest first
+          // Populate months dynamically
           const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
           months.forEach(month => {
             const option = document.createElement('option');
