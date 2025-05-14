@@ -24,63 +24,62 @@ body {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #3e3e3e;
+  color: #222; /* Changed to dark gray for better readability */
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Headers styling */
+/* Headers styling - darker purple for better readability */
 h1 {
   font-family: 'Teen Bold', sans-serif;
-  color: #e79cff; /* Match primary color */
+  color: #9b2c9b; /* Darker purple */
   font-size: 40px;
 }
 
 h2 {
   font-family: 'Teen Light', sans-serif;
-  color: #e79cff;
+  color: #9b2c9b;
   font-size: 32px;
 }
 
 h3 {
   font-family: 'Teen Bold', sans-serif;
-  color: #e79cff;
+  color: #9b2c9b;
   font-size: 28px;
 }
 
 h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
-  color: #e79cff;
+  color: #9b2c9b;
 }
 
-/* Paragraphs */
+/* Paragraphs and page text - dark gray for readability */
 p {
   text-align: justify;
-  color: #4b4b4b; /* Slightly darker for contrast and readability */
+  color: #222;
 }
 
-/* Page text styling */
 .page-text {
-  color: #e79cff;
+  color: #222;
   font-family: 'Teen Bold';
 }
 
-/* Italic text globally */
+/* Italic text */
 em, i {
   font-family: 'Teen Italic', sans-serif;
-  color: #b4004e; /* Keep existing for contrast, or consider #d81b60 for harmony */
+  color: #b4004e; /* Keep existing or adjust if needed for contrast */
 }
 
-/* Links */
+/* Links - keep accent color for highlights */
 a {
-  color: #e79cff; /* Match accent color */
+  color: #e79cff; /* Original accent color */
   text-decoration: underline;
 }
 a:hover,
 a:active {
-  color: #a14dd7; /* Slightly darker or a complementary hover color */
+  color: #a14dd7; /* Slightly darker for hover state */
   text-decoration: underline;
 }
 
@@ -90,14 +89,13 @@ a:active {
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 6px 18px rgba(231, 156, 255, 0.25); /* matching accent color for glow */
-  border: 2px solid #e79cff; /* accent border */
+  box-shadow: 0 6px 18px rgba(231, 156, 255, 0.25);
+  border: 2px solid #e79cff;
   overflow: hidden;
   position: relative;
   padding: 24px;
 }
 
-/* Headings inside main content */
 .main-content h1,
 .main-content h2,
 .main-content h3,
@@ -107,7 +105,7 @@ a:active {
   text-align: left;
 }
 
-/* Tables styling */
+/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -127,19 +125,19 @@ table tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
 
-/* Images inside table cells */
+/* Image styling inside table cells */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Details column alignment */
+/* Details column right-align */
 .detailsColumn {
   text-align: right;
 }
 
-/* Commit list styles */
+/* Commit list styling */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -168,7 +166,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps */
+/* Stamps section */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -204,7 +202,7 @@ video {
 
 /* ASCII art box */
 .ascii-box {
-  border: 1px solid #e79cff; /* accent border */
+  border: 1px solid #e79cff;
   display: flex;
   justify-content: center;
   margin: 20px auto;
@@ -232,7 +230,7 @@ video {
   margin-bottom: 5px;
 }
 
-/* Footer styling */
+/* Footer */
 #footer {
   font-family: 'Teen Light', sans-serif;
   font-size: 0.9em;
@@ -260,7 +258,7 @@ video {
   color: #3e3e3e;
 }
 
-/* Select styling */
+/* Select (sort) styling - flat, no border-radius */
 #controls select#sort {
   font-family: 'Teen', sans-serif;
   font-size: 1rem;
