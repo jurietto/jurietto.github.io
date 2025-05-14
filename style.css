@@ -86,14 +86,17 @@ a:active {
 
 /* Main content block */
 .main-content {
+  .main-content {
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 24px;
+  padding: 0 24px 24px 24px; /* Remove top padding only */
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
   box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
   border: 1px solid #ffc0cb;
   overflow: hidden;
+  position: relative;
+}
 }
 .main-content h1,
 .main-content h2,
@@ -271,9 +274,12 @@ video {
 .banner-top {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed.png');
   background-repeat: repeat-x;
-  background-position: top center;
-  width: calc(100% + 48px); /* Cancels padding cleanly */
-  height: 60px;
+  background-position: center top;
   background-size: auto;
+  height: 60px;
+  width: 100%;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
 }
 
