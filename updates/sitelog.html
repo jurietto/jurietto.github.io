@@ -37,43 +37,69 @@
     </div>
 
     <div id="posts">
-      <!-- Your posts here, same structure as you have -->
-      <!-- Example Post -->
       <div class="post">
-        <p class="commit-header">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/butter.gifv" alt="update icon" style="vertical-align: middle; margin-right: 6px;">
-          <strong>March 14, 2025 – 2:17 PM</strong>
-        </p>
+        <p class="commit-header"><img src="https://file.garden/ZhTgSjrp5nAroRKq/butter.gifv" alt="update icon" style="vertical-align: middle; margin-right: 6px;"><strong>March 14, 2025 – 2:17 PM</strong></p>
         <p class="commit-message">Things have been a bit off, but I’m managing...</p>
       </div>
-      <!-- More posts... -->
+      <div class="post">
+        <p class="commit-header"><img src="https://file.garden/ZhTgSjrp5nAroRKq/butter.gifv" alt="update icon" style="vertical-align: middle; margin-right: 6px;"><strong>February 20, 2025 – 1:13 AM</strong></p>
+        <p class="commit-message">I haven’t posted an update since last fall, but...</p>
+      </div>
+      <!-- Add more posts following the same format -->
     </div>
 
     <div id="footer"></div>
     <script>
-      // Footer loader
+      // Load footer
       fetch('../footer.html').then(res => res.text()).then(html => {
         document.getElementById('footer').innerHTML = html;
       });
 
-      // Sorting logic using correct 'sort' id
-      function sortPosts(order) {
+      // Sorting logic with dynamic month/year insertion
+      document.addEventListener('DOMContentLoaded', () => {
         const postsContainer = document.getElementById('posts');
         const posts = Array.from(postsContainer.getElementsByClassName('post'));
+        const sortSelect = document.getElementById('sort');
 
-        posts.sort((a, b) => {
-          const dateA = new Date(a.querySelector('strong').textContent.split('–')[0].trim());
-          const dateB = new Date(b.querySelector('strong').textContent.split('–')[0].trim());
-          return order === 'old' ? dateA - dateB : dateB - dateA;
+        // Extract months dynamically from posts
+        const months = [...new Set(posts.map(p => {
+          const dateText = p.querySelector('strong').textContent.split('–')[0].trim();
+          const date = new Date(dateText);
+          return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        }))].sort().reverse();
+
+        months.forEach(month => {
+          const option = document.createElement('option');
+          option.value = month;
+          option.textContent = month;
+          sortSelect.appendChild(option);
         });
 
-        posts.forEach(post => postsContainer.appendChild(post));
-      }
+        function sortPosts(order) {
+          let sortedPosts = posts;
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const sort = document.getElementById('sort');
-        sortPosts(sort.value);
-        sort.addEventListener('change', () => sortPosts(sort.value));
+          if (order === 'old') {
+            sortedPosts = [...posts].sort((a, b) => new Date(a.querySelector('strong').textContent.split('–')[0].trim()) - new Date(b.querySelector('strong').textContent.split('–')[0].trim()));
+          } else if (order === 'new') {
+            sortedPosts = [...posts].sort((a, b) => new Date(b.querySelector('strong').textContent.split('–')[0].trim()) - new Date(a.querySelector('strong').textContent.split('–')[0].trim()));
+          } else {
+            sortedPosts = posts.filter(p => {
+              const dateText = p.querySelector('strong').textContent.split('–')[0].trim();
+              const date = new Date(dateText);
+              const postMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+              return postMonth === order;
+            });
+          }
+
+          postsContainer.innerHTML = '';
+          sortedPosts.forEach(post => postsContainer.appendChild(post));
+        }
+
+        sortPosts(sortSelect.value);
+
+        sortSelect.addEventListener('change', (e) => {
+          sortPosts(e.target.value);
+        });
       });
     </script>
     <script src="../script.js"></script>
