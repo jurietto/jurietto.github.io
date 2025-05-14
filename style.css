@@ -21,8 +21,8 @@
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
-/* Body styling */
 body {
+  position: relative;
   background-color: #fce4ec;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
   background-attachment: fixed;
@@ -31,6 +31,16 @@ body {
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(75, 0, 130, 0.5); /* Deep purple with transparency */
+  z-index: -1; /* Keeps it behind the content */
+  pointer-events: none;
 }
 
 /* Headers styling */
