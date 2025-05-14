@@ -107,6 +107,17 @@ a:active {
   padding: 24px;
 }
 
+.site-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.header-gif {
+  display: inline-block;
+  height: auto;
+  max-width: 150px; /* optional scaling */
+}
+
 .main-content h1,
 .main-content h2,
 .main-content h3,
