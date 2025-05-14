@@ -153,6 +153,11 @@ td {
   word-break: break-word;
 }
 
+.commit-message {
+  margin: 0 0 1.2rem 2rem;
+  max-width: none;
+}
+
 /* Main content block */
 .main-content {
   background-color: white;
@@ -245,7 +250,7 @@ iframe, video {
   color: #ff3ea5;
 }
 
-/* Life Updates unified with Site Log style */
+/* Life Updates unified with Site Log style clean */
 #posts .post {
   margin-bottom: 1.8rem;
 }
@@ -261,11 +266,12 @@ iframe, video {
   color: #3e3e3e;
   font-family: 'Teen', sans-serif;
   font-size: 1rem;
-  margin: 0 0 0 2rem;
+  margin: 0 0 1.2rem 2rem; /* indent only */
   line-height: 1.7;
-  max-width: 80ch;
+  max-width: none; /* fix the extra right margin look */
   word-break: break-word;
 }
+
 #controls {
   margin-bottom: 1.5rem;
 }
