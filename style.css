@@ -3,119 +3,97 @@
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
 }
-
 @font-face {
   font-family: 'Teen Bold';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
   font-weight: bold;
 }
-
 @font-face {
   font-family: 'Teen Italic';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
   font-style: italic;
 }
-
 @font-face {
   font-family: 'Teen Light';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
-/* Body styling */
 body {
-  background-color: #fce4ec;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
+  position: relative;
+  background-color: #f7deff; /* Keep your existing background image */
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #3e3e3e;
+  color: #222; /* Changed to dark gray for better readability */
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Headers styling */
+/* Headers styling - darker purple for better readability */
 h1 {
   font-family: 'Teen Bold', sans-serif;
-  color: #d81b60;
+  color: #9b2c9b; /* Darker purple */
   font-size: 40px;
 }
 
 h2 {
   font-family: 'Teen Light', sans-serif;
-  color: #d81b60;
+  color: #9b2c9b;
   font-size: 32px;
 }
 
 h3 {
   font-family: 'Teen Bold', sans-serif;
-  color: #d81b60;
+  color: #9b2c9b;
   font-size: 28px;
 }
 
 h4, h5, h6, strong, b, th {
   font-family: 'Teen Bold', sans-serif;
-  color: #d81b60;
+  color: #9b2c9b;
 }
 
-/* Paragraphs */
+/* Paragraphs and page text - dark gray for readability */
 p {
   text-align: justify;
+  color: #222;
 }
 
 .page-text {
-    color: #d81b60;
-    font-family: 'Teen Bold';
-  }
-
-/* Italic text globally */
-em, i {
-  font-family: 'Teen Italic', sans-serif;
-  color: #b4004e;
+  color: #222;
+  font-family: 'Teen Bold';
 }
 
-/* Links */
+/* Italic text */
+em, i {
+  font-family: 'Teen Italic', sans-serif;
+  color: #b4004e; /* Keep existing or adjust if needed for contrast */
+}
+
+/* Links - keep accent color for highlights */
 a {
-  color: #b4004e;
+  color: #e79cff; /* Original accent color */
   text-decoration: underline;
 }
 a:hover,
 a:active {
-  color: #ff3ea5;
+  color: #a14dd7; /* Slightly darker for hover state */
   text-decoration: underline;
 }
 
+/* Main content container */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
-  border: 2px solid #ffc0cb;
+  box-shadow: 0 6px 18px rgba(231, 156, 255, 0.25);
+  border: 2px solid #e79cff;
   overflow: hidden;
   position: relative;
-}
-
-.banner-top {
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
-  background-repeat: repeat-x;
-  background-position: center top;
-  height: 100px; /* Adjust to your image's natural height if needed */
-  width: 100%;
-}
-
-.inner-content {
   padding: 24px;
-}
-
-.site-header {
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.header-gif {
-  display: inline-block;
-  height: auto;
-  max-width: 150px; /* optional scaling */
 }
 
 .main-content h1,
@@ -136,28 +114,30 @@ table {
 th {
   text-align: left;
   padding-bottom: 6px;
-  border-bottom: 1px solid #ffb6c1;
+  border-bottom: 1px solid #e79cff;
 }
 td {
   padding: 6px 10px;
-  border-bottom: 1px dotted #ffc0cb;
+  border-bottom: 1px dotted #e79cff;
   white-space: nowrap;
 }
 table tr:hover {
-  background-color: rgba(255, 182, 193, 0.2);
+  background-color: rgba(231, 156, 255, 0.2);
 }
 
+/* Image styling inside table cells */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
+/* Details column right-align */
 .detailsColumn {
   text-align: right;
 }
 
-/* Commit list */
+/* Commit list styling */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -186,7 +166,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps */
+/* Stamps section */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -222,7 +202,7 @@ video {
 
 /* ASCII art box */
 .ascii-box {
-  border: 1px solid #3e3e3e;
+  border: 1px solid #e79cff;
   display: flex;
   justify-content: center;
   margin: 20px auto;
@@ -245,6 +225,7 @@ video {
   color: #3e3e3e;
 }
 
+/* Header gif margin */
 .header-gif {
   margin-bottom: 5px;
 }
@@ -256,15 +237,13 @@ video {
   margin-top: 24px;
   color: #3e3e3e;
 }
-
 #footer .footer-links a {
-  color: #b4004e;
+  color: #e79cff;
   text-decoration: underline;
 }
-
 #footer .footer-links a:hover,
 #footer .footer-links a:active {
-  color: #ff3ea5;
+  color: #a14dd7;
 }
 
 /* Controls block styling */
@@ -284,9 +263,8 @@ video {
   font-family: 'Teen', sans-serif;
   font-size: 1rem;
   color: #3e3e3e;
-  background-color: white;
-  border: 1px solid #ffc0cb;
+  background-color: #fff;
+  border: 1px solid #e79cff;
   padding: 0.3rem 1rem;
   border-radius: 0;
-
 }
