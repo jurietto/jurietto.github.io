@@ -99,17 +99,14 @@
           <td class="detailsColumn">HTML</td>
         </tr>
       </tbody>
-    </table></div>
+    </table>
 
-
-    <div class="main-content">
     <!-- Chatbox -->
-    <h1>Chatzone</h1>
-    <iframe src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" scrolling="auto"></iframe></div>
+    <h2>Chatzone</h2>
+    <iframe src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" scrolling="auto"></iframe>
 
-    <div class="main-content"> 
     <!-- Video -->
-    <h1>jurietto.mp4</h1>
+    <h2>jurietto.mp4</h2>
     <div id="video"></div>
     <script>
       fetch('video.html')
@@ -117,11 +114,10 @@
         .then(data => {
           document.getElementById('video').innerHTML = data;
         });
-    </script></div>
+    </script>
 
-    <div class="main-content">
     <!-- Stamps -->
-    <h1>Stamps</h1>
+    <h2>Stamps</h2>
     <div id="stamps"></div>
     <script>
       fetch('stamps.html')
@@ -129,9 +125,8 @@
         .then(data => {
           document.getElementById('stamps').innerHTML = data;
         });
-    </script></div>
-      
-<div class="main-content">
+    </script>
+
     <!-- Footer -->
     <div id="footer"></div>
     <script>
@@ -141,7 +136,7 @@
           document.getElementById('footer').innerHTML = data;
         });
     </script>
-  </div></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
