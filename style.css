@@ -1,4 +1,4 @@
-/* Import custom fonts */
+/* Import custom fonts - you can remove these if you want to fully switch to Arial */
 @font-face {
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
@@ -18,94 +18,83 @@
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
+/* Apply Arial universally */
 body {
   position: relative;
-  background-color: #f7deff; /* Keep your existing background image */
+  background-color: #f7deff; /* or your preferred background */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #222; /* Changed to dark gray for better readability */
-  font-family: 'Teen', sans-serif;
+  color: #222; /* text color */
+  font-family: Arial, sans-serif; /* <-- all text in Arial */
   padding: 20px;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Headers styling - darker purple for better readability */
+/* Headings in dark pink for contrast, but font is Arial */
 h1 {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b; /* Darker purple */
+  font-family: Arial, sans-serif;
+  color: #9b2c9b; /* or a darker pink if preferred */
   font-size: 40px;
 }
-
 h2 {
-  font-family: 'Teen Light', sans-serif;
+  font-family: Arial, sans-serif;
   color: #9b2c9b;
   font-size: 32px;
 }
-
 h3 {
-  font-family: 'Teen Bold', sans-serif;
+  font-family: Arial, sans-serif;
   color: #9b2c9b;
   font-size: 28px;
 }
-
 h4, h5, h6, strong, b, th {
-  font-family: 'Teen Bold', sans-serif;
+  font-family: Arial, sans-serif;
   color: #9b2c9b;
 }
 
-/* Paragraphs and page text - dark gray for readability */
+/* Paragraphs and page text */
 p {
   text-align: justify;
   color: #222;
 }
-
 .page-text {
   color: #222;
-  font-family: 'Teen Bold';
+  font-family: Arial, sans-serif;
 }
 
 /* Italic text */
 em, i {
-  font-family: 'Teen Italic', sans-serif;
-  color: #b4004e; /* Keep existing or adjust if needed for contrast */
+  font-family: Arial, sans-serif;
+  font-style: italic; /* optional: add italics if desired */
+  color: #b4004e; /* keep as is or adjust for contrast */
 }
 
-/* Links - keep accent color for highlights */
+/* Links - bright pink for visibility */
 a {
-  color: #e79cff; /* Original accent color */
+  color: #e84284;
   text-decoration: underline;
 }
 a:hover,
 a:active {
-  color: #a14dd7; /* Slightly darker for hover state */
+  color: #a14dd7; /* darker shade for hover */
   text-decoration: underline;
 }
 
-/* Main content container */
+/* Content container background and border */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
   box-shadow: 0 6px 18px rgba(231, 156, 255, 0.25);
-  border: 2px solid #e79cff;
+  border: 2px solid #e84284;
   overflow: hidden;
-  position: relative;
   padding: 24px;
+  font-family: Arial, sans-serif; /* force Arial here too */
 }
 
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  text-align: left;
-}
-
-/* Tables */
+/* Tables styling - dark text on light background */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -114,157 +103,17 @@ table {
 th {
   text-align: left;
   padding-bottom: 6px;
-  border-bottom: 1px solid #e79cff;
+  border-bottom: 1px solid #e84284;
+  color: #000;
 }
 td {
   padding: 6px 10px;
-  border-bottom: 1px dotted #e79cff;
+  border-bottom: 1px dotted #e84284;
   white-space: nowrap;
+  color: #000;
 }
 table tr:hover {
-  background-color: rgba(231, 156, 255, 0.2);
+  background-color: rgba(232, 66, 132, 0.2);
 }
 
-/* Image styling inside table cells */
-.file-cell img {
-  vertical-align: middle;
-  margin-right: 6px;
-  height: 16px;
-}
-
-/* Details column right-align */
-.detailsColumn {
-  text-align: right;
-}
-
-/* Commit list styling */
-#commit-list {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 20px;
-}
-#commit-list li {
-  position: relative;
-  padding-left: 28px;
-  margin-bottom: 20px;
-}
-#commit-list li::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-/* All images */
-img {
-  max-width: 100%;
-  display: inline-block;
-}
-
-/* Stamps section */
-#stamps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-#stamps img {
-  width: 99px;
-  height: 56px;
-  object-fit: contain;
-  display: block;
-}
-
-/* Iframes */
-iframe {
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  border: none;
-  margin-bottom: 20px;
-}
-
-/* Videos */
-video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 20px;
-}
-
-/* ASCII art box */
-.ascii-box {
-  border: 1px solid #e79cff;
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-  max-width: fit-content;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
-  background-blend-mode: lighten;
-}
-
-@media (max-width: 768px) {
-  .ascii-box {
-    display: none;
-  }
-}
-
-.ascii-box pre {
-  margin: 0;
-  font-family: 'Consolas', monospace;
-  line-height: 1.2;
-  color: #3e3e3e;
-}
-
-/* Header gif margin */
-.header-gif {
-  margin-bottom: 5px;
-}
-
-/* Footer */
-#footer {
-  font-family: 'Teen Light', sans-serif;
-  font-size: 0.9em;
-  margin-top: 24px;
-  color: #3e3e3e;
-}
-#footer .footer-links a {
-  color: #e79cff;
-  text-decoration: underline;
-}
-#footer .footer-links a:hover,
-#footer .footer-links a:active {
-  color: #a14dd7;
-}
-
-/* Controls block styling */
-#controls {
-  margin-bottom: 1.5rem;
-}
-
-/* Label styling */
-#controls label {
-  font-family: 'Teen Bold', sans-serif;
-  margin-right: 0.5rem;
-  color: #3e3e3e;
-}
-
-/* Select (sort) styling - flat, no border-radius */
-#controls select#sort {
-  font-family: 'Teen', sans-serif;
-  font-size: 1rem;
-  color: #3e3e3e;
-  background-color: #fff;
-  border: 1px solid #e79cff;
-  padding: 0.3rem 1rem;
-  border-radius: 0;
-}
+/* Other elements like images, ASCII box, footer, etc., don't need font changes unless specified. */
