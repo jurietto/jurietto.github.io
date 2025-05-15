@@ -3,131 +3,161 @@
   font-family: 'Teen';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'Teen Bold';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
   font-weight: bold;
 }
+
 @font-face {
   font-family: 'Teen Italic';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
   font-style: italic;
 }
+
 @font-face {
   font-family: 'Teen Light';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
-/* Body with black/dark background for pastel goth vibe */
+/* Body styling */
 body {
-  position: relative;
-  background-color: #000; /* pure black background */
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
+  background-color: #fce4ec;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg01.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #fff; /* default text white for readability */
+  color: #3e3e3e;
   font-family: 'Teen', sans-serif;
   padding: 20px;
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
-/* Main content container with dark purple/pinkish headers */
-.main-content {
-  background-color: #0d0d0d; /* very dark gray/black for content background */
-  border-radius: 12px;
-  max-width: 900px;
-  margin: 0 auto;
-  box-shadow: 0 0 20px #ff69b4; /* pastel pink glow */
-  border: 2px solid #ff69b4;
-  overflow: hidden;
-  padding: 24px;
-}
-
-/* Headers: dark purple-pinkish, easy on eyes, glowing effect */
+/* Headers styling */
 h1 {
   font-family: 'Teen Bold', sans-serif;
-  color: #d081b7; /* a pastel purple-pinkish shade */
+  color: #d81b60;
   font-size: 40px;
-  text-shadow: 0 0 10px #d081b7, 0 0 20px #d081b7;
 }
+
 h2 {
   font-family: 'Teen Light', sans-serif;
-  color: #d081b7;
+  color: #d81b60;
   font-size: 32px;
-  text-shadow: 0 0 8px #d081b7, 0 0 15px #d081b7;
 }
+
 h3 {
   font-family: 'Teen Bold', sans-serif;
-  color: #d081b7;
+  color: #d81b60;
   font-size: 28px;
-  text-shadow: 0 0 8px #d081b7, 0 0 15px #d081b7;
 }
 
-/* Paragraphs and general text - pure white for clarity */
+h4, h5, h6, strong, b, th {
+  font-family: 'Teen Bold', sans-serif;
+  color: #d81b60;
+}
+
+/* Paragraphs */
 p {
   text-align: justify;
-  color: #fff; /* white text for readability */
 }
 
-/* Accent colors for links and highlights - neon pink and magenta */
+.page-text {
+    color: #d81b60;
+    font-family: 'Teen Bold';
+  }
+
+/* Italic text globally */
+em, i {
+  font-family: 'Teen Italic', sans-serif;
+  color: #b4004e;
+}
+
+/* Links */
 a {
-  color: #ff69b4; /* bubblegum pink */
+  color: #b4004e;
   text-decoration: underline;
-  text-shadow: 0 0 5px #ff69b4;
 }
 a:hover,
 a:active {
-  color: #00ff00; /* lime green hover for contrast */
-  text-shadow: 0 0 10px #00ff00;
+  color: #ff3ea5;
+  text-decoration: underline;
 }
 
-/* Italic text for contrast */
-em, i {
-  font-family: 'Teen Italic', sans-serif;
-  color: #999; /* softer grey for italics */
+.main-content {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 6px 18px rgba(255, 105, 180, 0.25);
+  border: 2px solid #ffc0cb;
+  overflow: hidden;
+  position: relative;
 }
 
-/* Tables styling with no hover on first row */
+.banner-top {
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/unnamed%20(1).png');
+  background-repeat: repeat-x;
+  background-position: center top;
+  height: 100px; /* Adjust to your image's natural height if needed */
+  width: 100%;
+}
+
+.inner-content {
+  padding: 24px;
+}
+
+.site-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.header-gif {
+  display: inline-block;
+  height: auto;
+  max-width: 150px; /* optional scaling */
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  text-align: left;
+}
+
+/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  font-family: 'Teen', sans-serif;
 }
 th {
+  text-align: left;
   padding-bottom: 6px;
-  border-bottom: 1px solid #ff69b4;
-  color: #ccc;
+  border-bottom: 1px solid #ffb6c1;
 }
 td {
   padding: 6px 10px;
-  border-bottom: 1px dotted #ff69b4;
-  color: #ddd;
+  border-bottom: 1px dotted #ffc0cb;
   white-space: nowrap;
 }
-
-/* No hover effect on first row, others glow neon magenta */
-table tbody tr:nth-child(1):hover {
-  background-color: transparent; /* no hover effect for first row */
-}
-table tbody tr:nth-child(n+2):hover {
-  background-color: rgba(255, 105, 180, 0.2); /* neon magenta glow for other rows */
+table tr:hover {
+  background-color: rgba(255, 182, 193, 0.2);
 }
 
-/* Images in table cells */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Right align for details column */
 .detailsColumn {
   text-align: right;
 }
 
-/* Commit list styles */
+/* Commit list */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -156,7 +186,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps section with neon glow */
+/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -171,7 +201,7 @@ img {
   display: block;
 }
 
-/* Iframes and videos for media */
+/* Iframes */
 iframe {
   display: block;
   max-width: 100%;
@@ -181,6 +211,8 @@ iframe {
   border: none;
   margin-bottom: 20px;
 }
+
+/* Videos */
 video {
   max-width: 100%;
   height: auto;
@@ -188,17 +220,16 @@ video {
   margin-bottom: 20px;
 }
 
-/* ASCII art box with neon glow, dark background */
+/* ASCII art box */
 .ascii-box {
-  border: 1px solid #ff69b4; /* neon pink border */
+  border: 1px solid #3e3e3e;
   display: flex;
   justify-content: center;
   margin: 20px auto;
   max-width: fit-content;
   padding: 10px;
-  background: rgba(13, 13, 13, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
+  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
   background-blend-mode: lighten;
-  box-shadow: 0 0 20px #ff69b4, inset 0 0 10px #00ff00; /* neon glow effect */
 }
 
 @media (max-width: 768px) {
@@ -211,45 +242,51 @@ video {
   margin: 0;
   font-family: 'Consolas', monospace;
   line-height: 1.2;
-  color: #ccc; /* light code text */
+  color: #3e3e3e;
 }
 
-/* Header gif margin */
 .header-gif {
   margin-bottom: 5px;
 }
 
-/* Footer styling */
+/* Footer */
 #footer {
   font-family: 'Teen Light', sans-serif;
   font-size: 0.9em;
   margin-top: 24px;
-  color: #888; /* darker footer text */
-}
-#footer .footer-links a {
-  color: #ff69b4; /* neon pink links */
-  text-decoration: underline;
-}
-#footer .footer-links a:hover,
-#footer .footer-links a:active {
-  color: #00ff00; /* lime green hover */
+  color: #3e3e3e;
 }
 
-/* Controls styling */
+#footer .footer-links a {
+  color: #b4004e;
+  text-decoration: underline;
+}
+
+#footer .footer-links a:hover,
+#footer .footer-links a:active {
+  color: #ff3ea5;
+}
+
+/* Controls block styling */
 #controls {
   margin-bottom: 1.5rem;
 }
+
+/* Label styling */
 #controls label {
   font-family: 'Teen Bold', sans-serif;
   margin-right: 0.5rem;
-  color: #ccc;
+  color: #3e3e3e;
 }
+
+/* Select (sort) styling - flat, no border-radius */
 #controls select#sort {
   font-family: 'Teen', sans-serif;
   font-size: 1rem;
-  color: #ccc;
-  background-color: #222; /* dark select background */
-  border: 1px solid #ff69b4; /* neon pink border */
+  color: #3e3e3e;
+  background-color: white;
+  border: 1px solid #ffc0cb;
   padding: 0.3rem 1rem;
   border-radius: 0;
+
 }
