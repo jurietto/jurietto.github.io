@@ -28,7 +28,7 @@ i,
   font-family: 'Tahoma', sans-serif;
 }
 
-/* Header weights */
+/* Headings styling */
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin-top: 0.5em;
@@ -51,7 +51,50 @@ a:active {
   color: #a14dd7;
 }
 
-/* Tables */
+/* Main content container */
+.main-content {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  border: 2px solid #e79cff;
+  overflow: hidden;
+  position: relative;
+  padding: 24px;
+}
+
+/* Headings inside main-content */
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+  font-family: 'Tahoma', sans-serif;
+  font-weight: normal;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+  text-align: left;
+}
+
+/* Page text inside main-content */
+.main-content .page-text {
+  font-family: 'Tahoma', sans-serif;
+  font-weight: normal;
+}
+
+/* Decorative underline for h2 headings */
+.main-content h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: #e79cff;
+  margin-top: 4px;
+  border-radius: 1px;
+}
+
+/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -63,6 +106,7 @@ th {
   border-bottom: 1px solid #e79cff;
   color: #9b2c9b;
   font-size: 0.95em;
+  font-weight: normal;
 }
 td {
   padding: 4px 6px;
@@ -83,7 +127,7 @@ table tbody tr:hover {
   height: 16px;
 }
 
-/* Details column alignment */
+/* Right-align specific table column */
 .detailsColumn {
   text-align: right;
 }
@@ -110,13 +154,13 @@ table tbody tr:hover {
   background-size: cover;
 }
 
-/* Images */
+/* All images */
 img {
   max-width: 100%;
   display: inline-block;
 }
 
-/* Stamps */
+/* Stamps section */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -148,7 +192,7 @@ video {
   margin-bottom: 20px;
 }
 
-/* Header GIF margin */
+/* Header gif margin */
 .header-gif {
   margin-bottom: 5px;
 }
@@ -168,15 +212,16 @@ video {
   color: #a14dd7;
 }
 
-/* Controls */
+/* Controls section */
 #controls {
   margin-bottom: 1.5rem;
 }
 #controls label {
   color: #3e3e3e;
+  font-weight: normal;
 }
 
-/* Dropdown style */
+/* Dropdown select style */
 #controls select#sort {
   font-size: 1rem;
   color: #3e3e3e;
@@ -186,7 +231,7 @@ video {
   border-radius: 0;
 }
 
-/* Status prefix */
+/* Status label */
 #myStatus::before {
   content: "Status - ";
 }
