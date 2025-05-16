@@ -1,24 +1,4 @@
-/* Import custom fonts */
-@font-face {
-  font-family: 'Teen';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'Teen Bold';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bold.ttf') format('truetype');
-  font-weight: bold;
-}
-@font-face {
-  font-family: 'Teen Italic';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_bolditalic.ttf') format('truetype');
-  font-style: italic;
-}
-@font-face {
-  font-family: 'Teen Light';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
-}
-
-/* Set the body font to a monospaced Courier font */
+/* Set the entire body's font to a monospaced Courier style */
 body {
   position: relative;
   background-color: #f7deff; /* Existing background color */
@@ -64,6 +44,7 @@ h3 {
   padding: 24px;
 }
 
+/* Ensure headers inside main content also use monospace and bold */
 .main-content h1,
 .main-content h2,
 .main-content h3,
@@ -75,13 +56,12 @@ h3 {
   text-align: left;
 }
 
-/* Responsive & Cute Table Styling */
+/* Responsive & Cute Table Styling with fixed layout and monospaced font */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  /* Make table layout fixed for consistent cell widths */
-  table-layout: fixed;
+  table-layout: fixed; /* fix the cell widths */
 }
 
 /* Header cells */
@@ -94,14 +74,13 @@ th {
   color: #9b2c9b;
 }
 
-/* Data cells */
+/* Data cells with fixed width and ellipsis for overflow */
 td {
   padding: 6px 10px;
   border-bottom: 1px dotted #e79cff;
   word-wrap: break-word;
   vertical-align: middle;
   font-family: 'Courier New', monospace;
-  /* Make text non-wrapping and overflow with ellipsis if needed */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -221,7 +200,7 @@ video {
   margin-bottom: 5px;
 }
 
-/* Footer */
+/* Footer styles, also in monospace */
 #footer {
   font-family: 'Courier New', monospace;
   font-size: 0.9em;
@@ -242,14 +221,14 @@ video {
   margin-bottom: 1.5rem;
 }
 
-/* Label styling */
+/* Labels in monospace */
 #controls label {
   font-family: 'Courier New', monospace;
   margin-right: 0.5rem;
   color: #3e3e3e;
 }
 
-/* Select (sort) styling - flat, no border-radius */
+/* Select styling in monospace, flat, no border-radius */
 #controls select#sort {
   font-family: 'Courier New', monospace;
   font-size: 1rem;
@@ -258,4 +237,9 @@ video {
   border: 1px solid #e79cff;
   padding: 0.3rem 1rem;
   border-radius: 0;
+}
+
+/* Prefix before #myStatus */
+#myStatus::before {
+  content: "Status - ";
 }
