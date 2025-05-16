@@ -1,7 +1,4 @@
-/* Import Archivo fonts (assuming you want to include from Google Fonts or similar) */
-@import url('https://fonts.googleapis.com/css2?family=Archivo&family=Archivo+Black&display=swap');
-
-/* Set all text to Archivo and make headings and emphasized text in Archivo Black */
+/* Use Tahoma font throughout the page for easy readability */
 body {
   position: relative;
   background-color: #f7deff;
@@ -9,25 +6,33 @@ body {
   background-attachment: fixed;
   background-size: auto;
   color: #222;
-  font-family: 'Archivo', sans-serif; /* All text in Archivo */
+  font-family: 'Tahoma', sans-serif; /* Main font for all text */
   padding: 20px;
-  line-height: 1.6; /* Slightly increased line height for readability */
-  text-align: justify; /* Justify all text */
+  line-height: 1.6; /* Line spacing for readability */
+  text-align: justify; /* Justify all text for balanced look */
   overflow-x: hidden;
 }
 
-/* Make all headings and bold emphasized text in Archivo Black for contrast and emphasis */
+/* Make all headings and emphasized text in Tahoma for consistency */
 h1, h2, h3, h4, h5, h6,
 .page-text,
 #footer,
-#controls label {
-  font-family: 'Archivo Black', sans-serif; /* Bold, striking font for headings and emphasized parts */
-  font-weight: normal; /* reset to normal since Archivo Black is already bold */
+#controls label,
+a,
+table,
+th,
+td,
+em,
+i,
+#footer,
+#controls,
+#myStatus {
+  font-family: 'Tahoma', sans-serif;
 }
 
-/* Keep headers sizes as before or remove for uniform look */
-h1 { /* optional: size if desired */
-  /* font-size: 40px; */
+/* Optional: specific header sizes if you want to control them */
+h1 {
+  /* font-size: 40px; */ /* Keep default or uncomment to set size */
 }
 h2 {
   /* font-size: 32px; */
@@ -36,7 +41,7 @@ h3 {
   /* font-size: 28px; */
 }
 
-/* Main content container */
+/* Main content container: no shadow, balanced padding and rounded corners */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
@@ -48,36 +53,35 @@ h3 {
   padding: 24px;
 }
 
-/* Inside main content headers in Archivo Black for emphasis */
+/* Inside main content headers in Tahoma for emphasis */
 .main-content h1,
 .main-content h2,
 .main-content h3,
 .main-content h4,
 .main-content h5,
 .main-content h6 {
-  font-family: 'Archivo Black', sans-serif;
-  font-weight: normal; /* optional, since Archivo Black is already bold */
+  font-family: 'Tahoma', sans-serif;
+  font-weight: normal; /* Keep it simple, boldness is default in headers */
   margin-top: 0.5em;
   margin-bottom: 0.2em;
   text-align: left;
 }
 
-/* Make key parts bold for emphasis, with Archivo Black */
+/* Make key parts bold for emphasis */
 .page-text,
 #footer,
 #controls label {
-  font-family: 'Archivo Black', sans-serif;
-  font-weight: normal; /* reset if needed, already bold in font-family */
-  font-size: 1em; /* default size for clarity */
+  font-family: 'Tahoma', sans-serif;
+  font-weight: bold;
 }
 
 /* Italicized emphasis for quotes or important text */
 em, i {
-  font-family: 'Archivo', sans-serif;
+  font-family: 'Tahoma', sans-serif;
   font-style: italic;
 }
 
-/* Links styled in Archivo, keeping colors */
+/* Links styled in Tahoma, maintaining color scheme */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -92,29 +96,26 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  /* Removed fixed layout for more natural flow */
 }
 th {
   text-align: left;
   padding: 4px 6px;
   border-bottom: 1px solid #e79cff;
-  font-family: 'Archivo Black', sans-serif;
-  font-weight: normal; /* boldness already in font-family */
+  font-family: 'Tahoma', sans-serif;
+  font-weight: normal; /* headers are bold by default in HTML, but explicitly set if needed */
   color: #9b2c9b;
   font-size: 0.95em;
 }
 td {
   padding: 4px 6px;
   border-bottom: 1px dotted #e79cff;
-  font-family: 'Archivo', sans-serif; /* use Archivo for data for readability */
-  /* Remove nowrap and overflow for balanced, natural wrapping */
-  word-wrap: break-word;
+  font-family: 'Tahoma', sans-serif; /* for readability */
+  word-wrap: break-word; /* allows natural wrapping */
   vertical-align: middle;
   font-size: 0.95em;
-  text-align: justify; /* justify inside cells for balance */
+  text-align: justify; /* justified for balance */
 }
-
-/* Row hover style */
+/* Row hover style for subtle background effect */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
@@ -131,7 +132,7 @@ table tbody tr:hover {
   text-align: right;
 }
 
-/* Commit list styles, minimal for balance */
+/* Commit list styles for balance and clarity */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -160,7 +161,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps section */
+/* Stamps section for icons or badges */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -175,7 +176,7 @@ img {
   display: block;
 }
 
-/* Iframes */
+/* Iframes for embedded content */
 iframe {
   display: block;
   max-width: 100%;
@@ -186,7 +187,7 @@ iframe {
   margin-bottom: 20px;
 }
 
-/* Videos */
+/* Videos for embedded media */
 video {
   max-width: 100%;
   height: auto;
@@ -194,16 +195,16 @@ video {
   margin-bottom: 20px;
 }
 
-/* Removed ASCII art styles for cleaner, balanced look */
+/* Remove ASCII art styles for cleaner look */
 
-/* Header gif margin */
+/* Header gif margin for visual separation */
 .header-gif {
   margin-bottom: 5px;
 }
 
-/* Footer styles: Georgia, bold, slightly smaller for balance */
+/* Footer: Tahoma, bold, slightly smaller for balance */
 #footer {
-  font-family: 'Georgia', serif;
+  font-family: 'Tahoma', sans-serif;
   font-size: 0.9em;
   margin-top: 24px;
   color: #3e3e3e;
@@ -217,20 +218,20 @@ video {
   color: #a14dd7;
 }
 
-/* Controls: labels in Georgia, bold, balanced spacing */
+/* Controls: labels in Tahoma, bold, for clarity */
 #controls {
   margin-bottom: 1.5rem;
 }
 #controls label {
-  font-family: 'Georgia', serif;
+  font-family: 'Tahoma', sans-serif;
   font-weight: bold;
   margin-right: 0.5rem;
   color: #3e3e3e;
 }
 
-/* Dropdown select in monospace, flat, compact */
+/* Dropdown select style: monospace, flat, balanced */
 #controls select#sort {
-  font-family: 'Courier New', monospace;
+  font-family: 'Tahoma', sans-serif;
   font-size: 1rem;
   color: #3e3e3e;
   background-color: #fff;
