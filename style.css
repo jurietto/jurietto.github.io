@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
 
-/* Body text: Courier */
+/* Body text: Courier New */
 body {
   position: relative;
   background-color: #f7deff;
@@ -9,20 +9,25 @@ body {
   background-size: auto;
   color: #222;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
+  font-size: 14px; /* Base font size */
   line-height: 1.4;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
 }
 
-/* Headers: IBM Plex Mono */
+/* Headings: IBM Plex Mono */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 700;
+  text-align: left;
   margin-top: 0.4em;
   margin-bottom: 0.2em;
-  text-align: left;
+}
+
+/* Specific h1 size */
+h1 {
+  font-size: 40px;
 }
 
 /* Italics for emphasis */
@@ -54,7 +59,7 @@ a:active {
 
 .main-content .page-text {
   font-family: 'Courier New', Courier, monospace;
-  font-weight: normal;
+  font-size: 14px;
 }
 
 /* Decorative underline for h2 headings */
@@ -73,7 +78,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px; /* Match body text */
 }
 th {
   text-align: left;
@@ -134,7 +140,7 @@ iframe, video {
 }
 
 #footer {
-  font-size: 13px;
+  font-size: 14px; /* Match body */
   margin-top: 20px;
   color: #3e3e3e;
 }
@@ -157,7 +163,7 @@ iframe, video {
 }
 
 #controls select#sort {
-  font-size: 0.9rem;
+  font-size: 14px; /* Match body */
   color: #3e3e3e;
   background-color: #fff;
   border: 1px solid #e79cff;
