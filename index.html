@@ -71,7 +71,7 @@
     .then(response => response.json())
     .then(data => {
       document.getElementById('myStatus').textContent = data.status;
-      document.getElementById('statusDate').textContent = `(Updated: ${data.lastUpdated})`;
+      document.getElementById('statusDate').textContent = `(Updated: ${data.Updated})`;
     })
     .catch(error => {
       console.error('Failed to load status:', error);
