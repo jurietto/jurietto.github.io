@@ -268,3 +268,7 @@ video {
   padding: 0.3rem 1rem;
   border-radius: 0;
 }
+
+#myStatus::before {
+  content: "Status - ";
+}
