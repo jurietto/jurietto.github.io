@@ -268,9 +268,3 @@ video {
   padding: 0.3rem 1rem;
   border-radius: 0;
 }
-/* Style for the inline status line to match table's aesthetic */
-#statuscafe.status-line {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* spacing between username, dash, and content */
-}
