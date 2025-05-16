@@ -7,10 +7,11 @@ body {
   background-size: auto;
   color: #222;
   font-family: 'Courier New', Courier, monospace;
-  padding: 20px;
-  line-height: 1.6;
+  font-size: 14px; /* smaller text */
+  line-height: 1.4; /* slightly tighter */
   text-align: justify;
   overflow-x: hidden;
+  padding: 16px; /* less padding */
 }
 
 /* Global font reset to Courier */
@@ -31,7 +32,7 @@ i,
 /* Headings styling */
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  margin-top: 0.5em;
+  margin-top: 0.4em;
   margin-bottom: 0.2em;
   text-align: left;
 }
@@ -54,13 +55,13 @@ a:active {
 /* Main content container */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 24px;
+  border-radius: 16px; /* slightly less rounded */
   max-width: 900px;
   margin: 0 auto;
   border: 2px solid #e79cff;
   overflow: hidden;
   position: relative;
-  padding: 24px;
+  padding: 16px; /* tighter padding */
 }
 
 /* Headings inside main-content */
@@ -70,16 +71,13 @@ a:active {
 .main-content h4,
 .main-content h5,
 .main-content h6 {
-  font-family: 'Courier New', Courier, monospace;
   font-weight: normal;
-  margin-top: 0.5em;
+  margin-top: 0.4em;
   margin-bottom: 0.2em;
-  text-align: left;
 }
 
 /* Page text inside main-content */
 .main-content .page-text {
-  font-family: 'Courier New', Courier, monospace;
   font-weight: normal;
 }
 
@@ -87,10 +85,10 @@ a:active {
 .main-content h2::after {
   content: "";
   display: block;
-  width: 50px;
+  width: 40px;
   height: 2px;
   background: #e79cff;
-  margin-top: 4px;
+  margin-top: 3px;
   border-radius: 1px;
 }
 
@@ -98,33 +96,32 @@ a:active {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
+  font-size: 13px; /* smaller table text */
 }
 th {
   text-align: left;
-  padding: 4px 6px;
+  padding: 3px 5px;
   border-bottom: 1px solid #e79cff;
   color: #9b2c9b;
-  font-size: 0.95em;
   font-weight: normal;
 }
 td {
-  padding: 4px 6px;
+  padding: 3px 5px;
   border-bottom: 1px dotted #e79cff;
   word-wrap: break-word;
   vertical-align: middle;
-  font-size: 0.95em;
   text-align: justify;
 }
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.2);
+  background-color: rgba(231, 156, 255, 0.15);
 }
 
 /* File cell icons */
 .file-cell img {
   vertical-align: middle;
-  margin-right: 6px;
-  height: 16px;
+  margin-right: 4px;
+  height: 14px;
 }
 
 /* Right-align specific table column */
@@ -136,25 +133,25 @@ table tbody tr:hover {
 #commit-list {
   list-style: none;
   padding-left: 0;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 #commit-list li {
   position: relative;
-  padding-left: 28px;
-  margin-bottom: 20px;
+  padding-left: 24px;
+  margin-bottom: 12px;
 }
 #commit-list li::before {
   content: '';
   position: absolute;
-  top: 3px;
+  top: 2px;
   left: 0;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif');
   background-size: cover;
 }
 
-/* All images */
+/* Images */
 img {
   max-width: 100%;
   display: inline-block;
@@ -165,14 +162,13 @@ img {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 6px;
+  margin-bottom: 16px;
 }
 #stamps img {
-  width: 99px;
-  height: 56px;
+  width: 90px;
+  height: 50px;
   object-fit: contain;
-  display: block;
 }
 
 /* Embedded content */
@@ -183,24 +179,24 @@ iframe {
   height: auto;
   aspect-ratio: 16 / 9;
   border: none;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 video {
   max-width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 /* Header gif margin */
 .header-gif {
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 /* Footer */
 #footer {
-  font-size: 0.9em;
-  margin-top: 24px;
+  font-size: 13px;
+  margin-top: 20px;
   color: #3e3e3e;
 }
 #footer .footer-links a {
@@ -214,7 +210,7 @@ video {
 
 /* Controls section */
 #controls {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 #controls label {
   color: #3e3e3e;
@@ -223,11 +219,11 @@ video {
 
 /* Dropdown select style */
 #controls select#sort {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #3e3e3e;
   background-color: #fff;
   border: 1px solid #e79cff;
-  padding: 0.3rem 1rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 0;
 }
 
