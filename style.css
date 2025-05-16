@@ -121,7 +121,7 @@ td {
   border-bottom: 1px dotted #e79cff;
   white-space: nowrap;
 }
-table tr:hover {
+table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
 
