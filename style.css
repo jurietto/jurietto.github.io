@@ -18,69 +18,37 @@
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/teen_light.ttf') format('truetype');
 }
 
+/* Set the body font to a monospaced Courier font */
 body {
   position: relative;
-  background-color: #f7deff; /* Keep your existing background image */
+  background-color: #f7deff; /* Existing background color */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #222; /* Changed to dark gray for better readability */
-  font-family: 'Teen', sans-serif;
+  color: #222; /* Dark gray for readability */
+  font-family: 'Courier New', monospace; /* Monospaced font for all text */
   padding: 20px;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Headers styling - darker purple for better readability */
+/* Headers styled to match the monospace font, bold for emphasis */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Courier New', monospace;
+  font-weight: bold; /* optional: make headers bold */
+  color: #9b2c9b; /* your chosen header color */
+  margin-top: 1em; /* optional spacing */
+}
+
+/* Specific header sizes */
 h1 {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b; /* Darker purple */
   font-size: 40px;
 }
-
 h2 {
-  font-family: 'Teen Light', sans-serif;
-  color: #9b2c9b;
   font-size: 32px;
 }
-
 h3 {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b;
   font-size: 28px;
-}
-
-h4, h5, h6, strong, b, th {
-  font-family: 'Teen Bold', sans-serif;
-  color: #9b2c9b;
-}
-
-/* Paragraphs and page text - dark gray for readability */
-p {
-  text-align: justify;
-  color: #222;
-}
-
-.page-text {
-  color: #222;
-  font-family: 'Teen Bold';
-}
-
-/* Italic text */
-em, i {
-  font-family: 'Teen Italic', sans-serif;
-  color: #b4004e; /* Keep existing or adjust if needed for contrast */
-}
-
-/* Links - keep accent color for highlights */
-a {
-  color: #e79cff; /* Original accent color */
-  text-decoration: underline;
-}
-a:hover,
-a:active {
-  color: #a14dd7; /* Slightly darker for hover state */
-  text-decoration: underline;
 }
 
 /* Main content container */
@@ -102,15 +70,18 @@ a:active {
 .main-content h4,
 .main-content h5,
 .main-content h6 {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
   text-align: left;
 }
 
 /* Responsive & Cute Table Styling */
-
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  /* Make table layout fixed for consistent cell widths */
+  table-layout: fixed;
 }
 
 /* Header cells */
@@ -118,7 +89,8 @@ th {
   text-align: left;
   padding-bottom: 6px;
   border-bottom: 1px solid #e79cff;
-  font-family: 'Teen Bold', sans-serif;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
   color: #9b2c9b;
 }
 
@@ -128,9 +100,14 @@ td {
   border-bottom: 1px dotted #e79cff;
   word-wrap: break-word;
   vertical-align: middle;
+  font-family: 'Courier New', monospace;
+  /* Make text non-wrapping and overflow with ellipsis if needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Hover effect */
+/* Hover effect for rows */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
@@ -246,7 +223,7 @@ video {
 
 /* Footer */
 #footer {
-  font-family: 'Teen Light', sans-serif;
+  font-family: 'Courier New', monospace;
   font-size: 0.9em;
   margin-top: 24px;
   color: #3e3e3e;
@@ -267,22 +244,18 @@ video {
 
 /* Label styling */
 #controls label {
-  font-family: 'Teen Bold', sans-serif;
+  font-family: 'Courier New', monospace;
   margin-right: 0.5rem;
   color: #3e3e3e;
 }
 
 /* Select (sort) styling - flat, no border-radius */
 #controls select#sort {
-  font-family: 'Teen', sans-serif;
+  font-family: 'Courier New', monospace;
   font-size: 1rem;
   color: #3e3e3e;
   background-color: #fff;
   border: 1px solid #e79cff;
   padding: 0.3rem 1rem;
   border-radius: 0;
-}
-
-#myStatus::before {
-  content: "Status - ";
 }
