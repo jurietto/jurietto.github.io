@@ -1,28 +1,28 @@
-/* Set the entire body's font to a monospace font and make all bold text Georgia for consistency */
+/* Set the entire body's font to a monospace font and headers to Georgia for a nice pairing */
 body {
   position: relative;
-  background-color: #f7deff; /* Existing background color */
+  background-color: #f7deff;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  color: #222; /* Dark gray for readability */
-  font-family: 'Courier New', monospace; /* Monospaced font for all text */
+  color: #222;
+  font-family: 'Courier New', monospace;
   padding: 20px;
-  line-height: 1; /* Remove extra spacing for compactness */
+  line-height: 1;
   overflow-x: hidden;
 }
 
-/* Headers - use a serif font (Georgia) for a nice pairing, bold for emphasis */
+/* Headers: use Georgia, bold, and slightly smaller for compactness */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Georgia', serif;
   font-weight: bold;
-  color: #9b2c9b; /* your header color */
+  color: #9b2c9b;
   margin-top: 1em;
-  margin-bottom: 0.2em; /* reduce spacing between headers and content */
+  margin-bottom: 0.2em;
 }
 
-/* Optional: specific sizes for headers if needed (you can remove these if you want uniform size) */
-h1 { /* keep size or remove if you want default */
+/* Specific header sizes—can be adjusted or removed for uniform size */
+h1 { /* optional: keep size if desired */
   /* font-size: 40px; */
 }
 h2 {
@@ -32,20 +32,20 @@ h3 {
   /* font-size: 28px; */
 }
 
-/* Main content container */
+/* Main content container: remove shadow for cleaner look, keep rounded corners and padding */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 6px 18px rgba(231, 156, 255, 0.25);
   border: 2px solid #e79cff;
   overflow: hidden;
   position: relative;
   padding: 24px;
+  /* Removed box-shadow for cleaner look */
 }
 
-/* Inside main content, headers use Georgia and bold */
+/* Inside main content, headers use Georgia and bold; reduce margin for compactness */
 .main-content h1,
 .main-content h2,
 .main-content h3,
@@ -59,7 +59,7 @@ h3 {
   margin-bottom: 0.2em;
 }
 
-/* Make some page parts bold (like page text, footer, labels) and Georgia for uniformity */
+/* Make some key parts bold for emphasis, using Georgia for consistency */
 .page-text,
 #footer,
 #controls label {
@@ -67,13 +67,13 @@ h3 {
   font-weight: bold;
 }
 
-/* Italicized emphasis text for quotes or emphasis */
+/* Italicized emphasis for quotes or important text */
 em, i {
   font-family: 'Georgia', serif;
   font-style: italic;
 }
 
-/* For links, keep in monospace, with the same style as headers for consistency if desired */
+/* Links in monospace, consistent with overall style */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -83,32 +83,33 @@ a:active {
   color: #a14dd7;
 }
 
-/* Table styles: compact, no extra line spacing, fixed layout, no wrapping */
+/* Table styles: compact, no fixed layout, no line spacing, balanced look */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  table-layout: fixed; /* fix cell widths for uniformity */
+  /* Removed table-layout: fixed for a more natural flow */
 }
 th {
   text-align: left;
-  padding: 4px 6px; /* smaller padding for compactness */
+  padding: 4px 6px;
   border-bottom: 1px solid #e79cff;
   font-family: 'Georgia', serif;
   font-weight: bold;
   color: #9b2c9b;
+  font-size: 0.95em; /* slightly smaller for compactness */
 }
 td {
-  padding: 4px 6px; /* smaller padding for compactness */
+  padding: 4px 6px;
   border-bottom: 1px dotted #e79cff;
-  word-wrap: break-word;
-  vertical-align: middle;
   font-family: 'Courier New', monospace; /* keep data in monospace for clarity */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Removed white-space: nowrap, overflow, text-overflow for more natural flow */
+  word-wrap: break-word; /* allows wrapping to prevent overflow */
+  vertical-align: middle;
+  font-size: 0.95em;
 }
-/* Row hover style for subtle background change */
+
+/* Row hover effect for subtle background change */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
@@ -125,7 +126,7 @@ table tbody tr:hover {
   text-align: right;
 }
 
-/* Commit list styles (kept minimal) */
+/* Commit list styles */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -188,14 +189,14 @@ video {
   margin-bottom: 20px;
 }
 
-/* Removed ASCII art styles */
+/* ASCII art styles removed for a cleaner, balanced look */
 
 /* Header gif margin */
 .header-gif {
   margin-bottom: 5px;
 }
 
-/* Footer: make it Georgia, bold, and slightly smaller */
+/* Footer: Georgia, bold, slightly smaller for compactness */
 #footer {
   font-family: 'Georgia', serif;
   font-size: 0.9em;
@@ -211,7 +212,7 @@ video {
   color: #a14dd7;
 }
 
-/* Controls section: labels bold and Georgia */
+/* Controls: labels bold Georgia for emphasis, compact spacing */
 #controls {
   margin-bottom: 1.5rem;
 }
@@ -222,7 +223,7 @@ video {
   color: #3e3e3e;
 }
 
-/* Select dropdown in monospace, flat style */
+/* Dropdown select style: monospace, flat, compact */
 #controls select#sort {
   font-family: 'Courier New', monospace;
   font-size: 1rem;
@@ -233,7 +234,7 @@ video {
   border-radius: 0;
 }
 
-/* Status prefix */
+/* Prefix label for status */
 #myStatus::before {
   content: "Status - ";
 }
