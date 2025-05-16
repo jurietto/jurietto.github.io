@@ -1,4 +1,4 @@
-/* Set the entire body's font to a monospace font and apply a complementary font for headers */
+/* Set the entire body's font to a monospace font and make all bold text Georgia for consistency */
 body {
   position: relative;
   background-color: #f7deff; /* Existing background color */
@@ -8,21 +8,22 @@ body {
   color: #222; /* Dark gray for readability */
   font-family: 'Courier New', monospace; /* Monospaced font for all text */
   padding: 20px;
-  line-height: 1.6;
+  line-height: 1; /* Remove extra spacing for compactness */
   overflow-x: hidden;
 }
 
-/* Headers - use a complementary font and bold */
+/* Headers - use a serif font (Georgia) for a nice pairing, bold for emphasis */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Georgia', serif; /* Choose a serif font that pairs well */
+  font-family: 'Georgia', serif;
   font-weight: bold;
-  color: #9b2c9b; /* Your header color */
-  margin-top: 1em; /* optional spacing */
+  color: #9b2c9b; /* your header color */
+  margin-top: 1em;
+  margin-bottom: 0.2em; /* reduce spacing between headers and content */
 }
 
-/* Specific header sizes (remove these if you want uniform size, but here we keep sizes) */
-h1 { /* if you want to keep sizes, you can customize or remove size declarations */
-  /* font-size: 40px; */ 
+/* Optional: specific sizes for headers if needed (you can remove these if you want uniform size) */
+h1 { /* keep size or remove if you want default */
+  /* font-size: 40px; */
 }
 h2 {
   /* font-size: 32px; */
@@ -44,7 +45,7 @@ h3 {
   padding: 24px;
 }
 
-/* Inside main content, headers use the same font and bold */
+/* Inside main content, headers use Georgia and bold */
 .main-content h1,
 .main-content h2,
 .main-content h3,
@@ -54,24 +55,25 @@ h3 {
   font-family: 'Georgia', serif;
   font-weight: bold;
   text-align: left;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
 }
 
-/* Make some page parts bold for emphasis */
+/* Make some page parts bold (like page text, footer, labels) and Georgia for uniformity */
 .page-text,
 #footer,
 #controls label {
-  font-family: 'Courier New', monospace;
+  font-family: 'Georgia', serif;
   font-weight: bold;
 }
 
-/* Italicize parts where it makes sense, e.g., emphasis or quotes */
+/* Italicized emphasis text for quotes or emphasis */
 em, i {
-  font-family: 'Courier New', monospace;
+  font-family: 'Georgia', serif;
   font-style: italic;
-  /* Optional: add color or other styles for emphasis */
 }
 
-/* For links, keep in monospace, maybe add emphasis on hover */
+/* For links, keep in monospace, with the same style as headers for consistency if desired */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -81,32 +83,32 @@ a:active {
   color: #a14dd7;
 }
 
-/* Table styles with fixed layout, no wrapping, and bold headers */
+/* Table styles: compact, no extra line spacing, fixed layout, no wrapping */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  table-layout: fixed;
+  table-layout: fixed; /* fix cell widths for uniformity */
 }
 th {
   text-align: left;
-  padding-bottom: 6px;
+  padding: 4px 6px; /* smaller padding for compactness */
   border-bottom: 1px solid #e79cff;
   font-family: 'Georgia', serif;
   font-weight: bold;
   color: #9b2c9b;
 }
 td {
-  padding: 6px 10px;
+  padding: 4px 6px; /* smaller padding for compactness */
   border-bottom: 1px dotted #e79cff;
   word-wrap: break-word;
   vertical-align: middle;
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', monospace; /* keep data in monospace for clarity */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* Row hover style */
+/* Row hover style for subtle background change */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
@@ -123,7 +125,7 @@ table tbody tr:hover {
   text-align: right;
 }
 
-/* Commit list styles */
+/* Commit list styles (kept minimal) */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -188,39 +190,14 @@ video {
 
 /* Removed ASCII art styles */
 
-/* ASCII art box (no longer used) */
-/* 
-.ascii-box {
-  border: 1px solid #e79cff;
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-  max-width: fit-content;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
-  background-blend-mode: lighten;
-}
-@media (max-width: 768px) {
-  .ascii-box {
-    display: none;
-  }
-}
-.ascii-box pre {
-  margin: 0;
-  font-family: 'Consolas', monospace;
-  line-height: 1.2;
-  color: #3e3e3e;
-}
-*/
-
 /* Header gif margin */
 .header-gif {
   margin-bottom: 5px;
 }
 
-/* Footer: make it monospace, bold, and slightly smaller */
+/* Footer: make it Georgia, bold, and slightly smaller */
 #footer {
-  font-family: 'Courier New', monospace;
+  font-family: 'Georgia', serif;
   font-size: 0.9em;
   margin-top: 24px;
   color: #3e3e3e;
@@ -234,12 +211,13 @@ video {
   color: #a14dd7;
 }
 
-/* Controls section: labels bold monospace */
+/* Controls section: labels bold and Georgia */
 #controls {
   margin-bottom: 1.5rem;
 }
 #controls label {
-  font-family: 'Courier New', monospace;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
   margin-right: 0.5rem;
   color: #3e3e3e;
 }
