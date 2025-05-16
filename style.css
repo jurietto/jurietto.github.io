@@ -1,4 +1,4 @@
-/* Use Tahoma font throughout the page for easy readability */
+/* Use Courier monospaced font throughout the page */
 body {
   position: relative;
   background-color: #f7deff;
@@ -6,14 +6,14 @@ body {
   background-attachment: fixed;
   background-size: auto;
   color: #222;
-  font-family: 'Tahoma', sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   padding: 20px;
   line-height: 1.6;
   text-align: justify;
   overflow-x: hidden;
 }
 
-/* Headings & emphasis */
+/* Global font reset to Courier */
 h1, h2, h3, h4, h5, h6,
 .page-text,
 #footer,
@@ -25,7 +25,7 @@ td,
 em,
 i,
 #myStatus {
-  font-family: 'Tahoma', sans-serif;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 /* Headings styling */
@@ -70,7 +70,7 @@ a:active {
 .main-content h4,
 .main-content h5,
 .main-content h6 {
-  font-family: 'Tahoma', sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   font-weight: normal;
   margin-top: 0.5em;
   margin-bottom: 0.2em;
@@ -79,7 +79,7 @@ a:active {
 
 /* Page text inside main-content */
 .main-content .page-text {
-  font-family: 'Tahoma', sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   font-weight: normal;
 }
 
