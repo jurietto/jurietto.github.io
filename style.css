@@ -1,4 +1,4 @@
-/* Set the entire body's font to a monospaced Courier style */
+/* Set the entire body's font to a monospace font and apply a complementary font for headers */
 body {
   position: relative;
   background-color: #f7deff; /* Existing background color */
@@ -12,23 +12,23 @@ body {
   overflow-x: hidden;
 }
 
-/* Headers styled to match the monospace font, bold for emphasis */
+/* Headers - use a complementary font and bold */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Courier New', monospace;
-  font-weight: bold; /* optional: make headers bold */
-  color: #9b2c9b; /* your chosen header color */
+  font-family: 'Georgia', serif; /* Choose a serif font that pairs well */
+  font-weight: bold;
+  color: #9b2c9b; /* Your header color */
   margin-top: 1em; /* optional spacing */
 }
 
-/* Specific header sizes */
-h1 {
-  font-size: 40px;
+/* Specific header sizes (remove these if you want uniform size, but here we keep sizes) */
+h1 { /* if you want to keep sizes, you can customize or remove size declarations */
+  /* font-size: 40px; */ 
 }
 h2 {
-  font-size: 32px;
+  /* font-size: 32px; */
 }
 h3 {
-  font-size: 28px;
+  /* font-size: 28px; */
 }
 
 /* Main content container */
@@ -44,37 +44,58 @@ h3 {
   padding: 24px;
 }
 
-/* Ensure headers inside main content also use monospace and bold */
+/* Inside main content, headers use the same font and bold */
 .main-content h1,
 .main-content h2,
 .main-content h3,
 .main-content h4,
 .main-content h5,
 .main-content h6 {
-  font-family: 'Courier New', monospace;
+  font-family: 'Georgia', serif;
   font-weight: bold;
   text-align: left;
 }
 
-/* Responsive & Cute Table Styling with fixed layout and monospaced font */
+/* Make some page parts bold for emphasis */
+.page-text,
+#footer,
+#controls label {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+/* Italicize parts where it makes sense, e.g., emphasis or quotes */
+em, i {
+  font-family: 'Courier New', monospace;
+  font-style: italic;
+  /* Optional: add color or other styles for emphasis */
+}
+
+/* For links, keep in monospace, maybe add emphasis on hover */
+a {
+  color: #e79cff;
+  text-decoration: underline;
+}
+a:hover,
+a:active {
+  color: #a14dd7;
+}
+
+/* Table styles with fixed layout, no wrapping, and bold headers */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  table-layout: fixed; /* fix the cell widths */
+  table-layout: fixed;
 }
-
-/* Header cells */
 th {
   text-align: left;
   padding-bottom: 6px;
   border-bottom: 1px solid #e79cff;
-  font-family: 'Courier New', monospace;
+  font-family: 'Georgia', serif;
   font-weight: bold;
   color: #9b2c9b;
 }
-
-/* Data cells with fixed width and ellipsis for overflow */
 td {
   padding: 6px 10px;
   border-bottom: 1px dotted #e79cff;
@@ -85,25 +106,24 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* Hover effect for rows */
+/* Row hover style */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
 
-/* Icon images inside table */
+/* Icons inside table cells */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Right-aligned details column */
+/* Right-align specific column */
 .detailsColumn {
   text-align: right;
 }
 
-/* Commit list styling */
+/* Commit list styles */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -180,13 +200,11 @@ video {
   background: rgba(255, 255, 255, 0.8) url('https://file.garden/ZhTgSjrp5nAroRKq/back6.gif') center center;
   background-blend-mode: lighten;
 }
-
 @media (max-width: 768px) {
   .ascii-box {
     display: none;
   }
 }
-
 .ascii-box pre {
   margin: 0;
   font-family: 'Consolas', monospace;
@@ -200,7 +218,7 @@ video {
   margin-bottom: 5px;
 }
 
-/* Footer styles, also in monospace */
+/* Footer: make it monospace, bold, and slightly smaller */
 #footer {
   font-family: 'Courier New', monospace;
   font-size: 0.9em;
@@ -216,19 +234,17 @@ video {
   color: #a14dd7;
 }
 
-/* Controls block styling */
+/* Controls section: labels bold monospace */
 #controls {
   margin-bottom: 1.5rem;
 }
-
-/* Labels in monospace */
 #controls label {
   font-family: 'Courier New', monospace;
   margin-right: 0.5rem;
   color: #3e3e3e;
 }
 
-/* Select styling in monospace, flat, no border-radius */
+/* Select dropdown in monospace, flat style */
 #controls select#sort {
   font-family: 'Courier New', monospace;
   font-size: 1rem;
@@ -239,7 +255,7 @@ video {
   border-radius: 0;
 }
 
-/* Prefix before #myStatus */
+/* Status prefix */
 #myStatus::before {
   content: "Status - ";
 }
