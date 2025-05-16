@@ -105,52 +105,67 @@ a:active {
   text-align: left;
 }
 
-/* Updated Table Styles with fixed layout and no cell breaking */
+/* Responsive & Cute Table Styling */
+
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  table-layout: fixed; /* Ensures fixed layout for cells */
 }
 
-/* Style header cells */
+/* Header cells */
 th {
   text-align: left;
   padding-bottom: 6px;
   border-bottom: 1px solid #e79cff;
+  font-family: 'Teen Bold', sans-serif;
+  color: #9b2c9b;
 }
 
-/* Style data cells to prevent breaking and make content fixed */
+/* Data cells */
 td {
   padding: 6px 10px;
   border-bottom: 1px dotted #e79cff;
-  white-space: nowrap;       /* Prevent text from wrapping */
-  overflow: hidden;          /* Hide overflowing content */
-  text-overflow: ellipsis;   /* Show ellipsis for overflowing text */
+  word-wrap: break-word;
+  vertical-align: middle;
 }
 
-/* Optional: show full content on hover for cells with overflow */
-td:hover {
-  overflow: visible;
-  white-space: normal;
-  background-color: rgba(231, 156, 255, 0.2);
-}
-
+/* Hover effect */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
 
-/* Image styling inside table cells */
+/* Icon images inside table */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Details column right-align */
+/* Right-aligned details column */
 .detailsColumn {
   text-align: right;
 }
+
+/* Optional: on very small screens, make cells stack vertically */
+@media (max-width: 600px) {
+  table, tbody, tr, td, th {
+    display: block;
+    width: 100%;
+  }
+
+  th {
+    border-bottom: none;
+    margin-top: 10px;
+  }
+
+  td {
+    border-bottom: 1px dotted #e79cff;
+  }
+
+  .detailsColumn {
+    text-align: left;
+  }
 
 /* Commit list styling */
 #commit-list {
