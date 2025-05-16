@@ -1,4 +1,7 @@
-/* Set the entire body's font to a monospace font and headers to Georgia for a nice pairing */
+/* Import Archivo fonts (assuming you want to include from Google Fonts or similar) */
+@import url('https://fonts.googleapis.com/css2?family=Archivo&family=Archivo+Black&display=swap');
+
+/* Set all text to Archivo and make headings and emphasized text in Archivo Black */
 body {
   position: relative;
   background-color: #f7deff;
@@ -6,23 +9,24 @@ body {
   background-attachment: fixed;
   background-size: auto;
   color: #222;
-  font-family: 'Courier New', monospace;
+  font-family: 'Archivo', sans-serif; /* All text in Archivo */
   padding: 20px;
-  line-height: 1;
+  line-height: 1.6; /* Slightly increased line height for readability */
+  text-align: justify; /* Justify all text */
   overflow-x: hidden;
 }
 
-/* Headers: use Georgia, bold, and slightly smaller for compactness */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Georgia', serif;
-  font-weight: bold;
-  color: #9b2c9b;
-  margin-top: 1em;
-  margin-bottom: 0.2em;
+/* Make all headings and bold emphasized text in Archivo Black for contrast and emphasis */
+h1, h2, h3, h4, h5, h6,
+.page-text,
+#footer,
+#controls label {
+  font-family: 'Archivo Black', sans-serif; /* Bold, striking font for headings and emphasized parts */
+  font-weight: normal; /* reset to normal since Archivo Black is already bold */
 }
 
-/* Specific header sizes—can be adjusted or removed for uniform size */
-h1 { /* optional: keep size if desired */
+/* Keep headers sizes as before or remove for uniform look */
+h1 { /* optional: size if desired */
   /* font-size: 40px; */
 }
 h2 {
@@ -32,7 +36,7 @@ h3 {
   /* font-size: 28px; */
 }
 
-/* Main content container: remove shadow for cleaner look, keep rounded corners and padding */
+/* Main content container */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
@@ -42,38 +46,38 @@ h3 {
   overflow: hidden;
   position: relative;
   padding: 24px;
-  /* Removed box-shadow for cleaner look */
 }
 
-/* Inside main content, headers use Georgia and bold; reduce margin for compactness */
+/* Inside main content headers in Archivo Black for emphasis */
 .main-content h1,
 .main-content h2,
 .main-content h3,
 .main-content h4,
 .main-content h5,
 .main-content h6 {
-  font-family: 'Georgia', serif;
-  font-weight: bold;
-  text-align: left;
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: normal; /* optional, since Archivo Black is already bold */
   margin-top: 0.5em;
   margin-bottom: 0.2em;
+  text-align: left;
 }
 
-/* Make some key parts bold for emphasis, using Georgia for consistency */
+/* Make key parts bold for emphasis, with Archivo Black */
 .page-text,
 #footer,
 #controls label {
-  font-family: 'Georgia', serif;
-  font-weight: bold;
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: normal; /* reset if needed, already bold in font-family */
+  font-size: 1em; /* default size for clarity */
 }
 
 /* Italicized emphasis for quotes or important text */
 em, i {
-  font-family: 'Georgia', serif;
+  font-family: 'Archivo', sans-serif;
   font-style: italic;
 }
 
-/* Links in monospace, consistent with overall style */
+/* Links styled in Archivo, keeping colors */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -83,33 +87,34 @@ a:active {
   color: #a14dd7;
 }
 
-/* Table styles: compact, no fixed layout, no line spacing, balanced look */
+/* Table styles: compact, balanced, justified text inside cells */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
-  /* Removed table-layout: fixed for a more natural flow */
+  /* Removed fixed layout for more natural flow */
 }
 th {
   text-align: left;
   padding: 4px 6px;
   border-bottom: 1px solid #e79cff;
-  font-family: 'Georgia', serif;
-  font-weight: bold;
+  font-family: 'Archivo Black', sans-serif;
+  font-weight: normal; /* boldness already in font-family */
   color: #9b2c9b;
-  font-size: 0.95em; /* slightly smaller for compactness */
+  font-size: 0.95em;
 }
 td {
   padding: 4px 6px;
   border-bottom: 1px dotted #e79cff;
-  font-family: 'Courier New', monospace; /* keep data in monospace for clarity */
-  /* Removed white-space: nowrap, overflow, text-overflow for more natural flow */
-  word-wrap: break-word; /* allows wrapping to prevent overflow */
+  font-family: 'Archivo', sans-serif; /* use Archivo for data for readability */
+  /* Remove nowrap and overflow for balanced, natural wrapping */
+  word-wrap: break-word;
   vertical-align: middle;
   font-size: 0.95em;
+  text-align: justify; /* justify inside cells for balance */
 }
 
-/* Row hover effect for subtle background change */
+/* Row hover style */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
@@ -126,7 +131,7 @@ table tbody tr:hover {
   text-align: right;
 }
 
-/* Commit list styles */
+/* Commit list styles, minimal for balance */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -189,14 +194,14 @@ video {
   margin-bottom: 20px;
 }
 
-/* ASCII art styles removed for a cleaner, balanced look */
+/* Removed ASCII art styles for cleaner, balanced look */
 
 /* Header gif margin */
 .header-gif {
   margin-bottom: 5px;
 }
 
-/* Footer: Georgia, bold, slightly smaller for compactness */
+/* Footer styles: Georgia, bold, slightly smaller for balance */
 #footer {
   font-family: 'Georgia', serif;
   font-size: 0.9em;
@@ -212,7 +217,7 @@ video {
   color: #a14dd7;
 }
 
-/* Controls: labels bold Georgia for emphasis, compact spacing */
+/* Controls: labels in Georgia, bold, balanced spacing */
 #controls {
   margin-bottom: 1.5rem;
 }
@@ -223,7 +228,7 @@ video {
   color: #3e3e3e;
 }
 
-/* Dropdown select style: monospace, flat, compact */
+/* Dropdown select in monospace, flat, compact */
 #controls select#sort {
   font-family: 'Courier New', monospace;
   font-size: 1rem;
