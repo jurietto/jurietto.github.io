@@ -48,4 +48,3 @@ jobs:
           git add commits.json
           git diff --cached --quiet || git commit -m "Refresh commit log for 2025"
           git push
-
