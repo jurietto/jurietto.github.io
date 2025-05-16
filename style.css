@@ -147,26 +147,6 @@ table tbody tr:hover {
   text-align: right;
 }
 
-/* Optional: on very small screens, make cells stack vertically */
-@media (max-width: 600px) {
-  table, tbody, tr, td, th {
-    display: block;
-    width: 100%;
-  }
-
-  th {
-    border-bottom: none;
-    margin-top: 10px;
-  }
-
-  td {
-    border-bottom: 1px dotted #e79cff;
-  }
-
-  .detailsColumn {
-    text-align: left;
-  }
-
 /* Commit list styling */
 #commit-list {
   list-style: none;
