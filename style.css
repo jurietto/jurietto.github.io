@@ -1,4 +1,6 @@
-/* Use Courier monospaced font throughout the page */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+
+/* Body text: Courier */
 body {
   position: relative;
   background-color: #f7deff;
@@ -7,31 +9,17 @@ body {
   background-size: auto;
   color: #222;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px; /* smaller text */
-  line-height: 1.4; /* slightly tighter */
+  font-size: 14px;
+  line-height: 1.4;
   text-align: justify;
   overflow-x: hidden;
-  padding: 16px; /* less padding */
+  padding: 16px;
 }
 
-/* Global font reset to Courier */
-h1, h2, h3, h4, h5, h6,
-.page-text,
-#footer,
-#controls label,
-a,
-table,
-th,
-td,
-em,
-i,
-#myStatus {
-  font-family: 'Courier New', Courier, monospace;
-}
-
-/* Headings styling */
+/* Headers: IBM Plex Mono */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: normal;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
   margin-top: 0.4em;
   margin-bottom: 0.2em;
   text-align: left;
@@ -52,32 +40,20 @@ a:active {
   color: #a14dd7;
 }
 
-/* Main content container */
+/* Main content */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 16px; /* slightly less rounded */
+  border-radius: 16px;
   max-width: 900px;
   margin: 0 auto;
   border: 2px solid #e79cff;
   overflow: hidden;
   position: relative;
-  padding: 16px; /* tighter padding */
+  padding: 16px;
 }
 
-/* Headings inside main-content */
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  font-weight: normal;
-  margin-top: 0.4em;
-  margin-bottom: 0.2em;
-}
-
-/* Page text inside main-content */
 .main-content .page-text {
+  font-family: 'Courier New', Courier, monospace;
   font-weight: normal;
 }
 
@@ -97,7 +73,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 12px;
-  font-size: 13px; /* smaller table text */
+  font-size: 13px;
 }
 th {
   text-align: left;
@@ -117,29 +93,7 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
 
-/* File cell icons */
-.file-cell img {
-  vertical-align: middle;
-  margin-right: 4px;
-  height: 14px;
-}
-
-/* Right-align specific table column */
-.detailsColumn {
-  text-align: right;
-}
-
-/* Commit list */
-#commit-list {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 16px;
-}
-#commit-list li {
-  position: relative;
-  padding-left: 24px;
-  margin-bottom: 12px;
-}
+/* Commit list, stamps, media, etc. */
 #commit-list li::before {
   content: '';
   position: absolute;
@@ -151,13 +105,11 @@ table tbody tr:hover {
   background-size: cover;
 }
 
-/* Images */
 img {
   max-width: 100%;
   display: inline-block;
 }
 
-/* Stamps section */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -171,8 +123,7 @@ img {
   object-fit: contain;
 }
 
-/* Embedded content */
-iframe {
+iframe, video {
   display: block;
   max-width: 100%;
   width: 100%;
@@ -181,24 +132,13 @@ iframe {
   border: none;
   margin-bottom: 16px;
 }
-video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 16px;
-}
 
-/* Header gif margin */
-.header-gif {
-  margin-bottom: 4px;
-}
-
-/* Footer */
 #footer {
   font-size: 13px;
   margin-top: 20px;
   color: #3e3e3e;
 }
+
 #footer .footer-links a {
   color: #e79cff;
   text-decoration: underline;
@@ -208,7 +148,6 @@ video {
   color: #a14dd7;
 }
 
-/* Controls section */
 #controls {
   margin-bottom: 1rem;
 }
@@ -217,7 +156,6 @@ video {
   font-weight: normal;
 }
 
-/* Dropdown select style */
 #controls select#sort {
   font-size: 0.9rem;
   color: #3e3e3e;
@@ -227,7 +165,6 @@ video {
   border-radius: 0;
 }
 
-/* Status label */
 #myStatus::before {
   content: "Status - ";
 }
