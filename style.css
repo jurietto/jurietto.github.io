@@ -105,22 +105,37 @@ a:active {
   text-align: left;
 }
 
-/* Tables */
+/* Updated Table Styles with fixed layout and no cell breaking */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+  table-layout: fixed; /* Ensures fixed layout for cells */
 }
+
+/* Style header cells */
 th {
   text-align: left;
   padding-bottom: 6px;
   border-bottom: 1px solid #e79cff;
 }
+
+/* Style data cells to prevent breaking and make content fixed */
 td {
   padding: 6px 10px;
   border-bottom: 1px dotted #e79cff;
-  white-space: nowrap;
+  white-space: nowrap;       /* Prevent text from wrapping */
+  overflow: hidden;          /* Hide overflowing content */
+  text-overflow: ellipsis;   /* Show ellipsis for overflowing text */
 }
+
+/* Optional: show full content on hover for cells with overflow */
+td:hover {
+  overflow: visible;
+  white-space: normal;
+  background-color: rgba(231, 156, 255, 0.2);
+}
+
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
@@ -200,7 +215,10 @@ video {
   margin-bottom: 20px;
 }
 
-/* ASCII art box */
+/* Removed ASCII art styles */
+
+/* ASCII art box (no longer used) */
+/* 
 .ascii-box {
   border: 1px solid #e79cff;
   display: flex;
@@ -224,6 +242,7 @@ video {
   line-height: 1.2;
   color: #3e3e3e;
 }
+*/
 
 /* Header gif margin */
 .header-gif {
