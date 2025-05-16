@@ -67,7 +67,7 @@
 
 
 <script>
-  fetch('https://your-site.com/status.json')
+  fetch('status.json')
     .then(response => response.json())
     .then(data => {
       document.getElementById('myStatus').textContent = data.status;
