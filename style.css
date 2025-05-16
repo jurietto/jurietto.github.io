@@ -6,14 +6,14 @@ body {
   background-attachment: fixed;
   background-size: auto;
   color: #222;
-  font-family: 'Tahoma', sans-serif; /* Main font for all text */
+  font-family: 'Tahoma', sans-serif;
   padding: 20px;
-  line-height: 1.6; /* Line spacing for readability */
-  text-align: justify; /* Justify all text for balanced look */
+  line-height: 1.6;
+  text-align: justify;
   overflow-x: hidden;
 }
 
-/* Make all headings and emphasized text in Tahoma for consistency */
+/* Headings & emphasis */
 h1, h2, h3, h4, h5, h6,
 .page-text,
 #footer,
@@ -24,64 +24,24 @@ th,
 td,
 em,
 i,
-#footer,
-#controls,
 #myStatus {
   font-family: 'Tahoma', sans-serif;
 }
 
-/* Optional: specific header sizes if you want to control them */
-h1 {
-  /* font-size: 40px; */ /* Keep default or uncomment to set size */
-}
-h2 {
-  /* font-size: 32px; */
-}
-h3 {
-  /* font-size: 28px; */
-}
-
-/* Main content container: no shadow, balanced padding and rounded corners */
-.main-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 24px;
-  max-width: 900px;
-  margin: 0 auto;
-  border: 2px solid #e79cff;
-  overflow: hidden;
-  position: relative;
-  padding: 24px;
-}
-
-/* Inside main content headers in Tahoma for emphasis */
-.main-content h1,
-.main-content h2,
-.main-content h3,
-.main-content h4,
-.main-content h5,
-.main-content h6 {
-  font-family: 'Tahoma', sans-serif;
-  font-weight: normal; /* Keep it simple, boldness is default in headers */
+/* Header weights */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
   margin-top: 0.5em;
   margin-bottom: 0.2em;
   text-align: left;
 }
 
-/* Make key parts bold for emphasis */
-.page-text,
-#footer,
-#controls label {
-  font-family: 'Tahoma', sans-serif;
-  font-weight: bold;
-}
-
-/* Italicized emphasis for quotes or important text */
+/* Italics for emphasis */
 em, i {
-  font-family: 'Tahoma', sans-serif;
   font-style: italic;
 }
 
-/* Links styled in Tahoma, maintaining color scheme */
+/* Links */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -91,7 +51,7 @@ a:active {
   color: #a14dd7;
 }
 
-/* Table styles: compact, balanced, justified text inside cells */
+/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -101,38 +61,34 @@ th {
   text-align: left;
   padding: 4px 6px;
   border-bottom: 1px solid #e79cff;
-  font-family: 'Tahoma', sans-serif;
-  font-weight: normal; /* headers are bold by default in HTML, but explicitly set if needed */
   color: #9b2c9b;
   font-size: 0.95em;
 }
 td {
   padding: 4px 6px;
   border-bottom: 1px dotted #e79cff;
-  font-family: 'Tahoma', sans-serif; /* for readability */
-  word-wrap: break-word; /* allows natural wrapping */
+  word-wrap: break-word;
   vertical-align: middle;
   font-size: 0.95em;
-  text-align: justify; /* justified for balance */
+  text-align: justify;
 }
-/* Row hover style for subtle background effect */
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.2);
 }
 
-/* Icons inside table cells */
+/* File cell icons */
 .file-cell img {
   vertical-align: middle;
   margin-right: 6px;
   height: 16px;
 }
 
-/* Right-align specific column */
+/* Details column alignment */
 .detailsColumn {
   text-align: right;
 }
 
-/* Commit list styles for balance and clarity */
+/* Commit list */
 #commit-list {
   list-style: none;
   padding-left: 0;
@@ -152,16 +108,15 @@ table tbody tr:hover {
   height: 20px;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif');
   background-size: cover;
-  background-repeat: no-repeat;
 }
 
-/* All images */
+/* Images */
 img {
   max-width: 100%;
   display: inline-block;
 }
 
-/* Stamps section for icons or badges */
+/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -176,7 +131,7 @@ img {
   display: block;
 }
 
-/* Iframes for embedded content */
+/* Embedded content */
 iframe {
   display: block;
   max-width: 100%;
@@ -186,8 +141,6 @@ iframe {
   border: none;
   margin-bottom: 20px;
 }
-
-/* Videos for embedded media */
 video {
   max-width: 100%;
   height: auto;
@@ -195,16 +148,13 @@ video {
   margin-bottom: 20px;
 }
 
-/* Remove ASCII art styles for cleaner look */
-
-/* Header gif margin for visual separation */
+/* Header GIF margin */
 .header-gif {
   margin-bottom: 5px;
 }
 
-/* Footer: Tahoma, bold, slightly smaller for balance */
+/* Footer */
 #footer {
-  font-family: 'Tahoma', sans-serif;
   font-size: 0.9em;
   margin-top: 24px;
   color: #3e3e3e;
@@ -218,20 +168,16 @@ video {
   color: #a14dd7;
 }
 
-/* Controls: labels in Tahoma, bold, for clarity */
+/* Controls */
 #controls {
   margin-bottom: 1.5rem;
 }
 #controls label {
-  font-family: 'Tahoma', sans-serif;
-  font-weight: bold;
-  margin-right: 0.5rem;
   color: #3e3e3e;
 }
 
-/* Dropdown select style: monospace, flat, balanced */
+/* Dropdown style */
 #controls select#sort {
-  font-family: 'Tahoma', sans-serif;
   font-size: 1rem;
   color: #3e3e3e;
   background-color: #fff;
@@ -240,7 +186,7 @@ video {
   border-radius: 0;
 }
 
-/* Prefix label for status */
+/* Status prefix */
 #myStatus::before {
   content: "Status - ";
 }
