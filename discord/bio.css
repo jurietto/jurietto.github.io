@@ -1,0 +1,154 @@
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1d);
+  font-family: "gg sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.profile-card {
+  position: relative;
+  width: 400px;
+  background-color: #232428;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(50, 205, 50, 0.4);
+}
+
+.banner {
+  width: 100%;
+  height: 120px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.pfp {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 6px solid #000;
+  background-color: #000;
+  position: absolute;
+  top: 80px;
+  left: 16px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/IMG_5880.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+}
+
+.profile-info {
+  padding: 60px 20px 20px 20px;
+  background-color: #000;
+  position: relative;
+  z-index: 2;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.handle {
+  font-size: 14px;
+  color: #b5bac1;
+  margin-top: 2px;
+}
+
+.handle img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.member-label {
+  font-size: 13px;
+  color: white;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.member-date {
+  font-size: 13px;
+  color: white;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.member-date img {
+  width: 14px;
+  height: 14px;
+}
+
+.section-title {
+  margin-top: 30px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #b5bac1;
+  font-weight: 600;
+}
+
+.connections {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border-top: 1px solid #3a3b3e;
+}
+
+.connection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #000;
+  border-bottom: 1px solid #3a3b3e;
+}
+
+.connection:last-child {
+  border-bottom: none;
+}
+
+.connection img {
+  width: 14px;
+  height: 14px;
+}
+
+.connection span {
+  font-size: 14px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.verified {
+  width: 14px;
+  height: 14px;
+}
+
+.arrow {
+  width: 6px;
+  height: 6px;
+}
+
+.overlay-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('loop.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+  z-index: 999;
+  pointer-events: none;
+}
