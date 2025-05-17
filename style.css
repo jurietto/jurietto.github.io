@@ -88,25 +88,24 @@ p {
   flex-shrink: 0;
 }
 
-/* Inline grouping of Status prefix, dash, and message */
+/* Status Content Row: prefix + dash + message */
 .status-content {
   display: flex;
   align-items: center;
-  flex: 1 1 auto;
-  min-width: 0;
+  flex-grow: 1;
+  flex-wrap: wrap;
   gap: 4px;
-  white-space: nowrap;
-  overflow: hidden;
+  min-width: 0;
 }
 
-/* Status Prefix "Status" (underlined) */
+/* Status Prefix */
 .status-prefix {
   text-decoration: underline;
   color: #9b2c9b;
   font-weight: bold;
 }
 
-/* Dash after Status (no underline) */
+/* Dash */
 .status-dash {
   color: #9b2c9b;
   font-weight: bold;
@@ -115,12 +114,11 @@ p {
 /* Status Message */
 #myStatus {
   font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal; /* Allow wrapping */
+  overflow: visible; /* No ellipsis */
 }
 
-/* Status Date (floats to right, wraps under if needed) */
+/* Status Date */
 #statusDate {
   font-size: 0.8em;
   color: #888;
