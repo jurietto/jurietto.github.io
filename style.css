@@ -72,6 +72,7 @@ p {
 /* Prefix "Status -" added before the status text */
 #myStatus::before {
   content: "Status - "; /* static prefix before status text */
+  text-decoration: underline;
 }
 
 /* Date display for status with smaller font and gray color */
