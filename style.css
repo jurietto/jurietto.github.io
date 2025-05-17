@@ -88,14 +88,15 @@ p {
   flex-shrink: 0;
 }
 
-/* Status Content Row: prefix + dash + message */
+/* Status Content: Prefix, Dash, Message (always in one line) */
 .status-content {
   display: flex;
   align-items: center;
   flex-grow: 1;
-  flex-wrap: wrap;
-  gap: 4px;
   min-width: 0;
+  gap: 4px;
+  flex-wrap: nowrap; /* ❗ This ensures they stay inline */
+  overflow: hidden;
 }
 
 /* Status Prefix */
@@ -114,18 +115,18 @@ p {
 /* Status Message */
 #myStatus {
   font-weight: bold;
-  white-space: normal; /* Allow wrapping */
-  overflow: visible; /* No ellipsis */
+  white-space: normal; /* Wrapping allowed */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Soft truncation if box gets too small */
 }
 
-/* Status Date */
+/* Status Date (floats right, can wrap below if needed) */
 #statusDate {
   font-size: 0.8em;
   color: #888;
   white-space: nowrap;
   margin-left: auto;
 }
-
 
 /* === Tables === */
 table {
