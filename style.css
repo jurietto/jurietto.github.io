@@ -24,7 +24,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #222;
 }
 
-/* h1 specific */
 h1 {
   font-size: 40px;
 }
@@ -56,9 +55,9 @@ a:active {
   padding: 32px;
 }
 
-/* Last Updated softer color */
+/* Last Updated color matches status date (grey #888) */
 #last-updated p {
-  color: #c4a8e2;
+  color: #888;
   font-size: 0.9em;
   margin-top: -12px;
   margin-bottom: 16px;
@@ -101,7 +100,7 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
 
-/* Charmmy Kitty list icons */
+/* Commit list icons */
 #commit-list li::before {
   content: '';
   position: absolute;
@@ -119,7 +118,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps section */
+/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -178,6 +177,5 @@ iframe, video {
 
 /* Status prefix */
 #myStatus::before {
-  content: "Status – ";
-  text-align: left;
+  content: "Status - ";
 }
