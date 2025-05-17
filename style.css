@@ -214,5 +214,10 @@ iframe, video {
   padding: 0.25rem 0.75rem;
   border-radius: 0;
 }
-
+/* Status prefix */
+#myStatus::before {
+  content: "Status - ";
+  vertical-align: middle;
+}
+ 
 
