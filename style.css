@@ -1,11 +1,4 @@
-@font-face {
-  font-family: 'Billo';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/BILLO___.TTF') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* Body text: Courier New */
+/* Body: Courier New */
 body {
   position: relative;
   background-color: #f7deff;
@@ -21,19 +14,19 @@ body {
   padding: 16px;
 }
 
-/* Headers use Billo */
+/* Headers: Georgia in dark purple (#5A2275) */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Billo', sans-serif;
+  font-family: Georgia, serif;
   font-weight: normal;
   text-align: left;
   margin-top: 0.4em;
   margin-bottom: 0.2em;
+  color: #5A2275;
 }
 
-/* h1 specific: bright gold */
+/* h1 specific size */
 h1 {
   font-size: 40px;
-  color: #D4AF37; /* proper gold tone */
 }
 
 /* Italics */
@@ -51,7 +44,7 @@ a:active {
   color: #a14dd7;
 }
 
-/* Main content */
+/* Main content container */
 .main-content {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
@@ -79,7 +72,7 @@ a:active {
   border-radius: 1px;
 }
 
-/* Table styles */
+/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
