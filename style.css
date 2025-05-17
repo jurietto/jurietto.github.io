@@ -178,48 +178,6 @@ img {
   display: inline-block;
 }
 
-/* === Stamps Section === */
-#stamps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin: 20px 0;
-}
-
-#stamps img {
-  width: 90px;
-  height: 50px;
-  object-fit: contain;
-}
-
-/* === Embedded Media === */
-iframe, video {
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  border: none;
-  margin: 16px 0;
-}
-
-/* === Footer === */
-#footer {
-  font-size: 14px;
-  margin-top: 24px;
-  color: #555;
-  text-align: center;
-}
-
-#footer .footer-links a {
-  color: #e79cff;
-}
-
-#footer .footer-links a:hover {
-  color: #a14dd7;
-}
-
 /* === Controls === */
 #controls {
   margin-bottom: 1.5rem;
@@ -237,15 +195,4 @@ iframe, video {
   border: 1px solid #e79cff;
   padding: 0.3rem 0.75rem;
   border-radius: 0;
-}
-
-/* === Commit List Icons === */
-#commit-list li::before {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  background: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif') no-repeat center/cover;
 }
