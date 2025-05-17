@@ -11,10 +11,14 @@ connections.forEach(conn => {
   });
 });
 
-// Optional: check if overlay gif is loading properly
+// Check if overlay gif is loading properly
 const overlay = document.querySelector('.overlay-background');
 if (overlay) {
-  const urlMatch = getComputedStyle(overlay).backgroundImage.match(/url\\("?(.*?)"?\\)/);
+  const style = getComputedStyle(overlay);
+  const backgroundImage = style.backgroundImage;
+
+  // Use regex to extract URL inside url("...")
+  const urlMatch = backgroundImage.match(/url\(["']?(.*?)["']?\)/);
   if (urlMatch && urlMatch[1]) {
     const img = new Image();
     img.src = urlMatch[1];
