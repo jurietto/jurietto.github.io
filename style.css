@@ -57,7 +57,7 @@ a:active {
 
 /* Last Updated matches status date grey */
 #last-updated p {
-  color: #888;
+  color: #888 !important;
   font-size: 0.9em;
   margin-top: -12px;
   margin-bottom: 16px;
