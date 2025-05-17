@@ -5,7 +5,7 @@
   font-style: normal;
 }
 
-/* Base body style: Courier */
+/* Body text: Courier New */
 body {
   position: relative;
   background-color: #f7deff;
@@ -30,10 +30,10 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.2em;
 }
 
-/* h1 specific: bronzey gold color */
+/* h1 specific: bright gold */
 h1 {
   font-size: 40px;
-  color: #b57f50; /* bronze-gold tone */
+  color: #D4AF37; /* proper gold tone */
 }
 
 /* Italics */
@@ -122,7 +122,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps section */
+/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
