@@ -69,63 +69,50 @@ p {
 
 /* === My Status Box === */
 #my-status {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: block;
   margin-bottom: 20px;
-  padding: 12px 16px;
+  padding: 16px 20px;
   background: rgba(231, 156, 255, 0.2);
   border: 1px solid #e79cff;
   border-radius: 12px;
   box-sizing: border-box;
+  color: #222;
+  font-size: 14px;
 }
 
-/* Icon */
-#my-status img {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-/* Status Content: Prefix, Dash, Message (always in one line) */
-.status-content {
+/* Icon next to Status line */
+#my-status-header {
   display: flex;
   align-items: center;
-  flex-grow: 1;
-  min-width: 0;
-  gap: 4px;
-  flex-wrap: nowrap; /* ❗ This ensures they stay inline */
-  overflow: hidden;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 
-/* Status Prefix */
+/* Status Prefix underlined */
 .status-prefix {
   text-decoration: underline;
   color: #9b2c9b;
   font-weight: bold;
 }
 
-/* Dash */
+/* Dash is just text after prefix */
 .status-dash {
-  color: #9b2c9b;
   font-weight: bold;
+  color: #9b2c9b;
 }
 
 /* Status Message */
 #myStatus {
   font-weight: bold;
-  white-space: normal; /* Wrapping allowed */
-  overflow: hidden;
-  text-overflow: ellipsis; /* Soft truncation if box gets too small */
 }
 
-/* Status Date (floats right, can wrap below if needed) */
+/* Date below in small grey text */
 #statusDate {
   font-size: 0.8em;
   color: #888;
-  white-space: nowrap;
-  margin-left: auto;
+  margin-top: 4px;
+  display: block;
 }
 
 /* === Tables === */
