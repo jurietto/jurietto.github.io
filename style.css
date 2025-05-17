@@ -51,23 +51,28 @@ p {
   padding: 32px;
 }
 
-/* My Status Box - Responsive Fix */
+/* My Status Box - Styled Container */
 #my-status {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   font-size: 14px;
   color: #222;
   max-width: 100%;
   box-sizing: border-box;
+
+  background-color: rgba(231, 156, 255, 0.2); /* soft purple background */
+  border: 1px solid #e79cff; /* pink border */
+  padding: 10px 14px;
+  border-radius: 12px;
 }
 
 /* Status Icon */
 #my-status img {
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   flex-shrink: 0;
 }
 
@@ -75,13 +80,15 @@ p {
 #myStatus {
   display: inline-block;
   white-space: nowrap;
+  font-weight: bold;
 }
 
-/* Underlined "Status - " */
+/* Underlined "Status - " with Purple Accent */
 #myStatus::before {
   content: "Status - ";
   text-decoration: underline;
   display: inline;
+  color: #9b2c9b; /* dark purple */
 }
 
 /* Status Date */
