@@ -178,5 +178,6 @@ iframe, video {
 
 /* Status prefix */
 #myStatus::before {
-  content: "Status - ";
+  content: "Status – ";
+  text-align: left;
 }
