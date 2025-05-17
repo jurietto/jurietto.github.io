@@ -71,6 +71,7 @@ p {
 /* === My Status Box === */
 #my-status {
   display: flex;
+  align-items: center; /* ✅ Center icon & text vertically */
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
@@ -83,24 +84,24 @@ p {
   box-sizing: border-box;
 }
 
-/* Icon aligned to bottom */
+/* Icon centered */
 #my-status img {
   width: 20px;
   height: 20px;
-  align-self: flex-end;
   flex-shrink: 0;
+  /* Removed align-self! It now inherits align-items: center */
 }
 
 /* Status Text Group: prefix + dash + message */
 .status-text {
   display: flex;
-  align-items: center;
+  align-items: center; /* ✅ Keep text aligned center too */
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
 }
 
-/* Status Prefix (underlined) */
+/* Status Prefix */
 .status-prefix {
   text-decoration: underline;
   color: #9b2c9b;
@@ -126,8 +127,9 @@ p {
   color: #888;
   white-space: nowrap;
   margin-left: auto;
-  align-self: flex-start;
+  align-self: flex-start; /* Date still at top right */
 }
+
 
 /* === Tables === */
 table {
