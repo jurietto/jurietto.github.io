@@ -81,13 +81,25 @@ p {
   box-sizing: border-box;
 }
 
+/* Icon */
 #my-status img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
 }
 
-/* Status Prefix "Status" (underlined only) */
+/* Inline grouping of Status prefix, dash, and message */
+.status-content {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Status Prefix "Status" (underlined) */
 .status-prefix {
   text-decoration: underline;
   color: #9b2c9b;
@@ -98,28 +110,24 @@ p {
 .status-dash {
   color: #9b2c9b;
   font-weight: bold;
-  margin-right: 4px;
 }
 
-.status-content {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  white-space: normal;
-}
-
-/* Status Message Text */
+/* Status Message */
 #myStatus {
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Status Date (right aligned, stays neat) */
+/* Status Date (floats to right, wraps under if needed) */
 #statusDate {
   font-size: 0.8em;
   color: #888;
-  margin-left: auto;
   white-space: nowrap;
+  margin-left: auto;
 }
+
 
 /* === Tables === */
 table {
