@@ -1,7 +1,7 @@
 /* === Body & Base === */
 body {
   position: relative;
-  background-color: #f7deff;
+  background-color: #f7deff; /* Soft lavender */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
@@ -11,27 +11,27 @@ body {
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
-  color: #f7deff; /* flipped to lavender for dark mode */
+  color: #333; /* Softer than black */
 }
 
 /* === Main Content Box === */
 .main-content {
-  background: rgba(0, 0, 0, 0.7); /* semi-transparent dark */
+  background-color: rgba(255, 255, 255, 0.98); /* Light translucent white */
   border: 2px solid #e79cff;
   border-radius: 20px;
   max-width: 900px;
   margin: 32px auto;
   padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  color: #f7deff;
+  color: #333;
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #ffffff;
+  color: #222;
   margin: 0.4em 0 0.2em;
 }
 
@@ -62,7 +62,7 @@ p {
 
 /* === Last Updated === */
 #last-updated p {
-  color: #ccc;
+  color: #666;
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
@@ -73,11 +73,11 @@ p {
   display: block;
   margin-bottom: 20px;
   padding: 16px 20px;
-  background: rgba(231, 156, 255, 0.25);
+  background: rgba(231, 156, 255, 0.15); /* Softer pastel box */
   border: 1px solid #e79cff;
   border-radius: 12px;
   box-sizing: border-box;
-  color: #f7deff;
+  color: #333;
   font-size: 14px;
 }
 
@@ -91,27 +91,25 @@ p {
 
 .status-prefix {
   text-decoration: underline;
-  color: #e79cff;
+  color: #9b2c9b;
   font-weight: bold;
   white-space: nowrap;
 }
 
 .status-dash {
   font-weight: bold;
-  color: #e79cff;
+  color: #9b2c9b;
   white-space: nowrap;
 }
 
 #myStatus {
   font-weight: bold;
   white-space: normal;
-  overflow: hidden;
-  text-overflow: clip;
 }
 
 #statusDate {
   font-size: 0.8em;
-  color: #bbb;
+  color: #777;
   margin-top: 6px;
   display: block;
 }
@@ -123,7 +121,7 @@ table {
   margin-top: 20px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  color: #f7deff;
+  color: #333;
 }
 
 th, td {
@@ -134,7 +132,7 @@ th, td {
 
 th {
   border-bottom: 1px solid #e79cff;
-  color: #e79cff;
+  color: #9b2c9b;
   font-weight: normal;
 }
 
@@ -143,7 +141,7 @@ td {
 }
 
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.1);
+  background-color: rgba(231, 156, 255, 0.08);
 }
 
 /* === Links === */
@@ -193,7 +191,7 @@ iframe, video {
 #footer {
   font-size: 14px;
   margin-top: 24px;
-  color: #bbb;
+  color: #555;
   text-align: center;
 }
 
@@ -212,7 +210,7 @@ iframe, video {
 
 #controls label {
   font-weight: normal;
-  color: #ccc;
+  color: #333;
 }
 
 #controls select#sort {
