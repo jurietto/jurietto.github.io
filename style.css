@@ -80,13 +80,13 @@ p {
   font-size: 14px;
 }
 
-/* Icon next to Status line */
+/* Icon + Status Prefix + Dash + Message all together */
 #my-status-header {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* ❗ keep it in one line until screen forces a wrap */
+  overflow: hidden;
 }
 
 /* Status Prefix underlined */
@@ -94,24 +94,29 @@ p {
   text-decoration: underline;
   color: #9b2c9b;
   font-weight: bold;
+  white-space: nowrap; /* prevent splitting */
 }
 
-/* Dash is just text after prefix */
+/* Dash */
 .status-dash {
   font-weight: bold;
   color: #9b2c9b;
+  white-space: nowrap; /* prevent splitting */
 }
 
 /* Status Message */
 #myStatus {
   font-weight: bold;
+  white-space: normal; /* allow wrapping if needed */
+  overflow: hidden;
+  text-overflow: clip;
 }
 
-/* Date below in small grey text */
+/* Date below */
 #statusDate {
   font-size: 0.8em;
   color: #888;
-  margin-top: 4px;
+  margin-top: 6px;
   display: block;
 }
 
