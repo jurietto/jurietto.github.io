@@ -90,7 +90,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 12px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, 
   font-size: 14px;
 }
 th {
@@ -103,7 +103,6 @@ th {
 td {
   padding: 3px 5px;
   border-bottom: 1px dotted #e79cff;
-  word-wrap: break-word;
   vertical-align: middle;
   
 }
@@ -115,6 +114,7 @@ table tbody tr:hover {
 #myStatus {
   display: inline-block;
   white-space: nowrap;
+  vertical-align: middle;
 }
 
 /* Commit list icons */
@@ -195,5 +195,6 @@ iframe, video {
 /* Status prefix */
 #myStatus::before {
   content: "Status - ";
+  vertical-align: middle;
 }
  
