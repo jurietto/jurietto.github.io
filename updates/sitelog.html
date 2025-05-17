@@ -1,26 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Site Log</title>
-  <link rel="stylesheet" href="../style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* === Commit List Icons === */
+    #commit-list li::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      background: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif') no-repeat center/cover;
+    }
+  </style>
 </head>
 <body>
   <div class="main-content">
-  
-    <h1> Site Log <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" aria-hidden="true" style="vertical-align: middle; margin-left: 6px;"></h1>
+    <h1>
+      Site Log
+      <img
+        src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif"
+        alt=""
+        aria-hidden="true"
+        style="vertical-align: middle; margin-left: 6px;"
+      />
+    </h1>
 
     <div id="last-updated">
       <p>Last Updated: Loading...</p>
     </div>
-    
-    <p class="page-text">This page keeps a record of updates and changes made to the site. It helps keep track of edits, adjustments, and improvements over time. The entries show who made the update (Juri is me — Jurietto is the site running in the background on GitHub), when it was done, and a short note about what changed. The list updates automatically and you can view updates in order from newest to oldest using the dropdown menu.</p>
-    
+
+    <p class="page-text">
+      This page keeps a record of updates and changes made to the site. It helps keep track of edits, adjustments, and improvements over time. The entries show who made the update (Juri is me — Jurietto is the site running in the background on GitHub), when it was done, and a short note about what changed. The list updates automatically and you can view updates in order from newest to oldest using the dropdown menu.
+    </p>
+
     <p>
       <a href="https://jurietto.github.io/updates/updates.html">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" style="vertical-align: middle; margin-right: 6px;">
+        <img
+          src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif"
+          alt="Back icon"
+          style="vertical-align: middle; margin-right: 6px;"
+        />
         [parent directory]
       </a>
     </p>
@@ -105,8 +129,7 @@
           document.getElementById('footer').innerHTML = html;
         });
     </script>
-  </div></div>
-
+  </div>
   <script src="../script.js"></script>
 </body>
 </html>
