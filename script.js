@@ -25,9 +25,9 @@ async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../
   }
 }
 
-// Helper: Update the target element
+// Helper: Update only the <p> inside #last-updated
 function updateLastUpdated(selector, text) {
-  const el = document.querySelector(selector);
+  const el = document.querySelector(`${selector} p`);
   if (el) {
     el.textContent = `Last Updated: ${text}`;
   }
