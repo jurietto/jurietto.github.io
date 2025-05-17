@@ -70,10 +70,13 @@ p {
 
 /* === My Status Box === */
 #my-status {
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 20px;
-  padding: 16px 20px;
-  background: rgba(231, 156, 255, 0.15); /* Softer pastel box */
+  padding: 14px 18px;
+  background: rgba(231, 156, 255, 0.15);
   border: 1px solid #e79cff;
   border-radius: 12px;
   box-sizing: border-box;
@@ -81,37 +84,46 @@ p {
   font-size: 14px;
 }
 
-#my-status-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-  overflow: hidden;
+/* Icon */
+#my-status img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Inline status text: Prefix + dash + message */
+.status-text {
+  display: inline;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  min-width: 0;
+  overflow-wrap: break-word;
+  line-height: 1.4;
 }
 
 .status-prefix {
   text-decoration: underline;
   color: #9b2c9b;
   font-weight: bold;
-  white-space: nowrap;
+  margin-right: 4px;
 }
 
 .status-dash {
-  font-weight: bold;
   color: #9b2c9b;
-  white-space: nowrap;
+  font-weight: bold;
+  margin-right: 6px;
 }
 
 #myStatus {
   font-weight: bold;
-  white-space: normal;
 }
 
+/* Updated Date */
 #statusDate {
   font-size: 0.8em;
-  color: #777;
-  margin-top: 6px;
-  display: block;
+  color: #888;
+  margin-left: auto;
+  white-space: nowrap;
 }
 
 /* === Tables === */
