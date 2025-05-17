@@ -1,4 +1,4 @@
-/* Body & Base */
+/* === Body & Base === */
 body {
   position: relative;
   background-color: #f7deff;
@@ -7,151 +7,140 @@ body {
   background-size: auto;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
+  color: #222;
 }
 
-/* Headers */
+/* === Main Content Box === */
+.main-content {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #e79cff;
+  border-radius: 20px;
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* === Headings === */
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  text-align: left;
-  margin-top: 0.4em;
-  margin-bottom: 0.2em;
   color: #222;
+  margin: 0.4em 0 0.2em;
 }
 
 h1 {
   font-size: 40px;
 }
 
-p {
-  color: #222;
-}
-
-/* Last Updated */
-#last-updated p {
-  color: #888 !important;
-  font-size: 0.9em;
-  margin-top: -8px;
-  margin-bottom: 8px;
-}
-
-/* Main Content Box */
-.main-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 32px auto;
-  border: 2px solid #e79cff;
-  overflow: hidden;
+h2 {
+  font-size: 28px;
+  margin-top: 24px;
   position: relative;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* soft shadow */
 }
 
-/* My Status Box - Styled Container */
-#my-status {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  color: #222;
-  max-width: 100%;
-  box-sizing: border-box;
-
-  background-color: rgba(231, 156, 255, 0.2);
-  border: 1px solid #e79cff;
-  padding: 10px 14px;
-  border-radius: 12px;
-}
-
-/* Status Icon */
-#my-status img {
-  height: 20px;
-  width: 20px;
-  flex-shrink: 0;
-}
-
-/* Status Text */
-#myStatus {
-  display: inline-block;
-  white-space: nowrap;
-  font-weight: bold;
-}
-
-/* Only "Status" underlined, dash is separate */
-#myStatus::before {
-  content: "Status";
-  text-decoration: underline;
-  display: inline;
-  color: #9b2c9b;
-}
-
-#myStatus::after {
-  content: " - ";
-  text-decoration: none;
-  display: inline;
-  color: #9b2c9b;
-}
-
-/* Status Date */
-#statusDate {
-  font-size: 0.8em;
-  color: #888;
-  margin-left: 8px;
-  white-space: nowrap;
-}
-
-/* Intro Paragraph */
-.page-text {
-  margin-top: 12px;
-}
-
-/* Decorative underline for h2 */
-.main-content h2::after {
+h2::after {
   content: "";
   display: block;
   width: 40px;
   height: 2px;
   background: #e79cff;
-  margin-top: 3px;
+  margin-top: 6px;
   border-radius: 1px;
 }
 
-/* Tables */
+/* === Paragraphs === */
+p {
+  margin: 0.8em 0;
+}
+
+/* === Last Updated === */
+#last-updated p {
+  color: #888;
+  font-size: 0.9em;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+
+/* === My Status Box === */
+#my-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: rgba(231, 156, 255, 0.2);
+  border: 1px solid #e79cff;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+#my-status img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+#myStatus {
+  font-weight: bold;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#myStatus::before {
+  content: "Status";
+  text-decoration: underline;
+  color: #9b2c9b;
+}
+
+#myStatus::after {
+  content: " - ";
+  color: #9b2c9b;
+}
+
+#statusDate {
+  font-size: 0.8em;
+  color: #888;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* === Tables === */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  margin-bottom: 12px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
 
-th {
+th, td {
+  padding: 6px 8px;
+  vertical-align: middle;
   text-align: left;
-  padding: 3px 5px;
+}
+
+th {
   border-bottom: 1px solid #e79cff;
   color: #9b2c9b;
   font-weight: normal;
 }
 
 td {
-  padding: 3px 5px;
   border-bottom: 1px dotted #e79cff;
-  vertical-align: middle;
 }
 
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.15);
+  background-color: rgba(231, 156, 255, 0.1);
 }
 
-/* Links */
+/* === Links === */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -162,31 +151,19 @@ a:active {
   color: #a14dd7;
 }
 
-/* Commit List Icons */
-#commit-list li::before {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif');
-  background-size: cover;
-}
-
-/* Images */
+/* === Images === */
 img {
   max-width: 100%;
   display: inline-block;
 }
 
-/* Stamps Section */
+/* === Stamps Section === */
 #stamps {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 6px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin: 20px 0;
 }
 
 #stamps img {
@@ -195,7 +172,7 @@ img {
   object-fit: contain;
 }
 
-/* Embedded Media */
+/* === Embedded Media === */
 iframe, video {
   display: block;
   max-width: 100%;
@@ -203,41 +180,51 @@ iframe, video {
   height: auto;
   aspect-ratio: 16 / 9;
   border: none;
-  margin-bottom: 16px;
+  margin: 16px 0;
 }
 
-/* Footer */
+/* === Footer === */
 #footer {
   font-size: 14px;
-  margin-top: 20px;
+  margin-top: 24px;
   color: #3e3e3e;
+  text-align: center;
 }
 
 #footer .footer-links a {
   color: #e79cff;
-  text-decoration: underline;
 }
 
-#footer .footer-links a:hover,
-#footer .footer-links a:active {
+#footer .footer-links a:hover {
   color: #a14dd7;
 }
 
-/* Controls */
+/* === Controls === */
 #controls {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 #controls label {
-  color: #3e3e3e;
   font-weight: normal;
+  color: #3e3e3e;
 }
 
 #controls select#sort {
   font-size: 14px;
   color: #3e3e3e;
-  background-color: #fff;
+  background: #fff;
   border: 1px solid #e79cff;
-  padding: 0.25rem 0.75rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 0;
+}
+
+/* === Commit List Icons === */
+#commit-list li::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif') no-repeat center/cover;
 }
