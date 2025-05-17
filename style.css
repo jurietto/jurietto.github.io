@@ -101,14 +101,19 @@ p {
   margin-right: 4px;
 }
 
+.status-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  white-space: normal;
+}
+
 /* Status Message Text */
 #myStatus {
   font-weight: bold;
-  display: inline-block;
-  white-space: nowrap;
 }
 
-/* Status Date (right aligned on big screens) */
+/* Status Date (right aligned, stays neat) */
 #statusDate {
   font-size: 0.8em;
   color: #888;
