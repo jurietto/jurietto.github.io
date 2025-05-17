@@ -49,6 +49,7 @@ p {
   overflow: hidden;
   position: relative;
   padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* soft shadow */
 }
 
 /* My Status Box - Styled Container */
@@ -63,8 +64,8 @@ p {
   max-width: 100%;
   box-sizing: border-box;
 
-  background-color: rgba(231, 156, 255, 0.2); /* soft purple background */
-  border: 1px solid #e79cff; /* pink border */
+  background-color: rgba(231, 156, 255, 0.2);
+  border: 1px solid #e79cff;
   padding: 10px 14px;
   border-radius: 12px;
 }
@@ -83,12 +84,19 @@ p {
   font-weight: bold;
 }
 
-/* Underlined "Status - " with Purple Accent */
+/* Only "Status" underlined, dash is separate */
 #myStatus::before {
-  content: "Status - ";
+  content: "Status";
   text-decoration: underline;
   display: inline;
-  color: #9b2c9b; /* dark purple */
+  color: #9b2c9b;
+}
+
+#myStatus::after {
+  content: " - ";
+  text-decoration: none;
+  display: inline;
+  color: #9b2c9b;
 }
 
 /* Status Date */
@@ -124,6 +132,7 @@ table {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
+
 th {
   text-align: left;
   padding: 3px 5px;
@@ -131,11 +140,13 @@ th {
   color: #9b2c9b;
   font-weight: normal;
 }
+
 td {
   padding: 3px 5px;
   border-bottom: 1px dotted #e79cff;
   vertical-align: middle;
 }
+
 table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
@@ -145,6 +156,7 @@ a {
   color: #e79cff;
   text-decoration: underline;
 }
+
 a:hover,
 a:active {
   color: #a14dd7;
@@ -176,6 +188,7 @@ img {
   gap: 6px;
   margin-bottom: 16px;
 }
+
 #stamps img {
   width: 90px;
   height: 50px;
@@ -199,10 +212,12 @@ iframe, video {
   margin-top: 20px;
   color: #3e3e3e;
 }
+
 #footer .footer-links a {
   color: #e79cff;
   text-decoration: underline;
 }
+
 #footer .footer-links a:hover,
 #footer .footer-links a:active {
   color: #a14dd7;
@@ -212,10 +227,12 @@ iframe, video {
 #controls {
   margin-bottom: 1rem;
 }
+
 #controls label {
   color: #3e3e3e;
   font-weight: normal;
 }
+
 #controls select#sort {
   font-size: 14px;
   color: #3e3e3e;
