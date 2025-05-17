@@ -14,17 +14,17 @@ body {
   padding: 16px;
 }
 
-/* Headers: Georgia in dark purple (#5A2275) */
+/* Headers: Times New Roman Bold */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Georgia, serif;
-  font-weight: normal;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
   text-align: left;
   margin-top: 0.4em;
   margin-bottom: 0.2em;
-  color: #5A2275;
+  color: #222; /* Default dark text */
 }
 
-/* h1 specific size */
+/* h1 size */
 h1 {
   font-size: 40px;
 }
@@ -98,7 +98,7 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
 
-/* Commit list icons */
+/* Commit list, stamps, media, etc. */
 #commit-list li::before {
   content: '';
   position: absolute;
@@ -115,7 +115,6 @@ img {
   display: inline-block;
 }
 
-/* Stamps */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -129,7 +128,6 @@ img {
   object-fit: contain;
 }
 
-/* Embedded media */
 iframe, video {
   display: block;
   max-width: 100%;
