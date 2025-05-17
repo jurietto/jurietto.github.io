@@ -71,68 +71,62 @@ p {
 /* === My Status Box === */
 #my-status {
   display: flex;
-  
   gap: 10px;
+  flex-wrap: wrap;
   margin-bottom: 20px;
   padding: 14px 18px;
   background: rgba(231, 156, 255, 0.15);
   border: 1px solid #e79cff;
   border-radius: 12px;
-  box-sizing: border-box;
   font-size: 14px;
   color: #333;
-  flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
-/* Icon aligned bottom */
+/* Icon aligned to bottom */
 #my-status img {
   width: 20px;
   height: 20px;
-  flex-shrink: 0;
   align-self: flex-end;
+  flex-shrink: 0;
 }
 
-/* Status text group */
+/* Status Text Group: prefix + dash + message */
 .status-text {
   display: flex;
-  
+  align-items: center;
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
-  overflow-wrap: break-word;
-  line-height: 1.4;
 }
 
-/* Prefix styling */
+/* Status Prefix (underlined) */
 .status-prefix {
   text-decoration: underline;
   color: #9b2c9b;
   font-weight: bold;
-  white-space: nowrap;
 }
 
-/* Dash styling */
+/* Dash */
 .status-dash {
   color: #9b2c9b;
   font-weight: bold;
-  white-space: nowrap;
 }
 
-/* Main status message */
+/* Main Status Message */
 #myStatus {
   font-weight: bold;
-  white-space: normal;
-  overflow-wrap: break-word;
   flex: 1 1 auto;
+  word-break: break-word;
 }
 
-/* Status date floated right */
+/* Updated Date aligned top right */
 #statusDate {
   font-size: 0.8em;
   color: #888;
   white-space: nowrap;
   margin-left: auto;
-  align-self: center;
+  align-self: flex-start;
 }
 
 /* === Tables === */
