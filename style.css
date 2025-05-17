@@ -1,223 +1,234 @@
-/* Body: Arial */
+/* Body styling: sets overall appearance of the webpage body */
 body {
-  position: relative;
-  background-color: #f7deff;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
-  background-attachment: fixed;
-  background-size: auto;
-  
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: justify;
-  overflow-x: hidden;
-  padding: 16px;
+  position: relative; /* positions the body relative to its normal position for potential absolute children */
+  background-color: #f7deff; /* light pink background color */
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif'); /* background image for tiled background effect */
+  background-attachment: fixed; /* background image stays fixed during scrolling */
+  background-size: auto; /* default size for background image */
+  font-family: Arial, Helvetica, sans-serif; /* fallback font stack for text */
+  font-size: 14px; /* base font size for the page */
+  line-height: 1.5; /* line spacing for readability */
+  text-align: justify; /* justifies text alignment for a clean look */
+  overflow-x: hidden; /* hides horizontal overflow to prevent horizontal scrollbars */
+  padding: 16px; /* padding around the body content */
 }
 
-/* Headers: Arial Bold */
+/* Header styles: applies to all header tags from h1 to h6 */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  text-align: left;
-  margin-top: 0.4em;
-  margin-bottom: 0.2em;
-  color: #222;
+  font-family: Arial, Helvetica, sans-serif; /* font family for headers */
+  font-weight: bold; /* make headers bold */
+  text-align: left; /* align headers to the left */
+  margin-top: 0.4em; /* space above headers */
+  margin-bottom: 0.2em; /* space below headers */
+  color: #222; /* dark gray text color for headers */
 }
 
-p {
-  color: #222;
-}  
-
-.main-content #last-updated p {
-  color: #888 !important;
-  font-size: 0.9em;
-  margin-top: -12px;
-  margin-bottom: 16px;
-}
-
+/* Specific style for h1 headers */
 h1 {
-  font-size: 40px;
+  font-size: 40px; /* large font size for main header */
 }
 
-/* Italics */
-em, i {
-  font-style: italic;
+/* Paragraph styling */
+p {
+  color: #222; /* default text color for paragraphs */
 }
 
-/* Links */
+/* Style for elements with class 'page-text' to add top margin */
+.page-text {
+  margin-top: 12px; /* space above the paragraph block */
+}
+
+/* Last updated information styling */
+#last-updated p {
+  color: #888 !important; /* gray color for last updated info, with high priority */
+  font-size: 0.9em; /* slightly smaller font size */
+  margin-top: -8px; /* negative margin to pull up the text slightly */
+  margin-bottom: 8px; /* space below the last updated info */
+}
+
+/* Styling for the status box container with id 'my-status' */
+#my-status {
+  display: inline-flex; /* display as inline flex container for alignment */
+  align-items: center; /* vertically center items inside */
+  gap: 8px; /* spacing between items */
+  margin-bottom: 16px; /* space below the status box */
+  font-size: 14px; /* font size within the status box */
+  color: #222; /* text color */
+}
+
+/* Icon image next to status text inside #my-status */
+#my-status img {
+  height: 18px; /* icon height */
+  width: 18px; /* icon width */
+  flex-shrink: 0; /* prevent icon from shrinking in flex layout */
+}
+
+/* Inline block display for status text with nowrap to prevent wrapping */
+#myStatus {
+  display: inline-block; /* keep on the same line as icon */
+  white-space: nowrap; /* prevent wrapping of status text */
+}
+
+/* Prefix "Status -" added before the status text */
+#myStatus::before {
+  content: "Status - "; /* static prefix before status text */
+}
+
+/* Date display for status with smaller font and gray color */
+#statusDate {
+  font-size: 0.8em; /* smaller font size for date */
+  color: #888; /* gray color for date text */
+  margin-left: 8px; /* space to the left of date */
+  white-space: nowrap; /* prevent wrapping of date text */
+}
+
+/* Styling for all anchor (link) elements */
 a {
-  color: #e79cff;
-  text-decoration: underline;
+  color: #e79cff; /* pinkish link color */
+  text-decoration: underline; /* underline links by default */
 }
+
+/* Hover and active state for links to change color */
 a:hover,
 a:active {
-  color: #a14dd7;
+  color: #a14dd7; /* darker purple on hover or active */
 }
 
-/* Main content container */
+/* Main content container styling */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 32px auto;
-  border: 2px solid #e79cff;
-  overflow: hidden;
-  position: relative;
-  padding: 32px;
+  background-color: rgba(255, 255, 255, 0.95); /* semi-transparent white background */
+  border-radius: 20px; /* rounded corners */
+  max-width: 900px; /* maximum width of content box */
+  margin: 32px auto; /* vertical margin and center horizontally */
+  border: 2px solid #e79cff; /* border with specific color */
+  overflow: hidden; /* hide overflowing content */
+  position: relative; /* position context for nested absolute elements if needed */
+  padding: 32px; /* padding inside the container */
 }
 
-/* Last Updated matches status date grey */
-#last-updated p {
-  color: #888 !important;
-  font-size: 0.9em;
-  margin-top: -12px;
-  margin-bottom: 16px;
-}
-
-/* Decorative underline for h2 */
+/* Decorative underline after h2 headers inside main content */
 .main-content h2::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 2px;
-  background: #e79cff;
-  margin-top: 3px;
-  border-radius: 1px;
+  content: ""; /* empty content for styling purposes */
+  display: block; /* make it a block element for styling */
+  width: 40px; /* width of the underline */
+  height: 2px; /* height of the underline */
+  background: #e79cff; /* color matching theme */
+  margin-top: 3px; /* space above the underline */
+  border-radius: 1px; /* slightly rounded edges */
 }
 
-/* Tables */
+/* Table styling for full width and spacing */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 12px;
-  font-family: Arial, 
-  font-size: 14px;
+  width: 100%; /* table spans full container width */
+  border-collapse: collapse; /* eliminate gaps between cells */
+  margin-top: 20px; /* space above the table */
+  margin-bottom: 12px; /* space below the table */
+  font-family: Arial, Helvetica, sans-serif; /* font for table content */
+  font-size: 14px; /* font size */
 }
+
+/* Header cells in tables */
 th {
-  text-align: left;
-  padding: 3px 5px;
-  border-bottom: 1px solid #e79cff;
-  color: #9b2c9b;
-  font-weight: normal;
+  text-align: left; /* align text to the left */
+  padding: 3px 5px; /* padding inside header cells */
+  border-bottom: 1px solid #e79cff; /* bottom border color */
+  color: #9b2c9b; /* purple color for header text */
+  font-weight: normal; /* normal font weight */
 }
+
+/* Data cells in tables */
 td {
-  padding: 3px 5px;
-  border-bottom: 1px dotted #e79cff;
-  vertical-align: middle;
-  
+  padding: 3px 5px; /* padding inside data cells */
+  border-bottom: 1px dotted #e79cff; /* dotted bottom border for separation */
+  vertical-align: middle; /* align content vertically in the middle */
 }
+
+/* Highlight table rows on hover for better interactivity */
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.15);
+  background-color: rgba(231, 156, 255, 0.15); /* subtle background color change on hover */
 }
 
-#my-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  font-size: 14px;
-  color: #222;
-}
-
-/* Icon next to Status */
-#my-status img {
-  height: 18px;
-  width: 18px;
-  flex-shrink: 0;
-}
-
-/* Status text */
-#myStatus {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-/* Status date */
-#statusDate {
-  font-size: 0.8em;
-  color: #888;
-  margin-left: 8px;
-  white-space: nowrap;
-}
-
-/* Commit list icons */
+/* List items in #commit-list with icons before each item */
 #commit-list li::before {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif');
-  background-size: cover;
+  content: ''; /* empty content for icon */
+  position: absolute; /* position relative to list item */
+  top: 2px; /* vertical position */
+  left: 0; /* align to the left edge */
+  width: 18px; /* icon width */
+  height: 18px; /* icon height */
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif'); /* icon image */
+  background-size: cover; /* scale background image to cover entire area */
 }
 
-/* Images */
+/* Images styling to ensure responsiveness */
 img {
-  max-width: 100%;
-  display: inline-block;
+  max-width: 100%; /* images do not overflow container width */
+  display: inline-block; /* inline block display for images */
 }
 
-/* Stamps section */
+/* Container for stamps section, flex layout for responsiveness */
 #stamps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 16px;
+  display: flex; /* flexbox layout */
+  flex-wrap: wrap; /* allow wrapping onto multiple lines */
+  justify-content: center; /* center items horizontally */
+  gap: 6px; /* space between images */
+  margin-bottom: 16px; /* space below stamps section */
 }
+
+/* Styling for images inside the stamps container */
 #stamps img {
-  width: 90px;
-  height: 50px;
-  object-fit: contain;
+  width: 90px; /* fixed width for stamps */
+  height: 50px; /* fixed height for stamps */
+  object-fit: contain; /* scale image to fit container without distortion */
 }
 
-/* Embedded media */
+/* Embedded media like iframes and videos */
 iframe, video {
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  border: none;
-  margin-bottom: 16px;
+  display: block; /* block display to take full width */
+  max-width: 100%; /* responsive width */
+  width: 100%; /* fill container width */
+  height: auto; /* maintain aspect ratio */
+  aspect-ratio: 16 / 9; /* standard video aspect ratio */
+  border: none; /* remove default border */
+  margin-bottom: 16px; /* space below embedded media */
 }
 
-/* Footer */
+/* Footer styling */
 #footer {
-  font-size: 14px;
-  margin-top: 20px;
-  color: #3e3e3e;
+  font-size: 14px; /* font size for footer */
+  margin-top: 20px; /* space above footer */
+  color: #3e3e3e; /* dark gray text color */
 }
+
+/* Links inside footer for consistent styling */
 #footer .footer-links a {
-  color: #e79cff;
-  text-decoration: underline;
+  color: #e79cff; /* link color matching theme */
+  text-decoration: underline; /* underlined links */
 }
+
+/* Hover and active states for footer links */
 #footer .footer-links a:hover,
 #footer .footer-links a:active {
-  color: #a14dd7;
+  color: #a14dd7; /* darker purple on hover/active */
 }
 
-/* Controls */
+/* Controls section styling, e.g., dropdowns or buttons */
 #controls {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; /* space below controls */
 }
-#controls label {
-  color: #3e3e3e;
-  font-weight: normal;
-}
-#controls select#sort {
-  font-size: 14px;
-  color: #3e3e3e;
-  background-color: #fff;
-  border: 1px solid #e79cff;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0;
-}
-/* Status prefix */
-#myStatus::before {
-  content: "Status - ";
-  vertical-align: middle;
-}
- 
 
+/* Labels inside controls */
+#controls label {
+  color: #3e3e3e; /* dark gray label text */
+  font-weight: normal; /* normal font weight */
+}
+
+/* Specific styling for select dropdown with id 'sort' */
+#controls select#sort {
+  font-size: 14px; /* font size of dropdown */
+  color: #3e3e3e; /* text color */
+  background-color: #fff; /* white background */
+  border: 1px solid #e79cff; /* border color matching theme */
+  padding: 0.25rem 0.75rem; /* padding inside dropdown */
+  border-radius: 0; /* sharp corners */
+}
