@@ -55,7 +55,7 @@ a:active {
   padding: 32px;
 }
 
-/* Last Updated color matches status date (grey #888) */
+/* Last Updated matches status date grey */
 #last-updated p {
   color: #888;
   font-size: 0.9em;
@@ -100,6 +100,13 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
 
+/* Status - alignment fix */
+#myStatus {
+  display: inline-block;
+  text-align: left;
+  white-space: nowrap;
+}
+
 /* Commit list icons */
 #commit-list li::before {
   content: '';
@@ -118,7 +125,7 @@ img {
   display: inline-block;
 }
 
-/* Stamps */
+/* Stamps section */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -179,4 +186,3 @@ iframe, video {
 #myStatus::before {
   content: "Status - ";
 }
- 
