@@ -1,6 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+@font-face {
+  font-family: 'Billo';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/BILLO___.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-/* Body text: Courier New */
+/* Base body style: Courier */
 body {
   position: relative;
   background-color: #f7deff;
@@ -9,28 +14,29 @@ body {
   background-size: auto;
   color: #222;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px; /* Base font size */
+  font-size: 14px;
   line-height: 1.4;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
 }
 
-/* Headings: IBM Plex Mono */
+/* Headers use Billo */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'IBM Plex Mono', monospace;
-  font-weight: 700;
+  font-family: 'Billo', sans-serif;
+  font-weight: normal;
   text-align: left;
   margin-top: 0.4em;
   margin-bottom: 0.2em;
 }
 
-/* Specific h1 size */
+/* h1 specific: bronzey gold color */
 h1 {
   font-size: 40px;
+  color: #b57f50; /* bronze-gold tone */
 }
 
-/* Italics for emphasis */
+/* Italics */
 em, i {
   font-style: italic;
 }
@@ -79,7 +85,7 @@ table {
   border-collapse: collapse;
   margin-bottom: 12px;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 14px; /* Match body text */
+  font-size: 14px;
 }
 th {
   text-align: left;
@@ -99,7 +105,7 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
 
-/* Commit list, stamps, media, etc. */
+/* Commit list icons */
 #commit-list li::before {
   content: '';
   position: absolute;
@@ -116,6 +122,7 @@ img {
   display: inline-block;
 }
 
+/* Stamps section */
 #stamps {
   display: flex;
   flex-wrap: wrap;
@@ -129,6 +136,7 @@ img {
   object-fit: contain;
 }
 
+/* Embedded media */
 iframe, video {
   display: block;
   max-width: 100%;
@@ -139,8 +147,9 @@ iframe, video {
   margin-bottom: 16px;
 }
 
+/* Footer */
 #footer {
-  font-size: 14px; /* Match body */
+  font-size: 14px;
   margin-top: 20px;
   color: #3e3e3e;
 }
@@ -154,6 +163,7 @@ iframe, video {
   color: #a14dd7;
 }
 
+/* Controls */
 #controls {
   margin-bottom: 1rem;
 }
@@ -163,7 +173,7 @@ iframe, video {
 }
 
 #controls select#sort {
-  font-size: 14px; /* Match body */
+  font-size: 14px;
   color: #3e3e3e;
   background-color: #fff;
   border: 1px solid #e79cff;
@@ -171,6 +181,7 @@ iframe, video {
   border-radius: 0;
 }
 
+/* Status */
 #myStatus::before {
   content: "Status - ";
 }
