@@ -71,7 +71,7 @@ p {
 /* === My Status Box === */
 #my-status {
   display: flex;
-  align-items: center;
+  
   gap: 10px;
   margin-bottom: 20px;
   padding: 14px 18px;
@@ -89,13 +89,13 @@ p {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  vertical-align: middle;
+  
 }
 
 /* Status text group */
 .status-text {
   display: flex;
-  align-items: center;
+  
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
