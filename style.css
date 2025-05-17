@@ -87,23 +87,22 @@ p {
   flex-shrink: 0;
 }
 
+/* Status Prefix: "Status -" */
+.status-prefix {
+  text-decoration: underline;
+  color: #9b2c9b;
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+/* Status Message */
 #myStatus {
   font-weight: bold;
   display: inline-block;
   white-space: nowrap;
 }
 
-#myStatus::before {
-  content: "Status";
-  text-decoration: underline;
-  color: #9b2c9b;
-}
-
-#myStatus::after {
-  content: " - ";
-  color: #9b2c9b;
-}
-
+/* Status Date on the right */
 #statusDate {
   font-size: 0.8em;
   color: #888;
