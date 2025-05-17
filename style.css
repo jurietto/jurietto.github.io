@@ -110,11 +110,34 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.15);
 }
 
-/* Status - alignment fix */
+#my-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #222;
+}
+
+/* Icon next to Status */
+#my-status img {
+  height: 18px;
+  width: 18px;
+  flex-shrink: 0;
+}
+
+/* Status text */
 #myStatus {
   display: inline-block;
   white-space: nowrap;
-  vertical-align: middle;
+}
+
+/* Status date */
+#statusDate {
+  font-size: 0.8em;
+  color: #888;
+  margin-left: 8px;
+  white-space: nowrap;
 }
 
 /* Commit list icons */
@@ -192,9 +215,4 @@ iframe, video {
   border-radius: 0;
 }
 
-/* Status prefix */
-#myStatus::before {
-  content: "Status - ";
-  vertical-align: middle;
-}
- 
+
