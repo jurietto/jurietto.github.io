@@ -225,8 +225,7 @@
 
     #imageModalContent {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 160px;
     }
 
     #modalImage {
@@ -272,45 +271,9 @@
           <div class="connection">
             <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify" />
             <span>Juri <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-            <a href="https://open.spotify.com/user/46im1mej4acux7oreojoynmoy?si=Lm3xOhl_QjCCfa5I2pvXNw" target="_blank" rel="noopener noreferrer">
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-            </a>
+            <a href="https://open.spotify.com/user/46im1mej4acux7oreojoynmoy?si=Lm3xOhl_QjCCfa5I2pvXNw" target="_blank"><img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" /></a>
           </div>
-          <div class="connection">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
-            <span>sotokomorii <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-            <a href="https://x.com/sotokomorii" target="_blank" rel="noopener noreferrer">
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-            </a>
-          </div>
-          <div class="connection">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" />
-            <span>jurietto <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-            <a href="https://jurietto.github.io/" target="_blank" rel="noopener noreferrer">
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-            </a>
-          </div>
-          <div class="connection">
-            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
-            <span>凸(¬‿¬) <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-            <a href="https://www.youtube.com/@juriscafe" target="_blank" rel="noopener noreferrer">
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-            </a>
-          </div>
-          <div class="connection">
-            <img src="https://vndb.org/favicon.ico" alt="VNDB" />
-            <span>VNDB <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-            <a href="https://vndb.org/u274298" target="_blank" rel="noopener noreferrer">
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-            </a>
-          </div>
-          <div class="connection">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/chat-4-xxl.png" alt="Cbox" />
-            <span>Chatzone <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-            <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm">
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-            </a>
-          </div>
+          <!-- Repeat connection blocks here if needed -->
         </div>
       </div>
     </div>
@@ -337,7 +300,7 @@
     });
 
     window.addEventListener('click', (e) => {
-      if (e.target === modal) {
+      if (modal.style.display === 'flex' && !modalImage.contains(e.target) && e.target !== profilePic) {
         modal.style.display = 'none';
       }
     });
