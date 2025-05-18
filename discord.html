@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Discord</title>
-<style>
-  /* Base / Mobile Styles */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord Profile Clone</title>
+  <style>
+/* Base / Mobile Styles */
 body {
   margin: 0;
   padding: 0;
@@ -41,12 +42,11 @@ a {
 
 .banner {
   width: 100%;
-  height: 160px;
-  background: linear-gradient(to bottom, #1e1f22 0%, #232428 100%),
-              url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
+  height: 120px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
   background-size: cover;
-  background-position: center;
-  box-shadow: inset 0 -30px 30px -10px #000;
+  background-position: center 20%; 
+  position: relative;
 }
 
 .pfp {
@@ -56,13 +56,14 @@ a {
   border: 4px solid #000;
   background-color: #000;
   position: absolute;
-  top: 110px;
-  left: 20px;
+  top: 80px;
+  left: 16px;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/IMG_5880.png');
   background-size: cover;
   background-position: center;
-  cursor: pointer;
+  cursor: default;
   user-select: none;
+  pointer-events: none;
 }
 
 .pfp::before {
@@ -80,7 +81,7 @@ a {
 }
 
 .profile-info {
-  padding: 60px 16px 16px 16px;
+  padding: 50px 16px 16px 16px;
   background-color: #000;
 }
 
@@ -88,7 +89,8 @@ a {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  gap: 4px;
+  margin-top: 0;
   margin-bottom: 12px;
 }
 
@@ -128,10 +130,10 @@ a {
 .handle {
   font-size: 13px;
   color: #b5bac1;
-  margin: 0;
   display: flex;
   align-items: center;
   gap: 4px;
+  margin: 0;
 }
 
 .handle img {
@@ -140,11 +142,12 @@ a {
   vertical-align: middle;
 }
 
-.member-label {
+.member-label,
+.section-title {
   font-size: 12px;
   color: white;
   font-weight: 600;
-  margin-top: 20px;
+  margin: 12px 0 4px;
 }
 
 .member-date {
@@ -153,6 +156,7 @@ a {
   display: flex;
   align-items: center;
   gap: 5px;
+  margin: 0 0 10px;
 }
 
 .member-date img {
@@ -160,27 +164,17 @@ a {
   height: 13px;
 }
 
-.section-title {
-  font-size: 11px;
-  color: #b5bac1;
-  font-weight: 600;
-  margin-top: 16px;
-  margin-bottom: 4px;
-}
-
 .about-me {
   font-size: 13px;
   color: #dcddde;
   line-height: 1.4;
-  margin: 0;
+  margin-bottom: 12px;
 }
 
 .connections {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 6px;
-  margin-top: 10px;
-  padding-top: 8px;
 }
 
 .connection {
@@ -189,8 +183,7 @@ a {
   gap: 8px;
   padding: 8px;
   background-color: #000;
-  border: 1px solid #3a3b3e;
-  border-radius: 6px;
+  border-bottom: 1px solid #3a3b3e;
 }
 
 .connection img {
@@ -232,132 +225,115 @@ a {
   }
 
   .connections {
-    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding-top: 8px;
+    gap: 10px;
   }
 
   .connection {
     border: 1px solid #3a3b3e;
     border-radius: 6px;
-    background-color: #000;
+    background-color: #111;
   }
 }
 
-</style>
+  </style>
+
+
 </head>
+
 <body>
-<div class="card-wrapper">
-  <div class="profile-card">
-    <div class="banner"></div>
-    <div class="pfp" id="profilePic"></div>
-    
-    <!-- All profile content inside this div -->
-    <div class="profile-info">
-      <p class="username">
-        Juri
-        <span class="inline-bubble">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/poop.gifv" class="status-icon" alt="status icon" />
-          <span class="bubble-text">mood: (￢‿￢ )</span>
-        </span>
-      </p>
-      <p class="handle">
-        sotokomori • she / they
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoことよろ.gif" alt="emoji icon" />
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoPrideAce.gif" alt="hashtag icon" />
-      </p>
-      <p class="member-label">Member Since</p>
-      <p class="member-date">
-        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord Icon" />
+  <div class="card-wrapper">
+    <div class="profile-card">
+      <div class="banner"></div>
+      <div class="pfp" id="profilePic"></div>
+
+      <!-- All profile info moved here, compact layout -->
+      <div class="profile-info">
+        <!-- Wrap name and mood in a container for close spacing -->
+        <div class="name-mood-container">
+          <p class="username">
+            Juri
+            <span class="inline-bubble">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/poop.gifv" class="status-icon" alt="status icon" />
+            <span class="bubble-text">mood: (￢‿￢ )</span>
+            </span>
+          </p>
+          <p class="handle">
+            sotokomori • she / they
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoことよろ.gif" alt="emoji icon" />
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoPrideAce.gif" alt="hashtag icon" />
+          </p>
+        </div>
+        <p class="member-label">Member Since</p>
+        <p class="member-date">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord Icon" />
         May 21, 2022
-      </p>
-      <p class="section-title">About Me</p>
-      <p class="about-me">
-        Herru, I'm Juri (or Juliet). I like music production, DJing, baking, and older visual novels.
-        Lately, I’ve developed a new interest in industrial design. My favorite music genres are
-        electronic, industrial dance, and EBM. I also have a very strong... and slightly random—
-        obsession with Charmmy Kitty, heh.
-      </p>
-      <p class="section-title">Connections</p>
-      <div class="connections">
-        <div class="connection">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify" />
-          <span>Juri <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-          <a href="https://open.spotify.com/user/46im1mej4acux7oreojoynmoy?si=Lm3xOhl_QjCCfa5I2pvXNw" target="_blank" rel="noopener noreferrer">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-          </a>
-        </div>
-        <div class="connection">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
-          <span>sotokomorii <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-          <a href="https://x.com/sotokomorii" target="_blank" rel="noopener noreferrer">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-          </a>
-        </div>
-        <div class="connection">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" />
-          <span>jurietto <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-          <a href="https://jurietto.github.io/" target="_blank" rel="noopener noreferrer">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-          </a>
-        </div>
-        <div class="connection">
-          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
-          <span>凸(¬‿¬) <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-          <a href="https://www.youtube.com/@juriscafe" target="_blank" rel="noopener noreferrer">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-          </a>
-        </div>
-        <div class="connection">
-          <img src="https://vndb.org/favicon.ico" alt="VNDB" />
-          <span>VNDB <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-          <a href="https://vndb.org/u274298" target="_blank" rel="noopener noreferrer">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-          </a>
-        </div>
-        <div class="connection">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/chat-4-xxl.png" alt="Cbox" />
-          <span>Chatzone <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
-          <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
-          </a>
+        </p>
+        <p class="section-title">About Me</p>
+        <p class="about-me">
+          Herru, I'm Juri (or Juliet). I like music production, DJing, baking, and older visual novels.
+          Lately, I’ve developed a new interest in industrial design. My favorite music genres are
+          electronic, industrial dance, and EBM. I also have a very strong... and slightly random—
+          obsession with Charmmy Kitty, heh.
+        </p>
+        <p class="section-title">Connections</p>
+        <div class="connections">
+          <div class="connection">
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify" />
+            <span>Juri <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <a href="https://open.spotify.com/user/46im1mej4acux7oreojoynmoy?si=Lm3xOhl_QjCCfa5I2pvXNw" target="_blank"
+              rel="noopener noreferrer">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
+            </a>
+          </div>
+          <div class="connection">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
+            <span>sotokomorii <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <a href="https://x.com/sotokomorii" target="_blank" rel="noopener noreferrer">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
+            </a>
+          </div>
+          <div class="connection">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" />
+            <span>jurietto <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <a href="https://jurietto.github.io/" target="_blank" rel="noopener noreferrer">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
+            </a>
+          </div>
+          <div class="connection">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+            <span>凸(¬‿¬) <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <a href="https://www.youtube.com/@juriscafe" target="_blank" rel="noopener noreferrer">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
+            </a>
+          </div>
+          <div class="connection">
+            <img src="https://vndb.org/favicon.ico" alt="VNDB" />
+            <span>VNDB <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <a href="https://vndb.org/u274298" target="_blank" rel="noopener noreferrer">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
+            </a>
+          </div>
+          <div class="connection">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/chat-4-xxl.png" alt="Cbox" />
+            <span>Chatzone <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <!-- Removed modal entirely -->
 
-<!-- Modal for image preview -->
-<div id="imageModal">
-  <div id="imageModalContent">
-    <img id="modalImage" src="" alt="Profile Preview" />
-  </div>
-</div>
-
-<script>
-const profilePic = document.getElementById('profilePic');
-const modal = document.getElementById('imageModal');
-const modalImage = document.getElementById('modalImage');
-
-// Prevent right click on profile picture
+  <script>
+    const profilePic = document.getElementById('profilePic');
+// Prevent right-click on profile picture
 profilePic.addEventListener('contextmenu', (e) => e.preventDefault());
 profilePic.setAttribute('draggable', 'false');
-
-// Show modal with smaller image on click
-profilePic.addEventListener('click', () => {
-  const bgImage = window.getComputedStyle(profilePic).backgroundImage;
-  const urlMatch = bgImage.match(/url\(["']?(.+?)["']?\)/);
-  if (urlMatch && urlMatch[1]) {
-    modalImage.src = urlMatch[1];
-    modal.style.display = 'flex';
-  }
-});
-
-// Hide modal on click anywhere
-window.addEventListener('click', () => {
-  modal.style.display = 'none';
-});
-</script>
+// No modal functionality needed anymore
+  </script>
 </body>
+
 </html>
