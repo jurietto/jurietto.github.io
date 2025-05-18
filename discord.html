@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,39 +46,45 @@ a {
   height: 120px;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg');
   background-size: cover;
-  background-position: center 20%; 
+  background-position: center 20%;
   position: relative;
 }
 
-.pfp {
-  width: 70px;
-  height: 70px;
+.pfp-container {
+  position: absolute;
+  top: 78px;
+  left: 16px;
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
   border: 4px solid #000;
   background-color: #000;
-  position: absolute;
-  top: 80px;
-  left: 16px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/IMG_5880.png');
-  background-size: cover;
-  background-position: center;
-  cursor: default;
-  user-select: none;
+  overflow: hidden;
+  z-index: 2;
   pointer-events: none;
 }
 
-.pfp::before {
-  content: "";
+.pfp-scene {
   position: absolute;
   top: -4px;
   left: -4px;
-  width: 78px;
-  height: 78px;
+  width: 84px;
+  height: 84px;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/scene.gif');
   background-size: cover;
   background-position: center;
   border-radius: 50%;
-  z-index: -1;
+  z-index: 1;
+}
+
+.pfp-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 2;
+  display: block;
 }
 
 .profile-info {
@@ -224,6 +231,17 @@ a {
     width: 100%;
   }
 
+  .pfp-container {
+    left: 24px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .pfp-scene {
+    width: 88px;
+    height: 88px;
+  }
+
   .connections {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -236,6 +254,7 @@ a {
   }
 }
 
+
   </style>
 
 
@@ -245,7 +264,10 @@ a {
   <div class="card-wrapper">
     <div class="profile-card">
       <div class="banner"></div>
-      <div class="pfp" id="profilePic"></div>
+      <div class="pfp-container">
+  <div class="pfp-scene"></div>
+  <img src="https://file.garden/ZhTgSjrp5nAroRKq/IMG_5880.png" alt="Profile Picture" class="pfp-img" />
+</div>
 
       <!-- All profile info moved here, compact layout -->
       <div class="profile-info">
