@@ -7,12 +7,9 @@
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #0a0a0a, #1a1a1d),
-        url('https://file.garden/ZhTgSjrp5nAroRKq/bg.jpg');
-      background-size: cover;
-      background-position: bottom;
+      background: #000; /* Set background to black */
       font-family: "gg sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
+      color: silver; /* All text default to silver */
       display: flex;
       justify-content: center;
       padding: 20px;
@@ -82,166 +79,17 @@
       z-index: -1;
     }
 
-    /* Style for the outer profile info container */
+    /* Style for the profile info container */
     .profile-info {
       padding: 60px 20px 20px 20px;
       background-color: #000;
     }
 
-    /* Profile details inside profile-info */
-    .username {
-      font-size: 20px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    /* All text inside will inherit color: silver from body */
 
-    .inline-bubble {
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 12px;
-      background-color: #444;
-      white-space: nowrap;
-      max-width: 160px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .status-icon {
-      width: 16px;
-      height: 16px;
-      margin-right: 6px;
-    }
-
-    .bubble-text {
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
-
-    .handle {
-      font-size: 14px;
-      color: #b5bac1;
-      margin-top: 2px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .handle img {
-      width: 20px;
-      height: 20px;
-      vertical-align: middle;
-    }
-
-    .member-label {
-      font-size: 13px;
-      color: white;
-      margin-top: 20px;
-      font-weight: 600;
-    }
-
-    .member-date {
-      font-size: 13px;
-      color: white;
-      margin-top: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .member-date img {
-      width: 14px;
-      height: 14px;
-    }
-
-    .section-title {
-      margin-top: 30px;
-      font-size: 12px;
-      text-transform: none;
-      color: #b5bac1;
-      font-weight: 600;
-    }
-
-    .about-me {
-      font-size: 14px;
-      margin-top: 10px;
-      color: #dcddde;
-      line-height: 1.5;
-    }
-
-    .connections {
-      display: flex;
-      flex-direction: column;
-      margin-top: 10px;
-      border-top: 1px solid #3a3b3e;
-    }
-
-    .connection {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      background-color: #000;
-      border-bottom: 1px solid #3a3b3e;
-    }
-
-    .connection:last-child {
-      border-bottom: none;
-    }
-
-    .connection img {
-      width: 14px;
-      height: 14px;
-    }
-
-    .connection span {
-      font-size: 14px;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .verified {
-      width: 14px;
-      height: 14px;
-    }
-
-    .arrow {
-      width: 6px;
-      height: 7px;
-      transform: scale(0.5);
-    }
-
-    /* Modal styles */
-    #imageModal {
-      display: none; /* Hidden by default */
-      position: fixed;
-      z-index: 9999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-
-    #imageModalContent {
-      position: relative;
-      width: 220px;
-      height: 220px;
-    }
-
-    #modalImage {
-      width: 100px; /* Smaller size for preview */
-      height: auto;
-      border-radius: 50%;
-      display: block;
+    /* Optional: explicit paragraph styling if needed */
+    p {
+      margin: 0 0 10px 0;
     }
   </style>
 </head>
@@ -251,33 +99,33 @@
       <div class="banner"></div>
       <div class="pfp" id="profilePic"></div>
       
-      <!-- Corrected: moved all profile info here, no nested inner div -->
+      <!-- All content wrapped in one profile-info div -->
       <div class="profile-info">
-        <div class="username">
+        <p class="username">
           Juri
-          <div class="inline-bubble">
+          <span class="inline-bubble">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/poop.gifv" class="status-icon" alt="status icon" />
             <span class="bubble-text">mood: (￢‿￢ )</span>
-          </div>
-        </div>
-        <div class="handle">
+          </span>
+        </p>
+        <p class="handle">
           sotokomori • she / they
           <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoことよろ.gif" alt="emoji icon" />
           <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoPrideAce.gif" alt="hashtag icon" />
-        </div>
-        <div class="member-label">Member Since</div>
-        <div class="member-date">
+        </p>
+        <p class="member-label">Member Since</p>
+        <p class="member-date">
           <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord Icon" />
           May 21, 2022
-        </div>
-        <div class="section-title">About Me</div>
-        <div class="about-me">
+        </p>
+        <p class="section-title">About Me</p>
+        <p class="about-me">
           Herru, I'm Juri (or Juliet). I like music production, DJing, baking, and older visual novels.
           Lately, I’ve developed a new interest in industrial design. My favorite music genres are
           electronic, industrial dance, and EBM. I also have a very strong... and slightly random—
           obsession with Charmmy Kitty, heh.
-        </div>
-        <div class="section-title">Connections</div>
+        </p>
+        <p class="section-title">Connections</p>
         <div class="connections">
           <div class="connection">
             <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png" alt="Spotify" />
