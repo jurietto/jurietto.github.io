@@ -16,7 +16,11 @@
       display: flex;
       justify-content: center;
       padding: 20px;
-      background-color: black; /* added for browser background color */
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
     }
 
     .card-wrapper {
@@ -56,26 +60,13 @@
       background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/IMG_5880.png');
       background-size: cover;
       background-position: center;
-      cursor: pointer; /* Make it clear it's clickable */
-      /* Disable right-click and pointer-events for security */
+      cursor: pointer;
+      /* Disable right click and dragging for security */
       user-select: none;
-    }
-
-    /* Disable context menu on the profile picture */
-    .pfp {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
-      user-select: none;
     }
-
-    /* Optional: prevent context menu on right click */
-    .pfp {
-      -webkit-touch-callout: none; /* iOS Safari */
-    }
-
-    /* Overlay to block right click (alternative approach) */
-    /* Not strictly necessary if JavaScript disables right click */
 
     .pfp::before {
       content: "";
@@ -91,11 +82,13 @@
       z-index: -1;
     }
 
+    /* Style for the outer profile info container */
     .profile-info {
       padding: 60px 20px 20px 20px;
       background-color: #000;
     }
 
+    /* Profile details inside profile-info */
     .username {
       font-size: 20px;
       font-weight: 600;
@@ -233,21 +226,21 @@
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0,0,0,0.8);
       justify-content: center;
       align-items: center;
     }
 
     #imageModalContent {
       position: relative;
-      max-width: 90%;
-      max-height: 90%;
+      width: 220px;
+      height: 220px;
     }
 
     #modalImage {
       width: 100px; /* Smaller size for preview */
       height: auto;
-      border-radius: 50%; /* Make the image preview circular */
+      border-radius: 50%;
       display: block;
     }
   </style>
@@ -257,6 +250,8 @@
     <div class="profile-card">
       <div class="banner"></div>
       <div class="pfp" id="profilePic"></div>
+      
+      <!-- Corrected: moved all profile info here, no nested inner div -->
       <div class="profile-info">
         <div class="username">
           Juri
@@ -267,7 +262,7 @@
         </div>
         <div class="handle">
           sotokomori • she / they
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/nuko%E3%81%93%E3%81%A8%E3%82%88%E3%82%8D.gif" alt="emoji icon" />
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoことよろ.gif" alt="emoji icon" />
           <img src="https://file.garden/ZhTgSjrp5nAroRKq/nukoPrideAce.gif" alt="hashtag icon" />
         </div>
         <div class="member-label">Member Since</div>
@@ -275,13 +270,6 @@
           <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord Icon" />
           May 21, 2022
         </div>
-
-        <div class="section-title">About Me</div>
-        <div class="about-me">
-          Herru, I'm Juri (or Juliet). I like music production, DJing, baking, and older visual novels. Lately, I’ve developed a new interest in industrial design. My favorite music genres are electronic, industrial dance, and EBM. I also have a very strong... and slightly random—obsession with Charmmy Kitty, heh.
-        </div>
-
-       </div>
         <div class="section-title">About Me</div>
         <div class="about-me">
           Herru, I'm Juri (or Juliet). I like music production, DJing, baking, and older visual novels.
@@ -328,7 +316,7 @@
           </div>
           <div class="connection">
             <img src="https://file.garden/ZhTgSjrp5nAroRKq/chat-4-xxl.png" alt="Cbox" />
-            <span>Chat <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
+            <span>Chatzone <img src="https://file.garden/ZhTgSjrp5nAroRKq/6817_Discord_Verified.png" class="verified" /></span>
             <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm">
               <img src="https://file.garden/ZhTgSjrp5nAroRKq/clipart2465655%20(1).png" class="arrow" />
             </a>
@@ -337,41 +325,33 @@
       </div>
     </div>
   </div>
-
-
-  <!-- Modal container -->
+  <!-- Modal for image preview -->
   <div id="imageModal">
     <div id="imageModalContent">
       <img id="modalImage" src="" alt="Profile Preview" />
     </div>
   </div>
-
   <script>
-    // Get elements
     const profilePic = document.getElementById('profilePic');
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
 
-    // Disable right-click on profile picture
+    // Prevent right-click on profile picture
     profilePic.addEventListener('contextmenu', (e) => e.preventDefault());
-
-    // Also disable drag start to prevent saving as image
     profilePic.setAttribute('draggable', 'false');
 
-    // When clicking on profile picture, show modal with image
+    // Show modal with smaller image on click
     profilePic.addEventListener('click', () => {
-      // Get the background image URL of the profile pic
       const bgImage = window.getComputedStyle(profilePic).backgroundImage;
-      // Extract the URL inside url("")
       const urlMatch = bgImage.match(/url\(["']?(.+?)["']?\)/);
       if (urlMatch && urlMatch[1]) {
-        modalImage.src = urlMatch[1]; // Set modal image src
-        modal.style.display = 'flex'; // Show modal
+        modalImage.src = urlMatch[1];
+        modal.style.display = 'flex';
       }
     });
 
-    // When clicking anywhere in the modal, close it
-    modal.addEventListener('click', () => {
+    // Hide modal on click anywhere
+    window.addEventListener('click', () => {
       modal.style.display = 'none';
     });
   </script>
