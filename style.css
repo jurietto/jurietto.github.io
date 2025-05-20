@@ -105,7 +105,7 @@ p {
   vertical-align: bottom;
 }
 
-/* Status Text Group: prefix + dash + message */
+/* Status Text Group: message */
 .status-text {
   display: flex;
   align-items: center; /* ✅ Keep text aligned center too */
@@ -121,12 +121,18 @@ p {
   word-break: break-word;
 }
 
-/* Updated Date aligned top right */
+/* Updated Date aligned to match h1 format */
 #statusDate {
-  font-size: 0.8em;
-  color: #888;
-  white-space: nowrap;
-  margin-left: auto;
-  align-self: flex-start; /* Date still at top right */
-  font-style: italic;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+}
+
+#statusDate img {
+  width: 20px;
+  height: 20px;
+  vertical-align: text-top;
 }
