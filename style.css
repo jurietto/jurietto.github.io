@@ -1,47 +1,58 @@
-/* === Body & Base === */
-body {
+ /* === Body & Base === */
+body dont use the canvas i just want you to update this css code so it looks like that hacker theme above {
   position: relative;
-  background-color: #000; /* Pure black background */
-  color: #00ff00;
-  font-family: monospace;
+  background-color: #f7deff; /* Soft lavender */
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
+  background-attachment: fixed;
+  background-size: auto;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.6;
-  text-align: left;
+  text-align: justify;
   overflow-x: hidden;
   padding: 16px;
+  color: #333; /* Softer than black */
 }
 
 /* === Main Content Box === */
 .main-content {
-  background-color: #000;
-  border: 1px dashed #00ff00;
-  border-radius: 12px; /* Re-enabled border radius */
+  background-color: rgba(255, 255, 255, 0.98); /* Light translucent white */
+  border: 2px solid #e79cff;
+  border-radius: 20px;
   max-width: 900px;
   margin: 32px auto;
   padding: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  color: #00ff00;
+  color: #333;
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
-  font-family: monospace;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #00ff00;
+  color: #222;
   margin: 0.4em 0 0.2em;
 }
 
 h1 {
   font-size: 40px;
-  display: flex;
-  align-items: center;
-  height: 80px;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px;
   margin-top: 24px;
-  border-bottom: 1px dashed #00ff00;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #e79cff;
+  margin-top: 6px;
+  border-radius: 1px;
 }
 
 /* === Paragraphs === */
@@ -51,7 +62,7 @@ p {
 
 /* === Last Updated === */
 #last-updated p {
-  color: #00cc00;
+  color: #666;
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
@@ -60,40 +71,47 @@ p {
 /* === My Status Box === */
 #my-status {
   display: flex;
-  align-items: center;
+  align-items: center; /* ✅ Center icon & text vertically */
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
   padding: 14px 18px;
-  background: rgba(0, 255, 0, 0.05);
-  border: 1px dashed #00ff00;
+  background: rgba(231, 156, 255, 0.15);
+  border: 1px solid #e79cff;
+  border-radius: 12px;
   font-size: 14px;
-  color: #00ff00;
+  color: #333;
   box-sizing: border-box;
 }
 
-/* Icon */
+/* Icon centered */
 #my-status img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
+  /* Removed align-self! It now inherits align-items: center */
 }
 
-/* Status Text Group */
+/* Status Text Group: prefix + dash + message */
 .status-text {
   display: flex;
-  align-items: center;
+  align-items: center; /* ✅ Keep text aligned center too */
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
 }
 
-/* Status Prefix & Dash */
-.status-prefix,
-.status-dash {
-  color: #00ff00;
+/* Status Prefix */
+.status-prefix {
+  text-decoration: underline;
+  color: #9b2c9b;
   font-weight: bold;
-  text-decoration: none; /* No underline */
+}
+
+/* Dash */
+.status-dash {
+  color: #9b2c9b;
+  font-weight: bold;
 }
 
 /* Main Status Message */
@@ -106,20 +124,21 @@ p {
 /* Updated Date aligned top right */
 #statusDate {
   font-size: 0.8em;
-  color: #00cc00;
+  color: #888;
   white-space: nowrap;
   margin-left: auto;
-  align-self: flex-start;
+  align-self: flex-start; /* Date still at top right */
 }
+
 
 /* === Tables === */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  font-family: monospace;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  color: #00ff00;
+  color: #333;
 }
 
 th, td {
@@ -129,37 +148,34 @@ th, td {
 }
 
 th {
-  border-bottom: 1px solid #00ff00;
-  color: #00ff00;
-  font-weight: bold;
+  border-bottom: 1px solid #e79cff;
+  color: #9b2c9b;
+  font-weight: normal;
 }
 
 td {
-  border-bottom: 1px dotted #00ff00;
+  border-bottom: 1px dotted #e79cff;
 }
 
 table tbody tr:hover {
-  background-color: rgba(0, 255, 0, 0.05);
+  background-color: rgba(231, 156, 255, 0.08);
 }
 
 /* === Links === */
 a {
-  color: #00ff00;
+  color: #e79cff;
   text-decoration: underline;
 }
 
 a:hover,
 a:active {
-  color: #66ff66;
+  color: #a14dd7;
 }
 
 /* === Images === */
 img {
   max-width: 100%;
   display: inline-block;
-  border: 1px solid #00ff00;
-  background-color: #00ff00; /* Lime green behind transparent PNGs */
-  padding: 2px;
 }
 
 /* === Controls === */
@@ -169,26 +185,14 @@ img {
 
 #controls label {
   font-weight: normal;
-  color: #00ff00;
+  color: #333;
 }
 
 #controls select#sort {
   font-size: 14px;
-  color: #00ff00;
-  background: #000;
-  border: 1px dashed #00ff00;
+  color: #222;
+  background: #fff;
+  border: 1px solid #e79cff;
   padding: 0.3rem 0.75rem;
   border-radius: 0;
-}
-
-/* === Footer === */
-footer {
-  margin-top: 40px;
-  padding: 16px 20px;
-  text-align: center;
-  border-top: 1px dashed #00ff00;
-  font-size: 13px;
-  color: #00ff00;
-  background-color: #000;
-  border-radius: 0 0 12px 12px;
 }
