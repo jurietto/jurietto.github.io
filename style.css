@@ -1,7 +1,7 @@
 /* === Body & Base === */
 body {
   position: relative;
-  background-color: #f7deff; /* Soft lavender */
+  background-color: #f7deff;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
@@ -11,7 +11,7 @@ body {
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
-  color: #333; /* Softer than black */
+  color: #333;
 }
 
 /* === Main Content Box === */
@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   color: #222;
   margin: 0.4em 0 0.2em;
-  vertical-align: baseline; /* Align to baseline */
+  vertical-align: baseline;
   display: inline-block;
 }
 
@@ -60,7 +60,10 @@ h2::after {
 /* === Paragraphs === */
 p {
   margin: 0.8em 0;
-  vertical-align: baseline; /* Text on baseline */
+  vertical-align: baseline;
+  display: flex;
+  align-items: center; /* Align icons and text inline */
+  gap: 6px;
 }
 
 /* === Last Updated === */
@@ -70,12 +73,15 @@ p {
   margin-top: -8px;
   margin-bottom: 16px;
   vertical-align: baseline;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* === My Status Box === */
 #my-status {
   display: flex;
-  align-items: baseline; /* baseline alignment */
+  align-items: center;
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
@@ -93,13 +99,13 @@ p {
   height: 20px;
   flex-shrink: 0;
   display: inline-block;
-  vertical-align: baseline; /* Align with text */
+  vertical-align: middle;
   margin-right: 6px;
 }
 
 .status-text {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
@@ -173,9 +179,9 @@ a:active {
 
 /* === Images === */
 img {
-  max-width: none; /* Allow overflow */
+  max-width: none;
   display: inline-block;
-  vertical-align: baseline; /* Align with text baseline */
+  vertical-align: middle;
 }
 
 /* === Controls === */
@@ -195,5 +201,5 @@ img {
   border: 1px solid #e79cff;
   padding: 0.3rem 0.75rem;
   border-radius: 0;
-  vertical-align: baseline;
+  vertical-align: middle;
 }
