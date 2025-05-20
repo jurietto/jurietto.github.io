@@ -43,9 +43,8 @@ h1 {
 }
 
 h1 img.icon-header {
-  width: 24px;
-  height: 24px;
   vertical-align: middle;
+  /* Keep natural size */
 }
 
 h2 {
