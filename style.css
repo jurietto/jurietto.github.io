@@ -16,7 +16,7 @@ body {
 
 /* === Main Content Box === */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.98); /* Light translucent white */
+  background-color: rgba(255, 255, 255, 0.98);
   border: 2px solid #e79cff;
   border-radius: 20px;
   max-width: 900px;
@@ -33,19 +33,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   color: #222;
   margin: 0.4em 0 0.2em;
+  vertical-align: baseline; /* Align to baseline */
+  display: inline-block;
 }
 
 h1 {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
   font-size: 40px;
-}
-
-h1 img {
-  vertical-align: text-top;
-  margin-bottom: 2px;
-  height: auto;
 }
 
 h2 {
@@ -67,6 +60,7 @@ h2::after {
 /* === Paragraphs === */
 p {
   margin: 0.8em 0;
+  vertical-align: baseline; /* Text on baseline */
 }
 
 /* === Last Updated === */
@@ -75,12 +69,13 @@ p {
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
+  vertical-align: baseline;
 }
 
 /* === My Status Box === */
 #my-status {
   display: flex;
-  align-items: center; /* ✅ Center icon & text vertically */
+  align-items: baseline; /* baseline alignment */
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
@@ -93,46 +88,112 @@ p {
   box-sizing: border-box;
 }
 
-#my-status:hover {
-  background: rgba(231, 156, 255, 0.22);
-  transition: background 0.3s ease;
-}
-
 #my-status img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  vertical-align: bottom;
+  display: inline-block;
+  vertical-align: baseline; /* Align with text */
+  margin-right: 6px;
 }
 
-/* Status Text Group: message */
 .status-text {
   display: flex;
-  align-items: center; /* ✅ Keep text aligned center too */
+  align-items: baseline;
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
 }
 
-/* Main Status Message */
+.status-prefix {
+  text-decoration: underline;
+  color: #9b2c9b;
+  font-weight: bold;
+}
+
+.status-dash {
+  color: #9b2c9b;
+  font-weight: bold;
+}
+
 #myStatus {
   font-weight: bold;
   flex: 1 1 auto;
   word-break: break-word;
 }
 
-/* Updated Date aligned to match h1 format */
 #statusDate {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #222;
+  font-size: 0.8em;
+  color: #888;
+  white-space: nowrap;
+  margin-left: auto;
+  align-self: flex-start;
 }
 
-#statusDate img {
-  width: 20px;
-  height: 20px;
-  vertical-align: text-top;
+/* === Tables === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+th, td {
+  padding: 6px 8px;
+  vertical-align: baseline;
+  text-align: left;
+}
+
+th {
+  border-bottom: 1px solid #e79cff;
+  color: #9b2c9b;
+  font-weight: normal;
+}
+
+td {
+  border-bottom: 1px dotted #e79cff;
+}
+
+table tbody tr:hover {
+  background-color: rgba(231, 156, 255, 0.08);
+}
+
+/* === Links === */
+a {
+  color: #e79cff;
+  text-decoration: underline;
+}
+
+a:hover,
+a:active {
+  color: #a14dd7;
+}
+
+/* === Images === */
+img {
+  max-width: none; /* Allow overflow */
+  display: inline-block;
+  vertical-align: baseline; /* Align with text baseline */
+}
+
+/* === Controls === */
+#controls {
+  margin-bottom: 1.5rem;
+}
+
+#controls label {
+  font-weight: normal;
+  color: #333;
+}
+
+#controls select#sort {
+  font-size: 14px;
+  color: #222;
+  background: #fff;
+  border: 1px solid #e79cff;
+  padding: 0.3rem 0.75rem;
+  border-radius: 0;
+  vertical-align: baseline;
 }
