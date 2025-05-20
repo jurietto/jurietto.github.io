@@ -6,40 +6,40 @@ body {
   background-attachment: fixed;
   background-size: auto;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.8;
+  font-size: 14px;
+  line-height: 1.6;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
-  color: #3b003b;
+  color: #333;
 }
 
 /* === Main Content Box === */
 .main-content {
   background-color: rgba(255, 255, 255, 0.98);
-  border: 2px solid #d48ad6;
+  border: 2px solid #e79cff;
   border-radius: 20px;
   max-width: 900px;
-  margin: 32px auto;
-  padding: 32px;
+  margin: 24px auto;
+  padding: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  color: #3b003b;
+  color: #333;
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #3b003b;
-  margin: 0.6em 0 0.3em;
+  color: #222;
+  margin: 0.4em 0 0.2em;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 36px;
 }
 
 h1 img.icon-header {
@@ -48,66 +48,66 @@ h1 img.icon-header {
 }
 
 h2 {
-  font-size: 28px;
-  margin-top: 24px;
+  font-size: 24px;
+  margin-top: 20px;
   position: relative;
 }
 
 h2::after {
   content: "";
   display: block;
-  width: 60px;
+  width: 40px;
   height: 2px;
-  background: linear-gradient(to right, #e79cff, transparent);
-  margin-top: 8px;
+  background: #e79cff;
+  margin-top: 6px;
   border-radius: 1px;
 }
 
 /* === Paragraphs === */
 p {
-  margin: 1em 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* === Last Updated === */
-#last-updated p {
-  color: #7a407a;
-  font-size: 0.9em;
-  margin-top: -8px;
-  margin-bottom: 16px;
+  margin: 0.8em 0;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
+/* === Last Updated === */
+#last-updated p {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: -8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 #last-updated img.icon-date {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   vertical-align: middle;
-  margin-right: 4px;
+  margin-right: 2px;
 }
 
 /* === My Status Box === */
 #my-status {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
-  padding: 18px 22px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
   background: rgba(231, 156, 255, 0.15);
-  border: 1px solid #d48ad6;
+  border: 1px solid #e79cff;
   border-radius: 12px;
   font-size: 14px;
-  color: #3b003b;
+  color: #333;
   box-sizing: border-box;
 }
 
 #my-status img {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   display: inline-block;
   vertical-align: middle;
@@ -118,7 +118,7 @@ p {
 .status-text {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex: 1 1 auto;
   min-width: 0;
 }
@@ -142,33 +142,33 @@ p {
 
 #statusDate {
   font-size: 0.8em;
-  color: #6a2b6a;
+  color: #888;
   white-space: nowrap;
   margin-left: auto;
   align-self: center;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 /* === Tables === */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 16px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  color: #3b003b;
+  color: #333;
 }
 
 th, td {
-  padding: 6px 8px;
-  vertical-align: baseline;
+  padding: 4px 6px;
+  vertical-align: middle;
   text-align: left;
 }
 
 th {
-  border-bottom: 1px solid #d48ad6;
+  border-bottom: 1px solid #e79cff;
   color: #9b2c9b;
   font-weight: normal;
 }
@@ -183,7 +183,7 @@ table tbody tr:hover {
 
 /* === Links === */
 a {
-  color: #d48ad6;
+  color: #e79cff;
   text-decoration: underline;
 }
 
@@ -194,35 +194,35 @@ a:active {
 
 /* === Images === */
 img {
-  max-width: none;
+  max-width: 100%;
   display: inline-block;
   vertical-align: middle;
   margin: 0;
 }
 
 img.icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
   vertical-align: middle;
 }
 
 /* === Controls === */
 #controls {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 #controls label {
   font-weight: normal;
-  color: #3b003b;
+  color: #333;
 }
 
 #controls select#sort {
   font-size: 14px;
-  color: #3b003b;
+  color: #222;
   background: #fff;
-  border: 1px solid #d48ad6;
-  padding: 0.3rem 0.75rem;
+  border: 1px solid #e79cff;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
   vertical-align: middle;
 }
@@ -230,12 +230,12 @@ img.icon {
 /* === Responsive Tweaks === */
 @media (max-width: 600px) {
   .main-content {
-    padding: 20px;
+    padding: 16px;
   }
   h1 {
     font-size: 28px;
   }
   h2 {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
