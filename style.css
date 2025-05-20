@@ -1,5 +1,5 @@
- /* === Body & Base === */
-body dont use the canvas i just want you to update this css code so it looks like that hacker theme above {
+/* === Body & Base === */
+body {
   position: relative;
   background-color: #f7deff; /* Soft lavender */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
