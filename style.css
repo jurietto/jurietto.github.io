@@ -5,9 +5,9 @@ body {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
@@ -17,7 +17,7 @@ body {
 /* === Main Content Box === */
 .main-content {
   background-color: rgba(255, 255, 255, 0.98);
-  border: 2px solid #e79cff;
+  border: 2px solid #c158d6;
   border-radius: 20px;
   max-width: 900px;
   margin: 32px auto;
@@ -29,12 +29,11 @@ body {
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   font-weight: bold;
   color: #222;
-  margin: 0.4em 0 0.2em;
-  vertical-align: baseline;
-  display: inline-block;
+  margin: 0.6em 0 0.3em;
+  display: block;
 }
 
 h1 {
@@ -50,20 +49,19 @@ h2 {
 h2::after {
   content: "";
   display: block;
-  width: 40px;
+  width: 60px;
   height: 2px;
-  background: #e79cff;
-  margin-top: 6px;
+  background: linear-gradient(to right, #e79cff, transparent);
+  margin-top: 8px;
   border-radius: 1px;
 }
 
 /* === Paragraphs === */
 p {
-  margin: 0.8em 0;
-  vertical-align: baseline;
+  margin: 1em 0;
   display: flex;
-  align-items: center; /* Align icons and text inline */
-  gap: 6px;
+  align-items: center;
+  gap: 8px;
 }
 
 /* === Last Updated === */
@@ -72,7 +70,6 @@ p {
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
-  vertical-align: baseline;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -82,12 +79,12 @@ p {
 #my-status {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
-  padding: 14px 18px;
+  margin-bottom: 24px;
+  padding: 18px 22px;
   background: rgba(231, 156, 255, 0.15);
-  border: 1px solid #e79cff;
+  border: 1px solid #c158d6;
   border-radius: 12px;
   font-size: 14px;
   color: #333;
@@ -100,7 +97,8 @@ p {
   flex-shrink: 0;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 6px;
+  align-self: center;
+  margin: 0;
 }
 
 .status-text {
@@ -141,7 +139,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #333;
 }
@@ -153,7 +151,7 @@ th, td {
 }
 
 th {
-  border-bottom: 1px solid #e79cff;
+  border-bottom: 1px solid #c158d6;
   color: #9b2c9b;
   font-weight: normal;
 }
@@ -168,7 +166,7 @@ table tbody tr:hover {
 
 /* === Links === */
 a {
-  color: #e79cff;
+  color: #c158d6;
   text-decoration: underline;
 }
 
@@ -181,6 +179,14 @@ a:active {
 img {
   max-width: none;
   display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+img.icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
   vertical-align: middle;
 }
 
@@ -198,9 +204,21 @@ img {
   font-size: 14px;
   color: #222;
   background: #fff;
-  border: 1px solid #e79cff;
+  border: 1px solid #c158d6;
   padding: 0.3rem 0.75rem;
-  border-radius: 0;
+  border-radius: 4px;
   vertical-align: middle;
 }
- 
+
+/* === Responsive Tweaks === */
+@media (max-width: 600px) {
+  .main-content {
+    padding: 20px;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+}
