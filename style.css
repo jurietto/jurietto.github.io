@@ -103,7 +103,6 @@ p {
 
 /* Status Prefix */
 .status-prefix {
-  text-decoration: underline;
   color: #9b2c9b;
   font-weight: bold;
 }
