@@ -1,58 +1,52 @@
 /* === Body & Base === */
 body {
   position: relative;
-  background-color: #f7deff; /* Soft lavender */
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
-  background-attachment: fixed;
-  background-size: auto;
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000;
+  color: #00ff00;
+  font-family: monospace;
   font-size: 14px;
   line-height: 1.6;
-  text-align: justify;
+  text-align: left;
   overflow-x: hidden;
   padding: 16px;
-  color: #333; /* Softer than black */
+
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.05),
+    rgba(0, 255, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  background-attachment: fixed;
 }
 
 /* === Main Content Box === */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.98); /* Light translucent white */
-  border: 2px solid #e79cff;
-  border-radius: 20px;
+  background-color: transparent;
+  border: 1px dashed #00ff00;
   max-width: 900px;
   margin: 32px auto;
   padding: 32px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  color: #333;
+  color: #00ff00;
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: monospace;
   font-weight: bold;
-  color: #222;
+  color: #00ff00;
   margin: 0.4em 0 0.2em;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 32px;
 }
 
 h2 {
-  font-size: 28px;
+  font-size: 24px;
   margin-top: 24px;
-  position: relative;
-}
-
-h2::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 2px;
-  background: #e79cff;
-  margin-top: 6px;
-  border-radius: 1px;
+  border-bottom: 1px dashed #00ff00;
 }
 
 /* === Paragraphs === */
@@ -62,7 +56,7 @@ p {
 
 /* === Last Updated === */
 #last-updated p {
-  color: #666;
+  color: #00cc00;
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
@@ -71,16 +65,15 @@ p {
 /* === My Status Box === */
 #my-status {
   display: flex;
-  align-items: center; /* ✅ Center icon & text vertically */
+  align-items: center;
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
   padding: 14px 18px;
-  background: rgba(231, 156, 255, 0.15);
-  border: 1px solid #e79cff;
-  border-radius: 12px;
+  background: rgba(0, 255, 0, 0.05);
+  border: 1px dashed #00ff00;
   font-size: 14px;
-  color: #333;
+  color: #00ff00;
   box-sizing: border-box;
 }
 
@@ -89,13 +82,12 @@ p {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  /* Removed align-self! It now inherits align-items: center */
 }
 
 /* Status Text Group: prefix + dash + message */
 .status-text {
   display: flex;
-  align-items: center; /* ✅ Keep text aligned center too */
+  align-items: center;
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
@@ -104,13 +96,14 @@ p {
 /* Status Prefix */
 .status-prefix {
   text-decoration: underline;
-  color: #9b2c9b;
+  color: #00ff00;
   font-weight: bold;
 }
 
 /* Dash */
 .status-dash {
-  color: #9b2c9b;
+  text-decoration: underline;
+  color: #00ff00;
   font-weight: bold;
 }
 
@@ -124,21 +117,20 @@ p {
 /* Updated Date aligned top right */
 #statusDate {
   font-size: 0.8em;
-  color: #888;
+  color: #00cc00;
   white-space: nowrap;
   margin-left: auto;
-  align-self: flex-start; /* Date still at top right */
+  align-self: flex-start;
 }
-
 
 /* === Tables === */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: monospace;
   font-size: 14px;
-  color: #333;
+  color: #00ff00;
 }
 
 th, td {
@@ -148,34 +140,35 @@ th, td {
 }
 
 th {
-  border-bottom: 1px solid #e79cff;
-  color: #9b2c9b;
-  font-weight: normal;
+  border-bottom: 1px solid #00ff00;
+  color: #00ff00;
+  font-weight: bold;
 }
 
 td {
-  border-bottom: 1px dotted #e79cff;
+  border-bottom: 1px dotted #00ff00;
 }
 
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.08);
+  background-color: rgba(0, 255, 0, 0.05);
 }
 
 /* === Links === */
 a {
-  color: #e79cff;
+  color: #00ff00;
   text-decoration: underline;
 }
 
 a:hover,
 a:active {
-  color: #a14dd7;
+  color: #66ff66;
 }
 
 /* === Images === */
 img {
   max-width: 100%;
   display: inline-block;
+  border: 1px solid #00ff00;
 }
 
 /* === Controls === */
@@ -185,14 +178,14 @@ img {
 
 #controls label {
   font-weight: normal;
-  color: #333;
+  color: #00ff00;
 }
 
 #controls select#sort {
   font-size: 14px;
-  color: #222;
-  background: #fff;
-  border: 1px solid #e79cff;
+  color: #00ff00;
+  background: #000;
+  border: 1px dashed #00ff00;
   padding: 0.3rem 0.75rem;
   border-radius: 0;
 }
