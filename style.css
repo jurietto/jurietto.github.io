@@ -1,7 +1,7 @@
 /* === Body & Base === */
 body {
   position: relative;
-  background-color: #000;
+  background-color: #000; /* Pure black background */
   color: #00ff00;
   font-family: monospace;
   font-size: 14px;
@@ -15,7 +15,7 @@ body {
 .main-content {
   background-color: #000;
   border: 1px dashed #00ff00;
-  border-radius: 10px;
+  border-radius: 12px; /* Re-enabled border radius */
   max-width: 900px;
   margin: 32px auto;
   padding: 32px;
@@ -72,7 +72,7 @@ p {
   box-sizing: border-box;
 }
 
-/* Icon centered */
+/* Icon */
 #my-status img {
   width: 20px;
   height: 20px;
@@ -93,7 +93,7 @@ p {
 .status-dash {
   color: #00ff00;
   font-weight: bold;
-  text-decoration: none;
+  text-decoration: none; /* No underline */
 }
 
 /* Main Status Message */
@@ -158,7 +158,7 @@ img {
   max-width: 100%;
   display: inline-block;
   border: 1px solid #00ff00;
-  background-color: #00ff00; /* Lime green background */
+  background-color: #00ff00; /* Lime green behind transparent PNGs */
   padding: 2px;
 }
 
@@ -184,9 +184,11 @@ img {
 /* === Footer === */
 footer {
   margin-top: 40px;
-  padding: 20px;
+  padding: 16px 20px;
   text-align: center;
   border-top: 1px dashed #00ff00;
-  font-size: 12px;
+  font-size: 13px;
   color: #00ff00;
+  background-color: #000;
+  border-radius: 0 0 12px 12px;
 }
