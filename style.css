@@ -36,7 +36,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   font-size: 40px;
+}
+
+h1 img {
+  vertical-align: text-top;
+  margin-bottom: 2px;
+  height: auto;
 }
 
 h2 {
@@ -84,12 +93,16 @@ p {
   box-sizing: border-box;
 }
 
-/* Icon centered */
+#my-status:hover {
+  background: rgba(231, 156, 255, 0.22);
+  transition: background 0.3s ease;
+}
+
 #my-status img {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  /* Removed align-self! It now inherits align-items: center */
+  vertical-align: bottom;
 }
 
 /* Status Text Group: prefix + dash + message */
@@ -99,18 +112,6 @@ p {
   gap: 6px;
   flex: 1 1 auto;
   min-width: 0;
-}
-
-/* Status Prefix */
-.status-prefix {
-  color: #9b2c9b;
-  font-weight: bold;
-}
-
-/* Dash */
-.status-dash {
-  color: #9b2c9b;
-  font-weight: bold;
 }
 
 /* Main Status Message */
@@ -127,71 +128,5 @@ p {
   white-space: nowrap;
   margin-left: auto;
   align-self: flex-start; /* Date still at top right */
-}
-
-
-/* === Tables === */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  color: #333;
-}
-
-th, td {
-  padding: 6px 8px;
-  vertical-align: middle;
-  text-align: left;
-}
-
-th {
-  border-bottom: 1px solid #e79cff;
-  color: #9b2c9b;
-  font-weight: normal;
-}
-
-td {
-  border-bottom: 1px dotted #e79cff;
-}
-
-table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.08);
-}
-
-/* === Links === */
-a {
-  color: #e79cff;
-  text-decoration: underline;
-}
-
-a:hover,
-a:active {
-  color: #a14dd7;
-}
-
-/* === Images === */
-img {
-  max-width: 100%;
-  display: inline-block;
-}
-
-/* === Controls === */
-#controls {
-  margin-bottom: 1.5rem;
-}
-
-#controls label {
-  font-weight: normal;
-  color: #333;
-}
-
-#controls select#sort {
-  font-size: 14px;
-  color: #222;
-  background: #fff;
-  border: 1px solid #e79cff;
-  padding: 0.3rem 0.75rem;
-  border-radius: 0;
+  font-style: italic;
 }
