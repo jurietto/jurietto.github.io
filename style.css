@@ -5,39 +5,47 @@ body {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.8;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
-  color: #333;
+  color: #3b003b;
 }
 
 /* === Main Content Box === */
 .main-content {
   background-color: rgba(255, 255, 255, 0.98);
-  border: 2px solid #c158d6;
+  border: 2px solid #d48ad6;
   border-radius: 20px;
   max-width: 900px;
   margin: 32px auto;
   padding: 32px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  color: #333;
+  color: #3b003b;
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #222;
+  color: #3b003b;
   margin: 0.6em 0 0.3em;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 h1 {
   font-size: 40px;
+}
+
+h1 img.icon-header {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
 h2 {
@@ -66,13 +74,20 @@ p {
 
 /* === Last Updated === */
 #last-updated p {
-  color: #666;
+  color: #7a407a;
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+#last-updated img.icon-date {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 4px;
 }
 
 /* === My Status Box === */
@@ -84,10 +99,10 @@ p {
   margin-bottom: 24px;
   padding: 18px 22px;
   background: rgba(231, 156, 255, 0.15);
-  border: 1px solid #c158d6;
+  border: 1px solid #d48ad6;
   border-radius: 12px;
   font-size: 14px;
-  color: #333;
+  color: #3b003b;
   box-sizing: border-box;
 }
 
@@ -128,10 +143,13 @@ p {
 
 #statusDate {
   font-size: 0.8em;
-  color: #888;
+  color: #6a2b6a;
   white-space: nowrap;
   margin-left: auto;
-  align-self: flex-start;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 /* === Tables === */
@@ -139,9 +157,9 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
-  color: #333;
+  color: #3b003b;
 }
 
 th, td {
@@ -151,7 +169,7 @@ th, td {
 }
 
 th {
-  border-bottom: 1px solid #c158d6;
+  border-bottom: 1px solid #d48ad6;
   color: #9b2c9b;
   font-weight: normal;
 }
@@ -166,7 +184,7 @@ table tbody tr:hover {
 
 /* === Links === */
 a {
-  color: #c158d6;
+  color: #d48ad6;
   text-decoration: underline;
 }
 
@@ -197,14 +215,14 @@ img.icon {
 
 #controls label {
   font-weight: normal;
-  color: #333;
+  color: #3b003b;
 }
 
 #controls select#sort {
   font-size: 14px;
-  color: #222;
+  color: #3b003b;
   background: #fff;
-  border: 1px solid #c158d6;
+  border: 1px solid #d48ad6;
   padding: 0.3rem 0.75rem;
   border-radius: 4px;
   vertical-align: middle;
