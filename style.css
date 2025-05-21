@@ -44,7 +44,9 @@ h1 {
 
 h1 img.icon-header {
   vertical-align: middle;
-  /* Keep natural size */
+  display: inline-block;
+  margin-left: 4px;
+  max-height: 36px;
 }
 
 h2 {
@@ -83,10 +85,11 @@ p {
 }
 
 #last-updated img.icon-date {
-  width: 18px;
+  width: auto;
   height: 18px;
   vertical-align: middle;
   margin-right: 2px;
+  display: inline-block;
 }
 
 /* === My Status Box === */
@@ -106,7 +109,7 @@ p {
 }
 
 #my-status img {
-  width: 18px;
+  width: auto;
   height: 18px;
   flex-shrink: 0;
   display: inline-block;
@@ -201,10 +204,11 @@ img {
 }
 
 img.icon {
-  width: 18px;
   height: 18px;
+  width: auto;
   margin-right: 6px;
   vertical-align: middle;
+  display: inline-block;
 }
 
 /* === Controls === */
@@ -227,15 +231,20 @@ img.icon {
   vertical-align: middle;
 }
 
-/* === Responsive Tweaks === */
-@media (max-width: 600px) {
-  .main-content {
-    padding: 16px;
-  }
-  h1 {
-    font-size: 28px;
-  }
-  h2 {
-    font-size: 20px;
-  }
+/* === Footer Styles === */
+#footer {
+  font-size: 14px;
+  margin-top: 24px;
+  color: #555;
+  text-align: center;
+}
+
+#footer .footer-links a {
+  color: #e79cff;
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+#footer .footer-links a:hover {
+  color: #a14dd7;
 }
