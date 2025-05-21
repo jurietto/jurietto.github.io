@@ -6,15 +6,11 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* === Commit List Icons === */
-    #commit-list li::before {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 0;
-      width: 18px;
-      height: 18px;
-      background: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif') no-repeat center/cover;
+    /* === Dotted Commit Divider === */
+    #commit-list hr {
+      border: 0;
+      border-bottom: 1px dotted #e79cff;
+      margin: 12px 0;
     }
   </style>
 </head>
@@ -22,12 +18,7 @@
   <div class="main-content">
     <h1>
       Site Log
-      <img
-        src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif"
-        alt=""
-        aria-hidden="true"
-        style="vertical-align: middle; margin-left: 6px;"
-      />
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" class="icon-header" />
     </h1>
 
     <div id="last-updated">
@@ -39,12 +30,8 @@
     </p>
 
     <p>
-      <a href="https://jurietto.github.io/updates/updates.html">
-        <img
-          src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif"
-          alt="Back icon"
-          style="vertical-align: middle; margin-right: 6px;"
-        />
+      <a href="/updates/updates.html">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
         [parent directory]
       </a>
     </p>
@@ -59,9 +46,12 @@
       </select>
     </div>
 
-    <section id="commit-list">
+    <!-- Commit log -->
+    <div id="commit-list">
       <p>Loading commit history...</p>
-    </section>
+    </div>
+
+    <div id="footer"></div>
 
     <script>
       async function loadCommits() {
@@ -71,7 +61,7 @@
           const container = document.getElementById('commit-list');
           const sortSelect = document.getElementById('sort');
 
-          // Populate months dynamically
+          // Populate months in the dropdown
           const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
           months.forEach(month => {
             const option = document.createElement('option');
@@ -82,36 +72,48 @@
 
           function renderCommits(order) {
             container.innerHTML = '';
-            let filteredCommits = commits;
+            let filtered = [...commits];
 
             if (order === 'old') {
-              filteredCommits = [...commits].reverse();
+              filtered.reverse();
             } else if (order !== 'new') {
-              filteredCommits = commits.filter(c => c.date.startsWith(order));
+              filtered = filtered.filter(c => c.date.startsWith(order));
             }
 
-            if (filteredCommits.length === 0) {
+            if (filtered.length === 0) {
               container.innerHTML = '<p>No commits found for this period.</p>';
               return;
             }
 
-            filteredCommits.forEach(commit => {
-              const date = new Date(commit.date).toLocaleString();
+            filtered.forEach(commit => {
+              const date = new Date(commit.date).toLocaleString(undefined, {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+              });
+
               const entry = document.createElement('div');
               entry.className = 'post';
               entry.innerHTML = `
                 <p class="commit-header">
-                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" style="vertical-align: middle; margin-right: 6px;">
+                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" class="icon" />
                   <strong>${commit.author}</strong> – <strong>${date}</strong>
                 </p>
                 <p class="commit-message">${commit.message}</p>
+                <hr />
               `;
               container.appendChild(entry);
             });
           }
 
-          sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
+          sortSelect.addEventListener('change', e => renderCommits(e.target.value));
           renderCommits('new');
+
+          // Set last updated
+          const latestDate = new Date(commits[0].date);
+          document.querySelector('#last-updated p').innerHTML = `
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" class="icon-date" alt="Charmmy Icon" />
+            Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}
+          `;
         } catch (err) {
           document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
           console.error(err);
@@ -119,17 +121,16 @@
       }
 
       loadCommits();
-    </script>
 
-    <div id="footer"></div>
-    <script>
+      // Load footer
       fetch('../footer.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('footer').innerHTML = html;
         });
     </script>
+
+    <script src="../script.js"></script>
   </div>
-  <script src="../script.js"></script>
 </body>
 </html>
