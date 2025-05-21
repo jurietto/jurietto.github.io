@@ -237,12 +237,10 @@ img.icon {
   margin-top: 24px;
   color: #555;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 16px 0;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 
 #footer .footer-links a {
   color: #e79cff;
