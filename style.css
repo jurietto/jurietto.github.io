@@ -235,3 +235,11 @@ img.icon {
 #footer .footer-links a:hover {
   color: #a14dd7;
 }
+
+/* === Status Log Divider === */
+#status-list hr {
+  border: 0;
+  border-bottom: 1px dotted #e79cff;
+  margin: 12px 0;
+}
+
