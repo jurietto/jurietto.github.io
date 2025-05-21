@@ -5,6 +5,14 @@
   <title>Status Log</title>
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* === Dotted divider like table border === */
+    #status-list hr {
+      border: 0;
+      border-bottom: 1px dotted #e79cff;
+      margin: 12px 0;
+    }
+  </style>
 </head>
 <body>
   <div class="main-content">
@@ -15,7 +23,6 @@
 
     <div id="last-updated">
       <p>
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
         Juri: Loading...
       </p>
     </div>
@@ -61,10 +68,10 @@
             list.appendChild(item);
           });
 
-          // Set "Juri" field to latest entry time
+          // Update label to "Juri" + time
           const latest = data[data.length - 1];
           if (latest) {
-            document.querySelector('#last-updated p').innerHTML = ` 
+            document.querySelector('#last-updated p').innerHTML = `
               <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
               Juri: ${latest.time}
             `;
