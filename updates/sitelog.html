@@ -22,16 +22,14 @@
   <div class="main-content">
     <h1>
       Site Log
-      <img
-        src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif"
-        alt=""
-        aria-hidden="true"
-        style="vertical-align: middle; margin-left: 6px;"
-      />
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" aria-hidden="true" class="icon-header" />
     </h1>
 
     <div id="last-updated">
-      <p>Last Updated: Loading...</p>
+      <p>
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
+        Last Updated: Loading...
+      </p>
     </div>
 
     <p class="page-text">
@@ -40,11 +38,7 @@
 
     <p>
       <a href="https://jurietto.github.io/updates/updates.html">
-        <img
-          src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif"
-          alt="Back icon"
-          style="vertical-align: middle; margin-right: 6px;"
-        />
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
         [parent directory]
       </a>
     </p>
@@ -63,6 +57,8 @@
       <p>Loading commit history...</p>
     </section>
 
+    <div id="footer"></div>
+
     <script>
       async function loadCommits() {
         try {
@@ -71,7 +67,6 @@
           const container = document.getElementById('commit-list');
           const sortSelect = document.getElementById('sort');
 
-          // Populate months dynamically
           const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
           months.forEach(month => {
             const option = document.createElement('option');
@@ -101,7 +96,7 @@
               entry.className = 'post';
               entry.innerHTML = `
                 <p class="commit-header">
-                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" style="vertical-align: middle; margin-right: 6px;">
+                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" class="icon" />
                   <strong>${commit.author}</strong> – <strong>${date}</strong>
                 </p>
                 <p class="commit-message">${commit.message}</p>
@@ -110,7 +105,7 @@
             });
           }
 
-          sortSelect.addEventListener('change', (e) => renderCommits(e.target.value));
+          sortSelect.addEventListener('change', e => renderCommits(e.target.value));
           renderCommits('new');
         } catch (err) {
           document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
@@ -119,17 +114,15 @@
       }
 
       loadCommits();
-    </script>
 
-    <div id="footer"></div>
-    <script>
       fetch('../footer.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('footer').innerHTML = html;
         });
     </script>
+
+    <script src="../script.js"></script>
   </div>
-  <script src="../script.js"></script>
 </body>
 </html>
