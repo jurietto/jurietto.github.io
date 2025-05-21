@@ -35,13 +35,14 @@
       </p>
     </div>
 
-    <div id="my-status">
+    <!-- Dynamic Status Box -->
+    <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
       <div class="status-text">
-        <span id="myStatus">just got up ~ had some coffee (・ω・) gonna tidy the site a bit, maybe work on the menhera section uwu</span>
+        <span id="myStatus">Loading status...</span>
       </div>
       <div id="statusDate">
         <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" />
-        <span>(Updated: 5/17 8:55 AM)</span>
+        <span id="statusTimestamp">(Loading...)</span>
       </div>
     </div>
 
@@ -112,14 +113,25 @@
     <!-- Footer -->
     <div id="footer"></div>
     <script>
+      // Load footer
       fetch('footer.html')
         .then(response => response.text())
         .then(data => {
           document.getElementById('footer').innerHTML = data;
         });
-    </script>
-  </div>
 
-  <script src="script.js"></script>
+      // Load latest status
+      fetch('updates/statuslog.json')
+        .then(response => response.json())
+        .then(data => {
+          const latest = data[data.length - 1]; // Last entry is the most recent
+          if (latest) {
+            document.getElementById('myStatus').textContent = latest.text;
+            document.getElementById('statusTimestamp').textContent = `(Updated: ${latest.time})`;
+          }
+        });
+    </script>
+    <script src="script.js"></script>
+  </div>
 </body>
 </html>
