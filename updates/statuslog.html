@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* === Dotted divider like table border === */
     #status-list hr {
       border: 0;
       border-bottom: 1px dotted #e79cff;
@@ -23,6 +22,7 @@
 
     <div id="last-updated">
       <p>
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
         Juri: Loading...
       </p>
     </div>
@@ -40,6 +40,15 @@
       </a>
     </p>
 
+    <!-- Controls block -->
+    <div id="controls">
+      <label for="sort">Sort by:</label>
+      <select id="sort">
+        <option value="new">Newest</option>
+        <option value="old">Oldest</option>
+      </select>
+    </div>
+
     <div id="status-list">
       <p>Loading status updates...</p>
     </div>
@@ -53,11 +62,12 @@
           const list = document.getElementById('status-list');
           list.innerHTML = '';
 
-          // Show newest first
-          data.slice().reverse().forEach(entry => {
-            const item = document.createElement('div');
-            item.className = 'post';
-            item.innerHTML = `
+          // Convert entries to DOM elements
+          const entries = data.map(entry => {
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.dataset.time = entry.time;
+            div.innerHTML = `
               <p class="commit-header">
                 <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" class="icon" />
                 <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
@@ -65,14 +75,29 @@
               <p class="commit-message">${entry.text}</p>
               <hr />
             `;
-            list.appendChild(item);
+            return div;
           });
 
-          // Update label to "Juri" + time
+          const sortSelect = document.getElementById('sort');
+
+          function render(order) {
+            list.innerHTML = '';
+            const sorted = [...entries].sort((a, b) => {
+              const dateA = new Date(a.dataset.time);
+              const dateB = new Date(b.dataset.time);
+              return order === 'old' ? dateA - dateB : dateB - dateA;
+            });
+            sorted.forEach(e => list.appendChild(e));
+          }
+
+          render('new');
+          sortSelect.addEventListener('change', () => render(sortSelect.value));
+
+          // Update "Last Updated"
           const latest = data[data.length - 1];
           if (latest) {
             document.querySelector('#last-updated p').innerHTML = `
-              <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/51c0471f.gif" alt="Card Icon" class="icon" />
               Juri: ${latest.time}
             `;
           }
