@@ -24,14 +24,11 @@ async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../
   }
 }
 
-// Helper: Update the inner HTML of <p> inside the given selector
+// Helper: Update the inner text of <p> inside the given selector (no icon)
 function updateLastUpdated(selector, text) {
   const el = document.querySelector(`${selector} p`);
   if (el) {
-    el.innerHTML = `
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="Card Icon" class="icon" />
-      Last Updated: ${text}
-    `;
+    el.textContent = `Last Updated: ${text}`;
   }
 }
 
