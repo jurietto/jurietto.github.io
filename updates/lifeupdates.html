@@ -42,7 +42,7 @@
       </select>
     </div>
 
-    <!-- Injected posts from lu.html -->
+    <!-- Injected posts from lu -->
     <div id="lu-posts">
       <p>Loading life updates...</p>
     </div>
@@ -52,25 +52,38 @@
 
     <script>
       // Load LU HTML content
-      fetch('../lu.html')
+      fetch('../updates/lu')
         .then(res => res.text())
         .then(html => {
-          document.getElementById('lu-posts').innerHTML = html;
+          const postsContainer = document.getElementById('lu-posts');
+          postsContainer.innerHTML = html;
 
-          // Now apply sorting after posts are injected
+          // Sorting function using data-date attribute
           function sortPosts(order) {
-            const postsContainer = document.getElementById('lu-posts');
             const posts = Array.from(postsContainer.getElementsByClassName('post'));
-
             posts.sort((a, b) => {
-              const dateA = new Date(a.querySelector('strong').textContent.split('–')[0].trim());
-              const dateB = new Date(b.querySelector('strong').textContent.split('–')[0].trim());
+              const dateA = new Date(a.dataset.date);
+              const dateB = new Date(b.dataset.date);
               return order === 'old' ? dateA - dateB : dateB - dateA;
             });
-
             posts.forEach(post => postsContainer.appendChild(post));
           }
 
+          // Update the "Last Updated" field
+          const firstPost = postsContainer.querySelector('.post');
+          if (firstPost) {
+            const lastDate = new Date(firstPost.dataset.date);
+            const dateString = lastDate.toLocaleString(undefined, {
+              dateStyle: 'long',
+              timeStyle: 'short'
+            });
+            document.querySelector('#last-updated p').innerHTML = `
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
+              Last Updated: ${dateString}
+            `;
+          }
+
+          // Attach sort control
           const sortSelect = document.getElementById('sort');
           sortPosts(sortSelect.value);
           sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
