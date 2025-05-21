@@ -16,14 +16,15 @@ body {
 
 /* === Layout Container === */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: rgba(255, 255, 255, 0.96);
   border: 2px solid #e79cff;
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 24px auto;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+  max-width: 880px;
+  margin: 32px auto;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(231, 156, 255, 0.1), 0 0 2px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
+  backdrop-filter: blur(2px);
 }
 
 /* === Headings === */
@@ -39,26 +40,27 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 36px;
+  text-shadow: 1px 1px #fff;
 }
 
 h1 img.icon-header {
   vertical-align: middle;
-  margin-left: 4px;
+  margin-left: 6px;
   max-height: 36px;
 }
 
 h2 {
   font-size: 24px;
-  margin-top: 20px;
+  margin-top: 24px;
   position: relative;
 }
 
 h2::after {
   content: "";
   display: block;
-  width: 40px;
+  width: 48px;
   height: 2px;
-  background: #e79cff;
+  background: linear-gradient(to right, #e79cff, #f7deff, #e79cff);
   margin-top: 6px;
   border-radius: 1px;
 }
@@ -73,14 +75,13 @@ p {
 
 /* === Page Text Section === */
 .page-text {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #e6b3ff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: inset 0 0 6px rgba(231, 156, 255, 0.2);
   position: relative;
   padding-bottom: 48px;
-  margin-bottom: 0;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid #e6b3ff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: inset 0 0 8px rgba(231, 156, 255, 0.25);
 }
 
 .page-text::after {
@@ -89,9 +90,9 @@ p {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 12px;
-  background: linear-gradient(to right, #e79cff 0%, #f7deff 50%, #e79cff 100%);
-  opacity: 0.6;
+  height: 10px;
+  background: linear-gradient(to right, #e79cff, #f7deff, #e79cff);
+  opacity: 0.4;
   border-radius: 0 0 8px 8px;
 }
 
@@ -106,13 +107,6 @@ p {
   gap: 4px;
 }
 
-#last-updated img.icon-date {
-  height: 18px;
-  margin-right: 2px;
-  vertical-align: middle;
-  margin-top: -2px;
-}
-
 /* === Status Box === */
 #my-status {
   display: flex;
@@ -121,26 +115,23 @@ p {
   flex-wrap: wrap;
   margin-bottom: 16px;
   padding: 12px 16px;
-  background: rgba(231, 156, 255, 0.15);
+  background: rgba(231, 156, 255, 0.12);
   border: 1px solid #e79cff;
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 14px;
-  box-sizing: border-box;
 }
 
 #my-status img {
   height: 18px;
   flex-shrink: 0;
   vertical-align: middle;
-  margin-top: -2px;
 }
 
 .status-text {
   display: flex;
   align-items: center;
   gap: 4px;
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: 1;
 }
 
 .status-prefix,
@@ -160,7 +151,6 @@ p {
   color: #888;
   white-space: nowrap;
   margin-left: auto;
-  align-self: center;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -176,13 +166,13 @@ table {
 }
 
 th, td {
-  padding: 4px 6px;
+  padding: 6px 8px;
   vertical-align: middle;
   text-align: left;
 }
 
 th {
-  border-bottom: 1px solid #e79cff;
+  border-bottom: 2px solid #e79cff;
   color: #9b2c9b;
   font-weight: normal;
 }
@@ -192,13 +182,14 @@ td {
 }
 
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.08);
+  background-color: rgba(231, 156, 255, 0.06);
 }
 
 /* === Links === */
 a {
   color: #e79cff;
   text-decoration: underline;
+  transition: color 0.2s ease;
 }
 
 a:hover,
@@ -216,7 +207,6 @@ img.icon {
   height: 16px;
   vertical-align: middle;
   margin-right: 4px;
-  margin-top: -2px;
 }
 
 /* === Controls === */
@@ -234,25 +224,21 @@ img.icon {
   color: #222;
   background: #fff;
   border: 1px solid #e79cff;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  vertical-align: middle;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
 }
 
 /* === Footer Styles === */
 #footer {
   font-size: 14px;
-  margin-top: 24px;
+  margin-top: 32px;
   color: #555;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #footer p {
-  text-align: center;
-  justify-content: center;
   display: flex;
+  justify-content: center;
   align-items: center;
   margin: 0.5em 0;
 }
@@ -260,7 +246,7 @@ img.icon {
 #footer .footer-links a {
   color: #e79cff;
   text-decoration: none;
-  margin: 0 4px;
+  margin: 0 6px;
 }
 
 #footer .footer-links a:hover {
