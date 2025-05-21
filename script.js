@@ -11,12 +11,11 @@ async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../
       return;
     }
 
-    // Find latest commit by date
+    // Find the latest commit by date
     const latestCommit = commits.reduce((latest, current) =>
       new Date(current.date) > new Date(latest.date) ? current : latest
     );
 
-    // Format the date nicely
     const formattedDate = formatDate(latestCommit.date);
     updateLastUpdated(targetSelector, formattedDate);
   } catch (error) {
@@ -25,25 +24,25 @@ async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../
   }
 }
 
-// Helper: Update only the <p> inside #last-updated
+// Helper: Update the inner HTML of <p> inside the given selector
 function updateLastUpdated(selector, text) {
   const el = document.querySelector(`${selector} p`);
   if (el) {
     el.innerHTML = `
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-4.gif" alt="Charmmy Icon" class="icon-date" />
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-4.gif" alt="Charmmy Icon" class="icon" />
       Last Updated: ${text}
     `;
   }
 }
 
-// Helper: Format date to "Weekday, MM/DD/YYYY"
+// Helper: Format date as "Weekday, MM/DD/YYYY"
 function formatDate(dateString) {
   const date = new Date(dateString);
   const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
   return date.toLocaleDateString(undefined, options);
 }
 
-// Auto-run on page load
+// Auto-run on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   showLastUpdated('#last-updated', '../commits.json');
 });
