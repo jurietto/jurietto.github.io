@@ -73,8 +73,21 @@ p {
 
 /* Page text color */
 .page-text {
-  color: #e79cff;
-  
+  color: #6f4b7e;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 24px;
+  margin-bottom: 16px;
+}
+
+.page-text::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: url('https://cutekawaiiresources.wordpress.com/wp-content/uploads/2014/08/110.gif?w=2500&h=') repeat-x;
+  background-size: auto 50px;
+  margin-top: 12px;
 }
 
 /* === Last Updated Section === */
@@ -251,9 +264,4 @@ img.icon {
   border: 0;
   border-bottom: 1px dotted #e79cff;
   margin: 12px 0;
-}
-
-/* Remove divider below page-text */
-.page-text::after {
-  content: none;
 }
