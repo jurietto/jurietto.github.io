@@ -42,7 +42,7 @@ h1 {
 }
 
 h1 img.icon-header {
-  vertical-align: top;
+  vertical-align: middle;
   margin-left: 4px;
   max-height: 36px;
 }
@@ -103,8 +103,10 @@ p {
 }
 
 #last-updated img.icon-date {
+  height: 18px;
   margin-right: 2px;
-  vertical-align: top;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 /* === Status Box === */
@@ -123,9 +125,10 @@ p {
 }
 
 #my-status img {
-
+  height: 18px;
   flex-shrink: 0;
-  vertical-align: top;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .status-text {
@@ -209,6 +212,7 @@ img.icon {
   height: 16px;
   vertical-align: middle;
   margin-right: 4px;
+  display: inline-block;
 }
 
 /* === Controls === */
