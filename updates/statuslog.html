@@ -16,7 +16,7 @@
     <div id="last-updated">
       <p>
         <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
-        Last Updated: Loading...
+        Juri: Loading...
       </p>
     </div>
 
@@ -61,12 +61,12 @@
             list.appendChild(item);
           });
 
-          // Set "Last Updated" field to latest entry
+          // Set "Juri" field to latest entry time
           const latest = data[data.length - 1];
           if (latest) {
-            document.querySelector('#last-updated p').innerHTML = `
+            document.querySelector('#last-updated p').innerHTML = ` 
               <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
-              Last Updated: ${latest.time}
+              Juri: ${latest.time}
             `;
           }
         })
