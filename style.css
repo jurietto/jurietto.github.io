@@ -74,21 +74,23 @@ p {
 /* Page text decorative image */
 .page-text {
   position: relative;
-  padding-bottom: 64px;
+  padding-bottom: 60px;
   margin-bottom: 0;
 }
 
 .page-text::after {
   content: "";
   position: absolute;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 0;
-  width: 100%;
-  height: 42px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/654854.gif');
-  background-repeat: repeat-x;
-  background-size: 80px 42px;
+  width: 868px;
+  height: 50px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/vine33.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
   display: block;
+  max-width: 100%;
 }
 
 /* === Last Updated Section === */
