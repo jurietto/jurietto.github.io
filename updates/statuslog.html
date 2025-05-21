@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Status Log</title>
+  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <div class="main-content">
+    <h1>
+      Status Log
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="" class="icon-header" />
+    </h1>
+
+    <div id="last-updated">
+      <p>
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
+        Last Updated: Loading...
+      </p>
+    </div>
+
+    <p class="page-text">
+      A timeline of little updates, moods, and life notes. These status entries are kind of like micro-logs —  
+      quick thoughts, reminders, or energy check-ins. They’re mostly for me to reflect and track how I’ve been feeling,  
+      but you’re welcome to read along 💌
+    </p>
+
+    <p>
+      <a href="/updates/updates.html">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
+        [parent directory]
+      </a>
+    </p>
+
+    <div id="status-list">
+      <p>Loading status updates...</p>
+    </div>
+
+    <div id="footer"></div>
+
+    <script>
+      fetch('statuslog.json')
+        .then(response => response.json())
+        .then(data => {
+          const list = document.getElementById('status-list');
+          list.innerHTML = '';
+
+          // Show newest first
+          data.slice().reverse().forEach(entry => {
+            const item = document.createElement('div');
+            item.className = 'post';
+            item.innerHTML = `
+              <p class="commit-header">
+                <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" class="icon" />
+                <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
+              </p>
+              <p class="commit-message">${entry.text}</p>
+              <hr />
+            `;
+            list.appendChild(item);
+          });
+
+          // Set "Last Updated" field to latest entry
+          const latest = data[data.length - 1];
+          if (latest) {
+            document.querySelector('#last-updated p').innerHTML = `
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
+              Last Updated: ${latest.time}
+            `;
+          }
+        })
+        .catch(err => {
+          document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+          console.error(err);
+        });
+
+      fetch('../footer.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('footer').innerHTML = html;
+        });
+    </script>
+
+    <script src="../script.js"></script>
+  </div>
+</body>
+</html>
