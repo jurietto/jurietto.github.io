@@ -42,41 +42,46 @@
       </select>
     </div>
 
-    <!-- Posts container -->
-    <div id="posts">
-      <!-- Dynamic posts will appear here -->
+    <!-- Injected posts from lu.html -->
+    <div id="lu-posts">
+      <p>Loading life updates...</p>
     </div>
 
     <!-- Footer -->
     <div id="footer"></div>
 
     <script>
+      // Load LU HTML content
+      fetch('../lu.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('lu-posts').innerHTML = html;
+
+          // Now apply sorting after posts are injected
+          function sortPosts(order) {
+            const postsContainer = document.getElementById('lu-posts');
+            const posts = Array.from(postsContainer.getElementsByClassName('post'));
+
+            posts.sort((a, b) => {
+              const dateA = new Date(a.querySelector('strong').textContent.split('–')[0].trim());
+              const dateB = new Date(b.querySelector('strong').textContent.split('–')[0].trim());
+              return order === 'old' ? dateA - dateB : dateB - dateA;
+            });
+
+            posts.forEach(post => postsContainer.appendChild(post));
+          }
+
+          const sortSelect = document.getElementById('sort');
+          sortPosts(sortSelect.value);
+          sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
+        });
+
       // Footer loader
       fetch('../footer.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('footer').innerHTML = html;
         });
-
-      // Sorting logic
-      function sortPosts(order) {
-        const postsContainer = document.getElementById('posts');
-        const posts = Array.from(postsContainer.getElementsByClassName('post'));
-
-        posts.sort((a, b) => {
-          const dateA = new Date(a.querySelector('strong').textContent.split('–')[0].trim());
-          const dateB = new Date(b.querySelector('strong').textContent.split('–')[0].trim());
-          return order === 'old' ? dateA - dateB : dateB - dateA;
-        });
-
-        posts.forEach(post => postsContainer.appendChild(post));
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const sortSelect = document.getElementById('sort');
-        sortPosts(sortSelect.value);
-        sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
-      });
     </script>
 
     <script src="../script.js"></script>
