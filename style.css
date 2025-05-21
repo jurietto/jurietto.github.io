@@ -8,13 +8,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.6;
+  color: #333;
   text-align: justify;
   overflow-x: hidden;
   padding: 16px;
-  color: #333;
 }
 
-/* === Main Content Box === */
+/* === Layout Container === */
 .main-content {
   background-color: rgba(255, 255, 255, 0.98);
   border: 2px solid #e79cff;
@@ -24,7 +24,6 @@ body {
   padding: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  color: #333;
 }
 
 /* === Headings === */
@@ -44,7 +43,6 @@ h1 {
 
 h1 img.icon-header {
   vertical-align: middle;
-  display: inline-block;
   margin-left: 4px;
   max-height: 36px;
 }
@@ -73,7 +71,7 @@ p {
   gap: 6px;
 }
 
-/* === Last Updated === */
+/* === Last Updated Section === */
 #last-updated p {
   color: #666;
   font-size: 0.9em;
@@ -85,14 +83,12 @@ p {
 }
 
 #last-updated img.icon-date {
-  width: auto;
   height: 18px;
-  vertical-align: middle;
   margin-right: 2px;
-  display: inline-block;
+  vertical-align: middle;
 }
 
-/* === My Status Box === */
+/* === Status Box === */
 #my-status {
   display: flex;
   align-items: center;
@@ -104,18 +100,13 @@ p {
   border: 1px solid #e79cff;
   border-radius: 12px;
   font-size: 14px;
-  color: #333;
   box-sizing: border-box;
 }
 
 #my-status img {
-  width: auto;
   height: 18px;
   flex-shrink: 0;
-  display: inline-block;
   vertical-align: middle;
-  align-self: center;
-  margin: 0;
 }
 
 .status-text {
@@ -126,12 +117,7 @@ p {
   min-width: 0;
 }
 
-.status-prefix {
-  text-decoration: underline;
-  color: #9b2c9b;
-  font-weight: bold;
-}
-
+.status-prefix,
 .status-dash {
   color: #9b2c9b;
   font-weight: bold;
@@ -159,7 +145,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 16px;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   color: #333;
 }
@@ -198,17 +183,12 @@ a:active {
 /* === Images === */
 img {
   max-width: 100%;
-  display: inline-block;
   vertical-align: middle;
-  margin: 0;
 }
 
 img.icon {
   height: 18px;
-  width: auto;
   margin-right: 6px;
-  vertical-align: middle;
-  display: inline-block;
 }
 
 /* === Controls === */
@@ -241,6 +221,10 @@ img.icon {
   margin-right: auto;
 }
 
+#footer p {
+  text-align: center;
+  margin: 0.5em 0;
+}
 
 #footer .footer-links a {
   color: #e79cff;
