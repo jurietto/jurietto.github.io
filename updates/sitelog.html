@@ -5,18 +5,6 @@
   <title>Site Log</title>
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    /* === Commit List Icons === */
-    #commit-list li::before {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 0;
-      width: 18px;
-      height: 18px;
-      background: url('https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif') no-repeat center/cover;
-    }
-  </style>
 </head>
 <body>
   <div class="main-content">
@@ -49,14 +37,16 @@
       <select id="sort">
         <option value="new">Newest</option>
         <option value="old">Oldest</option>
-        <!-- Months will be dynamically added -->
+        <!-- Dynamic month options will be inserted here -->
       </select>
     </div>
 
-    <section id="commit-list">
+    <!-- Commit log -->
+    <div id="commit-list">
       <p>Loading commit history...</p>
-    </section>
+    </div>
 
+    <!-- Footer -->
     <div id="footer"></div>
 
     <script>
@@ -67,6 +57,7 @@
           const container = document.getElementById('commit-list');
           const sortSelect = document.getElementById('sort');
 
+          // Extract months for filtering
           const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
           months.forEach(month => {
             const option = document.createElement('option');
@@ -77,27 +68,32 @@
 
           function renderCommits(order) {
             container.innerHTML = '';
-            let filteredCommits = commits;
+            let filtered = [...commits];
 
             if (order === 'old') {
-              filteredCommits = [...commits].reverse();
+              filtered.reverse();
             } else if (order !== 'new') {
-              filteredCommits = commits.filter(c => c.date.startsWith(order));
+              filtered = filtered.filter(c => c.date.startsWith(order));
             }
 
-            if (filteredCommits.length === 0) {
+            if (filtered.length === 0) {
               container.innerHTML = '<p>No commits found for this period.</p>';
               return;
             }
 
-            filteredCommits.forEach(commit => {
-              const date = new Date(commit.date).toLocaleString();
+            filtered.forEach(commit => {
+              const date = new Date(commit.date);
+              const formattedDate = date.toLocaleString(undefined, {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+              });
+
               const entry = document.createElement('div');
               entry.className = 'post';
               entry.innerHTML = `
                 <p class="commit-header">
                   <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-2.gif" alt="update icon" class="icon" />
-                  <strong>${commit.author}</strong> – <strong>${date}</strong>
+                  <strong>${commit.author}</strong> – <strong>${formattedDate}</strong>
                 </p>
                 <p class="commit-message">${commit.message}</p>
               `;
@@ -107,6 +103,13 @@
 
           sortSelect.addEventListener('change', e => renderCommits(e.target.value));
           renderCommits('new');
+
+          // Update "Last Updated"
+          const latestDate = new Date(commits[0].date);
+          document.querySelector('#last-updated p').innerHTML = `
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" alt="Charmmy Icon" class="icon-date" />
+            Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}
+          `;
         } catch (err) {
           document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
           console.error(err);
