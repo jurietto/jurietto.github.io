@@ -29,7 +29,7 @@ function updateLastUpdated(selector, text) {
   const el = document.querySelector(`${selector} p`);
   if (el) {
     el.innerHTML = `
-      <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="Crown Icon" class="icon" />
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/51c0471f.gif" alt="Card Icon" class="icon" />
       Last Updated: ${text}
     `;
   }
