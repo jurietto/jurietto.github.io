@@ -8,12 +8,12 @@ body {
   background-attachment: fixed;
   background-size: auto;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #222;
   text-align: justify;
   overflow-x: hidden;
-  padding: 16px;
+  padding: 24px;
 }
 
 img {
@@ -25,13 +25,13 @@ img {
    Layout Containers
    ========================= */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: #fff;
   border: 2px solid #e79cff;
   border-radius: 20px;
   max-width: 900px;
-  margin: 24px auto;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 32px auto;
+  padding: 40px 48px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
 }
 
@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 2.5rem;
 }
 
 h1 img.icon-header {
@@ -59,8 +59,8 @@ h1 img.icon-header {
 }
 
 h2 {
-  font-size: 24px;
-  margin-top: 20px;
+  font-size: 1.7rem;
+  margin-top: 24px;
   position: relative;
 }
 
@@ -86,18 +86,99 @@ p {
    ========================= */
 .page-text {
   position: relative;
-  margin: 20px 0;
-  padding: 20px;
-  background: #f7deff;
-  border: 1px solid #e79cff;
-  border-radius: 12px;
+  margin: 28px 0;
+  padding: 32px 48px;
+  background: #fff6ff;
+  border: 2px solid #e79cff;
+  border-radius: 16px;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(231, 156, 255, 0.08);
 }
 
 .page-text p {
   margin: 0.8em 0;
-  line-height: 1.6;
-  color: #9b2c9b;
+  line-height: 1.7;
+  color: #7a1c7a;
 }
+
+/* =========================
+   Accessibility: Focus Styles
+   ========================= */
+a:focus, button:focus, input:focus, select:focus, textarea:focus {
+  outline: 2px solid #a14dd7;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #e79cff33;
+}
+
+/* =========================
+   Accessibility: High Contrast for Links
+   ========================= */
+a {
+  color: #a14dd7;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+a:hover, a:active {
+  color: #7a1c7a;
+}
+
+/* =========================
+   Controls
+   ========================= */
+#controls label {
+  font-weight: 600;
+  color: #222;
+}
+
+#controls select#sort,
+#controls select#sort:focus,
+#controls select#sort:active {
+  box-shadow: none !important;
+  outline: 2px solid #e79cff;
+  border-radius: 6px;
+}
+
+/* =========================
+   Footer
+   ========================= */
+#footer {
+  font-size: 1rem;
+  margin-top: 32px;
+  color: #555;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer p {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+}
+
+#footer .footer-links a {
+  color: #a14dd7;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+#footer .footer-links a:hover {
+  color: #7a1c7a;
+}
+
+/* =========================
+   Semantic HTML Usage
+   ========================= */
+/*
+  Use <main> for main-content, <section> for logical sections, <nav> for navigation, and <footer> for #footer.
+  Example:
+  <main class="main-content">...</main>
+  <section class="page-text">...</section>
+  <footer id="footer">...</footer>
+*/
 
 /* =========================
    Section: Last Updated
@@ -215,19 +296,6 @@ table tbody tr:hover {
 }
 
 /* =========================
-   Links
-   ========================= */
-a {
-  color: #e79cff;
-  text-decoration: underline;
-}
-
-a:hover,
-a:active {
-  color: #a14dd7;
-}
-
-/* =========================
    Icon Images
    ========================= */
 img.icon {
@@ -235,57 +303,6 @@ img.icon {
   vertical-align: middle;
   margin-right: 4px;
   margin-top: -2px;
-}
-
-/* =========================
-   Controls
-   ========================= */
-#controls {
-  margin-bottom: 1rem;
-}
-
-#controls label {
-  font-weight: normal;
-  color: #333;
-}
-
-#controls select#sort,
-#controls select#sort:focus,
-#controls select#sort:active {
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
-  outline: none !important;
-}
-
-/* =========================
-   Footer
-   ========================= */
-#footer {
-  font-size: 14px;
-  margin-top: 24px;
-  color: #555;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#footer p {
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  margin: 0.5em 0;
-}
-
-#footer .footer-links a {
-  color: #e79cff;
-  text-decoration: none;
-  margin: 0 4px;
-}
-
-#footer .footer-links a:hover {
-  color: #a14dd7;
 }
 
 /* =========================
