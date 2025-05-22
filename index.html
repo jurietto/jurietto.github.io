@@ -23,9 +23,7 @@
 </head>
 <body>
   <div class="main-content">
-    <h1>
-      Index
-    </h1>
+    <h1>Index</h1>
 
     <div id="last-updated">
       <p>
@@ -39,7 +37,7 @@
         <span id="myStatus">Loading status...</span>
       </div>
       <div id="statusDate">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="Charmmy Icon" />
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="Charmmy Icon" />
         <span id="statusTimestamp">(Loading...)</span>
       </div>
     </div>
@@ -110,6 +108,7 @@
 
     <!-- Footer -->
     <div id="footer"></div>
+
     <script>
       // Load footer
       fetch('footer.html')
@@ -118,17 +117,23 @@
           document.getElementById('footer').innerHTML = data;
         });
 
-      // Load latest status
+      // Load latest status (use the first entry, assuming most recent is at the top)
       fetch('updates/statuslog.json')
         .then(response => response.json())
         .then(data => {
-          const latest = data[data.length - 1]; // Last entry is the most recent
+          const latest = data[0]; // ✅ Corrected: First entry is most recent
           if (latest) {
             document.getElementById('myStatus').textContent = latest.text;
             document.getElementById('statusTimestamp').textContent = `(Juri: ${latest.time})`;
           }
+        })
+        .catch(error => {
+          console.error('Failed to load latest status:', error);
+          document.getElementById('myStatus').textContent = 'Status unavailable.';
+          document.getElementById('statusTimestamp').textContent = '';
         });
     </script>
+
     <script src="script.js"></script>
   </div>
 </body>
