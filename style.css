@@ -133,7 +133,7 @@ p {
   flex-wrap: wrap;
   margin: 20px 0;
   padding: 14px 18px;
-  background: rgba(231, 156, 255, 0.12);
+  background: transparent;
   border: 1px solid #e79cff;
   border-radius: 12px;
   font-size: 14px;
@@ -296,7 +296,7 @@ img.icon {
 #status-list .status-entry {
   margin-bottom: 12px;
   padding: 14px 18px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(231, 156, 255, 0.12);
   border: 1px solid #e6b3ff;
   border-radius: 12px;
 }
