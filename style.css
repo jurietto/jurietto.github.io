@@ -10,7 +10,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.7;
-  color: #222;
+  color: #3a2a3a;
   text-align: justify;
   overflow-x: hidden;
   padding: 24px;
@@ -25,13 +25,13 @@ img {
    Layout Containers
    ========================= */
 .main-content {
-  background-color: #fff;
+  background-color: #f7deff;
   border: 2px solid #e79cff;
   border-radius: 20px;
   max-width: 900px;
   margin: 32px auto;
   padding: 40px 48px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px #e79cff33;
   box-sizing: border-box;
 }
 
@@ -41,7 +41,7 @@ img {
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #222;
+  color: #a14dd7;
   margin: 0.4em 0 0.2em;
   display: flex;
   align-items: center;
@@ -79,6 +79,7 @@ p {
   display: flex;
   align-items: center;
   gap: 6px;
+  color: #3a2a3a;
 }
 
 /* =========================
@@ -88,26 +89,26 @@ p {
   position: relative;
   margin: 28px 0;
   padding: 32px 48px;
-  background: #fff6ff;
+  background: #f7deff;
   border: 2px solid #e79cff;
   border-radius: 16px;
-  color: #222;
-  box-shadow: 0 2px 8px rgba(231, 156, 255, 0.08);
+  color: #3a2a3a;
+  box-shadow: 0 2px 8px #e79cff22;
 }
 
 .page-text p {
   margin: 0.8em 0;
   line-height: 1.7;
-  color: #7a1c7a;
+  color: #a14dd7;
 }
 
 /* =========================
    Accessibility: Focus Styles
    ========================= */
 a:focus, button:focus, input:focus, select:focus, textarea:focus {
-  outline: 2px solid #a14dd7;
+  outline: 2px solid #e79cff;
   outline-offset: 2px;
-  box-shadow: 0 0 0 2px #e79cff33;
+  box-shadow: 0 0 0 2px #f7deff;
 }
 
 /* =========================
@@ -120,7 +121,7 @@ a {
 }
 
 a:hover, a:active {
-  color: #7a1c7a;
+  color: #e79cff;
 }
 
 /* =========================
@@ -128,7 +129,7 @@ a:hover, a:active {
    ========================= */
 #controls label {
   font-weight: 600;
-  color: #222;
+  color: #a14dd7;
 }
 
 #controls select#sort,
@@ -137,6 +138,8 @@ a:hover, a:active {
   box-shadow: none !important;
   outline: 2px solid #e79cff;
   border-radius: 6px;
+  background: #f7deff;
+  color: #3a2a3a;
 }
 
 /* =========================
@@ -145,7 +148,7 @@ a:hover, a:active {
 #footer {
   font-size: 1rem;
   margin-top: 32px;
-  color: #555;
+  color: #a14dd7;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -166,7 +169,7 @@ a:hover, a:active {
 }
 
 #footer .footer-links a:hover {
-  color: #7a1c7a;
+  color: #e79cff;
 }
 
 /* =========================
@@ -184,7 +187,7 @@ a:hover, a:active {
    Section: Last Updated
    ========================= */
 #last-updated p {
-  color: #666;
+  color: #a14dd7;
   font-size: 0.9em;
   margin-top: -8px;
   margin-bottom: 16px;
@@ -210,8 +213,8 @@ a:hover, a:active {
   flex-wrap: wrap;
   margin: 20px 0;
   padding: 14px 18px;
-  background: transparent;
-  border: 1px solid #9b2c9b;
+  background: #f7deff;
+  border: 1px solid #e79cff;
   border-radius: 12px;
   font-size: 14px;
   box-sizing: border-box;
@@ -234,7 +237,7 @@ a:hover, a:active {
 
 .status-prefix,
 .status-dash {
-  color: #9b2c9b;
+  color: #e79cff;
   font-weight: bold;
   white-space: nowrap;
 }
@@ -244,11 +247,12 @@ a:hover, a:active {
   flex: 1 1 auto;
   word-break: break-word;
   line-height: 1.4;
+  color: #a14dd7;
 }
 
 #statusDate {
   font-size: 0.85em;
-  color: #666;
+  color: #a14dd7;
   white-space: nowrap;
   margin-left: auto;
   display: flex;
@@ -269,7 +273,8 @@ table {
   border-collapse: collapse;
   margin: 20px 0;
   font-size: 14px;
-  color: #333;
+  color: #3a2a3a;
+  background: #f7deff;
 }
 
 th, td {
@@ -279,9 +284,9 @@ th, td {
 }
 
 th {
-  background: rgba(231, 156, 255, 0.08);
+  background: #e79cff33;
   border-bottom: 1px solid #e79cff;
-  color: #9b2c9b;
+  color: #a14dd7;
   font-weight: bold;
   white-space: nowrap;
 }
@@ -292,7 +297,7 @@ td {
 }
 
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.06);
+  background-color: #e79cff22;
 }
 
 /* =========================
@@ -315,14 +320,14 @@ img.icon {
 #status-list .status-entry {
   margin-bottom: 12px;
   padding: 14px 18px;
-  background: rgba(231, 156, 255, 0.12);
-  border: 1px solid #e6b3ff;
+  background: #f7deff;
+  border: 1px solid #e79cff;
   border-radius: 12px;
 }
 
 #status-list .status-date {
   font-size: 0.85em;
-  color: #666;
+  color: #a14dd7;
   margin-bottom: 6px;
   display: flex;
   align-items: center;
@@ -330,7 +335,7 @@ img.icon {
 }
 
 #status-list .status-content {
-  color: #333;
+  color: #3a2a3a;
   line-height: 1.6;
 }
 
