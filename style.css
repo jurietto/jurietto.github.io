@@ -322,3 +322,15 @@ img.icon {
   border-bottom: 1px dotted #e79cff;
   margin: 16px 0;
 }
+
+/* =========================
+   Commit Header Icons
+   ========================= */
+.commit-header img {
+  height: 16px;
+  width: 16px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 4px;
+  margin-top: -2px;
+}
