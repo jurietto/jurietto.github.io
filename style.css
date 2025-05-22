@@ -86,26 +86,6 @@ p {
   line-height: 1.6;
 }
 
-.page-text p:first-child {
-  margin-top: 0;
-}
-
-.page-text p:last-child {
-  margin-bottom: 0;
-}
-
-.page-text::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 12px;
-  background: linear-gradient(to right, #e79cff 0%, #f7deff 50%, #e79cff 100%);
-  opacity: 0.6;
-  border-radius: 0 0 12px 12px;
-}
-
 /* === Last Updated Section === */
 #last-updated p {
   color: #666;
