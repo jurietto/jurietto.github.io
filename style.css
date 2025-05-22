@@ -256,6 +256,7 @@ img.icon {
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   vertical-align: middle;
+  box-shadow: none !important;
 }
 
 /* =========================
