@@ -29,14 +29,10 @@
       <p>Last Updated: Loading...</p>
     </div>
 
-    <!-- Dynamic Status Box -->
+    <!-- Dynamic Status Box (text only, no timestamp, no icon) -->
     <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
       <div class="status-text">
         <span id="myStatus">Loading status...</span>
-      </div>
-      <div id="statusDate">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="Charmmy Icon" />
-        <span id="statusTimestamp">(Loading...)</span>
       </div>
     </div>
 
@@ -115,20 +111,18 @@
           document.getElementById('footer').innerHTML = data;
         });
 
-      // Load latest status (use the first entry, assuming most recent is at the top)
+      // Load latest status (text only)
       fetch('updates/statuslog.json')
         .then(response => response.json())
         .then(data => {
-          const latest = data[0]; // First entry = most recent
+          const latest = data[0];
           if (latest) {
             document.getElementById('myStatus').textContent = latest.text;
-            document.getElementById('statusTimestamp').textContent = `(Juri: ${latest.time})`;
           }
         })
         .catch(error => {
           console.error('Failed to load latest status:', error);
           document.getElementById('myStatus').textContent = 'Status unavailable.';
-          document.getElementById('statusTimestamp').textContent = '';
         });
     </script>
 
