@@ -248,15 +248,13 @@ img.icon {
   color: #333;
 }
 
-#controls select#sort {
-  font-size: 14px;
-  color: #222;
-  background: #fff;
-  border: 1px solid #e79cff;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  vertical-align: middle;
+#controls select#sort,
+#controls select#sort:focus,
+#controls select#sort:active {
   box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  outline: none !important;
 }
 
 /* =========================
