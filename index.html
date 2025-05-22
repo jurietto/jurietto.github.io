@@ -26,15 +26,18 @@
     <h1>Index</h1>
 
     <div id="last-updated">
-      <p>
-        Last Updated: Loading...
-      </p>
+      <p>Last Updated: Loading...</p>
     </div>
 
     <!-- Dynamic Status Box -->
     <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
       <div class="status-text">
         <span id="myStatus">Loading status...</span>
+      </div>
+      <div id="statusDate">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/ckpxl.gif" alt="Charmmy Icon" />
+        <span id="statusTimestamp">(Loading...)</span>
+      </div>
     </div>
 
     <p class="page-text">
@@ -116,7 +119,7 @@
       fetch('updates/statuslog.json')
         .then(response => response.json())
         .then(data => {
-          const latest = data[0]; // ✅ Corrected: First entry is most recent
+          const latest = data[0]; // First entry = most recent
           if (latest) {
             document.getElementById('myStatus').textContent = latest.text;
             document.getElementById('statusTimestamp').textContent = `(Juri: ${latest.time})`;
