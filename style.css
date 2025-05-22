@@ -88,8 +88,8 @@
     position: relative;
     margin: 20px 0;
     padding: 20px;
-    background: #f7deff;
-    border: 1px solid #e79cff;
+    background: linear-gradient(135deg, #fff7fc 0%, #f3e6ff 100%);
+    border: 1.5px solid #b47acc;
     border-radius: 12px;
   }
   
