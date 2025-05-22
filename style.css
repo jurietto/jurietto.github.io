@@ -8,7 +8,7 @@ body {
   line-height: 1.4;
   color: #333;
   text-align: justify;
-  padding: 8px;
+  padding: 12px;
   margin: 0;
 }
 
@@ -17,9 +17,10 @@ body {
   background: #fff;
   border: 1px solid #e79cff;
   max-width: 800px;
-  margin: 12px auto;
-  padding: 16px;
+  margin: 16px auto;
+  padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
 }
 
 /* === Headings === */
@@ -27,19 +28,28 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Arial, sans-serif;
   font-weight: bold;
   color: #222;
-  margin: 0.3em 0 0.2em;
+  margin: 0.4em 0 0.3em;
 }
 
-h1 { font-size: 24px; }
-h2 { font-size: 20px; }
+h1 { 
+  font-size: 24px;
+  margin-bottom: 0.5em;
+}
+
+h2 { 
+  font-size: 20px;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
+}
 
 /* === Status Box === */
 #my-status {
   border: 1px solid #e79cff;
   background: #fff;
-  margin: 8px 0;
-  padding: 8px;
+  margin: 16px 0;
+  padding: 12px;
   font-size: 13px;
+  border-radius: 4px;
 }
 
 #my-status img {
@@ -71,49 +81,51 @@ h2 { font-size: 20px; }
   display: block;
   font-size: 11px;
   color: #666;
-  margin-top: 4px;
+  margin-top: 6px;
   border-top: 1px dotted #e79cff;
-  padding-top: 4px;
+  padding-top: 6px;
 }
 
 /* === Status List === */
 #status-list {
-  margin: 8px 0;
+  margin: 16px 0;
 }
 
 #status-list .status-entry {
   border: 1px solid #e79cff;
   background: #fff;
-  margin-bottom: 4px;
-  padding: 6px 8px;
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: 4px;
 }
 
 #status-list .status-date {
   font-size: 11px;
   color: #666;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 #status-list .status-content {
   color: #333;
+  line-height: 1.5;
 }
 
 #status-list hr {
   border: 0;
   border-top: 1px dotted #e79cff;
-  margin: 4px 0;
+  margin: 8px 0;
 }
 
 /* === Tables === */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 12px 0;
+  margin: 16px 0;
   font-size: 13px;
 }
 
 th, td {
-  padding: 6px 8px;
+  padding: 8px 10px;
   border: 1px solid #e79cff;
   text-align: left;
 }
@@ -136,28 +148,35 @@ a:hover {
 /* === Footer === */
 #footer {
   font-size: 12px;
-  margin-top: 16px;
+  margin-top: 24px;
   color: #666;
   text-align: center;
-  padding: 8px 0;
+  padding: 12px 0;
+  border-top: 1px solid #e79cff;
 }
 
 #footer .footer-links a {
-  margin: 0 4px;
+  margin: 0 6px;
 }
 
 /* === Page Text === */
 .page-text {
-  padding: 12px;
-  background: #faf0ff;
+  padding: 16px;
+  background: #fff;
   border: 1px solid #e6b3ff;
-  margin-bottom: 12px;
+  margin: 16px 0;
+  border-radius: 4px;
 }
 
 /* === Controls === */
+#controls {
+  margin: 16px 0;
+}
+
 #controls select#sort {
   font-size: 13px;
-  padding: 4px 6px;
+  padding: 6px 8px;
   border: 1px solid #e79cff;
   background: #fff;
+  border-radius: 4px;
 }
