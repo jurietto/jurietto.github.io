@@ -259,3 +259,14 @@ img.icon {
   border-bottom: 1px dotted #e79cff;
   margin: 12px 0;
 }
+
+/* === Unified Icon Styling === */
+img.icon,
+.commit-header img,
+.post img {
+  height: 16px;
+  width: 16px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 4px;
+}
