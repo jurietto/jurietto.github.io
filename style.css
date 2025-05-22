@@ -2,13 +2,18 @@
    Base Styles
    ========================= */
 body {
-  font-family: Courier, monospace;
+  position: relative;
+  background-color: #f7deff;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
+  background-attachment: fixed;
+  background-size: auto;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.7;
   color: #222;
-  background: none;
-  padding: 0;
-  margin: 0;
+  text-align: justify;
+  overflow-x: hidden;
+  padding: 24px;
 }
 
 img {
@@ -19,8 +24,15 @@ img {
 /* =========================
    Layout Containers
    ========================= */
-.main-content, .page-text, #my-status, #status-list .status-entry, #footer, #controls, table, th, td, #status-list, #status-list hr {
-  all: unset;
+.main-content {
+  background-color: #fff;
+  border: 2px solid #e79cff;
+  border-radius: 20px;
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 40px 48px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
 }
 
 /* =========================
@@ -31,13 +43,62 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   color: #222;
   margin: 0.4em 0 0.2em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 1.7rem; margin-top: 1.5em; }
+h1 {
+  font-size: 2.5rem;
+}
+
+h1 img.icon-header {
+  vertical-align: middle;
+  margin-left: 4px;
+  max-height: 36px;
+}
+
+h2 {
+  font-size: 1.7rem;
+  margin-top: 24px;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #e79cff;
+  margin-top: 6px;
+  border-radius: 1px;
+}
 
 p {
   margin: 0.8em 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================
+   Section: Page Text
+   ========================= */
+.page-text {
+  position: relative;
+  margin: 28px 0;
+  padding: 32px 48px;
+  background: #fff6ff;
+  border: 2px solid #e79cff;
+  border-radius: 16px;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(231, 156, 255, 0.08);
+}
+
+.page-text p {
+  margin: 0.8em 0;
+  line-height: 1.7;
+  color: #7a1c7a;
 }
 
 /* =========================
@@ -53,12 +114,13 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus {
    Accessibility: High Contrast for Links
    ========================= */
 a {
-  color: #222;
+  color: #a14dd7;
   text-decoration: underline;
+  transition: color 0.2s;
 }
 
 a:hover, a:active {
-  color: #555;
+  color: #7a1c7a;
 }
 
 /* =========================
@@ -149,7 +211,7 @@ a:hover, a:active {
   margin: 20px 0;
   padding: 14px 18px;
   background: transparent;
-  border: 1px solid #9b2c9b;
+  border: 2px solid #9b2c9b;
   border-radius: 12px;
   font-size: 14px;
   box-sizing: border-box;
@@ -205,23 +267,42 @@ a:hover, a:active {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1em;
-  color: #222;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #333;
 }
 
 th, td {
-  padding: 4px 6px;
+  padding: 8px 10px;
+  vertical-align: middle;
   text-align: left;
+}
+
+th {
+  background: rgba(231, 156, 255, 0.08);
+  border-bottom: 1px solid #e79cff;
+  color: #9b2c9b;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+td {
+  border-bottom: 1px dotted #e79cff;
+  line-height: 1.4;
+}
+
+table tbody tr:hover {
+  background-color: rgba(231, 156, 255, 0.06);
 }
 
 /* =========================
    Icon Images
    ========================= */
-img.icon, h1 img.icon-header, #last-updated img.icon-date, #my-status img, #statusDate img, .commit-header img {
-  height: 1em;
-  width: 1em;
+img.icon {
+  height: 16px;
   vertical-align: middle;
-  margin: 0;
+  margin-right: 4px;
+  margin-top: -2px;
 }
 
 /* =========================
