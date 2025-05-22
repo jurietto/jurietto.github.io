@@ -1,370 +1,163 @@
-/* === Body & Base === */
+/* === Base Styles === */
 body {
-  position: relative;
   background-color: #f7deff;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
-  background-size: auto;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #2c2c2c;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
   text-align: justify;
-  overflow-x: hidden;
-  padding: 12px;
+  padding: 8px;
+  margin: 0;
 }
 
-/* === Layout Container === */
+/* === Main Container === */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.95);
-  border: 2px solid #e79cff;
-  border-radius: 16px;
-  max-width: 900px;
-  margin: 16px auto;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-  transition: transform 0.2s ease;
-}
-
-.main-content:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border: 1px solid #e79cff;
+  max-width: 800px;
+  margin: 12px auto;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   font-weight: bold;
-  color: #1a1a1a;
-  margin: 0.4em 0 0.2em;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  color: #222;
+  margin: 0.3em 0 0.2em;
 }
 
-h1 {
-  font-size: 32px;
-  margin-bottom: 0.4em;
-}
-
-h1 img.icon-header {
-  vertical-align: middle;
-  margin-left: 4px;
-  max-height: 36px;
-}
-
-h2 {
-  font-size: 24px;
-  margin-top: 20px;
-}
-
-h2::after {
-  content: "";
-  display: block;
-  width: 48px;
-  height: 3px;
-  background: linear-gradient(to right, #e79cff, #f7deff);
-  margin-top: 8px;
-  border-radius: 2px;
-}
-
-/* === Paragraphs === */
-p {
-  margin: 0.8em 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* === Page Text Section === */
-.page-text {
-  position: relative;
-  padding: 20px;
-  margin-bottom: 0;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid #e6b3ff;
-  border-radius: 12px;
-  box-shadow: inset 0 0 8px rgba(231, 156, 255, 0.2);
-}
-
-.page-text:hover {
-  box-shadow: inset 0 0 16px rgba(231, 156, 255, 0.3);
-}
-
-.page-text::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 12px;
-  background: linear-gradient(to right, #e79cff 0%, #f7deff 50%, #e79cff 100%);
-  opacity: 0.6;
-  border-radius: 0 0 8px 8px;
-}
-
-/* === Last Updated Section === */
-#last-updated p {
-  color: #666;
-  font-size: 0.9em;
-  margin-top: -8px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-#last-updated img.icon-date {
-  height: 18px;
-  margin-right: 2px;
-  vertical-align: middle;
-  margin-top: -2px;
-}
+h1 { font-size: 24px; }
+h2 { font-size: 20px; }
 
 /* === Status Box === */
 #my-status {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-  padding: 12px 16px;
-  background: rgba(231, 156, 255, 0.12);
   border: 1px solid #e79cff;
-  border-radius: 12px;
-  font-size: 14px;
-  box-sizing: border-box;
-  width: 100%;
-  overflow: hidden;
-}
-
-#my-status:hover {
-  background: rgba(231, 156, 255, 0.18);
-  transform: translateY(-1px);
+  background: #fff;
+  margin: 8px 0;
+  padding: 8px;
+  font-size: 13px;
 }
 
 #my-status img {
-  height: 16px;
-  flex-shrink: 0;
+  height: 12px;
+  margin-right: 4px;
   vertical-align: middle;
-  margin-top: 2px;
 }
 
 .status-text {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  flex: 1 1 auto;
-  min-width: 0;
-  flex-wrap: wrap;
+  display: inline;
 }
 
-.status-prefix,
-.status-dash {
+.status-prefix {
   color: #9b2c9b;
   font-weight: bold;
-  white-space: nowrap;
+}
+
+.status-dash {
+  color: #9b2c9b;
+  margin: 0 4px;
 }
 
 #myStatus {
   font-weight: bold;
-  flex: 1 1 auto;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  max-width: 100%;
-  line-height: 1.4;
+  color: #333;
 }
 
 #statusDate {
-  font-size: 0.85em;
-  color: #888;
-  white-space: nowrap;
-  margin-left: auto;
-  align-self: flex-start;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-}
-
-#statusDate img {
-  height: 16px;
-  margin-top: 1px;
+  display: block;
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+  border-top: 1px dotted #e79cff;
+  padding-top: 4px;
 }
 
 /* === Status List === */
 #status-list {
-  margin-top: 16px;
+  margin: 8px 0;
 }
 
 #status-list .status-entry {
-  padding: 10px 14px;
-  margin-bottom: 8px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid #e6b3ff;
-  border-radius: 10px;
-  transition: all 0.2s ease;
-}
-
-#status-list .status-entry:hover {
-  background: rgba(255, 255, 255, 0.9);
-  transform: translateX(4px);
+  border: 1px solid #e79cff;
+  background: #fff;
+  margin-bottom: 4px;
+  padding: 6px 8px;
 }
 
 #status-list .status-date {
-  font-size: 0.85em;
-  color: #888;
+  font-size: 11px;
+  color: #666;
   margin-bottom: 2px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
 }
 
 #status-list .status-content {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  line-height: 1.4;
+  color: #333;
 }
 
 #status-list hr {
   border: 0;
-  border-bottom: 1px solid rgba(231, 156, 255, 0.3);
-  margin: 16px 0;
+  border-top: 1px dotted #e79cff;
+  margin: 4px 0;
 }
 
 /* === Tables === */
 table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 16px;
-  font-size: 14px;
-  color: #2c2c2c;
-  border-radius: 10px;
-  overflow: hidden;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
 }
 
 th, td {
-  padding: 8px 12px;
-  vertical-align: middle;
+  padding: 6px 8px;
+  border: 1px solid #e79cff;
   text-align: left;
 }
 
 th {
-  background: rgba(231, 156, 255, 0.1);
+  background: #faf0ff;
   color: #9b2c9b;
-  font-weight: 600;
-  border-bottom: 2px solid #e79cff;
-}
-
-td {
-  border-bottom: 1px solid rgba(231, 156, 255, 0.2);
-}
-
-table tbody tr {
-  transition: background-color 0.2s ease;
-}
-
-table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.08);
 }
 
 /* === Links === */
 a {
-  color: #d17aff;
-  text-decoration: none;
-  position: relative;
-  transition: color 0.2s ease;
+  color: #9b2c9b;
+  text-decoration: underline;
 }
 
 a:hover {
-  color: #a14dd7;
+  color: #6b1c6b;
 }
 
-a::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: -1px;
-  left: 0;
-  background-color: #a14dd7;
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s ease;
-}
-
-a:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-/* === Images === */
-img {
-  max-width: 100%;
-  vertical-align: middle;
-}
-
-img.icon {
-  height: 16px;
-  vertical-align: middle;
-  margin-right: 4px;
-  margin-top: -2px;
-}
-
-/* === Controls === */
-#controls {
-  margin-bottom: 1rem;
-}
-
-#controls label {
-  font-weight: normal;
-  color: #333;
-}
-
-#controls select#sort {
-  font-size: 15px;
-  color: #2c2c2c;
-  background: #fff;
-  border: 1px solid #e79cff;
-  padding: 8px 12px;
-  border-radius: 8px;
-  vertical-align: middle;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-#controls select#sort:hover {
-  border-color: #d17aff;
-  box-shadow: 0 2px 8px rgba(231, 156, 255, 0.2);
-}
-
-/* === Footer Styles === */
+/* === Footer === */
 #footer {
-  font-size: 14px;
-  margin-top: 24px;
+  font-size: 12px;
+  margin-top: 16px;
   color: #666;
   text-align: center;
-  padding: 16px 0;
-}
-
-#footer p {
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  margin: 0.5em 0;
+  padding: 8px 0;
 }
 
 #footer .footer-links a {
-  color: #d17aff;
-  text-decoration: none;
-  margin: 0 6px;
-  transition: color 0.2s ease;
+  margin: 0 4px;
 }
 
-#footer .footer-links a:hover {
-  color: #a14dd7;
+/* === Page Text === */
+.page-text {
+  padding: 12px;
+  background: #faf0ff;
+  border: 1px solid #e6b3ff;
+  margin-bottom: 12px;
 }
- 
+
+/* === Controls === */
+#controls select#sort {
+  font-size: 13px;
+  padding: 4px 6px;
+  border: 1px solid #e79cff;
+  background: #fff;
+}
