@@ -1,4 +1,6 @@
-/* === Body & Base === */
+/* =========================
+   Base Styles
+   ========================= */
 body {
   position: relative;
   background-color: #f7deff;
@@ -14,7 +16,14 @@ body {
   padding: 16px;
 }
 
-/* === Layout Container === */
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+/* =========================
+   Layout Containers
+   ========================= */
 .main-content {
   background-color: rgba(255, 255, 255, 0.98);
   border: 2px solid #e79cff;
@@ -26,7 +35,9 @@ body {
   box-sizing: border-box;
 }
 
-/* === Headings === */
+/* =========================
+   Typography
+   ========================= */
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -63,7 +74,6 @@ h2::after {
   border-radius: 1px;
 }
 
-/* === Paragraphs === */
 p {
   margin: 0.8em 0;
   display: flex;
@@ -71,7 +81,9 @@ p {
   gap: 6px;
 }
 
-/* === Page Text Section === */
+/* =========================
+   Section: Page Text
+   ========================= */
 .page-text {
   position: relative;
   margin: 20px 0;
@@ -86,7 +98,9 @@ p {
   line-height: 1.6;
 }
 
-/* === Last Updated Section === */
+/* =========================
+   Section: Last Updated
+   ========================= */
 #last-updated p {
   color: #666;
   font-size: 0.9em;
@@ -104,7 +118,9 @@ p {
   margin-top: -2px;
 }
 
-/* === Status Box === */
+/* =========================
+   Section: Status Box
+   ========================= */
 #my-status {
   display: flex;
   align-items: center;
@@ -163,7 +179,9 @@ p {
   width: 14px;
 }
 
-/* === Tables === */
+/* =========================
+   Tables
+   ========================= */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -195,7 +213,9 @@ table tbody tr:hover {
   background-color: rgba(231, 156, 255, 0.06);
 }
 
-/* === Links === */
+/* =========================
+   Links
+   ========================= */
 a {
   color: #e79cff;
   text-decoration: underline;
@@ -206,12 +226,9 @@ a:active {
   color: #a14dd7;
 }
 
-/* === Images === */
-img {
-  max-width: 100%;
-  vertical-align: middle;
-}
-
+/* =========================
+   Icon Images
+   ========================= */
 img.icon {
   height: 16px;
   vertical-align: middle;
@@ -219,7 +236,9 @@ img.icon {
   margin-top: -2px;
 }
 
-/* === Controls === */
+/* =========================
+   Controls
+   ========================= */
 #controls {
   margin-bottom: 1rem;
 }
@@ -239,7 +258,9 @@ img.icon {
   vertical-align: middle;
 }
 
-/* === Footer Styles === */
+/* =========================
+   Footer
+   ========================= */
 #footer {
   font-size: 14px;
   margin-top: 24px;
@@ -267,7 +288,9 @@ img.icon {
   color: #a14dd7;
 }
 
-/* === Status List === */
+/* =========================
+   Status List
+   ========================= */
 #status-list {
   margin: 20px 0;
 }
