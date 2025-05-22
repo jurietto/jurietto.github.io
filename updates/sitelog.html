@@ -109,15 +109,13 @@
           renderCommits('new');
 
           // Set last updated
-          const latestDate = new Date(commits[0].date);
-          document.querySelector('#last-updated p').innerHTML = `
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-kitty-bullet-2.gif" class="icon-date" alt="Charmmy Icon" />
-            Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}
-          `;
-        } catch (err) {
-          document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-          console.error(err);
-        }
+const latestDate = new Date(commits[0].date);
+document.querySelector('#last-updated p').textContent =
+  `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
+} catch (err) {
+  document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+  console.error(err);
+}
       }
 
       loadCommits();
