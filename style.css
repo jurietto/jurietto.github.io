@@ -5,52 +5,58 @@ body {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
   background-attachment: fixed;
   background-size: auto;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #2c2c2c;
   text-align: justify;
   overflow-x: hidden;
-  padding: 16px;
+  padding: 20px;
 }
 
 /* === Layout Container === */
 .main-content {
-  background-color: rgba(255, 255, 255, 0.96);
+  background-color: rgba(255, 255, 255, 0.95);
   border: 2px solid #e79cff;
   border-radius: 24px;
-  max-width: 880px;
+  max-width: 1000px;
   margin: 32px auto;
   padding: 32px;
-  box-shadow: 0 8px 24px rgba(231, 156, 255, 0.1), 0 0 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
-  backdrop-filter: blur(2px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
 /* === Headings === */
 h1, h2, h3, h4, h5, h6 {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  color: #222;
-  margin: 0.4em 0 0.2em;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0.5em 0 0.3em;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 36px;
-  text-shadow: 1px 1px #fff;
+  font-size: 42px;
+  margin-bottom: 0.5em;
 }
 
 h1 img.icon-header {
   vertical-align: middle;
-  margin-left: 6px;
+  margin-left: 4px;
   max-height: 36px;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px;
   margin-top: 24px;
   position: relative;
 }
@@ -59,10 +65,10 @@ h2::after {
   content: "";
   display: block;
   width: 48px;
-  height: 2px;
-  background: linear-gradient(to right, #e79cff, #f7deff, #e79cff);
-  margin-top: 6px;
-  border-radius: 1px;
+  height: 3px;
+  background: linear-gradient(to right, #e79cff, #f7deff);
+  margin-top: 8px;
+  border-radius: 2px;
 }
 
 /* === Paragraphs === */
@@ -75,13 +81,18 @@ p {
 
 /* === Page Text Section === */
 .page-text {
+  position: relative;
+  padding: 32px;
+  margin-bottom: 0;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid #e6b3ff;
   border-radius: 16px;
-  padding: 24px;
-  box-shadow: inset 0 0 6px rgba(231, 156, 255, 0.2);
-  position: relative;
-  padding-bottom: 48px;
+  box-shadow: inset 0 0 12px rgba(231, 156, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.page-text:hover {
+  box-shadow: inset 0 0 16px rgba(231, 156, 255, 0.3);
 }
 
 .page-text::after {
@@ -90,9 +101,9 @@ p {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 10px;
-  background: linear-gradient(to right, #e79cff, #f7deff, #e79cff);
-  opacity: 0.4;
+  height: 12px;
+  background: linear-gradient(to right, #e79cff 0%, #f7deff 50%, #e79cff 100%);
+  opacity: 0.6;
   border-radius: 0 0 8px 8px;
 }
 
@@ -107,31 +118,47 @@ p {
   gap: 4px;
 }
 
+#last-updated img.icon-date {
+  height: 18px;
+  margin-right: 2px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
 /* === Status Box === */
 #my-status {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
-  padding: 12px 16px;
+  margin-bottom: 20px;
+  padding: 16px 20px;
   background: rgba(231, 156, 255, 0.12);
   border: 1px solid #e79cff;
-  border-radius: 14px;
-  font-size: 14px;
+  border-radius: 16px;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+#my-status:hover {
+  background: rgba(231, 156, 255, 0.18);
+  transform: translateY(-1px);
 }
 
 #my-status img {
   height: 18px;
   flex-shrink: 0;
   vertical-align: middle;
+  margin-top: -2px;
 }
 
 .status-text {
   display: flex;
   align-items: center;
   gap: 4px;
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .status-prefix,
@@ -151,6 +178,7 @@ p {
   color: #888;
   white-space: nowrap;
   margin-left: auto;
+  align-self: center;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -159,42 +187,68 @@ p {
 /* === Tables === */
 table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 16px;
-  font-size: 14px;
-  color: #333;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #2c2c2c;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 th, td {
-  padding: 6px 8px;
+  padding: 12px 16px;
   vertical-align: middle;
   text-align: left;
 }
 
 th {
-  border-bottom: 2px solid #e79cff;
+  background: rgba(231, 156, 255, 0.1);
   color: #9b2c9b;
-  font-weight: normal;
+  font-weight: 600;
+  border-bottom: 2px solid #e79cff;
 }
 
 td {
-  border-bottom: 1px dotted #e79cff;
+  border-bottom: 1px solid rgba(231, 156, 255, 0.2);
+}
+
+table tbody tr {
+  transition: background-color 0.2s ease;
 }
 
 table tbody tr:hover {
-  background-color: rgba(231, 156, 255, 0.06);
+  background-color: rgba(231, 156, 255, 0.08);
 }
 
 /* === Links === */
 a {
-  color: #e79cff;
-  text-decoration: underline;
+  color: #d17aff;
+  text-decoration: none;
+  position: relative;
   transition: color 0.2s ease;
 }
 
-a:hover,
-a:active {
+a:hover {
   color: #a14dd7;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -1px;
+  left: 0;
+  background-color: #a14dd7;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 /* === Images === */
@@ -207,6 +261,7 @@ img.icon {
   height: 16px;
   vertical-align: middle;
   margin-right: 4px;
+  margin-top: -2px;
 }
 
 /* === Controls === */
@@ -220,33 +275,44 @@ img.icon {
 }
 
 #controls select#sort {
-  font-size: 14px;
-  color: #222;
+  font-size: 15px;
+  color: #2c2c2c;
   background: #fff;
   border: 1px solid #e79cff;
-  padding: 0.3rem 0.5rem;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+#controls select#sort:hover {
+  border-color: #d17aff;
+  box-shadow: 0 2px 8px rgba(231, 156, 255, 0.2);
 }
 
 /* === Footer Styles === */
 #footer {
-  font-size: 14px;
+  font-size: 15px;
   margin-top: 32px;
-  color: #555;
+  color: #666;
   text-align: center;
+  padding: 24px 0;
 }
 
 #footer p {
-  display: flex;
+  text-align: center;
   justify-content: center;
+  display: flex;
   align-items: center;
   margin: 0.5em 0;
 }
 
 #footer .footer-links a {
-  color: #e79cff;
+  color: #d17aff;
   text-decoration: none;
-  margin: 0 6px;
+  margin: 0 8px;
+  transition: color 0.2s ease;
 }
 
 #footer .footer-links a:hover {
@@ -256,17 +322,6 @@ img.icon {
 /* === Status Log Divider === */
 #status-list hr {
   border: 0;
-  border-bottom: 1px dotted #e79cff;
-  margin: 12px 0;
-}
-
-/* === Unified Icon Styling === */
-img.icon,
-.commit-header img,
-.post img {
-  height: 16px;
-  width: 16px;
-  object-fit: contain;
-  vertical-align: middle;
-  margin-right: 4px;
+  border-bottom: 1px solid rgba(231, 156, 255, 0.3);
+  margin: 16px 0;
 }
