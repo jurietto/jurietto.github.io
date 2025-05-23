@@ -8,11 +8,9 @@
 </head>
 
 <body>
-<!-- player.html -->
-<div id="music-bar"> ... </div>
-<div id="playlist-panel"> ... </div>
-<audio id="audio"></audio>
 
+  <!-- Injected player will appear here -->
+  <div id="player-container"></div>
 
   <div class="main-content"> 
     <h1>Updates</h1>
@@ -22,7 +20,10 @@
     </div>
 
     <p class="page-text">
-      This section is where I keep track of personal updates and site changes. <strong>Life Updates</strong> is where I write about personal stuff—things that's been going on. <strong>Site Log</strong> is for tracking technical edits and general maintenance. And <strong>Status Log</strong> which is just a timeline of notes—micro-logs... Altogether these help me stay organized and give anyone who might visit a sense of whatever is happening...
+      This section is where I keep track of personal updates and site changes.
+      <strong>Life Updates</strong> is where I write about personal stuff—things that's been going on.
+      <strong>Site Log</strong> is for tracking technical edits and general maintenance.
+      And <strong>Status Log</strong> which is just a timeline of notes—micro-logs...
     </p>
 
     <p>
@@ -42,21 +43,21 @@
       <tbody>
         <tr>
           <td class="file-cell">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="icon" class="icon" />
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
             <a href="/updates/lifeupdates.html">Life Updates</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
         <tr>
           <td class="file-cell">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="icon" class="icon" />
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
             <a href="/updates/sitelog.html">Site Log</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
         <tr>
           <td class="file-cell">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="icon" class="icon" />
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
             <a href="/updates/statuslog.html">Status Log</a>
           </td>
           <td class="detailsColumn">HTML</td>
@@ -66,31 +67,28 @@
 
     <!-- Footer -->
     <div id="footer"></div>
-
-    <!-- Scripts -->
-    <script src="/script.js"></script>
-    <script>
-      // Load footer content
-      fetch('/footer.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('footer').innerHTML = data;
-        });
-    </script>
   </div>
 
-  <!-- Add this just before closing </body> -->
+  <!-- Scripts -->
+  <script src="/script.js"></script>
   <script>
+    // Load footer content
+    fetch('/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+
+    // Load and inject player
     fetch('/player.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('player-container').innerHTML = html;
-      // Now load the script manually
-      const script = document.createElement('script');
-      script.src = '/player.js';
-      script.defer = true;
-      document.body.appendChild(script);
-    });
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html>
