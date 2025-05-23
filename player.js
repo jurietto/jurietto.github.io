@@ -8,34 +8,11 @@ const durationEl = document.getElementById('duration');
 const playlist = document.getElementById('playlist');
 const playlistPanel = document.getElementById('playlist-panel');
 const togglePlaylistBtn = document.getElementById('toggle-playlist');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
-
-playBtn.addEventListener('click', () => audio.play());
-pauseBtn.addEventListener('click', () => audio.pause());
-volume.addEventListener('input', () => audio.volume = volume.value);
-togglePlaylistBtn.addEventListener('click', () => playlistPanel.classList.toggle('show'));
-
-playlist.addEventListener('click', e => {
-  if (e.target.tagName === 'LI') {
-    [...playlist.children].forEach(li => li.classList.remove('active'));
-    e.target.classList.add('active');
-    audio.src = e.target.dataset.src;
-    audio.play();
-    currentTrack = e.target;
-  }
-});
-
-audio.addEventListener('timeupdate', () => {
-  const percent = (audio.currentTime / audio.duration) * 100;
-  progress.value = percent || 0;
-  currentTimeEl.textContent = formatTime(audio.currentTime);
-  durationEl.textContent = formatTime(audio.duration);
-});
-
-progress.addEventListener('input', () => {
-  audio.currentTime = (progress.value / 100) * audio.duration;
-});
 
 function formatTime(seconds) {
   if (isNaN(seconds)) return '0:00';
@@ -43,9 +20,6 @@ function formatTime(seconds) {
   const s = Math.floor(seconds % 60).toString().padStart(2, '0');
   return `${m}:${s}`;
 }
-const prevBtn = document.getElementById('prev');
-const nextBtn = document.getElementById('next');
-const trackList = [...playlist.querySelectorAll('li')];
 
 function playTrack(index) {
   if (index < 0 || index >= trackList.length) return;
@@ -56,6 +30,33 @@ function playTrack(index) {
   audio.play();
   currentTrack = item;
 }
+
+playBtn.addEventListener('click', () => audio.play());
+pauseBtn.addEventListener('click', () => audio.pause());
+volume.addEventListener('input', () => audio.volume = volume.value);
+togglePlaylistBtn.addEventListener('click', () => playlistPanel.classList.toggle('show'));
+
+playlist.addEventListener('click', e => {
+  if (e.target.tagName === 'LI') {
+    trackList.forEach(li => li.classList.remove('active'));
+    e.target.classList.add('active');
+    audio.src = e.target.dataset.src;
+    audio.play();
+    currentTrack = e.target;
+  }
+});
+
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  const percent = (audio.currentTime / audio.duration) * 100;
+  progress.value = percent;
+  currentTimeEl.textContent = formatTime(audio.currentTime);
+  durationEl.textContent = formatTime(audio.duration);
+});
+
+progress.addEventListener('input', () => {
+  audio.currentTime = (progress.value / 100) * audio.duration;
+});
 
 prevBtn.addEventListener('click', () => {
   if (!currentTrack) return;
