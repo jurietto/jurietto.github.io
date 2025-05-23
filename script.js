@@ -1,13 +1,12 @@
 // --- Music Player Functionality ---
 
 const tracks = [
-  { title: "Track 1", url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E7%B4%97%E8%80%B6%E9%A6%99%20-ROSARY-.mp3" },
-  { title: "Track 2", url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E6%A2%A8%E6%B2%99%20-REINCARNATION-%20EP..mp3" },
-  { title: "Track 3", url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E9%82%84%E3%82%8B%E3%82%82%E3%81%AE%E3%83%BB%E7%B6%99%E3%81%90%E3%82%82%E3%81%AE%20-TO%20DETERMINATION-%20EP..mp3" }
+  { title: "Track 1", url: "https://example.com/song1.mp3" },
+  { title: "Track 2", url: "https://example.com/song2.mp3" },
+  { title: "Track 3", url: "https://example.com/song3.mp3" }
 ];
 
 let currentTrack = 0;
-
 const audio = document.getElementById("audio");
 const playPauseBtn = document.getElementById("play-pause");
 const nextBtn = document.getElementById("next");
@@ -26,25 +25,32 @@ function formatTime(t) {
   return `${m}:${s}`;
 }
 
-function loadTrack(index) {
-  const track = tracks[index];
-  audio.src = track.url;
-  audio.load();
-  audio.play();
-  playPauseBtn.textContent = "Pause";
-  highlightTrack(index);
-}
-
 function highlightTrack(index) {
-  document.querySelectorAll("#playlist li").forEach((li, i) => {
+  [...playlistEl.children].forEach((li, i) => {
     li.classList.toggle("active", i === index);
   });
 }
 
+function loadTrack(index, play = true) {
+  currentTrack = index;
+  audio.src = tracks[index].url;
+  audio.load();
+  highlightTrack(index);
+  if (play) {
+    audio.play();
+    playPauseBtn.textContent = "Pause";
+  } else {
+    playPauseBtn.textContent = "Play";
+  }
+}
+
+// Initial load of first track without autoplay
+loadTrack(0, false);
+
+// Controls
 playPauseBtn.onclick = () => {
-  if (audio.src === "") {
-    loadTrack(currentTrack);
-  } else if (audio.paused) {
+  if (!audio.src) loadTrack(currentTrack);
+  if (audio.paused) {
     audio.play();
     playPauseBtn.textContent = "Pause";
   } else {
@@ -53,46 +59,33 @@ playPauseBtn.onclick = () => {
   }
 };
 
-nextBtn.onclick = () => {
-  currentTrack = (currentTrack + 1) % tracks.length;
-  loadTrack(currentTrack);
-};
+nextBtn.onclick = () => loadTrack((currentTrack + 1) % tracks.length);
+backBtn.onclick = () => loadTrack((currentTrack - 1 + tracks.length) % tracks.length);
 
-backBtn.onclick = () => {
-  currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-  loadTrack(currentTrack);
-};
-
-volume.oninput = () => {
-  audio.volume = volume.value;
-};
-
-seeker.oninput = () => {
-  audio.currentTime = seeker.value;
-};
+volume.oninput = () => { audio.volume = volume.value; };
+seeker.oninput = () => { audio.currentTime = seeker.value; };
 
 audio.ontimeupdate = () => {
-  seeker.max = audio.duration || 0;
-  seeker.value = audio.currentTime;
-  currentTimeEl.textContent = formatTime(audio.currentTime);
-  durationEl.textContent = formatTime(audio.duration || 0);
+  if (!isNaN(audio.duration)) {
+    seeker.max = audio.duration;
+    seeker.value = audio.currentTime;
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
+  }
 };
 
-toggleBtn.onclick = () => {
-  playlistPanel.classList.toggle("show");
-};
+audio.onended = () => nextBtn.click();
 
+toggleBtn.onclick = () => playlistPanel.classList.toggle("show");
+
+// Build playlist
 tracks.forEach((track, i) => {
   const li = document.createElement("li");
   li.textContent = track.title;
-  li.onclick = () => {
-    currentTrack = i;
-    loadTrack(i);
-  };
+  li.onclick = () => loadTrack(i, true);
   playlistEl.appendChild(li);
 });
 
-loadTrack(currentTrack);
 
 
 
