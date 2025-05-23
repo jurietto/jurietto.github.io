@@ -15,10 +15,11 @@
   </style>
 </head>
 <body>
+  <!-- Add this immediately after <body> -->
+  <div id="player-container"></div>
+
   <div class="main-content">
-    <h1>
-      Site Log
-    </h1>
+    <h1>Site Log</h1>
 
     <div id="last-updated">
       <p>Last Updated: Loading...</p>
@@ -50,6 +51,7 @@
       <p>Loading commit history...</p>
     </div>
 
+    <!-- Footer -->
     <div id="footer"></div>
 
     <script>
@@ -108,13 +110,13 @@
           renderCommits('new');
 
           // Set last updated
-const latestDate = new Date(commits[0].date);
-document.querySelector('#last-updated p').textContent =
-  `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
-} catch (err) {
-  document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-  console.error(err);
-}
+          const latestDate = new Date(commits[0].date);
+          document.querySelector('#last-updated p').textContent =
+            `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
+        } catch (err) {
+          document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+          console.error(err);
+        }
       }
 
       loadCommits();
@@ -129,5 +131,14 @@ document.querySelector('#last-updated p').textContent =
 
     <script src="../script.js"></script>
   </div>
+
+  <!-- Add this just before closing </body> -->
+  <script>
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+      });
+  </script>
 </body>
 </html>
