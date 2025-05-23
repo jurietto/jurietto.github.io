@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* === Life Update Divider === */
     #lu-posts hr {
       border: 0;
       border-bottom: 1px dotted #e79cff;
@@ -16,11 +15,9 @@
 </head>
 
 <body>
-  <!-- player.html -->
-<div id="music-bar"> ... </div>
-<div id="playlist-panel"> ... </div>
-<audio id="audio"></audio>
 
+  <!-- Injected music player -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Life Updates</h1>
@@ -40,7 +37,6 @@
       </a>
     </p>
 
-    <!-- Controls block -->
     <div id="controls">
       <label for="sort">Sort by:</label>
       <select id="sort">
@@ -49,87 +45,81 @@
       </select>
     </div>
 
-    <!-- Life updates content -->
     <div id="lu-posts">
       <p>Loading life updates...</p>
     </div>
 
-    <!-- Footer -->
     <div id="footer"></div>
+  </div>
 
-    <script>
-      fetch('../updates/lu')
-        .then(res => res.text())
-        .then(html => {
-          const postsContainer = document.getElementById('lu-posts');
-          const tempContainer = document.createElement('div');
-          tempContainer.innerHTML = html;
+  <!-- Scripts -->
+  <script>
+    fetch('../updates/lu')
+      .then(res => res.text())
+      .then(html => {
+        const postsContainer = document.getElementById('lu-posts');
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = html;
 
-          const posts = Array.from(tempContainer.getElementsByClassName('post'));
+        const posts = Array.from(tempContainer.getElementsByClassName('post'));
 
-          // Insert <hr> after each post
-          posts.forEach(post => {
-            post.setAttribute('data-date', post.querySelector('strong')?.textContent.split('–')[0]?.trim());
+        posts.forEach(post => {
+          post.setAttribute('data-date', post.querySelector('strong')?.textContent.split('–')[0]?.trim());
+          postsContainer.appendChild(post);
+          const hr = document.createElement('hr');
+          postsContainer.appendChild(hr);
+        });
+
+        function sortPosts(order) {
+          const postElements = Array.from(postsContainer.querySelectorAll('.post'));
+          postElements.sort((a, b) => {
+            const dateA = new Date(a.dataset.date);
+            const dateB = new Date(b.dataset.date);
+            return order === 'old' ? dateA - dateB : dateB - dateA;
+          });
+
+          postsContainer.innerHTML = '';
+          postElements.forEach(post => {
             postsContainer.appendChild(post);
             const hr = document.createElement('hr');
             postsContainer.appendChild(hr);
           });
+        }
 
-          function sortPosts(order) {
-            const postElements = Array.from(postsContainer.querySelectorAll('.post'));
-            postElements.sort((a, b) => {
-              const dateA = new Date(a.dataset.date);
-              const dateB = new Date(b.dataset.date);
-              return order === 'old' ? dateA - dateB : dateB - dateA;
-            });
+        const firstPost = postsContainer.querySelector('.post');
+        if (firstPost) {
+          const lastDate = new Date(firstPost.dataset.date);
+          const dateString = lastDate.toLocaleString(undefined, {
+            dateStyle: 'long',
+            timeStyle: 'short'
+          });
+          document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
+        }
 
-            // Clear and reinsert posts with <hr>
-            postsContainer.innerHTML = '';
-            postElements.forEach(post => {
-              postsContainer.appendChild(post);
-              const hr = document.createElement('hr');
-              postsContainer.appendChild(hr);
-            });
-          }
+        const sortSelect = document.getElementById('sort');
+        sortPosts(sortSelect.value);
+        sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
+      });
 
-          const firstPost = postsContainer.querySelector('.post');
-          if (firstPost) {
-            const lastDate = new Date(firstPost.dataset.date);
-            const dateString = lastDate.toLocaleString(undefined, {
-              dateStyle: 'long',
-              timeStyle: 'short'
-            });
-            document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
-          }
+    // Load footer
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
 
-          const sortSelect = document.getElementById('sort');
-          sortPosts(sortSelect.value);
-          sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
-        });
-
-      // Load footer content
-      fetch('../footer.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('footer').innerHTML = html;
-        });
-    </script>
-
-    <script src="../script.js"></script>
-  </div>
-
-  <!-- Add this just before closing </body> -->
-  <script>
+    // Inject music player
     fetch('/player.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('player-container').innerHTML = html;
-      // Now load the script manually
-      const script = document.createElement('script');
-      script.src = '/player.js';
-      script.defer = true;
-      document.body.appendChild(script);
-    });
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
   </script>
+
+  <script src="../script.js"></script>
 </body>
 </html>
