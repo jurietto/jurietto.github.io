@@ -23,10 +23,11 @@ main, section, nav, footer {
 }
 
 main {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  padding: 24px 3vw 20px 3vw;
+  background: #ffe6fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(161, 77, 215, 0.08);
+  border: 1.5px solid #e79cff;
+  padding: 28px 3vw 22px 3vw;
   margin-top: 2em;
 }
 
@@ -35,18 +36,23 @@ h1 {
   margin: 0.7em 0 0.3em 0;
   font-weight: bold;
   letter-spacing: -1px;
+  color: #7a1c7a;
+  border-bottom: 3px solid #e79cff;
+  padding-bottom: 0.2em;
 }
 h2 {
   font-size: 1.4rem;
   margin: 1.5em 0 0.5em 0;
   font-weight: bold;
-  border-bottom: 2px solid #e0e0f7;
-  padding-bottom: 0.2em;
+  color: #a14dd7;
+  border-bottom: 2px solid #ffb3e6;
+  padding-bottom: 0.15em;
 }
 h3 {
   font-size: 1.1rem;
   margin: 1.2em 0 0.4em 0;
   font-weight: bold;
+  color: #7a1c7a;
 }
 
 p, ul, ol {
@@ -59,8 +65,8 @@ ul, ol {
 
 code, pre {
   font-family: 'Courier New', Courier, monospace;
-  background: #f4f4f4;
-  color: #7a1c7a;
+  background: #ffe6fa;
+  color: #a14dd7;
   font-size: 0.97em;
   border-radius: 4px;
 }
@@ -78,24 +84,33 @@ table {
   margin: 1.2em 0;
   font-size: 0.98em;
   background: #fff;
+  border: 1.5px solid #e79cff;
+  border-radius: 6px;
+  overflow: hidden;
 }
 th, td {
   padding: 7px 10px;
   text-align: left;
 }
 th {
-  background: #f0eaff;
+  background: #e79cff;
   color: #7a1c7a;
   font-weight: bold;
-  border-bottom: 2px solid #e0e0f7;
+  border-bottom: 2px solid #ffb3e6;
 }
 td {
   border-bottom: 1px solid #ececf7;
 }
+tr:nth-child(even) td {
+  background: #ffe6fa;
+}
+tr:nth-child(odd) td {
+  background: #f7f7fa;
+}
 
 nav {
   margin-bottom: 1.5em;
-  border-bottom: 1px solid #e0e0f7;
+  border-bottom: 1.5px solid #e79cff;
   padding-bottom: 0.5em;
 }
 
@@ -103,18 +118,19 @@ footer {
   font-size: 0.97em;
   color: #888;
   text-align: center;
-  border-top: 1px solid #e0e0f7;
+  border-top: 1.5px solid #e79cff;
   padding-top: 1em;
   margin-bottom: 0;
+  background: #f7f7fa;
 }
 
 a {
-  color: #7a1c7a;
+  color: #a14dd7;
   text-decoration: underline;
   transition: color 0.2s;
 }
 a:hover, a:active {
-  color: #a14dd7;
+  color: #ffb3e6;
 }
 
 img.icon, h1 img.icon-header, #last-updated img.icon-date, #my-status img, #statusDate img, .commit-header img {
