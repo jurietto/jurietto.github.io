@@ -55,19 +55,19 @@
     <div id="footer"></div>
   </div>
 
-  <!-- Load Music Player & Dependencies -->
+  <!-- Inject Music Player HTML & then JS -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Inject player.html into the player-container
+    window.onload = () => {
+      // Inject player.html
       fetch('player.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('player-container').innerHTML = html;
 
-          // After HTML is added, load player.js
+          // Now that the player HTML is injected, load and run player.js
           const script = document.createElement('script');
           script.src = 'player.js';
-          script.defer = true;
+          script.onload = () => console.log('Player script loaded.');
           document.body.appendChild(script);
         });
 
@@ -78,17 +78,19 @@
           document.getElementById('footer').innerHTML = data;
         });
 
-      // Load dynamic status
+      // Load status text
       fetch('updates/statuslog.json')
         .then(res => res.json())
         .then(data => {
-          if (data[0]) document.getElementById('myStatus').textContent = data[0].text;
+          if (data[0]) {
+            document.getElementById('myStatus').textContent = data[0].text;
+          }
         })
         .catch(err => {
           console.error('Status error:', err);
           document.getElementById('myStatus').textContent = 'Status unavailable.';
         });
-    });
+    };
   </script>
 
   <script src="script.js"></script>
