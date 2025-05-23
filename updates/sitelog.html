@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* === Dotted Commit Divider === */
     #commit-list hr {
       border: 0;
       border-bottom: 1px dotted #e79cff;
@@ -15,11 +14,9 @@
   </style>
 </head>
 <body>
- <!-- player.html -->
-<div id="music-bar"> ... </div>
-<div id="playlist-panel"> ... </div>
-<audio id="audio"></audio>
 
+  <!-- Injected music player -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Site Log</h1>
@@ -29,7 +26,7 @@
     </div>
 
     <p class="page-text">
-      This page keeps a record of updates and changes made to the site. It helps keep track of edits, adjustments, and improvements over time. The entries show who made the update (<strong>Juri</strong> is me — <strong>Jurietto</strong> is the site running in the background on GitHub), when it was done, and a short note about what changed. The list updates automatically and you can view updates in order from newest to oldest using the dropdown menu.
+      This page keeps a record of updates and changes made to the site...
     </p>
 
     <p>
@@ -39,114 +36,104 @@
       </a>
     </p>
 
-    <!-- Controls block -->
     <div id="controls">
       <label for="sort">Sort by:</label>
       <select id="sort">
         <option value="new">Newest</option>
         <option value="old">Oldest</option>
-        <!-- Months will be dynamically added -->
       </select>
     </div>
 
-    <!-- Commit log -->
     <div id="commit-list">
       <p>Loading commit history...</p>
     </div>
 
-    <!-- Footer -->
     <div id="footer"></div>
-
-    <script>
-      async function loadCommits() {
-        try {
-          const res = await fetch('../commits.json');
-          const commits = await res.json();
-          const container = document.getElementById('commit-list');
-          const sortSelect = document.getElementById('sort');
-
-          // Populate months in the dropdown
-          const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
-          months.forEach(month => {
-            const option = document.createElement('option');
-            option.value = month;
-            option.textContent = month;
-            sortSelect.appendChild(option);
-          });
-
-          function renderCommits(order) {
-            container.innerHTML = '';
-            let filtered = [...commits];
-
-            if (order === 'old') {
-              filtered.reverse();
-            } else if (order !== 'new') {
-              filtered = filtered.filter(c => c.date.startsWith(order));
-            }
-
-            if (filtered.length === 0) {
-              container.innerHTML = '<p>No commits found for this period.</p>';
-              return;
-            }
-
-            filtered.forEach(commit => {
-              const date = new Date(commit.date).toLocaleString(undefined, {
-                dateStyle: 'medium',
-                timeStyle: 'short'
-              });
-
-              const entry = document.createElement('div');
-              entry.className = 'post';
-              entry.innerHTML = `
-                <p class="commit-header">
-                  <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="update icon" class="icon" />
-                  <strong>${commit.author}</strong> – <strong>${date}</strong>
-                </p>
-                <p class="commit-message">${commit.message}</p>
-                <hr />
-              `;
-              container.appendChild(entry);
-            });
-          }
-
-          sortSelect.addEventListener('change', e => renderCommits(e.target.value));
-          renderCommits('new');
-
-          // Set last updated
-          const latestDate = new Date(commits[0].date);
-          document.querySelector('#last-updated p').textContent =
-            `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
-        } catch (err) {
-          document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-          console.error(err);
-        }
-      }
-
-      loadCommits();
-
-      // Load footer
-      fetch('../footer.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('footer').innerHTML = html;
-        });
-    </script>
-
-    <script src="../script.js"></script>
   </div>
 
-  <!-- Add this just before closing </body> -->
+  <!-- Scripts -->
+  <script src="../script.js"></script>
+
   <script>
+    async function loadCommits() {
+      try {
+        const res = await fetch('../commits.json');
+        const commits = await res.json();
+        const container = document.getElementById('commit-list');
+        const sortSelect = document.getElementById('sort');
+
+        const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
+        months.forEach(month => {
+          const option = document.createElement('option');
+          option.value = month;
+          option.textContent = month;
+          sortSelect.appendChild(option);
+        });
+
+        function renderCommits(order) {
+          container.innerHTML = '';
+          let filtered = [...commits];
+
+          if (order === 'old') {
+            filtered.reverse();
+          } else if (order !== 'new') {
+            filtered = filtered.filter(c => c.date.startsWith(order));
+          }
+
+          if (filtered.length === 0) {
+            container.innerHTML = '<p>No commits found for this period.</p>';
+            return;
+          }
+
+          filtered.forEach(commit => {
+            const date = new Date(commit.date).toLocaleString(undefined, {
+              dateStyle: 'medium',
+              timeStyle: 'short'
+            });
+
+            const entry = document.createElement('div');
+            entry.className = 'post';
+            entry.innerHTML = `
+              <p class="commit-header">
+                <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+                <strong>${commit.author}</strong> – <strong>${date}</strong>
+              </p>
+              <p class="commit-message">${commit.message}</p>
+              <hr />
+            `;
+            container.appendChild(entry);
+          });
+        }
+
+        sortSelect.addEventListener('change', e => renderCommits(e.target.value));
+        renderCommits('new');
+
+        const latestDate = new Date(commits[0].date);
+        document.querySelector('#last-updated p').textContent =
+          `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
+      } catch (err) {
+        document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+        console.error(err);
+      }
+    }
+
+    loadCommits();
+
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
+
     fetch('/player.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('player-container').innerHTML = html;
-      // Now load the script manually
-      const script = document.createElement('script');
-      script.src = '/player.js';
-      script.defer = true;
-      document.body.appendChild(script);
-    });
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html>
