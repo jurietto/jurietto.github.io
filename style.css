@@ -339,14 +339,5 @@
     margin-right: 4px;
     margin-top: -2px;
   }
-  
-  /* Responsive: minimal padding/margin on small screens */
-  @media (max-width: 600px) {
-    .page-text {
-      padding: 4px 2vw;
-      margin: 0;
-    }
-    body {
-      padding: 0;
-    }
+
   }
