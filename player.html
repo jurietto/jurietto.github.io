@@ -3,7 +3,6 @@
   body, #music-bar, #playlist-panel, #player-controls, button, input {
     font-family: Arial, sans-serif;
   }
-
   #music-bar {
     position: fixed;
     top: 0;
@@ -20,7 +19,6 @@
     height: 36px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   }
-
   #player-controls {
     display: flex;
     align-items: center;
@@ -28,18 +26,15 @@
     flex-grow: 1;
     flex-wrap: nowrap;
   }
-
   #player-controls button {
     all: unset;
     color: #9b2c9b;
     cursor: pointer;
     font-size: 13px;
   }
-
   #player-controls button:hover {
     text-decoration: underline;
   }
-
   #progress-container {
     display: flex;
     align-items: center;
@@ -47,29 +42,22 @@
     flex-grow: 1;
     max-width: 240px;
   }
-
-  #current-time,
-  #duration {
+  #current-time, #duration {
     font-size: 12px;
     color: #4f0e83;
     width: 42px;
     text-align: center;
   }
-
-  #progress,
-  #volume {
+  #progress, #volume {
     height: 4px;
     accent-color: #e79cff;
   }
-
   #progress {
     flex-grow: 1;
   }
-
   #volume {
     width: 60px;
   }
-
   #playlist-panel {
     position: fixed;
     top: 36px;
@@ -84,17 +72,14 @@
     transform: translateX(100%);
     transition: transform 0.3s ease;
   }
-
   #playlist-panel.show {
     transform: translateX(0%);
   }
-
   #playlist {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-
   #playlist li {
     padding: 6px 12px;
     font-size: 13px;
@@ -102,19 +87,15 @@
     cursor: pointer;
     transition: background 0.2s ease;
   }
-
   #playlist li:hover {
     background-color: #f5d9ff;
   }
-
   #playlist li.active {
     background-color: #e79cff;
     color: #fff;
   }
-
   @media screen and (max-width: 600px) {
-    #music-bar,
-    #playlist-panel {
+    #music-bar, #playlist-panel {
       display: none !important;
     }
   }
@@ -137,9 +118,9 @@
 
 <div id="playlist-panel">
   <ul id="playlist">
-    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E7%B4%97%E8%80%B6%E9%A6%99%20-ROSARY-.mp3">紗耶香 -ROSARY-</li>
-    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E6%A2%A8%E6%B2%99%20-REINCARNATION-%20EP..mp3">梨沙 -REINCARNATION- EP.</li>
-    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E8%96%84%E3%82%8C%E8%A1%8C%E3%81%8F%E5%B8%8C%E6%9C%9B%20-MISERY-.mp3">薄れ行く希望 -MISERY-</li>
+    <li data-src="song1.mp3">Track 1</li>
+    <li data-src="song2.mp3">Track 2</li>
+    <li data-src="song3.mp3">Track 3</li>
   </ul>
 </div>
 
