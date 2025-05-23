@@ -7,8 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-  <!-- Add this immediately after <body> -->
-  <div id="player-container"></div>
+<!-- player.html -->
+<div id="music-bar"> ... </div>
+<div id="playlist-panel"> ... </div>
+<audio id="audio"></audio>
+
 
   <div class="main-content">
     <h1>Status Log</h1>
@@ -108,10 +111,15 @@
   <!-- Add this just before closing </body> -->
   <script>
     fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-      });
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('player-container').innerHTML = html;
+      // Now load the script manually
+      const script = document.createElement('script');
+      script.src = '/player.js';
+      script.defer = true;
+      document.body.appendChild(script);
+    });
   </script>
 </body>
 </html>
