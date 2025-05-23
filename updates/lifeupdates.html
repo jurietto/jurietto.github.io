@@ -16,21 +16,18 @@
 </head>
 
 <body>
-  <div class="main-content">
+  <!-- Add this immediately after <body> -->
+  <div id="player-container"></div>
 
-    <h1>
-      Life Updates
-    </h1>
+  <div class="main-content">
+    <h1>Life Updates</h1>
 
     <div id="last-updated">
-      <p>
-        Last Updated: Loading...
-      </p>
+      <p>Last Updated: Loading...</p>
     </div>
 
     <p class="page-text">
       A space where I jot down life stuff, events, and whatever’s been going on.
-
     </p>
 
     <p>
@@ -58,63 +55,73 @@
     <div id="footer"></div>
 
     <script>
-  fetch('../updates/lu')
-    .then(res => res.text())
-    .then(html => {
-      const postsContainer = document.getElementById('lu-posts');
-      const tempContainer = document.createElement('div');
-      tempContainer.innerHTML = html;
+      fetch('../updates/lu')
+        .then(res => res.text())
+        .then(html => {
+          const postsContainer = document.getElementById('lu-posts');
+          const tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
 
-      const posts = Array.from(tempContainer.getElementsByClassName('post'));
+          const posts = Array.from(tempContainer.getElementsByClassName('post'));
 
-      // Insert <hr> after each post
-      posts.forEach(post => {
-        post.setAttribute('data-date', post.querySelector('strong')?.textContent.split('–')[0]?.trim());
-        postsContainer.appendChild(post);
-        const hr = document.createElement('hr');
-        postsContainer.appendChild(hr);
-      });
+          // Insert <hr> after each post
+          posts.forEach(post => {
+            post.setAttribute('data-date', post.querySelector('strong')?.textContent.split('–')[0]?.trim());
+            postsContainer.appendChild(post);
+            const hr = document.createElement('hr');
+            postsContainer.appendChild(hr);
+          });
 
-      function sortPosts(order) {
-        const postElements = Array.from(postsContainer.querySelectorAll('.post'));
-        postElements.sort((a, b) => {
-          const dateA = new Date(a.dataset.date);
-          const dateB = new Date(b.dataset.date);
-          return order === 'old' ? dateA - dateB : dateB - dateA;
+          function sortPosts(order) {
+            const postElements = Array.from(postsContainer.querySelectorAll('.post'));
+            postElements.sort((a, b) => {
+              const dateA = new Date(a.dataset.date);
+              const dateB = new Date(b.dataset.date);
+              return order === 'old' ? dateA - dateB : dateB - dateA;
+            });
+
+            // Clear and reinsert posts with <hr>
+            postsContainer.innerHTML = '';
+            postElements.forEach(post => {
+              postsContainer.appendChild(post);
+              const hr = document.createElement('hr');
+              postsContainer.appendChild(hr);
+            });
+          }
+
+          const firstPost = postsContainer.querySelector('.post');
+          if (firstPost) {
+            const lastDate = new Date(firstPost.dataset.date);
+            const dateString = lastDate.toLocaleString(undefined, {
+              dateStyle: 'long',
+              timeStyle: 'short'
+            });
+            document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
+          }
+
+          const sortSelect = document.getElementById('sort');
+          sortPosts(sortSelect.value);
+          sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
         });
 
-        // Clear and reinsert posts with <hr>
-        postsContainer.innerHTML = '';
-        postElements.forEach(post => {
-          postsContainer.appendChild(post);
-          const hr = document.createElement('hr');
-          postsContainer.appendChild(hr);
+      // Load footer content
+      fetch('../footer.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('footer').innerHTML = html;
         });
-      }
-
-      const firstPost = postsContainer.querySelector('.post');
-      if (firstPost) {
-        const lastDate = new Date(firstPost.dataset.date);
-        const dateString = lastDate.toLocaleString(undefined, {
-          dateStyle: 'long',
-          timeStyle: 'short'
-        });
-        document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
-      }
-
-      const sortSelect = document.getElementById('sort');
-      sortPosts(sortSelect.value);
-      sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
-    });
-
-  fetch('../footer.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('footer').innerHTML = html;
-    });
-</script>
+    </script>
 
     <script src="../script.js"></script>
   </div>
+
+  <!-- Add this just before closing </body> -->
+  <script>
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+      });
+  </script>
 </body>
 </html>
