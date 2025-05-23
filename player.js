@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const audio = document.getElementById('audio');
   const playPauseBtn = document.getElementById('play-pause');
@@ -48,7 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
   prevBtn.onclick = () => loadTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
   nextBtn.onclick = () => loadTrack((currentTrackIndex + 1) % tracks.length);
   volume.oninput = () => { audio.volume = volume.value; };
-  progress.oninput = () => { if (audio.duration) audio.currentTime = (progress.value / 100) * audio.duration; };
+  progress.oninput = () => {
+    if (audio.duration) {
+      audio.currentTime = (progress.value / 100) * audio.duration;
+    }
+  };
 
   audio.ontimeupdate = () => {
     if (audio.duration) {
@@ -75,5 +80,5 @@ document.addEventListener('DOMContentLoaded', () => {
     tracks[i].onclick = () => loadTrack(i);
   }
 
-  loadTrack(0, false); // Load first track without playing
+  loadTrack(0, false);
 });
