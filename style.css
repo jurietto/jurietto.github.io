@@ -342,15 +342,11 @@
   
   /* Responsive: minimal padding/margin on small screens */
   @media (max-width: 600px) {
-    .main-content, .page-text {
+    .page-text {
       padding: 4px 2vw;
       margin: 0;
     }
     body {
       padding: 0;
-    }
-    table, th, td {
-      font-size: 1em;
-      padding: 4px 2px;
     }
   }
