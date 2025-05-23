@@ -1,5 +1,4 @@
-
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   const audio = document.getElementById('audio');
   const playPauseBtn = document.getElementById('play-pause');
   const prevBtn = document.getElementById('back');
@@ -9,8 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const playlistPanel = document.getElementById('playlist-panel');
   const togglePlaylistBtn = document.getElementById('toggle-playlist');
   const playlist = document.getElementById('playlist');
-  const tracks = playlist.getElementsByTagName('li');
+  const tracks = playlist?.getElementsByTagName('li') || [];
   let currentTrackIndex = 0;
+
+  if (!audio || !playPauseBtn || tracks.length === 0) {
+    console.error("Music player initialization failed: Missing elements.");
+    return;
+  }
 
   const formatTime = (t) => {
     const m = Math.floor(t / 60);
@@ -80,6 +84,5 @@ document.addEventListener('DOMContentLoaded', () => {
     tracks[i].onclick = () => loadTrack(i);
   }
 
-  loadTrack(0, false);
+  loadTrack(0, false); // Load the first track without autoplay
 });
- 
