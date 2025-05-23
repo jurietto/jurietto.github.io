@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <title>Index</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- OpenGraph / Twitter Meta -->
+  <!-- Metadata -->
   <meta property="og:title" content="Juri's Stuff" />
   <meta property="og:description" content="Juri's personal space on the web" />
   <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
@@ -15,12 +16,10 @@
   <meta name="twitter:title" content="Juri's Stuff" />
   <meta name="twitter:description" content="Juri's personal space on the web" />
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body>
 
-  <!-- Inject music player from player.html -->
+<body>
+  <!-- Music Player Will Be Injected -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -37,19 +36,17 @@
     </div>
 
     <p class="page-text">
-      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture. My favorite character is Charmmy Kitty...
+      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture...
     </p>
 
     <table>
-      <thead>
-        <tr><th>Name</th><th class="detailsColumn">Type</th></tr>
-      </thead>
+      <thead><tr><th>Name</th><th class="detailsColumn">Type</th></tr></thead>
       <tbody>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />Discord - sotokomori</td><td>Text</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
-        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">VNDB</a></td><td>URL</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="updates/updates.html">Updates</a></td><td>HTML</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="menhera">Menhera</a></td><td>HTML</td></tr>
       </tbody>
@@ -58,16 +55,16 @@
     <div id="footer"></div>
   </div>
 
-  <!-- Inject music player HTML and JS -->
+  <!-- Load Music Player & Dependencies -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Load player.html content
+      // Inject player.html into the player-container
       fetch('player.html')
         .then(res => res.text())
         .then(html => {
           document.getElementById('player-container').innerHTML = html;
 
-          // Load player.js script after injecting player HTML
+          // After HTML is added, load player.js
           const script = document.createElement('script');
           script.src = 'player.js';
           script.defer = true;
@@ -81,23 +78,19 @@
           document.getElementById('footer').innerHTML = data;
         });
 
-      // Load latest status
+      // Load dynamic status
       fetch('updates/statuslog.json')
         .then(res => res.json())
         .then(data => {
-          const latest = data[0];
-          if (latest) {
-            document.getElementById('myStatus').textContent = latest.text;
-          }
+          if (data[0]) document.getElementById('myStatus').textContent = data[0].text;
         })
         .catch(err => {
-          console.error('Failed to load status:', err);
+          console.error('Status error:', err);
           document.getElementById('myStatus').textContent = 'Status unavailable.';
         });
     });
   </script>
 
-  <!-- Your custom script -->
   <script src="script.js"></script>
 </body>
 </html>
