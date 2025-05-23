@@ -19,14 +19,12 @@
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
 
   <!-- Prevent zooming on mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
+  <!-- Add this immediately after <body> -->
+  <div id="player-container"></div>
 
-
-<div id="player-container"></div>
-
-  
   <div class="main-content">
     <h1>Index</h1>
 
@@ -35,7 +33,10 @@
     </div>
 
     <!-- Dynamic Status Box (text only, no timestamp, no icon) -->
-    <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
+    <div 
+      id="my-status" 
+      style="cursor: pointer;" 
+      onclick="window.location.href='updates/statuslog.html'">
       <div class="status-text">
         <span id="myStatus">Loading status...</span>
       </div>
@@ -108,14 +109,15 @@
     <!-- Footer -->
     <div id="footer"></div>
 
+    <!-- Scripts -->
     <script>
-        // Load the music player HTML from an external file (player.html)
-  fetch('/player.html') 
-    .then(res => res.text()) // Convert the response to plain text
-    .then(html => {
-      // Insert the fetched HTML into the <div id="player-container"> on this page
-      document.getElementById('player-container').innerHTML = html;
-    });
+      // Load the music player HTML from an external file (player.html)
+      fetch('/player.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('player-container').innerHTML = html;
+        });
+      
       // Load footer
       fetch('footer.html')
         .then(response => response.text())
@@ -137,8 +139,16 @@
           document.getElementById('myStatus').textContent = 'Status unavailable.';
         });
     </script>
-
     <script src="script.js"></script>
   </div>
+
+  <!-- Add this script just before closing </body> -->
+  <script>
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+      });
+  </script>
 </body>
 </html>
