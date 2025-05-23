@@ -4,22 +4,26 @@
   <meta charset="UTF-8" />
   <title>Index</title>
   <link rel="stylesheet" href="style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Metadata -->
+  <!-- OpenGraph / Facebook Meta -->
   <meta property="og:title" content="Juri's Stuff" />
   <meta property="og:description" content="Juri's personal space on the web" />
   <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
   <meta property="og:url" content="https://jurietto.github.io/" />
   <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Juri's Stuff" />
   <meta name="twitter:description" content="Juri's personal space on the web" />
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
-</head>
 
+  <!-- Prevent zooming on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
 <body>
-  <!-- Music Player Will Be Injected -->
+
+  <!-- Music Player will be injected here -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -36,17 +40,22 @@
     </div>
 
     <p class="page-text">
-      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture...
+      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture. My favorite character is Charmmy Kitty...
     </p>
 
     <table>
-      <thead><tr><th>Name</th><th class="detailsColumn">Type</th></tr></thead>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="detailsColumn">Type</th>
+        </tr>
+      </thead>
       <tbody>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />Discord - sotokomori</td><td>Text</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
-        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">VNDB</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="updates/updates.html">Updates</a></td><td>HTML</td></tr>
         <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="menhera">Menhera</a></td><td>HTML</td></tr>
       </tbody>
@@ -55,44 +64,42 @@
     <div id="footer"></div>
   </div>
 
-  <!-- Inject Music Player HTML & then JS -->
+  <!-- Scripts -->
   <script>
-    window.onload = () => {
-      // Inject player.html
-      fetch('player.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('player-container').innerHTML = html;
+    // Load music player HTML and JS
+    fetch('player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = 'player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
 
-          // Now that the player HTML is injected, load and run player.js
-          const script = document.createElement('script');
-          script.src = 'player.js';
-          script.onload = () => console.log('Player script loaded.');
-          document.body.appendChild(script);
-        });
+    // Load footer
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
 
-      // Load footer
-      fetch('footer.html')
-        .then(res => res.text())
-        .then(data => {
-          document.getElementById('footer').innerHTML = data;
-        });
-
-      // Load status text
-      fetch('updates/statuslog.json')
-        .then(res => res.json())
-        .then(data => {
-          if (data[0]) {
-            document.getElementById('myStatus').textContent = data[0].text;
-          }
-        })
-        .catch(err => {
-          console.error('Status error:', err);
-          document.getElementById('myStatus').textContent = 'Status unavailable.';
-        });
-    };
+    // Load latest status
+    fetch('updates/statuslog.json')
+      .then(res => res.json())
+      .then(data => {
+        const latest = data[0];
+        if (latest) {
+          document.getElementById('myStatus').textContent = latest.text;
+        }
+      })
+      .catch(err => {
+        console.error('Failed to load status:', err);
+        document.getElementById('myStatus').textContent = 'Status unavailable.';
+      });
   </script>
 
   <script src="script.js"></script>
 </body>
 </html>
+ 
