@@ -24,31 +24,7 @@
 <body>
 
 
-<div id="music-bar">
-  <div id="player-controls">
-    <button id="back">Back</button>
-    <button id="play-pause">Play</button>
-    <button id="next">Next</button>
-
-    <div id="progress-container">
-      <span id="current-time">0:00</span>
-      <input type="range" id="progress" value="0" min="0">
-      <span id="duration">0:00</span>
-    </div>
-
-    <input type="range" id="volume" min="0" max="1" step="0.01">
-
-    <button id="toggle-playlist">List</button>
-  </div>
-</div>
-
-<div id="playlist-panel">
-  <ul id="playlist"></ul>
-</div>
-
-<audio id="audio"></audio>
-
-
+<div id="player-container"></div>
 
   
   <div class="main-content">
@@ -133,6 +109,13 @@
     <div id="footer"></div>
 
     <script>
+        // Load the music player HTML from an external file (player.html)
+  fetch('/player.html') 
+    .then(res => res.text()) // Convert the response to plain text
+    .then(html => {
+      // Insert the fetched HTML into the <div id="player-container"> on this page
+      document.getElementById('player-container').innerHTML = html;
+    });
       // Load footer
       fetch('footer.html')
         .then(response => response.text())
