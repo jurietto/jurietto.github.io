@@ -5,29 +5,20 @@
   <title>Status Log</title>
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    #status-list hr {
-      border: 0;
-      border-bottom: 1px dotted #e79cff;
-      margin: 12px 0;
-    }
-  </style>
 </head>
 <body>
+  <!-- Add this immediately after <body> -->
+  <div id="player-container"></div>
+
   <div class="main-content">
-    <h1>
-      Status Log
-    </h1>
+    <h1>Status Log</h1>
 
     <div id="last-updated">
-      <p>
-        Juri: Loading...
-      </p>
+      <p>Juri: Loading...</p>
     </div>
 
     <p class="page-text">
       A timeline of little updates, moods, and notes. 
-
     </p>
 
     <p>
@@ -50,6 +41,7 @@
       <p>Loading status updates...</p>
     </div>
 
+    <!-- Footer -->
     <div id="footer"></div>
 
     <script>
@@ -112,5 +104,14 @@
 
     <script src="../script.js"></script>
   </div>
+
+  <!-- Add this just before closing </body> -->
+  <script>
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+      });
+  </script>
 </body>
 </html>
