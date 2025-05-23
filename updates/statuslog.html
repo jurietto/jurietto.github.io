@@ -7,11 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-<!-- player.html -->
-<div id="music-bar"> ... </div>
-<div id="playlist-panel"> ... </div>
-<audio id="audio"></audio>
 
+  <!-- Injected music player -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Status Log</h1>
@@ -54,7 +52,6 @@
           const list = document.getElementById('status-list');
           list.innerHTML = '';
 
-          // Convert entries to DOM elements
           const entries = data.map(entry => {
             const div = document.createElement('div');
             div.className = 'post';
@@ -88,9 +85,7 @@
           // Update "Last Updated"
           const latest = data[data.length - 1];
           if (latest) {
-            document.querySelector('#last-updated p').innerHTML = `
-              Juri: ${latest.time}
-            `;
+            document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
           }
         })
         .catch(err => {
@@ -108,18 +103,17 @@
     <script src="../script.js"></script>
   </div>
 
-  <!-- Add this just before closing </body> -->
+  <!-- Music Player Loader -->
   <script>
     fetch('/player.html')
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('player-container').innerHTML = html;
-      // Now load the script manually
-      const script = document.createElement('script');
-      script.src = '/player.js';
-      script.defer = true;
-      document.body.appendChild(script);
-    });
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html>
