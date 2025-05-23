@@ -32,9 +32,6 @@ body {
     font-weight: bold;
     color: #222;
     margin: 0.4em 0 0.2em;
-    display: flex;
-    align-items: center;
-    gap: 6px;
   }
   
   h1 {
@@ -64,11 +61,10 @@ body {
   }
   
   /* === Paragraphs === */
-  p {
-    margin: 0.8em 0;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  p, .page-text, .page-text p {
+    display: block;
+    align-items: unset;
+    gap: unset;
   }
   
   /* === Page Text Section === */
