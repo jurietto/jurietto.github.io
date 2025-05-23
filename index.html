@@ -5,12 +5,12 @@
   <title>Index</title>
   <link rel="stylesheet" href="style.css" />
 
+  <!-- OpenGraph / Twitter Meta -->
   <meta property="og:title" content="Juri's Stuff" />
   <meta property="og:description" content="Juri's personal space on the web" />
   <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
   <meta property="og:url" content="https://jurietto.github.io/" />
   <meta property="og:type" content="website" />
-
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Juri's Stuff" />
   <meta name="twitter:description" content="Juri's personal space on the web" />
@@ -20,7 +20,7 @@
 </head>
 <body>
 
-  <!-- Music Player Injection Point -->
+  <!-- Inject music player from player.html -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -37,44 +37,51 @@
     </div>
 
     <p class="page-text">
-      I'm Juri (or Juliet) and I'm from California...
+      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture. My favorite character is Charmmy Kitty...
     </p>
 
     <table>
-      <thead><tr><th>Name</th><th class="detailsColumn">Type</th></tr></thead>
+      <thead>
+        <tr><th>Name</th><th class="detailsColumn">Type</th></tr>
+      </thead>
       <tbody>
-        <tr><td class="file-cell"><img class="icon" src="..." />Discord - sotokomori</td><td>Text</td></tr>
-        <tr><td class="file-cell"><img class="icon" src="..." /><a href="...">Chatzone</a></td><td>URL</td></tr>
-        <!-- Add other links as needed -->
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />Discord - sotokomori</td><td>Text</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="updates/updates.html">Updates</a></td><td>HTML</td></tr>
+        <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="menhera">Menhera</a></td><td>HTML</td></tr>
       </tbody>
     </table>
 
     <div id="footer"></div>
   </div>
 
-  <!-- Load Music Player -->
+  <!-- Inject music player HTML and JS -->
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load player.html content
       fetch('player.html')
         .then(res => res.text())
         .then(html => {
-          const container = document.getElementById('player-container');
-          container.innerHTML = html;
+          document.getElementById('player-container').innerHTML = html;
 
+          // Load player.js script after injecting player HTML
           const script = document.createElement('script');
           script.src = 'player.js';
           script.defer = true;
           document.body.appendChild(script);
         });
 
-      // Footer
+      // Load footer
       fetch('footer.html')
         .then(res => res.text())
         .then(data => {
           document.getElementById('footer').innerHTML = data;
         });
 
-      // Status
+      // Load latest status
       fetch('updates/statuslog.json')
         .then(res => res.json())
         .then(data => {
@@ -84,13 +91,13 @@
           }
         })
         .catch(err => {
-          console.error('Status error:', err);
+          console.error('Failed to load status:', err);
           document.getElementById('myStatus').textContent = 'Status unavailable.';
         });
     });
   </script>
 
-  <!-- General scripts -->
+  <!-- Your custom script -->
   <script src="script.js"></script>
 </body>
 </html>
