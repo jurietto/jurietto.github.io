@@ -1,9 +1,9 @@
 // --- Music Player Functionality ---
 
 const tracks = [
-  { title: "Track 1", url: "https://example.com/track1.mp3" },
-  { title: "Track 2", url: "https://example.com/track2.mp3" },
-  { title: "Track 3", url: "https://example.com/track3.mp3" }
+  { title: "Track 1", url: "https://example.com/song1.mp3" },
+  { title: "Track 2", url: "https://example.com/song2.mp3" },
+  { title: "Track 3", url: "https://example.com/song3.mp3" }
 ];
 
 let currentTrack = 0;
@@ -17,8 +17,8 @@ const volume = document.getElementById("volume");
 const currentTimeEl = document.getElementById("current-time");
 const durationEl = document.getElementById("duration");
 const playlistEl = document.getElementById("playlist");
-const toggleBtn = document.getElementById("toggle-playlist");
 const playlistPanel = document.getElementById("playlist-panel");
+const toggleBtn = document.getElementById("toggle-playlist");
 
 function formatTime(t) {
   const m = Math.floor(t / 60);
@@ -36,14 +36,15 @@ function loadTrack(index) {
 }
 
 function highlightTrack(index) {
-  const items = playlistEl.querySelectorAll("li");
-  items.forEach((li, i) => {
+  document.querySelectorAll("#playlist li").forEach((li, i) => {
     li.classList.toggle("active", i === index);
   });
 }
 
 playPauseBtn.onclick = () => {
-  if (audio.paused) {
+  if (audio.src === "") {
+    loadTrack(currentTrack);
+  } else if (audio.paused) {
     audio.play();
     playPauseBtn.textContent = "Pause";
   } else {
@@ -92,6 +93,7 @@ tracks.forEach((track, i) => {
 });
 
 loadTrack(currentTrack);
+
 
 
 // --- Last Updated Date Functionality ---
