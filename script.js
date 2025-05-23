@@ -1,36 +1,31 @@
 // --- Music Player Functionality ---
 
-const audio = document.getElementById("audio");
-const playPauseBtn = document.getElementById("play-pause");
-const nextBtn = document.getElementById("next");
-const backBtn = document.getElementById("back");
-const volumeSlider = document.getElementById("volume");
-const progressBar = document.getElementById("progress");
-const currentTimeEl = document.getElementById("current-time");
-const durationEl = document.getElementById("duration");
-const playlistPanel = document.getElementById("playlist-panel");
-const togglePlaylistBtn = document.getElementById("toggle-playlist");
-const playlistEl = document.getElementById("playlist");
-
-// Playlist array
 const tracks = [
-  {
-    title: "Memory",
-    url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E7%B4%97%E8%80%B6%E9%A6%99%20-ROSARY-.mp3"
-  },
-  {
-    title: "Track 2",
-    url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E6%A2%A8%E6%B2%99%20-REINCARNATION-%20EP..mp3"
-  },
-  {
-    title: "Track 3",
-    url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E9%82%84%E3%82%8B%E3%82%82%E3%81%AE%E3%83%BB%E7%B6%99%E3%81%90%E3%82%82%E3%81%AE%20-TO%20DETERMINATION-%20EP..mp3"
-  }
+  { title: "Track 1", url: "https://example.com/track1.mp3" },
+  { title: "Track 2", url: "https://example.com/track2.mp3" },
+  { title: "Track 3", url: "https://example.com/track3.mp3" }
 ];
 
 let currentTrack = 0;
 
-// Load track by index
+const audio = document.getElementById("audio");
+const playPauseBtn = document.getElementById("play-pause");
+const nextBtn = document.getElementById("next");
+const backBtn = document.getElementById("back");
+const seeker = document.getElementById("progress");
+const volume = document.getElementById("volume");
+const currentTimeEl = document.getElementById("current-time");
+const durationEl = document.getElementById("duration");
+const playlistEl = document.getElementById("playlist");
+const toggleBtn = document.getElementById("toggle-playlist");
+const playlistPanel = document.getElementById("playlist-panel");
+
+function formatTime(t) {
+  const m = Math.floor(t / 60);
+  const s = Math.floor(t % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
 function loadTrack(index) {
   const track = tracks[index];
   audio.src = track.url;
@@ -40,15 +35,13 @@ function loadTrack(index) {
   highlightTrack(index);
 }
 
-// Highlight current track in playlist UI
 function highlightTrack(index) {
   const items = playlistEl.querySelectorAll("li");
   items.forEach((li, i) => {
-    li.style.fontWeight = i === index ? "bold" : "normal";
+    li.classList.toggle("active", i === index);
   });
 }
 
-// Play/Pause Button
 playPauseBtn.onclick = () => {
   if (audio.paused) {
     audio.play();
@@ -59,61 +52,47 @@ playPauseBtn.onclick = () => {
   }
 };
 
-// Next Track
 nextBtn.onclick = () => {
   currentTrack = (currentTrack + 1) % tracks.length;
   loadTrack(currentTrack);
 };
 
-// Previous Track
 backBtn.onclick = () => {
   currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
   loadTrack(currentTrack);
 };
 
-// Volume Control
-volumeSlider.oninput = () => {
-  audio.volume = volumeSlider.value;
+volume.oninput = () => {
+  audio.volume = volume.value;
 };
 
-// Update progress bar and time display
+seeker.oninput = () => {
+  audio.currentTime = seeker.value;
+};
+
 audio.ontimeupdate = () => {
-  progressBar.max = audio.duration || 0;
-  progressBar.value = audio.currentTime;
+  seeker.max = audio.duration || 0;
+  seeker.value = audio.currentTime;
   currentTimeEl.textContent = formatTime(audio.currentTime);
-  durationEl.textContent = formatTime(audio.duration);
+  durationEl.textContent = formatTime(audio.duration || 0);
 };
 
-// Seek within track
-progressBar.oninput = () => {
-  audio.currentTime = progressBar.value;
+toggleBtn.onclick = () => {
+  playlistPanel.classList.toggle("show");
 };
 
-// Toggle playlist panel visibility
-togglePlaylistBtn.onclick = () => {
-  playlistPanel.classList.toggle("hidden");
-};
-
-// Format seconds into MM:SS
-function formatTime(time) {
-  const mins = Math.floor(time / 60);
-  const secs = Math.floor(time % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-}
-
-// Populate playlist UI
-tracks.forEach((track, index) => {
+tracks.forEach((track, i) => {
   const li = document.createElement("li");
   li.textContent = track.title;
   li.onclick = () => {
-    currentTrack = index;
-    loadTrack(index);
+    currentTrack = i;
+    loadTrack(i);
   };
   playlistEl.appendChild(li);
 });
 
-// Initialize first track on load
 loadTrack(currentTrack);
+
 
 // --- Last Updated Date Functionality ---
 
