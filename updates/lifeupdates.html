@@ -118,10 +118,15 @@
   <!-- Add this just before closing </body> -->
   <script>
     fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-      });
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('player-container').innerHTML = html;
+      // Now load the script manually
+      const script = document.createElement('script');
+      script.src = '/player.js';
+      script.defer = true;
+      document.body.appendChild(script);
+    });
   </script>
 </body>
 </html>
