@@ -1,9 +1,9 @@
 // --- Music Player Functionality ---
 
 const tracks = [
-  { title: "Track 1", url: "https://example.com/song1.mp3" },
-  { title: "Track 2", url: "https://example.com/song2.mp3" },
-  { title: "Track 3", url: "https://example.com/song3.mp3" }
+  { title: "Track 1", url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E7%B4%97%E8%80%B6%E9%A6%99%20-ROSARY-.mp3" },
+  { title: "Track 2", url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E6%A2%A8%E6%B2%99%20-REINCARNATION-%20EP..mp3" },
+  { title: "Track 3", url: "https://file.garden/ZhTgSjrp5nAroRKq/music/%E9%82%84%E3%82%8B%E3%82%82%E3%81%AE%E3%83%BB%E7%B6%99%E3%81%90%E3%82%82%E3%81%AE%20-TO%20DETERMINATION-%20EP..mp3" }
 ];
 
 let currentTrack = 0;
