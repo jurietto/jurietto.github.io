@@ -43,3 +43,28 @@ function formatTime(seconds) {
   const s = Math.floor(seconds % 60).toString().padStart(2, '0');
   return `${m}:${s}`;
 }
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const trackList = [...playlist.querySelectorAll('li')];
+
+function playTrack(index) {
+  if (index < 0 || index >= trackList.length) return;
+  const item = trackList[index];
+  trackList.forEach(li => li.classList.remove('active'));
+  item.classList.add('active');
+  audio.src = item.dataset.src;
+  audio.play();
+  currentTrack = item;
+}
+
+prevBtn.addEventListener('click', () => {
+  if (!currentTrack) return;
+  const index = trackList.indexOf(currentTrack);
+  playTrack(index - 1);
+});
+
+nextBtn.addEventListener('click', () => {
+  if (!currentTrack) return;
+  const index = trackList.indexOf(currentTrack);
+  playTrack(index + 1);
+});
