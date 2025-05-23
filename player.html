@@ -1,7 +1,9 @@
 <div id="music-bar">
   <div id="player-controls">
+    <button id="prev" title="Previous">&#9664;</button>
     <button id="play">Play</button>
     <button id="pause">Pause</button>
+    <button id="next" title="Next">&#9654;</button>
     <div id="progress-container">
       <span id="current-time">0:00</span>
       <input type="range" id="progress" value="0" min="0" max="100" />
@@ -9,14 +11,15 @@
     </div>
     <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5" />
   </div>
-  <button id="toggle-playlist">Playlist</button>
+  <span id="toggle-playlist" title="Toggle Playlist">Playlist ▼</span>
 </div>
 
 <div id="playlist-panel">
+  <h3>Playlist</h3>
   <ul id="playlist">
-    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E7%B4%97%E8%80%B6%E9%A6%99%20-ROSARY-.mp3">ROSARY</li>
-    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E6%A2%A8%E6%B2%99%20-REINCARNATION-%20EP..mp3">REINCARNATION EP</li>
-    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E8%96%84%E3%82%8C%E8%A1%8C%E3%81%8F%E5%B8%8C%E6%9C%9B%20-MISERY-.mp3">MISERY</li>
+    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E7%B4%97%E8%80%B6%E9%A6%99%20-ROSARY-.mp3">紗耶香 -ROSARY-</li>
+    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E6%A2%A8%E6%B2%99%20-REINCARNATION-%20EP..mp3">梨沙 -REINCARNATION- EP.</li>
+    <li data-src="https://file.garden/ZhTgSjrp5nAroRKq/music/%E8%96%84%E3%82%8C%E8%A1%8C%E3%81%8F%E5%B8%8C%E6%9C%9B%20-MISERY-.mp3">薄れ行く希望 -MISERY-</li>
   </ul>
 </div>
 <audio id="audio"></audio>
