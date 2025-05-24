@@ -22,15 +22,18 @@ function formatTime(seconds) {
 
 function playTrack(index) {
   if (index < 0 || index >= trackList.length) return;
+
   const item = trackList[index];
-  if (currentTrack !== item) {
-    trackList.forEach(li => li.classList.remove('active'));
-    item.classList.add('active');
-    audio.src = item.dataset.src;
-    currentTrack = item;
-    audio.play();
-    playToggleBtn.textContent = 'Pause';
-  }
+  trackList.forEach(li => li.classList.remove('active'));
+  item.classList.add('active');
+  audio.src = item.dataset.src;
+  currentTrack = item;
+  audio.play();
+  playToggleBtn.textContent = 'Pause';
+}
+
+function getCurrentTrackIndex() {
+  return trackList.indexOf(currentTrack);
 }
 
 playToggleBtn.addEventListener('click', () => {
@@ -69,17 +72,37 @@ audio.addEventListener('timeupdate', () => {
 });
 
 progress.addEventListener('input', () => {
-  audio.currentTime = (progress.value / 100) * audio.duration;
+  if (audio.duration) {
+    audio.currentTime = (progress.value / 100) * audio.duration;
+  }
 });
 
 prevBtn.addEventListener('click', () => {
   if (!currentTrack) return;
-  const index = trackList.indexOf(currentTrack);
-  playTrack(index - 1);
+  const index = getCurrentTrackIndex();
+  if (index > 0) {
+    playTrack(index - 1);
+  }
 });
 
 nextBtn.addEventListener('click', () => {
   if (!currentTrack) return;
-  const index = trackList.indexOf(currentTrack);
-  playTrack(index + 1);
+  const index = getCurrentTrackIndex();
+  if (index < trackList.length - 1) {
+    playTrack(index + 1);
+  } else {
+    // Restart the playlist if at end
+    playTrack(0);
+  }
+});
+
+// Auto-play next track when one ends
+audio.addEventListener('ended', () => {
+  const index = getCurrentTrackIndex();
+  if (index < trackList.length - 1) {
+    playTrack(index + 1);
+  } else {
+    // Restart from beginning if end reached
+    playTrack(0);
+  }
 });
