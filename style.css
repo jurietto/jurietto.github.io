@@ -266,39 +266,6 @@ body {
     margin: 12px 0;
   }
 
-#toggle-playlist {
-  cursor: pointer;
-  color: #9b2c9b;
-  font-size: 13px;
-  user-select: none;
-}
-
-#toggle-playlist:hover {
-  text-decoration: underline;
-}
-
-#playlist-panel h3 {
-  margin: 0;
-  padding: 8px 12px;
-  font-size: 14px;
-  color: #9b2c9b;
-  border-bottom: 1px solid #e79cff;
-}
-
-#player-controls button {
-  all: unset;
-  color: #9b2c9b;
-  cursor: pointer;
-  font-size: 13px;
-  padding: 0 6px;
-  transition: opacity 0.2s ease;
-}
-
-#player-controls button:hover {
-  text-decoration: none;
-  opacity: 0.8;
-}
-
 /* === Music Player Bar === */
 #music-bar {
   position: fixed;
