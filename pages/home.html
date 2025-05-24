@@ -25,73 +25,35 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          Discord – sotokomori
-        </td>
-        <td>Text</td>
-      </tr>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a>
-        </td>
-        <td>URL</td>
-      </tr>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          <a href="https://x.com/sotokomorii" target="_blank">Twitter</a>
-        </td>
-        <td>URL</td>
-      </tr>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          <a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a>
-        </td>
-        <td>URL</td>
-      </tr>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          <a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a>
-        </td>
-        <td>URL</td>
-      </tr>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          <a href="/updates/updates.html">Updates</a>
-        </td>
-        <td>HTML</td>
-      </tr>
-      <tr>
-        <td class="file-cell">
-          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-          <a href="/menhera">Menhera</a>
-        </td>
-        <td>HTML</td>
-      </tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />Discord – sotokomori</td><td>Text</td></tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="/updates/updates.html">Updates</a></td><td>HTML</td></tr>
+      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="/menhera">Menhera</a></td><td>HTML</td></tr>
     </tbody>
   </table>
 </div>
 
 <script>
-  // Fetch and display the latest status from JSON
   fetch('/updates/statuslog.json')
     .then(res => res.json())
     .then(data => {
-      const latest = data[0]; // Get the most recent entry assuming newest-first order
-      if (latest && latest.text) {
+      const latest = data[data.length - 1];
+      if (latest && latest.text && latest.time) {
+        const date = new Date(latest.time);
+        const formatted = date.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' });
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
         document.getElementById('myStatus').textContent = latest.text;
       } else {
         document.getElementById('myStatus').textContent = 'No status available.';
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unknown';
       }
     })
     .catch(err => {
       console.error('Failed to load status:', err);
       document.getElementById('myStatus').textContent = 'Status unavailable.';
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     });
 </script>
