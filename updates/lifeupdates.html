@@ -38,62 +38,66 @@
 </style>
 
 <script>
-  // Load life update posts
-  fetch('/updates/lu')
-    .then(res => res.text())
-    .then(html => {
-      const postsContainer = document.getElementById('lu-posts');
-      const tempContainer = document.createElement('div');
-      tempContainer.innerHTML = html;
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load life update posts
+    fetch('/updates/lu')
+      .then(res => res.text())
+      .then(html => {
+        const postsContainer = document.getElementById('lu-posts');
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = html;
 
-      const posts = Array.from(tempContainer.getElementsByClassName('post'));
+        const posts = Array.from(tempContainer.getElementsByClassName('post'));
 
-      posts.forEach(post => {
-        const dateText = post.querySelector('strong')?.textContent.split('–')[0]?.trim();
-        post.setAttribute('data-date', dateText);
-        postsContainer.appendChild(post);
-        const hr = document.createElement('hr');
-        postsContainer.appendChild(hr);
-      });
-
-      function sortPosts(order) {
-        const postElements = Array.from(postsContainer.querySelectorAll('.post'));
-        postElements.sort((a, b) => {
-          const dateA = new Date(a.dataset.date);
-          const dateB = new Date(b.dataset.date);
-          return order === 'old' ? dateA - dateB : dateB - dateA;
+        posts.forEach(post => {
+          const dateText = post.querySelector('strong')?.textContent.split('–')[0]?.trim();
+          if (dateText) {
+            post.setAttribute('data-date', dateText);
+            postsContainer.appendChild(post);
+            const hr = document.createElement('hr');
+            postsContainer.appendChild(hr);
+          }
         });
 
-        postsContainer.innerHTML = '';
-        postElements.forEach(post => {
-          postsContainer.appendChild(post);
-          const hr = document.createElement('hr');
-          postsContainer.appendChild(hr);
-        });
-      }
+        function sortPosts(order) {
+          const postElements = Array.from(postsContainer.querySelectorAll('.post'));
+          postElements.sort((a, b) => {
+            const dateA = new Date(a.dataset.date);
+            const dateB = new Date(b.dataset.date);
+            return order === 'old' ? dateA - dateB : dateB - dateA;
+          });
 
-      const sortSelect = document.getElementById('sort');
-      sortPosts(sortSelect.value);
-      sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
-    })
-    .catch(err => {
-      console.error('Failed to load life updates:', err);
-      document.getElementById('lu-posts').innerHTML = '<p>Could not load posts.</p>';
-    });
+          postsContainer.innerHTML = '';
+          postElements.forEach(post => {
+            postsContainer.appendChild(post);
+            const hr = document.createElement('hr');
+            postsContainer.appendChild(hr);
+          });
+        }
 
-  // Load Last Updated from meta
-  fetch('/meta/lifeupdates_meta.json')
-    .then(res => res.json())
-    .then(data => {
-      const lastDate = new Date(data.lastUpdated);
-      const formatted = lastDate.toLocaleString(undefined, {
-        dateStyle: 'long',
-        timeStyle: 'short'
+        const sortSelect = document.getElementById('sort');
+        sortPosts(sortSelect.value);
+        sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
+      })
+      .catch(err => {
+        console.error('Failed to load life updates:', err);
+        document.getElementById('lu-posts').innerHTML = '<p>Could not load posts.</p>';
       });
-      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
-    })
-    .catch(err => {
-      console.error('Failed to load last updated metadata:', err);
-      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
-    });
+
+    // Load Last Updated from meta
+    fetch('/meta/lifeupdates_meta.json')
+      .then(res => res.json())
+      .then(data => {
+        const lastDate = new Date(data.lastUpdated);
+        const formatted = lastDate.toLocaleString(undefined, {
+          dateStyle: 'long',
+          timeStyle: 'short'
+        });
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+      })
+      .catch(err => {
+        console.error('Failed to load last updated metadata:', err);
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+      });
+  });
 </script>
