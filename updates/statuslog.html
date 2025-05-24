@@ -37,13 +37,18 @@
       list.innerHTML = '';
 
       const entries = data.map(entry => {
+        const dateFormatted = new Date(entry.time).toLocaleString(undefined, {
+          dateStyle: 'long',
+          timeStyle: 'short'
+        });
+
         const div = document.createElement('div');
         div.className = 'post';
         div.dataset.time = entry.time;
         div.innerHTML = `
           <p class="commit-header">
-            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="update icon" class="icon" />
-            <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" alt="update icon" />
+            <strong>${entry.author}</strong> – <strong>${dateFormatted}</strong>
           </p>
           <p class="commit-message">${entry.text}</p>
           <hr />
@@ -66,13 +71,20 @@
       render('new');
       sortSelect.addEventListener('change', () => render(sortSelect.value));
 
-      const latest = data[data.length - 1];
+      const latest = data.reduce((a, b) =>
+        new Date(a.time) > new Date(b.time) ? a : b
+      );
       if (latest) {
-        document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
+        const formatted = new Date(latest.time).toLocaleString(undefined, {
+          dateStyle: 'long',
+          timeStyle: 'short'
+        });
+        document.querySelector('#last-updated p').textContent = `Juri: ${formatted}`;
       }
     })
     .catch(err => {
       document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+      document.querySelector('#last-updated p').textContent = 'Juri: Unavailable';
       console.error(err);
     });
 </script>
