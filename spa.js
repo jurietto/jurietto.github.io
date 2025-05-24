@@ -17,29 +17,28 @@ function loadPage(path) {
     });
 }
 
-// Handle link clicks
+// Intercept internal link clicks
 document.addEventListener('click', e => {
   const link = e.target.closest('a');
-  if (link && link.getAttribute('href')?.endsWith('.html')) {
-    const href = link.getAttribute('href');
-    const isInternal = href.startsWith('/') || !href.startsWith('http');
-    const isPage = !link.hasAttribute('target') && isInternal;
+  if (!link) return;
 
-    if (isPage) {
-      e.preventDefault();
-      history.pushState(null, '', href);
-      loadPage(href);
-    }
+  const href = link.getAttribute('href');
+  const isInternalHTML = href?.endsWith('.html') && (href.startsWith('/') || !href.startsWith('http'));
+
+  if (isInternalHTML && !link.hasAttribute('target')) {
+    e.preventDefault();
+    history.pushState(null, '', href);
+    loadPage(href);
   }
 });
 
-// Handle browser navigation
+// Handle browser back/forward buttons
 window.addEventListener('popstate', () => {
   loadPage(location.pathname);
 });
 
 // Initial load
 window.addEventListener('DOMContentLoaded', () => {
-  const initial = location.pathname === '/' ? '/updates/updates.html' : location.pathname;
-  loadPage(initial);
+  const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
+  loadPage(initialPath);
 });
