@@ -1,6 +1,5 @@
 const audio = document.getElementById('audio');
-const playBtn = document.getElementById('play');
-const pauseBtn = document.getElementById('pause');
+const playToggleBtn = document.getElementById('play-toggle');
 const progress = document.getElementById('progress');
 const volume = document.getElementById('volume');
 const currentTimeEl = document.getElementById('current-time');
@@ -28,21 +27,35 @@ function playTrack(index) {
   item.classList.add('active');
   audio.src = item.dataset.src;
   audio.play();
+  playToggleBtn.textContent = 'Pause';
   currentTrack = item;
 }
 
-playBtn.addEventListener('click', () => audio.play());
-pauseBtn.addEventListener('click', () => audio.pause());
-volume.addEventListener('input', () => audio.volume = volume.value);
-togglePlaylistBtn.addEventListener('click', () => playlistPanel.classList.toggle('show'));
+playToggleBtn.addEventListener('click', () => {
+  if (!audio.src) {
+    // If nothing is loaded yet, play first track
+    playTrack(0);
+  } else if (audio.paused) {
+    audio.play();
+    playToggleBtn.textContent = 'Pause';
+  } else {
+    audio.pause();
+    playToggleBtn.textContent = 'Play';
+  }
+});
+
+volume.addEventListener('input', () => {
+  audio.volume = volume.value;
+});
+
+togglePlaylistBtn.addEventListener('click', () => {
+  playlistPanel.classList.toggle('show');
+});
 
 playlist.addEventListener('click', e => {
   if (e.target.tagName === 'LI') {
-    trackList.forEach(li => li.classList.remove('active'));
-    e.target.classList.add('active');
-    audio.src = e.target.dataset.src;
-    audio.play();
-    currentTrack = e.target;
+    const index = trackList.indexOf(e.target);
+    playTrack(index);
   }
 });
 
