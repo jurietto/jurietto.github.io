@@ -48,7 +48,8 @@
       const posts = Array.from(tempContainer.getElementsByClassName('post'));
 
       posts.forEach(post => {
-        post.setAttribute('data-date', post.querySelector('strong')?.textContent.split('–')[0]?.trim());
+        const dateText = post.querySelector('strong')?.textContent.split('–')[0]?.trim();
+        post.setAttribute('data-date', dateText);
         postsContainer.appendChild(post);
         const hr = document.createElement('hr');
         postsContainer.appendChild(hr);
@@ -70,18 +71,28 @@
         });
       }
 
-      const firstPost = postsContainer.querySelector('.post');
-      if (firstPost) {
-        const lastDate = new Date(firstPost.dataset.date);
-        const dateString = lastDate.toLocaleString(undefined, {
+      // Find most recent post by date
+      const mostRecent = posts.reduce((latest, post) => {
+        const latestDate = new Date(latest.dataset.date);
+        const currentDate = new Date(post.dataset.date);
+        return currentDate > latestDate ? post : latest;
+      });
+
+      if (mostRecent) {
+        const lastDate = new Date(mostRecent.dataset.date);
+        const formatted = lastDate.toLocaleString(undefined, {
           dateStyle: 'long',
           timeStyle: 'short'
         });
-        document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
       }
 
       const sortSelect = document.getElementById('sort');
       sortPosts(sortSelect.value);
       sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
+    })
+    .catch(err => {
+      console.error('Failed to load life updates:', err);
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     });
 </script>
