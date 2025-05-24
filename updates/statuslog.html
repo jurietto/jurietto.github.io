@@ -30,7 +30,7 @@
 </div>
 
 <script>
-  // Load status posts
+  // Load status entries
   fetch('/updates/statuslog.json')
     .then(response => response.json())
     .then(data => {
@@ -77,28 +77,19 @@
       console.error(err);
     });
 
-  // Load last updated from commits.json
-  fetch('/commits.json')
+  // Load Last Updated from meta
+  fetch('/meta/statuslog_meta.json')
     .then(res => res.json())
-    .then(commits => {
-      if (!Array.isArray(commits) || commits.length === 0) {
-        document.querySelector('#last-updated p').textContent = 'Last Updated: Unknown';
-        return;
-      }
-
-      const latest = commits.reduce((a, b) =>
-        new Date(a.date) > new Date(b.date) ? a : b
-      );
-
-      const formatted = new Date(latest.date).toLocaleString(undefined, {
+    .then(data => {
+      const lastDate = new Date(data.lastUpdated);
+      const formatted = lastDate.toLocaleString(undefined, {
         dateStyle: 'long',
         timeStyle: 'short'
       });
-
       document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     })
     .catch(err => {
-      console.error('Failed to load commits.json:', err);
+      console.error('Failed to load last-updated metadata:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     });
 </script>
