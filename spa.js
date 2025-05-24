@@ -16,12 +16,28 @@ function loadPage(path) {
     })
     .then(html => {
       contentTarget.innerHTML = html;
+      runInlineScripts(contentTarget); // Important: ensure inline or linked scripts execute
       window.scrollTo(0, 0);
     })
     .catch(err => {
       console.error(err);
       contentTarget.innerHTML = '<p>Failed to load content.</p>';
     });
+}
+
+// Helper: run scripts from injected HTML
+function runInlineScripts(container) {
+  const scripts = container.querySelectorAll('script');
+  scripts.forEach(oldScript => {
+    const newScript = document.createElement('script');
+    if (oldScript.src) {
+      newScript.src = oldScript.src;
+      newScript.defer = oldScript.defer;
+    } else {
+      newScript.textContent = oldScript.textContent;
+    }
+    document.body.appendChild(newScript);
+  });
 }
 
 // Intercept internal link clicks
