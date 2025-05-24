@@ -7,9 +7,9 @@
 
   <p class="page-text">
     This section is where I keep track of personal updates and site changes.
-    <strong>Life Updates</strong> is where I write about personal stuff—things that's been going on.
+    <strong>Life Updates</strong> is where I write about personal stuff—things that've been going on.
     <strong>Site Log</strong> is for tracking technical edits and general maintenance.
-    And <strong>Status Log</strong> which is just a timeline of notes—micro-logs...
+    And <strong>Status Log</strong> is just a timeline of notes—micro-logs.
   </p>
 
   <p>
@@ -51,3 +51,18 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  fetch('/updates/statuslog.json')
+    .then(res => res.json())
+    .then(data => {
+      const latest = data[0];
+      if (latest) {
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${latest.time}`;
+      }
+    })
+    .catch(err => {
+      document.querySelector('#last-updated p').textContent = 'Last Updated: N/A';
+      console.error(err);
+    });
+</script>
