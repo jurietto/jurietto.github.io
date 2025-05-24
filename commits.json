@@ -1,6 +1,21 @@
 [
   {
     "author": "Juri",
+    "date": "2025-05-24T10:58:26Z",
+    "message": "Delete media/jurietto.mp4"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-05-24T10:58:06Z",
+    "message": "Delete media/prpl.gif"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-05-24T05:45:46Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-05-24T05:45:19Z",
     "message": "Update home.html"
   },
