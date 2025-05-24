@@ -29,67 +29,77 @@
   </div>
 </div>
 
-<script>
-  // Load status entries
-  fetch('/updates/statuslog.json')
-    .then(response => response.json())
-    .then(data => {
-      const list = document.getElementById('status-list');
-      list.innerHTML = '';
+<style>
+  #status-list hr {
+    border: 0;
+    border-bottom: 1px dotted #e79cff;
+    margin: 12px 0;
+  }
+</style>
 
-      const entries = data.map(entry => {
-        const dateFormatted = new Date(entry.time).toLocaleString(undefined, {
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const list = document.getElementById('status-list');
+    const sortSelect = document.getElementById('sort');
+
+    // Load status entries
+    fetch('/updates/statuslog.json')
+      .then(response => response.json())
+      .then(data => {
+        list.innerHTML = '';
+
+        const entries = data.map(entry => {
+          const dateFormatted = new Date(entry.time).toLocaleString(undefined, {
+            dateStyle: 'long',
+            timeStyle: 'short'
+          });
+
+          const div = document.createElement('div');
+          div.className = 'post';
+          div.dataset.time = entry.time;
+          div.innerHTML = `
+            <p class="commit-header">
+              <img src="/media/crown.png" class="icon" alt="update icon" />
+              <strong>${entry.author}</strong> – <strong>${dateFormatted}</strong>
+            </p>
+            <p class="commit-message">${entry.text}</p>
+            <hr />
+          `;
+          return div;
+        });
+
+        function render(order) {
+          list.innerHTML = '';
+          const sorted = [...entries].sort((a, b) => {
+            const dateA = new Date(a.dataset.time);
+            const dateB = new Date(b.dataset.time);
+            return order === 'old' ? dateA - dateB : dateB - dateA;
+          });
+          sorted.forEach(e => list.appendChild(e));
+        }
+
+        render('new');
+        sortSelect.addEventListener('change', () => render(sortSelect.value));
+      })
+      .catch(err => {
+        console.error('Failed to load status entries:', err);
+        list.innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+      });
+
+    // Load Last Updated from metadata
+    fetch('/meta/statuslog_meta.json')
+      .then(res => res.json())
+      .then(data => {
+        const lastDate = new Date(data.lastUpdated);
+        const formatted = lastDate.toLocaleString(undefined, {
           dateStyle: 'long',
           timeStyle: 'short'
         });
-
-        const div = document.createElement('div');
-        div.className = 'post';
-        div.dataset.time = entry.time;
-        div.innerHTML = `
-          <p class="commit-header">
-            <img src="/media/crown.png" class="icon" alt="update icon" />
-            <strong>${entry.author}</strong> – <strong>${dateFormatted}</strong>
-          </p>
-          <p class="commit-message">${entry.text}</p>
-          <hr />
-        `;
-        return div;
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+      })
+      .catch(err => {
+        console.error('Failed to load last-updated metadata:', err);
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
       });
-
-      const sortSelect = document.getElementById('sort');
-
-      function render(order) {
-        list.innerHTML = '';
-        const sorted = [...entries].sort((a, b) => {
-          const dateA = new Date(a.dataset.time);
-          const dateB = new Date(b.dataset.time);
-          return order === 'old' ? dateA - dateB : dateB - dateA;
-        });
-        sorted.forEach(e => list.appendChild(e));
-      }
-
-      render('new');
-      sortSelect.addEventListener('change', () => render(sortSelect.value));
-    })
-    .catch(err => {
-      document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
-      console.error(err);
-    });
-
-  // Load Last Updated from meta
-  fetch('/meta/statuslog_meta.json')
-    .then(res => res.json())
-    .then(data => {
-      const lastDate = new Date(data.lastUpdated);
-      const formatted = lastDate.toLocaleString(undefined, {
-        dateStyle: 'long',
-        timeStyle: 'short'
-      });
-      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
-    })
-    .catch(err => {
-      console.error('Failed to load last-updated metadata:', err);
-      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
-    });
+  });
 </script>
