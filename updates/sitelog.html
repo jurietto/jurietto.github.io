@@ -1,139 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Site Log</title>
-  <link rel="stylesheet" href="../style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    #commit-list hr {
-      border: 0;
-      border-bottom: 1px dotted #e79cff;
-      margin: 12px 0;
-    }
-  </style>
-</head>
-<body>
+<div class="main-content">
+  <h1>Site Log</h1>
 
-  <!-- Injected music player -->
-  <div id="player-container"></div>
-
-  <div class="main-content">
-    <h1>Site Log</h1>
-
-    <div id="last-updated">
-      <p>Last Updated: Loading...</p>
-    </div>
-
-    <p class="page-text">
-      This page keeps a record of updates and changes made to the site...
-    </p>
-
-    <p>
-      <a href="/updates/updates.html">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
-        [parent directory]
-      </a>
-    </p>
-
-    <div id="controls">
-      <label for="sort">Sort by:</label>
-      <select id="sort">
-        <option value="new">Newest</option>
-        <option value="old">Oldest</option>
-      </select>
-    </div>
-
-    <div id="commit-list">
-      <p>Loading commit history...</p>
-    </div>
-
-    <div id="footer"></div>
+  <div id="last-updated">
+    <p>Last Updated: Loading...</p>
   </div>
 
-  <!-- Scripts -->
-  <script src="../script.js"></script>
+  <p class="page-text">
+    This page keeps a record of updates and changes made to the site...
+  </p>
 
-  <script>
-    async function loadCommits() {
-      try {
-        const res = await fetch('../commits.json');
-        const commits = await res.json();
-        const container = document.getElementById('commit-list');
-        const sortSelect = document.getElementById('sort');
+  <p>
+    <a href="/updates/updates.html">
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
+      [parent directory]
+    </a>
+  </p>
 
-        const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
-        months.forEach(month => {
-          const option = document.createElement('option');
-          option.value = month;
-          option.textContent = month;
-          sortSelect.appendChild(option);
-        });
+  <div id="controls">
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+      <option value="new">Newest</option>
+      <option value="old">Oldest</option>
+    </select>
+  </div>
 
-        function renderCommits(order) {
-          container.innerHTML = '';
-          let filtered = [...commits];
+  <div id="commit-list">
+    <p>Loading commit history...</p>
+  </div>
+</div>
 
-          if (order === 'old') {
-            filtered.reverse();
-          } else if (order !== 'new') {
-            filtered = filtered.filter(c => c.date.startsWith(order));
-          }
+<style>
+  #commit-list hr {
+    border: 0;
+    border-bottom: 1px dotted #e79cff;
+    margin: 12px 0;
+  }
+</style>
 
-          if (filtered.length === 0) {
-            container.innerHTML = '<p>No commits found for this period.</p>';
-            return;
-          }
+<script>
+  async function loadCommits() {
+    try {
+      const res = await fetch('/commits.json');
+      const commits = await res.json();
+      const container = document.getElementById('commit-list');
+      const sortSelect = document.getElementById('sort');
 
-          filtered.forEach(commit => {
-            const date = new Date(commit.date).toLocaleString(undefined, {
-              dateStyle: 'medium',
-              timeStyle: 'short'
-            });
+      const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
+      months.forEach(month => {
+        const option = document.createElement('option');
+        option.value = month;
+        option.textContent = month;
+        sortSelect.appendChild(option);
+      });
 
-            const entry = document.createElement('div');
-            entry.className = 'post';
-            entry.innerHTML = `
-              <p class="commit-header">
-                <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
-                <strong>${commit.author}</strong> – <strong>${date}</strong>
-              </p>
-              <p class="commit-message">${commit.message}</p>
-              <hr />
-            `;
-            container.appendChild(entry);
-          });
+      function renderCommits(order) {
+        container.innerHTML = '';
+        let filtered = [...commits];
+
+        if (order === 'old') {
+          filtered.reverse();
+        } else if (order !== 'new') {
+          filtered = filtered.filter(c => c.date.startsWith(order));
         }
 
-        sortSelect.addEventListener('change', e => renderCommits(e.target.value));
-        renderCommits('new');
+        if (filtered.length === 0) {
+          container.innerHTML = '<p>No commits found for this period.</p>';
+          return;
+        }
 
-        const latestDate = new Date(commits[0].date);
-        document.querySelector('#last-updated p').textContent =
-          `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
-      } catch (err) {
-        document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-        console.error(err);
+        filtered.forEach(commit => {
+          const date = new Date(commit.date).toLocaleString(undefined, {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          });
+
+          const entry = document.createElement('div');
+          entry.className = 'post';
+          entry.innerHTML = `
+            <p class="commit-header">
+              <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+              <strong>${commit.author}</strong> – <strong>${date}</strong>
+            </p>
+            <p class="commit-message">${commit.message}</p>
+            <hr />
+          `;
+          container.appendChild(entry);
+        });
       }
+
+      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
+      renderCommits('new');
+
+      const latestDate = new Date(commits[0].date);
+      document.querySelector('#last-updated p').textContent =
+        `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
+    } catch (err) {
+      document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+      console.error(err);
     }
+  }
 
-    loadCommits();
-
-    fetch('../footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
-      });
-
-    fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = '/player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
-  </script>
-</body>
-</html>
+  loadCommits();
+</script>
