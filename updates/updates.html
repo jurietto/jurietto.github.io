@@ -53,27 +53,18 @@
 </div>
 
 <script>
-  fetch('/commits.json')
+  fetch('/meta/updates_meta.json')
     .then(res => res.json())
-    .then(commits => {
-      if (!Array.isArray(commits) || commits.length === 0) {
-        document.querySelector('#last-updated p').textContent = 'Last Updated: Unknown';
-        return;
-      }
-
-      const latest = commits.reduce((a, b) =>
-        new Date(a.date) > new Date(b.date) ? a : b
-      );
-
-      const formatted = new Date(latest.date).toLocaleString(undefined, {
+    .then(data => {
+      const date = new Date(data.lastUpdated);
+      const formatted = date.toLocaleString(undefined, {
         dateStyle: 'long',
         timeStyle: 'short'
       });
-
       document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     })
     .catch(err => {
-      console.error('Failed to load commits.json:', err);
+      console.error('Failed to load last-updated metadata:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: N/A';
     });
 </script>
