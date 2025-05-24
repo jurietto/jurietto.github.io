@@ -23,13 +23,13 @@
   <!-- Music Player Loads Once -->
   <div id="player-container"></div>
 
-  <!-- SPA Content Will Load Here -->
+  <!-- Main Content from SPA -->
   <div id="spa-content"></div>
 
   <!-- Footer Loads Once -->
   <div id="footer"></div>
 
-  <!-- Load Player HTML and JS -->
+  <!-- Load Music Player HTML + JS -->
   <script>
     fetch('player.html')
       .then(res => res.text())
@@ -40,7 +40,10 @@
         script.defer = true;
         document.body.appendChild(script);
       });
+  </script>
 
+  <!-- Load Footer -->
+  <script>
     fetch('footer.html')
       .then(res => res.text())
       .then(html => {
@@ -48,7 +51,7 @@
       });
   </script>
 
-  <!-- Load SPA Routing Script -->
-  <script src="spa.js"></script>
+  <!-- SPA Routing -->
+  <script src="spa.js" defer></script>
 </body>
 </html>
