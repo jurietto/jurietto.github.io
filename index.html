@@ -26,9 +26,6 @@
   <!-- Main Content from SPA -->
   <div id="spa-content"></div>
 
-  <!-- Footer Loads Once -->
-  <div id="footer"></div>
-
   <!-- Load Music Player HTML + JS -->
   <script>
     fetch('player.html')
@@ -39,15 +36,6 @@
         script.src = 'player.js';
         script.defer = true;
         document.body.appendChild(script);
-      });
-  </script>
-
-  <!-- Load Footer -->
-  <script>
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
       });
   </script>
 
