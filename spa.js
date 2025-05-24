@@ -1,10 +1,17 @@
 const contentTarget = document.getElementById('spa-content');
 
+// Normalize path to start with slash
+function normalizePath(path) {
+  return path.startsWith('/') ? path : '/' + path;
+}
+
 // Load page content into #spa-content
 function loadPage(path) {
-  fetch(path)
+  const cleanPath = normalizePath(path);
+
+  fetch(cleanPath)
     .then(res => {
-      if (!res.ok) throw new Error(`Failed to load ${path}`);
+      if (!res.ok) throw new Error(`Failed to load ${cleanPath}`);
       return res.text();
     })
     .then(html => {
@@ -23,21 +30,23 @@ document.addEventListener('click', e => {
   if (!link) return;
 
   const href = link.getAttribute('href');
-  const isInternalHTML = href?.endsWith('.html') && (href.startsWith('/') || !href.startsWith('http'));
+  const isHTML = href?.endsWith('.html');
+  const isInternal = href && (href.startsWith('/') || !href.startsWith('http'));
 
-  if (isInternalHTML && !link.hasAttribute('target')) {
+  if (isHTML && isInternal && !link.hasAttribute('target')) {
     e.preventDefault();
-    history.pushState(null, '', href);
-    loadPage(href);
+    const newPath = normalizePath(href);
+    history.pushState(null, '', newPath);
+    loadPage(newPath);
   }
 });
 
-// Handle browser back/forward buttons
+// Handle browser navigation (back/forward)
 window.addEventListener('popstate', () => {
   loadPage(location.pathname);
 });
 
-// Initial load
+// Load home page on initial load if at root
 window.addEventListener('DOMContentLoaded', () => {
   const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
   loadPage(initialPath);
