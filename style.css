@@ -1,414 +1,408 @@
 /* === Body & Base === */
 body {
-    position: relative;
-    background-color: #f7deff;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
-    background-attachment: fixed;
-    background-size: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
-    text-align: justify;
-    overflow-x: hidden;
-    padding: 16px;
-  }
-  
-  /* === Layout Container === */
-  .main-content {
-    background-color: rgba(255, 255, 255, 0.98);
-    border: 2px solid #e79cff;
-    border-radius: 20px;
-    max-width: 900px;
-    margin: 24px auto;
-    margin-top: 50px;
-    padding: 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-  }
-  
-  /* === Headings === */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: #222;
-    margin: 0.4em 0 0.2em;
-  }
-  
-  h1 {
-    font-size: 36px;
-  }
-  
-  h1 img.icon-header {
-    vertical-align: middle;
-    margin-left: 4px;
-    max-height: 36px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-top: 20px;
-    position: relative;
-  }
-  
-  h2::after {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 2px;
-    background: #e79cff;
-    margin-top: 6px;
-    border-radius: 1px;
-  }
-  
-  /* === Paragraphs === */
-  p, .page-text, .page-text p {
-    display: block;
-    align-items: unset;
-    gap: unset;
-  }
-  
-  /* === Page Text Section === */
-  .page-text {
-    position: relative;
-    background: #fff6ff;
-    border: 1px solid #e79cff;
-    border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 0;
-    color: inherit;
-    font-family: inherit;
-    box-shadow: none;
-    text-align: justify;
-    hyphens: auto;
-  }
-  
-  .page-text::after {
-    content: none;
-  }
-  
-  /* === Last Updated Section === */
-  #last-updated p {
-    color: #666;
-    font-size: 0.9em;
-    margin-top: -8px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  #last-updated img.icon-date {
-    height: 18px;
-    margin-right: 2px;
-    vertical-align: middle;
-    margin-top: -2px;
-  }
-  
-  /* === Status Box === */
-  #my-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-    padding: 12px 16px;
-    background: rgba(231, 156, 255, 0.15);
-    border: 1px solid #e79cff;
-    border-radius: 12px;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-  
-  #my-status img {
-    height: 18px;
-    flex-shrink: 0;
-    vertical-align: middle;
-    margin-top: -2px;
-  }
-  
-  .status-text {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  
-  .status-prefix,
-  .status-dash {
-    color: #9b2c9b;
-    font-weight: bold;
-  }
-  
-  #myStatus {
-    font-weight: bold;
-    flex: 1 1 auto;
-    word-break: break-word;
-  }
-  
-  #statusDate {
-    font-size: 0.8em;
-    color: #888;
-    white-space: nowrap;
-    margin-left: auto;
-    align-self: center;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  /* === Tables === */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  th, td {
-    padding: 4px 6px;
-    vertical-align: middle;
-    text-align: left;
-  }
-  
-  th {
-    border-bottom: 1px solid #e79cff;
-    color: #9b2c9b;
-    font-weight: normal;
-  }
-  
-  td {
-    border-bottom: 1px dotted #e79cff;
-  }
-  
-  table tbody tr:hover {
-    background-color: rgba(231, 156, 255, 0.08);
-  }
-  
-  /* === Links === */
-  a {
-    color: #e79cff;
-    text-decoration: underline;
-  }
-  
-  a:hover,
-  a:active {
-    color: #a14dd7;
-  }
-  
-  /* === Images === */
-  img {
-    max-width: 100%;
-    vertical-align: middle;
-  }
-  
-  img.icon {
-    height: 1em;
-    vertical-align: -0.125em;
-    margin-right: 0.4em;
-    margin-top: 0;
-  }
-  
-  /* === Controls === */
-  #controls {
-    margin-bottom: 1rem;
-  }
-  
-  #controls label {
-    font-weight: normal;
-    color: #333;
-  }
-  
-  #controls select#sort {
-    font-size: 14px;
-    color: #222;
-    background: #fff;
-    border: 1px solid #e79cff;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    vertical-align: middle;
-  }
-  
-  /* === Footer Styles === */
-  #footer {
-    font-size: 14px;
-    margin-top: 24px;
-    color: #555;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  #footer p {
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin: 0.5em 0;
-  }
-  
-  #footer .footer-links a {
-    color: #e79cff;
-    text-decoration: none;
-    margin: 0 4px;
-  }
-  
-  #footer .footer-links a:hover {
-    color: #a14dd7;
-  }
-  
-  /* === Status Log Divider === */
-  #status-list hr {
-    border: 0;
-    border-bottom: 1px dotted #e79cff;
-    margin: 12px 0;
-  }
-
-/* === Music Player Bar === */
-#music-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #fff6ff;
-  border-bottom: 1px solid #e79cff;
-  z-index: 1000;
-  padding: 4px 10px;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 36px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  background-color: #f7deff;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
+  background-attachment: fixed;
+  background-size: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  text-align: justify;
+  overflow-x: hidden;
+  padding: 16px;
 }
 
-/* === Controls Area === */
-#player-controls {
+/* === Layout Container === */
+.main-content {
+  background-color: rgba(255, 255, 255, 0.98);
+  border: 2px solid #e79cff;
+  border-radius: 20px;
+  max-width: 900px;
+  margin: 24px auto;
+  margin-top: 50px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* === Headings === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #222;
+  margin: 0.4em 0 0.2em;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h1 img.icon-header {
+  vertical-align: middle;
+  margin-left: 4px;
+  max-height: 36px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 20px;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #e79cff;
+  margin-top: 6px;
+  border-radius: 1px;
+}
+
+/* === Paragraphs === */
+p, .page-text, .page-text p {
+  display: block;
+  align-items: unset;
+  gap: unset;
+}
+
+/* === Page Text Section === */
+.page-text {
+  position: relative;
+  background: #fff6ff;
+  border: 1px solid #e79cff;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 0;
+  color: inherit;
+  font-family: inherit;
+  box-shadow: none;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.page-text::after {
+  content: none;
+}
+
+/* === Last Updated Section === */
+#last-updated p {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: -8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#last-updated img.icon-date {
+  height: 18px;
+  margin-right: 2px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* === Status Box === */
+#my-status {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(231, 156, 255, 0.15);
+  border: 1px solid #e79cff;
+  border-radius: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+#my-status img {
+  height: 18px;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+.status-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.status-prefix,
+.status-dash {
+  color: #9b2c9b;
+  font-weight: bold;
+}
+
+#myStatus {
+  font-weight: bold;
+  flex: 1 1 auto;
+  word-break: break-word;
+}
+
+#statusDate {
+  font-size: 0.8em;
+  color: #888;
+  white-space: nowrap;
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* === Tables === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #333;
+}
+
+th, td {
+  padding: 4px 6px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+th {
+  border-bottom: 1px solid #e79cff;
+  color: #9b2c9b;
+  font-weight: normal;
+}
+
+td {
+  border-bottom: 1px dotted #e79cff;
+}
+
+table tbody tr:hover {
+  background-color: rgba(231, 156, 255, 0.08);
+}
+
+/* === Links === */
+a {
+  color: #e79cff;
+  text-decoration: underline;
+}
+
+a:hover,
+a:active {
+  color: #a14dd7;
+}
+
+/* === Images === */
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+img.icon {
+  height: 1em;
+  vertical-align: -0.125em;
+  margin-right: 0.4em;
+  margin-top: 0;
+}
+
+/* === Controls === */
+#controls {
+  margin-bottom: 1rem;
+}
+
+#controls label {
+  font-weight: normal;
+  color: #333;
+}
+
+#controls select#sort {
+  font-size: 14px;
+  color: #222;
+  background: #fff;
+  border: 1px solid #e79cff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+/* === Footer Styles === */
+#footer {
+  font-size: 14px;
+  margin-top: 24px;
+  color: #555;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer p {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+}
+
+#footer .footer-links a {
+  color: #e79cff;
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+#footer .footer-links a:hover {
+  color: #a14dd7;
+}
+
+/* === Status Log Divider === */
+#status-list hr {
+  border: 0;
+  border-bottom: 1px dotted #e79cff;
+  margin: 12px 0;
+}
+
+/* === Music Player Bar === */
+#music-bar {
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fffafd;
+  border-bottom: 1px solid #e6bfff;
+  z-index: 1000;
+  padding: 0 6px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  border-radius: 0 0 7px 7px;
+}
+
+#player-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
   flex-grow: 1;
   flex-wrap: nowrap;
 }
 
 #player-controls button {
   all: unset;
-  color: #9b2c9b;
+  color: #a03ca0;
   cursor: pointer;
-  font-size: 13px;
-  padding: 0 6px;
-  transition: opacity 0.2s ease;
+  font-size: 11px;
+  padding: 0 3px;
+  border-radius: 3px;
+  min-height: 22px;
+  min-width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, opacity 0.18s;
 }
-
 #player-controls button:hover {
-  opacity: 0.8;
+  background: #f3e0ff;
+  opacity: 0.85;
 }
 
-/* === Progress Bar and Time === */
 #progress-container {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 2px;
   flex-grow: 1;
-  max-width: 240px;
+  max-width: 120px;
 }
 
-#current-time,
-#duration {
-  font-size: 12px;
-  color: #4f0e83;
-  width: 42px;
+#current-time, #duration {
+  font-size: 10px;
+  color: #6a1b8a;
+  width: 30px;
   text-align: center;
 }
 
-#progress,
-#volume {
-  height: 4px;
-  accent-color: #e79cff;
+#progress, #volume {
+  height: 2.5px;
+  accent-color: #e6bfff;
+  border-radius: 2px;
 }
+#progress { flex-grow: 1; }
+#volume { width: 32px; }
 
-#progress {
-  flex-grow: 1;
-}
-
-#volume {
-  width: 60px;
-}
-
-/* === Playlist Toggle === */
 #toggle-playlist {
   cursor: pointer;
-  color: #9b2c9b;
-  font-size: 13px;
+  color: #a03ca0;
+  font-size: 11px;
   user-select: none;
+  padding: 1px 4px;
+  border-radius: 3px;
+  transition: background 0.12s;
 }
-
 #toggle-playlist:hover {
-  text-decoration: underline;
+  background: #f3e0ff;
+  text-decoration: none;
 }
 
-/* === Playlist Panel === */
 #playlist-panel {
+  font-family: Arial, sans-serif;
   position: fixed;
-  top: 36px;
+  top: 24px;
   right: 0;
-  width: 200px;
-  height: calc(100% - 36px);
-  background: #fff0ff;
-  border-left: 1px solid #e79cff;
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
+  width: 120px;
+  height: calc(100% - 24px);
+  background: #fffafd;
+  border-left: 1px solid #e6bfff;
+  box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
-  padding: 10px 0;
+  padding: 4px 0;
   transform: translateX(100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.18s;
   z-index: 999;
+  border-radius: 7px 0 0 7px;
 }
-
-#playlist-panel.show {
-  transform: translateX(0%);
-}
-
+#playlist-panel.show { transform: translateX(0%); }
 #playlist-panel h3 {
   margin: 0;
-  padding: 8px 12px;
-  font-size: 14px;
-  color: #9b2c9b;
-  border-bottom: 1px solid #e79cff;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: #a03ca0;
+  border-bottom: 1px solid #e6bfff;
 }
 
-/* === Playlist Items === */
 #playlist {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 #playlist li {
-  padding: 6px 12px;
-  font-size: 13px;
-  color: #4f0e83;
+  padding: 3px 8px;
+  font-size: 11px;
+  color: #6a1b8a;
   cursor: pointer;
-  transition: background 0.2s ease;
+  border-radius: 3px;
+  transition: background 0.12s;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
 }
-
 #playlist li:hover {
-  background-color: #f5d9ff;
+  background-color: #f3e0ff;
 }
-
 #playlist li.active {
-  background-color: #e79cff;
+  background-color: #e6bfff;
   color: #fff;
 }
 
-/* === Hide on small screens === */
+/* Hide on small screens */
 @media screen and (max-width: 600px) {
-  #music-bar,
-  #playlist-panel {
-    display: none !important;
-  }
+  #music-bar, #playlist-panel { display: none !important; }
+}
 }
