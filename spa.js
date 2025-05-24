@@ -18,14 +18,14 @@ function loadPage(path) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-      // Extract just the main content
       const main = doc.querySelector('.main-content');
       if (main) {
-        contentTarget.innerHTML = ''; // clear current content
-        contentTarget.appendChild(main); // insert new content
+        contentTarget.innerHTML = `<div class="main-content">${main.innerHTML}</div>`;
+      } else {
+        contentTarget.innerHTML = '<p>No main content found.</p>';
       }
 
-      // Execute any <script> tags inside .main-content
+      // Execute scripts
       const scripts = doc.querySelectorAll('script');
       scripts.forEach(oldScript => {
         const newScript = document.createElement('script');
@@ -38,7 +38,7 @@ function loadPage(path) {
         document.body.appendChild(newScript);
       });
 
-      // Copy <style> blocks from the loaded content
+      // Inject styles
       const styles = doc.querySelectorAll('style');
       styles.forEach(style => {
         const cloned = document.createElement('style');
@@ -54,7 +54,7 @@ function loadPage(path) {
     });
 }
 
-// Link navigation
+// Intercept internal link clicks
 document.addEventListener('click', e => {
   const link = e.target.closest('a');
   if (!link) return;
@@ -71,10 +71,12 @@ document.addEventListener('click', e => {
   }
 });
 
+// Browser navigation
 window.addEventListener('popstate', () => {
   loadPage(location.pathname);
 });
 
+// Initial load
 window.addEventListener('DOMContentLoaded', () => {
   const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
   loadPage(initialPath);
