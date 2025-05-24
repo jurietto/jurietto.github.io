@@ -410,11 +410,11 @@ body {
   
   #playlist {
     list-style: none;
-    padding: 0;
+    padding: 8px 0 0 0;
     margin: 0;
   }
   #playlist li {
-    padding: 3px 0 3px 0;
+    padding: 3px 0 3px 18px;
     font-size: 11px;
     color: #6a1b8a;
     cursor: pointer;
