@@ -1,119 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Status Log</title>
-  <link rel="stylesheet" href="../style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-<body>
+<div class="main-content">
+  <h1>Status Log</h1>
 
-  <!-- Injected music player -->
-  <div id="player-container"></div>
-
-  <div class="main-content">
-    <h1>Status Log</h1>
-
-    <div id="last-updated">
-      <p>Juri: Loading...</p>
-    </div>
-
-    <p class="page-text">
-      A timeline of little updates, moods, and notes. 
-    </p>
-
-    <p>
-      <a href="/updates/updates.html">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
-        [parent directory]
-      </a>
-    </p>
-
-    <!-- Controls block -->
-    <div id="controls">
-      <label for="sort">Sort by:</label>
-      <select id="sort">
-        <option value="new">Newest</option>
-        <option value="old">Oldest</option>
-      </select>
-    </div>
-
-    <div id="status-list">
-      <p>Loading status updates...</p>
-    </div>
-
-    <!-- Footer -->
-    <div id="footer"></div>
-
-    <script>
-      fetch('statuslog.json')
-        .then(response => response.json())
-        .then(data => {
-          const list = document.getElementById('status-list');
-          list.innerHTML = '';
-
-          const entries = data.map(entry => {
-            const div = document.createElement('div');
-            div.className = 'post';
-            div.dataset.time = entry.time;
-            div.innerHTML = `
-              <p class="commit-header">
-                <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="update icon" class="icon" />
-                <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
-              </p>
-              <p class="commit-message">${entry.text}</p>
-              <hr />
-            `;
-            return div;
-          });
-
-          const sortSelect = document.getElementById('sort');
-
-          function render(order) {
-            list.innerHTML = '';
-            const sorted = [...entries].sort((a, b) => {
-              const dateA = new Date(a.dataset.time);
-              const dateB = new Date(b.dataset.time);
-              return order === 'old' ? dateA - dateB : dateB - dateA;
-            });
-            sorted.forEach(e => list.appendChild(e));
-          }
-
-          render('new');
-          sortSelect.addEventListener('change', () => render(sortSelect.value));
-
-          // Update "Last Updated"
-          const latest = data[data.length - 1];
-          if (latest) {
-            document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
-          }
-        })
-        .catch(err => {
-          document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
-          console.error(err);
-        });
-
-      fetch('../footer.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('footer').innerHTML = html;
-        });
-    </script>
-
-    <script src="../script.js"></script>
+  <div id="last-updated">
+    <p>Juri: Loading...</p>
   </div>
 
-  <!-- Music Player Loader -->
-  <script>
-    fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = '/player.js';
-        script.defer = true;
-        document.body.appendChild(script);
+  <p class="page-text">
+    A timeline of little updates, moods, and notes. 
+  </p>
+
+  <p>
+    <a href="/updates/updates.html">
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
+      [parent directory]
+    </a>
+  </p>
+
+  <!-- Controls block -->
+  <div id="controls">
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+      <option value="new">Newest</option>
+      <option value="old">Oldest</option>
+    </select>
+  </div>
+
+  <div id="status-list">
+    <p>Loading status updates...</p>
+  </div>
+</div>
+
+<script>
+  fetch('/updates/statuslog.json')
+    .then(response => response.json())
+    .then(data => {
+      const list = document.getElementById('status-list');
+      list.innerHTML = '';
+
+      const entries = data.map(entry => {
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.dataset.time = entry.time;
+        div.innerHTML = `
+          <p class="commit-header">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="update icon" class="icon" />
+            <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
+          </p>
+          <p class="commit-message">${entry.text}</p>
+          <hr />
+        `;
+        return div;
       });
-  </script>
-</body>
-</html>
+
+      const sortSelect = document.getElementById('sort');
+
+      function render(order) {
+        list.innerHTML = '';
+        const sorted = [...entries].sort((a, b) => {
+          const dateA = new Date(a.dataset.time);
+          const dateB = new Date(b.dataset.time);
+          return order === 'old' ? dateA - dateB : dateB - dateA;
+        });
+        sorted.forEach(e => list.appendChild(e));
+      }
+
+      render('new');
+      sortSelect.addEventListener('change', () => render(sortSelect.value));
+
+      const latest = data[data.length - 1];
+      if (latest) {
+        document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
+      }
+    })
+    .catch(err => {
+      document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+      console.error(err);
+    });
+</script>
