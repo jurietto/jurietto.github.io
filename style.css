@@ -271,7 +271,7 @@ img.icon {
   font-family: Arial, sans-serif;
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: #fffafd;
+  background: #fffafd; /* Plain background, no image */
   border-bottom: 1px solid #e6bfff;
   z-index: 1000;
   padding: 0 6px;
@@ -281,7 +281,14 @@ img.icon {
   gap: 4px;
   height: 24px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-  border-radius: 0 0 7px 7px;
+  position: fixed;
+}
+#music-bar::before {
+  display: none; /* No overlay needed */
+}
+#music-bar > * {
+  position: relative;
+  z-index: 1;
 }
 
 #player-controls {
@@ -298,7 +305,6 @@ img.icon {
   cursor: pointer;
   font-size: 11px;
   padding: 0 3px;
-  border-radius: 3px;
   min-height: 22px;
   min-width: 22px;
   display: flex;
@@ -314,9 +320,10 @@ img.icon {
 #progress-container {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 10px;
   flex-grow: 1;
-  max-width: 120px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 #current-time, #duration {
@@ -326,13 +333,15 @@ img.icon {
   text-align: center;
 }
 
-#progress, #volume {
-  height: 2.5px;
-  accent-color: #e6bfff;
-  border-radius: 2px;
+#progress {
+  flex-grow: 1;
+  min-width: 0;
 }
-#progress { flex-grow: 1; }
-#volume { width: 32px; }
+
+#volume {
+  width: 40px;
+  flex-shrink: 0;
+}
 
 #toggle-playlist {
   cursor: pointer;
@@ -340,7 +349,6 @@ img.icon {
   font-size: 11px;
   user-select: none;
   padding: 1px 4px;
-  border-radius: 3px;
   transition: background 0.12s;
 }
 #toggle-playlist:hover {
@@ -353,9 +361,9 @@ img.icon {
   position: fixed;
   top: 24px;
   right: 0;
-  width: 120px;
+  width: 220px;
   height: calc(100% - 24px);
-  background: #fffafd;
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/tumblr_8ff32143a763c91d56f50b39fb9a697c_e8b6f90a_500.webp') center/cover no-repeat;
   border-left: 1px solid #e6bfff;
   box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
@@ -363,7 +371,18 @@ img.icon {
   transform: translateX(100%);
   transition: transform 0.18s;
   z-index: 999;
-  border-radius: 7px 0 0 7px;
+}
+#playlist-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,250,253,0.90);
+  pointer-events: none;
+  z-index: 0;
+}
+#playlist-panel > * {
+  position: relative;
+  z-index: 1;
 }
 #playlist-panel.show { transform: translateX(0%); }
 #playlist-panel h3 {
@@ -384,7 +403,6 @@ img.icon {
   font-size: 11px;
   color: #6a1b8a;
   cursor: pointer;
-  border-radius: 3px;
   transition: background 0.12s;
   white-space: nowrap;
   overflow: hidden;
@@ -401,7 +419,6 @@ img.icon {
   color: #fff;
 }
 
-/* Hide on small screens */
 @media screen and (max-width: 600px) {
   #music-bar, #playlist-panel { display: none !important; }
 }
