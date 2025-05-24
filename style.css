@@ -265,11 +265,6 @@ body {
     border-bottom: 1px dotted #e79cff;
     margin: 12px 0;
   }
-body {
-  background-image: var(--background-image, none);
-  background-size: cover;
-  background-position: center;
-}
 
 #toggle-playlist {
   cursor: pointer;
