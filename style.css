@@ -414,7 +414,7 @@ body {
     margin: 0;
   }
   #playlist li {
-    padding: 3px 8px;
+    padding: 3px 0 3px 0;
     font-size: 11px;
     color: #6a1b8a;
     cursor: pointer;
