@@ -391,6 +391,9 @@ body {
   color: #4f0e83;
   cursor: pointer;
   transition: background 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #playlist li:hover {
