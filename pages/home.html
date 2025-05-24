@@ -84,7 +84,6 @@ fetch('/updates/statuslog.json')
   .then(data => {
     if (!Array.isArray(data) || data.length === 0) throw new Error('Empty or invalid data');
 
-    // Find the latest by date (not just first)
     const latest = data.reduce((a, b) => new Date(a.time) > new Date(b.time) ? a : b);
     document.getElementById('myStatus').textContent = latest.text || 'No status found.';
   })
@@ -93,14 +92,12 @@ fetch('/updates/statuslog.json')
     document.getElementById('myStatus').textContent = 'Status unavailable.';
   });
 
-// Fetch latest COMMIT date from commits.json
-fetch('/commits.json')
+// Fetch Last Updated from meta/home_meta.json
+fetch('/meta/home_meta.json')
   .then(res => res.json())
-  .then(commits => {
-    if (!Array.isArray(commits) || commits.length === 0) throw new Error('Empty or invalid data');
-
-    const latestCommit = commits.reduce((a, b) => new Date(a.date) > new Date(b.date) ? a : b);
-    const formatted = new Date(latestCommit.date).toLocaleString(undefined, {
+  .then(data => {
+    const date = new Date(data.lastUpdated);
+    const formatted = date.toLocaleString(undefined, {
       dateStyle: 'long',
       timeStyle: 'short'
     });
