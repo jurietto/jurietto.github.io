@@ -15,30 +15,19 @@ function loadPage(path) {
       return res.text();
     })
     .then(html => {
-      // Parse fetched HTML as a virtual document
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-      // Replace content with new .main-content
+      // Extract just the main content
       const main = doc.querySelector('.main-content');
-      contentTarget.innerHTML = '';
       if (main) {
-        contentTarget.appendChild(main);
+        contentTarget.innerHTML = ''; // clear current content
+        contentTarget.appendChild(main); // insert new content
       }
 
-      // Remove previously injected inline styles
-      document.querySelectorAll('head style[data-spa]').forEach(s => s.remove());
-
-      // Inject inline <style> blocks
-      doc.querySelectorAll('style').forEach(style => {
-        const cloned = document.createElement('style');
-        cloned.textContent = style.textContent;
-        cloned.setAttribute('data-spa', ''); // mark for cleanup
-        document.head.appendChild(cloned);
-      });
-
-      // Re-run scripts (inline and external)
-      doc.querySelectorAll('script').forEach(oldScript => {
+      // Execute any <script> tags inside .main-content
+      const scripts = doc.querySelectorAll('script');
+      scripts.forEach(oldScript => {
         const newScript = document.createElement('script');
         if (oldScript.src) {
           newScript.src = oldScript.src;
@@ -49,6 +38,14 @@ function loadPage(path) {
         document.body.appendChild(newScript);
       });
 
+      // Copy <style> blocks from the loaded content
+      const styles = doc.querySelectorAll('style');
+      styles.forEach(style => {
+        const cloned = document.createElement('style');
+        cloned.textContent = style.textContent;
+        document.head.appendChild(cloned);
+      });
+
       window.scrollTo(0, 0);
     })
     .catch(err => {
@@ -57,7 +54,7 @@ function loadPage(path) {
     });
 }
 
-// Intercept internal <a href> clicks
+// Link navigation
 document.addEventListener('click', e => {
   const link = e.target.closest('a');
   if (!link) return;
@@ -74,12 +71,10 @@ document.addEventListener('click', e => {
   }
 });
 
-// Handle browser navigation (back/forward)
 window.addEventListener('popstate', () => {
   loadPage(location.pathname);
 });
 
-// Initial page load
 window.addEventListener('DOMContentLoaded', () => {
   const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
   loadPage(initialPath);
