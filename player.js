@@ -23,17 +23,18 @@ function formatTime(seconds) {
 function playTrack(index) {
   if (index < 0 || index >= trackList.length) return;
   const item = trackList[index];
-  trackList.forEach(li => li.classList.remove('active'));
-  item.classList.add('active');
-  audio.src = item.dataset.src;
-  audio.play();
-  playToggleBtn.textContent = 'Pause';
-  currentTrack = item;
+  if (currentTrack !== item) {
+    trackList.forEach(li => li.classList.remove('active'));
+    item.classList.add('active');
+    audio.src = item.dataset.src;
+    currentTrack = item;
+    audio.play();
+    playToggleBtn.textContent = 'Pause';
+  }
 }
 
 playToggleBtn.addEventListener('click', () => {
-  if (!audio.src) {
-    // If nothing is loaded yet, play first track
+  if (!audio.src && trackList.length > 0) {
     playTrack(0);
   } else if (audio.paused) {
     audio.play();
