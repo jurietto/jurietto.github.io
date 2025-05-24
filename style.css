@@ -375,7 +375,7 @@ body {
     right: 0;
     width: 220px;
     height: calc(100% - 24px);
-    background: none !important;
+    background: #fffafd;
     border-left: 1px solid #e6bfff;
     box-shadow: -2px 0 3px rgba(0,0,0,0.03);
     overflow-y: auto;
