@@ -404,6 +404,8 @@ body {
     font-size: 11px;
     color: #a03ca0;
     border-bottom: 1px solid #e6bfff;
+    background: #f3e0ff;
+    border-radius: 0;
   }
   
   #playlist {
@@ -425,11 +427,23 @@ body {
     align-items: center;
   }
   #playlist li:hover {
-    background-color: transparent;
-  }
-  #playlist li.active {
     background-color: #e6bfff;
     color: #fff;
+    border-radius: 0;
+  }
+  #playlist li.active {
+    background-color: #a03ca0;
+    color: #fff;
+    border-radius: 0;
+  }
+  
+  #music-bar button:hover,
+  #music-bar [role="button"]:hover,
+  #music-bar a:hover,
+  #music-bar span:hover {
+    background-color: #e6bfff;
+    color: #fff;
+    border-radius: 0;
   }
   
   @media screen and (max-width: 600px) {
