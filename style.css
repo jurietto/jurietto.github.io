@@ -313,7 +313,7 @@ img.icon {
   transition: background 0.12s, opacity 0.18s;
 }
 #player-controls button:hover {
-  background: #f3e0ff;
+  background: none;
   opacity: 0.85;
 }
 
@@ -333,13 +333,25 @@ img.icon {
   text-align: center;
 }
 
+#progress, #volume {
+  height: 5px;
+  accent-color: #a03ca0;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.08);
+  background: #f3e0ff;
+  outline: none;
+  border: none;
+  transition: box-shadow 0.18s;
+}
+#progress:focus, #volume:focus {
+  box-shadow: 0 0 0 2px #e6bfff;
+}
 #progress {
   flex-grow: 1;
   min-width: 0;
 }
-
 #volume {
-  width: 40px;
+  width: 70px;
   flex-shrink: 0;
 }
 
@@ -363,7 +375,7 @@ img.icon {
   right: 0;
   width: 220px;
   height: calc(100% - 24px);
-  background: url('https://file.garden/ZhTgSjrp5nAroRKq/tumblr_8ff32143a763c91d56f50b39fb9a697c_e8b6f90a_500.webp') center/cover no-repeat;
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/tumblr_8ff32143a763c91d56f50b39fb9a697c_e8b6f90a_500.webp') top left repeat;
   border-left: 1px solid #e6bfff;
   box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
@@ -412,7 +424,7 @@ img.icon {
   align-items: center;
 }
 #playlist li:hover {
-  background-color: #f3e0ff;
+  background-color: transparent;
 }
 #playlist li.active {
   background-color: #e6bfff;
@@ -421,5 +433,4 @@ img.icon {
 
 @media screen and (max-width: 600px) {
   #music-bar, #playlist-panel { display: none !important; }
-}
 }
