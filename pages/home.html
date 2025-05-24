@@ -5,7 +5,7 @@
     <p>Last Updated: Loading...</p>
   </div>
 
-  <!-- Updated my-status block for SPA compatibility -->
+  <!-- Status box linking to Status Log -->
   <a id="my-status" href="/updates/statuslog.html" style="display: block; cursor: pointer;">
     <div class="status-text">
       <span id="myStatus">Loading status...</span>
@@ -77,3 +77,21 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  // Fetch and display the latest status from JSON
+  fetch('/updates/statuslog.json')
+    .then(res => res.json())
+    .then(data => {
+      const latest = data[data.length - 1];
+      if (latest && latest.text) {
+        document.getElementById('myStatus').textContent = latest.text;
+      } else {
+        document.getElementById('myStatus').textContent = 'No status available.';
+      }
+    })
+    .catch(err => {
+      console.error('Failed to load status:', err);
+      document.getElementById('myStatus').textContent = 'Status unavailable.';
+    });
+</script>
