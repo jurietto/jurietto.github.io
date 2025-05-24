@@ -79,35 +79,4 @@
           entry.className = 'post';
           entry.innerHTML = `
             <p class="commit-header">
-              <img src="/media/crown.png" class="icon" />
-              <strong>${commit.author}</strong> – <strong>${date}</strong>
-            </p>
-            <p class="commit-message">${commit.message}</p>
-            <hr />
-          `;
-          container.appendChild(entry);
-        });
-      }
-
-      // Render initial sorted view
-      renderCommits('new');
-      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
-
-      // Find the most recent commit date
-      const latestDate = commits.reduce((latest, current) =>
-        new Date(current.date) > new Date(latest.date) ? current : latest
-      );
-      const formatted = new Date(latestDate.date).toLocaleString(undefined, {
-        dateStyle: 'long',
-        timeStyle: 'short'
-      });
-      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
-    } catch (err) {
-      document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
-      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
-      console.error(err);
-    }
-  }
-
-  loadCommits();
-</script>
+              <img src=
