@@ -205,10 +205,10 @@ body {
   }
   
   img.icon {
-    height: 16px;
-    vertical-align: middle;
-    margin-right: 4px;
-    margin-top: -2px;
+    height: 1em;
+    vertical-align: -0.125em;
+    margin-right: 0.4em;
+    margin-top: 0;
   }
   
   /* === Controls === */
