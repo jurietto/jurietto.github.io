@@ -15,22 +15,30 @@ function loadPage(path) {
       return res.text();
     })
     .then(html => {
-      // Create a virtual document from the fetched HTML
+      // Parse fetched HTML as a virtual document
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-      // Clear existing content
-      contentTarget.innerHTML = '';
-
-      // Extract and insert the main content block
+      // Replace content with new .main-content
       const main = doc.querySelector('.main-content');
+      contentTarget.innerHTML = '';
       if (main) {
         contentTarget.appendChild(main);
       }
 
-      // Re-run <script> tags (inline + external)
-      const scripts = doc.querySelectorAll('script');
-      scripts.forEach(oldScript => {
+      // Remove previously injected inline styles
+      document.querySelectorAll('head style[data-spa]').forEach(s => s.remove());
+
+      // Inject inline <style> blocks
+      doc.querySelectorAll('style').forEach(style => {
+        const cloned = document.createElement('style');
+        cloned.textContent = style.textContent;
+        cloned.setAttribute('data-spa', ''); // mark for cleanup
+        document.head.appendChild(cloned);
+      });
+
+      // Re-run scripts (inline and external)
+      doc.querySelectorAll('script').forEach(oldScript => {
         const newScript = document.createElement('script');
         if (oldScript.src) {
           newScript.src = oldScript.src;
@@ -41,14 +49,6 @@ function loadPage(path) {
         document.body.appendChild(newScript);
       });
 
-      // Re-apply any inline styles (optional but useful)
-      const styles = doc.querySelectorAll('style');
-      styles.forEach(style => {
-        const cloned = document.createElement('style');
-        cloned.textContent = style.textContent;
-        document.head.appendChild(cloned);
-      });
-
       window.scrollTo(0, 0);
     })
     .catch(err => {
@@ -57,7 +57,7 @@ function loadPage(path) {
     });
 }
 
-// Intercept internal link clicks
+// Intercept internal <a href> clicks
 document.addEventListener('click', e => {
   const link = e.target.closest('a');
   if (!link) return;
@@ -79,7 +79,7 @@ window.addEventListener('popstate', () => {
   loadPage(location.pathname);
 });
 
-// Load home page on initial load if at root
+// Initial page load
 window.addEventListener('DOMContentLoaded', () => {
   const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
   loadPage(initialPath);
