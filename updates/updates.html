@@ -53,16 +53,27 @@
 </div>
 
 <script>
-  fetch('/updates/statuslog.json')
+  fetch('/commits.json')
     .then(res => res.json())
-    .then(data => {
-      const latest = data[0];
-      if (latest) {
-        document.querySelector('#last-updated p').textContent = `Last Updated: ${latest.time}`;
+    .then(commits => {
+      if (!Array.isArray(commits) || commits.length === 0) {
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unknown';
+        return;
       }
+
+      const latest = commits.reduce((a, b) =>
+        new Date(a.date) > new Date(b.date) ? a : b
+      );
+
+      const formatted = new Date(latest.date).toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      });
+
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     })
     .catch(err => {
+      console.error('Failed to load commits.json:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: N/A';
-      console.error(err);
     });
 </script>
