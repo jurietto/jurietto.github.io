@@ -78,33 +78,32 @@
 </div>
 
 <script>
-// Fetch latest STATUS entry from statuslog.json
-fetch('/updates/statuslog.json')
-  .then(res => res.json())
-  .then(data => {
-    if (!Array.isArray(data) || data.length === 0) throw new Error('Empty or invalid data');
-
-    const latest = data.reduce((a, b) => new Date(a.time) > new Date(b.time) ? a : b);
-    document.getElementById('myStatus').textContent = latest.text || 'No status found.';
-  })
-  .catch(err => {
-    console.error('Status load error:', err);
-    document.getElementById('myStatus').textContent = 'Status unavailable.';
-  });
-
-// Fetch Last Updated from meta/home_meta.json
-fetch('/meta/home_meta.json')
-  .then(res => res.json())
-  .then(data => {
-    const date = new Date(data.lastUpdated);
-    const formatted = date.toLocaleString(undefined, {
-      dateStyle: 'long',
-      timeStyle: 'short'
+  // Load latest status entry
+  fetch('/updates/statuslog.json')
+    .then(res => res.json())
+    .then(data => {
+      if (!Array.isArray(data) || data.length === 0) throw new Error('No entries');
+      const latest = data.reduce((a, b) => new Date(a.time) > new Date(b.time) ? a : b);
+      document.getElementById('myStatus').textContent = latest.text || 'No status found.';
+    })
+    .catch(err => {
+      console.error('Status load error:', err);
+      document.getElementById('myStatus').textContent = 'Status unavailable.';
     });
-    document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
-  })
-  .catch(err => {
-    console.error('Last Updated load error:', err);
-    document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
-  });
+
+  // Load last updated from home_meta.json
+  fetch('/meta/home_meta.json')
+    .then(res => res.json())
+    .then(data => {
+      const date = new Date(data.lastUpdated);
+      const formatted = date.toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      });
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+    })
+    .catch(err => {
+      console.error('Failed to load home_meta.json:', err);
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+    });
 </script>
