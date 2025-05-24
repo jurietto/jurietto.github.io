@@ -38,13 +38,14 @@
 </style>
 
 <script>
-  async function loadCommits() {
+  document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('commit-list');
+    const sortSelect = document.getElementById('sort');
+
     try {
       const res = await fetch('/commits.json');
       if (!res.ok) throw new Error('Failed to fetch commits');
       const commits = await res.json();
-      const container = document.getElementById('commit-list');
-      const sortSelect = document.getElementById('sort');
 
       const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
       months.forEach(month => {
@@ -56,20 +57,20 @@
 
       function renderCommits(order) {
         container.innerHTML = '';
-        let filtered = [...commits];
+        let list = [...commits];
 
         if (order === 'old') {
-          filtered.reverse();
+          list.reverse();
         } else if (order !== 'new') {
-          filtered = filtered.filter(c => c.date.startsWith(order));
+          list = list.filter(c => c.date.startsWith(order));
         }
 
-        if (filtered.length === 0) {
+        if (list.length === 0) {
           container.innerHTML = '<p>No commits found for this period.</p>';
           return;
         }
 
-        filtered.forEach(commit => {
+        list.forEach(commit => {
           const date = new Date(commit.date).toLocaleString(undefined, {
             dateStyle: 'medium',
             timeStyle: 'short'
@@ -79,4 +80,36 @@
           entry.className = 'post';
           entry.innerHTML = `
             <p class="commit-header">
-              <img src=
+              <img src="/media/crown.png" class="icon" />
+              <strong>${commit.author}</strong> – <strong>${date}</strong>
+            </p>
+            <p class="commit-message">${commit.message}</p>
+            <hr />
+          `;
+          container.appendChild(entry);
+        });
+      }
+
+      renderCommits('new');
+      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+    }
+
+    // Load Last Updated from meta
+    try {
+      const metaRes = await fetch('/meta/sitelog_meta.json');
+      const meta = await metaRes.json();
+      const lastDate = new Date(meta.lastUpdated);
+      const formatted = lastDate.toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      });
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+    } catch (err) {
+      console.error('Failed to load last updated metadata:', err);
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+    }
+  });
+</script>
