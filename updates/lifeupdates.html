@@ -38,6 +38,7 @@
 </style>
 
 <script>
+  // Load life update posts
   fetch('/updates/lu')
     .then(res => res.text())
     .then(html => {
@@ -71,28 +72,28 @@
         });
       }
 
-      // Find most recent post by date
-      const mostRecent = posts.reduce((latest, post) => {
-        const latestDate = new Date(latest.dataset.date);
-        const currentDate = new Date(post.dataset.date);
-        return currentDate > latestDate ? post : latest;
-      });
-
-      if (mostRecent) {
-        const lastDate = new Date(mostRecent.dataset.date);
-        const formatted = lastDate.toLocaleString(undefined, {
-          dateStyle: 'long',
-          timeStyle: 'short'
-        });
-        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
-      }
-
       const sortSelect = document.getElementById('sort');
       sortPosts(sortSelect.value);
       sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
     })
     .catch(err => {
       console.error('Failed to load life updates:', err);
+      document.getElementById('lu-posts').innerHTML = '<p>Could not load posts.</p>';
+    });
+
+  // Load Last Updated from meta
+  fetch('/meta/lifeupdates_meta.json')
+    .then(res => res.json())
+    .then(data => {
+      const lastDate = new Date(data.lastUpdated);
+      const formatted = lastDate.toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      });
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+    })
+    .catch(err => {
+      console.error('Failed to load last updated metadata:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     });
 </script>
