@@ -41,6 +41,7 @@
   async function loadCommits() {
     try {
       const res = await fetch('/commits.json');
+      if (!res.ok) throw new Error('Failed to fetch commits');
       const commits = await res.json();
       const container = document.getElementById('commit-list');
       const sortSelect = document.getElementById('sort');
@@ -88,17 +89,22 @@
         });
       }
 
-      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
+      // Render initial sorted view
       renderCommits('new');
+      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
 
-      const latestDate = new Date(commits[0].date);
-      document.querySelector('#last-updated p').textContent =
-        `Last Updated: ${latestDate.toLocaleString(undefined, {
-          dateStyle: 'long',
-          timeStyle: 'short'
-        })}`;
+      // Find the most recent commit date
+      const latestDate = commits.reduce((latest, current) =>
+        new Date(current.date) > new Date(latest.date) ? current : latest
+      );
+      const formatted = new Date(latestDate.date).toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      });
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     } catch (err) {
       document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
       console.error(err);
     }
   }
