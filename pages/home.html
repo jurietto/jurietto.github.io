@@ -25,13 +25,55 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />Discord – sotokomori</td><td>Text</td></tr>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="/updates/updates.html">Updates</a></td><td>HTML</td></tr>
-      <tr><td class="file-cell"><img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" /><a href="/menhera">Menhera</a></td><td>HTML</td></tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          Discord – sotokomori
+        </td>
+        <td>Text</td>
+      </tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a>
+        </td>
+        <td>URL</td>
+      </tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          <a href="https://x.com/sotokomorii" target="_blank">Twitter</a>
+        </td>
+        <td>URL</td>
+      </tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          <a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a>
+        </td>
+        <td>URL</td>
+      </tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          <a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a>
+        </td>
+        <td>URL</td>
+      </tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          <a href="/updates/updates.html">Updates</a>
+        </td>
+        <td>HTML</td>
+      </tr>
+      <tr>
+        <td class="file-cell">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+          <a href="/menhera">Menhera</a>
+        </td>
+        <td>HTML</td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -40,12 +82,18 @@
   fetch('/updates/statuslog.json')
     .then(res => res.json())
     .then(data => {
-      const latest = data[data.length - 1];
+      const latest = data[0]; // assumes newest is first
       if (latest && latest.text && latest.time) {
-        const date = new Date(latest.time);
-        const formatted = date.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' });
-        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+        // Update status text
         document.getElementById('myStatus').textContent = latest.text;
+
+        // Format and show "Last Updated"
+        const date = new Date(latest.time);
+        const formatted = date.toLocaleString(undefined, {
+          dateStyle: 'long',
+          timeStyle: 'short'
+        });
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
       } else {
         document.getElementById('myStatus').textContent = 'No status available.';
         document.querySelector('#last-updated p').textContent = 'Last Updated: Unknown';
