@@ -1,82 +1,89 @@
-const audio = new Audio();
-let playlist = [];
-let currentIndex = 0;
+const contentTarget = document.getElementById('spa-content');
 
-// DOM elements
-const playBtn = document.getElementById('play');
-const pauseBtn = document.getElementById('pause');
-const nextBtn = document.getElementById('next');
-const prevBtn = document.getElementById('prev');
-const playlistUI = document.getElementById('playlist');
-
-function loadTrack(index) {
-  if (!playlist.length) return;
-
-  currentIndex = index % playlist.length;
-  const track = playlist[currentIndex];
-
-  audio.src = track.src;
-  audio.play();
-
-  updateUI();
+// Normalize path to start with a slash
+function normalizePath(path) {
+  return path.startsWith('/') ? path : '/' + path;
 }
 
-function updateUI() {
-  [...playlistUI.children].forEach((li, i) => {
-    li.classList.toggle('active', i === currentIndex);
-  });
-}
+// Load and render page content
+async function loadPage(path) {
+  const cleanPath = normalizePath(path);
 
-// Autoplay next track when one ends
-audio.addEventListener('ended', () => {
-  currentIndex++;
-  if (currentIndex >= playlist.length) {
-    currentIndex = 0; // loop back to start
+  try {
+    const res = await fetch(cleanPath);
+    if (!res.ok) throw new Error(`Failed to load ${cleanPath}`);
+    const html = await res.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const main = doc.querySelector('.main-content');
+    if (main) {
+      // Load footer and inject into the bottom of the main content
+      const footerRes = await fetch('/footer.html');
+      const footerHTML = await footerRes.text();
+      const footerWrapper = document.createElement('div');
+      footerWrapper.innerHTML = footerHTML;
+      main.appendChild(footerWrapper);
+
+      // Replace the SPA content area with the new main content
+      contentTarget.innerHTML = `<div class="main-content">${main.innerHTML}</div>`;
+    } else {
+      contentTarget.innerHTML = '<p>No main content found.</p>';
+    }
+
+    // Re-run any scripts (inline and external)
+    const scripts = doc.querySelectorAll('script');
+    scripts.forEach(oldScript => {
+      const newScript = document.createElement('script');
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
+        newScript.defer = oldScript.defer || false;
+      } else {
+        newScript.textContent = oldScript.textContent;
+      }
+      document.body.appendChild(newScript);
+    });
+
+    // Apply inline styles
+    const styles = doc.querySelectorAll('style');
+    styles.forEach(style => {
+      const cloned = document.createElement('style');
+      cloned.textContent = style.textContent;
+      document.head.appendChild(cloned);
+    });
+
+    window.scrollTo(0, 0);
+  } catch (err) {
+    console.error(err);
+    contentTarget.innerHTML = '<p>Failed to load content.</p>';
   }
-  loadTrack(currentIndex);
-});
-
-// Controls
-playBtn.addEventListener('click', () => {
-  if (!audio.src) loadTrack(currentIndex);
-  else audio.play();
-});
-
-pauseBtn.addEventListener('click', () => {
-  audio.pause();
-});
-
-nextBtn.addEventListener('click', () => {
-  currentIndex++;
-  if (currentIndex >= playlist.length) {
-    currentIndex = 0; // loop to start
-  }
-  loadTrack(currentIndex);
-});
-
-prevBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-  loadTrack(currentIndex);
-});
-
-// Populate playlist (can be dynamic)
-function initPlaylist() {
-  playlist = Array.from(playlistUI.children).map(li => {
-    return {
-      src: li.dataset.src,
-      title: li.textContent
-    };
-  });
-
-  playlistUI.addEventListener('click', e => {
-    const li = e.target.closest('li');
-    if (!li) return;
-    const index = [...playlistUI.children].indexOf(li);
-    loadTrack(index);
-  });
-
-  updateUI();
 }
 
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', initPlaylist);
+// Intercept internal link clicks
+document.addEventListener('click', e => {
+  const link = e.target.closest('a');
+  if (!link) return;
+
+  const href = link.getAttribute('href');
+  const isHTML = href?.endsWith('.html');
+  const isInternal = href && (href.startsWith('/') || !href.startsWith('http'));
+
+  if (isHTML && isInternal && !link.hasAttribute('target')) {
+    e.preventDefault();
+    const newPath = normalizePath(href);
+    history.pushState(null, '', newPath);
+    loadPage(newPath);
+  }
+});
+
+// Handle browser navigation (back/forward)
+window.addEventListener('popstate', () => {
+  loadPage(location.pathname);
+});
+
+// Load home page on initial load
+window.addEventListener('DOMContentLoaded', () => {
+  const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
+  loadPage(initialPath);
+});
