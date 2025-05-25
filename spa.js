@@ -1,89 +1,58 @@
-const contentTarget = document.getElementById('spa-content');
+document.addEventListener('DOMContentLoaded', () => {
+  const spaRoot = document.getElementById('spa-content');
 
-// Normalize path to start with a slash
-function normalizePath(path) {
-  return path.startsWith('/') ? path : '/' + path;
-}
+  async function loadPage(url, addToHistory = true) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+      const html = await res.text();
 
-// Load and render page content
-async function loadPage(path) {
-  const cleanPath = normalizePath(path);
+      // Replace <div id="spa-content"> inner HTML
+      spaRoot.innerHTML = html;
 
-  try {
-    const res = await fetch(cleanPath);
-    if (!res.ok) throw new Error(`Failed to load ${cleanPath}`);
-    const html = await res.text();
+      // Execute inline scripts and load external ones
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
+      // Inline scripts
+      tempDiv.querySelectorAll('script').forEach(script => {
+        const newScript = document.createElement('script');
+        if (script.src) {
+          newScript.src = script.src;
+        } else {
+          newScript.textContent = script.textContent;
+        }
+        document.body.appendChild(newScript);
+      });
 
-    const main = doc.querySelector('.main-content');
-    if (main) {
-      // Load footer and inject into the bottom of the main content
-      const footerRes = await fetch('/footer.html');
-      const footerHTML = await footerRes.text();
-      const footerWrapper = document.createElement('div');
-      footerWrapper.innerHTML = footerHTML;
-      main.appendChild(footerWrapper);
-
-      // Replace the SPA content area with the new main content
-      contentTarget.innerHTML = `<div class="main-content">${main.innerHTML}</div>`;
-    } else {
-      contentTarget.innerHTML = '<p>No main content found.</p>';
-    }
-
-    // Re-run any scripts (inline and external)
-    const scripts = doc.querySelectorAll('script');
-    scripts.forEach(oldScript => {
-      const newScript = document.createElement('script');
-      if (oldScript.src) {
-        newScript.src = oldScript.src;
-        newScript.defer = oldScript.defer || false;
-      } else {
-        newScript.textContent = oldScript.textContent;
+      if (addToHistory) {
+        history.pushState({ url }, '', url);
       }
-      document.body.appendChild(newScript);
-    });
-
-    // Apply inline styles
-    const styles = doc.querySelectorAll('style');
-    styles.forEach(style => {
-      const cloned = document.createElement('style');
-      cloned.textContent = style.textContent;
-      document.head.appendChild(cloned);
-    });
-
-    window.scrollTo(0, 0);
-  } catch (err) {
-    console.error(err);
-    contentTarget.innerHTML = '<p>Failed to load content.</p>';
+    } catch (err) {
+      console.error(err);
+      spaRoot.innerHTML = `<p style="color: crimson;">Page failed to load: ${url}</p>`;
+    }
   }
-}
 
-// Intercept internal link clicks
-document.addEventListener('click', e => {
-  const link = e.target.closest('a');
-  if (!link) return;
+  // Intercept internal links
+  document.body.addEventListener('click', e => {
+    const anchor = e.target.closest('a');
+    if (anchor && anchor.getAttribute('href') && anchor.origin === location.origin) {
+      const href = anchor.getAttribute('href');
+      if (!href.startsWith('http') && !href.startsWith('#') && !href.includes('mailto:')) {
+        e.preventDefault();
+        loadPage(href);
+      }
+    }
+  });
 
-  const href = link.getAttribute('href');
-  const isHTML = href?.endsWith('.html');
-  const isInternal = href && (href.startsWith('/') || !href.startsWith('http'));
+  // Handle browser back/forward
+  window.addEventListener('popstate', e => {
+    if (e.state?.url) {
+      loadPage(e.state.url, false);
+    }
+  });
 
-  if (isHTML && isInternal && !link.hasAttribute('target')) {
-    e.preventDefault();
-    const newPath = normalizePath(href);
-    history.pushState(null, '', newPath);
-    loadPage(newPath);
-  }
-});
-
-// Handle browser navigation (back/forward)
-window.addEventListener('popstate', () => {
+  // Load initial page
   loadPage(location.pathname);
-});
-
-// Load home page on initial load
-window.addEventListener('DOMContentLoaded', () => {
-  const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
-  loadPage(initialPath);
 });
