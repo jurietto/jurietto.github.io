@@ -1,0 +1,103 @@
+<div class="main-content">
+  <h1>Status Log</h1>
+
+  <div id="last-updated">
+    <p>Last Updated: Loading...</p>
+  </div>
+
+  <p class="page-text">
+    A timeline of little updates, moods, and notes.
+  </p>
+
+  <p>
+    <a href="/pages/updates.html">
+      <img src="/media/c8.gif" alt="Back icon" class="icon" />
+      [parent directory]
+    </a>
+  </p>
+
+  <div id="controls">
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+      <option value="new">Newest</option>
+      <option value="old">Oldest</option>
+    </select>
+  </div>
+
+  <div id="status-list">
+    <p>Loading status updates...</p>
+  </div>
+</div>
+
+<style>
+  #status-list hr {
+    border: 0;
+    border-bottom: 1px dotted #e79cff;
+    margin: 12px 0;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const list = document.getElementById('status-list');
+    const sortSelect = document.getElementById('sort');
+
+    fetch('/updates/statuslog.json')
+      .then(res => res.json())
+      .then(data => {
+        list.innerHTML = '';
+
+        const entries = data.map(entry => {
+          const dateFormatted = new Date(entry.time).toLocaleString(undefined, {
+            dateStyle: 'long',
+            timeStyle: 'short'
+          });
+
+          const div = document.createElement('div');
+          div.className = 'post';
+          div.dataset.time = entry.time;
+          div.innerHTML = `
+            <p class="commit-header">
+              <img src="/media/crown.png" class="icon" alt="update icon" />
+              <strong>${entry.author}</strong> – <strong>${dateFormatted}</strong>
+            </p>
+            <p class="commit-message">${entry.text}</p>
+            <hr />
+          `;
+          return div;
+        });
+
+        function render(order) {
+          list.innerHTML = '';
+          const sorted = [...entries].sort((a, b) => {
+            const dateA = new Date(a.dataset.time);
+            const dateB = new Date(b.dataset.time);
+            return order === 'old' ? dateA - dateB : dateB - dateA;
+          });
+          sorted.forEach(e => list.appendChild(e));
+        }
+
+        render('new');
+        sortSelect.addEventListener('change', () => render(sortSelect.value));
+      })
+      .catch(err => {
+        console.error('Failed to load status entries:', err);
+        list.innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+      });
+
+    fetch('/meta/statuslog_meta.json')
+      .then(res => res.json())
+      .then(data => {
+        const lastDate = new Date(data.lastUpdated);
+        const formatted = lastDate.toLocaleString(undefined, {
+          dateStyle: 'long',
+          timeStyle: 'short'
+        });
+        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+      })
+      .catch(err => {
+        console.error('Failed to load metadata:', err);
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+      });
+  });
+</script>
