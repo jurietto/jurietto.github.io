@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
 
-      // Run scripts inside the loaded content
       tempDiv.querySelectorAll('script').forEach(script => {
         const newScript = document.createElement('script');
         if (script.src) {
@@ -32,10 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Intercept internal links
   document.body.addEventListener('click', e => {
     const anchor = e.target.closest('a');
-    if (anchor && anchor.getAttribute('href') && anchor.origin === location.origin) {
+    if (
+      anchor &&
+      anchor.getAttribute('href') &&
+      anchor.origin === location.origin &&
+      !anchor.getAttribute('target')
+    ) {
       const href = anchor.getAttribute('href');
       if (!href.startsWith('http') && !href.startsWith('#') && !href.includes('mailto:')) {
         e.preventDefault();
@@ -44,14 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Handle browser navigation
   window.addEventListener('popstate', e => {
     if (e.state?.url) {
       loadPage(e.state.url, false);
     }
   });
 
-  // 🔧 THIS IS THE IMPORTANT FIX:
-  const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
+  // ✅ Ensure correct pathing when deployed under GitHub Pages
+  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/'); // strip filename
+  const initialPath = location.pathname === '/' || location.pathname === '/jurietto.github.io/' 
+    ? 'pages/home.html'
+    : location.pathname.slice(1); // remove leading /
+
   loadPage(initialPath);
 });
