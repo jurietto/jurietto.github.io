@@ -6,7 +6,7 @@
   </div>
 
   <p class="page-text">
-    This page keeps a record of updates and changes made to the site...
+    This page keeps a record of updates and changes made to the site.
   </p>
 
   <p>
@@ -55,6 +55,11 @@
           list.reverse();
         }
 
+        if (list.length === 0) {
+          container.innerHTML = '<p>No commits found.</p>';
+          return;
+        }
+
         list.forEach(commit => {
           const date = new Date(commit.date).toLocaleString(undefined, {
             dateStyle: 'medium',
@@ -78,10 +83,11 @@
       renderCommits('new');
       sortSelect.addEventListener('change', e => renderCommits(e.target.value));
     } catch (err) {
-      console.error(err);
+      console.error('Commit load error:', err);
       container.innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
     }
 
+    // Last updated from meta
     try {
       const metaRes = await fetch('/meta/sitelog_meta.json');
       const meta = await metaRes.json();
@@ -91,3 +97,9 @@
         timeStyle: 'short'
       });
       document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+    } catch (err) {
+      console.error('Failed to load sitelog_meta.json:', err);
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+    }
+  });
+</script>
