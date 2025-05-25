@@ -100,6 +100,7 @@
     // Load Last Updated from meta
     try {
       const metaRes = await fetch('/meta/sitelog_meta.json');
+      if (!metaRes.ok) throw new Error('Failed to fetch sitelog metadata');
       const meta = await metaRes.json();
       const lastDate = new Date(meta.lastUpdated);
       const formatted = lastDate.toLocaleString(undefined, {
@@ -113,4 +114,3 @@
     }
   });
 </script>
- 
