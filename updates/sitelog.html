@@ -6,11 +6,11 @@
   </div>
 
   <p class="page-text">
-    This page keeps a record of updates and changes made to the site...
+    This page keeps a record of updates and changes made to the site.
   </p>
 
   <p>
-    <a href="/pages/updates.html">
+    <a href="/updates/updates.html">
       <img src="/media/c8.gif" alt="Back icon" class="icon" />
       [parent directory]
     </a>
@@ -56,7 +56,7 @@
         }
 
         if (list.length === 0) {
-          container.innerHTML = '<p>No commits found for this period.</p>';
+          container.innerHTML = '<p>No commits found.</p>';
           return;
         }
 
@@ -83,14 +83,14 @@
       renderCommits('new');
       sortSelect.addEventListener('change', e => renderCommits(e.target.value));
     } catch (err) {
-      console.error(err);
-      container.innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+      console.error('Commit load error:', err);
+      container.innerHTML = '<p style="color: crimson;">Could not load commit history.</p>';
     }
 
-    // Last updated
+    // Load Last Updated from meta file
     try {
       const metaRes = await fetch('/meta/sitelog_meta.json');
-      if (!metaRes.ok) throw new Error('Failed to fetch metadata');
+      if (!metaRes.ok) throw new Error('Failed to load metadata');
       const meta = await metaRes.json();
       const lastDate = new Date(meta.lastUpdated);
       const formatted = lastDate.toLocaleString(undefined, {
@@ -99,7 +99,7 @@
       });
       document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     } catch (err) {
-      console.error('Failed to load sitelog metadata:', err);
+      console.error('Meta error:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     }
   });
