@@ -20,13 +20,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-  <!-- Music Player Loads Once -->
+  <!-- Music Player -->
   <div id="player-container"></div>
 
-  <!-- Main Content from SPA -->
+  <!-- Main Content SPA -->
   <div id="spa-content"></div>
 
-  <!-- Load Music Player HTML + JS -->
+  <!-- Load Player + SPA Routing -->
   <script>
     fetch('player.html')
       .then(res => res.text())
@@ -39,7 +39,6 @@
       });
   </script>
 
-  <!-- SPA Routing -->
   <script src="spa.js" defer></script>
 </body>
 </html>
