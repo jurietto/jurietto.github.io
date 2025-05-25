@@ -3,61 +3,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadPage(url, addToHistory = true) {
     try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+      // Ensure we always start from the root for GitHub Pages
+      const fullPath = url.startsWith('/') ? url : `/${url}`;
+      const res = await fetch(fullPath);
+      if (!res.ok) throw new Error(`Failed to fetch ${fullPath}`);
       const html = await res.text();
 
+      // Inject content
       spaRoot.innerHTML = html;
 
+      // Re-run scripts in loaded content
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
 
-      tempDiv.querySelectorAll('script').forEach(script => {
+      tempDiv.querySelectorAll('script').forEach(oldScript => {
         const newScript = document.createElement('script');
-        if (script.src) {
-          newScript.src = script.src;
+        if (oldScript.src) {
+          newScript.src = oldScript.src;
         } else {
-          newScript.textContent = script.textContent;
+          newScript.textContent = oldScript.textContent;
         }
         document.body.appendChild(newScript);
       });
 
       if (addToHistory) {
-        history.pushState({ url }, '', url);
+        history.pushState({ url: fullPath }, '', fullPath);
       }
     } catch (err) {
       console.error(err);
-      spaRoot.innerHTML = `<p style="color: crimson;">Page failed to load: ${url}</p>`;
+      spaRoot.innerHTML = `<p style="color: crimson;">Failed to load: ${url}</p>`;
     }
   }
 
+  // Intercept internal links
   document.body.addEventListener('click', e => {
     const anchor = e.target.closest('a');
     if (
       anchor &&
-      anchor.getAttribute('href') &&
       anchor.origin === location.origin &&
+      !anchor.hasAttribute('download') &&
       !anchor.getAttribute('target')
     ) {
       const href = anchor.getAttribute('href');
-      if (!href.startsWith('http') && !href.startsWith('#') && !href.includes('mailto:')) {
+      if (
+        href &&
+        !href.startsWith('http') &&
+        !href.startsWith('#') &&
+        !href.includes('mailto:')
+      ) {
         e.preventDefault();
         loadPage(href);
       }
     }
   });
 
+  // Handle back/forward
   window.addEventListener('popstate', e => {
     if (e.state?.url) {
       loadPage(e.state.url, false);
     }
   });
 
-  // ✅ Ensure correct pathing when deployed under GitHub Pages
-  const basePath = window.location.pathname.replace(/\/[^/]*$/, '/'); // strip filename
-  const initialPath = location.pathname === '/' || location.pathname === '/jurietto.github.io/' 
-    ? 'pages/home.html'
-    : location.pathname.slice(1); // remove leading /
-
-  loadPage(initialPath);
+  // Load initial page
+  const initialPath =
+    location.pathname === '/' ? '/pages/home.html' : location.pathname;
+  loadPage(initialPath, false);
 });
