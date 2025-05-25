@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Juri's Stuff</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 
   <!-- Social Meta -->
   <meta property="og:title" content="Juri's Stuff" />
@@ -26,20 +26,20 @@
   <!-- Main Content SPA -->
   <div id="spa-content"></div>
 
-  <!-- Load Player + SPA Routing -->
+  <!-- Load Player -->
   <script>
-    fetch('player.html')
+    fetch('./player.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('player-container').innerHTML = html;
         const script = document.createElement('script');
-        script.src = 'player.js';
+        script.src = './player.js';
         script.defer = true;
         document.body.appendChild(script);
       });
   </script>
 
-  <script src="spa.js" defer></script>
+  <!-- SPA Router -->
+  <script src="./spa.js" defer></script>
 </body>
 </html>
- 
