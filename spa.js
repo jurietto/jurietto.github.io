@@ -7,14 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error(`Failed to fetch ${url}`);
       const html = await res.text();
 
-      // Replace <div id="spa-content"> inner HTML
       spaRoot.innerHTML = html;
 
-      // Execute inline scripts and load external ones
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
 
-      // Inline scripts
+      // Run scripts inside the loaded content
       tempDiv.querySelectorAll('script').forEach(script => {
         const newScript = document.createElement('script');
         if (script.src) {
@@ -46,13 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Handle browser back/forward
+  // Handle browser navigation
   window.addEventListener('popstate', e => {
     if (e.state?.url) {
       loadPage(e.state.url, false);
     }
   });
 
-  // Load initial page
-  loadPage(location.pathname);
+  // 🔧 THIS IS THE IMPORTANT FIX:
+  const initialPath = location.pathname === '/' ? '/pages/home.html' : location.pathname;
+  loadPage(initialPath);
 });
