@@ -47,6 +47,12 @@
       if (!res.ok) throw new Error('Failed to fetch commits');
       const commits = await res.json();
 
+      if (!Array.isArray(commits) || commits.length === 0) {
+        container.innerHTML = '<p>No commit data available.</p>';
+        return;
+      }
+
+      // Fill month/year filter
       const months = [...new Set(commits.map(c => c.date.slice(0, 7)))].sort().reverse();
       months.forEach(month => {
         const option = document.createElement('option');
@@ -57,20 +63,20 @@
 
       function renderCommits(order) {
         container.innerHTML = '';
-        let list = [...commits];
+        let filtered = [...commits];
 
         if (order === 'old') {
-          list.reverse();
+          filtered.reverse();
         } else if (order !== 'new') {
-          list = list.filter(c => c.date.startsWith(order));
+          filtered = filtered.filter(c => c.date.startsWith(order));
         }
 
-        if (list.length === 0) {
+        if (filtered.length === 0) {
           container.innerHTML = '<p>No commits found for this period.</p>';
           return;
         }
 
-        list.forEach(commit => {
+        filtered.forEach(commit => {
           const date = new Date(commit.date).toLocaleString(undefined, {
             dateStyle: 'medium',
             timeStyle: 'short'
@@ -93,7 +99,7 @@
       renderCommits('new');
       sortSelect.addEventListener('change', e => renderCommits(e.target.value));
     } catch (err) {
-      console.error(err);
+      console.error('Commit load error:', err);
       container.innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
     }
 
@@ -109,8 +115,9 @@
       });
       document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     } catch (err) {
-      console.error('Failed to load last updated metadata:', err);
+      console.error('Metadata load error:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     }
   });
 </script>
+
