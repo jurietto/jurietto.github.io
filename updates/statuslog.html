@@ -42,10 +42,14 @@
     const list = document.getElementById('status-list');
     const sortSelect = document.getElementById('sort');
 
+    // Load status entries
     fetch('/updates/statuslog.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Status JSON not available');
+        return res.json();
+      })
       .then(data => {
-        list.innerHTML = '';
+        if (!Array.isArray(data)) throw new Error('Invalid status data');
 
         const entries = data.map(entry => {
           const dateFormatted = new Date(entry.time).toLocaleString(undefined, {
@@ -68,13 +72,14 @@
         });
 
         function render(order) {
-          list.innerHTML = '';
           const sorted = [...entries].sort((a, b) => {
             const dateA = new Date(a.dataset.time);
             const dateB = new Date(b.dataset.time);
             return order === 'old' ? dateA - dateB : dateB - dateA;
           });
-          sorted.forEach(e => list.appendChild(e));
+
+          list.innerHTML = '';
+          sorted.forEach(entry => list.appendChild(entry));
         }
 
         render('new');
@@ -85,8 +90,12 @@
         list.innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
       });
 
+    // Load Last Updated from meta
     fetch('/meta/statuslog_meta.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Metadata not available');
+        return res.json();
+      })
       .then(data => {
         const lastDate = new Date(data.lastUpdated);
         const formatted = lastDate.toLocaleString(undefined, {
@@ -101,3 +110,4 @@
       });
   });
 </script>
+
