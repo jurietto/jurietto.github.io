@@ -1,0 +1,104 @@
+<div class="main-content">
+  <h1>Site Log</h1>
+
+  <div id="last-updated">
+    <p>Last Updated: Loading...</p>
+  </div>
+
+  <p class="page-text">
+    This page keeps a record of updates and changes made to the site.
+  </p>
+
+  <p>
+    <a href="/pages/updates.html">
+      <img src="/media/c8.gif" alt="Back icon" class="icon" />
+      [parent directory]
+    </a>
+  </p>
+
+  <div id="controls">
+    <label for="sort">Sort by:</label>
+    <select id="sort">
+      <option value="new">Newest</option>
+      <option value="old">Oldest</option>
+    </select>
+  </div>
+
+  <div id="commit-list">
+    <p>Loading commit history...</p>
+  </div>
+</div>
+
+<style>
+  #commit-list hr {
+    border: 0;
+    border-bottom: 1px dotted #e79cff;
+    margin: 12px 0;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('commit-list');
+    const sortSelect = document.getElementById('sort');
+
+    try {
+      const res = await fetch('/commits.json');
+      if (!res.ok) throw new Error('Failed to fetch commits');
+      const commits = await res.json();
+
+      function renderCommits(order) {
+        container.innerHTML = '';
+        let list = [...commits];
+
+        if (order === 'old') list.reverse();
+
+        if (list.length === 0) {
+          container.innerHTML = '<p>No commits found for this period.</p>';
+          return;
+        }
+
+        list.forEach(commit => {
+          const date = new Date(commit.date).toLocaleString(undefined, {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          });
+
+          const entry = document.createElement('div');
+          entry.className = 'post';
+          entry.innerHTML = `
+            <p class="commit-header">
+              <img src="/media/crown.png" class="icon" />
+              <strong>${commit.author}</strong> – <strong>${date}</strong>
+            </p>
+            <p class="commit-message">${commit.message}</p>
+            <hr />
+          `;
+          container.appendChild(entry);
+        });
+      }
+
+      renderCommits('new');
+      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+    }
+
+    // Load Last Updated from meta
+    try {
+      const metaRes = await fetch('/meta/sitelog_meta.json');
+      if (!metaRes.ok) throw new Error('Failed to fetch sitelog metadata');
+      const meta = await metaRes.json();
+      const lastDate = new Date(meta.lastUpdated);
+      const formatted = lastDate.toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
+      });
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
+    } catch (err) {
+      console.error('Failed to load last updated metadata:', err);
+      document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+    }
+  });
+</script>
