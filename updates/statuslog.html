@@ -96,7 +96,7 @@
         document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
       })
       .catch(err => {
-        console.error('Failed to load metadata:', err);
+        console.error('Failed to load last-updated metadata:', err);
         document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
       });
   });
