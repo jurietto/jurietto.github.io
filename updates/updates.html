@@ -52,8 +52,12 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     fetch('/meta/updates_meta.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch updates metadata');
+        return res.json();
+      })
       .then(data => {
+        if (!data.lastUpdated) throw new Error('Missing lastUpdated field in metadata');
         const date = new Date(data.lastUpdated);
         const formatted = date.toLocaleString(undefined, {
           dateStyle: 'long',
@@ -63,7 +67,7 @@
       })
       .catch(err => {
         console.error('Failed to load last-updated metadata:', err);
-        document.querySelector('#last-updated p').textContent = 'Last Updated: N/A';
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
       });
   });
 </script>
