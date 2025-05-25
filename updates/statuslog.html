@@ -1,16 +1,16 @@
 <div class="main-content">
-  <h1>Status Log</h1>
+  <h1>Site Log</h1>
 
   <div id="last-updated">
     <p>Last Updated: Loading...</p>
   </div>
 
   <p class="page-text">
-    A timeline of little updates, moods, and notes.
+    This page keeps a record of updates and changes made to the site...
   </p>
 
   <p>
-    <a href="/updates/updates.html">
+    <a href="/pages/home.html">
       <img src="/media/c8.gif" alt="Back icon" class="icon" />
       [parent directory]
     </a>
@@ -24,13 +24,13 @@
     </select>
   </div>
 
-  <div id="status-list">
-    <p>Loading status updates...</p>
+  <div id="commit-list">
+    <p>Loading commit history...</p>
   </div>
 </div>
 
 <style>
-  #status-list hr {
+  #commit-list hr {
     border: 0;
     border-bottom: 1px dotted #e79cff;
     margin: 12px 0;
@@ -38,68 +38,56 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const list = document.getElementById('status-list');
+  document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('commit-list');
     const sortSelect = document.getElementById('sort');
 
-    // Load status entries
-    fetch('/updates/statuslog.json')
-      .then(res => res.json())
-      .then(data => {
-        list.innerHTML = '';
+    try {
+      const res = await fetch('/commits.json');
+      if (!res.ok) throw new Error('Failed to fetch commits');
+      const commits = await res.json();
 
-        const entries = data.map(entry => {
-          const dateFormatted = new Date(entry.time).toLocaleString(undefined, {
-            dateStyle: 'long',
+      function renderCommits(order) {
+        container.innerHTML = '';
+        let list = [...commits];
+
+        if (order === 'old') {
+          list.reverse();
+        }
+
+        list.forEach(commit => {
+          const date = new Date(commit.date).toLocaleString(undefined, {
+            dateStyle: 'medium',
             timeStyle: 'short'
           });
 
-          const div = document.createElement('div');
-          div.className = 'post';
-          div.dataset.time = entry.time;
-          div.innerHTML = `
+          const entry = document.createElement('div');
+          entry.className = 'post';
+          entry.innerHTML = `
             <p class="commit-header">
-              <img src="/media/crown.png" class="icon" alt="update icon" />
-              <strong>${entry.author}</strong> – <strong>${dateFormatted}</strong>
+              <img src="/media/crown.png" class="icon" />
+              <strong>${commit.author}</strong> – <strong>${date}</strong>
             </p>
-            <p class="commit-message">${entry.text}</p>
+            <p class="commit-message">${commit.message}</p>
             <hr />
           `;
-          return div;
+          container.appendChild(entry);
         });
+      }
 
-        function render(order) {
-          list.innerHTML = '';
-          const sorted = [...entries].sort((a, b) => {
-            const dateA = new Date(a.dataset.time);
-            const dateB = new Date(b.dataset.time);
-            return order === 'old' ? dateA - dateB : dateB - dateA;
-          });
-          sorted.forEach(e => list.appendChild(e));
-        }
+      renderCommits('new');
+      sortSelect.addEventListener('change', e => renderCommits(e.target.value));
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+    }
 
-        render('new');
-        sortSelect.addEventListener('change', () => render(sortSelect.value));
-      })
-      .catch(err => {
-        console.error('Failed to load status entries:', err);
-        list.innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+    try {
+      const metaRes = await fetch('/meta/sitelog_meta.json');
+      const meta = await metaRes.json();
+      const lastDate = new Date(meta.lastUpdated);
+      const formatted = lastDate.toLocaleString(undefined, {
+        dateStyle: 'long',
+        timeStyle: 'short'
       });
-
-    // Load Last Updated from metadata
-    fetch('/meta/statuslog_meta.json')
-      .then(res => res.json())
-      .then(data => {
-        const lastDate = new Date(data.lastUpdated);
-        const formatted = lastDate.toLocaleString(undefined, {
-          dateStyle: 'long',
-          timeStyle: 'short'
-        });
-        document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
-      })
-      .catch(err => {
-        console.error('Failed to load last-updated metadata:', err);
-        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
-      });
-  });
-</script>
+      document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
