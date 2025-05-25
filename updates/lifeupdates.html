@@ -42,6 +42,7 @@
     const postsContainer = document.getElementById('lu-posts');
     const sortSelect = document.getElementById('sort');
 
+    // Load life update posts
     fetch('/updates/lu')
       .then(res => res.text())
       .then(html => {
@@ -80,6 +81,7 @@
         postsContainer.innerHTML = '<p>Could not load posts.</p>';
       });
 
+    // Load Last Updated date from metadata
     fetch('/meta/lifeupdates_meta.json')
       .then(res => res.json())
       .then(data => {
@@ -91,4 +93,8 @@
         document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
       })
       .catch(err => {
-        console.error('Failed to load metadata
+        console.error('Failed to load last updated metadata:', err);
+        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
+      });
+  });
+</script>
