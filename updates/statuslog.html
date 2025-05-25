@@ -42,9 +42,8 @@
     const list = document.getElementById('status-list');
     const sortSelect = document.getElementById('sort');
 
-    // Load status entries
     fetch('/updates/statuslog.json')
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         list.innerHTML = '';
 
@@ -86,7 +85,6 @@
         list.innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
       });
 
-    // Load Last Updated from metadata
     fetch('/meta/statuslog_meta.json')
       .then(res => res.json())
       .then(data => {
