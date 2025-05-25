@@ -39,11 +39,12 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Load life update posts
+    const postsContainer = document.getElementById('lu-posts');
+    const sortSelect = document.getElementById('sort');
+
     fetch('/updates/lu')
       .then(res => res.text())
       .then(html => {
-        const postsContainer = document.getElementById('lu-posts');
         const tempContainer = document.createElement('div');
         tempContainer.innerHTML = html;
 
@@ -53,38 +54,32 @@
           const dateText = post.querySelector('strong')?.textContent.split('–')[0]?.trim();
           if (dateText) {
             post.setAttribute('data-date', dateText);
-            postsContainer.appendChild(post);
-            const hr = document.createElement('hr');
-            postsContainer.appendChild(hr);
           }
         });
 
-        function sortPosts(order) {
-          const postElements = Array.from(postsContainer.querySelectorAll('.post'));
-          postElements.sort((a, b) => {
+        function render(order) {
+          const sorted = [...posts].sort((a, b) => {
             const dateA = new Date(a.dataset.date);
             const dateB = new Date(b.dataset.date);
             return order === 'old' ? dateA - dateB : dateB - dateA;
           });
 
           postsContainer.innerHTML = '';
-          postElements.forEach(post => {
+          sorted.forEach(post => {
             postsContainer.appendChild(post);
             const hr = document.createElement('hr');
             postsContainer.appendChild(hr);
           });
         }
 
-        const sortSelect = document.getElementById('sort');
-        sortPosts(sortSelect.value);
-        sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
+        render(sortSelect.value);
+        sortSelect.addEventListener('change', () => render(sortSelect.value));
       })
       .catch(err => {
         console.error('Failed to load life updates:', err);
-        document.getElementById('lu-posts').innerHTML = '<p>Could not load posts.</p>';
+        postsContainer.innerHTML = '<p>Could not load posts.</p>';
       });
 
-    // Load Last Updated from meta
     fetch('/meta/lifeupdates_meta.json')
       .then(res => res.json())
       .then(data => {
@@ -96,8 +91,4 @@
         document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
       })
       .catch(err => {
-        console.error('Failed to load last updated metadata:', err);
-        document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
-      });
-  });
-</script>
+        console.error('Failed to load metadata
