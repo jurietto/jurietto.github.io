@@ -5,7 +5,6 @@
     <p>Last Updated: Loading...</p>
   </div>
 
-  <!-- Status box linking to Status Log -->
   <a id="my-status" href="/updates/statuslog.html" style="display: block; cursor: pointer;">
     <div class="status-text">
       <span id="myStatus">Loading status...</span>
@@ -13,7 +12,12 @@
   </a>
 
   <p class="page-text">
-    I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture. My favorite character is Charmmy Kitty. Mental health is something that's important to me. As a neurodivergent person, life can sometimes feel a little unusual, but I try to be patient with myself, and I'm working on getting better. In my free time, I like to code, go on hikes, DJ, bake, and journal. I'm a little bit of a quiet person, but don't hesitate to send a message for friendly conversation. I've had all sorts of jobs over the years – in food service, in hospitality, fixing computers.
+    I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture.
+    My favorite character is Charmmy Kitty. Mental health is something that's important to me.
+    As a neurodivergent person, life can sometimes feel a little unusual, but I try to be patient with myself, and I'm working on getting better.
+    In my free time, I like to code, go on hikes, DJ, bake, and journal.
+    I'm a little bit of a quiet person, but don't hesitate to send a message for friendly conversation.
+    I've had all sorts of jobs over the years – in food service, in hospitality, fixing computers.
   </p>
 
   <table>
@@ -25,50 +29,41 @@
     </thead>
     <tbody>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
-          Discord – sotokomori
-        </td>
+        <td class="file-cell"><img src="/media/crown.png" class="icon" /> Discord – sotokomori</td>
         <td>Text</td>
       </tr>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
+        <td class="file-cell"><img src="/media/crown.png" class="icon" />
           <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a>
         </td>
         <td>URL</td>
       </tr>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
+        <td class="file-cell"><img src="/media/crown.png" class="icon" />
           <a href="https://x.com/sotokomorii" target="_blank">Twitter</a>
         </td>
         <td>URL</td>
       </tr>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
+        <td class="file-cell"><img src="/media/crown.png" class="icon" />
           <a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a>
         </td>
         <td>URL</td>
       </tr>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
+        <td class="file-cell"><img src="/media/crown.png" class="icon" />
           <a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a>
         </td>
         <td>URL</td>
       </tr>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
+        <td class="file-cell"><img src="/media/crown.png" class="icon" />
           <a href="/updates/updates.html">Updates</a>
         </td>
         <td>HTML</td>
       </tr>
       <tr>
-        <td class="file-cell">
-          <img src="/media/crown.png" class="icon" />
+        <td class="file-cell"><img src="/media/crown.png" class="icon" />
           <a href="/menhera">Menhera</a>
         </td>
         <td>HTML</td>
@@ -78,32 +73,29 @@
 </div>
 
 <script>
-  // Load latest status entry
   fetch('/updates/statuslog.json')
     .then(res => res.json())
     .then(data => {
-      if (!Array.isArray(data) || data.length === 0) throw new Error('No entries');
+      if (!Array.isArray(data) || data.length === 0) throw new Error('No status data');
       const latest = data.reduce((a, b) => new Date(a.time) > new Date(b.time) ? a : b);
       document.getElementById('myStatus').textContent = latest.text || 'No status found.';
     })
     .catch(err => {
-      console.error('Status load error:', err);
+      console.error('Status error:', err);
       document.getElementById('myStatus').textContent = 'Status unavailable.';
     });
 
-  // Load last updated from home_meta.json
   fetch('/meta/home_meta.json')
     .then(res => res.json())
     .then(data => {
-      const date = new Date(data.lastUpdated);
-      const formatted = date.toLocaleString(undefined, {
+      const formatted = new Date(data.lastUpdated).toLocaleString(undefined, {
         dateStyle: 'long',
         timeStyle: 'short'
       });
       document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
     })
     .catch(err => {
-      console.error('Failed to load home_meta.json:', err);
+      console.error('Last updated error:', err);
       document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
     });
 </script>
