@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    <a href="/pages/updates.html">
+    <a href="/updates/updates.html">
       <img src="/media/c8.gif" alt="parent directory icon" class="icon" />
       [parent directory]
     </a>
@@ -42,13 +42,13 @@
     const postsContainer = document.getElementById('lu-posts');
     const sortSelect = document.getElementById('sort');
 
-    fetch('/updates/lu')
+    fetch('/updates/lu.html')
       .then(res => res.text())
       .then(html => {
-        const tempContainer = document.createElement('div');
-        tempContainer.innerHTML = html;
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
 
-        const posts = Array.from(tempContainer.getElementsByClassName('post'));
+        const posts = Array.from(tempDiv.getElementsByClassName('post'));
 
         posts.forEach(post => {
           const dateText = post.querySelector('strong')?.textContent.split('–')[0]?.trim();
@@ -91,7 +91,7 @@
         document.querySelector('#last-updated p').textContent = `Last Updated: ${formatted}`;
       })
       .catch(err => {
-        console.error('Failed to load metadata:', err);
+        console.error('Failed to load last updated metadata:', err);
         document.querySelector('#last-updated p').textContent = 'Last Updated: Unavailable';
       });
   });
