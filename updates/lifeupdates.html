@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Life Updates</title>
+  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    #lu-posts hr {
+      border: 0;
+      border-bottom: 1px dotted #e79cff;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Injected music player -->
+  <div id="player-container"></div>
+
+  <div class="main-content">
+    <h1>Life Updates</h1>
+
+    <div id="last-updated">
+      <p>Last Updated: Loading...</p>
+    </div>
+
+    <p class="page-text">
+      A space where I jot down life stuff, events, and whatever’s been going on.
+    </p>
+
+    <p>
+      <a href="https://jurietto.github.io/updates/updates.html">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="parent directory icon" class="icon" />
+        [parent directory]
+      </a>
+    </p>
+
+    <div id="controls">
+      <label for="sort">Sort by:</label>
+      <select id="sort">
+        <option value="new">Newest</option>
+        <option value="old">Oldest</option>
+      </select>
+    </div>
+
+    <div id="lu-posts">
+      <p>Loading life updates...</p>
+    </div>
+
+    <div id="footer"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    fetch('../updates/lu')
+      .then(res => res.text())
+      .then(html => {
+        const postsContainer = document.getElementById('lu-posts');
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = html;
+
+        const posts = Array.from(tempContainer.getElementsByClassName('post'));
+
+        posts.forEach(post => {
+          post.setAttribute('data-date', post.querySelector('strong')?.textContent.split('–')[0]?.trim());
+          postsContainer.appendChild(post);
+          const hr = document.createElement('hr');
+          postsContainer.appendChild(hr);
+        });
+
+        function sortPosts(order) {
+          const postElements = Array.from(postsContainer.querySelectorAll('.post'));
+          postElements.sort((a, b) => {
+            const dateA = new Date(a.dataset.date);
+            const dateB = new Date(b.dataset.date);
+            return order === 'old' ? dateA - dateB : dateB - dateA;
+          });
+
+          postsContainer.innerHTML = '';
+          postElements.forEach(post => {
+            postsContainer.appendChild(post);
+            const hr = document.createElement('hr');
+            postsContainer.appendChild(hr);
+          });
+        }
+
+        const firstPost = postsContainer.querySelector('.post');
+        if (firstPost) {
+          const lastDate = new Date(firstPost.dataset.date);
+          const dateString = lastDate.toLocaleString(undefined, {
+            dateStyle: 'long',
+            timeStyle: 'short'
+          });
+          document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
+        }
+
+        const sortSelect = document.getElementById('sort');
+        sortPosts(sortSelect.value);
+        sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
+      });
+
+    // Load footer
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
+
+    // Inject music player
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
+  </script>
+
+  <script src="../script.js"></script>
+</body>
+</html>

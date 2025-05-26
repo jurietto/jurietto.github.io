@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Updates</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+  <!-- Injected player will appear here -->
+  <div id="player-container"></div>
+
+  <div class="main-content"> 
+    <h1>Updates</h1>
+
+    <div id="last-updated">
+      <p>Last Updated: Loading...</p>
+    </div>
+
+    <p class="page-text">
+      This section is where I keep track of personal updates and site changes.
+      <strong>Life Updates</strong> is where I write about personal stuff—things that's been going on.
+      <strong>Site Log</strong> is for tracking technical edits and general maintenance.
+      And <strong>Status Log</strong> which is just a timeline of notes—micro-logs...
+    </p>
+
+    <p>
+      <a href="/">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
+        [parent directory]
+      </a>
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="detailsColumn">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="file-cell">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+            <a href="/updates/lifeupdates.html">Life Updates</a>
+          </td>
+          <td class="detailsColumn">HTML</td>
+        </tr>
+        <tr>
+          <td class="file-cell">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+            <a href="/updates/sitelog.html">Site Log</a>
+          </td>
+          <td class="detailsColumn">HTML</td>
+        </tr>
+        <tr>
+          <td class="file-cell">
+            <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" class="icon" />
+            <a href="/updates/statuslog.html">Status Log</a>
+          </td>
+          <td class="detailsColumn">HTML</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/script.js"></script>
+  <script>
+    // Load footer content
+    fetch('/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+
+    // Load and inject player
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
+  </script>
+</body>
+</html>
