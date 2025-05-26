@@ -2,85 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Updates</title>
-  <link rel="stylesheet" href="/style.css" />
+  <title>Status Log</title>
+  <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-
 <body>
-  <!-- Injected player will appear here -->
+
+  <!-- Music Player Container -->
   <div id="player-container"></div>
 
-  <div class="main-content"> 
-    <h1>Updates</h1>
+  <div class="main-content">
+    <h1>Status Log</h1>
 
     <div id="last-updated">
-      <p>Last Updated: Loading...</p>
+      <p>Juri: Loading...</p>
     </div>
 
     <p class="page-text">
-      This section is where I keep track of personal updates and site changes.
-      <strong>Life Updates</strong> is where I write about personal stuff—things that's been going on.
-      <strong>Site Log</strong> is for tracking technical edits and general maintenance.
-      And <strong>Status Log</strong> which is just a timeline of notes—micro-logs...
+      A timeline of little updates, moods, and notes.
     </p>
 
-    <!-- ✅ Updated parent directory icon -->
     <p>
-      <a href="/">
-        <img src="/media/card.gif" alt="Back icon" class="icon" />
+      <a href="/updates/updates.html">
+        <img src="/media/ace.gif" alt="Back icon" class="icon" />
         [parent directory]
       </a>
     </p>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th class="detailsColumn">Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- ✅ Updated row icons to /media/crown.png -->
-        <tr>
-          <td class="file-cell">
-            <img src="/media/crown.png" class="icon" />
-            <a href="/updates/lifeupdates.html">Life Updates</a>
-          </td>
-          <td class="detailsColumn">HTML</td>
-        </tr>
-        <tr>
-          <td class="file-cell">
-            <img src="/media/crown.png" class="icon" />
-            <a href="/updates/sitelog.html">Site Log</a>
-          </td>
-          <td class="detailsColumn">HTML</td>
-        </tr>
-        <tr>
-          <td class="file-cell">
-            <img src="/media/crown.png" class="icon" />
-            <a href="/updates/statuslog.html">Status Log</a>
-          </td>
-          <td class="detailsColumn">HTML</td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="controls">
+      <label for="sort">Sort by:</label>
+      <select id="sort">
+        <option value="new">Newest</option>
+        <option value="old">Oldest</option>
+      </select>
+    </div>
 
-    <!-- Footer -->
+    <div id="status-list">
+      <p>Loading status updates...</p>
+    </div>
+
     <div id="footer"></div>
   </div>
 
-  <!-- Scripts -->
-  <script src="/script.js"></script>
+  <!-- Load Footer -->
   <script>
-    // Load footer content
-    fetch('/footer.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('footer').innerHTML = data;
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
       });
+  </script>
 
-    // Load and inject player
+  <!-- Load Player -->
+  <script>
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
@@ -91,5 +65,58 @@
         document.body.appendChild(script);
       });
   </script>
+
+  <!-- Status Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const list = document.getElementById('status-list');
+      const sortSelect = document.getElementById('sort');
+
+      fetch('statuslog.json')
+        .then(res => res.json())
+        .then(data => {
+          list.innerHTML = '';
+
+          const entries = data.map(entry => {
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.dataset.time = entry.time;
+            div.innerHTML = `
+              <p class="commit-header">
+                <img src="/media/crown.png" alt="update icon" class="icon" />
+                <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
+              </p>
+              <p class="commit-message">${entry.text}</p>
+              <hr />
+            `;
+            return div;
+          });
+
+          function render(order) {
+            list.innerHTML = '';
+            const sorted = [...entries].sort((a, b) => {
+              const dateA = new Date(a.dataset.time);
+              const dateB = new Date(b.dataset.time);
+              return order === 'old' ? dateA - dateB : dateB - dateA;
+            });
+            sorted.forEach(e => list.appendChild(e));
+          }
+
+          render('new');
+          sortSelect.addEventListener('change', () => render(sortSelect.value));
+
+          const latest = data[data.length - 1];
+          if (latest) {
+            document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
+          }
+        })
+        .catch(err => {
+          console.error('Failed to load status entries:', err);
+          list.innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+        });
+    });
+  </script>
+
+  <script src="../script.js"></script>
 </body>
 </html>
