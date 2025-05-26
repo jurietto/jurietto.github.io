@@ -414,41 +414,37 @@ body {
   color: #6a1b8a;
   cursor: pointer;
   transition: color 0.12s, background 0.12s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: flex;
   align-items: center;
   border-radius: 0;
   background: none;
+  overflow: hidden;
   position: relative;
 }
-#playlist li:hover,
-#playlist li.active {
-  background: #a03ca0;
-  color: #fff;
-}
 
-/* === Ticker Effect on Hover === */
-#playlist li:hover::after {
-  content: attr(data-title);
-  position: absolute;
-  left: 100%;
+/* === Ticker Text === */
+#playlist li span {
+  display: inline-block;
   white-space: nowrap;
-  padding-left: 1em;
-  animation: ticker 10s linear infinite;
-  color: inherit;
-  top: 0;
-  background: inherit;
+  padding-right: 16px;
+  will-change: transform;
 }
-
-@keyframes ticker {
+#playlist li:hover span {
+  animation: scroll-text 10s linear infinite;
+}
+@keyframes scroll-text {
   0% {
     transform: translateX(0%);
   }
   100% {
     transform: translateX(-100%);
   }
+}
+
+#playlist li:hover,
+#playlist li.active {
+  background: #a03ca0;
+  color: #fff;
 }
 
 /* Hide player for small screens */
