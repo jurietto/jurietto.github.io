@@ -367,7 +367,7 @@ body {
   width: 220px;
   height: calc(100% - 32px);
   background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
-  border-left: 1px solid #e6bfff;
+  border-left: 1px solid #a03ca0;
   box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
   transform: translateX(100%);
@@ -395,7 +395,7 @@ body {
   padding: 10px 0 10px 14px;
   font-size: 12px;
   color: #a03ca0;
-  border-bottom: 1px solid #e6bfff;
+  border-bottom: 1px solid #a03ca0;
   background: #f3e0ff;
   font-weight: 600;
   letter-spacing: 0.2px;
