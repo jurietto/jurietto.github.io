@@ -5,23 +5,26 @@
   <title>Index</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Meta for social -->
+  <!-- OpenGraph / Facebook Meta -->
   <meta property="og:title" content="Juri's Stuff" />
   <meta property="og:description" content="Juri's personal space on the web" />
   <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
   <meta property="og:url" content="https://jurietto.github.io/" />
   <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Juri's Stuff" />
   <meta name="twitter:description" content="Juri's personal space on the web" />
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
 
+  <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 
-  <!-- SCM-style Music Player Injected Here -->
-  <div id="scm-player-container"></div>
+  <!-- Music Player will be injected here -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Index</h1>
@@ -37,11 +40,9 @@
     </div>
 
     <p class="page-text">
-      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's,
-      gothic lolita punk j-fashion/subculture. My favorite character is Charmmy Kitty.
-      Mental health is something that's important to me.
-      As a neurodivergent person, life can sometimes feel a little unusual,
-      but I try to be patient with myself, and I'm working on getting better.
+      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture.
+      My favorite character is Charmmy Kitty. Mental health is something that's important to me.
+      As a neurodivergent person, life can sometimes feel a little unusual, but I try to be patient with myself, and I'm working on getting better.
       In my free time, I like to code, go on hikes, DJ, bake, and journal.
       I'm a little bit of a quiet person, but don't hesitate to send a message for friendly conversation.
       I've had all sorts of jobs over the years – in food service, in hospitality, fixing computers.
@@ -103,18 +104,16 @@
 
   <!-- Scripts -->
   <script>
-    // Inject music player once globally if not already added
-    if (!document.querySelector('#music-bar')) {
-      fetch('player.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('scm-player-container').innerHTML = html;
-          const script = document.createElement('script');
-          script.src = 'player.js';
-          script.defer = true;
-          document.body.appendChild(script);
-        });
-    }
+    // Load music player HTML and JS
+    fetch('player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = 'player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
 
     // Load footer
     fetch('footer.html')
