@@ -34,14 +34,11 @@ function updateLastUpdated(selector, text) {
   }
 }
 
-// Helper to format date as "Weekday, MM/DD/YYYY"
+// Helper to format date as "Month Day, Year, Time"
 function formatDate(dateString) {
   const date = new Date(dateString);
-  const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-  return date.toLocaleDateString(undefined, options);
+  return date.toLocaleString(undefined, {
+    dateStyle: 'long',
+    timeStyle: 'short'
+  });
 }
-
-// Run the last updated fetch on DOM content loaded
-document.addEventListener('DOMContentLoaded', () => {
-  showLastUpdated('#last-updated', '../commits.json');
-});
