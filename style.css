@@ -360,7 +360,6 @@ body {
 
 /* === Playlist Panel === */
 #playlist-panel {
-  font-family: Arial, sans-serif;
   position: fixed;
   top: 32px;
   right: 0;
@@ -371,9 +370,11 @@ body {
   box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
   transform: translateX(100%);
-  transition: transform 0.18s;
+  transition: transform 0.3s ease;
   z-index: 999;
 }
+
+
 #playlist-panel::before {
   content: '';
   position: absolute;
