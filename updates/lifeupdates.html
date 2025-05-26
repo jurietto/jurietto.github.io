@@ -13,10 +13,9 @@
     }
   </script>
 </head>
+<body class="content-frame">
 
-<body>
-
-  <!-- Fallback music player (only when opened outside of frame) -->
+  <!-- Injected music player (fallback only) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -108,7 +107,7 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Fallback music player (only outside frame)
+    // Fallback music player load
     if (window.top === window.self) {
       fetch('/player.html')
         .then(res => res.text())
