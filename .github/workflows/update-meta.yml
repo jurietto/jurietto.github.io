@@ -1,0 +1,35 @@
+name: Update Meta Files
+
+on:
+  push:
+    paths:
+      - '**.html'
+      - '**.json'
+      - '**.py'
+      - '**.js'
+      - '**.css'
+  workflow_dispatch:
+
+jobs:
+  update-meta:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run Meta Generator
+        run: python generate_meta.py
+
+      - name: Commit and Push Meta Changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add meta/*.json
+          git commit -m "Auto-update meta files" || echo "No changes to commit"
+          git push
