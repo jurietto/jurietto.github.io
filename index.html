@@ -20,10 +20,17 @@
 
   <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Redirect to frame.html if loaded standalone -->
+  <script>
+    if (window.top === window.self) {
+      window.location.href = "frame.html";
+    }
+  </script>
 </head>
 <body>
 
-  <!-- Music Player will be injected here -->
+  <!-- Music Player will be injected here if in standalone mode (optional) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -33,7 +40,7 @@
       <p>Last Updated: Loading...</p>
     </div>
 
-    <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
+    <div id="my-status" style="cursor: pointer;" onclick="window.parent.frames.contentframe.location.href='updates/statuslog.html'">
       <div class="status-text">
         <span id="myStatus">Loading status...</span>
       </div>
@@ -86,13 +93,13 @@
         </tr>
         <tr>
           <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="updates/updates.html">Updates</a>
+            <a href="updates/updates.html" target="contentframe">Updates</a>
           </td>
           <td>HTML</td>
         </tr>
         <tr>
           <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="menhera">Menhera</a>
+            <a href="menhera" target="contentframe">Menhera</a>
           </td>
           <td>HTML</td>
         </tr>
@@ -104,17 +111,6 @@
 
   <!-- Scripts -->
   <script>
-    // Load music player HTML and JS
-    fetch('player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = 'player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
-
     // Load footer
     fetch('footer.html')
       .then(res => res.text())
