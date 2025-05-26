@@ -5,11 +5,17 @@
   <title>Life Updates</title>
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Redirect if not framed -->
+  <script>
+    if (window.top === window.self) {
+      window.location.href = "/playlist.html";
+    }
+  </script>
 </head>
 
 <body>
 
-  <!-- Injected music player -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -24,7 +30,7 @@
     </p>
 
     <p>
-      <a href="https://jurietto.github.io/updates/updates.html">
+      <a href="/updates/updates.html" target="contentframe">
         <img src="/media/c6.gif" alt="parent directory icon" class="icon" />
         [parent directory]
       </a>
@@ -101,7 +107,7 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Inject music player
+    // Optional: Inject player if fallback is needed
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
