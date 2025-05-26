@@ -5,11 +5,17 @@
   <title>Updates</title>
   <link rel="stylesheet" href="/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
 
+  <!-- Redirect to playlist wrapper if not in iframe -->
+  <script>
+    if (window.top === window.self) {
+      window.location.href = "/playlist.html";
+    }
+  </script>
+</head>
 <body>
 
-  <!-- Injected player will appear here -->
+  <!-- Player (injected if needed) -->
   <div id="player-container"></div>
 
   <div class="main-content"> 
@@ -27,7 +33,7 @@
     </p>
 
     <p>
-      <a href="/">
+      <a href="/" target="contentframe">
         <img src="/media/c6.gif" alt="parent directory icon" class="icon" />
         [parent directory]
       </a>
@@ -44,21 +50,21 @@
         <tr>
           <td class="file-cell">
             <img src="/media/crown.png" class="icon" />
-            <a href="/updates/lifeupdates.html">Life Updates</a>
+            <a href="/updates/lifeupdates.html" target="contentframe">Life Updates</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
         <tr>
           <td class="file-cell">
             <img src="/media/crown.png" class="icon" />
-            <a href="/updates/sitelog.html">Site Log</a>
+            <a href="/updates/sitelog.html" target="contentframe">Site Log</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
         <tr>
           <td class="file-cell">
             <img src="/media/crown.png" class="icon" />
-            <a href="/updates/statuslog.html">Status Log</a>
+            <a href="/updates/statuslog.html" target="contentframe">Status Log</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
@@ -71,15 +77,16 @@
 
   <!-- Scripts -->
   <script src="/script.js"></script>
+
   <script>
-    // Load footer content
+    // Load footer
     fetch('/footer.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('footer').innerHTML = data;
       });
 
-    // Load and inject player
+    // Optional fallback: Load player if needed
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
