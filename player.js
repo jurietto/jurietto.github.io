@@ -1,4 +1,3 @@
-<script>
 const audio = document.getElementById('audio');
 const playToggleBtn = document.getElementById('play-toggle');
 const progress = document.getElementById('progress');
@@ -166,4 +165,4 @@ audio.addEventListener('ended', () => {
     playTrack(0);
   }
 });
-</script>
+
