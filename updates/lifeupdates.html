@@ -6,10 +6,11 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
 
-  <!-- SCM-style Music Player Injected Here -->
-  <div id="scm-player-container"></div>
+  <!-- Injected music player -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Life Updates</h1>
@@ -23,7 +24,7 @@
     </p>
 
     <p>
-      <a href="/updates/updates.html">
+      <a href="https://jurietto.github.io/updates/updates.html">
         <img src="/media/c6.gif" alt="parent directory icon" class="icon" />
         [parent directory]
       </a>
@@ -100,18 +101,16 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Inject music player once globally if not already added
-    if (!document.querySelector('#music-bar')) {
-      fetch('/player.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('scm-player-container').innerHTML = html;
-          const script = document.createElement('script');
-          script.src = '/player.js';
-          script.defer = true;
-          document.body.appendChild(script);
-        });
-    }
+    // Inject music player
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
   </script>
 
   <script src="../script.js"></script>
