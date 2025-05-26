@@ -8,8 +8,8 @@
 </head>
 <body>
 
-  <!-- SCM-style Music Player Injected Here -->
-  <div id="scm-player-container"></div>
+  <!-- Injected music player -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Status Log</h1>
@@ -19,7 +19,7 @@
     </div>
 
     <p class="page-text">
-      A timeline of little updates, moods, and notes.
+      A timeline of little updates, moods, and notes. 
     </p>
 
     <p>
@@ -44,10 +44,10 @@
     <div id="footer"></div>
   </div>
 
-  <!-- JavaScript -->
+  <!-- Load and render status entries -->
   <script>
     fetch('statuslog.json')
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
         const list = document.getElementById('status-list');
         list.innerHTML = '';
@@ -82,12 +82,11 @@
 
         const latest = data[data.length - 1];
         if (latest) {
-          document.querySelector('#last-updated p').textContent = `Juri: ${latest.time}`;
+          document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
         }
       })
       .catch(err => {
-        document.getElementById('status-list').innerHTML =
-          '<p style="color: crimson;">Could not load status entries.</p>';
+        document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
         console.error(err);
       });
 
@@ -97,21 +96,21 @@
       .then(html => {
         document.getElementById('footer').innerHTML = html;
       });
-
-    // Inject music player once globally if not already added
-    if (!document.querySelector('#music-bar')) {
-      fetch('/player.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('scm-player-container').innerHTML = html;
-          const script = document.createElement('script');
-          script.src = '/player.js';
-          script.defer = true;
-          document.body.appendChild(script);
-        });
-    }
   </script>
 
   <script src="../script.js"></script>
+
+  <!-- Music Player Loader -->
+  <script>
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
+  </script>
 </body>
 </html>
