@@ -271,6 +271,12 @@ body {
       border-bottom: 1px dotted #e79cff;
       margin: 12px 0;
     }
+
+    #lu-posts hr {
+      border: 0;
+      border-bottom: 1px dotted #e79cff;
+      margin: 12px 0;
+    }
   
 /* === Music Player Bar === */
 #music-bar {
