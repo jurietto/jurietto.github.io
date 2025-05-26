@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Redirect if not in iframe -->
+  <!-- Redirect to frame.html if not in iframe -->
   <script>
     if (window.top === window.self) {
       window.location.href = "/frame.html";
@@ -16,7 +16,7 @@
 
 <body>
 
-  <!-- Injected music player (fallback only) -->
+  <!-- Fallback music player (only when opened outside of frame) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -108,16 +108,18 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Fallback player load
-    fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = '/player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
+    // Fallback music player (only outside frame)
+    if (window.top === window.self) {
+      fetch('/player.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('player-container').innerHTML = html;
+          const script = document.createElement('script');
+          script.src = '/player.js';
+          script.defer = true;
+          document.body.appendChild(script);
+        });
+    }
   </script>
 
   <script src="../script.js"></script>
