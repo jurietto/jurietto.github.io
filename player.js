@@ -1,3 +1,4 @@
+<script>
 const audio = document.getElementById('audio');
 const playToggleBtn = document.getElementById('play-toggle');
 const progress = document.getElementById('progress');
@@ -13,11 +14,14 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
-// Add full text as tooltip and store for later
+// Add full text as tooltip on the span
 trackList.forEach(li => {
-  const text = li.textContent.trim();
-  li.dataset.title = text;
-  li.title = text;
+  const span = li.querySelector('.track-title');
+  if (span) {
+    const text = span.textContent.trim();
+    span.title = text;
+    li.dataset.title = text;
+  }
 });
 
 function formatTime(seconds) {
@@ -60,7 +64,6 @@ function savePlaybackState() {
   }
 }
 
-// Load and resume previous track/time/volume
 window.addEventListener('DOMContentLoaded', () => {
   const saved = JSON.parse(localStorage.getItem('music-player-state'));
   if (saved) {
@@ -163,3 +166,4 @@ audio.addEventListener('ended', () => {
     playTrack(0);
   }
 });
+</script>
