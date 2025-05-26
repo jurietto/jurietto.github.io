@@ -13,7 +13,7 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
-// Add data-title for tooltip support
+// Apply title tooltip and optionally restore volume
 trackList.forEach(li => {
   li.dataset.title = li.textContent.trim();
 });
@@ -33,8 +33,12 @@ function playTrack(index) {
   item.classList.add('active');
   audio.src = item.dataset.src;
   currentTrack = item;
-  audio.play();
-  playToggleBtn.textContent = 'Pause';
+
+  audio.play().then(() => {
+    playToggleBtn.textContent = 'Pause';
+  }).catch(() => {
+    playToggleBtn.textContent = 'Play';
+  });
 
   savePlaybackState();
 }
@@ -48,16 +52,18 @@ function savePlaybackState() {
     const index = getCurrentTrackIndex();
     localStorage.setItem('music-player-state', JSON.stringify({
       trackIndex: index,
-      time: audio.currentTime
+      time: audio.currentTime,
+      volume: audio.volume
     }));
   }
 }
 
-// Load and resume previous state
+// Load and resume previous track/time/volume
 window.addEventListener('DOMContentLoaded', () => {
   const saved = JSON.parse(localStorage.getItem('music-player-state'));
   if (saved) {
-    const { trackIndex, time } = saved;
+    const { trackIndex, time, volume: savedVolume } = saved;
+
     if (trackIndex >= 0 && trackIndex < trackList.length) {
       const item = trackList[trackIndex];
       trackList.forEach(li => li.classList.remove('active'));
@@ -66,13 +72,18 @@ window.addEventListener('DOMContentLoaded', () => {
       currentTrack = item;
 
       audio.addEventListener('loadedmetadata', () => {
-        audio.currentTime = time || 0;
+        if (time) audio.currentTime = time;
         audio.play().then(() => {
           playToggleBtn.textContent = 'Pause';
         }).catch(() => {
-          playToggleBtn.textContent = 'Play'; // Autoplay blocked
+          playToggleBtn.textContent = 'Play';
         });
       }, { once: true });
+    }
+
+    if (savedVolume != null) {
+      audio.volume = savedVolume;
+      volume.value = savedVolume;
     }
   }
 });
@@ -81,8 +92,11 @@ playToggleBtn.addEventListener('click', () => {
   if (!audio.src && trackList.length > 0) {
     playTrack(0);
   } else if (audio.paused) {
-    audio.play();
-    playToggleBtn.textContent = 'Pause';
+    audio.play().then(() => {
+      playToggleBtn.textContent = 'Pause';
+    }).catch(() => {
+      playToggleBtn.textContent = 'Play';
+    });
   } else {
     audio.pause();
     playToggleBtn.textContent = 'Play';
@@ -91,6 +105,7 @@ playToggleBtn.addEventListener('click', () => {
 
 volume.addEventListener('input', () => {
   audio.volume = volume.value;
+  savePlaybackState();
 });
 
 togglePlaylistBtn.addEventListener('click', () => {
