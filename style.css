@@ -358,7 +358,7 @@ body {
   padding: 2px 8px;
 }
 
-/* === Playlist Panel Minimal Redesign === */
+/* === Playlist Panel === */
 #playlist-panel {
   font-family: Arial, sans-serif;
   position: fixed;
@@ -421,11 +421,34 @@ body {
   align-items: center;
   border-radius: 0;
   background: none;
+  position: relative;
 }
 #playlist li:hover,
 #playlist li.active {
   background: #a03ca0;
   color: #fff;
+}
+
+/* === Ticker Effect on Hover === */
+#playlist li:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 100%;
+  white-space: nowrap;
+  padding-left: 1em;
+  animation: ticker 10s linear infinite;
+  color: inherit;
+  top: 0;
+  background: inherit;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 /* Hide player for small screens */
@@ -435,7 +458,7 @@ body {
   }
 }
 
-/* Compact and uniform font */
+/* Uniform font and spacing */
 #player-controls button,
 #toggle-playlist {
   font-family: Arial, sans-serif;
@@ -452,7 +475,7 @@ body {
   background: none !important;
 }
 
-/* Progress bar thumb styling for all browsers */
+/* Progress bar thumb styling */
 #progress::-webkit-slider-thumb,
 #volume::-webkit-slider-thumb {
   -webkit-appearance: none;
