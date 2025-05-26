@@ -291,7 +291,7 @@ body {
   align-items: center;
   gap: 16px;
   height: 32px;
-  box-shadow: 0 2px 8px 0 rgba(160,60,160,0.10), 0 1.5px 0 #fff inset;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
   padding: 0 16px;
 }
 #music-bar > * {
@@ -316,20 +316,6 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2px 8px;
-  background: linear-gradient(180deg, #f3e0ff 60%, #e6bfff 100%);
-  box-shadow: 0 2px 6px 0 rgba(160,60,160,0.10), 0 1.5px 0 #fffafd inset;
-  border-radius: 7px;
-  border: 1px solid #e6bfff;
-  transition: box-shadow 0.15s, background 0.15s;
-}
-#player-controls button:active {
-  background: linear-gradient(180deg, #e6bfff 60%, #f3e0ff 100%);
-  box-shadow: 0 1px 2px 0 rgba(160,60,160,0.13) inset;
-}
-#player-controls button:hover {
-  text-decoration: underline;
-  background: linear-gradient(180deg, #fffafd 60%, #e6bfff 100%) !important;
-  box-shadow: 0 3px 10px 0 rgba(160,60,160,0.13), 0 1.5px 0 #fffafd inset;
 }
 #progress-container {
   display: flex;
@@ -350,10 +336,10 @@ body {
   height: 4px;
   accent-color: #a03ca0;
   border-radius: 0;
-  background: linear-gradient(90deg, #f3e0ff 0%, #e6bfff 100%);
+  background: #f3e0ff;
   outline: none;
   border: none;
-  box-shadow: 0 1.5px 4px 0 rgba(160,60,160,0.10) inset;
+  box-shadow: none;
   transition: none;
 }
 #progress {
@@ -370,20 +356,6 @@ body {
   font-size: 13px;
   user-select: none;
   padding: 2px 8px;
-  background: linear-gradient(180deg, #f3e0ff 60%, #e6bfff 100%);
-  box-shadow: 0 2px 6px 0 rgba(160,60,160,0.10), 0 1.5px 0 #fffafd inset;
-  border-radius: 7px;
-  border: 1px solid #e6bfff;
-  transition: box-shadow 0.15s, background 0.15s;
-}
-#toggle-playlist:active {
-  background: linear-gradient(180deg, #e6bfff 60%, #f3e0ff 100%);
-  box-shadow: 0 1px 2px 0 rgba(160,60,160,0.13) inset;
-}
-#toggle-playlist:hover {
-  text-decoration: underline;
-  background: linear-gradient(180deg, #fffafd 60%, #e6bfff 100%) !important;
-  box-shadow: 0 3px 10px 0 rgba(160,60,160,0.13), 0 1.5px 0 #fffafd inset;
 }
 
 /* === Playlist Panel Minimal Redesign === */
@@ -396,7 +368,7 @@ body {
   height: calc(100% - 32px);
   background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
   border-left: 1px solid #e6bfff;
-  box-shadow: -4px 0 12px 0 rgba(160,60,160,0.08);
+  box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
   transform: translateX(100%);
   transition: transform 0.18s;
@@ -487,37 +459,34 @@ body {
   appearance: none;
   width: 14px;
   height: 14px;
-  background: linear-gradient(180deg, #a03ca0 60%, #e6bfff 100%);
+  background: #a03ca0;
   border: 2px solid #fffafd;
-  box-shadow: 0 2px 6px 0 rgba(160,60,160,0.18), 0 1.5px 0 #fffafd inset;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
   cursor: pointer;
   position: relative;
   z-index: 2;
-  border-radius: 50%;
 }
 #progress::-moz-range-thumb,
 #volume::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: linear-gradient(180deg, #a03ca0 60%, #e6bfff 100%);
+  background: #a03ca0;
   border: 2px solid #fffafd;
-  box-shadow: 0 2px 6px 0 rgba(160,60,160,0.18), 0 1.5px 0 #fffafd inset;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
   cursor: pointer;
   position: relative;
   z-index: 2;
-  border-radius: 50%;
 }
 #progress::-ms-thumb,
 #volume::-ms-thumb {
   width: 14px;
   height: 14px;
-  background: linear-gradient(180deg, #a03ca0 60%, #e6bfff 100%);
+  background: #a03ca0;
   border: 2px solid #fffafd;
-  box-shadow: 0 2px 6px 0 rgba(160,60,160,0.18), 0 1.5px 0 #fffafd inset;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
   cursor: pointer;
   position: relative;
   z-index: 2;
-  border-radius: 50%;
 }
 #progress, #volume {
   font-family: Arial, sans-serif;
