@@ -422,19 +422,32 @@ body {
   position: relative;
 }
 
-/* === Ticker Text === */
+/* === Ticker Text (Only if needed) === */
 #playlist li span {
   display: inline-block;
   white-space: nowrap;
   padding-right: 16px;
   will-change: transform;
 }
-#playlist li:hover span {
-  animation: scroll-text 10s linear infinite;
+
+/* Only scroll if JS applies the .scrolling class */
+#playlist li span.scrolling {
+  animation: scroll-text 12s linear infinite;
 }
+#playlist li span.scrolling:hover {
+  animation-play-state: paused;
+}
+
+/* Smooth loop effect */
 @keyframes scroll-text {
   0% {
     transform: translateX(0%);
+  }
+  10% {
+    transform: translateX(0%);
+  }
+  90% {
+    transform: translateX(-100%);
   }
   100% {
     transform: translateX(-100%);
