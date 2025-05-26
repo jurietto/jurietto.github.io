@@ -5,32 +5,28 @@
   <title>Index</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- OpenGraph / Facebook Meta -->
+  <!-- OpenGraph / Twitter / Meta -->
   <meta property="og:title" content="Juri's Stuff" />
   <meta property="og:description" content="Juri's personal space on the web" />
   <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
   <meta property="og:url" content="https://jurietto.github.io/" />
   <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Juri's Stuff" />
   <meta name="twitter:description" content="Juri's personal space on the web" />
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
-
-  <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Redirect to frame.html if loaded standalone -->
+  <!-- Redirect to playlist.html if not framed -->
   <script>
     if (window.top === window.self) {
-      window.location.href = "frame.html";
+      window.location.href = "playlist.html";
     }
   </script>
 </head>
 <body>
 
-  <!-- Music Player will be injected here if in standalone mode (optional) -->
+  <!-- Music Player container (for optional fallback display) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -47,9 +43,11 @@
     </div>
 
     <p class="page-text">
-      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture.
-      My favorite character is Charmmy Kitty. Mental health is something that's important to me.
-      As a neurodivergent person, life can sometimes feel a little unusual, but I try to be patient with myself, and I'm working on getting better.
+      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's,
+      gothic lolita punk j-fashion/subculture. My favorite character is Charmmy Kitty.
+      Mental health is something that's important to me.
+      As a neurodivergent person, life can sometimes feel a little unusual,
+      but I try to be patient with myself, and I'm working on getting better.
       In my free time, I like to code, go on hikes, DJ, bake, and journal.
       I'm a little bit of a quiet person, but don't hesitate to send a message for friendly conversation.
       I've had all sorts of jobs over the years – in food service, in hospitality, fixing computers.
@@ -111,6 +109,17 @@
 
   <!-- Scripts -->
   <script>
+    // Load music player (optional fallback, will still work if in iframe)
+    fetch('player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = 'player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
+
     // Load footer
     fetch('footer.html')
       .then(res => res.text())
@@ -118,7 +127,7 @@
         document.getElementById('footer').innerHTML = data;
       });
 
-    // Load latest status
+    // Load status
     fetch('updates/statuslog.json')
       .then(res => res.json())
       .then(data => {
