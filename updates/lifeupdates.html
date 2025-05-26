@@ -79,16 +79,6 @@
           });
         }
 
-        const firstPost = postsContainer.querySelector('.post');
-        if (firstPost) {
-          const lastDate = new Date(firstPost.dataset.date);
-          const dateString = lastDate.toLocaleString(undefined, {
-            dateStyle: 'long',
-            timeStyle: 'short'
-          });
-          document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
-        }
-
         const sortSelect = document.getElementById('sort');
         sortPosts(sortSelect.value);
         sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
@@ -114,5 +104,9 @@
   </script>
 
   <script src="../script.js"></script>
+  <script>
+    // Unified last updated date
+    showLastUpdated('#last-updated', '../commits.json');
+  </script>
 </body>
 </html>
