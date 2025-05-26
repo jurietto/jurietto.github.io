@@ -5,6 +5,13 @@
   <title>Status Log</title>
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Redirect if not in iframe -->
+  <script>
+    if (window.top === window.self) {
+      window.location.href = "/playlist.html";
+    }
+  </script>
 </head>
 <body>
 
@@ -23,7 +30,7 @@
     </p>
 
     <p>
-      <a href="/updates/updates.html">
+      <a href="/updates/updates.html" target="contentframe">
         <img src="/media/c6.gif" alt="parent directory icon" class="icon" />
         [parent directory]
       </a>
@@ -96,12 +103,8 @@
       .then(html => {
         document.getElementById('footer').innerHTML = html;
       });
-  </script>
 
-  <script src="../script.js"></script>
-
-  <!-- Music Player Loader -->
-  <script>
+    // Load fallback player if needed
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
@@ -112,5 +115,7 @@
         document.body.appendChild(script);
       });
   </script>
+
+  <script src="../script.js"></script>
 </body>
 </html>
