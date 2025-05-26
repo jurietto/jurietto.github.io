@@ -22,9 +22,10 @@
       A timeline of little updates, moods, and notes. 
     </p>
 
+    <!-- ✅ Updated icon path -->
     <p>
       <a href="/updates/updates.html">
-        <img src="https://file.garden/ZhTgSjrp5nAroRKq/charmmy-6.gif" alt="Back icon" class="icon" />
+        <img src="/media/card.gif" alt="Back icon" class="icon" />
         [parent directory]
       </a>
     </p>
@@ -44,64 +45,64 @@
 
     <!-- Footer -->
     <div id="footer"></div>
-
-    <script>
-      fetch('statuslog.json')
-        .then(response => response.json())
-        .then(data => {
-          const list = document.getElementById('status-list');
-          list.innerHTML = '';
-
-          const entries = data.map(entry => {
-            const div = document.createElement('div');
-            div.className = 'post';
-            div.dataset.time = entry.time;
-            div.innerHTML = `
-              <p class="commit-header">
-                <img src="https://file.garden/ZhTgSjrp5nAroRKq/c0d36cbd.png" alt="update icon" class="icon" />
-                <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
-              </p>
-              <p class="commit-message">${entry.text}</p>
-              <hr />
-            `;
-            return div;
-          });
-
-          const sortSelect = document.getElementById('sort');
-
-          function render(order) {
-            list.innerHTML = '';
-            const sorted = [...entries].sort((a, b) => {
-              const dateA = new Date(a.dataset.time);
-              const dateB = new Date(b.dataset.time);
-              return order === 'old' ? dateA - dateB : dateB - dateA;
-            });
-            sorted.forEach(e => list.appendChild(e));
-          }
-
-          render('new');
-          sortSelect.addEventListener('change', () => render(sortSelect.value));
-
-          // Update "Last Updated"
-          const latest = data[data.length - 1];
-          if (latest) {
-            document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
-          }
-        })
-        .catch(err => {
-          document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
-          console.error(err);
-        });
-
-      fetch('../footer.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('footer').innerHTML = html;
-        });
-    </script>
-
-    <script src="../script.js"></script>
   </div>
+
+  <!-- Script Section -->
+  <script>
+    // Load and render status log entries
+    fetch('statuslog.json')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('status-list');
+        list.innerHTML = '';
+
+        const entries = data.map(entry => {
+          const div = document.createElement('div');
+          div.className = 'post';
+          div.dataset.time = entry.time;
+          div.innerHTML = `
+            <p class="commit-header">
+              <img src="/media/crown.png" alt="update icon" class="icon" />
+              <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
+            </p>
+            <p class="commit-message">${entry.text}</p>
+            <hr />
+          `;
+          return div;
+        });
+
+        function render(order) {
+          list.innerHTML = '';
+          const sorted = [...entries].sort((a, b) => {
+            const dateA = new Date(a.dataset.time);
+            const dateB = new Date(b.dataset.time);
+            return order === 'old' ? dateA - dateB : dateB - dateA;
+          });
+          sorted.forEach(e => list.appendChild(e));
+        }
+
+        render('new');
+        document.getElementById('sort').addEventListener('change', e => render(e.target.value));
+
+        const latest = data[data.length - 1];
+        if (latest) {
+          document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
+        }
+      })
+      .catch(err => {
+        document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+        console.error(err);
+      });
+
+    // Load footer
+    fetch('../footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
+  </script>
+
+  <script src="../script.js"></script>
 
   <!-- Music Player Loader -->
   <script>
