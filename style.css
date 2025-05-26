@@ -13,6 +13,10 @@ body {
     overflow-x: hidden;
     padding: 16px;
   }
+body.content-frame {
+  padding-top: 32px; /* height of your music bar */
+  box-sizing: border-box;
+}
   
   /* === Layout Container === */
   .main-content {
