@@ -5,7 +5,7 @@
   <title>Index</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- OpenGraph / Twitter / Meta -->
+  <!-- Meta for social -->
   <meta property="og:title" content="Juri's Stuff" />
   <meta property="og:description" content="Juri's personal space on the web" />
   <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
@@ -15,18 +15,19 @@
   <meta name="twitter:title" content="Juri's Stuff" />
   <meta name="twitter:description" content="Juri's personal space on the web" />
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Redirect to playlist.html if not framed -->
+  <!-- Redirect to frame.html if not inside iframe -->
   <script>
     if (window.top === window.self) {
-      window.location.href = "playlist.html";
+      window.location.href = "frame.html";
     }
   </script>
 </head>
 <body>
 
-  <!-- Music Player container (for optional fallback display) -->
+  <!-- Music Player will be injected here (fallback) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -109,7 +110,7 @@
 
   <!-- Scripts -->
   <script>
-    // Load music player (optional fallback, will still work if in iframe)
+    // Load music player fallback (only active if not in frame)
     fetch('player.html')
       .then(res => res.text())
       .then(html => {
@@ -127,7 +128,7 @@
         document.getElementById('footer').innerHTML = data;
       });
 
-    // Load status
+    // Load latest status entry
     fetch('updates/statuslog.json')
       .then(res => res.json())
       .then(data => {
