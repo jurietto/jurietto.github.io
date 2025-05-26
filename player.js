@@ -13,9 +13,11 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
-// Apply title tooltip and optionally restore volume
+// Add full text as tooltip and store for later
 trackList.forEach(li => {
-  li.dataset.title = li.textContent.trim();
+  const text = li.textContent.trim();
+  li.dataset.title = text;
+  li.title = text;
 });
 
 function formatTime(seconds) {
