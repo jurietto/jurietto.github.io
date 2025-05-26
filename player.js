@@ -13,6 +13,7 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
+// Add full text as tooltip on the span
 trackList.forEach(li => {
   const span = li.querySelector('.track-title');
   if (span) {
@@ -57,8 +58,7 @@ function savePlaybackState() {
     localStorage.setItem('music-player-state', JSON.stringify({
       trackIndex: index,
       time: audio.currentTime,
-      volume: audio.volume,
-      autoplay: !audio.paused
+      volume: audio.volume
     }));
   }
 }
@@ -66,24 +66,22 @@ function savePlaybackState() {
 window.addEventListener('DOMContentLoaded', () => {
   const saved = JSON.parse(localStorage.getItem('music-player-state'));
   if (saved) {
-    const { trackIndex, time, volume: savedVolume, autoplay } = saved;
+    const { trackIndex, time, volume: savedVolume } = saved;
 
     if (trackIndex >= 0 && trackIndex < trackList.length) {
       const item = trackList[trackIndex];
-      audio.src = item.dataset.src;
-      currentTrack = item;
       trackList.forEach(li => li.classList.remove('active'));
       item.classList.add('active');
+      audio.src = item.dataset.src;
+      currentTrack = item;
 
       audio.addEventListener('loadedmetadata', () => {
         if (time) audio.currentTime = time;
-        if (autoplay) {
-          audio.play().then(() => {
-            playToggleBtn.textContent = 'Pause';
-          }).catch(() => {
-            playToggleBtn.textContent = 'Play';
-          });
-        }
+        audio.play().then(() => {
+          playToggleBtn.textContent = 'Pause';
+        }).catch(() => {
+          playToggleBtn.textContent = 'Play';
+        });
       }, { once: true });
     }
 
