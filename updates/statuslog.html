@@ -15,7 +15,7 @@
     <h1>Status Log</h1>
 
     <div id="last-updated">
-      <p>Juri: Loading...</p>
+      <p>Last Updated: Loading...</p>
     </div>
 
     <p class="page-text">
@@ -79,11 +79,6 @@
 
         render('new');
         document.getElementById('sort').addEventListener('change', e => render(e.target.value));
-
-        const latest = data[data.length - 1];
-        if (latest) {
-          document.querySelector('#last-updated p').innerHTML = `Juri: ${latest.time}`;
-        }
       })
       .catch(err => {
         document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
@@ -99,6 +94,10 @@
   </script>
 
   <script src="../script.js"></script>
+  <script>
+    // Call the centralized "last updated" function
+    showLastUpdated('#last-updated', 'statuslog.json');
+  </script>
 
   <!-- Music Player Loader -->
   <script>
