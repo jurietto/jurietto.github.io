@@ -13,7 +13,6 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
-// Tooltips
 trackList.forEach(li => {
   const span = li.querySelector('.track-title');
   if (span) {
@@ -30,6 +29,24 @@ function formatTime(seconds) {
   return `${m}:${s}`;
 }
 
+function playTrack(index) {
+  if (index < 0 || index >= trackList.length) return;
+
+  const item = trackList[index];
+  trackList.forEach(li => li.classList.remove('active'));
+  item.classList.add('active');
+  audio.src = item.dataset.src;
+  currentTrack = item;
+
+  audio.play().then(() => {
+    playToggleBtn.textContent = 'Pause';
+  }).catch(() => {
+    playToggleBtn.textContent = 'Play';
+  });
+
+  savePlaybackState();
+}
+
 function getCurrentTrackIndex() {
   return trackList.indexOf(currentTrack);
 }
@@ -40,46 +57,33 @@ function savePlaybackState() {
     localStorage.setItem('music-player-state', JSON.stringify({
       trackIndex: index,
       time: audio.currentTime,
-      volume: audio.volume
+      volume: audio.volume,
+      autoplay: !audio.paused
     }));
   }
 }
 
-function playTrack(index) {
-  if (index < 0 || index >= trackList.length) return;
-
-  const item = trackList[index];
-  trackList.forEach(li => li.classList.remove('active'));
-  item.classList.add('active');
-  audio.src = item.dataset.src;
-  currentTrack = item;
-
-  audio.play()
-    .then(() => playToggleBtn.textContent = 'Pause')
-    .catch(() => playToggleBtn.textContent = 'Play');
-
-  savePlaybackState();
-}
-
-function restorePlaybackState() {
-  try {
-    const saved = JSON.parse(localStorage.getItem('music-player-state'));
-    if (!saved) return;
-
-    const { trackIndex, time, volume: savedVolume } = saved;
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = JSON.parse(localStorage.getItem('music-player-state'));
+  if (saved) {
+    const { trackIndex, time, volume: savedVolume, autoplay } = saved;
 
     if (trackIndex >= 0 && trackIndex < trackList.length) {
       const item = trackList[trackIndex];
-      trackList.forEach(li => li.classList.remove('active'));
-      item.classList.add('active');
       audio.src = item.dataset.src;
       currentTrack = item;
+      trackList.forEach(li => li.classList.remove('active'));
+      item.classList.add('active');
 
       audio.addEventListener('loadedmetadata', () => {
         if (time) audio.currentTime = time;
-        audio.play()
-          .then(() => playToggleBtn.textContent = 'Pause')
-          .catch(() => playToggleBtn.textContent = 'Play');
+        if (autoplay) {
+          audio.play().then(() => {
+            playToggleBtn.textContent = 'Pause';
+          }).catch(() => {
+            playToggleBtn.textContent = 'Play';
+          });
+        }
       }, { once: true });
     }
 
@@ -87,22 +91,18 @@ function restorePlaybackState() {
       audio.volume = savedVolume;
       volume.value = savedVolume;
     }
-  } catch (e) {
-    console.warn('Could not restore saved playback state:', e);
   }
-}
+});
 
-// Initialize on load
-window.addEventListener('DOMContentLoaded', restorePlaybackState);
-
-// Controls
 playToggleBtn.addEventListener('click', () => {
   if (!audio.src && trackList.length > 0) {
     playTrack(0);
   } else if (audio.paused) {
-    audio.play()
-      .then(() => playToggleBtn.textContent = 'Pause')
-      .catch(() => playToggleBtn.textContent = 'Play');
+    audio.play().then(() => {
+      playToggleBtn.textContent = 'Pause';
+    }).catch(() => {
+      playToggleBtn.textContent = 'Play';
+    });
   } else {
     audio.pause();
     playToggleBtn.textContent = 'Play';
@@ -144,7 +144,9 @@ progress.addEventListener('input', () => {
 prevBtn.addEventListener('click', () => {
   if (!currentTrack) return;
   const index = getCurrentTrackIndex();
-  if (index > 0) playTrack(index - 1);
+  if (index > 0) {
+    playTrack(index - 1);
+  }
 });
 
 nextBtn.addEventListener('click', () => {
