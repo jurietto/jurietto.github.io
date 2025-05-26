@@ -13,20 +13,7 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
-// Apply ticker animation if span overflows its parent
-function applyTickerIfNeeded() {
-  trackList.forEach(li => {
-    const span = li.querySelector('span');
-    if (!span) return;
-
-    span.classList.remove('scrolling');
-    if (span.scrollWidth > li.offsetWidth) {
-      span.classList.add('scrolling');
-    }
-  });
-}
-
-// Add data-title for accessibility/tooltip support
+// Add data-title for tooltip support
 trackList.forEach(li => {
   li.dataset.title = li.textContent.trim();
 });
@@ -66,18 +53,26 @@ function savePlaybackState() {
   }
 }
 
-// Load saved state on page load
+// Load and resume previous state
 window.addEventListener('DOMContentLoaded', () => {
-  applyTickerIfNeeded();
-
   const saved = JSON.parse(localStorage.getItem('music-player-state'));
   if (saved) {
     const { trackIndex, time } = saved;
     if (trackIndex >= 0 && trackIndex < trackList.length) {
-      playTrack(trackIndex);
-      audio.currentTime = time || 0;
-      audio.pause();
-      playToggleBtn.textContent = 'Play';
+      const item = trackList[trackIndex];
+      trackList.forEach(li => li.classList.remove('active'));
+      item.classList.add('active');
+      audio.src = item.dataset.src;
+      currentTrack = item;
+
+      audio.addEventListener('loadedmetadata', () => {
+        audio.currentTime = time || 0;
+        audio.play().then(() => {
+          playToggleBtn.textContent = 'Pause';
+        }).catch(() => {
+          playToggleBtn.textContent = 'Play'; // Autoplay blocked
+        });
+      }, { once: true });
     }
   }
 });
@@ -151,6 +146,3 @@ audio.addEventListener('ended', () => {
     playTrack(0);
   }
 });
-
-// Re-check ticker spans when window resizes
-window.addEventListener('resize', applyTickerIfNeeded);
