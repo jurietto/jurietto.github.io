@@ -359,6 +359,7 @@ body {
 }
 
 /* === Playlist Panel === */
+
 #playlist-panel {
   position: fixed;
   top: 32px;
@@ -373,8 +374,6 @@ body {
   transition: transform 0.3s ease;
   z-index: 999;
 }
-
-
 #playlist-panel::before {
   content: '';
   position: absolute;
@@ -431,9 +430,21 @@ body {
 
 /* Hide player for small screens */
 @media screen and (max-width: 600px) {
-  #music-bar, #playlist-panel {
-    display: none !important;
-  }
+  #music-bar, 
+#playlist-panel {
+  position: fixed;
+  top: 32px;
+  right: 0;
+  width: 220px;
+  height: calc(100% - 32px);
+  background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
+  border-left: 1px solid #a03ca0;
+  box-shadow: -2px 0 3px rgba(0,0,0,0.03);
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 999;
+}
 }
 
 /* Uniform font and spacing */
