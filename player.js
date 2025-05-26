@@ -13,9 +13,22 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
-// Add data-title attribute for ticker effect
+// Apply ticker animation if span overflows its parent
+function applyTickerIfNeeded() {
+  trackList.forEach(li => {
+    const span = li.querySelector('span');
+    if (!span) return;
+
+    span.classList.remove('scrolling');
+    if (span.scrollWidth > li.offsetWidth) {
+      span.classList.add('scrolling');
+    }
+  });
+}
+
+// Add data-title for accessibility/tooltip support
 trackList.forEach(li => {
-  li.dataset.title = li.textContent;
+  li.dataset.title = li.textContent.trim();
 });
 
 function formatTime(seconds) {
@@ -36,7 +49,6 @@ function playTrack(index) {
   audio.play();
   playToggleBtn.textContent = 'Pause';
 
-  // Save track index immediately on load
   savePlaybackState();
 }
 
@@ -54,15 +66,17 @@ function savePlaybackState() {
   }
 }
 
-// Load saved state
+// Load saved state on page load
 window.addEventListener('DOMContentLoaded', () => {
+  applyTickerIfNeeded();
+
   const saved = JSON.parse(localStorage.getItem('music-player-state'));
   if (saved) {
     const { trackIndex, time } = saved;
     if (trackIndex >= 0 && trackIndex < trackList.length) {
       playTrack(trackIndex);
       audio.currentTime = time || 0;
-      audio.pause(); // Wait for user interaction to play
+      audio.pause();
       playToggleBtn.textContent = 'Play';
     }
   }
@@ -89,8 +103,9 @@ togglePlaylistBtn.addEventListener('click', () => {
 });
 
 playlist.addEventListener('click', e => {
-  if (e.target.tagName === 'LI') {
-    const index = trackList.indexOf(e.target);
+  const target = e.target.closest('li');
+  if (target && playlist.contains(target)) {
+    const index = trackList.indexOf(target);
     playTrack(index);
   }
 });
@@ -101,8 +116,6 @@ audio.addEventListener('timeupdate', () => {
   progress.value = percent;
   currentTimeEl.textContent = formatTime(audio.currentTime);
   durationEl.textContent = formatTime(audio.duration);
-
-  // Save position during playback
   savePlaybackState();
 });
 
@@ -138,3 +151,6 @@ audio.addEventListener('ended', () => {
     playTrack(0);
   }
 });
+
+// Re-check ticker spans when window resizes
+window.addEventListener('resize', applyTickerIfNeeded);
