@@ -6,16 +6,16 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Redirect to playlist.html if not in iframe -->
+  <!-- Redirect if not in iframe -->
   <script>
     if (window.top === window.self) {
-      window.location.href = "/playlist.html";
+      window.location.href = "/frame.html";
     }
   </script>
 </head>
 <body>
 
-  <!-- Injected music player -->
+  <!-- Injected music player (fallback only) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -125,7 +125,7 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Optional fallback: load player in case not in iframe
+    // Load fallback music player if needed
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
