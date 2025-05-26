@@ -17,18 +17,11 @@
   <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Redirect to frame.html if not inside iframe -->
-  <script>
-    if (window.top === window.self) {
-      window.location.href = "frame.html";
-    }
-  </script>
 </head>
-<body class="content-frame">
+<body>
 
-  <!-- Music Player will be injected here (fallback) -->
-  <div id="player-container"></div>
+  <!-- SCM-style Music Player Injected Here -->
+  <div id="scm-player-container"></div>
 
   <div class="main-content">
     <h1>Index</h1>
@@ -37,7 +30,7 @@
       <p>Last Updated: Loading...</p>
     </div>
 
-    <div id="my-status" style="cursor: pointer;" onclick="window.parent.frames.contentframe.location.href='updates/statuslog.html'">
+    <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
       <div class="status-text">
         <span id="myStatus">Loading status...</span>
       </div>
@@ -92,13 +85,13 @@
         </tr>
         <tr>
           <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="updates/updates.html" target="contentframe">Updates</a>
+            <a href="updates/updates.html">Updates</a>
           </td>
           <td>HTML</td>
         </tr>
         <tr>
           <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="menhera" target="contentframe">Menhera</a>
+            <a href="menhera">Menhera</a>
           </td>
           <td>HTML</td>
         </tr>
@@ -110,12 +103,12 @@
 
   <!-- Scripts -->
   <script>
-    // Load music player fallback (only active if not in frame)
-    if (window.top === window.self) {
+    // Inject music player once globally if not already added
+    if (!document.querySelector('#music-bar')) {
       fetch('player.html')
         .then(res => res.text())
         .then(html => {
-          document.getElementById('player-container').innerHTML = html;
+          document.getElementById('scm-player-container').innerHTML = html;
           const script = document.createElement('script');
           script.src = 'player.js';
           script.defer = true;
