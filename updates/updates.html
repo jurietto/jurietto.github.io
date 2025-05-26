@@ -5,19 +5,11 @@
   <title>Updates</title>
   <link rel="stylesheet" href="/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Redirect to frame.html if not in iframe -->
-  <script>
-    if (window.top === window.self) {
-      window.location.href = "/frame.html";
-    }
-  </script>
 </head>
+<body>
 
-<body class="content-frame">
-
-  <!-- Injected player (fallback only) -->
-  <div id="player-container"></div>
+  <!-- SCM-style Music Player Injected Here -->
+  <div id="scm-player-container"></div>
 
   <div class="main-content"> 
     <h1>Updates</h1>
@@ -34,7 +26,7 @@
     </p>
 
     <p>
-      <a href="/" target="contentframe">
+      <a href="/">
         <img src="/media/c6.gif" alt="parent directory icon" class="icon" />
         [parent directory]
       </a>
@@ -51,21 +43,21 @@
         <tr>
           <td class="file-cell">
             <img src="/media/crown.png" class="icon" />
-            <a href="/updates/lifeupdates.html" target="contentframe">Life Updates</a>
+            <a href="/updates/lifeupdates.html">Life Updates</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
         <tr>
           <td class="file-cell">
             <img src="/media/crown.png" class="icon" />
-            <a href="/updates/sitelog.html" target="contentframe">Site Log</a>
+            <a href="/updates/sitelog.html">Site Log</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
         <tr>
           <td class="file-cell">
             <img src="/media/crown.png" class="icon" />
-            <a href="/updates/statuslog.html" target="contentframe">Status Log</a>
+            <a href="/updates/statuslog.html">Status Log</a>
           </td>
           <td class="detailsColumn">HTML</td>
         </tr>
@@ -77,8 +69,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="/script.js"></script>
-
   <script>
     // Load footer content
     fetch('/footer.html')
@@ -87,12 +77,12 @@
         document.getElementById('footer').innerHTML = data;
       });
 
-    // Load fallback music player if needed
-    if (window.top === window.self) {
+    // Inject music player once globally if not already added
+    if (!document.querySelector('#music-bar')) {
       fetch('/player.html')
         .then(res => res.text())
         .then(html => {
-          document.getElementById('player-container').innerHTML = html;
+          document.getElementById('scm-player-container').innerHTML = html;
           const script = document.createElement('script');
           script.src = '/player.js';
           script.defer = true;
@@ -100,5 +90,6 @@
         });
     }
   </script>
+  <script src="/script.js"></script>
 </body>
 </html>
