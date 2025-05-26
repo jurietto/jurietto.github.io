@@ -6,16 +6,17 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Redirect if not framed -->
+  <!-- Redirect if not in iframe -->
   <script>
     if (window.top === window.self) {
-      window.location.href = "/playlist.html";
+      window.location.href = "/frame.html";
     }
   </script>
 </head>
 
 <body>
 
+  <!-- Injected music player (fallback only) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -107,7 +108,7 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Optional: Inject player if fallback is needed
+    // Fallback player load
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
