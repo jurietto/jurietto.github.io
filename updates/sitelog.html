@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Redirect if not in iframe -->
+  <!-- Redirect to frame.html if not in iframe -->
   <script>
     if (window.top === window.self) {
       window.location.href = "/frame.html";
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-  <!-- Injected music player (fallback only) -->
+  <!-- Fallback music player (only loads outside frame) -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -112,29 +112,33 @@
         document.querySelector('#last-updated p').textContent =
           `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
       } catch (err) {
-        document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
+        document.getElementById('commit-list').innerHTML =
+          '<p style="color: crimson;">Could not load updates.</p>';
         console.error(err);
       }
     }
 
     loadCommits();
 
+    // Load footer
     fetch('../footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Load fallback music player if needed
-    fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = '/player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
+    // Load fallback player only if not inside a frame
+    if (window.top === window.self) {
+      fetch('/player.html')
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById('player-container').innerHTML = html;
+          const script = document.createElement('script');
+          script.src = '/player.js';
+          script.defer = true;
+          document.body.appendChild(script);
+        });
+    }
   </script>
 </body>
 </html>
