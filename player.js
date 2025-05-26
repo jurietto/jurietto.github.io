@@ -13,6 +13,11 @@ const trackList = [...playlist.querySelectorAll('li')];
 
 let currentTrack = null;
 
+// Add data-title attribute for ticker effect
+trackList.forEach(li => {
+  li.dataset.title = li.textContent;
+});
+
 function formatTime(seconds) {
   if (isNaN(seconds)) return '0:00';
   const m = Math.floor(seconds / 60);
@@ -30,11 +35,38 @@ function playTrack(index) {
   currentTrack = item;
   audio.play();
   playToggleBtn.textContent = 'Pause';
+
+  // Save track index immediately on load
+  savePlaybackState();
 }
 
 function getCurrentTrackIndex() {
   return trackList.indexOf(currentTrack);
 }
+
+function savePlaybackState() {
+  if (currentTrack) {
+    const index = getCurrentTrackIndex();
+    localStorage.setItem('music-player-state', JSON.stringify({
+      trackIndex: index,
+      time: audio.currentTime
+    }));
+  }
+}
+
+// Load saved state
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = JSON.parse(localStorage.getItem('music-player-state'));
+  if (saved) {
+    const { trackIndex, time } = saved;
+    if (trackIndex >= 0 && trackIndex < trackList.length) {
+      playTrack(trackIndex);
+      audio.currentTime = time || 0;
+      audio.pause(); // Wait for user interaction to play
+      playToggleBtn.textContent = 'Play';
+    }
+  }
+});
 
 playToggleBtn.addEventListener('click', () => {
   if (!audio.src && trackList.length > 0) {
@@ -69,6 +101,9 @@ audio.addEventListener('timeupdate', () => {
   progress.value = percent;
   currentTimeEl.textContent = formatTime(audio.currentTime);
   durationEl.textContent = formatTime(audio.duration);
+
+  // Save position during playback
+  savePlaybackState();
 });
 
 progress.addEventListener('input', () => {
@@ -91,18 +126,15 @@ nextBtn.addEventListener('click', () => {
   if (index < trackList.length - 1) {
     playTrack(index + 1);
   } else {
-    // Restart the playlist if at end
     playTrack(0);
   }
 });
 
-// Auto-play next track when one ends
 audio.addEventListener('ended', () => {
   const index = getCurrentTrackIndex();
   if (index < trackList.length - 1) {
     playTrack(index + 1);
   } else {
-    // Restart from beginning if end reached
     playTrack(0);
   }
 });
