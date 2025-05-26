@@ -41,4 +41,4 @@ function formatDate(dateString) {
     dateStyle: 'long',
     timeStyle: 'short'
   });
-}
+} 
