@@ -8,8 +8,8 @@
 </head>
 <body>
 
-  <!-- SCM-style Music Player Injected Here -->
-  <div id="scm-player-container"></div>
+  <!-- Injected music player -->
+  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Site Log</h1>
@@ -118,18 +118,15 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Inject music player once globally if not already added
-    if (!document.querySelector('#music-bar')) {
-      fetch('/player.html')
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById('scm-player-container').innerHTML = html;
-          const script = document.createElement('script');
-          script.src = '/player.js';
-          script.defer = true;
-          document.body.appendChild(script);
-        });
-    }
+    fetch('/player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = '/player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html>
