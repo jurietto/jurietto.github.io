@@ -22,7 +22,6 @@
       A timeline of little updates, moods, and notes. 
     </p>
 
-    <!-- ✅ Updated icon path -->
     <p>
       <a href="/updates/updates.html">
         <img src="/media/card.gif" alt="Back icon" class="icon" />
@@ -30,7 +29,6 @@
       </a>
     </p>
 
-    <!-- Controls block -->
     <div id="controls">
       <label for="sort">Sort by:</label>
       <select id="sort">
@@ -43,13 +41,11 @@
       <p>Loading status updates...</p>
     </div>
 
-    <!-- Footer -->
     <div id="footer"></div>
   </div>
 
-  <!-- Script Section -->
+  <!-- Load and render status entries -->
   <script>
-    // Load and render status log entries
     fetch('statuslog.json')
       .then(response => response.json())
       .then(data => {
