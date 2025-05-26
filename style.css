@@ -205,10 +205,10 @@ body {
   }
   
   img.icon {
-    height: 16px;
-    vertical-align: middle;
-    margin-right: 4px;
-    margin-top: -2px;
+    height: 1em;
+    vertical-align: -0.125em;
+    margin-right: 0.4em;
+    margin-top: 0;
   }
   
   /* === Controls === */
@@ -265,4 +265,218 @@ body {
     border-bottom: 1px dotted #e79cff;
     margin: 12px 0;
   }
+  
+/* === Music Player Bar === */
+#music-bar {
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fffafd;
+  border-bottom: 1px solid #e6bfff;
+  z-index: 1000;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 32px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  padding: 0 16px;
+}
+#music-bar > * {
+  position: relative;
+  z-index: 1;
+}
+#player-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+}
+#player-controls button {
+  all: unset;
+  color: #a03ca0;
+  cursor: pointer;
+  font-size: 13px;
+  min-height: 28px;
+  min-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+}
+#progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+#current-time, #duration {
+  font-size: 12px;
+  color: #a03ca0;
+  width: 36px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+#progress, #volume {
+  height: 4px;
+  accent-color: #a03ca0;
+  border-radius: 0;
+  background: #f3e0ff;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  transition: none;
+}
+#progress {
+  flex-grow: 1;
+  min-width: 0;
+}
+#volume {
+  width: 70px;
+  flex-shrink: 0;
+}
+#toggle-playlist {
+  cursor: pointer;
+  color: #a03ca0;
+  font-size: 13px;
+  user-select: none;
+  padding: 2px 8px;
+}
+
+/* === Playlist Panel Minimal Redesign === */
+#playlist-panel {
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: 32px;
+  right: 0;
+  width: 220px;
+  height: calc(100% - 32px);
+  background: #fffafd;
+  border-left: 1px solid #e6bfff;
+  box-shadow: -2px 0 3px rgba(0,0,0,0.03);
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.18s;
+  z-index: 999;
+}
+#playlist-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('https://file.garden/ZhTgSjrp5nAroRKq/leaves.gif') top left repeat;
+  opacity: 0.85;
+  z-index: 0;
+  pointer-events: none;
+}
+#playlist-panel > * {
+  position: relative;
+  z-index: 1;
+}
+#playlist-panel.show {
+  transform: translateX(0%);
+}
+#playlist-panel h3 {
+  margin: 0;
+  padding: 10px 0 10px 14px;
+  font-size: 12px;
+  color: #a03ca0;
+  border-bottom: 1px solid #e6bfff;
+  background: #f3e0ff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  box-shadow: none;
+}
+#playlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#playlist li {
+  padding: 4px 0 4px 18px;
+  min-height: 20px;
+  font-size: 12px;
+  color: #6a1b8a;
+  cursor: pointer;
+  transition: color 0.12s, background 0.12s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+  background: none;
+}
+#playlist li:hover,
+#playlist li.active {
+  background: #a03ca0;
+  color: #fff;
+}
+
+/* Hide player for small screens */
+@media screen and (max-width: 600px) {
+  #music-bar, #playlist-panel {
+    display: none !important;
+  }
+}
+
+/* Compact and uniform font */
+#player-controls button,
+#toggle-playlist {
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 13px;
+  padding: 2px 8px;
+}
+
+/* Hover: underline only */
+#player-controls button:hover,
+#toggle-playlist:hover {
+  text-decoration: underline;
+  background: none !important;
+}
+
+/* Progress bar thumb styling for all browsers */
+#progress::-webkit-slider-thumb,
+#volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #a03ca0;
+  border: 2px solid #fffafd;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+#progress::-moz-range-thumb,
+#volume::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #a03ca0;
+  border: 2px solid #fffafd;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+#progress::-ms-thumb,
+#volume::-ms-thumb {
+  width: 14px;
+  height: 14px;
+  background: #a03ca0;
+  border: 2px solid #fffafd;
+  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+#progress, #volume {
+  font-family: Arial, sans-serif;
+}
 
