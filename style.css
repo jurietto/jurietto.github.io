@@ -35,14 +35,13 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 4;
+  height: 100px; /* or adjust to suit the SVG's natural height */
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/spring-landscape-silhouette-000000-original.svg');
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: bottom;
-  opacity: 0.03; 
-  pointer-events: none; 
+  background-size: contain; /* or '100% auto' */
+  background-position: bottom center;
+  opacity: 0.05; /* barely visible */
+  pointer-events: none;
   z-index: 0;
 }
   
