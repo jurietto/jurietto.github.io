@@ -20,6 +20,13 @@
 
   <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    .status-text img {
+      max-height: 150px;
+      display: block;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
 
@@ -104,6 +111,19 @@
 
   <!-- Scripts -->
   <script>
+    function formatStatusText(text) {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const lines = text.split('\n').map(line => {
+        const match = line.match(urlRegex);
+        if (match && match[0].match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+          return `<img src="${match[0]}" alt="status image" />`;
+        } else {
+          return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+        }
+      });
+      return lines.join('<br>');
+    }
+
     fetch('player.html')
       .then(res => res.text())
       .then(html => {
@@ -125,7 +145,7 @@
       .then(data => {
         const latest = data[0];
         if (latest) {
-          document.getElementById('myStatus').textContent = latest.text;
+          document.getElementById('myStatus').innerHTML = formatStatusText(latest.text);
         }
       })
       .catch(err => {
