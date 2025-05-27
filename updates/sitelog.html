@@ -46,6 +46,7 @@
 
   <!-- Scripts -->
   <script src="../script.js"></script>
+
   <script>
     async function loadCommits() {
       try {
@@ -99,6 +100,10 @@
 
         sortSelect.addEventListener('change', e => renderCommits(e.target.value));
         renderCommits('new');
+
+        const latestDate = new Date(commits[0].date);
+        document.querySelector('#last-updated p').textContent =
+          `Last Updated: ${latestDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' })}`;
       } catch (err) {
         document.getElementById('commit-list').innerHTML = '<p style="color: crimson;">Could not load updates.</p>';
         console.error(err);
@@ -107,17 +112,12 @@
 
     loadCommits();
 
-    // Unified Last Updated from commits.json
-    showLastUpdated('#last-updated', '../commits.json');
-
-    // Footer
     fetch('../footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Player
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
