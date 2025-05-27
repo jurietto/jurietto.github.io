@@ -5,6 +5,13 @@
   <title>Timeline</title>
   <link rel="stylesheet" href="../style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    img.status-image {
+      max-height: 150px;
+      display: block;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
 
@@ -19,7 +26,7 @@
     </div>
 
     <p class="page-text">
-    Statuses, moods, and notes.
+      Statuses, moods, and notes.
     </p>
 
     <p>
@@ -44,8 +51,20 @@
     <div id="footer"></div>
   </div>
 
-  <!-- Load and render status entries -->
   <script>
+    function formatText(text) {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const lines = text.split('\n').map(line => {
+        const match = line.match(urlRegex);
+        if (match && match[0].match(/\.(jpeg|jpg|gif|png|webp|gif)$/i)) {
+          return `<img src="${match[0]}" class="status-image" alt="image" />`;
+        } else {
+          return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+        }
+      });
+      return lines.join('<br>');
+    }
+
     fetch('statuslog.json')
       .then(response => response.json())
       .then(data => {
@@ -61,7 +80,7 @@
               <img src="/media/crown.png" alt="update icon" class="icon" />
               <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
             </p>
-            <p class="commit-message">${entry.text}</p>
+            <p class="commit-message">${formatText(entry.text)}</p>
             <hr />
           `;
           return div;
