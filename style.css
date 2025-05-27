@@ -35,12 +35,12 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  aspect-ratio: 1.74 / 1; /* match 1920:1101 */
+  aspect-ratio: 1.74 / 1;
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/spring-landscape-silhouette-000000-original.svg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom center;
-  opacity: 0.03; /* extremely subtle */
+  opacity: 0.3; 
   pointer-events: none;
   z-index: 0;
 }
