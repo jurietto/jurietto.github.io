@@ -104,7 +104,6 @@
 
   <!-- Scripts -->
   <script>
-    // Load music player HTML and JS
     fetch('player.html')
       .then(res => res.text())
       .then(html => {
@@ -115,14 +114,12 @@
         document.body.appendChild(script);
       });
 
-    // Load footer
     fetch('footer.html')
       .then(res => res.text())
       .then(data => {
         document.getElementById('footer').innerHTML = data;
       });
 
-    // Load latest status
     fetch('updates/statuslog.json')
       .then(res => res.json())
       .then(data => {
