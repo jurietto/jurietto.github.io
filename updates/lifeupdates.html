@@ -79,6 +79,16 @@
           });
         }
 
+        const firstPost = postsContainer.querySelector('.post');
+        if (firstPost) {
+          const lastDate = new Date(firstPost.dataset.date);
+          const dateString = lastDate.toLocaleString(undefined, {
+            dateStyle: 'long',
+            timeStyle: 'short'
+          });
+          document.querySelector('#last-updated p').textContent = `Last Updated: ${dateString}`;
+        }
+
         const sortSelect = document.getElementById('sort');
         sortPosts(sortSelect.value);
         sortSelect.addEventListener('change', () => sortPosts(sortSelect.value));
@@ -104,9 +114,5 @@
   </script>
 
   <script src="../script.js"></script>
-  <script>
-    // Page-specific "last updated" based on commits touching this file
-    showLastUpdated('#last-updated', '../commits.json', 'lifeupdates.html');
-  </script>
 </body>
 </html>
