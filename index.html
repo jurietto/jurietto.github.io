@@ -20,13 +20,6 @@
 
   <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    .status-text img {
-      max-height: 150px;
-      display: block;
-      margin-top: 8px;
-    }
-  </style>
 </head>
 <body>
 
@@ -111,12 +104,13 @@
 
   <!-- Scripts -->
   <script>
+    // Format status text with links and centered images
     function formatStatusText(text) {
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       const lines = text.split('\n').map(line => {
         const match = line.match(urlRegex);
         if (match && match[0].match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-          return `<img src="${match[0]}" alt="status image" />`;
+          return `<img src="${match[0]}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
         } else {
           return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
         }
@@ -124,6 +118,7 @@
       return lines.join('<br>');
     }
 
+    // Load and insert the music player
     fetch('player.html')
       .then(res => res.text())
       .then(html => {
@@ -134,12 +129,14 @@
         document.body.appendChild(script);
       });
 
+    // Load and insert the footer
     fetch('footer.html')
       .then(res => res.text())
       .then(data => {
         document.getElementById('footer').innerHTML = data;
       });
 
+    // Load latest status update and render image
     fetch('updates/statuslog.json')
       .then(res => res.json())
       .then(data => {
