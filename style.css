@@ -493,3 +493,11 @@ body {
 #progress, #volume {
   font-family: Arial, sans-serif;
 }
+
+.status-text img {
+    max-height: 300px;
+    min-height: 200px;
+    display: block;
+    margin: 12px auto;
+    border-radius: 6px;
+  }
