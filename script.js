@@ -34,11 +34,19 @@ function updateLastUpdated(selector, text) {
   }
 }
 
-// Helper to format date as "Weekday, MM/DD/YYYY"
+// Helper to format date as "Weekday, Month Day, Year, Time"
 function formatDate(dateString) {
   const date = new Date(dateString);
-  const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-  return date.toLocaleDateString(undefined, options);
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  };
+  return date.toLocaleString(undefined, options);
 }
 
 // Run the last updated fetch on DOM content loaded
