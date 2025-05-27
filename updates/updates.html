@@ -72,9 +72,6 @@
   <!-- Scripts -->
   <script src="/script.js"></script>
   <script>
-    // Inject Last Updated timestamp from commits.json
-    showLastUpdated('#last-updated', 'commits.json');
-
     // Load footer content
     fetch('/footer.html')
       .then(response => response.text())
@@ -82,7 +79,7 @@
         document.getElementById('footer').innerHTML = data;
       });
 
-    // Load and inject music player
+    // Load and inject player
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
