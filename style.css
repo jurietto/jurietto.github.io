@@ -36,14 +36,18 @@ body {
   left: 0;
   width: 100%;
   aspect-ratio: 1.74 / 1;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/spring-landscape-silhouette-000000-original.svg');
+  background-image: 
+    linear-gradient(rgba(231, 156, 255, 0.4), rgba(231, 156, 255, 0.4)), 
+    url('https://file.garden/ZhTgSjrp5nAroRKq/spring-landscape-silhouette-000000-original.svg');
+  background-blend-mode: lighten;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom center;
-  opacity: 0.3; 
+  opacity: 0.1;
   pointer-events: none;
   z-index: 0;
 }
+
   
   /* === Headings === */
   h1, h2, h3, h4, h5, h6 {
