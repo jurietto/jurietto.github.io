@@ -1,5 +1,29 @@
 <div id="posts">
-  <div class="post" data-date="2025-03-14T14:17:00">
+  <div class="post" data-date="">
+    <p class="commit-header">
+      <img src="/media/crown.png" alt="update icon" class="icon" />
+      <strong>May 27, 2025 – 12:19 PM</strong>
+    </p>
+   <p>A few months ago, I had a series of hospital and ER visits. It was really bad. The times I went to the ER, I was taken by ambulance. I was vomiting so much and there was blood in my vomit, so my mother told me to call 911. I didn't want to call, but the vomiting was so bad and persistent. I was getting tired and my throat was sore too, so I just gave in and called.</p>
+
+<p>The same people from one of the times I was taken to the ER last fall or winter came again. It felt weird because one of the EMTs happened to be someone I went to high school with. I think he grew up in the area that I live in now, which was kind of a coincidence.</p>
+
+<p>My mother is doing fine. She's the same as always, just planting in her garden and working on her boutique business. For the past month or a little over, my brother's girlfriend and their son came to visit from Thailand. It was a little awkward because right now I'm not on the best terms with my brother, and my mother doesn't particularly like his girlfriend. But I get along with her okay. I just feel anxious being too talkative around her when my mother is there.</p>
+
+<p>My brother's son is really cute. He's 10 years old, and even though he's from Thailand, he talks like an American boy when he speaks English. He uses American slang and internet slang. I usually don't talk to him much, but when I do, we talk about video games. They're still here visiting. I'm not sure when they'll be going back to Thailand, but my mother is planning for them to move here permanently in a year or so.</p>
+
+<p>Around the time when I was having to go to the ER a lot, I was struggling to take my medications consistently. My schedule was just crazy. The way I was managing my meds wasn't really doing me any good either. I was awake all night, sleeping during the day, and starting my day at 3pm. It didn't feel good honestly. It made me feel bad about myself.</p>
+
+<p>The vomiting I was experiencing on top of that made everything worse. I have to take my medication with food, and every time I had to eat, I would vomit because my stomach couldn't hold down the food. Sometimes I would throw up my meds too. Because of all the vomiting, I had to start taking blood pressure medication since it shot my blood pressure through the roof.</p>
+
+<p>Everything is expensive right now. The economy is really bad and it's going to get worse before it gets better. The tariff situation is so unnecessary. Just the other day, I had a package from Kowloon, China. Just to accept the package at the door, I had to pay 27 dollars. I never had to do that in my entire life. But apparently UPS has that fee now for any package from China. When I asked them about it, they said it was because of the tariff situation.</p>
+
+<p>This summer I don't have any plans except to keep up with my medical appointments.</p>
+  </div>
+
+
+<div id="posts">
+  <div class="post" data-date="">
     <p class="commit-header">
       <img src="/media/crown.png" alt="update icon" class="icon" />
       <strong>March 14, 2025 – 2:17 PM</strong>
@@ -11,7 +35,7 @@
     <p class="commit-message">I have a doctor’s appointment on Monday, but I may just go in for my lab work and follow up with a call instead. I also have a psychiatrist appointment later in the month. Lately, I’ve been struggling with my routine, especially on weekends, where I haven’t been taking my medication consistently. I need to adjust my schedule to stay on track.</p>
   </div>
 
-  <div class="post" data-date="2025-02-20T01:13:00">
+  <div class="post" data-date="">
     <p class="commit-header">
       <img src="/media/crown.png" alt="update icon" class="icon" />
       <strong>February 20, 2025 – 1:13 AM</strong>
@@ -23,7 +47,7 @@
     <p class="commit-message">One of the things I wanted to do early this year was to set up therapy, but I haven’t done it yet. I know I need to, and I’ve been frustrated with myself for putting it off, but as long as I get it done before late spring, I’ll be fine.</p>
   </div>
 
-  <div class="post" data-date="2024-09-11T00:00:00">
+  <div class="post" data-date="">
     <p class="commit-header">
       <img src="/media/crown.png" alt="update icon" class="icon" />
       <strong>September 11, 2024 – 12:00 AM</strong>
@@ -31,7 +55,7 @@
     <p class="commit-message">I know I always change my site, but this Rilakkuma theme is just so cozy omo... colors.</p>
   </div>
 
-  <div class="post" data-date="2024-09-11T00:00:01">
+  <div class="post" data-date="">
     <p class="commit-header">
       <img src="/media/crown.png" alt="update icon" class="icon" />
       <strong>September 11, 2024 – 12:00 AM</strong>
@@ -39,7 +63,7 @@
     <p class="commit-message">I'm glad the summer is over. It was hot and I had a very scary surgery. I'm good now, I have to go to follow-up appointments and stuff. So glad fall is here!</p>
   </div>
 
-  <div class="post" data-date="2024-05-28T12:00:00">
+  <div class="post" data-date="">
     <p class="commit-header">
       <img src="/media/crown.png" alt="update icon" class="icon" />
       <strong>May 28, 2024 – 12:00 PM</strong>
@@ -47,7 +71,7 @@
     <p class="commit-message">I stayed up all night doing drugs and reading about music tech stuff. I feel too depressed to produce anything, so I'm just going to try to learn a few things here and there.</p>
   </div>
 
-  <div class="post" data-date="2024-05-04T12:00:00">
+  <div class="post" data-date="">
     <p class="commit-header">
       <img src="/media/crown.png" alt="update icon" class="icon" />
       <strong>May 4, 2024 – 12:00 PM</strong>
