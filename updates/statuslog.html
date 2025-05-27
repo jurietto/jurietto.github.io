@@ -91,16 +91,8 @@
       .then(html => {
         document.getElementById('footer').innerHTML = html;
       });
-  </script>
 
-  <script src="../script.js"></script>
-  <script>
-    // Unified "last updated" from commits.json
-    showLastUpdated('#last-updated', '../commits.json');
-  </script>
-
-  <!-- Music Player Loader -->
-  <script>
+    // Inject music player
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
@@ -111,5 +103,8 @@
         document.body.appendChild(script);
       });
   </script>
+
+  <!-- Shared site script for "Last Updated" -->
+  <script src="../script.js"></script>
 </body>
 </html>
