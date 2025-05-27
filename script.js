@@ -1,20 +1,31 @@
 // --- Last Updated Date Functionality ---
 
-// Function to fetch and display last commit date
+// Function to fetch and display last commit date for this page (based on filename in message)
 async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../commits.json') {
   try {
     const res = await fetch(jsonPath);
     if (!res.ok) throw new Error('Network response was not ok');
 
     const commits = await res.json();
-
     if (!Array.isArray(commits) || commits.length === 0) {
       updateLastUpdated(targetSelector, 'Unknown');
       return;
     }
 
-    // Find the latest commit by date
-    const latestCommit = commits.reduce((latest, current) =>
+    const filename = window.location.pathname.split('/').pop();
+
+    // Filter commits mentioning this file
+    const relevantCommits = commits.filter(commit =>
+      commit.message && commit.message.toLowerCase().includes(filename.toLowerCase())
+    );
+
+    if (relevantCommits.length === 0) {
+      updateLastUpdated(targetSelector, 'No recent file-specific updates');
+      return;
+    }
+
+    // Pick most recent commit mentioning this file
+    const latestCommit = relevantCommits.reduce((latest, current) =>
       new Date(current.date) > new Date(latest.date) ? current : latest
     );
 
@@ -26,7 +37,7 @@ async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../
   }
 }
 
-// Helper to update the DOM element with last updated info
+// DOM update
 function updateLastUpdated(selector, text) {
   const el = document.querySelector(`${selector} p`);
   if (el) {
@@ -34,7 +45,7 @@ function updateLastUpdated(selector, text) {
   }
 }
 
-// Helper to format date as "Weekday, Month Day, Year, Time"
+// Format: Sunday, May 26, 2024, 3:45 PM
 function formatDate(dateString) {
   const date = new Date(dateString);
   const options = {
@@ -49,7 +60,7 @@ function formatDate(dateString) {
   return date.toLocaleString(undefined, options);
 }
 
-// Run the last updated fetch on DOM content loaded
+// Auto run on page load
 document.addEventListener('DOMContentLoaded', () => {
-  showLastUpdated('#last-updated', '../commits.json');
+  showLastUpdated('#last-updated');
 });
