@@ -501,8 +501,3 @@ body {
     margin: 12px auto;
     border-radius: 6px;
   }
-    img.status-image {
-      display: block;
-      margin: 12px auto;
-      min-height: 200px;
-      max-height: 300px;
