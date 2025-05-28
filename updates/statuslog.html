@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- Injected music player -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -18,9 +17,7 @@
       <p>Last Updated: Loading...</p>
     </div>
 
-    <p class="page-text">
-      Statuses, moods, and notes.
-    </p>
+    <p class="page-text">Statuses, moods, and notes.</p>
 
     <p>
       <a href="/updates/updates.html">
@@ -54,7 +51,7 @@
 
         const url = match[0];
 
-        // Responsive YouTube Embed
+        // Responsive YouTube Embed (limited to 480px)
         if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
           let videoId = '';
           if (url.includes("watch?v=")) {
@@ -64,7 +61,7 @@
           }
 
           return `
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 12px auto;">
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 12px auto; max-width: 480px;">
               <iframe 
                 src="https://www.youtube.com/embed/${videoId}" 
                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
@@ -78,7 +75,7 @@
         // SoundCloud Embed
         if (url.includes("soundcloud.com")) {
           return `
-            <div style="text-align: center; margin: 12px auto;">
+            <div style="margin: 12px auto; max-width: 480px; text-align: center;">
               <iframe width="100%" height="166" scrolling="no" frameborder="no"
                 allow="autoplay"
                 src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
@@ -86,7 +83,7 @@
             </div>`;
         }
 
-        // Image Embed
+        // Image Embed (centered)
         if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
           return `<img src="${url}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
         }
@@ -137,14 +134,12 @@
         console.error(err);
       });
 
-    // Load footer
     fetch('../footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Inject music player
     fetch('/player.html')
       .then(res => res.text())
       .then(html => {
@@ -156,7 +151,6 @@
       });
   </script>
 
-  <!-- Shared site script for "Last Updated" -->
   <script src="../script.js"></script>
 </body>
 </html>
