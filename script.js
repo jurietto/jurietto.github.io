@@ -1,66 +1,152 @@
-// --- Last Updated Date Functionality ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Index</title>
+  <link rel="stylesheet" href="style.css" />
 
-// Function to fetch and display last commit date for this page (based on filename in message)
-async function showLastUpdated(targetSelector = '#last-updated', jsonPath = '../commits.json') {
-  try {
-    const res = await fetch(jsonPath);
-    if (!res.ok) throw new Error('Network response was not ok');
+  <!-- OpenGraph / Facebook Meta -->
+  <meta property="og:title" content="Juri's Stuff" />
+  <meta property="og:description" content="Juri's personal space on the web" />
+  <meta property="og:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
+  <meta property="og:url" content="https://jurietto.github.io/" />
+  <meta property="og:type" content="website" />
 
-    const commits = await res.json();
-    if (!Array.isArray(commits) || commits.length === 0) {
-      updateLastUpdated(targetSelector, 'Unknown');
-      return;
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Juri's Stuff" />
+  <meta name="twitter:description" content="Juri's personal space on the web" />
+  <meta name="twitter:image" content="https://file.garden/ZhTgSjrp5nAroRKq/216b471b796e732d46861f32575a7c59.gif" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+  <div id="player-container"></div>
+
+  <div class="main-content">
+    <h1>Index</h1>
+
+    <div id="last-updated">
+      <p>Last Updated: Loading...</p>
+    </div>
+
+    <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
+      <div class="status-text">
+        <span id="myStatus">Loading status...</span>
+      </div>
+    </div>
+
+    <p class="page-text">
+      I'm Juri (or Juliet) and I'm from California. I like: working with audio, reading old VN's, gothic lolita punk j-fashion/subculture.
+      My favorite character is Charmmy Kitty. Mental health is something that's important to me.
+      As a neurodivergent person, life can sometimes feel a little unusual, but I try to be patient with myself, and I'm working on getting better.
+      In my free time, I like to code, go on hikes, DJ, bake, and journal.
+      I'm a little bit of a quiet person, but don't hesitate to send a message for friendly conversation.
+      I've had all sorts of jobs over the years – in food service, in hospitality, fixing computers.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="detailsColumn">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" />Discord – sotokomori</td><td>Text</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="updates/updates.html">Updates</a></td><td>HTML</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="menhera">Menhera</a></td><td>HTML</td></tr>
+      </tbody>
+    </table>
+
+    <div id="footer"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function formatStatusText(text) {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const lines = text.split('\n').map(line => {
+        const match = line.match(urlRegex);
+        if (!match) return line;
+
+        const url = match[0];
+
+        // YouTube
+        if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
+          let videoId = url.includes("watch?v=")
+            ? url.split("v=")[1].split("&")[0]
+            : url.split("youtu.be/")[1].split("?")[0];
+
+          return `
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 12px auto; max-width: 480px;">
+              <iframe src="https://www.youtube.com/embed/${videoId}"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>`;
+        }
+
+        // SoundCloud
+        if (url.includes("soundcloud.com")) {
+          return `
+            <div style="margin: 12px auto; text-align: center; max-width: 480px;">
+              <iframe width="100%" height="166" scrolling="no" frameborder="no"
+                allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
+              </iframe>
+            </div>`;
+        }
+
+        // Image
+        if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+          return `<img src="${url}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
+        }
+
+        // Link
+        return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+      });
+
+      return lines.join('<br>');
     }
 
-    const filename = window.location.pathname.split('/').pop();
+    fetch('player.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('player-container').innerHTML = html;
+        const script = document.createElement('script');
+        script.src = 'player.js';
+        script.defer = true;
+        document.body.appendChild(script);
+      });
 
-    // Filter commits mentioning this file
-    const relevantCommits = commits.filter(commit =>
-      commit.message && commit.message.toLowerCase().includes(filename.toLowerCase())
-    );
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
+      });
 
-    if (relevantCommits.length === 0) {
-      updateLastUpdated(targetSelector, 'No recent file-specific updates');
-      return;
-    }
+    fetch('updates/statuslog.json')
+      .then(res => res.json())
+      .then(data => {
+        const latest = data[0];
+        if (latest) {
+          document.getElementById('myStatus').innerHTML = formatStatusText(latest.text);
+        }
+      })
+      .catch(err => {
+        console.error('Failed to load status:', err);
+        document.getElementById('myStatus').textContent = 'Status unavailable.';
+      });
+  </script>
 
-    // Pick most recent commit mentioning this file
-    const latestCommit = relevantCommits.reduce((latest, current) =>
-      new Date(current.date) > new Date(latest.date) ? current : latest
-    );
-
-    const formattedDate = formatDate(latestCommit.date);
-    updateLastUpdated(targetSelector, formattedDate);
-  } catch (error) {
-    console.error('Failed to load last updated date:', error);
-    updateLastUpdated(targetSelector, 'Failed to load');
-  }
-}
-
-// DOM update
-function updateLastUpdated(selector, text) {
-  const el = document.querySelector(`${selector} p`);
-  if (el) {
-    el.textContent = `Last Updated: ${text}`;
-  }
-}
-
-// Format: Sunday, May 26, 2024, 3:45 PM
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true
-  };
-  return date.toLocaleString(undefined, options);
-}
-
-// Auto run on page load
-document.addEventListener('DOMContentLoaded', () => {
-  showLastUpdated('#last-updated');
-});
+  <script src="script.js"></script>
+</body>
+</html>
