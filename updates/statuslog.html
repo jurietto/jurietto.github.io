@@ -44,115 +44,116 @@
     <div id="footer"></div>
   </div>
 
-  <script>
-    function formatText(text) {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
+<script>
+  function formatText(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
 
-      const lines = text.split('\n').map(line => {
-        const match = line.match(urlRegex);
-        if (!match) return line;
+    const lines = text.split('\n').map(line => {
+      const match = line.match(urlRegex);
+      if (!match) return line;
 
-        const url = match[0];
+      const url = match[0];
 
-        // YouTube Embed
-        if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
-          let videoId = '';
-          if (url.includes("watch?v=")) {
-            videoId = url.split("v=")[1].split("&")[0];
-          } else {
-            videoId = url.split("youtu.be/")[1].split("?")[0];
-          }
-
-          return `
-            <div style="text-align: center; margin: 12px auto;">
-              <iframe width="300" height="169"
-                src="https://www.youtube.com/embed/${videoId}"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen style="border-radius: 8px;"></iframe>
-            </div>`;
+      // YouTube Embed
+      if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
+        let videoId = '';
+        if (url.includes("watch?v=")) {
+          videoId = url.split("v=")[1].split("&")[0];
+        } else {
+          videoId = url.split("youtu.be/")[1].split("?")[0];
         }
 
-        // SoundCloud Embed
-        if (url.includes("soundcloud.com")) {
-          return `
-            <div style="text-align: center; margin: 12px auto;">
-              <iframe width="100%" height="166" scrolling="no" frameborder="no"
-                allow="autoplay"
-                src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
-              </iframe>
-            </div>`;
-        }
+        return `
+          <div style="text-align: center; margin: 12px auto;">
+            <iframe width="300" height="169"
+              src="https://www.youtube.com/embed/${videoId}"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen style="border-radius: 8px;"></iframe>
+          </div>`;
+      }
 
-        // Image Embed
-        if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-          return `<img src="${url}" class="status-image" alt="status image" />`;
-        }
+      // SoundCloud Embed
+      if (url.includes("soundcloud.com")) {
+        return `
+          <div style="text-align: center; margin: 12px auto;">
+            <iframe width="100%" height="166" scrolling="no" frameborder="no"
+              allow="autoplay"
+              src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
+            </iframe>
+          </div>`;
+      }
 
-        // Fallback: clickable link
-        return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+      // Image Embed
+      if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+        return `<img src="${url}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
+      }
+
+      // Fallback: clickable link
+      return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+    });
+
+    return lines.join('<br>');
+  }
+
+  fetch('statuslog.json')
+    .then(response => response.json())
+    .then(data => {
+      const list = document.getElementById('status-list');
+      list.innerHTML = '';
+
+      const entries = data.map(entry => {
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.dataset.time = entry.time;
+        div.innerHTML = `
+          <p class="commit-header">
+            <img src="/media/crown.png" alt="update icon" class="icon" />
+            <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
+          </p>
+          <p class="commit-message">${formatText(entry.text)}</p>
+          <hr />
+        `;
+        return div;
       });
 
-      return lines.join('<br>');
-    }
-
-    fetch('statuslog.json')
-      .then(response => response.json())
-      .then(data => {
-        const list = document.getElementById('status-list');
+      function render(order) {
         list.innerHTML = '';
-
-        const entries = data.map(entry => {
-          const div = document.createElement('div');
-          div.className = 'post';
-          div.dataset.time = entry.time;
-          div.innerHTML = `
-            <p class="commit-header">
-              <img src="/media/crown.png" alt="update icon" class="icon" />
-              <strong>${entry.author}</strong> – <strong>${entry.time}</strong>
-            </p>
-            <p class="commit-message">${formatText(entry.text)}</p>
-            <hr />
-          `;
-          return div;
+        const sorted = [...entries].sort((a, b) => {
+          const dateA = new Date(a.dataset.time);
+          const dateB = new Date(b.dataset.time);
+          return order === 'old' ? dateA - dateB : dateB - dateA;
         });
+        sorted.forEach(e => list.appendChild(e));
+      }
 
-        function render(order) {
-          list.innerHTML = '';
-          const sorted = [...entries].sort((a, b) => {
-            const dateA = new Date(a.dataset.time);
-            const dateB = new Date(b.dataset.time);
-            return order === 'old' ? dateA - dateB : dateB - dateA;
-          });
-          sorted.forEach(e => list.appendChild(e));
-        }
+      render('new');
+      document.getElementById('sort').addEventListener('change', e => render(e.target.value));
+    })
+    .catch(err => {
+      document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
+      console.error(err);
+    });
 
-        render('new');
-        document.getElementById('sort').addEventListener('change', e => render(e.target.value));
-      })
-      .catch(err => {
-        document.getElementById('status-list').innerHTML = '<p style="color: crimson;">Could not load status entries.</p>';
-        console.error(err);
-      });
+  // Load footer
+  fetch('../footer.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('footer').innerHTML = html;
+    });
 
-    // Load footer
-    fetch('../footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer').innerHTML = html;
-      });
+  // Inject music player
+  fetch('/player.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('player-container').innerHTML = html;
+      const script = document.createElement('script');
+      script.src = '/player.js';
+      script.defer = true;
+      document.body.appendChild(script);
+    });
+</script>
 
-    // Inject music player
-    fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = '/player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
-  </script>
 
   <!-- Shared site script for "Last Updated" -->
   <script src="../script.js"></script>
