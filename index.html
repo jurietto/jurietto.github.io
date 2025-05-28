@@ -102,55 +102,90 @@
     <div id="footer"></div>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    // Format status text with links and centered images
-    function formatStatusText(text) {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      const lines = text.split('\n').map(line => {
-        const match = line.match(urlRegex);
-        if (match && match[0].match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-          return `<img src="${match[0]}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
+<!-- Scripts -->
+<script>
+  // Format status text with embeds and links
+  function formatStatusText(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const lines = text.split('\n').map(line => {
+      const match = line.match(urlRegex);
+      if (!match) return line;
+
+      const url = match[0];
+
+      // YouTube embed (watch or short link)
+      if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
+        let videoId = '';
+        if (url.includes("watch?v=")) {
+          videoId = url.split("v=")[1].split("&")[0];
         } else {
-          return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+          videoId = url.split("youtu.be/")[1].split("?")[0];
         }
-      });
-      return lines.join('<br>');
-    }
+        return `
+          <div style="margin: 12px auto; max-width: 100%; text-align: center;">
+            <iframe width="300" height="169" src="https://www.youtube.com/embed/${videoId}" 
+              frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen style="border-radius: 8px;"></iframe>
+          </div>`;
+      }
 
-    // Load and insert the music player
-    fetch('player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = 'player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
+      // SoundCloud embed
+      if (url.includes("soundcloud.com")) {
+        return `
+          <div style="margin: 12px auto; max-width: 100%; text-align: center;">
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" 
+              allow="autoplay" 
+              src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
+            </iframe>
+          </div>`;
+      }
 
-    // Load and insert the footer
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('footer').innerHTML = data;
-      });
+      // Image embed
+      if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+        return `<img src="${url}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
+      }
 
-    // Load latest status update and render image
-    fetch('updates/statuslog.json')
-      .then(res => res.json())
-      .then(data => {
-        const latest = data[0];
-        if (latest) {
-          document.getElementById('myStatus').innerHTML = formatStatusText(latest.text);
-        }
-      })
-      .catch(err => {
-        console.error('Failed to load status:', err);
-        document.getElementById('myStatus').textContent = 'Status unavailable.';
-      });
-  </script>
+      // Fallback: plain clickable link
+      return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+    });
 
-  <script src="script.js"></script>
+    return lines.join('<br>');
+  }
+
+  // Load and insert the music player
+  fetch('player.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('player-container').innerHTML = html;
+      const script = document.createElement('script');
+      script.src = 'player.js';
+      script.defer = true;
+      document.body.appendChild(script);
+    });
+
+  // Load and insert the footer
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+
+  // Load latest status update and render
+  fetch('updates/statuslog.json')
+    .then(res => res.json())
+    .then(data => {
+      const latest = data[0];
+      if (latest) {
+        document.getElementById('myStatus').innerHTML = formatStatusText(latest.text);
+      }
+    })
+    .catch(err => {
+      console.error('Failed to load status:', err);
+      document.getElementById('myStatus').textContent = 'Status unavailable.';
+    });
+</script>
+
+<script src="script.js"></script>
+
 </body>
 </html>
