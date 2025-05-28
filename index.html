@@ -22,7 +22,6 @@
 </head>
 <body>
 
-  <!-- Music Player -->
   <div id="player-container"></div>
 
   <div class="main-content">
@@ -55,46 +54,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />Discord – sotokomori</td>
-          <td>Text</td>
-        </tr>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a>
-          </td>
-          <td>URL</td>
-        </tr>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="https://x.com/sotokomorii" target="_blank">Twitter</a>
-          </td>
-          <td>URL</td>
-        </tr>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a>
-          </td>
-          <td>URL</td>
-        </tr>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a>
-          </td>
-          <td>URL</td>
-        </tr>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="updates/updates.html">Updates</a>
-          </td>
-          <td>HTML</td>
-        </tr>
-        <tr>
-          <td class="file-cell"><img src="media/crown.png" class="icon" />
-            <a href="menhera">Menhera</a>
-          </td>
-          <td>HTML</td>
-        </tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" />Discord – sotokomori</td><td>Text</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" target="_blank">Chatzone</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://x.com/sotokomorii" target="_blank">Twitter</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://www.youtube.com/@juriscafe" target="_blank">YouTube</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="https://vndb.org/u274298" target="_blank">Visual Novel Database</a></td><td>URL</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="updates/updates.html">Updates</a></td><td>HTML</td></tr>
+        <tr><td class="file-cell"><img src="media/crown.png" class="icon" /><a href="menhera">Menhera</a></td><td>HTML</td></tr>
       </tbody>
     </table>
 
@@ -111,16 +77,14 @@
 
         const url = match[0];
 
-        // YouTube Embed (Responsive)
+        // YouTube
         if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
-          let videoId = '';
-          if (url.includes("watch?v=")) {
-            videoId = url.split("v=")[1].split("&")[0];
-          } else {
-            videoId = url.split("youtu.be/")[1].split("?")[0];
-          }
+          let videoId = url.includes("watch?v=")
+            ? url.split("v=")[1].split("&")[0]
+            : url.split("youtu.be/")[1].split("?")[0];
+
           return `
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 12px auto; max-width: 100%;">
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 12px auto; max-width: 480px;">
               <iframe src="https://www.youtube.com/embed/${videoId}"
                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"
                 frameborder="0"
@@ -130,10 +94,10 @@
             </div>`;
         }
 
-        // SoundCloud Embed
+        // SoundCloud
         if (url.includes("soundcloud.com")) {
           return `
-            <div style="margin: 12px auto; text-align: center; max-width: 100%;">
+            <div style="margin: 12px auto; text-align: center; max-width: 480px;">
               <iframe width="100%" height="166" scrolling="no" frameborder="no"
                 allow="autoplay"
                 src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false">
@@ -141,19 +105,18 @@
             </div>`;
         }
 
-        // Image Embed
+        // Image
         if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
           return `<img src="${url}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
         }
 
-        // Plain link fallback
+        // Link
         return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
       });
 
       return lines.join('<br>');
     }
 
-    // Load player
     fetch('player.html')
       .then(res => res.text())
       .then(html => {
@@ -164,14 +127,12 @@
         document.body.appendChild(script);
       });
 
-    // Load footer
     fetch('footer.html')
       .then(res => res.text())
-      .then(data => {
-        document.getElementById('footer').innerHTML = data;
+      .then(html => {
+        document.getElementById('footer').innerHTML = html;
       });
 
-    // Load status
     fetch('updates/statuslog.json')
       .then(res => res.json())
       .then(data => {
@@ -187,6 +148,5 @@
   </script>
 
   <script src="script.js"></script>
-
 </body>
 </html>
