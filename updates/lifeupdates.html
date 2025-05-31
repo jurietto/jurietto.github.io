@@ -9,9 +9,7 @@
 
 <body>
 
-  <!-- Injected music player -->
-  <div id="player-container"></div>
-
+  
   <div class="main-content">
     <h1>Life Updates</h1>
 
@@ -91,16 +89,7 @@
         document.getElementById('footer').innerHTML = html;
       });
 
-    // Inject music player
-    fetch('/player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = '/player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
+
   </script>
 
   <script src="../script.js"></script>
