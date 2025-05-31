@@ -19,7 +19,6 @@
 </head>
 <body>
 
-  <div id="player-container"></div>
 
   <div class="main-content">
     <h1>Index</h1>
@@ -111,15 +110,7 @@
       return lines.join('<br>');
     }
 
-    fetch('player.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('player-container').innerHTML = html;
-        const script = document.createElement('script');
-        script.src = 'player.js';
-        script.defer = true;
-        document.body.appendChild(script);
-      });
+
 
     fetch('footer.html')
       .then(res => res.text())
