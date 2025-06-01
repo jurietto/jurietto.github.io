@@ -1,1 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vampire Bloodlines</title>
+  <link rel="stylesheet" href="/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+  <div class="main-content"> 
+    <h1>Vampire Bloodlines</h1>
+
+    <div id="last-updated">
+      <p>Last Updated: Loading...</p>
+    </div>
+
+    <p class="page-text">
+      I <3 <strong>Vampire: The Masquerade – Bloodlines</strong>.  
+  It’s honestly my favorite game—I’ve played it countless times, and it never gets old.  
+  This section is where I ramble about anything related to it: characters, lore, mechanics, mods, and maybe even vampires in general.  
+  I might also post some <strong>fan fiction</strong> or creative stuff here in the future—who knows!
+    </p>
+
+    <p>
+      <a href="/">
+        <img src="/media/c6.gif" alt="parent directory icon" class="icon" />
+        [parent directory]
+      </a>
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="detailsColumn">Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="file-cell">
+            <img src="/media/crown.png" class="icon" />
+            <a href="/vtm/1/vtmbchar.html">Bloodlines Character Sheet</a>
+          </td>
+          <td class="detailsColumn">HTML</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/script.js"></script>
+
+  <script>
+    // Load footer content
+    fetch('/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+
+    // Display current date as "Last Updated"
+    const today = new Date();
+    document.querySelector("#last-updated p").textContent = `Last Updated: ${today.toLocaleDateString()}`;
+  </script>
+</body>
+</html>
 
