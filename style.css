@@ -1,345 +1,569 @@
 @charset "utf-8";
 
-/* === Global Font & Base === */
-html, body {
-	font-family: "ＭＳ Ｐゴシック", sans-serif;
-	font-size: 14px;
-	background-color: #f7deff;
-	color: #333;
-	line-height: 1.6;
-	text-align: justify;
-	overflow-x: hidden;
-	padding: 0;
-	margin: 0;
+/*
+==================================================
+  1. Base & Layout
+==================================================
+*/
+
+/*
+  html: The big cheese. Sets the stage for the whole operation.
+  Also, background is a blank gif because why not? It's 2003 somewhere.
+*/
+html {
+  position: relative; /* html needs to feel important */
+  top: 27px; /* floating above reality */
+  background: url(//static.fc2cn.com/share/fc2footermenu/blank.gif) fixed; /* the most essential image on the web */
+  position: static\9; /* for all IE only, because IE is a special snowflake */
 }
 
+/*
+  body: The meat suit of your website. Now with extra vampire.
+*/
 body {
-	position: relative;
-	background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
-	background-attachment: fixed;
-	background-size: auto;
-	padding: 16px;
+  position: relative; /* stay grounded, king */
+  margin-top: 27px; /* gotta make room for the header, or else */
+  margin-top: 27px\9; /* IE, again, refuses to cooperate */
+  background-color: #181018; /* so dark, even your monitor is scared */
+  background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80'); /* spooky castle vibes */
+  background-repeat: no-repeat; /* no clones allowed */
+  background-position: center center; /* dead center, like my hopes and dreams */
+  background-size: cover; /* stretch it like your last paycheck */
+  background-position-y: 27px\9; /* IE, please go home */
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", Arial, Helvetica, sans-serif; /* the font of legends (and Japanese Windows XP) */
+  font-size: 12px; /* small but mighty */
+  line-height: 1.6; /* for people who like to breathe between lines */
+  color: #e0d6f6; /* pale lavender, like a goth's bedsheets */
+  text-align: justify; /* because chaos is bad */
+  overflow-x: hidden; /* no horizontal shenanigans */
+  padding: 16px; /* a little space never hurt anyone */
 }
 
-/* === FC2 Header Bar (Kawaii Style) === */
-#sh_fc2blogheadbar {
-	position: fixed;
-	top: 0;
-	left: 0;
-	min-width: 840px;
-	width: 100%;
-	font-size: 13px;
-	line-height: 1.4;
-	border-bottom: 2px solid #e79cff;
-	color: #707070;
-	z-index: 1000;
-	background: linear-gradient(180deg, #fffafd 60%, #f7deff 100%);
-	box-shadow: 0 2px 8px rgba(231, 156, 255, 0.10);
-	border-radius: 0 0 18px 18px;
-	padding: 0 0 2px 0;
-}
-#sh_fc2blogheadbar .sh_fc2blogheadbar_body {
-	height: 36px;
-	overflow: hidden;
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0 24px;
-}
-#sh_fc2blogheadbar .sh_fc2blogheadbar_link {
-	display: flex;
-	gap: 12px;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-#sh_fc2blogheadbar .sh_fc2blogheadbar_link li {
-	background: none;
-	text-align: right;
-}
-#sh_fc2blogheadbar .sh_fc2blogheadbar_link a {
-	color: #e79cff;
-	text-decoration: none;
-	font-weight: bold;
-	padding: 4px 10px;
-	border-radius: 8px;
-	transition: background 0.2s, color 0.2s;
-}
-#sh_fc2blogheadbar .sh_fc2blogheadbar_link a:hover {
-	background: #f7deff;
-	color: #a14dd7;
-	text-decoration: underline;
-}
-#sh_fc2blogheadbar #sh_fc2blogheadbar_menu {
-	flex: 1 1 auto;
-	text-align: left;
-	padding-left: 12px;
-}
-#sh_fc2blogheadbar #sh_fc2blogheadbar_search {
-	position: relative;
-	width: 220px;
-	text-align: right;
-}
-#sh_fc2blogheadbar #sh_fc2blogheadbar_search .sh_fc2blogheadbar_searchform {
-	width: 150px;
-	font-size: 13px;
-	color: #a14dd7;
-	background: #fff6ff;
-	border: 1px solid #e79cff;
-	border-radius: 8px;
-	padding: 2px 8px;
-}
-#sh_fc2blogheadbar #sh_fc2blogheadbar_search .sh_fc2blogheadbar_searchbtn {
-	height: 22px;
-	background-color: #eaeaea;
-	border: 1px solid #a1a1a1;
-	font-size: 13px;
-	border-radius: 8px;
-	vertical-align: middle;
-	cursor: pointer;
-	padding: 1px 10px;
-	margin-left: 4px;
-	color: #a14dd7;
-	transition: background 0.2s;
-}
-#sh_fc2blogheadbar #sh_fc2blogheadbar_search .sh_fc2blogheadbar_searchbtn:hover {
-	background-color: #f7deff;
-}
+/*
+==================================================
+  2. Main Content
+==================================================
+*/
 
-/* === Main Content Container (Kawaii) === */
+/*
+  .main-content: The VIP lounge. Only the coolest content gets in.
+*/
 .main-content {
-	position: relative;
-	background-color: rgba(255, 255, 255, 0.98);
-	border: 2px solid #e79cff;
-	border-radius: 20px;
-	max-width: 900px;
-	margin: 48px auto 24px auto;
-	padding: 32px 24px 24px 24px;
-	box-shadow: 0 4px 16px rgba(231, 156, 255, 0.15);
-	box-sizing: border-box;
-	overflow: hidden;
+  position: relative; /* always keep your friends close */
+  background-color: #000; /* blacker than my coffee */
+  color: #e0d6f6; /* readable, unless you're a bat */
+  border: 2px solid #a03ca0; /* purple, because why not */
+  border-radius: 20px; /* round those corners, sharp edges are for squares */
+  max-width: 900px; /* not too wide, not too narrow, just right */
+  margin: 24px auto; /* center it like a motivational poster */
+  padding: 24px; /* give your content a hug */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7); /* dramatic lighting, Oscar-worthy */
+  box-sizing: border-box; /* the only box you want to be in */
+  overflow: hidden; /* secrets stay inside */
 }
 
-/* === Headings (Kawaii) === */
-h1, h2, h3, h4, h5, h6 {
-	font-family: "ＭＳ Ｐゴシック", sans-serif;
-	font-weight: bold;
-	color: #a14dd7;
-	margin: 0.4em 0 0.2em;
-	letter-spacing: 1px;
-}
-h1 {
-	font-size: 36px;
-	text-shadow: 0 2px 8px #f7deff;
-}
-h1 img.icon-header {
-	vertical-align: middle;
-	margin-left: 4px;
-	max-height: 36px;
-}
-h2 {
-	font-size: 24px;
-	margin-top: 20px;
-	position: relative;
-}
-h2::after {
-	content: "";
-	display: block;
-	width: 40px;
-	height: 2px;
-	background: #e79cff;
-	margin-top: 6px;
-	border-radius: 1px;
-}
-
-/* === Paragraphs & Page Text === */
-p, .page-text, .page-text p {
-	display: block;
-	align-items: unset;
-	gap: unset;
-}
+/*
+  .page-text: For when you want your text to feel special.
+*/
 .page-text {
-	position: relative;
-	background: #fff6ff;
-	border: 1px solid #e79cff;
-	border-radius: 10px;
-	padding: 24px;
-	margin-bottom: 0;
-	color: inherit;
-	font-family: inherit;
-	box-shadow: none;
-	text-align: justify;
-	hyphens: auto;
-}
-.page-text::after {
-	content: none;
+  position: relative; /* always be aware of your surroundings */
+  background: #181018; /* more black, because you deserve it */
+  color: #e0d6f6; /* readable, like a neon sign in a foggy alley */
+  border: 1px solid #a03ca0; /* purple, again, because it's the law */
+  border-radius: 10px; /* slightly less round, but still friendly */
+  padding: 24px; /* comfort is key */
+  margin-bottom: 0; /* no more bottomless pits */
+  font-family: inherit; /* like father, like son */
+  box-shadow: none; /* no drama here */
+  text-align: justify; /* order in the court */
+  hyphens: auto; /* break words like bad habits */
 }
 
-/* === Cute Status Box === */
+/*
+==================================================
+  3. Typography
+==================================================
+*/
+
+/*
+  Headings: The loudest people in the room.
+*/
+h1, h2, h3, h4, h5, h6 {
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", Arial, Helvetica, sans-serif; /* the font that refuses to quit */
+  font-weight: bold; /* skip leg day, never skip bold */
+  color: #e0d6f6; /* stand out like a sore thumb */
+  margin: 0.4em 0 0.2em; /* just enough space to breathe, not enough to escape */
+}
+
+h1 {
+  font-size: 36px; /* go big or go home */
+}
+
+h1 img.icon-header {
+  vertical-align: middle;
+  margin-left: 4px;
+  max-height: 36px;
+}
+
+h2 {
+  font-size: 24px; /* slightly less big, still important */
+  margin-top: 20px; /* needs its space */
+  position: relative; /* always plotting */
+}
+
+h2::after {
+  content: ""; /* the void */
+  display: block;
+  width: 40px; /* the perfect line length, scientifically proven */
+  height: 2px; /* thin but deadly */
+  background: #e79cff; /* purple, again, because you can't stop me */
+  margin-top: 6px; /* a little breathing room */
+  border-radius: 1px; /* round, but not too round */
+}
+
+/*
+  Paragraphs: The backbone of civilization.
+*/
+p, .page-text, .page-text p {
+  display: block; /* no inline shenanigans */
+  align-items: unset; /* don't get any ideas */
+  gap: unset; /* no gaps, only closeness */
+}
+
+/* === Last Updated Section === */
+#last-updated p {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: -8px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#last-updated img.icon-date {
+  height: 18px;
+  margin-right: 2px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* === Status Box === */
 #my-status {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	flex-wrap: wrap;
-	margin-bottom: 16px;
-	padding: 12px 16px;
-	background: rgba(231, 156, 255, 0.15);
-	border: 1px solid #e79cff;
-	border-radius: 12px;
-	font-size: 14px;
-	box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(231, 156, 255, 0.15);
+  border: 1px solid #e79cff;
+  border-radius: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
+
 #my-status img {
-	height: 18px;
-	flex-shrink: 0;
-	vertical-align: middle;
-	margin-top: -2px;
+  height: 18px;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-top: -2px;
 }
+
 .status-text {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-	flex: 1 1 auto;
-	min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
 }
+
 .status-prefix,
 .status-dash {
-	color: #e79cff;
-	font-weight: bold;
+  color: #9b2c9b;
+  font-weight: bold;
 }
+
 #myStatus {
-	font-weight: bold;
-	flex: 1 1 auto;
-	word-break: break-word;
+  font-weight: bold;
+  flex: 1 1 auto;
+  word-break: break-word;
 }
+
 #statusDate {
-	font-size: 0.8em;
-	color: #888;
-	white-space: nowrap;
-	margin-left: auto;
-	align-self: center;
-	display: flex;
-	align-items: center;
-	gap: 4px;
+  font-size: 0.8em;
+  color: #888;
+  white-space: nowrap;
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-/* === Cute Tables === */
+/*
+==================================================
+  4. Tables
+==================================================
+*/
+
+/*
+  table: Where data goes to mingle.
+*/
 table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 16px;
-	font-size: 14px;
-	color: #333;
-	background: #fffafd;
-	border-radius: 10px;
-	overflow: hidden;
-	box-shadow: 0 2px 8px rgba(231, 156, 255, 0.08);
-}
-th, td {
-	padding: 8px 10px;
-	vertical-align: middle;
-	text-align: left;
-}
-th {
-	border-bottom: 2px solid #e79cff;
-	color: #a14dd7;
-	font-weight: normal;
-	background: #fff6ff;
-}
-td {
-	border-bottom: 1px dotted #e79cff;
-}
-table tbody tr:hover {
-	background-color: #f7deff;
+  width: 100%; /* go big or go home, again */
+  border-collapse: collapse; /* no space for drama */
+  margin-top: 16px; /* a little space never hurt */
+  font-size: 14px; /* slightly bigger for the visually challenged */
+  color: #e0d6f6; /* readable, like a fortune cookie */
 }
 
-/* === Cute Links === */
-a {
-	color: #e79cff;
-	text-decoration: underline;
-	transition: color 0.2s;
+th, td {
+  padding: 4px 6px; /* comfort for your data */
+  vertical-align: middle; /* not too high, not too low */
+  text-align: left; /* because right is wrong */
 }
+
+th {
+  border-bottom: 1px solid #e79cff;
+  color: #a03ca0;
+  font-weight: normal;
+}
+
+td {
+  border-bottom: 1px dotted #e79cff;
+  color: #e0d6f6;
+}
+
+table tbody tr:hover {
+  background-color: rgba(231, 156, 255, 0.08);
+}
+
+/*
+==================================================
+  5. Links
+==================================================
+*/
+
+/*
+  a: The gateway to other realms (or Rickrolls).
+*/
+a {
+  color: #e79cff;
+  text-decoration: underline;
+}
+
 a:hover,
 a:active {
-	color: #a14dd7;
+  color: #a14dd7;
 }
 
-/* === Cute Images === */
+/*
+==================================================
+  6. Images
+==================================================
+*/
+
+/*
+  img: Pictures worth at least 999 words.
+*/
 img {
-	max-width: 100%;
-	vertical-align: middle;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(231, 156, 255, 0.10);
+  max-width: 100%; /* no stretching, please */
+  vertical-align: middle; /* not too high, not too low, just right */
 }
+
 img.icon {
-	height: 1em;
-	vertical-align: -0.125em;
-	margin-right: 0.4em;
-	margin-top: 0;
-	border-radius: 0;
-	box-shadow: none;
+  height: 1em; /* tiny but mighty */
+  vertical-align: -0.125em; /* just a smidge lower */
+  margin-right: 0.4em; /* give it some space */
+  margin-top: 0; /* don't get any ideas */
 }
 
-/* === Cute Controls === */
+/* === Controls === */
 #controls {
-	margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
+
 #controls label {
-	font-weight: normal;
-	color: #a14dd7;
+  font-weight: normal;
+  color: #333;
 }
+
 #controls select#sort {
-	font-size: 14px;
-	color: #a14dd7;
-	background: #fff;
-	border: 1px solid #e79cff;
-	padding: 0.25rem 0.5rem;
-	border-radius: 6px;
-	vertical-align: middle;
+  font-size: 14px;
+  color: #222;
+  background: #fff;
+  border: 1px solid #e79cff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  vertical-align: middle;
 }
 
-/* === Cute Footer === */
-#footer {
-	font-size: 14px;
-	margin-top: 24px;
-	color: #a14dd7;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-}
-#footer p {
-	text-align: center;
-	justify-content: center;
-	display: flex;
-	align-items: center;
-	margin: 0.5em 0;
-}
-#footer .footer-links a {
-	color: #e79cff;
-	text-decoration: none;
-	margin: 0 4px;
-}
-#footer .footer-links a:hover {
-	color: #a14dd7;
+/*
+==================================================
+  7. Music Bar (Header)
+==================================================
+*/
+
+/*
+  #music-bar: The top dog. The big kahuna. The header that refuses to scroll away.
+*/
+#music-bar {
+  position: fixed !important; /* stay on top, like a stubborn cat */
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 840px; /* because 839px is for cowards */
+  font-size: 12px;
+  line-height: 1.4;
+  border-bottom: 1px solid #A1A1A1; /* the line of demarcation */
+  color: #707070; /* mysterious gray */
+  z-index: 1000; /* higher than my credit score */
+  background: linear-gradient(to bottom, #FFFFFF, #F0F0F0);
+  box-shadow: none; /* no drama, just vibes */
+  height: 27px; /* not too tall, not too short */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", Arial, Helvetica, sans-serif;
 }
 
-/* === Cute Dividers === */
-#status-list hr, #commit-list hr, #lu-posts hr {
-	border: 0;
-	border-bottom: 1px dotted #e79cff;
-	margin: 12px 0;
+#music-bar * {
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: normal;
 }
 
-/* === Responsive: Hide header bar and playlist on mobile === */
+#music-bar a {
+  color: #4ca1e3;
+  text-decoration: none;
+}
+#music-bar a:hover, #music-bar a:active, #music-bar a:focus {
+  color: #336699;
+  text-decoration: none;
+}
+
+#music-bar .search-bar {
+  position: absolute; /* floating in the void */
+  top: 4px;
+  right: 20px;
+  width: 250px; /* just enough for your wildest queries */
+  text-align: right; /* because left is too mainstream */
+}
+#music-bar .search-bar input,
+#music-bar .search-bar select {
+  background-color: #fff;
+  border: 1px solid #b2b2b2;
+  color: #000;
+  height: 18px; /* short kings */
+  font-size: 12px;
+  font-family: "ＭＳ Ｐゴシック", "MS PGothic", Arial, Helvetica, sans-serif;
+}
+#music-bar .search-bar button {
+  height: 18px; /* short and sweet */
+  background-color: #eaeaea;
+  border: 1px solid #a1a1a1;
+  font-size: 12px;
+  cursor: pointer; /* pointy finger of destiny */
+  padding: 1px 5px; /* just enough for your thumb */
+}
+#music-bar .search-bar button:hover {
+  background-color: #cccccc;
+}
+
+/* === Playlist Panel === */
+
+#playlist-panel {
+position: fixed;
+top: 32px;
+right: 0;
+width: 220px;
+height: calc(100% - 32px);
+background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
+border-left: 1px solid #a03ca0;
+box-shadow: -2px 0 3px rgba(0,0,0,0.03);
+overflow-y: auto;
+transform: translateX(100%);
+transition: transform 0.3s ease;
+z-index: 999;
+}
+#playlist-panel::before {
+content: '';
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+background: url('https://file.garden/ZhTgSjrp5nAroRKq/leaves.gif') top left repeat;
+opacity: 0.85;
+z-index: 0;
+pointer-events: none;
+}
+#playlist-panel > * {
+position: relative;
+z-index: 1;
+}
+#playlist-panel.show {
+transform: translateX(0%);
+}
+#playlist-panel h3 {
+margin: 0;
+padding: 10px 0 10px 14px;
+font-size: 12px;
+color: #a03ca0;
+border-bottom: 1px solid #a03ca0;
+background: #f3e0ff;
+font-weight: 600;
+letter-spacing: 0.2px;
+text-transform: none;
+box-shadow: none;
+}
+#playlist {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+#playlist li {
+display: block;
+padding: 4px 18px;
+font-size: 12px;
+color: #6a1b8a;
+cursor: pointer;
+transition: color 0.12s, background 0.12s;
+}
+#playlist li .track-title {
+display: block;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+max-width: 100%;
+} 
+#playlist li:hover,
+#playlist li.active {
+background: #a03ca0;
+color: #fff;
+}
+
 @media screen and (max-width: 600px) {
-	#sh_fc2blogheadbar,
-	#music-bar,
-	#playlist-panel {
-		display: none !important;
-	}
-	.main-content {
-		margin: 16px 2vw;
-		padding: 16px 4vw;
-	}
+#music-bar,
+#playlist-panel {
+  display: none !important;
+}
+
+
+/* Uniform font and spacing */
+#player-controls button,
+#toggle-playlist {
+font-family: Arial, sans-serif;
+font-weight: normal;
+font-style: normal;
+font-size: 13px;
+padding: 2px 8px;
+}
+
+/* Hover: underline only */
+#player-controls button:hover,
+#toggle-playlist:hover {
+text-decoration: underline;
+background: none !important;
+}
+
+/* Progress bar thumb styling */
+#progress::-webkit-slider-thumb,
+#volume::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 14px;
+height: 14px;
+background: #a03ca0;
+border: 2px solid #fffafd;
+box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+cursor: pointer;
+position: relative;
+z-index: 2;
+}
+#progress::-moz-range-thumb,
+#volume::-moz-range-thumb {
+width: 14px;
+height: 14px;
+background: #a03ca0;
+border: 2px solid #fffafd;
+box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+cursor: pointer;
+position: relative;
+z-index: 2;
+}
+#progress::-ms-thumb,
+#volume::-ms-thumb {
+width: 14px;
+height: 14px;
+background: #a03ca0;
+border: 2px solid #fffafd;
+box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+cursor: pointer;
+position: relative;
+z-index: 2;
+}
+#progress, #volume {
+font-family: Arial, sans-serif;
+}
+
+.status-text img {
+  max-height: 300px;
+  min-height: 200px;
+  display: block;
+  margin: 12px auto;
+  border-radius: 6px;
+}
+
+/*
+==================================================
+  8. Footer
+==================================================
+*/
+
+/*
+  #footer: The end of the line. The final frontier. The place where dreams go to nap.
+*/
+#footer {
+  font-size: 14px; /* slightly bigger, for the grand finale */
+  margin-top: 24px; /* give it some space, it's earned it */
+  color: #a03ca0; /* purple, because we're consistent */
+  text-align: center; /* all eyes on me */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer p {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+}
+
+#footer .footer-links a {
+  color: #e79cff; /* pastel purple, for the softies */
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+#footer .footer-links a:hover {
+  color: #a14dd7; /* slightly more purple, because you hovered */
+}
+
+/* === Status Log Divider === */
+#status-list hr {
+  border: 0;
+  border-bottom: 1px dotted #e79cff;
+  margin: 12px 0;
+}
+
+#commit-list hr {
+  border: 0;
+  border-bottom: 1px dotted #e79cff;
+  margin: 12px 0;
+}
+
+#lu-posts hr {
+  border: 0;
+  border-bottom: 1px dotted #e79cff;
+  margin: 12px 0;
 }
