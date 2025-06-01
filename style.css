@@ -1,14 +1,14 @@
 /* === Body & Base === */
 body {
     position: relative;
-    background-color: #f7deff;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
+    background-color: #111;
+    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/bg.jpg');
     background-attachment: fixed;
-    background-size: auto;
+    background-size: cover;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     line-height: 1.6;
-    color: #333;
+    color: #d0ffd0;
     text-align: justify;
     overflow-x: hidden;
     padding: 16px;
@@ -17,14 +17,14 @@ body {
   /* === Layout Container === */
 .main-content {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.98);
-  border: 2px solid #e79cff;
+  background-color: rgba(20, 20, 20, 0.92);
+  border: 2px solid #39ff14;
   border-radius: 20px;
   max-width: 900px;
   margin: 24px auto;
-  margin-top: px;
+  margin-top: 0;
   padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
   box-sizing: border-box;
   overflow: hidden; 
 } 
@@ -33,7 +33,7 @@ body {
   h1, h2, h3, h4, h5, h6 {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #222;
+    color: #39ff14;
     margin: 0.4em 0 0.2em;
   }
   
@@ -58,7 +58,7 @@ body {
     display: block;
     width: 40px;
     height: 2px;
-    background: #e79cff;
+    background: #39ff14;
     margin-top: 6px;
     border-radius: 1px;
   }
@@ -73,12 +73,12 @@ body {
   /* === Page Text Section === */
   .page-text {
     position: relative;
-    background: #fff6ff;
-    border: 1px solid #e79cff;
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid #39ff14;
     border-radius: 10px;
     padding: 24px;
     margin-bottom: 0;
-    color: inherit;
+    color: #d0ffd0;
     font-family: inherit;
     box-shadow: none;
     text-align: justify;
@@ -91,7 +91,7 @@ body {
   
   /* === Last Updated Section === */
   #last-updated p {
-    color: #666;
+    color: #b0ffb0;
     font-size: 0.9em;
     margin-top: -8px;
     margin-bottom: 16px;
@@ -115,8 +115,8 @@ body {
     flex-wrap: wrap;
     margin-bottom: 16px;
     padding: 12px 16px;
-    background: rgba(231, 156, 255, 0.15);
-    border: 1px solid #e79cff;
+    background: rgba(30, 30, 30, 0.85);
+    border: 1px solid #39ff14;
     border-radius: 12px;
     font-size: 14px;
     box-sizing: border-box;
@@ -139,7 +139,7 @@ body {
   
   .status-prefix,
   .status-dash {
-    color: #9b2c9b;
+    color: #39ff14;
     font-weight: bold;
   }
   
@@ -147,11 +147,12 @@ body {
     font-weight: bold;
     flex: 1 1 auto;
     word-break: break-word;
+    color: #39ff14;
   }
   
   #statusDate {
     font-size: 0.8em;
-    color: #888;
+    color: #b0ffb0;
     white-space: nowrap;
     margin-left: auto;
     align-self: center;
@@ -166,7 +167,8 @@ body {
     border-collapse: collapse;
     margin-top: 16px;
     font-size: 14px;
-    color: #333;
+    color: #d0ffd0;
+    background: rgba(20, 20, 20, 0.95);
   }
   
   th, td {
@@ -176,28 +178,29 @@ body {
   }
   
   th {
-    border-bottom: 1px solid #e79cff;
-    color: #9b2c9b;
+    border-bottom: 1px solid #39ff14;
+    color: #39ff14;
     font-weight: normal;
+    background: rgba(30, 30, 30, 0.95);
   }
   
   td {
-    border-bottom: 1px dotted #e79cff;
+    border-bottom: 1px dotted #39ff14;
   }
   
   table tbody tr:hover {
-    background-color: rgba(231, 156, 255, 0.08);
+    background-color: rgba(57, 255, 20, 0.08);
   }
   
   /* === Links === */
   a {
-    color: #e79cff;
+    color: #39ff14;
     text-decoration: underline;
   }
   
   a:hover,
   a:active {
-    color: #a14dd7;
+    color: #b0ffb0;
   }
   
   /* === Images === */
@@ -220,14 +223,14 @@ body {
   
   #controls label {
     font-weight: normal;
-    color: #333;
+    color: #d0ffd0;
   }
   
   #controls select#sort {
     font-size: 14px;
-    color: #222;
-    background: #fff;
-    border: 1px solid #e79cff;
+    color: #111;
+    background: #d0ffd0;
+    border: 1px solid #39ff14;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     vertical-align: middle;
@@ -237,7 +240,7 @@ body {
   #footer {
     font-size: 14px;
     margin-top: 24px;
-    color: #555;
+    color: #b0ffb0;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -252,48 +255,38 @@ body {
   }
   
   #footer .footer-links a {
-    color: #e79cff;
+    color: #39ff14;
     text-decoration: none;
     margin: 0 4px;
   }
   
   #footer .footer-links a:hover {
-    color: #a14dd7;
+    color: #b0ffb0;
   }
   
   /* === Status Log Divider === */
-  #status-list hr {
+  #status-list hr,
+  #commit-list hr,
+  #lu-posts hr {
     border: 0;
-    border-bottom: 1px dotted #e79cff;
+    border-bottom: 1px dotted #39ff14;
     margin: 12px 0;
   }
 
-    #commit-list hr {
-      border: 0;
-      border-bottom: 1px dotted #e79cff;
-      margin: 12px 0;
-    }
-
-    #lu-posts hr {
-      border: 0;
-      border-bottom: 1px dotted #e79cff;
-      margin: 12px 0;
-    }
-  
 /* === Music Player Bar === */
 #music-bar {
   font-family: Arial, sans-serif;
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: linear-gradient(180deg, #fffafd 60%, #e6bfff 100%);
-  border-bottom: 1px solid #a03ca0;
+  background: linear-gradient(180deg, #181818 60%, #222 100%);
+  border-bottom: 1px solid #39ff14;
   z-index: 1000;
   font-size: 11px;
   display: flex;
   align-items: center;
   gap: 16px;
   height: 32px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
   padding: 0 16px;
 }
 #music-bar > * {
@@ -309,7 +302,7 @@ body {
 }
 #player-controls button {
   all: unset;
-  color: #a03ca0;
+  color: #39ff14;
   cursor: pointer;
   font-size: 13px;
   min-height: 28px;
@@ -329,16 +322,16 @@ body {
 }
 #current-time, #duration {
   font-size: 12px;
-  color: #a03ca0;
+  color: #39ff14;
   width: 36px;
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
 #progress, #volume {
   height: 4px;
-  accent-color: #a03ca0;
+  accent-color: #39ff14;
   border-radius: 0;
-  background: #f3e0ff;
+  background: #222;
   outline: none;
   border: none;
   box-shadow: none;
@@ -354,7 +347,7 @@ body {
 }
 #toggle-playlist {
   cursor: pointer;
-  color: #a03ca0;
+  color: #39ff14;
   font-size: 13px;
   user-select: none;
   padding: 2px 8px;
@@ -368,9 +361,9 @@ body {
   right: 0;
   width: 220px;
   height: calc(100% - 32px);
-  background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
-  border-left: 1px solid #a03ca0;
-  box-shadow: -2px 0 3px rgba(0,0,0,0.03);
+  background: linear-gradient(180deg, #181818 70%, #222 100%);
+  border-left: 1px solid #39ff14;
+  box-shadow: -2px 0 3px rgba(0,0,0,0.10);
   overflow-y: auto;
   transform: translateX(100%);
   transition: transform 0.3s ease;
@@ -381,7 +374,7 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: url('https://file.garden/ZhTgSjrp5nAroRKq/leaves.gif') top left repeat;
-  opacity: 0.85;
+  opacity: 0.15;
   z-index: 0;
   pointer-events: none;
 }
@@ -396,9 +389,9 @@ body {
   margin: 0;
   padding: 10px 0 10px 14px;
   font-size: 12px;
-  color: #a03ca0;
-  border-bottom: 1px solid #a03ca0;
-  background: #f3e0ff;
+  color: #39ff14;
+  border-bottom: 1px solid #39ff14;
+  background: #222;
   font-weight: 600;
   letter-spacing: 0.2px;
   text-transform: none;
@@ -413,7 +406,7 @@ body {
   display: block;
   padding: 4px 18px;
   font-size: 12px;
-  color: #6a1b8a;
+  color: #b0ffb0;
   cursor: pointer;
   transition: color 0.12s, background 0.12s;
 }
@@ -426,8 +419,8 @@ body {
 } 
 #playlist li:hover,
 #playlist li.active {
-  background: #a03ca0;
-  color: #fff;
+  background: #39ff14;
+  color: #111;
 }
 
 @media screen and (max-width: 600px) {
@@ -461,9 +454,9 @@ body {
   appearance: none;
   width: 14px;
   height: 14px;
-  background: #a03ca0;
-  border: 2px solid #fffafd;
-  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+  background: #39ff14;
+  border: 2px solid #222;
+  box-shadow: 0 1px 4px rgba(57,255,20,0.10);
   cursor: pointer;
   position: relative;
   z-index: 2;
@@ -472,9 +465,9 @@ body {
 #volume::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: #a03ca0;
-  border: 2px solid #fffafd;
-  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+  background: #39ff14;
+  border: 2px solid #222;
+  box-shadow: 0 1px 4px rgba(57,255,20,0.10);
   cursor: pointer;
   position: relative;
   z-index: 2;
@@ -483,9 +476,9 @@ body {
 #volume::-ms-thumb {
   width: 14px;
   height: 14px;
-  background: #a03ca0;
-  border: 2px solid #fffafd;
-  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
+  background: #39ff14;
+  border: 2px solid #222;
+  box-shadow: 0 1px 4px rgba(57,255,20,0.10);
   cursor: pointer;
   position: relative;
   z-index: 2;
