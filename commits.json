@@ -1,6 +1,21 @@
 [
   {
     "author": "Juri",
+    "date": "2025-06-01T02:02:34Z",
+    "message": "Rename xvtmbchar.html to vtmbchar.html"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-06-01T02:02:18Z",
+    "message": "Rename vtmbchar.html to vampire.html"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-06-01T02:01:59Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-06-01T02:01:38Z",
     "message": "Rename vampire.html to vtmbchar.html"
   },
