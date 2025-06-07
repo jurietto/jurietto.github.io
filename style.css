@@ -1,24 +1,24 @@
 /* === Body & Base === */
 body {
-    position: relative;
-    background-color: #f7deff;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
-    background-attachment: fixed;
-    background-size: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
-    text-align: justify;
-    overflow-x: hidden;
-    padding: 16px;
-  }
+  position: relative;
+  background-color: #000;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/giphy.gif');
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+  text-align: justify;
+  overflow-x: hidden;
+  padding: 16px;
+}
   
   /* === Layout Container === */
 .main-content {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.98);
-  border: 2px solid #e79cff;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid #8b008b;
   border-radius: 20px;
   max-width: 900px;
   margin: 24px auto;
@@ -33,7 +33,7 @@ body {
   h1, h2, h3, h4, h5, h6 {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color: #222;
+    color: #fff;
     margin: 0.4em 0 0.2em;
   }
   
@@ -58,7 +58,7 @@ body {
     display: block;
     width: 40px;
     height: 2px;
-    background: #e79cff;
+    background: #8b008b;
     margin-top: 6px;
     border-radius: 1px;
   }
@@ -73,8 +73,8 @@ body {
   /* === Page Text Section === */
   .page-text {
     position: relative;
-    background: #fff6ff;
-    border: 1px solid #e79cff;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #8b008b;
     border-radius: 10px;
     padding: 24px;
     margin-bottom: 0;
@@ -115,8 +115,8 @@ body {
     flex-wrap: wrap;
     margin-bottom: 16px;
     padding: 12px 16px;
-    background: rgba(231, 156, 255, 0.15);
-    border: 1px solid #e79cff;
+    background: rgba(139, 0, 139, 0.2);
+    border: 1px solid #8b008b;
     border-radius: 12px;
     font-size: 14px;
     box-sizing: border-box;
@@ -139,7 +139,7 @@ body {
   
   .status-prefix,
   .status-dash {
-    color: #9b2c9b;
+    color: #8b008b;
     font-weight: bold;
   }
   
@@ -166,7 +166,7 @@ body {
     border-collapse: collapse;
     margin-top: 16px;
     font-size: 14px;
-    color: #333;
+    color: #fff;
   }
   
   th, td {
@@ -176,28 +176,28 @@ body {
   }
   
   th {
-    border-bottom: 1px solid #e79cff;
-    color: #9b2c9b;
+    border-bottom: 1px solid #8b008b;
+    color: #8b008b;
     font-weight: normal;
   }
   
   td {
-    border-bottom: 1px dotted #e79cff;
+    border-bottom: 1px dotted #8b008b;
   }
   
   table tbody tr:hover {
-    background-color: rgba(231, 156, 255, 0.08);
+    background-color: rgba(139, 0, 139, 0.1);
   }
   
   /* === Links === */
   a {
-    color: #e79cff;
+    color: #8b008b;
     text-decoration: underline;
   }
   
   a:hover,
   a:active {
-    color: #a14dd7;
+    color: #c0c0c0;
   }
   
   /* === Images === */
@@ -220,14 +220,14 @@ body {
   
   #controls label {
     font-weight: normal;
-    color: #333;
+    color: #fff;
   }
   
   #controls select#sort {
     font-size: 14px;
-    color: #222;
+    color: #000;
     background: #fff;
-    border: 1px solid #e79cff;
+    border: 1px solid #8b008b;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     vertical-align: middle;
@@ -237,7 +237,7 @@ body {
   #footer {
     font-size: 14px;
     margin-top: 24px;
-    color: #555;
+    color: #c0c0c0;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -252,31 +252,31 @@ body {
   }
   
   #footer .footer-links a {
-    color: #e79cff;
+    color: #8b008b;
     text-decoration: none;
     margin: 0 4px;
   }
   
   #footer .footer-links a:hover {
-    color: #a14dd7;
+    color: #c0c0c0;
   }
   
   /* === Status Log Divider === */
   #status-list hr {
     border: 0;
-    border-bottom: 1px dotted #e79cff;
+    border-bottom: 1px dotted #8b008b;
     margin: 12px 0;
   }
 
     #commit-list hr {
       border: 0;
-      border-bottom: 1px dotted #e79cff;
+      border-bottom: 1px dotted #8b008b;
       margin: 12px 0;
     }
 
     #lu-posts hr {
       border: 0;
-      border-bottom: 1px dotted #e79cff;
+      border-bottom: 1px dotted #8b008b;
       margin: 12px 0;
     }
   
@@ -285,8 +285,8 @@ body {
   font-family: Arial, sans-serif;
   position: fixed;
   top: 0; left: 0; right: 0;
-  background: linear-gradient(180deg, #fffafd 60%, #e6bfff 100%);
-  border-bottom: 1px solid #a03ca0;
+  background: linear-gradient(180deg, #ffffff 60%, #c0c0c0 100%);
+  border-bottom: 1px solid #8b008b;
   z-index: 1000;
   font-size: 11px;
   display: flex;
@@ -309,7 +309,7 @@ body {
 }
 #player-controls button {
   all: unset;
-  color: #a03ca0;
+  color: #8b008b;
   cursor: pointer;
   font-size: 13px;
   min-height: 28px;
@@ -329,16 +329,16 @@ body {
 }
 #current-time, #duration {
   font-size: 12px;
-  color: #a03ca0;
+  color: #8b008b;
   width: 36px;
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
 #progress, #volume {
   height: 4px;
-  accent-color: #a03ca0;
+  accent-color: #8b008b;
   border-radius: 0;
-  background: #f3e0ff;
+  background: #c0c0c0;
   outline: none;
   border: none;
   box-shadow: none;
@@ -354,7 +354,7 @@ body {
 }
 #toggle-playlist {
   cursor: pointer;
-  color: #a03ca0;
+  color: #8b008b;
   font-size: 13px;
   user-select: none;
   padding: 2px 8px;
@@ -368,8 +368,8 @@ body {
   right: 0;
   width: 220px;
   height: calc(100% - 32px);
-  background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
-  border-left: 1px solid #a03ca0;
+  background: linear-gradient(180deg, #ffffff 70%, #c0c0c0 100%);
+  border-left: 1px solid #8b008b;
   box-shadow: -2px 0 3px rgba(0,0,0,0.03);
   overflow-y: auto;
   transform: translateX(100%);
@@ -396,9 +396,9 @@ body {
   margin: 0;
   padding: 10px 0 10px 14px;
   font-size: 12px;
-  color: #a03ca0;
-  border-bottom: 1px solid #a03ca0;
-  background: #f3e0ff;
+  color: #8b008b;
+  border-bottom: 1px solid #8b008b;
+  background: #c0c0c0;
   font-weight: 600;
   letter-spacing: 0.2px;
   text-transform: none;
@@ -413,7 +413,7 @@ body {
   display: block;
   padding: 4px 18px;
   font-size: 12px;
-  color: #6a1b8a;
+  color: #8b008b;
   cursor: pointer;
   transition: color 0.12s, background 0.12s;
 }
@@ -426,7 +426,7 @@ body {
 } 
 #playlist li:hover,
 #playlist li.active {
-  background: #a03ca0;
+  background: #8b008b;
   color: #fff;
 }
 
@@ -461,7 +461,7 @@ body {
   appearance: none;
   width: 14px;
   height: 14px;
-  background: #a03ca0;
+  background: #8b008b;
   border: 2px solid #fffafd;
   box-shadow: 0 1px 4px rgba(160,60,160,0.10);
   cursor: pointer;
@@ -472,7 +472,7 @@ body {
 #volume::-moz-range-thumb {
   width: 14px;
   height: 14px;
-  background: #a03ca0;
+  background: #8b008b;
   border: 2px solid #fffafd;
   box-shadow: 0 1px 4px rgba(160,60,160,0.10);
   cursor: pointer;
@@ -483,7 +483,7 @@ body {
 #volume::-ms-thumb {
   width: 14px;
   height: 14px;
-  background: #a03ca0;
+  background: #8b008b;
   border: 2px solid #fffafd;
   box-shadow: 0 1px 4px rgba(160,60,160,0.10);
   cursor: pointer;
@@ -510,7 +510,7 @@ body {
 /* === Header/Nav Styles === */
 .site-header {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/836knmhcc46w0.jpg');
-  background-repeat: repeat;
+  background-repeat: repeat-x;
   border-bottom: 2px solid silver;
   padding: 8px 16px;
   display: flex;
@@ -529,13 +529,13 @@ body {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  border: 2px solid silver;
+  border: 3px solid silver;
   object-fit: cover;
 }
 
 .site-title {
   font-family: 'Momstypewriter', Arial, sans-serif;
-  font-size: 28px;
+  font-size: 2.5rem;
   color: white;
   text-shadow: 2px 2px 2px black;
 }
@@ -552,8 +552,9 @@ body {
   text-decoration: underline;
   font-weight: bold;
   font-size: 16px;
+  text-transform: uppercase;
 }
 
 .nav-links a:hover {
-  color: #cccccc;
+  color: #c0c0c0;
 }
