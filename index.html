@@ -19,7 +19,20 @@
 </head>
 <body>
 
+  <!-- Header/Nav -->
+  <header class="site-header">
+    <div class="header-left">
+      <img src="https://file.garden/ZhTgSjrp5nAroRKq/image0_cropped.png" alt="Avatar" class="site-avatar">
+      <div class="site-title">JURIETTO.GITHUB.IO</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">✯ INDEX</a>
+      <a href="updates/updates.html">✯ UPDATES</a>
+      <a href="contact.html">✯ CONTACT</a>
+    </nav>
+  </header>
 
+  <!-- Main Content -->
   <div class="main-content">
     <h1>Index</h1>
 
@@ -27,7 +40,7 @@
       <p>Last Updated: Loading...</p>
     </div>
 
-    <div id="my-status" style="cursor: pointer;" onclick="window.location.href='updates/statuslog.html'">
+    <div id="my-status" onclick="window.location.href='updates/statuslog.html'">
       <div class="status-text">
         <span id="myStatus">Loading status...</span>
       </div>
@@ -72,7 +85,6 @@
 
         const url = match[0];
 
-        // YouTube
         if (url.includes("youtube.com/watch?v=") || url.includes("youtu.be/")) {
           const videoId = url.includes("watch?v=")
             ? url.split("v=")[1].split("&")[0]
@@ -89,7 +101,6 @@
             </div>`;
         }
 
-        // SoundCloud
         if (url.includes("soundcloud.com")) {
           return `
             <div style="margin: 12px auto; text-align: center; max-width: 480px;">
@@ -100,19 +111,15 @@
             </div>`;
         }
 
-        // Image
         if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
           return `<img src="${url}" alt="status image" style="display: block; margin: 12px auto; min-height: 200px; max-height: 300px;" />`;
         }
 
-        // Fallback
         return line.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
       });
 
       return lines.join('<br>');
     }
-
-
 
     fetch('footer.html')
       .then(res => res.text())
