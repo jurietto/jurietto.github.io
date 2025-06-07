@@ -1,6 +1,21 @@
 [
   {
     "author": "Juri",
+    "date": "2025-06-07T05:39:20Z",
+    "message": "Merge pull request #2 from jurietto/codex/update-css-and-preview-site-design\n\nUnify site header and update style"
+  },
+  {
+    "author": "Juri",
+    "date": "2025-06-07T05:37:48Z",
+    "message": "Apply site-wide header and style tweaks"
+  },
+  {
+    "author": "jurietto",
+    "date": "2025-06-07T05:03:31Z",
+    "message": "Refresh commit log for 2025"
+  },
+  {
+    "author": "Juri",
     "date": "2025-06-07T05:02:58Z",
     "message": "Update index.html"
   },
