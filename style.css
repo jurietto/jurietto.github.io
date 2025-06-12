@@ -1,503 +1,245 @@
-/* === Body & Base === */
+@font-face {
+  font-family: 'LovelyText';
+  src: url('https://file.garden/ZhTgSjrp5nAroRKq/lovelytext_LjWJYFCYT7o6MPq5VgP7H.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* === Body === */
 body {
-    position: relative;
-    background-color: #f7deff;
-    background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/pixtilebg04.gif');
-    background-attachment: fixed;
-    background-size: auto;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
-    text-align: justify;
-    overflow-x: hidden;
-    padding: 16px;
-  }
-  
-  /* === Layout Container === */
+  background-color: #000;
+  font-family: 'LovelyText', Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #c0c0c0;
+  text-align: justify;
+  overflow-x: hidden;
+  padding: 16px;
+}
+
+/* === Main Container === */
 .main-content {
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.98);
-  border: 2px solid #e79cff;
+  background-color: #111;
+  border: 2px solid #ff1493;
   border-radius: 20px;
   max-width: 900px;
   margin: 24px auto;
-  margin-top: px;
   padding: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  overflow: hidden; 
-} 
-  
-  /* === Headings === */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: #222;
-    margin: 0.4em 0 0.2em;
-  }
-  
-  h1 {
-    font-size: 36px;
-  }
-  
-  h1 img.icon-header {
-    vertical-align: middle;
-    margin-left: 4px;
-    max-height: 36px;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-top: 20px;
-    position: relative;
-  }
-  
-  h2::after {
-    content: "";
-    display: block;
-    width: 40px;
-    height: 2px;
-    background: #e79cff;
-    margin-top: 6px;
-    border-radius: 1px;
-  }
-  
-  /* === Paragraphs === */
-  p, .page-text, .page-text p {
-    display: block;
-    align-items: unset;
-    gap: unset;
-  }
-  
-  /* === Page Text Section === */
-  .page-text {
-    position: relative;
-    background: #fff6ff;
-    border: 1px solid #e79cff;
-    border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 0;
-    color: inherit;
-    font-family: inherit;
-    box-shadow: none;
-    text-align: justify;
-    hyphens: auto;
-  }
-  
-  .page-text::after {
-    content: none;
-  }
-  
-  /* === Last Updated Section === */
-  #last-updated p {
-    color: #666;
-    font-size: 0.9em;
-    margin-top: -8px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  #last-updated img.icon-date {
-    height: 18px;
-    margin-right: 2px;
-    vertical-align: middle;
-    margin-top: -2px;
-  }
-  
-  /* === Status Box === */
-  #my-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-    padding: 12px 16px;
-    background: rgba(231, 156, 255, 0.15);
-    border: 1px solid #e79cff;
-    border-radius: 12px;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-  
-  #my-status img {
-    height: 18px;
-    flex-shrink: 0;
-    vertical-align: middle;
-    margin-top: -2px;
-  }
-  
-  .status-text {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  
-  .status-prefix,
-  .status-dash {
-    color: #9b2c9b;
-    font-weight: bold;
-  }
-  
-  #myStatus {
-    font-weight: bold;
-    flex: 1 1 auto;
-    word-break: break-word;
-  }
-  
-  #statusDate {
-    font-size: 0.8em;
-    color: #888;
-    white-space: nowrap;
-    margin-left: auto;
-    align-self: center;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  /* === Tables === */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  th, td {
-    padding: 4px 6px;
-    vertical-align: middle;
-    text-align: left;
-  }
-  
-  th {
-    border-bottom: 1px solid #e79cff;
-    color: #9b2c9b;
-    font-weight: normal;
-  }
-  
-  td {
-    border-bottom: 1px dotted #e79cff;
-  }
-  
-  table tbody tr:hover {
-    background-color: rgba(231, 156, 255, 0.08);
-  }
-  
-  /* === Links === */
-  a {
-    color: #e79cff;
-    text-decoration: underline;
-  }
-  
-  a:hover,
-  a:active {
-    color: #a14dd7;
-  }
-  
-  /* === Images === */
-  img {
-    max-width: 100%;
-    vertical-align: middle;
-  }
-  
-  img.icon {
-    height: 1em;
-    vertical-align: -0.125em;
-    margin-right: 0.4em;
-    margin-top: 0;
-  }
-  
-  /* === Controls === */
-  #controls {
-    margin-bottom: 1rem;
-  }
-  
-  #controls label {
-    font-weight: normal;
-    color: #333;
-  }
-  
-  #controls select#sort {
-    font-size: 14px;
-    color: #222;
-    background: #fff;
-    border: 1px solid #e79cff;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    vertical-align: middle;
-  }
-  
-  /* === Footer Styles === */
-  #footer {
-    font-size: 14px;
-    margin-top: 24px;
-    color: #555;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  #footer p {
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    margin: 0.5em 0;
-  }
-  
-  #footer .footer-links a {
-    color: #e79cff;
-    text-decoration: none;
-    margin: 0 4px;
-  }
-  
-  #footer .footer-links a:hover {
-    color: #a14dd7;
-  }
-  
-  /* === Status Log Divider === */
-  #status-list hr {
-    border: 0;
-    border-bottom: 1px dotted #e79cff;
-    margin: 12px 0;
-  }
-
-    #commit-list hr {
-      border: 0;
-      border-bottom: 1px dotted #e79cff;
-      margin: 12px 0;
-    }
-
-    #lu-posts hr {
-      border: 0;
-      border-bottom: 1px dotted #e79cff;
-      margin: 12px 0;
-    }
-  
-/* === Music Player Bar === */
-#music-bar {
-  font-family: Arial, sans-serif;
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  background: linear-gradient(180deg, #fffafd 60%, #e6bfff 100%);
-  border-bottom: 1px solid #a03ca0;
-  z-index: 1000;
-  font-size: 11px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  height: 32px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-  padding: 0 16px;
 }
-#music-bar > * {
+
+/* === Headings === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: bold;
+  color: #fff;
+  margin: 0.4em 0 0.2em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-top: 20px;
   position: relative;
-  z-index: 1;
-}
-#player-controls {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-grow: 1;
-  flex-wrap: nowrap;
-}
-#player-controls button {
-  all: unset;
-  color: #a03ca0;
-  cursor: pointer;
-  font-size: 13px;
-  min-height: 28px;
-  min-width: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 8px;
-}
-#progress-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-grow: 1;
-  min-width: 0;
-  max-width: 100%;
-}
-#current-time, #duration {
-  font-size: 12px;
-  color: #a03ca0;
-  width: 36px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-#progress, #volume {
-  height: 4px;
-  accent-color: #a03ca0;
-  border-radius: 0;
-  background: #f3e0ff;
-  outline: none;
-  border: none;
-  box-shadow: none;
-  transition: none;
-}
-#progress {
-  flex-grow: 1;
-  min-width: 0;
-}
-#volume {
-  width: 70px;
-  flex-shrink: 0;
-}
-#toggle-playlist {
-  cursor: pointer;
-  color: #a03ca0;
-  font-size: 13px;
-  user-select: none;
-  padding: 2px 8px;
 }
 
-/* === Playlist Panel === */
+h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #ff1493;
+  margin-top: 6px;
+  border-radius: 1px;
+}
 
-#playlist-panel {
-  position: fixed;
-  top: 32px;
-  right: 0;
-  width: 220px;
-  height: calc(100% - 32px);
-  background: linear-gradient(180deg, #fffafd 70%, #e6bfff 100%);
-  border-left: 1px solid #a03ca0;
-  box-shadow: -2px 0 3px rgba(0,0,0,0.03);
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 999;
+/* === Paragraphs === */
+p, .page-text, .page-text p {
+  color: #c0c0c0;
+  margin-bottom: 20px;
 }
-#playlist-panel::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: url('https://file.garden/ZhTgSjrp5nAroRKq/leaves.gif') top left repeat;
-  opacity: 0.85;
-  z-index: 0;
-  pointer-events: none;
+
+/* === Page Text Box === */
+.page-text {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #ff1493;
+  border-radius: 10px;
+  padding: 24px;
+  hyphens: auto;
+  text-align: justify;
 }
-#playlist-panel > * {
-  position: relative;
-  z-index: 1;
+
+/* === Status Box === */
+#my-status {
+  background: rgba(255, 20, 147, 0.1);
+  border: 1px solid #ff1493;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #c0c0c0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
-#playlist-panel.show {
-  transform: translateX(0%);
+
+.status-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 auto;
 }
-#playlist-panel h3 {
-  margin: 0;
-  padding: 10px 0 10px 14px;
-  font-size: 12px;
-  color: #a03ca0;
-  border-bottom: 1px solid #a03ca0;
-  background: #f3e0ff;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  text-transform: none;
-  box-shadow: none;
+
+#myStatus {
+  font-weight: bold;
+  word-break: break-word;
 }
-#playlist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+
+.status-prefix, .status-dash {
+  color: #ff1493;
+  font-weight: bold;
 }
-#playlist li {
-  display: block;
-  padding: 4px 18px;
-  font-size: 12px;
-  color: #6a1b8a;
-  cursor: pointer;
-  transition: color 0.12s, background 0.12s;
-}
-#playlist li .track-title {
-  display: block;
-  overflow: hidden;
+
+#statusDate {
+  font-size: 0.8em;
+  color: #999;
   white-space: nowrap;
-  text-overflow: ellipsis;
-  max-width: 100%;
-} 
-#playlist li:hover,
-#playlist li.active {
-  background: #a03ca0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* === Commit / Status Entries === */
+#commit-list, #status-list, #lu-posts {
+  margin-top: 24px;
+}
+
+.commit-entry,
+.status-entry {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #ff1493;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  padding-left: 36px;
+}
+
+.commit-entry::before,
+.status-entry::before {
+  content: "𖤐";
+  color: #ff1493;
+  font-size: 18px;
+  position: absolute;
+  left: 14px;
+  top: 16px;
+}
+
+#commit-list p,
+#status-list p,
+#lu-posts p {
+  font-size: 14px;
+  color: #c0c0c0;
+  margin-bottom: 12px;
+}
+
+#commit-list time,
+#status-list time,
+#lu-posts time {
+  font-size: 12px;
+  color: #999;
+  display: block;
+  margin-bottom: 6px;
+}
+
+#commit-list hr,
+#status-list hr,
+#lu-posts hr {
+  border: 0;
+  border-bottom: 1px dotted #ff1493;
+  margin: 12px 0;
+}
+
+/* === Links === */
+a {
+  color: #ff1493;
+  text-decoration: underline;
+}
+
+a:hover,
+a:active {
   color: #fff;
 }
 
-@media screen and (max-width: 600px) {
-  #music-bar,
-  #playlist-panel {
-    display: none !important;
-  }
-
-
-/* Uniform font and spacing */
-#player-controls button,
-#toggle-playlist {
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 13px;
-  padding: 2px 8px;
+/* === Images === */
+img {
+  max-width: 100%;
+  border: 2px solid #ff1493;
+  border-radius: 8px;
+  display: block;
+  margin: 16px auto;
 }
 
-/* Hover: underline only */
-#player-controls button:hover,
-#toggle-playlist:hover {
-  text-decoration: underline;
-  background: none !important;
+/* === Search Bar === */
+.nav-search {
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #fff;
+  background: #111;
+  border: 1px solid #ff1493;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Progress bar thumb styling */
-#progress::-webkit-slider-thumb,
-#volume::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  background: #a03ca0;
-  border: 2px solid #fffafd;
-  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-}
-#progress::-moz-range-thumb,
-#volume::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  background: #a03ca0;
-  border: 2px solid #fffafd;
-  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-}
-#progress::-ms-thumb,
-#volume::-ms-thumb {
-  width: 14px;
-  height: 14px;
-  background: #a03ca0;
-  border: 2px solid #fffafd;
-  box-shadow: 0 1px 4px rgba(160,60,160,0.10);
-  cursor: pointer;
-  position: relative;
-  z-index: 2;
-}
-#progress, #volume {
-  font-family: Arial, sans-serif;
+.nav-search::placeholder {
+  color: #bbb;
+  font-style: italic;
 }
 
+.nav-search:focus {
+  box-shadow: 0 0 8px #ff1493;
+  border-color: #fff;
+}
+
+/* === Footer === */
+#footer {
+  font-size: 14px;
+  margin-top: 24px;
+  color: #444;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #ff1493;
+}
+
+#footer p {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#footer .footer-links a {
+  color: #ff1493;
+  text-decoration: none;
+  margin: 0 4px;
+}
+
+#footer .footer-links a:hover {
+  color: #fff;
+}
+
+/* === Status Images in Text === */
 .status-text img {
-    max-height: 300px;
-    min-height: 200px;
-    display: block;
-    margin: 12px auto;
-    border-radius: 6px;
-  }
+  max-height: 300px;
+  min-height: 200px;
+  border-radius: 6px;
+  display: block;
+  margin: 12px auto;
+}
