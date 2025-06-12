@@ -242,11 +242,18 @@ footer.footer {
   max-width: 100%;
 }
 
+/* Timeline Date Styling */
 .post-date {
-  color: dodgerblue;
+  color: dodgerblue; /* Dodger Blue color for the date */
   margin-bottom: 10px;
+  font-size: 16px;
   font-weight: bold;
-  display: block;
+}
+
+#last-updated {
+  color: dodgerblue; /* Dodger Blue color for last updated */
+  font-size: 16px;
+  font-weight: bold;
 }
 
 #commits-table {
