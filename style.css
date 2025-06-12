@@ -241,8 +241,3 @@ footer.footer {
   display: block;
   max-width: 100%;
 }
-
-/* 🔊 Square SoundCloud Player */
-#status-message iframe[src*="soundcloud.com"] {
-  height: 300px !important; /* Square-like ratio */
-}
