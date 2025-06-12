@@ -241,3 +241,11 @@ footer.footer {
   display: block;
   max-width: 100%;
 }
+
+.post-date {
+  color: dodgerblue;
+  margin-bottom: 10px;
+  font-weight: bold;
+  display: block;
+}
+
