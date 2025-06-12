@@ -16,6 +16,8 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.7;
+  font-size: 16px; /* Ensure base font size is 16px */
+  font-weight: normal; /* No bold by default */
 }
 
 /* Navigation Bar */
@@ -25,7 +27,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   padding: 16px 24px;
-  border-bottom: 1px solid deeppink;
+  border-bottom: 1px solid #ff1493;
   background: #000;
 }
 
@@ -163,11 +165,11 @@ img {
 h1,
 h2,
 h3 {
-  color: #fff; /* White headers */
-  font-size: 1em; /* Small size */
+  color: #fff;
+  font-size: 1em;
   text-align: center;
   margin: 24px 0 12px;
-  font-weight: normal;
+  font-weight: normal; /* Only headers can override if needed */
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -184,17 +186,33 @@ h3::after {
   content: " 𖤐";
 }
 
+/* Ensure all other text elements are not bold and 16px */
+p,
+.small-text,
+a,
+.nav-links a,
+.nav-search,
+#commits-table td,
+#commits-table th,
+.link-list li,
+footer.footer,
+.post-date,
+#last-updated {
+  font-size: 16px !important;
+  font-weight: normal !important;
+}
+
 /* Text */
 p {
   color: #ddd;
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
 .small-text {
   font-size: 15px;
   color: #ddd;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 /* Links */
@@ -247,7 +265,7 @@ footer.footer {
   color: dodgerblue; /* Dodger Blue color for the date */
   margin-bottom: 10px;
   font-size: 16px;
-  font-weight: bold;
+
 }
 
 #last-updated {
@@ -277,5 +295,4 @@ footer.footer {
 #commits-table td {
   color: #ddd;
 }
-
 
