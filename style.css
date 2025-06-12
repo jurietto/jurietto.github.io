@@ -192,8 +192,8 @@ p {
 }
 
 .small-text {
-  font-size: 14px;
-  color: #ccc;
+  font-size: 15px;
+  color: #ddd;
   margin-bottom: 16px;
 }
 
@@ -248,4 +248,27 @@ footer.footer {
   font-weight: bold;
   display: block;
 }
+
+#commits-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#commits-table th,
+#commits-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid deeppink;
+}
+
+#commits-table th {
+  background-color: #111;
+  color: deeppink;
+}
+
+#commits-table td {
+  color: #ddd;
+}
+
 
