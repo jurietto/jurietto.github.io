@@ -1,5 +1,13 @@
 // Function to fetch and display the last timeline entry with media embed
 function displayTimelineEntry() {
+  // Make sure the element exists before proceeding
+  const statusMessage = document.getElementById('status-message');
+  
+  if (!statusMessage) {
+    console.error('Status message element not found!');
+    return; // Exit early if the element doesn't exist
+  }
+
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
