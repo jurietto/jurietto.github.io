@@ -17,6 +17,7 @@ function displayLastUpdated() {
   const lastUpdated = document.lastModified; // Get the last modified time of index.html
   const formattedDate = formatDate(lastUpdated);
   document.getElementById('last-updated').textContent = `Last updated: ${formattedDate}`;
+  document.getElementById('last-updated').style.color = 'dodgerblue'; // Set text color to Dodger Blue
 }
 
 // Function to fetch and display the latest 5 commits from the GitHub repository
@@ -66,7 +67,18 @@ function fetchTimeline() {
         const latestStatus = data[0];  // Get the most recent status
         const formattedTime = formatDate(latestStatus.time);
         const statusContent = `${formattedTime} - ${latestStatus.text}`;
-        document.getElementById('status-message').innerHTML = statusContent;
+        
+        // Display status content and embed media
+        const statusMessageElement = document.getElementById('status-message');
+        statusMessageElement.innerHTML = statusContent;
+
+        // Handle embedded media (SoundCloud, YouTube, images, etc.)
+        statusMessageElement.innerHTML = latestStatus.text.split('\n').map(line => {
+          return getEmbedHTML(line);
+        }).join('<br>');
+
+        // Set the status date to Dodger Blue color
+        statusMessageElement.querySelector('.post-date').style.color = 'dodgerblue';
       } else {
         document.getElementById('status-message').innerHTML = "No status updates available.";
       }
@@ -75,6 +87,35 @@ function fetchTimeline() {
       console.error('Error fetching timeline:', error);
       document.getElementById('status-message').innerHTML = "Failed to load status.";
     });
+}
+
+// Function to handle embedded content like SoundCloud, YouTube, images, etc.
+function getEmbedHTML(url) {
+  if (/youtube\.com|youtu\.be/.test(url)) {
+    const videoId = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/)?.[1];
+    return videoId
+      ? `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`
+      : `<a href="${url}" target="_blank">${url}</a>`;
+  }
+
+  if (/soundcloud\.com/.test(url)) {
+    return `
+      <div style="width:100%; aspect-ratio: 1 / 1; margin-top: 20px;">
+        <iframe width="100%" height="200px" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%23ff007f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+        </iframe>
+      </div>`;
+  }
+
+  if (/\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+    return `<img src="${url}" alt="embedded image" style="max-width: 100%; margin-top: 20px; border-radius: 8px; border: 2px solid deeppink;" />`;
+  }
+
+  if (/\.(mp4|webm|ogg)$/i.test(url)) {
+    return `<video controls style="max-width:100%; margin-top:10px;"><source src="${url}" type="video/mp4">Your browser does not support video playback.</video>`;
+  }
+
+  return `<a href="${url}" target="_blank">${url}</a>`;
 }
 
 // Fetch commits and timeline when the page is loaded
