@@ -231,7 +231,7 @@ footer.footer {
   border-bottom: none;      /* Optional: remove if you don't want a bottom border */
 }
 
-/* 🗨️ Timeline Embed Styling */
+/* 🚨 Timeline Embed Styling */
 #status-message iframe,
 #status-message img,
 #status-message video {
