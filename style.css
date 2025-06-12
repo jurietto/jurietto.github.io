@@ -230,3 +230,19 @@ footer.footer {
   background: #000;         /* Match nav background */
   border-bottom: none;      /* Optional: remove if you don't want a bottom border */
 }
+
+/* 🗨️ Timeline Embed Styling */
+#status-message iframe,
+#status-message img,
+#status-message video {
+  margin-top: 20px;
+  border-radius: 8px;
+  border: 2px solid deeppink;
+  display: block;
+  max-width: 100%;
+}
+
+/* 🔊 Square SoundCloud Player */
+#status-message iframe[src*="soundcloud.com"] {
+  height: 300px !important; /* Square-like ratio */
+}
