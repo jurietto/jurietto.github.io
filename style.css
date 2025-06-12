@@ -4,242 +4,178 @@
   font-display: swap;
 }
 
-/* === Body === */
 body {
-  background-color: #000;
-  font-family: 'LovelyText', Arial, Helvetica, sans-serif;
-  font-size: 15px;
+  background: #000;
+  color: white;
+  font-family: 'LovelyText', cursive, sans-serif;
+  margin: 0;
+  padding: 0;
   line-height: 1.7;
-  color: #c0c0c0;
-  text-align: justify;
-  overflow-x: hidden;
-  padding: 16px;
 }
 
-/* === Main Container === */
-.main-content {
-  background-color: #111;
-  border: 2px solid #ff1493;
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 24px auto;
-  padding: 24px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
+/* 🧭 NAVIGATION BAR */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 16px 24px;
+  border-bottom: 1px solid #ff00ff;
+  background: #000;
 }
 
-/* === Headings === */
-h1, h2, h3, h4, h5, h6 {
-  font-family: inherit;
-  font-weight: bold;
-  color: #fff;
-  margin: 0.4em 0 0.2em;
-  text-transform: uppercase;
-}
-
-h1 {
-  font-size: 36px;
-}
-
-h2 {
-  font-size: 24px;
-  margin-top: 20px;
-  position: relative;
-}
-
-h2::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 2px;
-  background: #ff1493;
-  margin-top: 6px;
-  border-radius: 1px;
-}
-
-/* === Paragraphs === */
-p, .page-text, .page-text p {
-  color: #c0c0c0;
-  margin-bottom: 20px;
-}
-
-/* === Page Text Box === */
-.page-text {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #ff1493;
-  border-radius: 10px;
-  padding: 24px;
-  hyphens: auto;
-  text-align: justify;
-}
-
-/* === Status Box === */
-#my-status {
-  background: rgba(255, 20, 147, 0.1);
-  border: 1px solid #ff1493;
-  padding: 12px 16px;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  font-size: 14px;
-  color: #c0c0c0;
+.nav-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+}
+
+.nav-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #ff00ff;
+  object-fit: cover;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.status-text {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex: 1 1 auto;
+.nav-links a {
+  color: #ff00ff;
+  text-decoration: underline;
+  font-size: 16px;
 }
 
-#myStatus {
-  font-weight: bold;
-  word-break: break-word;
-}
-
-.status-prefix, .status-dash {
-  color: #ff1493;
-  font-weight: bold;
-}
-
-#statusDate {
-  font-size: 0.8em;
-  color: #999;
-  white-space: nowrap;
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* === Commit / Status Entries === */
-#commit-list, #status-list, #lu-posts {
-  margin-top: 24px;
-}
-
-.commit-entry,
-.status-entry {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid #ff1493;
-  border-radius: 10px;
-  padding: 16px;
-  margin-bottom: 16px;
-  position: relative;
-  padding-left: 36px;
-}
-
-.commit-entry::before,
-.status-entry::before {
-  content: "𖤐";
-  color: #ff1493;
-  font-size: 18px;
-  position: absolute;
-  left: 14px;
-  top: 16px;
-}
-
-#commit-list p,
-#status-list p,
-#lu-posts p {
+.nav-search {
+  padding: 6px 12px;
+  border: 1px solid #ff00ff;
+  border-radius: 6px;
+  background-color: #111;
+  color: #fff;
+  font-family: 'LovelyText', cursive;
   font-size: 14px;
-  color: #c0c0c0;
-  margin-bottom: 12px;
 }
 
-#commit-list time,
-#status-list time,
-#lu-posts time {
-  font-size: 12px;
-  color: #999;
+/* 📦 MAIN LAYOUT */
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 40px 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+/* 📥 SIDEBAR + MAIN CONTENT */
+.sidebar, .mainbox {
+  border: 1px solid #ff00ff;
+  background-color: #000;
+  padding: 24px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  width: 320px;
+}
+
+.mainbox {
+  flex: 1;
+  max-width: 700px;
+  text-align: justify;
+}
+
+/* 📷 IMAGES */
+img {
+  max-width: 100%;
+  height: auto;
   display: block;
-  margin-bottom: 6px;
+  margin: 16px auto;
+  border: 2px solid #ff00ff;
+  border-radius: 8px;
 }
 
-#commit-list hr,
-#status-list hr,
-#lu-posts hr {
-  border: 0;
-  border-bottom: 1px dotted #ff1493;
-  margin: 12px 0;
+/* 🎁 CBOX WRAPPER */
+.cbox-frame {
+  border: 2px solid #ff00ff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px 0;
 }
 
-/* === Links === */
+/* 🅰 HEADINGS */
+h1, h2, h3 {
+  color: #ff00ff;
+  font-size: 22px;
+  text-align: center;
+  margin: 24px 0 12px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h1::before, h2::before, h3::before {
+  content: "𖤐 ";
+}
+
+h1::after, h2::after, h3::after {
+  content: " 𖤐";
+}
+
+/* 📝 TEXT */
+p {
+  color: #ddd;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.small-text {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+/* 🔗 LINKS */
 a {
-  color: #ff1493;
+  color: #ff00ff;
   text-decoration: underline;
 }
 
-a:hover,
-a:active {
-  color: #fff;
+a:hover {
+  color: white;
 }
 
-/* === Images === */
-img {
-  max-width: 100%;
-  border: 2px solid #ff1493;
-  border-radius: 8px;
-  display: block;
-  margin: 16px auto;
+/* LISTS */
+.link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.8;
 }
 
-/* === Search Bar === */
-.nav-search {
-  padding: 8px 14px;
-  font-size: 14px;
-  color: #fff;
-  background: #111;
-  border: 1px solid #ff1493;
-  border-radius: 8px;
-  outline: none;
-  transition: all 0.2s ease-in-out;
+.link-list li {
+  margin: 8px 0;
 }
 
-.nav-search::placeholder {
-  color: #bbb;
-  font-style: italic;
-}
-
-.nav-search:focus {
-  box-shadow: 0 0 8px #ff1493;
-  border-color: #fff;
-}
-
-/* === Footer === */
-#footer {
-  font-size: 14px;
-  margin-top: 24px;
-  color: #444;
+/* 📌 FOOTER */
+footer.footer {
   text-align: center;
+  color: #999;
   padding: 20px;
-  border-top: 1px solid #ff1493;
-}
-
-#footer p {
-  margin: 0.5em 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#footer .footer-links a {
-  color: #ff1493;
-  text-decoration: none;
-  margin: 0 4px;
-}
-
-#footer .footer-links a:hover {
-  color: #fff;
-}
-
-/* === Status Images in Text === */
-.status-text img {
-  max-height: 300px;
-  min-height: 200px;
-  border-radius: 6px;
-  display: block;
-  margin: 12px auto;
+  border-top: 1px solid #ff00ff;
+  margin-top: 48px;
+  font-size: 0.9em;
 }
