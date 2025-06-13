@@ -51,8 +51,8 @@ function displayTimelineEntry() {
 
       // Add the formatted content (date first in Dodger Blue, no name, status justified) to the status message
       statusMessage.innerHTML = `
-        <span style="color: dodgerblue; font-weight: normal;">${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
-        <div style="text-align: justify;">${textWithoutLinks}</div>
+        <span>${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
+        <div>${textWithoutLinks}</div>
         ${mediaContent}
       `;
     })
