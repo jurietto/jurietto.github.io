@@ -16,7 +16,7 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.7;
-  font-size: 16px; /* Ensure base font size is 16px */
+  font-size: 16px;
   font-weight: normal; /* No bold by default */
 }
 
@@ -81,7 +81,7 @@ body {
   grid-template-columns: 250px 800px 250px;
   gap: 32px;
   padding: 40px 24px;
-  max-width: 1360px; /* 250 + 800 + 250 + gaps */
+  max-width: 1360px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -169,7 +169,7 @@ h3 {
   font-size: 1em;
   text-align: center;
   margin: 24px 0 12px;
-  font-weight: normal; /* Only headers can override if needed */
+  font-weight: normal; /* No bold headers */
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -186,7 +186,7 @@ h3::after {
   content: " 𖤐";
 }
 
-/* Ensure all other text elements are not bold and 16px */
+/* Text */
 p,
 .small-text,
 a,
@@ -245,11 +245,10 @@ footer.footer {
   border-top: 1px solid deeppink;
   margin-top: 48px;
   font-size: 0.9em;
-  background: #000;         /* Match nav background */
-  border-bottom: none;      /* Optional: remove if you don't want a bottom border */
+  background: #000;
 }
 
-/* 🚨 Timeline Embed Styling */
+/* Timeline Embed Styling */
 #status-message iframe,
 #status-message img,
 #status-message video {
@@ -258,20 +257,21 @@ footer.footer {
   border: 2px solid deeppink;
   display: block;
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Timeline Date Styling */
 .post-date {
-  color: dodgerblue; /* Dodger Blue color for the date */
+  color: dodgerblue;
   margin-bottom: 10px;
   font-size: 16px;
-
 }
 
 #last-updated {
-  color: dodgerblue; /* Dodger Blue color for last updated */
+  color: dodgerblue;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: normal;
   text-align: justify;
 }
 
@@ -297,8 +297,6 @@ footer.footer {
   color: #ddd;
 }
 
-/* Justify text for the Recent Updates and Last Updated sections */
 #commits-body {
   text-align: justify;
 }
-
