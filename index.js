@@ -50,8 +50,9 @@ function displayTimelineEntry() {
       const textWithoutLinks = lastEntry.text.replace(/https?:\/\/[^\s]+/g, '');
 
       // Add the formatted content (date first, no inline styles)
+      const dateString = new Date(lastEntry.time).toLocaleString(); // Get the date and time string
       statusMessage.innerHTML = `
-        <span>${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
+        <span>${dateString}</span><br>
         <div>${textWithoutLinks}</div>
         ${mediaContent}
       `;
