@@ -192,6 +192,11 @@ footer.footer,
   text-align: justify;
 }
 
+/* Center footer text */
+footer.footer {
+  text-align: center !important;
+}
+
 /* Text */
 p {
   color: #ddd;
