@@ -1,20 +1,17 @@
 // Function to fetch and display the last timeline entry with media embed
 function displayTimelineEntry() {
-  // Ensure the status message element exists before proceeding
   const statusMessage = document.getElementById('status-message');
   
   if (!statusMessage) {
     console.error('Status message element not found!');
-    return; // Exit early if the element doesn't exist
+    return;
   }
 
-  // Fetch the timeline data from timeline.json
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      const lastEntry = timeline[timeline.length - 1];  // Get the most recent entry from the timeline
-      
-      // Prepare the content to include media if applicable
+      const lastEntry = timeline[timeline.length - 1];
+
       let mediaContent = '';
 
       // Check if the content contains a YouTube URL
@@ -57,7 +54,52 @@ function displayTimelineEntry() {
     .catch(error => console.error('Error fetching timeline:', error));
 }
 
-// Call this function when the page is loaded
+// Function to fetch and display the last 5 commits from commits.json
+function displayRecentCommits() {
+  const commitsTableBody = document.getElementById('commits-body');
+  
+  // Fetch the commits from commits.json
+  fetch('commits.json')
+    .then(response => response.json())
+    .then(commits => {
+      // Display the last 5 commits in the table
+      commitsTableBody.innerHTML = '';  // Clear previous data
+      const recentCommits = commits.slice(-5);  // Get the last 5 commits
+      
+      recentCommits.forEach(commit => {
+        const row = document.createElement('tr');
+        
+        // Create a string for the files changed
+        const filesChanged = commit.files_changed.join(', ');
+
+        row.innerHTML = `
+          <td>${new Date(commit.date).toLocaleString()}</td>
+          <td>${commit.author}</td>
+          <td>${commit.message}</td>
+          <td>${filesChanged}</td>
+        `;
+        commitsTableBody.appendChild(row);
+      });
+    })
+    .catch(error => console.error('Error fetching commits:', error));
+}
+
+// Function to fetch and display the last updated date of index.html
+function displayLastUpdated() {
+  const lastUpdatedElement = document.getElementById('last-updated');
+
+  // Fetch the last modified date of index.html
+  fetch('index.html', { method: 'HEAD' })
+    .then(response => {
+      const lastModified = new Date(response.headers.get('last-modified'));
+      lastUpdatedElement.textContent = `Last updated: ${lastModified.toLocaleString()}`;
+    })
+    .catch(error => console.error('Error fetching last updated date:', error));
+}
+
+// Call the functions when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
   displayTimelineEntry();
+  displayRecentCommits();
+  displayLastUpdated();
 });
