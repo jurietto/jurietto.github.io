@@ -3,9 +3,9 @@ name: Update Commits JSON
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to the main branch
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  # Run every hour to ensure your commits are always up to date
 
 jobs:
   update_commits:
@@ -17,6 +17,7 @@ jobs:
 
     - name: Get the latest commits
       run: |
+        # Get the last 5 commits and format them into a JSON array
         git log -n 5 --pretty=format:'{"author": "%an", "message": "%s", "date": "%ad", "url": "%H"}' --date=iso > commits.json
 
     - name: Commit the updated commits.json
