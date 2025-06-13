@@ -16,6 +16,8 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.7;
+  font-size: 16px;
+  font-weight: normal; /* No bold by default */
 }
 
 /* Navigation Bar */
@@ -23,7 +25,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   padding: 16px 24px;
   border-bottom: 1px solid deeppink;
   background: #000;
@@ -45,16 +46,12 @@ body {
 .nav-right {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 16px;
-  justify-content: flex-end;
-  flex: 1;
 }
 
 .nav-links {
   display: flex;
   gap: 16px;
-  flex-wrap: wrap;
 }
 
 .nav-links a {
@@ -79,7 +76,7 @@ body {
   grid-template-columns: 250px 800px 250px;
   gap: 32px;
   padding: 40px 24px;
-  max-width: 1360px; /* 250 + 800 + 250 + gaps */
+  max-width: 1360px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -126,6 +123,7 @@ body {
   padding: 24px;
   border-radius: 12px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .mainbox {
@@ -144,13 +142,6 @@ img {
   border-radius: 8px;
 }
 
-.mainbox a[href*="flagcounter"] img {
-  width: 100%;
-  height: auto;
-  display: block;
-  max-width: 100%;
-}
-
 /* Cbox Chat Frame */
 .cbox-frame {
   border: 2px solid deeppink;
@@ -163,8 +154,8 @@ img {
 h1,
 h2,
 h3 {
-  color: #fff; /* White headers */
-  font-size: 1em; /* Small size */
+  color: #fff;
+  font-size: 1em;
   text-align: center;
   margin: 24px 0 12px;
   font-weight: normal;
@@ -185,16 +176,33 @@ h3::after {
 }
 
 /* Text */
+p,
+.small-text,
+a,
+.nav-links a,
+.nav-search,
+#commits-table td,
+#commits-table th,
+.link-list li,
+footer.footer,
+.post-date,
+#last-updated {
+  font-size: 16px;
+  font-weight: normal;
+  text-align: justify;
+}
+
+/* Text */
 p {
   color: #ddd;
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
 .small-text {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 16px;
+  font-size: 15px;
+  color: #ddd;
+  margin-bottom: 20px;
 }
 
 /* Links */
@@ -227,11 +235,10 @@ footer.footer {
   border-top: 1px solid deeppink;
   margin-top: 48px;
   font-size: 0.9em;
-  background: #000;         /* Match nav background */
-  border-bottom: none;      /* Optional: remove if you don't want a bottom border */
+  background: #000;
 }
 
-/* 🚨 Timeline Embed Styling */
+/* Timeline Embed Styling */
 #status-message iframe,
 #status-message img,
 #status-message video {
@@ -240,4 +247,46 @@ footer.footer {
   border: 2px solid deeppink;
   display: block;
   max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Timeline Date Styling */
+.post-date {
+  color: deeppink;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+#last-updated {
+  color: deeppink;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: justify;
+}
+
+#commits-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#commits-table th,
+#commits-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid deeppink;
+}
+
+#commits-table th {
+  background-color: #111;
+  color: deeppink;
+}
+
+#commits-table td {
+  color: #ddd;
+}
+
+#commits-body {
+  text-align: justify;
 }
