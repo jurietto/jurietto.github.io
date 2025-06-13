@@ -10,8 +10,7 @@ function displayTimelineEntry() {
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      // Get the most recent entry
-      const lastEntry = timeline[timeline.length - 1];
+      const lastEntry = timeline[timeline.length - 1]; // Get the last entry from the array
 
       let mediaContent = '';
 
@@ -46,7 +45,7 @@ function displayTimelineEntry() {
 
       // Add the formatted content (date first in Dodger Blue, no name, status justified) to the status message
       statusMessage.innerHTML = `
-        <span style="color: dodgerblue; font-weight: bold;">${new Date(lastEntry.time).toLocaleDateString()}</span><br>
+        <span style="color: dodgerblue; font-weight: normal;">${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
         <div style="text-align: justify;">${lastEntry.text}</div>
         ${mediaContent}
       `;
@@ -69,14 +68,11 @@ function displayRecentCommits() {
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');
         
-        // Extract modified files from commit message
-        const filesChanged = commit.files_changed.join(', ');
-
+        // Only display the commit details without the "Modified Files" column
         row.innerHTML = `
           <td>${new Date(commit.date).toLocaleString()}</td>
           <td>${commit.author}</td>
           <td>${commit.message}</td>
-          <td>${filesChanged || 'No files changed'}</td>
         `;
         commitsTableBody.appendChild(row);
       });
@@ -92,7 +88,7 @@ function displayLastUpdated() {
   fetch('index.html', { method: 'HEAD' })
     .then(response => {
       const lastModified = new Date(response.headers.get('last-modified'));
-      lastUpdatedElement.textContent = lastModified.toLocaleDateString() + " @ " + lastModified.toLocaleTimeString(); // Date and Time format
+      lastUpdatedElement.textContent = `${lastModified.toLocaleDateString()} @ ${lastModified.toLocaleTimeString()}`; // Only show the date and time
     })
     .catch(error => console.error('Error fetching last updated date:', error));
 }
