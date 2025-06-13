@@ -10,7 +10,7 @@ function displayTimelineEntry() {
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      const lastEntry = timeline[timeline.length - 1];  // Ensure the last entry is selected
+      const lastEntry = timeline[timeline.length - 1];  // Access the last entry
 
       let mediaContent = '';
 
@@ -45,7 +45,7 @@ function displayTimelineEntry() {
 
       // Add the formatted content (date first in Dodger Blue, no name, status justified) to the status message
       statusMessage.innerHTML = `
-        <span style="color: dodgerblue; font-weight: bold;">${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
+        <span style="color: dodgerblue; font-weight: bold;">${new Date(lastEntry.time).toLocaleDateString()}</span><br>
         <div style="text-align: justify;">${lastEntry.text}</div>
         ${mediaContent}
       `;
@@ -56,7 +56,7 @@ function displayTimelineEntry() {
 // Function to fetch and display the last 5 commits from commits.json
 function displayRecentCommits() {
   const commitsTableBody = document.getElementById('commits-body');
-  
+
   // Fetch the commits from commits.json
   fetch('commits.json')
     .then(response => response.json())
@@ -64,12 +64,12 @@ function displayRecentCommits() {
       // Display the last 5 commits in the table
       commitsTableBody.innerHTML = '';  // Clear previous data
       const recentCommits = commits.slice(-5);  // Get the last 5 commits
-      
+
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');
-        
+
         // Create a string for the files changed
-        const filesChanged = commit.files_changed.join(', '); // Join modified files
+        const filesChanged = commit.files_changed ? commit.files_changed.join(', ') : 'No files changed';
 
         row.innerHTML = `
           <td>${new Date(commit.date).toLocaleString()}</td>
@@ -91,7 +91,7 @@ function displayLastUpdated() {
   fetch('index.html', { method: 'HEAD' })
     .then(response => {
       const lastModified = new Date(response.headers.get('last-modified'));
-      lastUpdatedElement.textContent = `${lastModified.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}`;
+      lastUpdatedElement.textContent = `${lastModified.toLocaleDateString()} @ ${lastModified.toLocaleTimeString()}`; // Show date and time only
     })
     .catch(error => console.error('Error fetching last updated date:', error));
 }
