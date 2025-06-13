@@ -10,7 +10,7 @@ function displayTimelineEntry() {
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      const lastEntry = timeline[timeline.length - 1];
+      const lastEntry = timeline[timeline.length - 1];  // Ensure the last entry is selected
 
       let mediaContent = '';
 
@@ -45,7 +45,7 @@ function displayTimelineEntry() {
 
       // Add the formatted content (date first in Dodger Blue, no name, status justified) to the status message
       statusMessage.innerHTML = `
-        <span style="color: dodgerblue; font-weight: bold;">${new Date(lastEntry.time).toLocaleDateString()}</span><br>
+        <span style="color: dodgerblue; font-weight: bold;">${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
         <div style="text-align: justify;">${lastEntry.text}</div>
         ${mediaContent}
       `;
@@ -69,7 +69,7 @@ function displayRecentCommits() {
         const row = document.createElement('tr');
         
         // Create a string for the files changed
-        const filesChanged = commit.files_changed.join(', ');
+        const filesChanged = commit.files_changed.join(', '); // Join modified files
 
         row.innerHTML = `
           <td>${new Date(commit.date).toLocaleString()}</td>
@@ -91,7 +91,7 @@ function displayLastUpdated() {
   fetch('index.html', { method: 'HEAD' })
     .then(response => {
       const lastModified = new Date(response.headers.get('last-modified'));
-      lastUpdatedElement.textContent = `Last updated: ${lastModified.toLocaleDateString()}`; // Only show the date
+      lastUpdatedElement.textContent = `${lastModified.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true })}`;
     })
     .catch(error => console.error('Error fetching last updated date:', error));
 }
