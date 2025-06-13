@@ -289,3 +289,7 @@ footer.footer {
 #commits-body {
   text-align: justify;
 }
+
+.small-text {
+  color: deeppink;
+}
