@@ -17,27 +17,41 @@ jobs:
 
     - name: Get the commits from this year
       run: |
-        # Get all commits from this year (January 1st to today)
-        git log --since="Jan 1, $(date +'%Y')" --pretty=format:'{
-          "author": "%an",
-          "message": "%s",
-          "date": "%ad",
-          "files_changed": [' > commits.json
-        
-        # Loop through each commit and get the list of files changed
+        # Initialize the commits.json file with an empty array
+        echo "[" > commits.json
+
+        # Get the list of commits from this year
+        first_commit=true
         for commit in $(git log --since="Jan 1, $(date +'%Y')" --pretty=format:"%H"); do
+          # Get the files changed for each commit
           files=$(git show --name-only --oneline --pretty=format:"" --no-patch $commit | tail -n +2 | jq -R . | jq -s .)
-          echo "  {\"author\": \"$(git show -s --format=%an $commit)\", \"message\": \"$(git show -s --format=%s $commit)\", \"date\": \"$(git show -s --format=%ad $commit)\", \"files_changed\": $files}," >> commits.json
+
+          # Get commit details: author, message, date
+          author=$(git show -s --format=%an $commit)
+          message=$(git show -s --format=%s $commit)
+          date=$(git show -s --format=%ad $commit)
+
+          # If it's not the first commit, add a comma separator
+          if [ "$first_commit" = true ]; then
+            first_commit=false
+          else
+            echo "," >> commits.json
+          fi
+
+          # Append the commit info in JSON format
+          echo "  {" >> commits.json
+          echo "    \"author\": \"$author\"," >> commits.json
+          echo "    \"message\": \"$message\"," >> commits.json
+          echo "    \"date\": \"$date\"," >> commits.json
+          echo "    \"files_changed\": $files" >> commits.json
+          echo "  }" >> commits.json
         done
-        
-        # Remove the trailing comma after the last entry
-        sed -i '$ s/,$//' commits.json
-        
-        # Add the closing bracket for the JSON array
+
+        # Close the JSON array
         echo "]" >> commits.json
 
-        # Use jq to ensure proper formatting of the commits.json file
-        jq -s '.' commits.json > commits.json.pretty && mv commits.json.pretty commits.json
+        # Use jq to ensure the final commits.json is formatted properly
+        jq . commits.json > commits.json.pretty && mv commits.json.pretty commits.json
 
     - name: Commit the updated commits.json
       run: |
