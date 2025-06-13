@@ -17,14 +17,14 @@ jobs:
 
     - name: Get the commits from this year
       run: |
-        # Get all commits from this year, excluding the commit URL, and format them into a structured JSON format
+        # Get all commits from this year (January 1st to today)
         git log --since="Jan 1, $(date +'%Y')" --pretty=format:'{
           "author": "%an",
           "message": "%s",
           "date": "%ad",
-          "files_changed": ['$(git show --name-only --oneline --pretty=format:"" --no-patch $commit | tail -n +2 | jq -R . | jq -s .)']
+          "files_changed": ["$(git show --name-only --oneline --pretty=format:"" --no-patch HEAD | tail -n +2 | jq -R . | jq -s .)"]
         }' --date=iso > commits.json
-        # Use jq to format and ensure proper structure
+        # Use jq to format the commits.json file
         jq -s '.' commits.json > commits.json.pretty && mv commits.json.pretty commits.json
 
     - name: Commit the updated commits.json
