@@ -293,3 +293,12 @@ footer.footer {
 .small-text {
   color: deeppink;
 }
+
+/* Style the status message: date in deeppink, rest in #ddd */
+#status-message {
+  color: #ddd;
+}
+
+#status-message span {
+  color: deeppink;
+}
