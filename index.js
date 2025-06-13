@@ -43,11 +43,10 @@ function displayTimelineEntry() {
         mediaContent += `<iframe width="100%" height="200" src="${videoUrl[0]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
       }
 
-      // Add the formatted content (text + media) to the status message
+      // Add the formatted content (date first in Dodger Blue, no name, status justified) to the status message
       statusMessage.innerHTML = `
-        <strong>${lastEntry.author}</strong><br>
-        ${lastEntry.text}<br>
-        <small>${new Date(lastEntry.time).toLocaleString()}</small><br>
+        <span style="color: dodgerblue; font-weight: bold;">${new Date(lastEntry.time).toLocaleDateString()}</span><br>
+        <div style="text-align: justify;">${lastEntry.text}</div>
         ${mediaContent}
       `;
     })
@@ -92,7 +91,7 @@ function displayLastUpdated() {
   fetch('index.html', { method: 'HEAD' })
     .then(response => {
       const lastModified = new Date(response.headers.get('last-modified'));
-      lastUpdatedElement.textContent = `Last updated: ${lastModified.toLocaleString()}`;
+      lastUpdatedElement.textContent = `Last updated: ${lastModified.toLocaleDateString()}`; // Only show the date
     })
     .catch(error => console.error('Error fetching last updated date:', error));
 }
