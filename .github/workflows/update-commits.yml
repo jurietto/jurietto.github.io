@@ -3,9 +3,9 @@ name: Update Commits JSON
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main
   schedule:
-    - cron: '0 * * * *'  # Run every hour to ensure your commits are always up to date
+    - cron: '0 * * * *'  # Run every hour
 
 jobs:
   update_commits:
@@ -20,7 +20,6 @@ jobs:
         # Initialize the commits.json file with an empty array
         echo "[" > commits.json
 
-        # Get the list of commits from this year
         first_commit=true
         for commit in $(git log --since="Jan 1, $(date +'%Y')" --pretty=format:"%H"); do
           # Get the files changed for each commit
