@@ -25,7 +25,7 @@ function displayTimelineEntry() {
         const youtubeUrl = lastEntry.text.match(/(?:https?:\/\/(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|\S+\/\S+\/\S+|(?:v|e(?:mbed)?)\/(\S+))|youtu\.be\/(\S+)))/);
         if (youtubeUrl && youtubeUrl[0]) {
           const videoId = youtubeUrl[0].split('v=')[1];
-          mediaContent += `<div style="text-align: center;">
+          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
                             <iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                             </div>`;
         }
@@ -35,7 +35,7 @@ function displayTimelineEntry() {
       if (lastEntry.text.includes('soundcloud.com')) {
         const soundcloudUrl = lastEntry.text.match(/https:\/\/soundcloud\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/);
         if (soundcloudUrl && soundcloudUrl[0]) {
-          mediaContent += `<div style="text-align: center;">
+          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
                             <iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(soundcloudUrl[0])}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
                             </div>`;
         }
@@ -44,7 +44,7 @@ function displayTimelineEntry() {
       // Check if the content contains an image or gif URL
       const imageUrl = lastEntry.text.match(/\bhttps?:\/\/\S+\.(?:jpg|jpeg|png|gif)\b/);
       if (imageUrl && imageUrl[0]) {
-        mediaContent += `<div style="text-align: center;">
+        mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
                             <img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">
                             </div>`;
       }
