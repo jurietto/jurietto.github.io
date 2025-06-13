@@ -1,0 +1,29 @@
+name: Update Commits JSON
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+  schedule:
+    - cron: '0 * * * *'  # Run every hour to ensure your commits are always up to date
+
+jobs:
+  update_commits:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Get the latest commits
+      run: |
+        # Get the last 5 commits and format them into a JSON array
+        git log -n 5 --pretty=format:'{"author": "%an", "message": "%s", "date": "%ad", "url": "%H"}' --date=iso > commits.json
+
+    - name: Commit the updated commits.json
+      run: |
+        git config --global user.email "your-email@example.com"
+        git config --global user.name "your-username"
+        git add commits.json
+        git commit -m "Update commits.json with latest commits"
+        git push origin main

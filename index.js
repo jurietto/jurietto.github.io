@@ -1,6 +1,6 @@
 // Function to fetch and display the last timeline entry with media embed
 function displayTimelineEntry() {
-  // Make sure the element exists before proceeding
+  // Ensure the status message element exists before proceeding
   const statusMessage = document.getElementById('status-message');
   
   if (!statusMessage) {
@@ -8,12 +8,13 @@ function displayTimelineEntry() {
     return; // Exit early if the element doesn't exist
   }
 
+  // Fetch the timeline data from timeline.json
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      const lastEntry = timeline[timeline.length - 1];
+      const lastEntry = timeline[timeline.length - 1];  // Get the most recent entry from the timeline
       
-      // Prepare the text and embed media if applicable
+      // Prepare the content to include media if applicable
       let mediaContent = '';
 
       // Check if the content contains a YouTube URL
@@ -56,7 +57,7 @@ function displayTimelineEntry() {
     .catch(error => console.error('Error fetching timeline:', error));
 }
 
-// Call this function on page load
+// Call this function when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
   displayTimelineEntry();
 });
