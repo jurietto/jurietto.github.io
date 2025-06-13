@@ -10,9 +10,6 @@ function displayTimelineEntry() {
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      // Print the timeline to the console to inspect the data
-      console.log(timeline);  // <-- Add this line to print the timeline
-
       // Sort the timeline in descending order based on date (if necessary)
       timeline.sort((a, b) => new Date(b.time) - new Date(a.time));
 
