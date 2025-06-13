@@ -10,7 +10,7 @@ function displayTimelineEntry() {
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      // Ensure that we are getting the most recent entry
+      // Get the most recent entry
       const lastEntry = timeline[timeline.length - 1];
 
       let mediaContent = '';
@@ -69,14 +69,14 @@ function displayRecentCommits() {
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');
         
-        // Get files changed (correctly formatted)
-        const filesChanged = commit.files_changed ? commit.files_changed.join(', ') : 'No files changed';
+        // Extract modified files from commit message
+        const filesChanged = commit.files_changed.join(', ');
 
         row.innerHTML = `
           <td>${new Date(commit.date).toLocaleString()}</td>
           <td>${commit.author}</td>
           <td>${commit.message}</td>
-          <td>${filesChanged}</td>
+          <td>${filesChanged || 'No files changed'}</td>
         `;
         commitsTableBody.appendChild(row);
       });
@@ -92,7 +92,7 @@ function displayLastUpdated() {
   fetch('index.html', { method: 'HEAD' })
     .then(response => {
       const lastModified = new Date(response.headers.get('last-modified'));
-      lastUpdatedElement.textContent = lastModified.toLocaleDateString(); // Display only the date
+      lastUpdatedElement.textContent = lastModified.toLocaleDateString() + " @ " + lastModified.toLocaleTimeString(); // Date and Time format
     })
     .catch(error => console.error('Error fetching last updated date:', error));
 }
