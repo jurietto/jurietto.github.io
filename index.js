@@ -1,7 +1,7 @@
 // Function to fetch and display the last timeline entry with media embed
 function displayTimelineEntry() {
   const statusMessage = document.getElementById('status-message');
-  
+
   if (!statusMessage) {
     console.error('Status message element not found!');
     return;
@@ -10,7 +10,13 @@ function displayTimelineEntry() {
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      const lastEntry = timeline[timeline.length - 1]; // Get the last entry from the array
+      // Print the timeline to the console to inspect the data
+      console.log(timeline);  // <-- Add this line to print the timeline
+
+      // Sort the timeline in descending order based on date (if necessary)
+      timeline.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+      const lastEntry = timeline[0];  // Now we are picking the most recent entry
 
       let mediaContent = '';
 
@@ -37,12 +43,6 @@ function displayTimelineEntry() {
         mediaContent += `<img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">`;
       }
 
-      // Check if the content contains a video URL (e.g., Vimeo or Dailymotion)
-      const videoUrl = lastEntry.text.match(/\bhttps?:\/\/(?:www\.)?(?:vimeo\.com\/\d+|dailymotion\.com\/video\/\w+)\b/);
-      if (videoUrl && videoUrl[0]) {
-        mediaContent += `<iframe width="100%" height="200" src="${videoUrl[0]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
-      }
-
       // Add the formatted content (date first in Dodger Blue, no name, status justified) to the status message
       statusMessage.innerHTML = `
         <span style="color: dodgerblue; font-weight: normal;">${new Date(lastEntry.time).toLocaleDateString()} @ ${new Date(lastEntry.time).toLocaleTimeString()}</span><br>
@@ -56,7 +56,7 @@ function displayTimelineEntry() {
 // Function to fetch and display the last 5 commits from commits.json
 function displayRecentCommits() {
   const commitsTableBody = document.getElementById('commits-body');
-  
+
   // Fetch the commits from commits.json
   fetch('commits.json')
     .then(response => response.json())
@@ -64,15 +64,18 @@ function displayRecentCommits() {
       // Display the last 5 commits in the table
       commitsTableBody.innerHTML = '';  // Clear previous data
       const recentCommits = commits.slice(-5);  // Get the last 5 commits
-      
+
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');
-        
-        // Only display the commit details without the "Modified Files" column
+
+        // Create a string for the files changed
+        const filesChanged = commit.files_changed.join(', ');
+
         row.innerHTML = `
           <td>${new Date(commit.date).toLocaleString()}</td>
           <td>${commit.author}</td>
           <td>${commit.message}</td>
+          <td>${filesChanged}</td>
         `;
         commitsTableBody.appendChild(row);
       });
