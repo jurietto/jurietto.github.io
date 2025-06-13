@@ -24,7 +24,7 @@ jobs:
           "date": "%ad",
           "files_changed": ["$(git show --name-only --oneline --pretty=format:"" --no-patch $commit | tail -n +2 | jq -R . | jq -s .)"]
         }' --date=iso > commits.json
-        # Ensure proper JSON formatting
+        # Use jq to format and ensure proper structure
         jq -s '.' commits.json > commits.json.pretty && mv commits.json.pretty commits.json
 
     - name: Commit the updated commits.json
