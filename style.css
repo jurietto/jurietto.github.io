@@ -16,8 +16,6 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.7;
-  font-size: 16px;
-  font-weight: normal; /* No bold by default */
 }
 
 /* Navigation Bar */
@@ -27,11 +25,11 @@ body {
   align-items: center;
   flex-wrap: wrap;
   padding: 16px 24px;
-  border-bottom: 1px solid #ff1493;
+  border-bottom: 1px solid deeppink;
   background: #000;
 }
 
-.nav-left, .nav-right {
+.nav-left {
   display: flex;
   align-items: center;
 }
@@ -44,9 +42,19 @@ body {
   object-fit: cover;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-end;
+  flex: 1;
+}
+
 .nav-links {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .nav-links a {
@@ -63,19 +71,51 @@ body {
   color: #fff;
   font-family: 'LovelyText', cursive;
   font-size: 14px;
-  margin-top: 16px;
-  width: 250px;
 }
 
 /* Main Layout with CSS Grid */
 .container {
   display: grid;
   grid-template-columns: 250px 800px 250px;
-  gap: 32px; /* Adjust gap for spacing between sidebar and content */
+  gap: 32px;
   padding: 40px 24px;
-  max-width: 1360px;
+  max-width: 1360px; /* 250 + 800 + 250 + gaps */
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+/* Responsive layout: stack on small screens */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar,
+  .mainbox {
+    width: 100%;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-right {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .nav-links {
+    flex-grow: 1;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .nav-search {
+    width: 100%;
+    margin-top: 8px;
+  }
 }
 
 /* Sidebar and Main Content Boxes */
@@ -85,13 +125,13 @@ body {
   background-color: #000;
   padding: 24px;
   border-radius: 12px;
-  text-align: center;
-  width: 100%; /* Center everything with 100% width */
+  box-sizing: border-box;
 }
 
 .mainbox {
-  text-align: justify; /* Justify text in the main content */
-  margin-top: 20px; /* Add margin to separate from other sections */
+  width: 100%;
+  max-width: 100%;
+  text-align: justify;
 }
 
 /* Images */
@@ -120,59 +160,47 @@ img {
 }
 
 /* Headings */
-h1, h2, h3 {
-  color: #fff;
-  font-size: 1em;
+h1,
+h2,
+h3 {
+  color: #fff; /* White headers */
+  font-size: 1em; /* Small size */
   text-align: center;
   margin: 24px 0 12px;
+  font-weight: normal;
   letter-spacing: 1px;
   text-transform: uppercase;
-  font-weight: normal;
 }
 
-h1::before, h2::before, h3::before {
+h1::before,
+h2::before,
+h3::before {
   content: "𖤐 ";
 }
 
-h1::after, h2::after, h3::after {
+h1::after,
+h2::after,
+h3::after {
   content: " 𖤐";
-}
-
-/* Text */
-p,
-.small-text,
-a,
-.nav-links a,
-.nav-search,
-#commits-table td,
-#commits-table th,
-.link-list li,
-footer.footer,
-.post-date,
-#last-updated {
-  font-size: 16px !important;
-  font-weight: normal !important;
-  text-align: justify; /* Justify text for all elements except links and headers */
 }
 
 /* Text */
 p {
   color: #ddd;
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 20px;
 }
 
 .small-text {
-  font-size: 15px;
-  color: #ddd;
-  margin-bottom: 20px;
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 16px;
 }
 
 /* Links */
 a {
   color: deeppink;
   text-decoration: underline;
-  font-weight: normal;
 }
 
 a:hover {
@@ -199,11 +227,11 @@ footer.footer {
   border-top: 1px solid deeppink;
   margin-top: 48px;
   font-size: 0.9em;
-  background: #000;
-  width: 100%;
+  background: #000;         /* Match nav background */
+  border-bottom: none;      /* Optional: remove if you don't want a bottom border */
 }
 
-/* Timeline Embed Styling */
+/* 🚨 Timeline Embed Styling */
 #status-message iframe,
 #status-message img,
 #status-message video {
@@ -212,47 +240,4 @@ footer.footer {
   border: 2px solid deeppink;
   display: block;
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Timeline Date Styling */
-.post-date {
-  color: dodgerblue;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-#last-updated {
-  color: dodgerblue;
-  font-size: 16px;
-  font-weight: normal;
-  text-align: justify;
-}
-
-/* Commit Table Styling */
-#commits-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-#commits-table th,
-#commits-table td {
-  padding: 10px;
-  text-align: justify; /* Justify the text */
-  border-bottom: 1px solid deeppink;
-}
-
-#commits-table th {
-  background-color: #111;
-  color: deeppink;
-}
-
-#commits-table td {
-  color: #ddd;
-}
-
-#commits-body {
-  text-align: justify;
 }
