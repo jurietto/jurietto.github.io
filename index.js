@@ -40,7 +40,7 @@ function displayTimelineEntry() {
         mediaContent += `<img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">`;
       }
 
-      // Check if the content contains a video URL (e.g., Vimeo or other platforms)
+      // Check if the content contains a video URL (e.g., Vimeo or Dailymotion)
       const videoUrl = lastEntry.text.match(/\bhttps?:\/\/(?:www\.)?(?:vimeo\.com\/\d+|dailymotion\.com\/video\/\w+)\b/);
       if (videoUrl && videoUrl[0]) {
         mediaContent += `<iframe width="100%" height="200" src="${videoUrl[0]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
@@ -50,7 +50,7 @@ function displayTimelineEntry() {
       statusMessage.innerHTML = `
         <strong>${lastEntry.author}</strong><br>
         ${lastEntry.text}<br>
-        <small>${lastEntry.time}</small><br>
+        <small>${new Date(lastEntry.time).toLocaleString()}</small><br>
         ${mediaContent}
       `;
     })

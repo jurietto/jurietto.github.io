@@ -15,17 +15,24 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Get the latest commits
+    - name: Get the commits from this year
       run: |
-        # Get the last 5 commits and format them into a JSON array
-        git log -n 5 --pretty=format:'{"author": "%an", "message": "%s", "date": "%ad", "url": "%H"}' --date=iso > commits.json
+        # Get all commits from this year, excluding the commit URL, and format them into a structured JSON format
+        git log --since="Jan 1, $(date +'%Y')" --pretty=format:'{
+          "author": "%an",
+          "message": "%s",
+          "date": "%ad",
+          "files_changed": ['$(git show --name-only --oneline --pretty=format:"" --no-patch $commit | tail -n +2 | jq -R . | jq -s .)']
+        }' --date=iso > commits.json
+        # Use jq to format and ensure proper structure
+        jq -s '.' commits.json > commits.json.pretty && mv commits.json.pretty commits.json
 
     - name: Commit the updated commits.json
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
         git add commits.json
-        git commit -m "Update commits.json with latest commits" || echo "No changes to commit"
+        git commit -m "Update commits.json with commits from this year" || echo "No changes to commit"
         git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git HEAD:main
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
