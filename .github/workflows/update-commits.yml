@@ -1,33 +1,48 @@
-name: Update commits.json
+name: Update Commits File
 
 on:
   push:
     branches:
-      - main
+      - main  # or your default branch
+  schedule:
+    - cron: '0 0 * * 0'  # Runs every Sunday at midnight (can adjust to your needs)
 
 jobs:
-  update-commits:
+  update_commits:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Extract Commit Info and Update JSON
+      # Fetch commits from this year using git log
+      - name: Fetch commits from this year
         run: |
-          # Fetch commit details
-          commits=$(git log --pretty=format:'{"commit": "%H", "author": "%an", "date": "%ad", "message": "%s"}' --date=iso)
+          current_year=$(date +%Y)
+          git log --since="${current_year}-01-01" --until="${current_year}-12-31" --pretty=format:"{
+            \"author\": \"%an\",
+            \"message\": \"%s\",
+            \"date\": \"%ad\"
+          }" --date=iso > commits_temp.json
 
-          # Format the commits into a JSON array
-          commits_json="[$commits]"
+      # If we have commits, update the commits.json file
+      - name: Update commits.json
+        run: |
+          if [ -f commits_temp.json ]; then
+            # Check if commits_temp.json is not empty
+            if [ -s commits_temp.json ]; then
+              # If the file is not empty, move it to commits.json
+              mv commits_temp.json commits.json
+            else
+              echo "No commits found for this year."
+            fi
+          fi
 
-          # Write to commits.json
-          echo "$commits_json" > commits.json
-
-      - name: Commit and Push Updated commits.json
-        uses: EndBug/add-and-commit@v9.1.4
-        with:
-          add: 'commits.json'
-          message: 'Update commits.json with latest commits'
-          author_name: 'GitHub Actions'
-          author_email: 'actions@github.com'
+      # Commit and push the updated commits.json to the repository
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add commits.json
+          git commit -m "Update commits.json with commits from this year"
+          git push origin main  # Make sure this points to your default branch
