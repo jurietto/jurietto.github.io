@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "author": "github-actions[bot]",
@@ -11,3 +12,10 @@
   }
 ]
   
+=======
+{
+  "author": "Juri",
+  "message": "Delete README.md",
+  "date": "2025-06-13 21:09:34 -0700"
+}
+>>>>>>> aa36b9ed3c4cb56e4b5c0b6ca40c45f5f19a07e1
