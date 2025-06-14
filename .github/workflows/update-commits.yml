@@ -1,3 +1,5 @@
+# GH_PAT must be set in repository secrets for this workflow to push changes
+
 name: Update Commits JSON
 
 on:
