@@ -3,45 +3,74 @@ name: Update Commits File
 on:
   push:
     branches:
-      - main  # Or your default branch
+      - main  # Triggers on every push to main
   schedule:
-    - cron: '0 0 * * 0'  # Runs every Sunday at midnight (you can adjust this)
+    - cron: '0 0 * * 0'  # Runs every Sunday at midnight UTC
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   update_commits:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Required for pushing changes
+    
     steps:
-      # Checkout the repository
+      # Checkout with full history to get all commits
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Fetch commits from this year and write them to commits.json
-      - name: Fetch commits from this year
+      # Install jq for JSON processing
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      # Generate commits.json with all commits from this year
+      - name: Generate commits from this year
         run: |
           # Get current year
           current_year=$(date +%Y)
           
-          # Generate JSON array of commits
-          git log --since="${current_year}-01-01" --until="${current_year}-12-31" --pretty=format:'{"author": "%an", "message": "%s", "date": "%ad"}' --date=iso | \
-          jq -s '.' > temp_commits.json
-
-          # If commits.json exists, merge with new commits; else initialize with new commits
-          if [ -f commits.json ]; then
-            # Merge existing commits with new commits
-            jq -s '.[0] + .[1]' commits.json temp_commits.json > temp_merged.json
-            mv temp_merged.json commits.json
-          else
-            # Create commits.json with current year's commits
-            mv temp_commits.json commits.json
+          # Generate commits.json with all commits from this year
+          echo "Fetching commits from ${current_year}..."
+          
+          # Create the commits array
+          git log --since="${current_year}-01-01" --until="${current_year}-12-31" \
+            --pretty=format:'{"author": "%an", "message": "%s", "date": "%ai"}' \
+            --reverse | \
+            sed 's/$/,/' | \
+            sed '$ s/,$//' | \
+            sed '1i[' | \
+            sed '$a]' > commits.json
+          
+          # If the file is empty (no commits this year), create empty array
+          if [ ! -s commits.json ] || [ "$(cat commits.json)" = "[]" ]; then
+            echo "[]" > commits.json
           fi
+          
+          # Validate JSON
+          if ! jq empty commits.json 2>/dev/null; then
+            echo "Invalid JSON generated, creating empty array"
+            echo "[]" > commits.json
+          fi
+          
+          echo "Generated commits.json:"
+          cat commits.json
 
-      # Commit and push the updated commits.json
+      # Commit and push if there are changes
       - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add commits.json
-          git commit -m "Update commits.json with commits from this year" || echo "No changes to commit"
-          git push origin main  # Make sure this points to your default branch
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Check if there are changes
+          if git diff --quiet commits.json; then
+            echo "No changes to commits.json"
+          else
+            echo "Changes detected, committing..."
+            git add commits.json
+            git commit -m "Update commits.json with commits from $(date +%Y)"
+            git push
+          fi
