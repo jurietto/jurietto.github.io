@@ -1,7 +1,5 @@
-[
-  {
-    "author": "github-actions[bot]",
-    "message": "Update commits.json with commits from this year",
-    "date": "2025-06-14 06:57:12 +0000"
-  }
-]
+{
+  "author": "Juri",
+  "message": "Add workflow to update commits.json with commits from this year",
+  "date": "2025-06-14 00:28:08 -0700"
+}
