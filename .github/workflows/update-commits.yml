@@ -1,42 +1,33 @@
-name: Update Commits JSON
+name: Update commits.json
 
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
-  schedule:
-    - cron: '0 * * * *'  # Run every hour to ensure your commits are always up to date
+      - main
 
 jobs:
-  update_commits:
+  update-commits:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    # Fetch the commits from this year and update commits.json
-    - name: Get commits from this year
-      run: |
-        # Get all commits from this year (January 1st to today)
-        git log --since="Jan 1, $(date +'%Y')" --pretty=format:'{
-          "author": "%an",
-          "message": "%s",
-          "date": "%ad"
-        }' --date=iso > commits.json
+      - name: Extract Commit Info and Update JSON
+        run: |
+          # Fetch commit details
+          commits=$(git log --pretty=format:'{"commit": "%H", "author": "%an", "date": "%ad", "message": "%s"}' --date=iso)
 
-        # Use jq to format and ensure proper structure
-        jq -s '.' commits.json > commits.json.pretty && mv commits.json.pretty commits.json
+          # Format the commits into a JSON array
+          commits_json="[$commits]"
 
-    # Commit and push the updated commits.json
-    - name: Commit and push the updated commits.json
-      run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
-        git add commits.json
-        git commit -m "Update commits.json with commits from this year" || echo "No changes to commit"
-        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git HEAD:main
-      env:
-        GH_PAT: ${{ secrets.GH_PAT }}  # Make sure your GitHub token is in secrets
+          # Write to commits.json
+          echo "$commits_json" > commits.json
 
+      - name: Commit and Push Updated commits.json
+        uses: EndBug/add-and-commit@v9.1.4
+        with:
+          add: 'commits.json'
+          message: 'Update commits.json with latest commits'
+          author_name: 'GitHub Actions'
+          author_email: 'actions@github.com'
