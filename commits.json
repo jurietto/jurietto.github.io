@@ -1,14 +1,13 @@
 [
-  [
-    [
-      [
-        {
-          "author": "github-actions[bot]",
-          "message": "Update commits.json with commits from this year",
-          "date": "Fri Jun 13 06:50:08 2025 +0000",
-          "files_changed": []
-        }
-      ]
-    ]
-  ]
+  {
+    "author": "github-actions[bot]",
+    "message": "Update commits.json with commits from this year",
+    "date": "Fri Jun 13 06:50:08 2025 +0000"
+  },
+  {
+    "author": "github-actions[bot]",
+    "message": "Update commits.json with commits from this year",
+    "date": "Thu Jun 12 16:42:21 2025 +0000"
+  }
 ]
+  
