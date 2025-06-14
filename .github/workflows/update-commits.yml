@@ -3,9 +3,9 @@ name: Update Commits File
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main  # Or your default branch
   schedule:
-    - cron: '0 0 * * 0'  # Runs every Sunday at midnight (can adjust to your needs)
+    - cron: '0 0 * * 0'  # Runs every Sunday at midnight (you can adjust this)
 
 jobs:
   update_commits:
@@ -15,34 +15,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Fetch commits from this year using git log
+      # Fetch commits from this year and write them to commits.json
       - name: Fetch commits from this year
         run: |
+          # Get current year
           current_year=$(date +%Y)
-          git log --since="${current_year}-01-01" --until="${current_year}-12-31" --pretty=format:"{
-            \"author\": \"%an\",
-            \"message\": \"%s\",
-            \"date\": \"%ad\"
-          }" --date=iso > commits_temp.json
+          
+          # Generate JSON array of commits
+          git log --since="${current_year}-01-01" --until="${current_year}-12-31" --pretty=format:'{"author": "%an", "message": "%s", "date": "%ad"}' --date=iso | \
+          jq -s '.' > temp_commits.json
 
-      # If we have commits, update the commits.json file
-      - name: Update commits.json
-        run: |
-          if [ -f commits_temp.json ]; then
-            # Check if commits_temp.json is not empty
-            if [ -s commits_temp.json ]; then
-              # If the file is not empty, move it to commits.json
-              mv commits_temp.json commits.json
-            else
-              echo "No commits found for this year."
-            fi
+          # If commits.json exists, merge with new commits; else initialize with new commits
+          if [ -f commits.json ]; then
+            # Merge existing commits with new commits
+            jq -s '.[0] + .[1]' commits.json temp_commits.json > temp_merged.json
+            mv temp_merged.json commits.json
+          else
+            # Create commits.json with current year's commits
+            mv temp_commits.json commits.json
           fi
 
-      # Commit and push the updated commits.json to the repository
+      # Commit and push the updated commits.json
       - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add commits.json
-          git commit -m "Update commits.json with commits from this year"
+          git commit -m "Update commits.json with commits from this year" || echo "No changes to commit"
           git push origin main  # Make sure this points to your default branch
