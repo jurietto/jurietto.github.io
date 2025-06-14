@@ -1,21 +1,5 @@
-<<<<<<< HEAD
-[
-  {
-    "author": "github-actions[bot]",
-    "message": "Update commits.json with commits from this year",
-    "date": "Fri Jun 13 06:50:08 2025 +0000"
-  },
-  {
-    "author": "github-actions[bot]",
-    "message": "Update commits.json with commits from this year",
-    "date": "Thu Jun 12 16:42:21 2025 +0000"
-  }
-]
-  
-=======
 {
   "author": "Juri",
-  "message": "Delete README.md",
-  "date": "2025-06-13 21:09:34 -0700"
+  "message": "Resolved merge conflict in commits.json",
+  "date": "2025-06-13 21:18:06 -0700"
 }
->>>>>>> aa36b9ed3c4cb56e4b5c0b6ca40c45f5f19a07e1
