@@ -23,7 +23,7 @@ function displayTimelineEntry() {
         if (youtubeUrl && youtubeUrl[0]) {
           const videoId = youtubeUrl[0].split('v=')[1];
           // For YouTube embed
-          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
+          mediaContent += `<div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
                             <iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                             </div>`;
         }
@@ -34,7 +34,7 @@ function displayTimelineEntry() {
         const soundcloudUrl = lastEntry.text.match(/https:\/\/soundcloud\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/);
         if (soundcloudUrl && soundcloudUrl[0]) {
           // For SoundCloud embed
-          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
+          mediaContent += `<div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
                             <iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(soundcloudUrl[0])}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
                             </div>`;
         }
@@ -44,7 +44,7 @@ function displayTimelineEntry() {
       const imageUrl = lastEntry.text.match(/\bhttps?:\/\/\S+\.(?:jpg|jpeg|png|gif)\b/);
       if (imageUrl && imageUrl[0]) {
         // For image/gif embed
-        mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
+        mediaContent += `<div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
                             <img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">
                             </div>`;
       }
@@ -78,8 +78,12 @@ function displayRecentCommits() {
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');
 
+        // Format the commit date properly
+        const commitDate = new Date(commit.date).toLocaleString();
+
+        // Populate the table
         row.innerHTML = `
-          <td>${new Date(commit.date).toLocaleString()}</td>
+          <td>${commitDate}</td>
           <td>${commit.author}</td>
           <td>${commit.message}</td>
         `;
