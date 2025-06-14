@@ -1,5 +1,7 @@
-{
-  "author": "Juri",
-  "message": "Resolved merge conflict in commits.json",
-  "date": "2025-06-13 23:10:55 -0700"
-}
+[
+  {
+    "author": "github-actions[bot]",
+    "message": "Update commits.json with commits from this year",
+    "date": "2025-06-14 06:57:12 +0000"
+  }
+]
