@@ -101,7 +101,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Sidebar and Main Content Boxes */
+/* Sidebar and Main Content Containers */
 .sidebar,
 .mainbox {
   border: 1px solid deeppink;
