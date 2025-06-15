@@ -8,24 +8,28 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-weight: normal !important;
 }
 
 body {
-  background-color: #000;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/tile_100x100_1749951998181.png');
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/tile_100x100_1749965270647.png');
   background-repeat: repeat;
   background-size: 40px 40px;
   background-position: top left;
   animation: checkerboard-move 30s linear infinite;
+  background-color: #000;
   color: #fff;
   font-family: 'LovelyText', cursive, sans-serif;
-  line-height: 1.5;
-  font-size: 14px;
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+  font-size: 16px;
   font-weight: normal;
-  text-shadow: 
-    0 0 10px rgba(0, 0, 0, 1),
-    0 0 10px rgba(0, 0, 0, 1),
-    0 0 10px rgba(0, 0, 0, 1);
+}
+
+/* Headers in deeppink */
+h1, h2, h3 {
+  color: darkmagenta;
 }
 
 @keyframes checkerboard-move {
@@ -104,7 +108,7 @@ body {
 /* Sidebar and Main Content Containers */
 .sidebar,
 .mainbox {
-  border: 1px solid deeppink;
+  border: 1px solid darkmagenta;
   background-color: rgba(0, 0, 0, 0.8);
   padding: 12px;
   margin: 0;
@@ -144,7 +148,7 @@ img {
 h1,
 h2,
 h3 {
-  color: deeppink;
+  color: darkmagenta; /* Headers stand out in darkmagenta */
   font-size: 13px;
   text-align: center;
   margin: 12px 0 6px 0;
@@ -181,7 +185,7 @@ a,
 footer.footer,
 .post-date,
 #last-updated {
-  font-size: 16px;
+  font-size: 1em;
   font-weight: normal;
   text-align: justify;
 }
@@ -228,12 +232,12 @@ a:hover {
 /* Footer */
 footer.footer {
   text-align: center;
-  color: #999;
+  color: darkmagenta;
+  border-top: 2px solid darkmagenta;
+  background: #000;
   padding: 20px 0;
-  border-top: 1px solid deeppink;
   margin-top: 48px;
   font-size: 0.9em;
-  background: #000;
 }
 
 /* Timeline Embed Styling */
@@ -273,7 +277,7 @@ footer.footer {
 #commits-table td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid deeppink;
+  border: 1px solid #ddd;
 }
 
 #commits-table th {
@@ -290,7 +294,7 @@ footer.footer {
 }
 
 .small-text {
-  color: deeppink;
+  color: #fff; /* Small text is subtle in white */
 }
 
 /* Style the status message: date in deeppink, rest in #ddd */
@@ -305,6 +309,13 @@ footer.footer {
 #status-message > div {
   margin: 4px 0 0 0;
   padding: 0;
+}
+
+#status-message,
+#status-message span,
+#last-updated,
+#last-updated span {
+  font-size: 1em;
 }
 
 /* Consistent spacing for main layout */
@@ -364,193 +375,25 @@ footer.footer {
   padding: 12px 0;
 }
 
-/* ===== MOBILE RESPONSIVE (below 768px) ===== */
-@media (max-width: 767px) {
-  body {
-    font-size: 14px;
-    background-size: 30px 30px;
-  }
-  
-  .container {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 16px 12px;
-  }
-  
-  /* Mobile Navigation */
-  .top-nav {
-    flex-direction: column;
-    align-items: center;
-    padding: 16px 20px;
-    gap: 16px;
-  }
-  
-  .nav-left {
-    justify-content: center;
-  }
-  
-  .nav-avatar {
-    width: 48px;
-    height: 48px;
-  }
-  
-  .nav-right {
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-    align-items: center;
-  }
-  
-  .nav-links {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .nav-links a {
-    font-size: 14px;
-    color: deeppink;
-    text-decoration: underline;
-  }
-  
-  .nav-search {
-    width: 80%;
-    max-width: 300px;
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-  
-  /* Mobile Content */
-  .sidebar,
-  .mainbox {
-    padding: 16px;
-    border-radius: 8px;
-  }
-  
-  .mainbox {
-    order: 1;
-  }
-  
-  .sidebar:first-of-type {
-    order: 2;
-  }
-  
-  .sidebar:last-of-type {
-    order: 3;
-  }
-  
-  /* Mobile Typography */
-  h1, h2, h3 {
-    font-size: 14px;
-    margin: 12px 0 6px 0;
-  }
-  
-  p, .small-text {
-    font-size: 14px;
-    margin: 8px 0;
-  }
-  
-  /* Mobile Tables - Row-based layout */
-  #commits-table,
-  #commits-table thead,
-  #commits-table tbody,
-  #commits-table th,
-  #commits-table td,
-  #commits-table tr {
-    display: block;
-  }
-  
-  #commits-table thead {
-    display: none;
-  }
-  
-  #commits-table tr {
-    border: 2px solid deeppink;
-    background: rgba(0, 0, 0, 0.6);
-    margin: 12px 0;
-    padding: 12px;
-    border-radius: 8px;
-  }
-  
-  #commits-table td {
-    display: block;
-    text-align: left;
-    border: none;
-    padding: 4px 0;
-    font-size: 12px;
-    background: transparent;
-  }
-  
-  #commits-table td:before {
-    content: attr(data-label) ": ";
-    font-weight: bold;
-    color: deeppink;
-  }
-  
-  #commits-table td:nth-child(1):before {
-    content: "Date: ";
-  }
-  
-  #commits-table td:nth-child(2):before {
-    content: "Author: ";
-  }
-  
-  #commits-table td:nth-child(3):before {
-    content: "Message: ";
-  }
-  
-  /* Mobile Images */
-  img {
-    margin: 8px auto;
-    border-radius: 6px;
-  }
-  
-  .nav-avatar {
-    border-radius: 50%;
-  }
-  
-  /* Mobile Chat Frame */
-  .cbox-frame {
-    margin: 12px 0;
-    border-radius: 6px;
-  }
-  
-  .cbox-frame iframe {
-    height: 300px;
-  }
-  
-  /* Mobile Links */
-  .link-list {
-    line-height: 1.6;
-  }
-  
-  .link-list li {
-    margin: 6px 0;
-  }
-  
-  .link-list a {
-    font-size: 14px;
-  }
-  
-  /* Mobile Status Message */
-  #status-message {
-    font-size: 14px;
-  }
-  
-  /* Mobile Footer */
-  footer.footer {
-    padding: 16px 0;
-    font-size: 12px;
-    margin-top: 32px;
-  }
-  
-  /* Mobile SoundCloud Embed - Square Ratio */
-  #status-message iframe[src*="soundcloud"] {
-    aspect-ratio: 1 / 1;
-    height: auto !important;
-    width: 100% !important;
-    max-width: 100%;
-    margin: 12px auto;
-  }
+/* Main section and header borders */
+.mainbox,
+.sidebar,
+h1, h2, h3 {
+  border: 1px solid darkmagenta;
 }
+
+/* Footer border */
+footer.footer {
+  border-top: 2px solid darkmagenta;
+}
+
+/* Table borders */
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+/* Optional: input or button borders */
+input, button, textarea {
+  border: 1px solid deeppink;
+}
+
