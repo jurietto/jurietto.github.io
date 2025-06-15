@@ -14,7 +14,7 @@
 body {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/tile_100x100_1749965270647.png');
   background-repeat: repeat;
-  background-size: 40px 40px;
+  background-size: 32px 32px;
   background-position: top left;
   animation: checkerboard-move 30s linear infinite;
   background-color: #000;
@@ -41,7 +41,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
+  padding: 16px 20px;
   border-bottom: 1px solid deeppink;
   background: #000;
 }
@@ -74,19 +74,20 @@ body {
 .nav-links a {
   color: deeppink;
   text-decoration: underline;
-  font-size: 12px;
+  font-size: 16px;
   text-transform: uppercase;
+  text-align: justify;
 }
 
 .nav-search {
-  padding: 4px 8px;
+  padding: 8px 12px;
   border: 1px solid deeppink;
   border-radius: 3px;
   background-color: #111;
   color: #fff;
   font-family: 'LovelyText', cursive;
-  font-size: 11px;
-  width: 100px;
+  font-size: 16px;
+  width: 120px;
 }
 
 /* Main Layout with CSS Grid */
@@ -105,55 +106,36 @@ body {
 .mainbox {
   border: 1px solid darkmagenta;
   background-color: rgba(0, 0, 0, 0.8);
-  padding: 12px;
+  padding: 16px;
   margin: 0;
-  border-radius: 4px;
+  border-radius: 3px;
   box-sizing: border-box;
-  text-align: center;
-  font-size: 12px;
+  text-align: justify;
+  font-size: 16px;
 }
 
 .mainbox {
   width: 100%;
   max-width: 100%;
   text-align: justify;
-  font-size: 13px;
+  font-size: 16px;
 }
 
-/* Images */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 8px auto;
-  border: 1px solid deeppink;
-  border-radius: 3px;
-  image-rendering: pixelated;
-}
-
-/* Cbox Chat Frame */
-.cbox-frame {
-  border: 1px solid deeppink;
-  border-radius: 3px;
-  overflow: hidden;
-  margin: 12px 0;
-}
-
-/* Headings - Made bigger and white, justified, no after symbol */
+/* Headings */
 h1,
 h2,
 h3 {
   color: white;
   font-size: 16px;
   text-align: justify;
-  margin: 12px 0 6px 0;
-  padding: 4px;
+  margin: 16px 0 8px 0;
+  padding: 8px;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid deeppink;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 h1::before,
@@ -162,40 +144,21 @@ h3::before {
   content: "𖤐 ";
 }
 
-/* Removed h1::after, h2::after, h3::after */
-
-/* Text */
-p,
-.small-text,
-a,
-.nav-links a,
-.nav-search,
-#commits-table td,
-#commits-table th,
-.link-list li,
-footer.footer,
-.post-date,
-#last-updated {
-  font-size: 1em;
-  font-weight: normal;
-  text-align: justify;
-}
-
-/* Center footer text */
-footer.footer {
-  text-align: center !important;
-}
-
-footer.footer p {
-  text-align: center;
-}
-
-/* Text */
+/* Text Elements */
 p {
   color: #ddd;
   font-size: 16px;
-  margin: 12px 0;
+  margin: 16px 0;
   padding: 0;
+  text-align: justify;
+}
+
+.small-text {
+  color: #fff;
+  font-size: 16px;
+  margin: 16px 0;
+  padding: 0;
+  text-align: justify;
 }
 
 /* Links */
@@ -203,71 +166,63 @@ a {
   color: deeppink;
   text-decoration: underline;
   font-size: 16px;
+  text-align: justify;
 }
 
 a:hover {
   color: white;
 }
 
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 16px auto;
+  border: 1px solid deeppink;
+  border-radius: 3px;
+}
+
+/* Flag counter and visitor counter images */
+img[src*="flagcounter.com"] {
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+}
+
 /* List styling */
 .link-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 16px 0;
   line-height: 1.8;
+  text-align: justify;
 }
 
 .link-list li {
-  margin: 8px 0;
+  margin: 16px 0;
   font-size: 16px;
+  text-align: justify;
 }
 
 .link-list a {
   font-size: 16px;
-}
-
-/* Footer */
-footer.footer {
-  text-align: center;
-  color: darkmagenta;
-  border-top: 2px solid darkmagenta;
-  background: #000;
-  padding: 20px 0;
-  margin-top: 48px;
-  font-size: 0.9em;
-}
-
-/* Timeline Embed Styling */
-#status-message iframe,
-#status-message img,
-#status-message video {
-  margin-top: 20px;
-  border-radius: 8px;
-  border: 2px solid deeppink;
-  display: block;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Timeline Date Styling - Made same size as p text (16px) */
-.post-date {
-  color: deeppink;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-#last-updated {
-  color: deeppink;
-  font-size: 16px;
-  font-weight: normal;
   text-align: justify;
 }
 
-/* Status Message - Made same size as p text (16px) */
+/* Cbox Chat Frame */
+.cbox-frame {
+  border: 1px solid deeppink;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+/* Status Message */
 #status-message {
   color: #ddd;
   font-size: 16px;
+  margin: 16px 0;
+  text-align: justify;
 }
 
 #status-message span {
@@ -276,123 +231,275 @@ footer.footer {
 }
 
 #status-message > div {
-  margin: 4px 0 0 0;
+  margin: 8px 0 0 0;
   padding: 0;
   font-size: 16px;
+  text-align: justify;
 }
 
+/* Timeline Date Styling */
+.post-date {
+  color: deeppink;
+  margin: 16px 0 8px 0;
+  font-size: 16px;
+  text-align: justify;
+}
+
+#last-updated {
+  color: deeppink;
+  font-size: 16px;
+  font-weight: normal;
+  text-align: justify;
+  margin: 16px 0;
+}
+
+/* Timeline Embed Styling */
+#status-message iframe,
+#status-message img,
+#status-message video {
+  margin: 16px auto;
+  border-radius: 3px;
+  border: 1px solid deeppink;
+  display: block;
+  max-width: 100%;
+}
+
+/* Table - Redesigned for better visual appeal */
 #commits-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0;
   border: 1px solid darkmagenta;
   background-color: rgba(0, 0, 0, 0.8);
-}
-
-#commits-table th,
-#commits-table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid darkmagenta;
-  font-size: 16px;
+  border-radius: 3px;
+  overflow: hidden;
 }
 
 #commits-table th {
+  padding: 16px;
+  text-align: left;
+  font-size: 14px;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
+  border-bottom: 2px solid deeppink;
+}
+
+#commits-table th:first-child {
+  width: 20%;
+}
+
+#commits-table th:nth-child(2) {
+  width: 25%;
+}
+
+#commits-table th:nth-child(3) {
+  width: 55%;
+}
+
+#commits-table th::before {
+  content: "𖤐 ";
+  color: deeppink;
+  margin-right: 8px;
+}
+
+#commits-table tbody tr:nth-child(even) {
+  background-color: rgba(139, 0, 139, 0.05);
 }
 
 #commits-table td {
+  padding: 16px;
+  text-align: justify;
+  font-size: 16px;
   color: #ddd;
-  background-color: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(139, 0, 139, 0.1);
+  vertical-align: top;
+}
+
+#commits-table td:first-child {
+  color: deeppink;
+  font-weight: bold;
+  text-align: left;
+  font-size: 14px;
+}
+
+#commits-table td:nth-child(2) {
+  color: white;
+  font-weight: bold;
+  text-align: left;
+}
+
+#commits-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 #commits-body {
   text-align: justify;
 }
 
-.small-text {
-  color: #fff;
-}
-
-/* Consistent spacing for main layout */
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  padding: 16px 12px;
-  gap: 16px;
-}
-
-.mainbox,
-.sidebar {
-  padding: 12px;
-  margin: 0;
-}
-
-/* Consistent spacing for headings */
-h1,
-h2,
-h3 {
-  margin: 12px 0 6px 0;
-  padding: 4px;
-}
-
-/* Consistent spacing for paragraphs and small text */
-p,
-.small-text {
-  margin: 8px 0;
-  padding: 0;
-}
-
-/* Consistent spacing for tables */
-table {
-  margin: 12px 0;
-  padding: 0;
-}
-
-/* Consistent spacing for images */
-img {
-  margin: 8px auto;
-  padding: 0;
-}
-
-/* Consistent spacing for status message and embeds */
-#status-message > div,
-#status-message > span {
-  margin: 3px 0 0 0;
-  padding: 0;
-}
-
-/* Consistent spacing for footer */
-footer.footer {
-  margin: 0;
-  padding: 12px 0;
-}
-
-/* Main section and header borders */
-.mainbox,
-.sidebar,
-h1, h2, h3 {
-  border: 1px solid darkmagenta;
-}
-
-/* Footer border */
-footer.footer {
-  border-top: 2px solid darkmagenta;
-}
-
-/* Table borders */
-table, th, td {
-  border: 1px solid #ddd;
-}
-
-/* Optional: input or button borders */
-input, button, textarea {
+/* Form Elements */
+input, 
+button, 
+textarea {
   border: 1px solid deeppink;
+  border-radius: 3px;
+  padding: 12px 16px;
+  background-color: #111;
+  color: #fff;
+  font-family: 'LovelyText', cursive;
+  font-size: 16px;
+}
+
+input:focus, 
+button:focus, 
+textarea:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 0 1px white;
+}
+
+button {
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background-color: rgba(139, 0, 139, 0.3);
+  border-color: white;
+}
+
+/* Footer */
+footer.footer {
+  text-align: center;
+  color: darkmagenta;
+  border-top: 2px solid darkmagenta;
+  background: #000;
+  padding: 24px 0;
+  margin-top: 48px;
+  font-size: 16px;
+}
+
+footer.footer p {
+  text-align: center;
+  margin: 16px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Container becomes single column */
+  .container {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  /* All content boxes maintain consistent styling */
+  .sidebar,
+  .mainbox {
+    padding: 16px;
+  }
+  
+  /* Navigation stacks vertically but stays readable */
+  .top-nav {
+    padding: 16px;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .nav-right {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .nav-links {
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-search {
+    width: 200px;
+    margin-top: 8px;
+  }
+  
+  /* Table becomes card layout on mobile */
+  #commits-table {
+    border: none;
+    background: transparent;
+  }
+  
+  #commits-table thead {
+    display: none;
+  }
+  
+  #commits-table tbody tr {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid darkmagenta;
+    border-radius: 3px;
+    margin: 16px 0;
+    padding: 16px;
+  }
+  
+  #commits-table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  #commits-table td {
+    display: block;
+    padding: 0;
+    border: none;
+    font-size: 16px;
+    text-align: justify;
+    margin: 8px 0;
+  }
+  
+  #commits-table td:first-child {
+    color: deeppink;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+  
+  #commits-table td:first-child::before {
+    content: "𖤐 ";
+    color: white;
+    margin-right: 8px;
+  }
+  
+  #commits-table td:nth-child(2) {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: rgba(139, 0, 139, 0.2);
+    padding: 8px 12px;
+    border-radius: 3px;
+    margin: 8px 0 12px 0;
+    text-align: left;
+  }
+  
+  #commits-table td:nth-child(3) {
+    color: #ddd;
+    line-height: 1.6;
+    margin: 8px 0;
+    padding-left: 16px;
+    border-left: 2px solid deeppink;
+  }
+  
+  /* Images scale properly */
+  img {
+    margin: 16px auto;
+  }
+  
+  /* Chat box responsive */
+  .cbox-frame iframe {
+    height: 350px;
+  }
 }
