@@ -11,6 +11,12 @@
   font-weight: normal !important;
 }
 
+/* Prevent horizontal scroll on html and body */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/tile_100x100_1749965270647.png');
   background-repeat: repeat;
@@ -46,11 +52,14 @@ body {
   background: #000;
   flex-wrap: wrap;
   gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .nav-left {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .nav-avatar {
@@ -67,6 +76,8 @@ body {
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav-links {
@@ -94,6 +105,8 @@ body {
   font-size: 16px;
   width: 120px;
   min-width: 100px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Main Layout with CSS Grid - Responsive */
@@ -105,6 +118,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
+  width: 100%;
 }
 
 /* Desktop Layout */
@@ -173,6 +187,8 @@ body {
   text-align: justify;
   font-size: 16px;
   width: 100%;
+  min-width: 0; /* Prevent flex items from overflowing */
+  overflow-wrap: break-word; /* Break long words */
 }
 
 .mainbox {
@@ -216,6 +232,7 @@ h3 {
   background: #000;
   border: 1px solid darkmagenta;
   border-radius: 3px;
+  overflow-wrap: break-word;
 }
 
 h1::before,
@@ -240,6 +257,7 @@ p {
   margin: 16px 0;
   padding: 0;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 .small-text {
@@ -248,6 +266,7 @@ p {
   margin: 16px 0;
   padding: 0;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 @media (max-width: 767px) {
@@ -263,6 +282,7 @@ a {
   text-decoration: underline;
   font-size: 16px;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 a:hover {
@@ -304,6 +324,7 @@ img[src*="flagcounter.com"] {
   margin: 16px 0;
   font-size: 16px;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 .link-list a {
@@ -332,11 +353,13 @@ img[src*="flagcounter.com"] {
   border-radius: 3px;
   overflow: hidden;
   margin: 16px 0;
+  max-width: 100%;
 }
 
 .cbox-frame iframe {
   width: 100%;
   height: 450px;
+  border: none;
 }
 
 @media (max-width: 767px) {
@@ -355,6 +378,7 @@ img[src*="flagcounter.com"] {
   font-size: 16px;
   margin: 16px 0;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 #status-message span {
@@ -367,6 +391,7 @@ img[src*="flagcounter.com"] {
   padding: 0;
   font-size: 16px;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 /* Timeline Date Styling */
@@ -375,6 +400,7 @@ img[src*="flagcounter.com"] {
   margin: 16px 0 8px 0;
   font-size: 16px;
   text-align: justify;
+  overflow-wrap: break-word;
 }
 
 #last-updated {
@@ -383,6 +409,7 @@ img[src*="flagcounter.com"] {
   font-weight: normal;
   text-align: justify;
   margin: 16px 0;
+  overflow-wrap: break-word;
 }
 
 /* Timeline Embed Styling */
@@ -394,31 +421,30 @@ img[src*="flagcounter.com"] {
   border: 1px solid darkmagenta;
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
-/* Table - Mobile Responsive */
-#commits-table {
+/* Table - Mobile Responsive - FIXED */
+.table-container {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  overflow-x: auto;
   margin: 16px 0;
   border: 1px solid darkmagenta;
-  background-color: #000;
   border-radius: 3px;
-  overflow: hidden;
-  overflow-x: auto;
-  display: block;
-  white-space: nowrap;
 }
 
-@media (min-width: 768px) {
-  #commits-table {
-    display: table;
-  }
+#commits-table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #000;
+  border-radius: 3px;
+  table-layout: fixed;
 }
 
 #commits-table th {
-  padding: 16px;
+  padding: 16px 8px;
   text-align: left;
   font-size: 14px;
   background-color: #000;
@@ -427,18 +453,22 @@ img[src*="flagcounter.com"] {
   text-transform: uppercase;
   letter-spacing: 1px;
   border-bottom: 2px solid deeppink;
+  overflow-wrap: break-word;
 }
 
 #commits-table th:first-child {
   width: 20%;
+  min-width: 80px;
 }
 
 #commits-table th:nth-child(2) {
   width: 25%;
+  min-width: 100px;
 }
 
 #commits-table th:nth-child(3) {
   width: 55%;
+  min-width: 200px;
 }
 
 #commits-table th::before {
@@ -452,12 +482,15 @@ img[src*="flagcounter.com"] {
 }
 
 #commits-table td {
-  padding: 16px;
+  padding: 16px 8px;
   text-align: justify;
   font-size: 16px;
   color: #ddd;
   border-bottom: 1px solid darkmagenta;
   vertical-align: top;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 #commits-table td:first-child {
@@ -483,18 +516,36 @@ img[src*="flagcounter.com"] {
 
 /* Mobile table adjustments */
 @media (max-width: 767px) {
+  .table-container {
+    margin: 12px 0;
+  }
+  
   #commits-table {
     font-size: 12px;
   }
   
   #commits-table th,
   #commits-table td {
-    padding: 8px;
+    padding: 8px 4px;
     font-size: 12px;
   }
   
-  #commits-table th {
+  #commits-table th:first-child,
+  #commits-table td:first-child {
+    min-width: 60px;
+    width: 15%;
+  }
+  
+  #commits-table th:nth-child(2),
+  #commits-table td:nth-child(2) {
     min-width: 80px;
+    width: 25%;
+  }
+  
+  #commits-table th:nth-child(3),
+  #commits-table td:nth-child(3) {
+    min-width: 120px;
+    width: 60%;
   }
   
   #commits-table td:first-child {
@@ -513,6 +564,8 @@ textarea {
   color: #fff;
   font-family: 'LovelyText', cursive;
   font-size: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 input:focus, 
@@ -550,10 +603,12 @@ footer.footer {
   padding: 24px 0;
   margin-top: 48px;
   font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 footer.footer p {
   text-align: center;
   margin: 16px 0;
+  overflow-wrap: break-word;
 }
-
