@@ -27,11 +27,6 @@ body {
   font-weight: normal;
 }
 
-/* Headers in deeppink */
-h1, h2, h3 {
-  color: darkmagenta;
-}
-
 @keyframes checkerboard-move {
   0% {
     background-position: 0 0;
@@ -144,13 +139,13 @@ img {
   margin: 12px 0;
 }
 
-/* Headings */
+/* Headings - Made bigger and white, justified, no after symbol */
 h1,
 h2,
 h3 {
-  color: darkmagenta; /* Headers stand out in darkmagenta */
-  font-size: 13px;
-  text-align: center;
+  color: white;
+  font-size: 16px;
+  text-align: justify;
   margin: 12px 0 6px 0;
   padding: 4px;
   font-weight: bold;
@@ -167,11 +162,7 @@ h3::before {
   content: "𖤐 ";
 }
 
-h1::after,
-h2::after,
-h3::after {
-  content: " 𖤐";
-}
+/* Removed h1::after, h2::after, h3::after */
 
 /* Text */
 p,
@@ -211,6 +202,7 @@ p {
 a {
   color: deeppink;
   text-decoration: underline;
+  font-size: 16px;
 }
 
 a:hover {
@@ -227,6 +219,11 @@ a:hover {
 
 .link-list li {
   margin: 8px 0;
+  font-size: 16px;
+}
+
+.link-list a {
+  font-size: 16px;
 }
 
 /* Footer */
@@ -253,7 +250,7 @@ footer.footer {
   margin-right: auto;
 }
 
-/* Timeline Date Styling */
+/* Timeline Date Styling - Made same size as p text (16px) */
 .post-date {
   color: deeppink;
   margin-bottom: 10px;
@@ -267,26 +264,50 @@ footer.footer {
   text-align: justify;
 }
 
+/* Status Message - Made same size as p text (16px) */
+#status-message {
+  color: #ddd;
+  font-size: 16px;
+}
+
+#status-message span {
+  color: deeppink;
+  font-size: 16px;
+}
+
+#status-message > div {
+  margin: 4px 0 0 0;
+  padding: 0;
+  font-size: 16px;
+}
+
 #commits-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  border: 1px solid darkmagenta;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #commits-table th,
 #commits-table td {
   padding: 10px;
   text-align: left;
-  border: 1px solid #ddd;
+  border: 1px solid darkmagenta;
+  font-size: 16px;
 }
 
 #commits-table th {
-  background-color: #111;
-  color: deeppink;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 #commits-table td {
   color: #ddd;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 #commits-body {
@@ -294,28 +315,7 @@ footer.footer {
 }
 
 .small-text {
-  color: #fff; /* Small text is subtle in white */
-}
-
-/* Style the status message: date in deeppink, rest in #ddd */
-#status-message {
-  color: #ddd;
-}
-
-#status-message span {
-  color: deeppink;
-}
-
-#status-message > div {
-  margin: 4px 0 0 0;
-  padding: 0;
-}
-
-#status-message,
-#status-message span,
-#last-updated,
-#last-updated span {
-  font-size: 1em;
+  color: #fff;
 }
 
 /* Consistent spacing for main layout */
@@ -396,4 +396,3 @@ table, th, td {
 input, button, textarea {
   border: 1px solid deeppink;
 }
-
