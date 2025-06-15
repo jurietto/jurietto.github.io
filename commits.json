@@ -3867,5 +3867,7 @@
 {"author": "Juri", "message": "t push origin mainMerge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-15 01:18:57 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-15 08:19:35 +0000"},
 {"author": "Juri", "message": "Add archive images to sidebar and after social links", "date": "2025-06-15 05:59:24 -0700"},
-{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-15 05:59:48 -0700"}
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-15 05:59:48 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-15 13:00:40 +0000"},
+{"author": "Juri", "message": "Add mobile-responsive CSS and archive images", "date": "2025-06-15 06:05:15 -0700"}
 ]
