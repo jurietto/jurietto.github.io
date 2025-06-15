@@ -4,22 +4,28 @@
   font-display: swap;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background-color: #000;
-  background-image:
-    url('https://file.garden/ZhTgSjrp5nAroRKq/tile_100x100_1749941154486.png');
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/tile_100x100_1749941154486.png');
   background-repeat: repeat;
   background-size: 40px 40px;
   background-position: top left;
   animation: checkerboard-move 30s linear infinite;
-  color: white;
+  color: #fff;
   font-family: 'LovelyText', cursive, sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.7;
-  font-size: 16px;
-  font-weight: normal; /* No bold by default */
-  /* Opacity for background image is simulated by overlaying a semi-transparent black layer */
+  line-height: 1.5;
+  font-size: 14px;
+  font-weight: normal;
+  text-shadow: 
+    0 0 10px rgba(0, 0, 0, 1),
+    0 0 10px rgba(0, 0, 0, 1),
+    0 0 10px rgba(0, 0, 0, 1);
 }
 
 @keyframes checkerboard-move {
@@ -36,7 +42,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 12px 20px;
   border-bottom: 1px solid deeppink;
   background: #000;
 }
@@ -47,252 +53,72 @@ body {
 }
 
 .nav-avatar {
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  border: 2px solid deeppink;
+  border: 1px solid deeppink;
   object-fit: cover;
+  image-rendering: pixelated;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .nav-links {
   display: flex;
-  gap: 16px;
+  gap: 12px;
 }
 
 .nav-links a {
   color: deeppink;
   text-decoration: underline;
-  font-size: 16px;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .nav-search {
-  padding: 6px 12px;
+  padding: 4px 8px;
   border: 1px solid deeppink;
-  border-radius: 6px;
+  border-radius: 3px;
   background-color: #111;
   color: #fff;
   font-family: 'LovelyText', cursive;
-  font-size: 14px;
+  font-size: 11px;
+  width: 100px;
 }
 
 /* Main Layout with CSS Grid */
 .container {
   display: grid;
-  grid-template-columns: 250px 800px 250px;
-  gap: 32px;
-  padding: 32px 16px;
-  max-width: 1360px;
+  grid-template-columns: 220px 1fr 220px;
+  gap: 16px;
+  padding: 16px 12px;
+  max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
-}
-
-/* ===== MOBILE RESPONSIVE (below 768px) ===== */
-@media (max-width: 767px) {
- body {
-   font-size: 14px;
-   background-size: 30px 30px;
- }
- 
- .container {
-   grid-template-columns: 1fr;
-   gap: 16px;
-   padding: 16px 12px;
- }
- 
- /* Mobile Navigation */
- .top-nav {
-   flex-direction: column;
-   align-items: center;
-   padding: 16px 20px;
-   gap: 16px;
- }
- 
- .nav-left {
-   justify-content: center;
- }
- 
- .nav-avatar {
-   width: 48px;
-   height: 48px;
- }
- 
- .nav-right {
-   flex-direction: column;
-   gap: 16px;
-   width: 100%;
-   align-items: center;
- }
- 
- .nav-links {
-   justify-content: center;
-   flex-wrap: wrap;
-   gap: 20px;
-   width: 100%;
- }
- 
- .nav-links a {
-   font-size: 14px;
-   color: deeppink;
-   text-decoration: underline;
- }
- 
- .nav-search {
-   width: 80%;
-   max-width: 300px;
-   font-size: 14px;
-   padding: 8px 12px;
- }
-
- /* Remove hover effects from nav links and search */
-.nav-links a:hover {
- color: deeppink;
- border: none;
- outline: none;
-}
-
-.nav-search:hover,
-.nav-search:focus {
- border: 1px solid deeppink;
- outline: none;
-}
- 
- /* Mobile Content */
- .sidebar,
- .mainbox {
-   padding: 16px;
-   border-radius: 8px;
- }
- 
- .mainbox {
-   order: 1;
- }
- 
- .sidebar:first-of-type {
-   order: 2;
- }
- 
- .sidebar:last-of-type {
-   order: 3;
- }
- 
- /* Mobile Typography */
- h1, h2, h3 {
-   font-size: 14px;
-   margin: 12px 0 6px 0;
- }
- 
- p, .small-text {
-   font-size: 14px;
-   margin: 8px 0;
- }
- 
- /* Mobile Tables */
- #commits-table {
-   font-size: 11px;
-   width: 100%;
-   border-collapse: collapse;
- }
- 
- #commits-table th,
- #commits-table td {
-   padding: 8px 4px;
-   text-align: left;
-   word-wrap: break-word;
-   max-width: 0;
- }
- 
- #commits-table th:nth-child(1),
- #commits-table td:nth-child(1) {
-   width: 25%;
- }
- 
- #commits-table th:nth-child(2),
- #commits-table td:nth-child(2) {
-   width: 20%;
- }
- 
- #commits-table th:nth-child(3),
- #commits-table td:nth-child(3) {
-   width: 55%;
- }
- 
- /* Mobile Images */
- img {
-   margin: 8px auto;
-   border-radius: 6px;
- }
- 
- .nav-avatar {
-   border-radius: 50%;
- }
- 
- /* Mobile Chat Frame */
- .cbox-frame {
-   margin: 12px 0;
-   border-radius: 6px;
- }
- 
- .cbox-frame iframe {
-   height: 300px;
- }
- 
- /* Mobile Links */
- .link-list {
-   line-height: 1.6;
- }
- 
- .link-list li {
-   margin: 6px 0;
- }
- 
- .link-list a {
-   font-size: 14px;
- }
- 
- /* Mobile Status Message */
- #status-message {
-   font-size: 14px;
- }
- 
- /* Mobile Footer */
- footer.footer {
-   padding: 16px 0;
-   font-size: 12px;
-   margin-top: 32px;
- }
-
- /* Mobile SoundCloud Embed - Square Ratio */
-@media (max-width: 767px) {
- #status-message iframe[src*="soundcloud"] {
-   aspect-ratio: 1 / 1;
-   height: auto !important;
-   width: 100% !important;
- }
-}
 }
 
 /* Sidebar and Main Content Boxes */
 .sidebar,
 .mainbox {
   border: 1px solid deeppink;
-  background-color: #000;
-  padding: 24px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 12px;
   margin: 0;
-  border-radius: 12px;
+  border-radius: 4px;
   box-sizing: border-box;
   text-align: center;
+  font-size: 12px;
 }
 
 .mainbox {
   width: 100%;
   max-width: 100%;
   text-align: justify;
+  font-size: 13px;
 }
 
 /* Images */
@@ -300,31 +126,35 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 12px auto;
-  border: 2px solid deeppink;
-  border-radius: 8px;
+  margin: 8px auto;
+  border: 1px solid deeppink;
+  border-radius: 3px;
+  image-rendering: pixelated;
 }
 
 /* Cbox Chat Frame */
 .cbox-frame {
-  border: 2px solid deeppink;
-  border-radius: 8px;
+  border: 1px solid deeppink;
+  border-radius: 3px;
   overflow: hidden;
-  margin: 20px 0;
+  margin: 12px 0;
 }
 
 /* Headings */
 h1,
 h2,
 h3 {
-  color: #fff;
-  font-size: 1em;
+  color: deeppink;
+  font-size: 13px;
   text-align: center;
-  margin: 16px 0 8px 0;
-  padding: 0;
-  font-weight: normal;
+  margin: 12px 0 6px 0;
+  padding: 4px;
+  font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid deeppink;
+  border-radius: 2px;
 }
 
 h1::before,
@@ -484,13 +314,13 @@ body {
 }
 
 .container {
-  padding: 32px 16px;
-  gap: 32px;
+  padding: 16px 12px;
+  gap: 16px;
 }
 
 .mainbox,
 .sidebar {
-  padding: 24px;
+  padding: 12px;
   margin: 0;
 }
 
@@ -498,38 +328,229 @@ body {
 h1,
 h2,
 h3 {
-  margin: 16px 0 8px 0;
-  padding: 0;
+  margin: 12px 0 6px 0;
+  padding: 4px;
 }
 
 /* Consistent spacing for paragraphs and small text */
 p,
 .small-text {
-  margin: 12px 0;
+  margin: 8px 0;
   padding: 0;
 }
 
 /* Consistent spacing for tables */
 table {
-  margin: 16px 0;
+  margin: 12px 0;
   padding: 0;
 }
 
 /* Consistent spacing for images */
 img {
-  margin: 12px auto;
+  margin: 8px auto;
   padding: 0;
 }
 
 /* Consistent spacing for status message and embeds */
 #status-message > div,
 #status-message > span {
-  margin: 4px 0 0 0;
+  margin: 3px 0 0 0;
   padding: 0;
 }
 
 /* Consistent spacing for footer */
 footer.footer {
   margin: 0;
-  padding: 20px 0;
+  padding: 12px 0;
+}
+
+/* ===== MOBILE RESPONSIVE (below 768px) ===== */
+@media (max-width: 767px) {
+  body {
+    font-size: 14px;
+    background-size: 30px 30px;
+  }
+  
+  .container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 12px;
+  }
+  
+  /* Mobile Navigation */
+  .top-nav {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 16px;
+  }
+  
+  .nav-left {
+    justify-content: center;
+  }
+  
+  .nav-avatar {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .nav-right {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .nav-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .nav-links a {
+    font-size: 14px;
+    color: deeppink;
+    text-decoration: underline;
+  }
+  
+  .nav-search {
+    width: 80%;
+    max-width: 300px;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  /* Mobile Content */
+  .sidebar,
+  .mainbox {
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .mainbox {
+    order: 1;
+  }
+  
+  .sidebar:first-of-type {
+    order: 2;
+  }
+  
+  .sidebar:last-of-type {
+    order: 3;
+  }
+  
+  /* Mobile Typography */
+  h1, h2, h3 {
+    font-size: 14px;
+    margin: 12px 0 6px 0;
+  }
+  
+  p, .small-text {
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  
+  /* Mobile Tables - Row-based layout */
+  #commits-table,
+  #commits-table thead,
+  #commits-table tbody,
+  #commits-table th,
+  #commits-table td,
+  #commits-table tr {
+    display: block;
+  }
+  
+  #commits-table thead {
+    display: none;
+  }
+  
+  #commits-table tr {
+    border: 2px solid deeppink;
+    background: rgba(0, 0, 0, 0.6);
+    margin: 12px 0;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  #commits-table td {
+    display: block;
+    text-align: left;
+    border: none;
+    padding: 4px 0;
+    font-size: 12px;
+    background: transparent;
+  }
+  
+  #commits-table td:before {
+    content: attr(data-label) ": ";
+    font-weight: bold;
+    color: deeppink;
+  }
+  
+  #commits-table td:nth-child(1):before {
+    content: "Date: ";
+  }
+  
+  #commits-table td:nth-child(2):before {
+    content: "Author: ";
+  }
+  
+  #commits-table td:nth-child(3):before {
+    content: "Message: ";
+  }
+  
+  /* Mobile Images */
+  img {
+    margin: 8px auto;
+    border-radius: 6px;
+  }
+  
+  .nav-avatar {
+    border-radius: 50%;
+  }
+  
+  /* Mobile Chat Frame */
+  .cbox-frame {
+    margin: 12px 0;
+    border-radius: 6px;
+  }
+  
+  .cbox-frame iframe {
+    height: 300px;
+  }
+  
+  /* Mobile Links */
+  .link-list {
+    line-height: 1.6;
+  }
+  
+  .link-list li {
+    margin: 6px 0;
+  }
+  
+  .link-list a {
+    font-size: 14px;
+  }
+  
+  /* Mobile Status Message */
+  #status-message {
+    font-size: 14px;
+  }
+  
+  /* Mobile Footer */
+  footer.footer {
+    padding: 16px 0;
+    font-size: 12px;
+    margin-top: 32px;
+  }
+  
+  /* Mobile SoundCloud Embed - Square Ratio */
+  #status-message iframe[src*="soundcloud"] {
+    aspect-ratio: 1 / 1;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100%;
+    margin: 12px auto;
+  }
 }
