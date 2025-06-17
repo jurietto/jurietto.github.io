@@ -46,7 +46,7 @@ function displayTimelineEntry() {
     .catch(error => console.error('Error fetching timeline:', error));
 }
 
-// Display the last 5 commits
+// Display the last 5 commits (latest first)
 function displayRecentCommits() {
   const commitsTableBody = document.getElementById('commit-list');
 
@@ -54,7 +54,10 @@ function displayRecentCommits() {
     .then(response => response.json())
     .then(commits => {
       commitsTableBody.innerHTML = '';
-      const recentCommits = commits.slice(-5);
+      
+      // Sort commits by date (newest first) and take the first 5
+      const sortedCommits = commits.sort((a, b) => new Date(b.date) - new Date(a.date));
+      const recentCommits = sortedCommits.slice(0, 5);
 
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');

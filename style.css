@@ -69,7 +69,21 @@ aside h2 {
   margin-bottom: 0.5rem;
 }
 
+/* Skull gif styling - override global img rules */
+.link-list img {
+  width: 20px !important;
+  height: 20px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  object-fit: contain;
+}
+
 aside h2:first-child {
+  margin-top: 0;
+}
+
+#main-content h2:first-child {
   margin-top: 0;
 }
 
@@ -268,7 +282,7 @@ ul.link-list li a:hover {
   background: #000;
   color: var(--text-color);
   margin-bottom: var(--element-spacing);
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 #changelog-section th, #changelog-section td {
@@ -277,7 +291,20 @@ ul.link-list li a:hover {
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  max-width: 200px;
+}
+
+#changelog-section th:first-child, #changelog-section td:first-child {
+  width: 25%;
+  max-width: 120px;
+}
+
+#changelog-section th:nth-child(2), #changelog-section td:nth-child(2) {
+  width: 20%;
+  max-width: 100px;
+}
+
+#changelog-section th:nth-child(3), #changelog-section td:nth-child(3) {
+  width: 55%;
 }
 
 #changelog-section th {
@@ -427,37 +454,8 @@ footer.footer {
     margin-bottom: var(--element-spacing);
   }
   
-  /* Mobile grid for right sidebar images only */
-  #right-sidebar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.875rem;
-    align-items: start;
-  }
-  
-  #right-sidebar h2 {
-    grid-column: 1 / -1;
-    margin-top: var(--section-spacing);
-    margin-bottom: 0.5rem;
-  }
-  
-  #right-sidebar h2:first-child {
-    margin-top: 0;
-  }
-  
-  #right-sidebar ul.link-list {
-    grid-column: 1 / -1;
-    margin-bottom: var(--element-spacing);
-  }
-  
-  #right-sidebar p {
-    grid-column: 1 / -1;
-    margin-bottom: var(--element-spacing);
-  }
-  
-  #right-sidebar img {
-    margin-bottom: 0;
-  }
+  /* REMOVED: Mobile grid for right sidebar - now images stack vertically */
+  /* All sidebar images will stack vertically with consistent spacing */
   
   .cbox-frame iframe {
     height: 300px;
@@ -473,13 +471,27 @@ footer.footer {
   }
   
   #changelog-section table {
-    min-width: 500px;
+    width: 100%;
     font-size: 0.9rem;
   }
   
   #changelog-section th, #changelog-section td {
-    padding: 0.5rem 0.625rem;
-    max-width: 150px;
+    padding: 0.5rem 0.375rem;
+  }
+  
+  #changelog-section th:first-child, #changelog-section td:first-child {
+    width: 30%;
+    max-width: 80px;
+    font-size: 0.8rem;
+  }
+  
+  #changelog-section th:nth-child(2), #changelog-section td:nth-child(2) {
+    width: 25%;
+    max-width: 70px;
+  }
+  
+  #changelog-section th:nth-child(3), #changelog-section td:nth-child(3) {
+    width: 45%;
   }
   
   h2 {
@@ -532,11 +544,6 @@ footer.footer {
     max-width: 280px;
   }
   
-  #right-sidebar {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-  
   /* Ensure consistent spacing on small mobile */
   aside h2 {
     margin-top: var(--section-spacing);
@@ -564,13 +571,28 @@ footer.footer {
   }
   
   #changelog-section table {
-    min-width: 400px;
     font-size: 0.85rem;
+    width: 100%;
   }
   
   #changelog-section th, #changelog-section td {
-    padding: 0.375rem 0.5rem;
-    max-width: 120px;
+    padding: 0.375rem 0.25rem;
+  }
+  
+  #changelog-section th:first-child, #changelog-section td:first-child {
+    width: 30%;
+    max-width: 70px;
+    font-size: 0.75rem;
+  }
+  
+  #changelog-section th:nth-child(2), #changelog-section td:nth-child(2) {
+    width: 25%;
+    max-width: 60px;
+    font-size: 0.8rem;
+  }
+  
+  #changelog-section th:nth-child(3), #changelog-section td:nth-child(3) {
+    width: 45%;
   }
   
   h2 {
@@ -622,10 +644,26 @@ footer.footer {
   
   #changelog-section table {
     font-size: 0.75rem;
-    min-width: 350px;
+    width: 100%;
   }
   
   #changelog-section th, #changelog-section td {
-    padding: 0.25rem 0.375rem;
+    padding: 0.25rem 0.1875rem;
+  }
+  
+  #changelog-section th:first-child, #changelog-section td:first-child {
+    width: 32%;
+    max-width: 60px;
+    font-size: 0.7rem;
+  }
+  
+  #changelog-section th:nth-child(2), #changelog-section td:nth-child(2) {
+    width: 23%;
+    max-width: 50px;
+    font-size: 0.7rem;
+  }
+  
+  #changelog-section th:nth-child(3), #changelog-section td:nth-child(3) {
+    width: 45%;
   }
 }
