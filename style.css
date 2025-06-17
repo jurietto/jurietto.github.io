@@ -419,10 +419,11 @@ img[src*="flagcounter.com"] {
   margin: 16px auto;
   border-radius: 3px;
   border: 1px solid darkmagenta;
-  display: block;
-  max-width: 100%;
-  height: auto;
 }
+
+
+
+
 
 /* Table - Mobile Responsive - FIXED */
 .table-container {
