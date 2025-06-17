@@ -3874,5 +3874,8 @@
 {"author": "Juri", "message": "Fix horizontal scrolling and responsive layout issues", "date": "2025-06-15 06:12:38 -0700"},
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-15 06:13:18 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-15 13:16:16 +0000"},
-{"author": "Juri", "message": "Update core files: index.js, index.html, style.css", "date": "2025-06-16 17:54:20 -0700"}
+{"author": "Juri", "message": "Update core files: index.js, index.html, style.css", "date": "2025-06-16 17:54:20 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-17 00:55:22 +0000"},
+{"author": "Juri", "message": "Updated CSS with polkadot patterns, banner, and text shadows", "date": "2025-06-16 20:42:42 -0700"},
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-16 20:43:01 -0700"}
 ]
