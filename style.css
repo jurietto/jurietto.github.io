@@ -13,7 +13,7 @@
 }
 
 :root {
-  --polka-bg-image: radial-gradient(rgb(139, 0, 139) 23.6%, transparent 35.6%), radial-gradient(rgb(139, 0, 139) 23.6%, transparent 35.6%);
+  --polka-bg-image: radial-gradient(rgba(60, 0, 60, 0.8) 23.6%, transparent 35.6%), radial-gradient(rgba(60, 0, 60, 0.8) 23.6%, transparent 35.6%);
   --polka-bg-position: 0 0, 8px 8px;
   --polka-bg-size: 16px 16px;
   --polka-bg-color: #000;
@@ -69,14 +69,15 @@ aside h2 {
   margin-bottom: 0.5rem;
 }
 
-/* Skull gif styling - override global img rules */
+/* Bullet point gif styling - override global img rules */
 .link-list img {
-  width: 20px !important;
-  height: 20px !important;
+  width: auto !important;
   border: none !important;
   border-radius: 0 !important;
   background: transparent !important;
   object-fit: contain;
+  
+  margin-right: 0.375rem;
 }
 
 aside h2:first-child {
@@ -231,13 +232,19 @@ ul.link-list li a {
   color: var(--accent-color);
   padding: 0.1875rem 0.375rem;
   border-radius: 0.25rem;
-  display: inline-block;
+  display: inline-flex;
+  gap: 0.375rem;         /* Optional: adds space between icon and text */
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 ul.link-list li a:hover {
   color: var(--primary-color);
+}
+
+ul.link-list img {
+  vertical-align: middle;
+  margin-right: 0;       /* Remove extra margin if using gap */
 }
 
 .cbox-frame {
