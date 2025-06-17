@@ -163,6 +163,12 @@ header.top-nav {
   flex-shrink: 0;
 }
 
+.nav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .nav-links {
   display: flex;
   gap: 1rem;
@@ -672,5 +678,17 @@ footer.footer {
   
   #changelog-section th:nth-child(3), #changelog-section td:nth-child(3) {
     width: 45%;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .nav-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
