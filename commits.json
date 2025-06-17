@@ -3887,5 +3887,8 @@
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-17 15:20:28 +0000"},
 {"author": "Juri", "message": "🎨 Major mobile optimizations + skull gif navigation bullets", "date": "2025-06-17 09:00:59 -0700"},
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-17 09:03:51 -0700"},
-{"author": "Juri", "message": "Initial commit - site files", "date": "2025-06-17 13:18:04 -0700"}
+{"author": "Juri", "message": "Initial commit - site files", "date": "2025-06-17 13:18:04 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-17 20:20:00 +0000"},
+{"author": "Juri", "message": "Fix avatar display on mobile nav", "date": "2025-06-17 13:41:51 -0700"},
+{"author": "Juri", "message": "Merge branch 'maint push ' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-17 13:42:07 -0700"}
 ]
