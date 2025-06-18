@@ -3926,5 +3926,7 @@
 {"author": "Juri", "message": "TOFFEE", "date": "2025-06-18 14:07:22 -0700"},
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-18 14:08:28 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-18 21:09:08 +0000"},
-{"author": "Juri", "message": "fix date parsing for commits", "date": "2025-06-18 16:29:56 -0700"}
+{"author": "Juri", "message": "fix date parsing for commits", "date": "2025-06-18 16:29:56 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-18 23:32:51 +0000"},
+{"author": "Juri", "message": "Fix commit date parsing and list bullet alignment (#3)", "date": "2025-06-18 16:47:56 -0700"}
 ]
