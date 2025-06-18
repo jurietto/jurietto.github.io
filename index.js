@@ -56,13 +56,23 @@ function displayRecentCommits() {
       commitsTableBody.innerHTML = '';
       
       // Sort commits by date (newest first) and take the first 5
-      const sortedCommits = commits.sort((a, b) => new Date(b.date) - new Date(a.date));
+      const parseCommitDate = dateStr => {
+        const parts = dateStr.trim().split(' ');
+        if (parts.length < 2) return new Date(dateStr);
+        const [date, time, zone] = parts;
+        const offset = zone ? zone.replace(/([+-]\d{2})(\d{2})/, '$1:$2') : '';
+        return new Date(`${date}T${time}${offset}`);
+      };
+
+      const sortedCommits = commits.sort((a, b) =>
+        parseCommitDate(b.date) - parseCommitDate(a.date)
+      );
       const recentCommits = sortedCommits.slice(0, 5);
 
       recentCommits.forEach(commit => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${new Date(commit.date).toLocaleString()}</td>
+          <td>${parseCommitDate(commit.date).toLocaleString()}</td>
           <td>${commit.author}</td>
           <td>${commit.message}</td>
         `;
