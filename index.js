@@ -1,6 +1,7 @@
 // Function to fetch and display the last timeline entry
 function displayTimelineEntry() {
   const statusMessage = document.getElementById('timeline-status');
+
   if (!statusMessage) {
     console.error('Timeline status element not found!');
     return;
@@ -39,8 +40,7 @@ function displayTimelineEntry() {
       }
 
       const textWithoutLinks = lastEntry.text.replace(/https?:\/\/[^\s]+/g, '');
-      const parsedDate = new Date(lastEntry.time);
-      const dateString = !isNaN(parsedDate) ? parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString() : '—';
+      const dateString = new Date(lastEntry.time).toLocaleString();
       statusMessage.innerHTML = `<span>${dateString}</span><br><div>${textWithoutLinks}</div>${mediaContent}`;
     })
     .catch(error => console.error('Error fetching timeline:', error));
@@ -54,15 +54,15 @@ function displayRecentCommits() {
     .then(response => response.json())
     .then(commits => {
       commitsTableBody.innerHTML = '';
+      
+      // Sort commits by date (newest first) and take the first 5
       const sortedCommits = commits.sort((a, b) => new Date(b.date) - new Date(a.date));
       const recentCommits = sortedCommits.slice(0, 5);
 
       recentCommits.forEach(commit => {
-        const dateObj = new Date(commit.date);
-        const dateDisplay = !isNaN(dateObj) ? dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString() : '—';
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${dateDisplay}</td>
+          <td>${new Date(commit.date).toLocaleString()}</td>
           <td>${commit.author}</td>
           <td>${commit.message}</td>
         `;
@@ -79,9 +79,7 @@ function displayLastUpdated() {
   fetch('index.html', { method: 'HEAD' })
     .then(response => {
       const lastModified = new Date(response.headers.get('last-modified'));
-      lastUpdatedElement.textContent = !isNaN(lastModified)
-        ? `${lastModified.toLocaleDateString()} @ ${lastModified.toLocaleTimeString()}`
-        : '—';
+      lastUpdatedElement.textContent = `${lastModified.toLocaleDateString()} @ ${lastModified.toLocaleTimeString()}`;
     })
     .catch(error => console.error('Error fetching last updated date:', error));
 }

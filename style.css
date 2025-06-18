@@ -48,13 +48,10 @@ img{width:100%!important;height:auto;display:block;border:2px solid var(--primar
 main img,
 #main-content img {
   border-radius: 1rem;
-  padding: 6px; /* creates space for the shadow */
-  background: transparent;
-  box-shadow:
-    inset 0 0 0px 5px rgba(0,0,0,1),
-    inset 0 0 0px 10px rgba(0,0,0,0.7),
-    inset 0 0 0px 15px rgba(0,0,0,0.4);
+  padding: 4px;
+  background: var(--bg-color, #fff); /* optional, for contrast */
   box-sizing: border-box;
+  border: 2px solid rgba(0,0,0,0.18); /* subtle black stroke */
 }
 
 /* Text Elements */
