@@ -57,11 +57,11 @@ function displayRecentCommits() {
       
       // Sort commits by date (newest first) and take the first 5
       const parseCommitDate = dateStr => {
-        const parts = dateStr.trim().split(' ');
-        if (parts.length < 2) return new Date(dateStr);
-        const [date, time, zone] = parts;
-        const offset = zone ? zone.replace(/([+-]\d{2})(\d{2})/, '$1:$2') : '';
-        return new Date(`${date}T${time}${offset}`);
+        const iso = dateStr
+          .replace(' ', 'T')
+          .replace(/ ([+-]\d{2})(\d{2})$/, (_, h, m) => ` ${h}:${m}`)
+          .replace('T', 'T');
+        return new Date(iso);
       };
 
       const sortedCommits = commits.sort((a, b) =>
@@ -100,3 +100,4 @@ document.addEventListener('DOMContentLoaded', () => {
   displayRecentCommits();
   displayLastUpdated();
 });
+
