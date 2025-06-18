@@ -56,13 +56,7 @@ function displayRecentCommits() {
       commitsTableBody.innerHTML = '';
       
       // Sort commits by date (newest first) and take the first 5
-      const parseCommitDate = dateStr => {
-        const iso = dateStr
-          .replace(' ', 'T')
-          .replace(/ ([+-]\d{2})(\d{2})$/, (_, h, m) => ` ${h}:${m}`)
-          .replace('T', 'T');
-        return new Date(iso);
-      };
+      const parseCommitDate = dateStr => new Date(dateStr);
 
       const sortedCommits = commits.sort((a, b) =>
         parseCommitDate(b.date) - parseCommitDate(a.date)
