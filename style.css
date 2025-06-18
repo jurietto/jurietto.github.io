@@ -2,7 +2,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 
 /* Custom Properties */
-:root{--primary-color:deeppink;--accent-color:darkmagenta;--text-color:#fff;--bg-color:#000;--border-color:var(--accent-color);--polka-bg-image:radial-gradient(rgba(60,0,60,0.8) 23.6%,transparent 35.6%),radial-gradient(rgba(60,0,60,0.8) 23.6%,transparent 35.6%);--polka-bg-position:0 0,8px 8px;--polka-bg-size:16px 16px;--polka-bg-color:var(--bg-color);--section-spacing:1rem;--element-spacing:0.875rem;--container-padding:1.5rem;--nav-padding:1rem 1.5rem;--sidebar-width:20%;--gap-size:1.5rem;--border-radius:0.75rem;--small-border-radius:0.5rem;--font-size-base:16px;--line-height-base:1.5;--font-size-h2:1.625rem;--font-size-h3:1.125rem}
+:root{--primary-color:mediumvioletred;--accent-color:darkmagenta;--text-color:#fff;--bg-color:#000;--border-color:var(--accent-color);--polka-bg-image:radial-gradient(rgba(60,0,60,0.8) 23.6%,transparent 35.6%),radial-gradient(rgba(60,0,60,0.8) 23.6%,transparent 35.6%);--polka-bg-position:0 0,8px 8px;--polka-bg-size:16px 16px;--polka-bg-color:var(--bg-color);--section-spacing:1rem;--element-spacing:0.875rem;--container-padding:1.5rem;--nav-padding:1rem 1.5rem;--sidebar-width:20%;--gap-size:1.5rem;--border-radius:0.75rem;--small-border-radius:0.5rem;--font-size-base:16px;--line-height-base:1.5;--font-size-h2:1.625rem;--font-size-h3:1.125rem}
 
 /* Typography */
 @font-face{font-family:'LovelyText';src:url('https://file.garden/ZhTgSjrp5nAroRKq/lovelytext_LjWJYFCYT7o6MPq5VgP7H.ttf') format('truetype');font-display:swap}
@@ -44,26 +44,6 @@ footer.footer{text-align:center;padding:0.875rem var(--container-padding);backgr
 
 /* Images */
 img{width:100%!important;height:auto;display:block;border:2px solid var(--primary-color);border-radius:var(--small-border-radius);background:var(--bg-color)}
-.index-gallery img,
-main img,
-#main-content img {
-  border-radius: 1rem;
-  padding: 4px;
-  background: var(--bg-color, #fff); /* optional */
-  box-sizing: border-box;
-  border: 2px solid black;
-  box-shadow:
-    0 0 0 4px mediumvioletred; /* deep pink outer border */
-}
-.index-gallery img:not(.bullet):not([src*="bullet"]) {
-  border-radius: 1rem;
-  padding: 2px;
-  background: var(--bg-color, #fff); /* optional */
-  box-sizing: border-box;
-  border: 1px solid black;
-  box-shadow:
-    0 0 0 2px mediumvioletred; /* deep pink outer border */
-}
 
 /* Text Elements */
 p,ul,table{margin-bottom:var(--element-spacing);word-wrap:break-word;overflow-wrap:break-word}
