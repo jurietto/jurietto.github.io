@@ -49,9 +49,20 @@ main img,
 #main-content img {
   border-radius: 1rem;
   padding: 4px;
-  background: var(--bg-color, #fff); /* optional, for contrast */
+  background: var(--bg-color, #fff); /* optional */
   box-sizing: border-box;
-  border: 2px solid rgba(0,0,0,0.18); /* subtle black stroke */
+  border: 2px solid black;
+  box-shadow:
+    0 0 0 4px mediumvioletred; /* deep pink outer border */
+}
+.index-gallery img:not(.bullet):not([src*="bullet"]) {
+  border-radius: 1rem;
+  padding: 2px;
+  background: var(--bg-color, #fff); /* optional */
+  box-sizing: border-box;
+  border: 1px solid black;
+  box-shadow:
+    0 0 0 2px mediumvioletred; /* deep pink outer border */
 }
 
 /* Text Elements */
