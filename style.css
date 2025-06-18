@@ -122,6 +122,16 @@ ul.info-list li::before {
 .flex-center{justify-content:center;align-items:center}
 .polka{background-image:var(--polka-bg-image);background-position:var(--polka-bg-position);background-size:var(--polka-bg-size);background-color:var(--polka-bg-color)}
 
+/* Links */
+a {
+  color: magenta;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #fff;
+}
 
 /* Mobile (max-width: 599px) */
 @media (max-width:599px) {
