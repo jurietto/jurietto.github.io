@@ -3897,5 +3897,8 @@
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-17 21:30:40 +0000"},
 {"author": "Juri", "message": "🎯 Mobile nav layout refined, font-size removed from media queries", "date": "2025-06-17 14:43:58 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-17 21:44:19 +0000"},
-{"author": "Juri", "message": "🚀 Force desktop layout with universal media query", "date": "2025-06-17 14:57:55 -0700"}
+{"author": "Juri", "message": "🚀 Force desktop layout with universal media query", "date": "2025-06-17 14:57:55 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-17 21:58:15 +0000"},
+{"author": "Juri", "message": "Restructure CSS with responsive media queries and clean single-line formatting", "date": "2025-06-17 19:37:58 -0700"},
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-17 19:38:23 -0700"}
 ]
