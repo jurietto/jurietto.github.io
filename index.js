@@ -22,20 +22,37 @@ async function injectChangelog () {
     const latestFive = commits.slice(-5).reverse();
     changelog.innerHTML =
       latestFive.map(({ date, author, message }) => {
-        const d = new Date(date);
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const dd = String(d.getDate()).padStart(2, '0');
-        const yyyy = d.getFullYear();
+        // Convert "2025-02-18 19:42:25 -0800" to ISO format for better mobile compatibility
+        let isoDate = date;
+        if (date && typeof date === 'string' && date.includes(' ') && !date.includes('T')) {
+          // Replace space with T and ensure proper timezone format
+          isoDate = date.replace(' ', 'T').replace(/\s(-?\d{4})$/, '$1');
+          // If timezone is in -0800 format, convert to -08:00
+          isoDate = isoDate.replace(/([+-]\d{2})(\d{2})$/, '$1:$2');
+        }
         
-        // Format time in 12-hour format
-        let hours = d.getHours();
-        const minutes = String(d.getMinutes()).padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // 0 should be 12
-        const timeStr = `${hours}:${minutes} ${ampm}`;
+        const d = new Date(isoDate);
+        let dateStr;
         
-        const dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
+        if (isNaN(d)) {
+          // Fallback if date parsing fails
+          dateStr = date || 'Unknown date';
+        } else {
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          const yyyy = d.getFullYear();
+          
+          // Format time in 12-hour format
+          let hours = d.getHours();
+          const minutes = String(d.getMinutes()).padStart(2, '0');
+          const ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12; // 0 should be 12
+          const timeStr = `${hours}:${minutes} ${ampm}`;
+          
+          dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
+        }
+        
         return `<li>${dateStr} – ${author} – ${message}</li>`;
       }).join('') || '<li>No recent commits found.</li>';
   } catch {
@@ -182,20 +199,37 @@ async function injectLastUpdated() {
     });
 
     // Format the date and time
-    const d = new Date(latestCommit.date);
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const yyyy = d.getFullYear();
+    let isoDate = latestCommit.date;
+    if (latestCommit.date && typeof latestCommit.date === 'string' && latestCommit.date.includes(' ') && !latestCommit.date.includes('T')) {
+      // Convert "2025-02-18 19:42:25 -0800" to ISO format for better mobile compatibility
+      isoDate = latestCommit.date.replace(' ', 'T').replace(/\s(-?\d{4})$/, '$1');
+      // If timezone is in -0800 format, convert to -08:00
+      isoDate = isoDate.replace(/([+-]\d{2})(\d{2})$/, '$1:$2');
+    }
     
-    // Format time in 12-hour format
-    let hours = d.getHours();
-    const minutes = String(d.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // 0 should be 12
-    const timeStr = `${hours}:${minutes} ${ampm}`;
+    const d = new Date(isoDate);
+    let dateStr;
+    
+    if (isNaN(d)) {
+      // Fallback if date parsing fails
+      dateStr = latestCommit.date || 'Unknown date';
+    } else {
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      
+      // Format time in 12-hour format
+      let hours = d.getHours();
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 should be 12
+      const timeStr = `${hours}:${minutes} ${ampm}`;
+      
+      dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
+    }
 
-    list.innerHTML = `<li>${mm}/${dd}/${yyyy} @ ${timeStr}</li>`;
+    list.innerHTML = `<li>${dateStr}</li>`;
 
   } catch (err) {
     console.error('[LAST UPDATED] error:', err);
