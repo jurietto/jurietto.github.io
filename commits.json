@@ -3959,5 +3959,10 @@
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-19 08:50:00 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-19 15:50:22 +0000"},
 {"author": "Juri", "message": "Update status and last updated functionality", "date": "2025-06-19 13:59:54 -0700"},
-{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-19 14:00:26 -0700"}
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-19 14:00:26 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-19 21:01:04 +0000"},
+{"author": "Juri", "message": "complete system overhaul: rebuilt the frontend from scratch, deployed a fresh theme, and refactored some legacy scripts", "date": "2025-06-19 14:27:20 -0700"},
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-19 14:28:00 -0700"},
+{"author": "Juri", "message": "enhanced mobile/tablet layouts and moved cbox section to end of content flow", "date": "2025-06-19 15:14:32 -0700"},
+{"author": "Juri", "message": "fix mobile date parsing for commits and last updated sections", "date": "2025-06-19 15:27:13 -0700"}
 ]
