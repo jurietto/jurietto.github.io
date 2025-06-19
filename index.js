@@ -22,11 +22,21 @@ async function injectChangelog () {
     const latestFive = commits.slice(-5).reverse();
     changelog.innerHTML =
       latestFive.map(({ date, author, message }) => {
-        const d  = new Date(date);
+        const d = new Date(date);
         const mm = String(d.getMonth() + 1).padStart(2, '0');
         const dd = String(d.getDate()).padStart(2, '0');
-        const yy = d.getFullYear();
-        return `<li>${mm}/${dd}/${yy} – ${author} – ${message}</li>`;
+        const yyyy = d.getFullYear();
+        
+        // Format time in 12-hour format
+        let hours = d.getHours();
+        const minutes = String(d.getMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // 0 should be 12
+        const timeStr = `${hours}:${minutes} ${ampm}`;
+        
+        const dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
+        return `<li>${dateStr} – ${author} – ${message}</li>`;
       }).join('') || '<li>No recent commits found.</li>';
   } catch {
     changelog.innerHTML = '<li>No recent commits found.</li>';
