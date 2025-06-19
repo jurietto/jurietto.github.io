@@ -30,74 +30,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     // console.error('Error loading commits:', err);
   }
 
-  // Additional media embedding logic
-  const lastEntry = latestCommits[latestCommits.length - 1];
-  let mediaContent = '';
+// Function to fetch and display the last timeline entry
+function displayTimelineEntry() {
+  const statusMessage = document.getElementById('timeline-status');
 
-  if (lastEntry.text.includes('youtube.com') || lastEntry.text.includes('youtu.be')) {
-    const youtubeMatch = lastEntry.text.match(/(?:v=|youtu\.be\/)([\w-]+)/);
-    if (youtubeMatch && youtubeMatch[1]) {
-      mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
-        <iframe width="100%" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      </div>`;
-    }
+  if (!statusMessage) {
+    console.error('Timeline status element not found!');
+    return;
   }
-
-  if (lastEntry.text.includes('soundcloud.com')) {
-    const soundcloudUrl = lastEntry.text.match(/https:\/\/soundcloud\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/);
-    if (soundcloudUrl && soundcloudUrl[0]) {
-      mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
-        <iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(soundcloudUrl[0])}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-      </div>`;
-    }
-  }
-
-  const imageUrl = lastEntry.text.match(/\bhttps?:\/\/\S+\.(?:jpg|jpeg|png|gif)\b/);
-  if (imageUrl && imageUrl[0]) {
-    mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
-      <img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">
-    </div>`;
-  }
-
-  const textWithoutLinks = lastEntry.text.replace(/https?:\/\/[^\s]+/g, '');
-  const dateString = new Date(lastEntry.time).toLocaleString();
-  statusMessage.innerHTML = `<span>${dateString}</span><br><div>${textWithoutLinks}</div>${mediaContent}`;
-})
-.catch(error => console.error('Error fetching timeline:', error));
-
-document.addEventListener('DOMContentLoaded', () => {
-  const statusList = document.getElementById('status-list');
-  if (!statusList) return;
 
   fetch('timeline.json')
     .then(response => response.json())
     .then(timeline => {
-      // Filter out entries without text
-      const validEntries = timeline.filter(entry => entry.text && entry.time);
-
-      if (!validEntries.length) {
-        statusList.innerHTML = '<li>No status entries found.</li>';
+      if (!timeline || !timeline.length) {
+        statusMessage.innerHTML = '<span>No timeline entries found.</span>';
         return;
       }
 
-      // Parse date in MM/DD/YY H:MM AM/PM format
-      function parseDate(str) {
-        // e.g. "5/29/25 11:33 PM"
-        // Safari needs slashes replaced with dashes for Date parsing
-        return new Date(str.replace(/\//g, '-'));
+      timeline.sort((a, b) => new Date(b.time) - new Date(a.time));
+      const lastEntry = timeline[0];
+      let mediaContent = '';
+
+      // YouTube
+      if (lastEntry.text.includes('youtube.com') || lastEntry.text.includes('youtu.be')) {
+        const youtubeMatch = lastEntry.text.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+        if (youtubeMatch && youtubeMatch[1]) {
+          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
+            <iframe width="100%" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>`;
+        }
       }
 
-      // Sort by date descending
-      validEntries.sort((a, b) => parseDate(b.time) - parseDate(a.time));
-      const lastEntry = validEntries[0];
-      const dateString = parseDate(lastEntry.time).toLocaleString();
-      const textWithoutLinks = lastEntry.text.replace(/https?:\/\/[^\s]+/g, '').trim();
+      // SoundCloud
+      if (lastEntry.text.includes('soundcloud.com')) {
+        const soundcloudUrl = lastEntry.text.match(/https:\/\/soundcloud\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/);
+        if (soundcloudUrl && soundcloudUrl[0]) {
+          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
+            <iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(soundcloudUrl[0])}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+          </div>`;
+        }
+      }
 
-      statusList.innerHTML = `<li>${dateString} - ${textWithoutLinks}</li>`;
+      // Image
+      const imageUrl = lastEntry.text.match(/\bhttps?:\/\/\S+\.(?:jpg|jpeg|png|gif)\b/);
+      if (imageUrl && imageUrl[0]) {
+        mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
+          <img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">
+        </div>`;
+      }
+
+      // Clean text (remove all links)
+      const textWithoutLinks = lastEntry.text.replace(/https?:\/\/[^\s]+/g, '').trim();
+      const dateString = new Date(lastEntry.time).toLocaleString();
+      statusMessage.innerHTML = `<span>${dateString}</span><br><div>${textWithoutLinks}</div>${mediaContent}`;
     })
     .catch(error => {
-      statusList.innerHTML = '<li>Error loading status.</li>';
+      statusMessage.innerHTML = '<span>Error fetching timeline.</span>';
       console.error('Error fetching timeline:', error);
     });
-});
-
+}
