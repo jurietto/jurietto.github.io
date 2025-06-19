@@ -134,7 +134,7 @@ main p {
 }
 
 footer {
-  background: var(--mediumvioletred);
+  background: var(--magenta);
   color: var(--white);
   text-align: center;
   padding: 1rem;
@@ -183,6 +183,31 @@ ul li {
   pointer-events: none;
   border-radius: inherit;
   mix-blend-mode: multiply; /* blend the vignette with the image */
+  z-index: 2;
+}
+
+/* SoundCloud embed styling - square and styled like images */
+.soundcloud-wrapper {
+  aspect-ratio: 1 / 1; /* Make it square */
+  height: auto;
+}
+
+.soundcloud-wrapper iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+.soundcloud-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  mix-blend-mode: multiply;
   z-index: 2;
 }
 

@@ -1,91 +1,194 @@
-// index.js - Dynamically inject latest commits into the CHANGELOG
+// index.js – inject latest commits + newest status from timeline.json
+document.addEventListener('DOMContentLoaded', () => {
+  injectChangelog();
+  injectStatus();
+  injectLastUpdated();
+});
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const commitsUrl = 'commits.json';
-  const changelogList = document.querySelector('section.content ul');
 
-  if (!changelogList) return;
+// ───────────────────────────────────────────────────────────────────────────────
+// CHANGELOG  (section.content ▸  <ul id="changelog">)
+// ───────────────────────────────────────────────────────────────────────────────
+async function injectChangelog () {
+  const commitsUrl   = 'commits.json';
+  const changelog    = document.querySelector('#changelog');
+  if (!changelog) return;
 
   try {
-    const response = await fetch(commitsUrl, {cache: "no-store"});
-    if (!response.ok) throw new Error('commits.json not found');
-    const commits = await response.json();
+    const res = await fetch(commitsUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error('commits.json not found');
+    const commits = await res.json();
 
-    // Only take the 5 most recent (should be sorted oldest-to-newest, so take from end)
-    const latestCommits = commits.slice(-5).reverse();
+    const latestFive = commits.slice(-5).reverse();
+    changelog.innerHTML =
+      latestFive.map(({ date, author, message }) => {
+        const d  = new Date(date);
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        const yy = d.getFullYear();
+        return `<li>${mm}/${dd}/${yy} – ${author} – ${message}</li>`;
+      }).join('') || '<li>No recent commits found.</li>';
+  } catch {
+    changelog.innerHTML = '<li>No recent commits found.</li>';
+  }
+}
 
-    // Format: MM/DD/YYYY - Author - Commit Message
-    changelogList.innerHTML = latestCommits.map(commit => {
-      const date = new Date(commit.date);
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-      const yyyy = date.getFullYear();
-      const formattedDate = `${mm}/${dd}/${yyyy}`;
-      return `<li>${formattedDate} - ${commit.author} - ${commit.message}</li>`;
-    }).join('') || '<li>No recent commits found.</li>';
+
+// ───────────────────────────────────────────────────────────────────────────────
+// STATUS  (aside ▸  <ul id="status-list">)
+// ───────────────────────────────────────────────────────────────────────────────
+async function injectStatus () {
+  console.log('[STATUS] fetching timeline.json…');
+  const list = document.getElementById('status-list');
+  if (!list) return;
+
+  try {
+    const timeline = await (await fetch('timeline.json', { cache: 'no-store' })).json();
+    if (!Array.isArray(timeline) || !timeline.length) {
+      list.innerHTML = '<li>No status updates yet.</li>';
+      return;
+    }
+
+    // pick the newest entry by date (in case the file isn't strictly ordered)
+    const latest = timeline.reduce((a, b) =>
+      new Date(b.time) > new Date(a.time) ? b : a
+    );
+
+    const { text: rawText, time } = latest;
+    const urlMatches = [...rawText.matchAll(/https?:\/\/\S+/g)].map(m => m[0]);
+
+    // remove URLs from text, preserve line-breaks
+    let cleanText = rawText;
+    urlMatches.forEach(u => { cleanText = cleanText.replace(u, '').trim(); });
+    cleanText = cleanText.replace(/\n+/g, '<br>');   // keep manual line breaks
+
+    // nice date string with time
+    const d = new Date(time);
+    let dateStr;
+    if (isNaN(d)) {
+      dateStr = time;
+    } else {
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      
+      // Format time in 12-hour format
+      let hours = d.getHours();
+      const minutes = String(d.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 should be 12
+      const timeStr = `${hours}:${minutes} ${ampm}`;
+      
+      dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
+    }
+
+    // build media / link embeds
+    const embedParts = await Promise.all(urlMatches.map(async url => {
+      const cleanUrl  = url.split('?')[0];
+      const isImg     = /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(url);
+      const ytMatch   = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/.exec(url);
+      const isSC      = /soundcloud\.com\//.test(url);
+      const isVideo   = /\.(mp4|webm|ogg)$/i.test(url);
+
+      if (isImg) {
+        return `<br><div class="photo-wrapper"><img src="${url}" alt="status" style="width:100%;height:auto;"></div>`;
+      }
+      if (ytMatch) {
+        return `<br><iframe width="100%" height="315" src="https://www.youtube.com/embed/${ytMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
+      }
+      if (isSC) {
+        const html = await fetch(`https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(cleanUrl)}`)
+          .then(r => r.ok ? r.json() : null)
+          .then(j => {
+            if (j?.html) {
+              // Wrap SoundCloud embed in photo-wrapper style container and make it square
+              return `<div class="photo-wrapper soundcloud-wrapper">${j.html}</div>`;
+            }
+            return `<a href="${url}" target="_blank">${url}</a>`;
+          })
+          .catch(() => `<a href="${url}" target="_blank">${url}</a>`);
+        return `<br>${html}`;
+      }
+      if (isVideo) {
+        return `<br><video controls style="max-width:100%;border-radius:4px;margin-top:.5rem"><source src="${url}"></video>`;
+      }
+      return `<br><a href="${url}" target="_blank" rel="noopener">${url}</a>`;
+    }));
+
+    list.innerHTML = `
+      <li>
+        <div class="status-entry">
+          ${dateStr} — ${cleanText}${embedParts.join('')}
+        </div>
+      </li>`;
+  } catch (err) {
+    console.error('[STATUS] error:', err);
+    list.innerHTML = '<li>No recent status found.</li>';
+  }
+}
+
+
+// ───────────────────────────────────────────────────────────────────────────────
+// LAST UPDATED  (aside ▸  <ul id="last-updated">)
+// ───────────────────────────────────────────────────────────────────────────────
+async function injectLastUpdated() {
+  console.log('[LAST UPDATED] fetching commits.json…');
+  const list = document.getElementById('last-updated');
+  if (!list) return;
+
+  try {
+    const res = await fetch('commits.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('commits.json not found');
+    const commits = await res.json();
+
+    // Find commits that affected index.html
+    const indexCommits = commits.filter(commit => {
+      // Check if commit has files array and includes index.html
+      if (commit.files && Array.isArray(commit.files)) {
+        return commit.files.some(file => 
+          file === 'index.html' || file.includes('index.html')
+        );
+      }
+      
+      // Fallback: check if message mentions index.html
+      if (commit.message) {
+        return commit.message.toLowerCase().includes('index.html');
+      }
+      
+      return false;
+    });
+
+    if (indexCommits.length === 0) {
+      list.innerHTML = '<li>No index.html updates found</li>';
+      return;
+    }
+
+    // Get the most recent commit that affected index.html
+    const latestCommit = indexCommits.reduce((latest, current) => {
+      const latestDate = new Date(latest.date);
+      const currentDate = new Date(current.date);
+      return currentDate > latestDate ? current : latest;
+    });
+
+    // Format the date and time
+    const d = new Date(latestCommit.date);
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const yyyy = d.getFullYear();
+    
+    // Format time in 12-hour format
+    let hours = d.getHours();
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 should be 12
+    const timeStr = `${hours}:${minutes} ${ampm}`;
+
+    list.innerHTML = `<li>${mm}/${dd}/${yyyy} @ ${timeStr}</li>`;
 
   } catch (err) {
-    changelogList.innerHTML = '<li>No recent commits found.</li>';
-    // Optionally log error
-    // console.error('Error loading commits:', err);
+    console.error('[LAST UPDATED] error:', err);
+    list.innerHTML = '<li>Unable to load update info</li>';
   }
-
-// Function to fetch and display the last timeline entry
-function displayTimelineEntry() {
-  const statusMessage = document.getElementById('timeline-status');
-
-  if (!statusMessage) {
-    console.error('Timeline status element not found!');
-    return;
-  }
-
-  fetch('timeline.json')
-    .then(response => response.json())
-    .then(timeline => {
-      if (!timeline || !timeline.length) {
-        statusMessage.innerHTML = '<span>No timeline entries found.</span>';
-        return;
-      }
-
-      timeline.sort((a, b) => new Date(b.time) - new Date(a.time));
-      const lastEntry = timeline[0];
-      let mediaContent = '';
-
-      // YouTube
-      if (lastEntry.text.includes('youtube.com') || lastEntry.text.includes('youtu.be')) {
-        const youtubeMatch = lastEntry.text.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
-        if (youtubeMatch && youtubeMatch[1]) {
-          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
-            <iframe width="100%" height="200" src="https://www.youtube.com/embed/${youtubeMatch[1]}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>`;
-        }
-      }
-
-      // SoundCloud
-      if (lastEntry.text.includes('soundcloud.com')) {
-        const soundcloudUrl = lastEntry.text.match(/https:\/\/soundcloud\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/);
-        if (soundcloudUrl && soundcloudUrl[0]) {
-          mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
-            <iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(soundcloudUrl[0])}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-          </div>`;
-        }
-      }
-
-      // Image
-      const imageUrl = lastEntry.text.match(/\bhttps?:\/\/\S+\.(?:jpg|jpeg|png|gif)\b/);
-      if (imageUrl && imageUrl[0]) {
-        mediaContent += `<div style="display: flex; justify-content: center; align-items: center;">
-          <img src="${imageUrl[0]}" alt="Embedded Media" style="max-width: 100%; height: auto; border: 2px solid deeppink; border-radius: 8px;">
-        </div>`;
-      }
-
-      // Clean text (remove all links)
-      const textWithoutLinks = lastEntry.text.replace(/https?:\/\/[^\s]+/g, '').trim();
-      const dateString = new Date(lastEntry.time).toLocaleString();
-      statusMessage.innerHTML = `<span>${dateString}</span><br><div>${textWithoutLinks}</div>${mediaContent}`;
-    })
-    .catch(error => {
-      statusMessage.innerHTML = '<span>Error fetching timeline.</span>';
-      console.error('Error fetching timeline:', error);
-    });
 }
