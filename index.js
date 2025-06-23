@@ -1,238 +1,115 @@
-// index.js – inject latest commits + newest status from timeline.json
-document.addEventListener('DOMContentLoaded', () => {
-  injectChangelog();
-  injectStatus();
-  injectLastUpdated();
-});
+const API_KEY = '01ec4f23ebb052c4517ad585c30f15f5';
+const ARTISTS = ['Ladytron', 'Nana Kitade', 'U2', 'goreshit', 'Velvet Acid Christ', 'Front Line Assembly', 'Front 242', 'Siouxsie and the Banshees', 'LFO', 'Vitalic'];
+let slides = [], currentSlide = 0;
 
-
-// ───────────────────────────────────────────────────────────────────────────────
-// CHANGELOG  (section.content ▸  <ul id="changelog">)
-// ───────────────────────────────────────────────────────────────────────────────
-async function injectChangelog () {
-  const commitsUrl   = 'commits.json';
-  const changelog    = document.querySelector('#changelog');
-  if (!changelog) return;
-
-  try {
-    const res = await fetch(commitsUrl, { cache: 'no-store' });
-    if (!res.ok) throw new Error('commits.json not found');
-    const commits = await res.json();
-
-    const latestFive = commits.slice(-5).reverse();
-    changelog.innerHTML =
-      latestFive.map(({ date, author, message }) => {
-        // Convert "2025-02-18 19:42:25 -0800" to ISO format for better mobile compatibility
-        let isoDate = date;
-        if (date && typeof date === 'string' && date.includes(' ') && !date.includes('T')) {
-          // Replace space with T and ensure proper timezone format
-          isoDate = date.replace(' ', 'T').replace(/\s(-?\d{4})$/, '$1');
-          // If timezone is in -0800 format, convert to -08:00
-          isoDate = isoDate.replace(/([+-]\d{2})(\d{2})$/, '$1:$2');
-        }
+const jsonp = (method, artist, limit = 30) => {
+    console.log(`🌐 Making API call: ${method} for ${artist}`);
+    return new Promise(resolve => {
+        const script = document.createElement('script'), cb = 'cb' + Date.now() + Math.random().toString(36).substr(2, 5);
+        const timeout = setTimeout(() => {
+            console.log(`⏰ Timeout for ${artist} - ${method}`);
+            cleanup();
+        }, 10000);
         
-        const d = new Date(isoDate);
-        let dateStr;
+        window[cb] = data => {
+            clearTimeout(timeout);
+            console.log(`✅ API Response for ${artist} - ${method}:`, data);
+            cleanup();
+        };
         
-        if (isNaN(d)) {
-          // Fallback if date parsing fails
-          dateStr = date || 'Unknown date';
-        } else {
-          const mm = String(d.getMonth() + 1).padStart(2, '0');
-          const dd = String(d.getDate()).padStart(2, '0');
-          const yyyy = d.getFullYear();
-          
-          // Format time in 12-hour format
-          let hours = d.getHours();
-          const minutes = String(d.getMinutes()).padStart(2, '0');
-          const ampm = hours >= 12 ? 'PM' : 'AM';
-          hours = hours % 12;
-          hours = hours ? hours : 12; // 0 should be 12
-          const timeStr = `${hours}:${minutes} ${ampm}`;
-          
-          dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
-        }
+        const cleanup = () => {
+            if (document.head.contains(script)) document.head.removeChild(script);
+            delete window[cb];
+            resolve(data || null);
+        };
         
-        return `<li>${dateStr} – ${author} – ${message}</li>`;
-      }).join('') || '<li>No recent commits found.</li>';
-  } catch {
-    changelog.innerHTML = '<li>No recent commits found.</li>';
-  }
-}
-
-
-// ───────────────────────────────────────────────────────────────────────────────
-// STATUS  (aside ▸  <ul id="status-list">)
-// ───────────────────────────────────────────────────────────────────────────────
-async function injectStatus () {
-  console.log('[STATUS] fetching timeline.json…');
-  const list = document.getElementById('status-list');
-  if (!list) return;
-
-  try {
-    const timeline = await (await fetch('timeline.json', { cache: 'no-store' })).json();
-    if (!Array.isArray(timeline) || !timeline.length) {
-      list.innerHTML = '<li>No status updates yet.</li>';
-      return;
-    }
-
-    // pick the newest entry by date (in case the file isn't strictly ordered)
-    const latest = timeline.reduce((a, b) =>
-      new Date(b.time) > new Date(a.time) ? b : a
-    );
-
-    const { text: rawText, time } = latest;
-    const urlMatches = [...rawText.matchAll(/https?:\/\/\S+/g)].map(m => m[0]);
-
-    // remove URLs from text, preserve line-breaks
-    let cleanText = rawText;
-    urlMatches.forEach(u => { cleanText = cleanText.replace(u, '').trim(); });
-    cleanText = cleanText.replace(/\n+/g, '<br>');   // keep manual line breaks
-
-    // nice date string with time
-    const d = new Date(time);
-    let dateStr;
-    if (isNaN(d)) {
-      dateStr = time;
-    } else {
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      const yyyy = d.getFullYear();
-      
-      // Format time in 12-hour format
-      let hours = d.getHours();
-      const minutes = String(d.getMinutes()).padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // 0 should be 12
-      const timeStr = `${hours}:${minutes} ${ampm}`;
-      
-      dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
-    }
-
-    // build media / link embeds
-    const embedParts = await Promise.all(urlMatches.map(async url => {
-      const cleanUrl  = url.split('?')[0];
-      const isImg     = /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(url);
-      const ytMatch   = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/.exec(url);
-      const isSC      = /soundcloud\.com\//.test(url);
-      const isVideo   = /\.(mp4|webm|ogg)$/i.test(url);
-
-      if (isImg) {
-        return `<br><div class="photo-wrapper"><img src="${url}" alt="status" style="width:100%;height:auto;"></div>`;
-      }
-      if (ytMatch) {
-        return `<br><iframe width="100%" height="315" src="https://www.youtube.com/embed/${ytMatch[1]}" frameborder="0" allowfullscreen></iframe>`;
-      }
-      if (isSC) {
-        const html = await fetch(`https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(cleanUrl)}`)
-          .then(r => r.ok ? r.json() : null)
-          .then(j => {
-            if (j?.html) {
-              // Wrap SoundCloud embed in photo-wrapper style container and make it square
-              return `<div class="photo-wrapper soundcloud-wrapper">${j.html}</div>`;
-            }
-            return `<a href="${url}" target="_blank">${url}</a>`;
-          })
-          .catch(() => `<a href="${url}" target="_blank">${url}</a>`);
-        return `<br>${html}`;
-      }
-      if (isVideo) {
-        return `<br><video controls style="max-width:100%;border-radius:4px;margin-top:.5rem"><source src="${url}"></video>`;
-      }
-      return `<br><a href="${url}" target="_blank" rel="noopener">${url}</a>`;
-    }));
-
-    list.innerHTML = `
-      <li>
-        <div class="status-entry">
-          ${dateStr} — ${cleanText}${embedParts.join('')}
-        </div>
-      </li>`;
-  } catch (err) {
-    console.error('[STATUS] error:', err);
-    list.innerHTML = '<li>No recent status found.</li>';
-  }
-}
-
-
-// ───────────────────────────────────────────────────────────────────────────────
-// LAST UPDATED  (aside ▸  <ul id="last-updated">)
-// ───────────────────────────────────────────────────────────────────────────────
-async function injectLastUpdated() {
-  console.log('[LAST UPDATED] fetching commits.json…');
-  const list = document.getElementById('last-updated');
-  if (!list) return;
-
-  try {
-    const res = await fetch('commits.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('commits.json not found');
-    const commits = await res.json();
-
-    // Find commits that affected index.html
-    const indexCommits = commits.filter(commit => {
-      // Check if commit has files array and includes index.html
-      if (commit.files && Array.isArray(commit.files)) {
-        return commit.files.some(file => 
-          file === 'index.html' || file.includes('index.html')
-        );
-      }
-      
-      // Fallback: check if message mentions index.html
-      if (commit.message) {
-        return commit.message.toLowerCase().includes('index.html');
-      }
-      
-      return false;
+        script.onerror = () => {
+            console.log(`❌ Script error for ${artist} - ${method}`);
+            clearTimeout(timeout);
+            cleanup();
+        };
+        
+        script.src = `https://ws.audioscrobbler.com/2.0/?method=${method}&artist=${encodeURIComponent(artist)}&api_key=${API_KEY}&format=json&limit=${limit}&callback=${cb}`;
+        document.head.appendChild(script);
     });
+};
 
-    if (indexCommits.length === 0) {
-      list.innerHTML = '<li>No index.html updates found</li>';
-      return;
-    }
+const validImg = url => url?.trim() && !url.includes('2a96cbd8b46e442fc41c2b86b821562f') && !url.includes('c6f59c1e5e7240a4c0d427abd71f3dbb');
 
-    // Get the most recent commit that affected index.html
-    const latestCommit = indexCommits.reduce((latest, current) => {
-      const latestDate = new Date(latest.date);
-      const currentDate = new Date(current.date);
-      return currentDate > latestDate ? current : latest;
+const addSlide = (url, artist, album = '', track = '', type = '') => {
+    if (!validImg(url)) return console.log(`❌ Invalid image for ${artist}: ${url}`);
+    if (slides.some(s => s.imageUrl === url)) return console.log(`🔄 Duplicate image for ${artist}: ${url}`);
+    slides.push({imageUrl: url, artistName: artist, albumName: album, trackName: track, type});
+    console.log(`✅ Added slide for ${artist} (${type}): ${album || track || 'artist image'}`);
+};
+
+const fetchArtist = artist => {
+    console.log(`🔍 Fetching artist info for: ${artist}`);
+    return jsonp('artist.getinfo', artist).then(d => {
+        console.log(`📊 ${artist} API response:`, d);
+        if (!d?.artist) return console.log(`❌ No artist data found for ${artist}`);
+        if (!d.artist.image) return console.log(`❌ No images found for artist ${artist}`);
+        console.log(`📸 Found ${d.artist.image.length} artist images for ${artist}`);
+        d.artist.image.forEach(img => addSlide(img['#text'], artist, '', '', 'Artist'));
     });
+};
 
-    // Format the date and time
-    let isoDate = latestCommit.date;
-    if (latestCommit.date && typeof latestCommit.date === 'string' && latestCommit.date.includes(' ') && !latestCommit.date.includes('T')) {
-      // Convert "2025-02-18 19:42:25 -0800" to ISO format for better mobile compatibility
-      isoDate = latestCommit.date.replace(' ', 'T').replace(/\s(-?\d{4})$/, '$1');
-      // If timezone is in -0800 format, convert to -08:00
-      isoDate = isoDate.replace(/([+-]\d{2})(\d{2})$/, '$1:$2');
+const fetchAlbums = artist => {
+    console.log(`💿 Fetching albums for: ${artist}`);
+    return jsonp('artist.gettopalbums', artist).then(d => {
+        if (!d?.topalbums?.album) return console.log(`❌ No albums found for ${artist}`);
+        const albums = Array.isArray(d.topalbums.album) ? d.topalbums.album : [d.topalbums.album];
+        console.log(`💿 Found ${albums.length} albums for ${artist}`);
+        albums.filter(Boolean).forEach(album => {
+            if (!album.image) return;
+            album.image.forEach(img => (img.size === 'extralarge' || img.size === 'large') && addSlide(img['#text'], artist, album.name, '', 'Album'));
+        });
+    });
+};
+
+const fetchTracks = artist => {
+    console.log(`🎵 Fetching tracks for: ${artist}`);
+    return jsonp('artist.gettoptracks', artist, 20).then(d => {
+        if (!d?.toptracks?.track) return console.log(`❌ No tracks found for ${artist}`);
+        const tracks = Array.isArray(d.toptracks.track) ? d.toptracks.track : [d.toptracks.track];
+        console.log(`🎵 Found ${tracks.length} tracks for ${artist}`);
+        tracks.filter(Boolean).slice(0, 15).forEach(track => {
+            if (!track.image) return;
+            track.image.forEach(img => (img.size === 'extralarge' || img.size === 'large') && addSlide(img['#text'], artist, '', track.name, 'Track'));
+        });
+    });
+};
+
+const nextSlide = () => {
+    if (slides.length <= 1) return;
+    document.querySelectorAll('.slide').forEach((slide, i) => slide.classList.toggle('active', i === (currentSlide = (currentSlide + 1) % slides.length)));
+};
+
+const createSlideshow = () => {
+    const slideshow = document.getElementById('slideshow');
+    console.log(`Creating slideshow with ${slides.length} unique images`);
+    slideshow.innerHTML = slides.length ? slides.map((slide, i) => `<div class="slide ${i === 0 ? 'active' : ''}"><img src="${slide.imageUrl}" alt="${slide.artistName}" onerror="this.parentElement.style.display='none';"><div class="artist-info"><div class="artist-name">${slide.artistName}</div>${slide.albumName ? `<div class="album-name">${slide.albumName}</div>` : ''}${slide.trackName ? `<div class="album-name">${slide.trackName}</div>` : ''}<div class="album-name" style="opacity: 0.7; font-size: 10px;">${slide.type}</div></div></div>`).join('') : '<div class="error">No images found</div>';
+    slides.length > 1 && setInterval(nextSlide, 5000);
+};
+
+const init = async () => {
+    console.log(`🚀 Starting slideshow with artists: ${ARTISTS.join(', ')}`);
+    
+    for (const artist of ARTISTS) {
+        console.log(`🎯 Processing artist: ${artist}`);
+        try {
+            await Promise.all([fetchArtist(artist), fetchAlbums(artist), fetchTracks(artist)]);
+            console.log(`✅ Completed ${artist} - Total slides so far: ${slides.length}`);
+        } catch (error) {
+            console.log(`❌ Error processing ${artist}:`, error);
+        }
+        // Small delay between artists to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 500));
     }
     
-    const d = new Date(isoDate);
-    let dateStr;
-    
-    if (isNaN(d)) {
-      // Fallback if date parsing fails
-      dateStr = latestCommit.date || 'Unknown date';
-    } else {
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      const yyyy = d.getFullYear();
-      
-      // Format time in 12-hour format
-      let hours = d.getHours();
-      const minutes = String(d.getMinutes()).padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // 0 should be 12
-      const timeStr = `${hours}:${minutes} ${ampm}`;
-      
-      dateStr = `${mm}/${dd}/${yyyy} @ ${timeStr}`;
-    }
+    console.log(`🎬 Final slideshow: ${slides.length} total slides`);
+    slides.sort(() => Math.random() - 0.5);
+    createSlideshow();
+};
 
-    list.innerHTML = `<li>${dateStr}</li>`;
-
-  } catch (err) {
-    console.error('[LAST UPDATED] error:', err);
-    list.innerHTML = '<li>Unable to load update info</li>';
-  }
-}
+document.addEventListener('DOMContentLoaded', init);
