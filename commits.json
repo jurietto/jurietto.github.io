@@ -3975,5 +3975,8 @@
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-22 20:25:34 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-23 03:26:10 +0000"},
 {"author": "Juri", "message": "Mobile revamp: improved spacing, browser default fonts, consistent cbox height", "date": "2025-06-22 20:59:53 -0700"},
-{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-22 21:00:07 -0700"}
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-06-22 21:00:07 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-06-23 04:00:32 +0000"},
+{"author": "Juri", "message": "Limit changelog to 5 most recent Juri commits", "date": "2025-06-22 21:33:18 -0700"},
+{"author": "Juri", "message": "Update changelog function and CSS styles", "date": "2025-06-22 21:34:13 -0700"}
 ]
