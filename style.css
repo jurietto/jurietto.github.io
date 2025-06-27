@@ -1,287 +1,145 @@
-/* ===== CSS CUSTOM PROPERTIES (VARIABLES) ===== */
-:root {
-  /* Color palette */
-  --black: #000000;
-  --white: #ffffff;
-  --rebeccapurple: #663399;
-  --mediumvioletred: #c71585;
-  --magenta: #ff00ff;
-
-  /* Polka dot background pattern */
-  --polka-bg-image: radial-gradient(rgb(82, 0, 112) 33.2%, transparent 33.2%),
-    radial-gradient(rgb(82, 0, 112) 33.2%, transparent 33.2%);
-  --polka-bg-position: 0 0, 8px 8px; /* Offset the second layer for pattern */
-  --polka-bg-size: 16px 16px; /* Size of each polka dot */
-
-  /* Semantic color names for theming */
-  --clr-bg: var(--black);
-  --clr-fg: var(--white);
-  --clr-border: var(--mediumvioletred);
-  --radius: 0.5rem;
-
-  /* Consistent spacing scale */
-  --space-xs: 0.5rem;   /* 8px */
-  --space-sm: 0.75rem;  /* 12px */
-  --space-md: 1rem;     /* 16px */
-  --space-lg: 1.5rem;   /* 24px */
-  --space-xl: 2rem;     /* 32px */
-}
-
-/* ===== CUSTOM FONT ===== */
 @font-face {
-  font-family: 'kidplay';
+  font-family: 'Kidplay';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/kidplay%20Preview.otf') format('opentype');
 }
 
-/* ===== GLOBAL RESET ===== */
-* {
-  box-sizing: border-box; /* Include padding/border in element width */
-  margin: 0;
-  padding: 0;
-}
-
-/* ===== BODY STYLES ===== */
+/* BASE BODY */
 body {
-  font-family: 'kidplay', sans-serif;
-  /* Fixed background syntax - color and image separated */
-  background-color: var(--clr-bg);
-  background-image: var(--polka-bg-image);
-  background-position: var(--polka-bg-position);
-  background-size: var(--polka-bg-size);
-  color: var(--clr-fg);
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #f6d2f3;
   line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  background-color: #000000;
 }
 
-/* ===== HEADER SECTION ===== */
-.site-header {
-  background: var(--rebeccapurple);
-  border-bottom: ridge 3px var(--clr-border); /* Only bottom border */
-  padding: var(--space-md) var(--space-lg);
-}
-
-/* Container for header content */
-.header-content {
-  display: flex;
-  justify-content: space-between; /* Avatar left, nav right */
-  align-items: center;
-  gap: var(--space-md);
-}
-
-/* ===== PROFILE AVATAR ===== */
-.profile-avatar {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%; /* Makes it circular */
-  border: ridge 3px var(--clr-border);
-  overflow: hidden; /* Crops image to circle */
-  flex-shrink: 0; /* Prevents shrinking on small screens */
-}
-
-/* Link wrapper around avatar image */
-.profile-avatar a {
-  display: block;
+/* LAYER 1: CHECKERBOARD BACKGROUND */
+.bg-checkerboard {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  line-height: 0; /* Removes text spacing under image */
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='20' height='20' fill='%232e003e'/%3E%3Crect x='20' y='20' width='20' height='20' fill='%232e003e'/%3E%3Crect x='20' width='20' height='20' fill='%2394008e'/%3E%3Crect y='20' width='20' height='20' fill='%2394008e'/%3E%3C/svg%3E");
+  background-size: 40px 40px;
+  background-repeat: repeat;
+  animation: scroll-bg 20s linear infinite;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* Avatar image itself */
-.profile-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Crops image to fit circle without stretching */
-  display: block;
+@keyframes scroll-bg {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 80px 80px;
+  }
 }
 
-/* ===== NAVIGATION ===== */
-.primary-navigation {
-  display: flex;
-  gap: var(--space-md);
-}
-
-.primary-navigation a {
-  color: var(--magenta);
-  text-decoration: underline;
-  padding: 0;
-}
-
-.primary-navigation a:hover {
-  color: var(--white);
-}
-
-/* ===== MAIN CONTENT GRID ===== */
-.site-content {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr; /* Sidebar | Main | Sidebar */
-  gap: var(--space-xl);
-  padding: var(--space-xl);
-}
-
-/* ===== CONTENT SECTIONS ===== */
-/* Styles all three main content areas */
-.about-section,
-.main-content,
-.media-section {
-  border: ridge 3px var(--clr-border);
-  padding: var(--space-lg);
-  border-radius: var(--radius);
-  background: var(--clr-bg); /* Solid background over polka dots */
-}
-
-/* ===== TYPOGRAPHY ===== */
-h2 {
-  margin-bottom: var(--space-md);
-  margin-top: var(--space-lg); /* Space between sections */
-  font-weight: normal;
-}
-
-/* Remove top margin from first heading in each section */
-h2:first-child {
-  margin-top: 0;
-}
-
-p {
-  margin-bottom: var(--space-md);
-  margin-top: var(--space-md);
-}
-
-/* Remove top margin from first paragraph in each section */
-p:first-child {
-  margin-top: 0;
-}
-
-/* ===== EMBEDDED WIDGETS ===== */
-/* Chat iframe styling */
-.chat-widget {
-  height: 450px;
-  width: 100%;
-  border: ridge 3px var(--clr-border);
-  border-radius: var(--radius);
-  background: var(--clr-bg);
-
-}
-
-/* Visitor counter image */
-.visitor-counter {
-  width: 100%;
-  border: ridge 3px var(--clr-border);
-  border-radius: var(--radius);
-  margin-bottom: var(--space-md);
-}
-
-/* ===== LINKS WIDGET ===== */
-.links-widget a {
-  color: var(--clr-fg);
-  text-decoration: underline;
-  display: block;
-  margin-bottom: var(--space-xs); /* Tighter spacing for links */
-}
-
-.links-widget a:hover {
-  color: var(--magenta);
-}
-
-/* ===== FOOTER ===== */
-.site-footer {
+/* HEADER SECTION */
+header {
+  position: relative;
   text-align: center;
-  background: var(--magenta);
-  color: var(--white); /* Dark text on bright background */
-  border-top: ridge 3px var(--clr-border);
-  padding: var(--space-md);
+  background-color: #2e003e;
+  border-bottom: 4px solid #94008e;
+  padding: 40px 20px 20px;
+  z-index: 2;
+  overflow: hidden;
 }
 
-/* ===== RETRO IMAGES ===== */
-/* Container for images with borders */
-.retro-image {
-  border: ridge 3px var(--clr-border);
-  border-radius: var(--radius);
-  overflow: hidden; /* Crops image to container shape */
-  margin-bottom: var(--space-md);
-  line-height: 0; /* Removes space under image */
+
+.logo {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 20px;
+  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/image0_cropped.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  border: 5px solid #94008e;
+  position: relative;
+  z-index: 1;
 }
 
-/* Actual image styling */
-.retro-image img {
+/* NAVIGATION */
+nav {
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+nav a {
+  margin: 0 15px;
+  font-family: 'Kidplay', cursive;
+  color: #ff00c8;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+/* MAIN CONTENT */
+main {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.content-box {
   width: 100%;
-  height: auto;
-  display: block;
-  image-rendering: pixelated; /* Makes images look low-res/retro */
+  max-width: 720px;
+  background-color: #2e003e;
+  padding: 30px;
+  border-radius: 10px;
+  border: 3px solid #94008e;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-
-/* TABLET LAYOUT (768px down to 601px) */
-@media (max-width: 1000px) and (min-width: 601px) {
-  .site-content {
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: var(--space-lg);
-    padding: var(--space-lg);
-  }
-  
-  /* Position sections in grid - Media first, then About and Main */
-  .media-section {
-    grid-column: 1 / -1; /* Span full width */
-    grid-row: 1;         /* Top row - FIRST */
-    order: 1;
-  }
-  
-  .about-section {
-    grid-column: 1; /* Left column */
-    grid-row: 2;    /* Second row */
-    order: 2;
-  }
-  
-  .main-content {
-    grid-column: 2; /* Right column */
-    grid-row: 2;    /* Second row */
-    order: 3;
-  }
+/* HEADINGS */
+h2 {
+  font-family: 'Kidplay', cursive;
+  color: #f6d2f3;
+  margin-top: 30px;
+  border-bottom: 2px solid #94008e;
+  padding-bottom: 5px;
 }
 
-/* MOBILE LAYOUT (600px and below) */
+/* CHAT IFRAME */
+iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  margin-top: 20px;
+  background-color: #000000;
+}
+
+/* LINKS */
+a {
+  color: #ff00c8;
+  text-decoration: underline;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: #000000;
+  color: #f6d2f3;
+  font-size: 0.9rem;
+  border-top: 3px solid #94008e;
+  position: relative;
+  z-index: 2;
+}
+
+/* RESPONSIVE */
 @media (max-width: 600px) {
-  /* Stack header elements vertically */
-  .header-content {
-    flex-direction: column;
-    gap: var(--space-sm);
+  .content-box {
+    padding: 20px;
   }
 
-  /* Smaller avatar on mobile */
-  .profile-avatar {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  /* Stack navigation vertically */
-  .primary-navigation {
-    flex-direction: column;
-    text-align: center;
-    gap: var(--space-sm);
-  }
-
-  /* Full width navigation links */
-  .primary-navigation a {
-    width: 100%;
-  }
-
-  /* Single column layout with custom order */
-  .site-content {
-    display: flex;
-    flex-direction: column; /* Stack all sections vertically */
-    padding: var(--space-md) var(--space-sm);
-    gap: var(--space-md);
-  }
-  
-  /* Reorder sections: Media first, About second, Main third */
-  .media-section {
-    order: 1; /* First */
-  }
-  
-  .about-section {
-    order: 2; /* Second */
-  }
-  
-  .main-content {
-    order: 3; /* Third */
+  .logo {
+    width: 120px;
+    height: 120px;
   }
 }
