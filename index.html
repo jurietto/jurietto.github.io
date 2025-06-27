@@ -1,171 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bevel Layout</title>
-  <style>
-    :root { 
-      --black: #000; 
-      --white: #fff; 
-      --purple: #639; 
-      --silver: #c0c0c0;
-      --mediumvioletred: #C71585; 
-      --polka: radial-gradient(#520070 33.2%, transparent 33.2%); 
-    }
-    
-    *, *::before, *::after { 
-      box-sizing: border-box; 
-    }
-    
-    html, body { 
-      margin: 0; 
-      height: 100%; 
-      font-family: system-ui; 
-      background: var(--black) var(--polka), var(--polka); 
-      background-position: 0 0, 8px 8px; 
-      background-size: 16px 16px; 
-      color: var(--white); 
-    }
-    
-    .layout { 
-      display: flex; 
-      height: 100vh; 
-      overflow: hidden; 
-    }
-    
-    .cbox-panel { 
-      width: 30%; 
-      min-width: 300px; 
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      border-right: ridge 4px var(--purple); 
-      background: var(--black); 
-    }
-    
-    .cbox-panel iframe { 
-      width: 100%; 
-      height: 100%; 
-      border: 0; 
-    }
-    
-    .right-side { 
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-    }
-    
-    .links-bar, .footer { 
-      border: ridge 4px var(--purple); 
-      background: var(--black); 
-      height: 60px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      padding: 0 1em; 
-    }
-    
-    .links-bar h1, .footer p { 
-      margin: 0; 
-      font-size: 1.6em; 
-      color: var(--white); 
-    }
-    
-    .main-area { 
-      display: flex; 
-      flex: 1; 
-      overflow: hidden; 
-    }
-    
-    .chat-box { 
-      flex: 1; 
-      border: ridge 4px var(--purple); 
-      background: var(--black); 
-      overflow-y: auto;
-      max-width: calc(100% - 208px);
-    }
-    
-    .chat-box p { 
-      margin: 0; 
-      padding: .5em; 
-      color: var(--silver); 
-    }
-    
-    .sidebar-box { 
-      width: 200px;
-      min-width: 200px;
-      flex-shrink: 0;
-      border: ridge 4px var(--purple); 
-      background: var(--black); 
-      overflow-y: auto; 
-      display: flex; 
-      flex-direction: column; 
-    }
-    
-    .sidebar-box a { 
-      color: var(--white); 
-      background: var(--black); 
-      padding: .6em; 
-      border: outset 3px var(--purple); 
-      text-decoration: none; 
-      display: block; 
-      cursor: pointer; 
-    }
-    
-    .sidebar-box a:hover { 
-      background: var(--purple); 
-    }
-    
-    .sidebar-box a:active { 
-      border-style: inset; 
-      background: var(--mediumvioletred); 
-      color: var(--black); 
-    }
-    
-    @media (max-width: 768px) { 
-      .layout { 
-        flex-direction: column; 
-        height: auto; 
-      }
-      
-      .cbox-panel {
-        width: 100%;
-        min-width: 100%;
-        height: 400px;
-        border-right: none;
-        border: ridge 4px var(--purple);
-      }
-      
-      .main-area { 
-        flex-direction: column; 
-      } 
-      
-      .chat-box {
-        max-width: 100%;
-      }
-      
-      .sidebar-box { 
-        width: 100%;
-        min-width: 100%;
-        order: -1;
-      } 
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jurietto.github.io</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="index.js" defer></script>
 </head>
 <body>
-  <div class="layout">
-    <div class="cbox-panel">
-      <iframe src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" allowtransparency="yes"></iframe>
-    </div>
-    <div class="right-side">
-      <div class="links-bar">
-        <h1>Welcome Succhead! 🍭</h1>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="profile-avatar">
+        <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Chicken_katsu_from_Kamameshi_House.JPG/1024px-Chicken_katsu_from_Kamameshi_House.JPG" target="_blank">
+          <img src="https://file.garden/ZhTgSjrp5nAroRKq/image0_cropped.png" alt="Avatar" />
+        </a>
       </div>
-      <div class="main-area">
-        <div class="chat-box">
-          <h2>⛧ ABOUT This Place (Or Whatever)</h2>
-    <p>
+      <nav class="primary-navigation">
+        <a href="#">⛧ HOME</a>
+        <a href="#">⛧ INFO</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-content">
+    <aside class="about-section">
+      <h2>⛧ JURI 🎀</h2>
+      <div class="retro-image">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/2013-08-15_00026.jpg" alt="Cat typing" />
+      </div>
+      
+
+      <h2>⛧ STATUS 🦴</h2>
+      <p>Loading...</p>
+
+      <h2>⛧ PROFILE 🧛🏻‍♀️</h2>
+<p>
+<strong>Name:</strong> Juri (Juliet)<br>
+<strong>Location:</strong> California<br>
+<strong>Pronouns:</strong> She/They<br>
+<strong>Personality:</strong> Patient, creative, neurodivergent<br>
+<strong>Interests:</strong> Audio, coding, gothic lolita punk (GLP), J-fashion, hiking, DJing, baking, journaling<br>
+<strong>Favorite Character:</strong> Charmmy Kitty<br>
+<strong>Values:</strong> Mental health, self-acceptance, darkness<br>
+<strong>Orientation:</strong> Asexual
+</p>
+
+<h2>⛧ CHANGELOG 💜</h2>
+      <p>Loading...</p>
+
+
+    </aside>
+
+    <section class="main-content">
+      <h2>⛧ WELCOME 🍭</h2>
+      <iframe
+        class="chat-widget"
+        src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm"
+        allowtransparency="yes"
+        title="Cbox Chat"
+      ></iframe>
+      <h2>⛧ ABOUT 🩷</h2>
+      <p>
       <img 
         src="https://file.garden/ZhTgSjrp5nAroRKq/kindpng_419679.png" 
         alt="Decorative" 
@@ -173,44 +68,46 @@
       />
       So basically this site exists because traditional social media makes my brain feel weird and I need somewhere I can be myself. I mainly use this space to mess around with basic web design - HTML, CSS, JavaScript, the usual suspects. Nothing fancy just me learning stuff and breaking things accidentally... sometimes I fix them sometimes I don't! It's whatever. Thoughts, feelings, random confusion, projects I start and forget about, things I'm supposedly working on... it all lives in in this little hermit hideout. Sometimes my online friends hang out here when Discord gets boring!!! We just pretend we're celebrities and start rambling to ourseleves in the chatbox like lost souls except with WIFI. Honestly the whole thing is a bit messy or chaotic a bit maybe and the design will probably change because I can't make creative decisions to save my life, but that's part of the fun I guess.
     </p>
-        </div>
-        <div class="sidebar-box">
-          <a href="#journal">⛧ Journal</a>
-          <a href="#spells">⛧ Spells</a>
-          <a href="#friends">⛧ Friends</a>
-          <a href="#gallery">⛧ Gallery</a>
-          <a href="#webrings">⛧ Webrings</a>
-          <a href="#music">⛧ Music</a>
-          <a href="#guestbook">⛧ Guestbook</a>
-          <a href="#moodboard">⛧ Moodboard</a>
-          <a href="#codevault">⛧ Code Vault</a>
-          <a href="#artifacts">⛧ Artifacts</a>
-          <a href="#journal2">⛧ Journal</a>
-          <a href="#spells2">⛧ Spells</a>
-          <a href="#friends2">⛧ Friends</a>
-          <a href="#gallery2">⛧ Gallery</a>
-          <a href="#webrings2">⛧ Webrings</a>
-          <a href="#music2">⛧ Music</a>
-          <a href="#guestbook2">⛧ Guestbook</a>
-          <a href="#moodboard2">⛧ Moodboard</a>
-          <a href="#codevault2">⛧ Code Vault</a>
-          <a href="#artifacts2">⛧ Artifacts</a>
-        </div>
-      </div>
-      <div class="footer">
-        <p>⛧ Thanks for visiting ⛧</p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+      <h2>⛧ VISITORS 🧸</h2>
+      <img
+        class="visitor-counter"
+        src="https://s01.flagcounter.com/count/RL5w/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_12/viewers_3/labels_1/pageviews_0/flags_0/percent_0/"
+        alt="Flag Counter"
+      />
+    </section>
 
-  
-  </aside>
-</main>
+    <aside class="media-section">
+      <h2>⛧ WEB M-A 💀</h2>
+      <div class="retro-image">
+        <img src="https://file.garden/ZhTgSjrp5nAroRKq/1748990140048.png" alt="WEB M-A" />
+      </div>
+       <p>The site is rated WEB M‑A because I have a goofy potty mouth.</p>
+      <div class="links-widget">
+        <h2>⛧ NAV 🦇</h2>
+<a href="https://wikipedia.org" target="_self">TOP</a>
+<a href="https://arstechnica.com" target="_self">UPDATES</a>
+<a href="https://theverge.com" target="_self">MENHERA</a>
+<a href="https://wired.com" target="_self">VAMPIRE</a>
+<a href="https://jurietto.github.io/music/index.html" target="_self">MUSIC</a>
+<a href="https://dev.to" target="_self">FOOD</a>
+<a href="https://web.dev" target="_self">GALLERY</a>
+<a href="https://dev.to" target="_self">TECHNO PAGANISM</a>
+<h2>⛧ EXTERNAL LINKS 🍬</h2>
+<a href="#" target="_blank">Twitter</a>
+<a href="#" target="_blank">YouTube</a>
+<a href="#" target="_blank">VNDB</a>
+<a href="#" target="_blank">Bloodlines&nbsp;Wiki</a>
+<a href="#" target="_blank">Webstudio</a>
 
-<footer>
-  <p>2024 - ??? Have A Nice Day! :D</p>
-</footer>
+<h2>⛧ ARCHIVES 🧁</h2>
+<a href="https://wikipedia.org" target="_blank" rel="noopener">Putumayo</a>
+<a href="https://arstechnica.com" target="_blank" rel="noopener">Charmmy Kitty</a>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 jurietto.github.io</p>
+  </footer>
 </body>
 </html>
