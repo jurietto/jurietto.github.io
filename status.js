@@ -5,7 +5,6 @@ async function loadLatestStatus() {
   try {
     const res = await fetch("timeline.json");
     const timeline = await res.json();
-
     const latest = timeline.find(entry => entry.author?.toLowerCase() === "juri");
     if (!latest) {
       statusEl.textContent = "No status found.";
@@ -13,40 +12,33 @@ async function loadLatestStatus() {
     }
 
     const date = latest.time || "Unknown date";
-    const [text, ...urls] = (latest.text || "").split("\n").map(str => str.trim()).filter(Boolean);
+    const [text, ...urls] = (latest.text || "").split("\n").map(s => s.trim()).filter(Boolean);
 
-    // Start building output
     let html = `<p><strong>${date}</strong> – ${text || "No text."}</p>`;
 
     for (const url of urls) {
-      const cleanUrl = url.split("?")[0];
-
-      // Handle YouTube & SoundCloud via oEmbed
       if (/youtube\.com|youtu\.be/.test(url)) {
-        html += `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${extractYouTubeID(url)}" frameborder="0" allowfullscreen></iframe>`;
+        const id = extractYouTubeID(url);
+        if (id) html += `<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
         continue;
       }
 
       if (/soundcloud\.com/.test(url)) {
-        const oembed = await fetch(`https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(url)}`)
-          .then(res => res.json())
-          .catch(() => null);
-
-        if (oembed?.html) {
-          html += oembed.html;
-        } else {
-          html += `<p><a href="${url}" target="_blank">${url}</a></p>`;
-        }
+        html += `<iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"></iframe>`;
         continue;
       }
 
-      // Default fallback: show as link (browsers like Twitter/X, TikTok, etc. will handle this)
+      if (/spotify\.com/.test(url)) {
+        html += `<iframe src="${url.replace(/\/track\//, '/embed/track/')}" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+        continue;
+      }
+
       html += `<p><a href="${url}" target="_blank">${url}</a></p>`;
     }
 
     statusEl.innerHTML = html;
-  } catch (error) {
-    console.error("Status loading error:", error);
+  } catch (err) {
+    console.error("Failed to load status:", err);
     statusEl.innerHTML = `<p>Error loading status.</p>`;
   }
 }

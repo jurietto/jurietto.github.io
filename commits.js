@@ -1,34 +1,33 @@
-async function loadChangelog() {
-  const el = document.getElementById("changelog");
-  if (!el) return;
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("commits.json")
+    .then((res) => res.json())
+    .then((commits) => {
+      const changelog = document.getElementById("changelog");
+      changelog.innerHTML = "";
 
-  try {
-    const data = await fetch("commits.json").then(r => r.json());
-    const juriCommits = data
-      .filter(c => c.author.toLowerCase() === "juri")
-      .slice(-5); // keep last 5
+      // Sort by date DESC (newest first)
+      const sorted = commits.sort((a, b) => new Date(b.date) - new Date(a.date));
+      const lastFive = sorted.slice(0, 5);
 
-    if (juriCommits.length === 0) {
-      el.textContent = "No recent Juri commits.";
-      return;
-    }
+      lastFive.forEach((commit) => {
+        const date = new Date(commit.date);
+        const formatted = date.toLocaleString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        });
 
-    el.innerHTML = juriCommits
-      .map(c => {
-        const d = new Date(c.date);
-        const ds =
-          String(d.getMonth()+1).padStart(2,'0') + '/' +
-          String(d.getDate()).padStart(2,'0') + '/' +
-          d.getFullYear() + ' @ ' +
-          String(d.getHours()).padStart(2,'0') + ':' +
-          String(d.getMinutes()).padStart(2,'0');
-        return `<p><strong>${ds}</strong> – ${c.message}</p>`;
-      })
-      .join("");
-  } catch (err) {
-    console.error("Changelog load error:", err);
-    el.textContent = "Error loading changelog.";
-  }
-}
-
-loadChangelog();
+        const [datePart, timePart] = formatted.split(", ");
+        const entry = document.createElement("p");
+        entry.innerHTML = `<strong>${datePart} @ ${timePart}</strong> – ${commit.message}`;
+        changelog.appendChild(entry);
+      });
+    })
+    .catch((err) => {
+      document.getElementById("changelog").innerHTML = "<p>Error loading changelog.</p>";
+      console.error("Changelog fetch error:", err);
+    });
+});

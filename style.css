@@ -1,30 +1,102 @@
+/* === Font === */
 @font-face {
   font-family: 'Kidplay';
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/kidplay%20Preview.otf') format('opentype');
 }
 
-/* BASE BODY */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  color: #f6d2f3;
-  line-height: 1.6;
-  position: relative;
-  z-index: 1;
-  background-color: #000000;
+/* === Box Model Fix === */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-/* LAYER 1: CHECKERBOARD BACKGROUND */
+/* === Sticky Footer Layout === */
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fbd3f7;
+  line-height: 1.6;
+  position: relative;
+  scrollbar-gutter: stable;
+  cursor: url("cursors/arrow.png"), auto;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.content-box {
+  width: 100%;
+  max-width: 720px;
+  background: #300047;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 3px solid #b000a5;
+}
+
+/* === Header === */
+header {
+  text-align: center;
+  background: linear-gradient(to bottom, #000, #300047);
+  border-bottom: 4px solid #b000a5;
+  padding: 2rem 1rem 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1rem;
+  background-image: url('./media/juri.png');
+  background-size: cover;
+  background-position: center;
+  border: 5px solid #b000a5;
+  border-radius: 50%;
+}
+
+/* === Navigation === */
+nav {
+  margin-top: 0.5rem;
+}
+
+nav a {
+  font-family: 'Kidplay', Arial;
+  font-size: 1.1rem;
+  margin: 0 1rem;
+  color: #ff00cc;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+/* === Animated Checkerboard Background === */
 .bg-checkerboard {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='20' height='20' fill='%232e003e'/%3E%3Crect x='20' y='20' width='20' height='20' fill='%232e003e'/%3E%3Crect x='20' width='20' height='20' fill='%2394008e'/%3E%3Crect y='20' width='20' height='20' fill='%2394008e'/%3E%3C/svg%3E");
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='20' height='20' fill='%23300047'/%3E%3Crect x='20' y='20' width='20' height='20' fill='%23300047'/%3E%3Crect x='20' width='20' height='20' fill='%23b000a5'/%3E%3Crect y='20' width='20' height='20' fill='%23b000a5'/%3E%3C/svg%3E");
   background-size: 40px 40px;
-  background-repeat: repeat;
-  animation: scroll-bg 20s linear infinite;
+  animation: scroll-bg 30s linear infinite;
+  will-change: background-position;
   z-index: 0;
   pointer-events: none;
 }
@@ -38,108 +110,157 @@ body {
   }
 }
 
-/* HEADER SECTION */
-header {
-  position: relative;
-  text-align: center;
-  background-color: #2e003e;
-  border-bottom: 4px solid #94008e;
-  padding: 40px 20px 20px;
-  z-index: 2;
-  overflow: hidden;
-}
-
-
-.logo {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto 20px;
-  background-image: url('https://file.garden/ZhTgSjrp5nAroRKq/image0_cropped.png');
-  background-size: cover;
-  background-position: center;
-  border-radius: 50%;
-  border: 5px solid #94008e;
-  position: relative;
-  z-index: 1;
-}
-
-/* NAVIGATION */
-nav {
-  margin-top: 10px;
-  position: relative;
-  z-index: 1;
-}
-
-nav a {
-  margin: 0 15px;
-  font-family: 'Kidplay', cursive;
-  color: #ff00c8;
-  text-decoration: none;
-  font-size: 1.1rem;
-}
-
-/* MAIN CONTENT */
-main {
-  display: flex;
-  justify-content: center;
-  padding: 40px 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.content-box {
-  width: 100%;
-  max-width: 720px;
-  background-color: #2e003e;
-  padding: 30px;
-  border-radius: 10px;
-  border: 3px solid #94008e;
-}
-
-/* HEADINGS */
+/* === Headings === */
 h2 {
-  font-family: 'Kidplay', cursive;
-  color: #f6d2f3;
-  margin-top: 30px;
-  border-bottom: 2px solid #94008e;
-  padding-bottom: 5px;
+  font-family: 'Kidplay', Arial;
+  color: #fbd3f7;
+  margin-top: 2rem;
+  border-bottom: 2px solid #b000a5;
+  padding-bottom: 0.3rem;
 }
 
-/* CHAT IFRAME */
-iframe {
+/* === Embeds and Iframes === */
+iframe,
+embed,
+object {
+  display: block;
   width: 100%;
-  height: 400px;
-  border: none;
-  margin-top: 20px;
-  background-color: #000000;
+  max-width: 100%;
+  border: 3px solid #b000a5;
+  border-radius: 8px;
+  background-color: #000;
+  margin: 1.5rem 0;
 }
 
-/* LINKS */
-a {
-  color: #ff00c8;
-  text-decoration: underline;
+.cbox-frame {
+  height: 450px;
 }
 
-/* FOOTER */
-footer {
+.flag-counter {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid #b000a5;
+  border-radius: 8px;
+  background-color: #000;
+  margin: 1rem 0;
+}
+
+/* === Inline Images === */
+.content-box img:not(.flag-counter) {
+  border: 3px solid #b000a5;
+  border-radius: 8px;
+  background-color: #000;
+  display: block;
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  margin: 1rem auto;
+}
+
+.content-box img[style*="float"] {
+  margin: 1rem 0 !important;
+}
+
+/* === Star Animation === */
+#star-zone {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.star {
+  position: absolute;
+  top: -20px;
+  color: #fff;
+  animation: animate 5s linear forwards;
+  font-family: FontAwesome;
+  text-shadow: 0 0 5px #fff, 0 0 20px #fff, 0 0 50px #fff;
+  will-change: transform, opacity;
+}
+
+.star::before {
+  content: "\f005";
+}
+
+@keyframes animate {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* === Back to Top Link === */
+.back-to-top {
   text-align: center;
-  padding: 30px 20px;
-  background-color: #000000;
-  color: #f6d2f3;
-  font-size: 0.9rem;
-  border-top: 3px solid #94008e;
-  position: relative;
+  margin: 0;
+  padding: 0;
   z-index: 2;
+  position: relative;
+  line-height: 0;
 }
 
-/* RESPONSIVE */
+.back-to-top a {
+  font-family: 'Kidplay', Arial;
+  color: #fff !important;
+  font-size: 1rem;
+  text-decoration: underline;
+  display: inline-block;
+  padding: 1rem 0;
+}
+
+.back-to-top a:hover {
+  color: #fff !important;
+}
+
+/* === Footer === */
+footer {
+  font-family: 'Kidplay';
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #000;
+  color: #fbd3f7;
+  font-size: 0.9rem;
+  border-top: 3px solid #b000a5;
+  width: 100%;
+  margin-top: auto;
+}
+
+/* === Custom Cursor Rules === */
+a, button, select, label, input[type="submit"],
+input[type="button"], .clickable {
+  cursor: url("cursors/selection.png"), pointer;
+}
+
+input[type="text"], input[type="email"], textarea {
+  cursor: url("cursors/text.png"), text;
+}
+
+/* === Responsive === */
 @media (max-width: 600px) {
-  .content-box {
-    padding: 20px;
+  .logo {
+    width: 100px;
+    height: 100px;
   }
 
-  .logo {
-    width: 120px;
-    height: 120px;
+  .content-box {
+    padding: 1.5rem;
+  }
+
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
   }
 }
