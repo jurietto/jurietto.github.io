@@ -10,12 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Sort commits by newest date first
-      const sorted = commits.sort((a, b) => new Date(b.date) - new Date(a.date));
+      // Sort by most recent date
+      const sorted = commits.sort((a, b) => parseDate(b.date) - parseDate(a.date));
       const lastFive = sorted.slice(0, 5);
 
       lastFive.forEach((commit) => {
-        const date = new Date(commit.date);
+        const date = parseDate(commit.date);
+        if (isNaN(date)) return;
+
         const formatted = date.toLocaleString("en-US", {
           month: "2-digit",
           day: "2-digit",
@@ -38,10 +40,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// Prevent potential HTML injection or layout bugs
+function parseDate(dateStr) {
+  const match = dateStr.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{2})(\d{2})$/);
+  if (!match) {
+    console.warn("Invalid date in commit:", dateStr);
+    return new Date("Invalid");
+  }
+
+  const [_, date, time, tzHour, tzMin] = match;
+  const formatted = `${date}T${time}${tzHour}:${tzMin}`;
+  return new Date(formatted);
+}
+
 function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
   return div.innerHTML;
 }
-
