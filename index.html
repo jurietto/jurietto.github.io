@@ -1,48 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Juri's personal space on the web.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Juri's personal space on the web." />
   <title>jurietto.github.io</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Scripts -->
   <script src="status.js" defer></script>
-  <script src="index.js" defer></script>
   <script src="commits.js" defer></script>
   <script src="cursor.js" defer></script>
-  </head>
+  <script src="index.js" defer></script>
+</head>
+
 <body>
-  <div class="bg-checkerboard"></div>
 
   <header>
     <div class="logo"></div>
     <nav>
-      <a href="#index.html">HOME</a>
-      <a href="#info">INFO</a>
+      <a href="index.html">HOME</a>
+      <a href="#about">INFO</a>
       <a href="timeline/index.html">TIMELINE</a>
     </nav>
+    <!-- Move star animation zone inside header -->
     <div id="star-zone"></div>
   </header>
 
   <main>
     <section class="content-box">
-      <h2>☠️WEB-MA</h2>
+      <h2>☠️ WEB-MA</h2>
       <p>This site is rated WEB M-A because I have a goofy potty mouth :3</p>
 
-      <!-- Cbox Chat Embed -->
       <iframe
-        class="cbox" 
-        src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" 
-        allowtransparency="true" 
-        allow="autoplay" 
-        scrolling="auto">
-      </iframe>
+        class="cbox"
+        src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm"
+        allowtransparency="true"
+        allow="autoplay"
+        scrolling="auto"
+      ></iframe>
 
-      <h2>☠️CURRENT STATUS</h2>
+      <h2>☠️ CURRENT STATUS</h2>
       <div id="status"><p>Loading...</p></div>
 
-      <h2 id="about">☠️ABOUT</h2>
+<h2 id="about">☠️ABOUT</h2>
       <p>
         <img 
           src="https://file.garden/ZhTgSjrp5nAroRKq/kindpng_419679.png" 
@@ -52,25 +58,24 @@
         So basically this site exists because traditional social media makes my brain feel weird and I need somewhere I can be myself. I mainly use this space to mess around with basic web design - HTML, CSS, JavaScript, the usual suspects. Nothing fancy just me learning stuff and breaking things accidentally... sometimes I fix them sometimes I don't! It's whatever. Thoughts, feelings, random confusion, projects I start and forget about, things I'm supposedly working on... it all lives in in this little hermit hideout. Sometimes my online friends hang out here when Discord gets boring!!! We just pretend we're celebrities and start rambling to ourseleves in the chatbox like lost souls except with WIFI. Honestly the whole thing is a bit messy or chaotic a bit maybe and the design will probably change because I can't make creative decisions to save my life, but that's part of the fun I guess.
       </p>
 
-      <h2>☠️CHANGELOG</h2>
+      <h2>☠️ CHANGELOG</h2>
       <div id="changelog"><p>Loading...</p></div>
 
-      <h2>☠️VISITORS</h2>
-      <a href="https://info.flagcounter.com/RL5w">
-        <img 
-          class="flag-counter" 
-          src="https://s01.flagcounter.com/map/RL5w/size_s/txt_000000/border_CCCCCC/pageviews_1/viewers_cute+lurkers/flags_12/" 
-          alt="Flag Counter">
+      <h2>☠️ VISITORS</h2>
+      <a href="https://info.flagcounter.com/RL5w" target="_blank" rel="noopener noreferrer">
+        <img
+          class="flag-counter"
+          src="https://s01.flagcounter.com/map/RL5w/size_s/txt_000000/border_CCCCCC/pageviews_1/viewers_cute+lurkers/flags_12/"
+          alt="Flag Counter"
+        />
       </a>
     </section>
   </main>
 
   <div class="back-to-top">
     <a href="#top">TOP</a>
-    </div>
+  </div>
 
   <footer>
-    <p>2024 – ??? jurietto.github.io</p>
+    <p>Made with 💜 by Juliet. This site is a work in progress, so expect changes and updates.</p>
   </footer>
-</body>
-</html>

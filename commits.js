@@ -5,7 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const changelog = document.getElementById("changelog");
       changelog.innerHTML = "";
 
-      // Sort by date DESC (newest first)
+      if (!Array.isArray(commits)) {
+        changelog.innerHTML = "<p>Invalid changelog format.</p>";
+        return;
+      }
+
+      // Sort commits by newest date first
       const sorted = commits.sort((a, b) => new Date(b.date) - new Date(a.date));
       const lastFive = sorted.slice(0, 5);
 
@@ -22,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const [datePart, timePart] = formatted.split(", ");
         const entry = document.createElement("p");
-        entry.innerHTML = `<strong>${datePart} @ ${timePart}</strong> – ${commit.message}`;
+        entry.style.wordBreak = "break-word";
+        entry.innerHTML = `<strong>${datePart} @ ${timePart}</strong> – ${escapeHtml(commit.message)}`;
         changelog.appendChild(entry);
       });
     })
@@ -31,3 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Changelog fetch error:", err);
     });
 });
+
+// Prevent potential HTML injection or layout bugs
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
