@@ -48,6 +48,10 @@ main {
   border: 3px solid #b000a5;
 }
 
+.content-box p {
+  font-family: "MS UI Gothic", "MS PGothic", "Meiryo", Arial, sans-serif;
+}
+
 /* === Header === */
 header {
   text-align: center;
@@ -227,7 +231,7 @@ object {
 
 /* === Footer === */
 footer {
-  font-family: 'Kidplay';
+  font-family: "MS UI Gothic", "MS PGothic", "Meiryo", Arial, sans-serif;
   text-align: center;
   padding: 2rem 1rem;
   background: #000;
@@ -236,6 +240,10 @@ footer {
   border-top: 3px solid #b000a5;
   width: 100%;
   margin-top: auto;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
 }
 
 /* === Custom Cursor Rules === */
