@@ -43,7 +43,7 @@ header {
   text-align: center;
   background: linear-gradient(to bottom, #000, #300047);
   border-bottom: 4px solid #b000a5;
-  padding: 2rem 1rem 1.2rem;
+  padding: 2rem 1rem 1.5rem;
   position: relative;
   overflow: hidden;
 }
@@ -60,7 +60,7 @@ header {
 }
 
 nav {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 nav a {
@@ -119,7 +119,7 @@ nav a:hover {
 main {
   display: flex;
   justify-content: center;
-  padding: 2.5rem 1rem;
+  padding: 3rem 1rem;
 }
 
 .content-box {
@@ -129,14 +129,19 @@ main {
   padding: 2rem;
   border-radius: 10px;
   border: 3px solid #b000a5;
+  box-shadow: 0 0 10px #000;
 }
 
 h2 {
   font-family: 'Kidplay', Arial;
   color: #fbd3f7;
-  margin-top: 2rem;
+  margin: 2rem 0 1rem;
   border-bottom: 2px solid #b000a5;
   padding-bottom: 0.3rem;
+}
+
+.content-box p {
+  margin-bottom: 1rem;
 }
 
 #changelog p {
@@ -177,7 +182,7 @@ iframe.cbox {
 }
 
 .content-box img[style*="float"] {
-  margin: 1rem 0 !important;
+  margin: 0 0 1rem 1rem !important;
 }
 
 /* === Footer === */
@@ -203,8 +208,9 @@ footer a:hover {
 /* === Back to Top === */
 .back-to-top {
   text-align: center;
+  margin-top: 2rem;
   padding: 0;
-  line-height: 0;
+  line-height: 1;
 }
 
 .back-to-top a {
@@ -244,5 +250,9 @@ input[type="text"], input[type="email"], textarea {
 
   .star {
     font-size: 8px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
   }
 }
