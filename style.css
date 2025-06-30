@@ -4,17 +4,6 @@
   src: url('https://file.garden/ZhTgSjrp5nAroRKq/kidplay%20Preview.otf') format('opentype');
 }
 
-/* === Box Model Fix === */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* === Sticky Footer Layout === */
-html {
-  height: 100%;
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -49,7 +38,7 @@ main {
 }
 
 .content-box p {
-  font-family: "MS UI Gothic", "MS PGothic", "Meiryo", Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 /* === Header === */
@@ -231,7 +220,7 @@ object {
 
 /* === Footer === */
 footer {
-  font-family: "MS UI Gothic", "MS PGothic", "Meiryo", Arial, sans-serif;
+  font-family: Arial, sans-serif;
   text-align: center;
   padding: 2rem 1rem;
   background: #000;
