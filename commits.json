@@ -4020,5 +4020,8 @@
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-01 01:36:04 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-07-01 08:36:23 +0000"},
 {"author": "Juri", "message": "No code changes made; maintaining current state.", "date": "2025-07-01 01:45:05 -0700"},
-{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-01 01:47:11 -0700"}
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-01 01:47:11 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-07-01 08:47:33 +0000"},
+{"author": "Juri", "message": "Refactor timeline functionality: add search, filter, and sort options; enhance media embedding; update timeline entry structure", "date": "2025-07-01 13:31:33 -0700"},
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-01 13:31:41 -0700"}
 ]
