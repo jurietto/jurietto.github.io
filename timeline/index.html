@@ -12,13 +12,12 @@
   <script src="timeline.js" defer></script>
 
 <style>
-  /* Responsive and minimal styling for timeline controls */
+  /* Stack timeline controls vertically on all screen sizes */
   #timeline-controls {
     display: flex;
-    flex-wrap: wrap;
-    justify-content:nter;
-    align-items: center;
-    gap: 0.75rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
     margin-bottom: 2rem;
     padding: 0.5rem;
     box-sizing: border-box;
@@ -27,8 +26,9 @@
   #timeline-controls label {
     font-weight: 600;
     font-size: 0.95rem;
-    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
     white-space: nowrap;
+    color: #ff00cc;
   }
 
   #timeline-controls input,
@@ -37,23 +37,12 @@
     font-size: 1rem;
     max-width: 100%;
     box-sizing: border-box;
+    margin-bottom: 0.5rem;
   }
 
-  @media (max-width: 600px) {
-    #timeline-controls {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 1rem;
-    }
-
-    #timeline-controls label {
-      margin-right: 0;
-    }
-
-    #timeline-controls input,
-    #timeline-controls select {
-      width: 100%;
-    }
+  #timeline-controls input:last-child,
+  #timeline-controls select:last-child {
+    margin-bottom: 0;
   }
 </style>
 
