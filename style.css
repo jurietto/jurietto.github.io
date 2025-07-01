@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Kidplay';
-  src: url('https://file.garden/ZhTgSjrp5nAroRKq/kidplay%20Preview.otf') format('opentype');
+  src: url('../fonts/kidplay.otf') format('opentype');
 }
 
 /* === Reset === */

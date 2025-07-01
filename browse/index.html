@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Juri's personal space on the web." />
+  <title>jurietto.github.io</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <script src="../index.js" defer></script>
+  <script src="../cursor.js" defer></script>
+</head>
+
+<body>
+  <div class="bg-checkerboard"></div>
+
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <a href="../index.html">HOME</a>
+      <a href="../browse/index.html">BROWSE</a>
+      <a href="index.html">TIMELINE</a>
+    </nav>
+    <div id="star-zone"></div>
+  </header>
+
+  <main>
+    <h2><a href="../info/index.html">INFO</a></h2>
+    <p>General info and FAQ</p>
+    <h2><a href="../timeline/index.html">TIMELINE</a></h2>
+  </main>
+
+  <div class="back-to-top">
+    <a href="#top">TOP</a>
+  </div>
+
+  <footer>
+    <p>2024 – ??? jurietto.github.io</p>
+  </footer>
+
+  <script>
+    // Prevent form submission from refreshing the page
+    document.getElementById("timeline-controls").addEventListener("submit", e => e.preventDefault());
+  </script>
+</body>
+</html>
