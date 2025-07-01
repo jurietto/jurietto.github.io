@@ -33,6 +33,11 @@ async function loadLatestStatus() {
         continue;
       }
 
+      if (/\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(url)) {
+        html += `<img src="${url}" alt="Embedded image" style="max-width: 100%; height: auto;" />`;
+        continue;
+      }
+
       html += `<p><a href="${url}" target="_blank">${url}</a></p>`;
     }
 

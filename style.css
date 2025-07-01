@@ -19,7 +19,6 @@ body {
   cursor: url("cursors/arrow.png"), auto;
   min-height: 100vh;
   overflow-x: hidden;
-
   background-image:
     repeating-linear-gradient(0deg, #300047 0 20px, #000 20px 40px),
     repeating-linear-gradient(90deg, #300047 0 20px, #000 20px 40px);
@@ -36,6 +35,15 @@ body {
   100% {
     background-position: 40px 40px;
   }
+}
+
+/* === Layout === */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1rem;
 }
 
 /* === Header === */
@@ -59,14 +67,18 @@ header {
   border-radius: 50%;
 }
 
+/* === Navigation === */
 nav {
   margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 nav a {
   font-family: 'Kidplay', Arial;
   font-size: 1.1rem;
-  margin: 0 1rem;
   color: #ff00cc;
   text-decoration: none;
 }
@@ -115,20 +127,14 @@ nav a:hover {
   }
 }
 
-/* === Main === */
-main {
-  display: flex;
-  justify-content: center;
-  padding: 3rem 1rem;
-}
-
+/* === Boxes === */
 .content-box {
-  width: 800px;
-  max-width: 100%;
-  background: rgb(0, 0, 0);
+  width: 100%;
+  max-width: 800px;
+  background: #000;
   padding: 2rem;
-  border-radius: 10px; /* Subtle rounded corners */
-  border: 2px solid #b000a5; /* Maintain border thickness */
+  border-radius: 10px;
+  border: 2px solid #b000a5;
 }
 
 h2 {
@@ -150,27 +156,18 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
-/* === Embeds and Images === */
+/* === Embeds and Media === */
 iframe,
 embed,
 object {
   display: block;
   width: 100%;
   max-width: 100%;
-  border: 2px solid #300047; /* Maintain border thickness */
-  border-radius: 8px; /* Subtle rounded corners */
+  border: 2px solid #300047;
+  border-radius: 8px;
+  margin: 1rem 0;
 }
 
-.cbox {
-  height: 450px;
-  max-height: 450px;
-  overflow: auto;
-  width: 100%;
-  max-width: 100%;
-  background-image: url('./media/stars2.gif');
-}
-
-.flag-counter,
 .content-box img:not(.flag-counter) {
   border: 3px solid #300047;
   border-radius: 8px;
@@ -183,6 +180,20 @@ object {
 
 .content-box img[style*="float"] {
   margin: 0 0 1rem 1rem !important;
+}
+
+.flag-counter {
+  display: block;
+  margin: 1rem auto;
+}
+
+/* === Chatbox Preview === */
+.cbox {
+  height: 450px;
+  max-height: 450px;
+  overflow: auto;
+  width: 100%;
+  background-image: url('./media/stars2.gif');
 }
 
 /* === Footer === */
@@ -208,7 +219,6 @@ footer a:hover {
 /* === Back to Top === */
 .back-to-top {
   text-align: center;
-
   line-height: 1;
 }
 
@@ -221,7 +231,7 @@ footer a:hover {
   padding: 1rem 0;
 }
 
-/* === Custom Cursors === */
+/* === Cursors === */
 a, button, select, label, input[type="submit"],
 input[type="button"], .clickable {
   cursor: url("cursors/selection.png"), pointer;
@@ -232,7 +242,7 @@ input[type="text"], input[type="email"], textarea {
 }
 
 /* === Responsive === */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .logo {
     width: 100px;
     height: 100px;
@@ -242,16 +252,20 @@ input[type="text"], input[type="email"], textarea {
     padding: 1.5rem;
   }
 
-  nav a {
-    display: block;
-    margin: 0.5rem 0;
+  nav {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .star {
-    font-size: 8px;
+  nav a {
+    margin: 0.5rem 0;
   }
 
   h2 {
     font-size: 1.3rem;
+  }
+
+  .star {
+    font-size: 8px;
   }
 }

@@ -1,75 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Juri's personal space on the web.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Juri's personal space on the web." />
   <title>jurietto.github.io</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../style.css">
-  <script src="status.js" defer></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
   <script src="../index.js" defer></script>
-  <script src="commits.js" defer></script>
-  </head>
+  <script src="timeline.js" defer></script>
+
+<style>
+  /* Responsive and minimal styling for timeline controls */
+  #timeline-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:nter;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  #timeline-controls label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-right: 0.25rem;
+    white-space: nowrap;
+  }
+
+  #timeline-controls input,
+  #timeline-controls select {
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 600px) {
+    #timeline-controls {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    #timeline-controls label {
+      margin-right: 0;
+    }
+
+    #timeline-controls input,
+    #timeline-controls select {
+      width: 100%;
+    }
+  }
+</style>
+
+</head>
+
 <body>
   <div class="bg-checkerboard"></div>
 
   <header>
     <div class="logo"></div>
     <nav>
-      <a href="#index.html">HOME</a>
+      <a href="../index.html">HOME</a>
       <a href="#info">INFO</a>
-      <a href="timeline/index.html">TIMELINE</a>
+      <a href="index.html">TIMELINE</a>
     </nav>
     <div id="star-zone"></div>
   </header>
 
   <main>
     <section class="content-box">
-      <h2>☠️WEB-MA</h2>
-      <p>This site is rated WEB M-A because I have a goofy potty mouth :3</p>
+      <form id="timeline-controls">
+        <label for="search">Search:</label>
+        <input type="search" id="search" placeholder="Type to filter entries…" />
 
-      <!-- Cbox Chat Embed -->
-      <iframe
-        class="cbox" 
-        src="https://www3.cbox.ws/box/?boxid=3544658&boxtag=e80zwm" 
-        allowtransparency="true" 
-        allow="autoplay" 
-        scrolling="auto">
-      </iframe>
+        <label for="filter">Filter:</label>
+        <select id="filter">
+          <option value="all">All Entries</option>
+          <option value="2025-07">July 2025</option>
+          <option value="2025-06">June 2025</option>
+          
+        </select>
 
-      <h2>☠️CURRENT STATUS</h2>
-      <div id="status"><p>Loading...</p></div>
+        <label for="sort">Sort:</label>
+        <select id="sort">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+        </select>
+      </form>
 
-      <h2 id="about">☠️ABOUT</h2>
-      <p>
-        <img 
-          src="https://file.garden/ZhTgSjrp5nAroRKq/kindpng_419679.png" 
-          alt="Decorative" 
-          style="float: right; width: 100%; max-width: 120px; height: auto; margin: 0 0 1em 1em;"
-        />
-        So basically this site exists because traditional social media makes my brain feel weird and I need somewhere I can be myself. I mainly use this space to mess around with basic web design - HTML, CSS, JavaScript, the usual suspects. Nothing fancy just me learning stuff and breaking things accidentally... sometimes I fix them sometimes I don't! It's whatever. Thoughts, feelings, random confusion, projects I start and forget about, things I'm supposedly working on... it all lives in in this little hermit hideout. Sometimes my online friends hang out here when Discord gets boring!!! We just pretend we're celebrities and start rambling to ourseleves in the chatbox like lost souls except with WIFI. Honestly the whole thing is a bit messy or chaotic a bit maybe and the design will probably change because I can't make creative decisions to save my life, but that's part of the fun I guess.
-      </p>
 
-      <h2>☠️CHANGELOG</h2>
-      <div id="changelog"><p>Loading...</p></div>
-
-      <h2>☠️VISITORS</h2>
-      <a href="https://info.flagcounter.com/RL5w">
-        <img 
-          class="flag-counter" 
-          src="https://s01.flagcounter.com/map/RL5w/size_s/txt_000000/border_CCCCCC/pageviews_1/viewers_cute+lurkers/flags_12/" 
-          alt="Flag Counter">
-      </a>
+    
+      <div id="timeline-entries"></div>
     </section>
   </main>
 
   <div class="back-to-top">
     <a href="#top">TOP</a>
-    </div>
+  </div>
 
   <footer>
     <p>2024 – ??? jurietto.github.io</p>
   </footer>
+
+  <script>
+    // Prevent form submission from refreshing the page
+    document.getElementById("timeline-controls").addEventListener("submit", e => e.preventDefault());
+  </script>
 </body>
 </html>
