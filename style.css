@@ -123,19 +123,19 @@ main {
 }
 
 .content-box {
-  width: 100%;
-  max-width: 720px;
-  background: #300047;
+  width: 1200px;
+  max-width: 100%;
+  background: rgb(0, 0, 0);
   padding: 2rem;
-  border-radius: 10px;
-  border: 3px solid #b000a5;
+  border-radius: 10px; /* Subtle rounded corners */
+  border: 2px solid #b000a5; /* Maintain border thickness */
 }
 
 h2 {
   font-family: 'Kidplay', Arial;
-  color: #fbd3f7;
+  color: #b000a5;
   margin: 2rem 0 1rem;
-  border-bottom: 2px solid #b000a5;
+  border-bottom: 2px solid #300047;
   padding-bottom: 0.3rem;
 }
 
@@ -157,24 +157,22 @@ object {
   display: block;
   width: 100%;
   max-width: 100%;
-  border: 3px solid #b000a5;
-  border-radius: 8px;
-  background-color: #000;
-  margin: 1.5rem 0;
+  border: 2px solid #300047; /* Maintain border thickness */
+  border-radius: 8px; /* Subtle rounded corners */
 }
 
-iframe.cbox,
 .cbox {
   height: 450px;
   max-height: 450px;
   overflow: auto;
-  width: 650px;
+  width: 100%;
   max-width: 100%;
+  background-image: url('./media/stars2.gif');
 }
 
 .flag-counter,
 .content-box img:not(.flag-counter) {
-  border: 3px solid #b000a5;
+  border: 3px solid #300047;
   border-radius: 8px;
   background-color: #000;
   display: block;
