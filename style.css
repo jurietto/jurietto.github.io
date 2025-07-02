@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Kidplay';
-  src: url('../fonts/kidplay.otf') format('opentype');
+  src: url('font/kidplay.otf') format('opentype');
 }
 
 /* === Reset === */
