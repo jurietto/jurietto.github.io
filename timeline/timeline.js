@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function parseCustomDate(str) {
   if (!str) return null;
-  const cleaned = str.replace('@', '').trim(); // Remove "@" symbol
-  const match = cleaned.match(/^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  const cleaned = str.replace(/[^0-9\/:@\sAMPamp]/g, '').trim();
+  const match = cleaned.match(/^(\d{2})\/(\d{2})\/(\d{4})\s*@\s*(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
   if (!match) return null;
-  let [ , mm, dd, yyyy, hour, min, period ] = match;
+  let [, mm, dd, yyyy, hour, min, period] = match;
   hour = parseInt(hour);
   if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
   if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
@@ -23,11 +23,11 @@ function parseCustomDate(str) {
 function getMonthYearKey(date) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  return `${year}-${month}`; // e.g. "2025-07"
+  return `${year}-${month}`;
 }
 
 function getMonthYearLabel(date) {
-  return date.toLocaleString('default', { month: 'long', year: 'numeric' }); // e.g. "July 2025"
+  return date.toLocaleString('default', { month: 'long', year: 'numeric' });
 }
 
 function populateMonthYearFilter(timeline) {
@@ -43,11 +43,13 @@ function populateMonthYearFilter(timeline) {
     }
   });
 
-  // Reset dropdown
   filter.innerHTML = `<option value="all">All Entries</option>`;
 
-  // Add sorted Month/Year options
-  const sorted = Array.from(monthYearMap.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+  const sorted = Array.from(monthYearMap.entries()).sort((a, b) => {
+    const dateA = new Date(a[0] + "-01");
+    const dateB = new Date(b[0] + "-01");
+    return dateB - dateA; // Newest first
+  });
 
   sorted.forEach(([value, label]) => {
     const option = document.createElement("option");
@@ -60,17 +62,31 @@ function populateMonthYearFilter(timeline) {
 function generateMediaEmbed(url) {
   if (/youtube\.com|youtu\.be/.test(url)) {
     const id = (url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/) || [])[1];
-    if (id) return `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe>`;
+    if (id) {
+      return `
+        <iframe 
+          width="560" 
+          height="315" 
+          style="max-width: 100%;" 
+          src="https://www.youtube.com/embed/${id}" 
+          frameborder="0" 
+          allowfullscreen>
+        </iframe>`;
+    }
   }
+
   if (/soundcloud\.com/.test(url)) {
     return `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"></iframe>`;
   }
+
   if (/spotify\.com/.test(url)) {
     return `<iframe src="${url.replace(/\/track\//, '/embed/track/')}" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
   }
+
   if (/\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(url)) {
     return `<img src="${url}" alt="Embedded image" style="max-width: 100%; height: auto; margin-top: 10px;" />`;
   }
+
   return `<p><a href="${url}" target="_blank">${url}</a></p>`;
 }
 
@@ -92,7 +108,10 @@ function generateEntryHTML(entry) {
 
 async function fetchTimeline() {
   try {
-    const res = await fetch("../timeline.json");
+    const res = await fetch("timeline.json");
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
     return await res.json();
   } catch (err) {
     console.error("Failed to fetch timeline.json:", err);

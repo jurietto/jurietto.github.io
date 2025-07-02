@@ -3,33 +3,39 @@ async function loadLatestStatus() {
   if (!statusEl) return;
 
   try {
-    const res = await fetch("timeline.json");
+    const res = await fetch("../timeline/timeline.json");
     const timeline = await res.json();
+
+    // Get the latest post from Juri
     const latest = timeline.find(entry => entry.author?.toLowerCase() === "juri");
     if (!latest) {
       statusEl.textContent = "No status found.";
       return;
     }
 
-    const date = latest.time || "Unknown date";
+    // Clean the date and main text
+    const date = removeLeadingEmoji(latest.time || "Unknown date");
     const [text, ...urls] = (latest.text || "").split("\n").map(s => s.trim()).filter(Boolean);
+    const cleanText = removeLeadingEmoji(text);
 
-    let html = `<p><strong>${date}</strong> – ${text || "No text."}</p>`;
+    let html = `<p><strong>${date}</strong> – ${cleanText || "No text."}</p>`;
 
     for (const url of urls) {
       if (/youtube\.com|youtu\.be/.test(url)) {
         const id = extractYouTubeID(url);
-        if (id) html += `<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+        if (id) {
+          html += `<iframe width="560" height="315" style="max-width: 100%;" src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+        }
         continue;
       }
 
       if (/soundcloud\.com/.test(url)) {
-        html += `<iframe scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"></iframe>`;
+        html += `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"></iframe>`;
         continue;
       }
 
       if (/spotify\.com/.test(url)) {
-        html += `<iframe src="${url.replace(/\/track\//, '/embed/track/')}" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+        html += `<iframe src="${url.replace(/\/track\//, '/embed/track/')}" width="100%" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
         continue;
       }
 
@@ -46,6 +52,12 @@ async function loadLatestStatus() {
     console.error("Failed to load status:", err);
     statusEl.innerHTML = `<p>Error loading status.</p>`;
   }
+}
+
+function removeLeadingEmoji(text) {
+  if (!text) return text;
+  // Match ☠ with or without variation selector (e.g., ☠ or ☠️), plus optional space
+  return text.replace(/^☠[\uFE0F]?\s*/, '').trim();
 }
 
 function extractYouTubeID(url) {
