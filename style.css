@@ -1,10 +1,6 @@
 @font-face {
   font-family: 'Kidplay';
-<<<<<<< HEAD
-  src: url('./fonts/kidplay Preview.otf') format('opentype');
-=======
-  src: url('font/kidplay.otf') format('opentype');
->>>>>>> 146851a078cf7631c67c5d66210597dcd6e43498
+  src: url('../fonts/kidplay Preview.otf') format('opentype');
 }
 
 /* === Reset === */
@@ -172,14 +168,22 @@ object {
   margin: 1rem 0;
 }
 
-.content-box img:not(.flag-counter) {
-  border: 3px solid #300047;
+.content-box .flag-counter {
+  border: 2px solid #300047;
   border-radius: 8px;
   background-color: #000;
   display: block;
   max-width: 100%;
   height: auto;
   margin: 1rem auto;
+}
+.content-box img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border: 2px solid #300047;
+  border-radius: 8px;
 }
 
 .content-box img[style*="float"] {
@@ -239,11 +243,11 @@ footer a:hover {
 /* === Cursors === */
 a, button, select, label, input[type="submit"],
 input[type="button"], .clickable {
-  cursor: url("cursors/selection.png"), pointer;
+  cursor: url("../cursors/selection.png"), pointer;
 }
 
 input[type="text"], input[type="email"], textarea {
-  cursor: url("cursors/text.png"), text;
+  cursor: url("../cursors/text.png"), text;
 }
 
 /* === Responsive === */
