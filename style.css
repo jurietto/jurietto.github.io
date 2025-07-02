@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Kidplay';
-  src: url('../fonts/kidplay.otf') format('opentype');
+  src: url('./fonts/kidplay Preview.otf') format('opentype');
 }
 
 /* === Reset === */
@@ -80,7 +80,7 @@ nav a {
   font-family: 'Kidplay', Arial;
   font-size: 1.1rem;
   color: #ff00cc;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 nav a:hover {
