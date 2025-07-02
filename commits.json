@@ -4038,5 +4038,7 @@
 {"author": "Juri", "message": "Enhance navigation and styling: add cursor script, update links, and improve link styles", "date": "2025-07-01 21:21:38 -0700"},
 {"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-01 21:23:10 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-07-02 04:23:34 +0000"},
-{"author": "Juri", "message": "Refactor HTML structure, update cursor paths, and enhance styling for consistency", "date": "2025-07-01 22:50:06 -0700"}
+{"author": "Juri", "message": "Refactor HTML structure, update cursor paths, and enhance styling for consistency", "date": "2025-07-01 22:50:06 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-07-02 05:50:30 +0000"},
+{"author": "Juri", "message": "Refactor HTML and CSS: remove unused links, update styles, and enhance timeline functionality", "date": "2025-07-02 00:58:18 -0700"}
 ]
