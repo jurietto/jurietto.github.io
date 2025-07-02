@@ -1,6 +1,10 @@
 @font-face {
   font-family: 'Kidplay';
+<<<<<<< HEAD
   src: url('./fonts/kidplay Preview.otf') format('opentype');
+=======
+  src: url('font/kidplay.otf') format('opentype');
+>>>>>>> 146851a078cf7631c67c5d66210597dcd6e43498
 }
 
 /* === Reset === */
