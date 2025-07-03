@@ -1,44 +1,11 @@
 {
-  "title": "Pages",
-  "description": "Analog diary entries and handwritten notes",
-  "created": "2025-07-02",
-  "tags": ["diary", "notes", "analog", "handwritten"],
-  "path": "/albums/pages",
   "entries": [
     {
-      "title": "Morning Thoughts - June 15",
-      "description": "Coffee shop reflections and daily planning",
-      "created": "2025-06-15",
-      "tags": ["morning", "coffee", "planning"],
-      "path": "https://picsum.photos/600/800?random=1"
-    },
-    {
-      "title": "Travel Notes - Barcelona",
-      "description": "Street observations and restaurant discoveries",
-      "created": "2025-06-22",
-      "tags": ["travel", "barcelona", "food"],
-      "path": "https://picsum.photos/600/800?random=2"
-    },
-    {
-      "title": "Book Ideas Draft",
-      "description": "Character sketches and plot outline brainstorm",
-      "created": "2025-06-28",
-      "tags": ["writing", "ideas", "creative"],
-      "path": "https://picsum.photos/600/800?random=3"
-    },
-    {
-      "title": "Weekly Review - June",
-      "description": "Goals assessment and next week planning",
-      "created": "2025-06-30",
-      "tags": ["review", "goals", "weekly"],
-      "path": "https://picsum.photos/600/800?random=4"
-    },
-    {
-      "title": "Random Thoughts",
-      "description": "Late night musings and philosophical questions",
-      "created": "2025-07-01",
-      "tags": ["thoughts", "philosophy", "late-night"],
-      "path": "https://picsum.photos/600/800?random=5"
+      "title": "June 3rd, 2025",
+      "description": "I haven't written in here in a while...",
+      "created": "2025-07-03",
+      "tags": ["diary"],
+      "path": "photos/pages/journal/june 3rd 2025.jpeg"
     }
   ]
 }
