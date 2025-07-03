@@ -6,6 +6,13 @@
       "created": "2025-07-03",
       "tags": ["diary"],
       "path": "photos/pages/journal/june 3rd 2025.jpeg"
+    },
+    {
+      "title": "Chapter 1 Notes – \"Hello, World\" from The C Programming Language by Kernighan and Ritchie",
+      "description": "Handwritten notes covering the first section of The C Programming Language. Includes a breakdown of the \"hello, world\" example, explanations of key parts like #include, main(), and, plus a step-by-step guide for writing and running the code using a terminal. Perfect for beginners learning C programming.",
+      "created": "2025-07-03",
+      "tags": ["notes", "programming"],
+      "path": "photos/pages/notes/IMG_7127.jpeg"
     }
   ]
 }
