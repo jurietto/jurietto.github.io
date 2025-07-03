@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sketchbook Gallery" />
+  <title>jurietto.github.io</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <!-- Optional global CSS -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* Controls Section */
+    #sketchbook-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+
+    #sketchbook-controls label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: #ff00cc;
+    }
+
+    #sketchbook-controls input,
+    #sketchbook-controls select {
+      padding: 0.4rem 0.6rem;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    #view-toggle {
+      margin-top: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      color: #333;
+    }
+
+    /* Tag Buttons */
+    #tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0 2rem;
+      padding-left: 0.5rem;
+    }
+
+    #tag-list button {
+      font-size: 1rem;
+      padding: 0.4rem 0.8rem;
+      background: #eee;
+      border: 2px outset #ccc;
+      color: #222;
+      border-radius: 4px;
+      cursor: pointer;
+      min-height: 2.25rem;
+      transition: background 0.1s ease-in-out;
+    }
+
+    #tag-list button:hover {
+      background-color: #ddd;
+    }
+
+    #tag-list button:active {
+      border: 2px inset #aaa;
+      background-color: #ccc;
+    }
+
+    /* Sketchbook Layout */
+    .sketchbook-list.list-view {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .sketchbook-list.grid-view {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 0 auto 2rem;
+      justify-content: center;
+    }
+
+    .sketchbook-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+
+    .sketchbook-entry.grid-view-item {
+      display: block;
+      text-align: center;
+    }
+
+    .sketchbook-list.grid-view .sketchbook-meta {
+      display: none;
+    }
+
+    /* Media Styling */
+    .sketchbook-entry img,
+    .sketchbook-entry video {
+      width: 100%;
+      max-width: 75%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      user-select: none;
+    }
+
+    .sketchbook-meta {
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .sketchbook-entry {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
+  <script src="../cursor.js" defer></script>
+  <script src="sketchbook.js" defer></script>
+  <script src="../index.js" defer></script>
+
+  <script>
+    // Prevent image dragging and right-click
+    document.addEventListener('contextmenu', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+    document.addEventListener('dragstart', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    });
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <a href="../index.html">HOME</a>
+      <a href="../browse/index.html">BROWSE</a>
+    </nav>
+    <div id="star-zone"></div>
+  </header>
+
+  <main>
+    <section class="content-box">
+      <h2>☠️ SKETCHBOOK</h2>
+      <div id="sketchlist">
+        <div id="sketchbook-controls">
+          <label for="search-input">Search Sketches</label>
+          <input id="search-input" class="search" placeholder="Type to search..." />
+
+          <label for="sort-select">Sort By</label>
+          <select id="sort-select" class="sort">
+            <option value="title">Title</option>
+            <option value="date">Date</option>
+          </select>
+
+          <div id="view-toggle"><i class="fa-solid fa-th"></i> Grid View</div>
+        </div>
+
+        <div id="tag-list"></div>
+
+        <div class="sketchbook-list list-view" id="sketchbook-list">
+          <!-- JS renders entries here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="back-to-top"><a href="#top">TOP</a></div>
+  <footer><p>2024 – ??? jurietto.github.io</p></footer>
+</body>
+</html>
