@@ -4048,5 +4048,8 @@
 {"author": "Juri", "message": "Update image link in timeline entry for July 2, 2025", "date": "2025-07-02 11:41:06 -0700"},
 {"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-07-02 18:42:14 +0000"},
 {"author": "Juri", "message": "Refactor chatbox iframe styling, update h2 colors, and enhance media elements with animations", "date": "2025-07-02 15:53:39 -0700"},
-{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-02 15:53:45 -0700"}
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-02 15:53:45 -0700"},
+{"author": "GitHub Action", "message": "Update commits.json with commits from 2025", "date": "2025-07-02 22:54:06 +0000"},
+{"author": "Juri", "message": "Add sketchbook gallery functionality with media rendering and filtering", "date": "2025-07-03 03:25:30 -0700"},
+{"author": "Juri", "message": "Merge branch 'main' of https://github.com/jurietto/jurietto.github.io", "date": "2025-07-03 03:25:38 -0700"}
 ]
