@@ -1,31 +1,70 @@
 import { db } from "./firebase.js";
-import { uploadFile } from "./storage.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+  collection,
+  query,
+  orderBy,
+  limit,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
 
-document.getElementById("post").onclick = async () => {
-  const text = document.getElementById("text").value.trim();
-  const user = document.getElementById("username").value.trim() || "Anonymous";
-  const fileInput = document.getElementById("file");
-  const file = fileInput.files[0];
+const q = query(
+  commentsRef,
+  orderBy("createdAt", "desc"),
+  limit(10)
+);
 
-  if (!text && !file) return;
+onSnapshot(q, snap => {
+  const container = document.getElementById("comments");
+  container.innerHTML = "";
 
-  let media = null;
+  snap.forEach(doc => {
+    const d = doc.data();
+    const date = new Date(d.createdAt);
 
-  if (file) {
-    media = await uploadFile(file);
-    fileInput.value = "";
-  }
+    const block = document.createElement("div");
 
-  await addDoc(commentsRef, {
-    text,
-    user,
-    media,
-    createdAt: Date.now()
+    block.innerHTML =
+      "<b>" + d.user + "</b> — " +
+      date.toLocaleString() + "<br>";
+
+    if (d.text) {
+      d.text.split("\n").forEach(line => {
+        const l = document.createElement("div");
+        l.textContent = line;
+        block.appendChild(l);
+      });
+    }
+
+    if (d.media) {
+      let el;
+
+      if (d.media.type === "image") {
+        el = document.createElement("img");
+        el.src = d.media.url;
+        el.style.maxWidth = "300px";
+      }
+
+      if (d.media.type === "audio") {
+        el = document.createElement("audio");
+        el.src = d.media.url;
+        el.controls = true;
+      }
+
+      if (d.media.type === "video") {
+        el = document.createElement("video");
+        el.src = d.media.url;
+        el.controls = true;
+        el.style.maxWidth = "300px";
+      }
+
+      if (el) block.appendChild(el);
+    }
+
+    block.appendChild(document.createElement("br"));
+    block.appendChild(document.createElement("br"));
+
+    container.appendChild(block);
   });
-
-  document.getElementById("text").value = "";
-};
-
+});
