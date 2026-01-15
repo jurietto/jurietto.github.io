@@ -34,7 +34,10 @@ postButton.onclick = async () => {
     textInput.value = "";
 
     // Notify forum to reload newest page
-    document.dispatchEvent(new Event("post-added"));
+    if (window.reloadForum) {
+  window.reloadForum();
+}
+
   } catch (err) {
     console.error("Post failed:", err);
   }
