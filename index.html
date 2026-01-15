@@ -1,97 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>/general/</title>
+  <meta charset="utf-8">
+  <title>hexangel93</title>
 </head>
 
-<body>
+<body bgcolor="#000000" text="#00ff00">
 
-<h1>/general/</h1>
+<center>
 
-<form onsubmit="return false;">
-  <table>
-    <tr>
-      <td>Name</td>
-      <td><input id="username" placeholder="Anonymous"></td>
-    </tr>
-    <tr>
-      <td>Comment</td>
-      <td><textarea id="text" rows="10" cols="40"></textarea></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><button id="post">Post</button></td>
-    </tr>
-  </table>
-</form>
+<h1>hexangel93</h1>
+
+<p>anonymous forum</p>
+
+<table width="320">
+  <tr>
+    <td>
+      <input
+        id="username"
+        placeholder="Anonymous"
+        size="38"
+      >
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <textarea
+        id="text"
+        rows="10"
+        cols="38"
+        placeholder="Write something..."
+      ></textarea>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <input type="file" id="file">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <button id="post">Post</button>
+    </td>
+  </tr>
+</table>
+
+<br>
 
 <div id="comments"></div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+</center>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
-  authDomain: "chansi-ddd7e.firebaseapp.com",
-  projectId: "chansi-ddd7e",
-  appId: "1:650473918964:web:63be3d4f9794f315fe29a1"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const commentsRef = collection(db, "threads", "general", "comments");
-
-document.getElementById("post").onclick = async () => {
-  const text = document.getElementById("text").value.trim();
-  const user =
-    document.getElementById("username").value.trim() || "Anonymous";
-
-  if (!text) return;
-
-  await addDoc(commentsRef, {
-    text,
-    user,
-    createdAt: Date.now()
-  });
-
-  document.getElementById("text").value = "";
-};
-
-const q = query(commentsRef, orderBy("createdAt"));
-
-onSnapshot(q, snap => {
-  const container = document.getElementById("comments");
-  container.innerHTML = "";
-
-  snap.forEach(doc => {
-    const d = doc.data();
-    const date = new Date(d.createdAt);
-
-    const header = document.createElement("div");
-    header.textContent =
-      (d.user || "Anonymous") + " — " + date.toLocaleString();
-
-    container.appendChild(header);
-
-    d.text.split("\n").forEach(line => {
-      const div = document.createElement("div");
-      div.textContent = line;
-      container.appendChild(div);
-    });
-
-    container.appendChild(document.createElement("br"));
-  });
-});
-</script>
+<!-- JS (logic only, no config here) -->
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/storage.js"></script>
+<script type="module" src="js/forum.js"></script>
+<script type="module" src="js/form.js"></script>
 
 </body>
 </html>
