@@ -279,3 +279,4 @@ window.reloadForum = () => {
 
 /* Initial load */
 loadPage(1);
+ 
