@@ -21,6 +21,7 @@ const pageNumSpan = document.getElementById("pageNum");
 const replyToInput = document.getElementById("replyTo");
 const replyInfo = document.getElementById("replyInfo");
 
+/* Load page */
 async function loadPage(pageNumber = 1) {
   let q;
 
@@ -47,7 +48,6 @@ async function loadPage(pageNumber = 1) {
 
   page = pageNumber;
   pageNumSpan.textContent = page;
-
   cursors[page] = snap.docs[snap.docs.length - 1];
 
   render(snap.docs);
@@ -56,57 +56,115 @@ async function loadPage(pageNumber = 1) {
   nextBtn.disabled = snap.docs.length < PAGE_SIZE;
 }
 
+/* Render posts with replies underneath */
 function render(docs) {
   commentsDiv.innerHTML = "";
 
-  docs.forEach(doc => {
-    const d = doc.data();
-    const id = doc.id;
-    const date = new Date(d.createdAt);
+  const posts = [];
+  const repliesByParent = {};
 
-    const post = document.createElement("div");
+  // Separate posts and replies
+  docs.forEach(doc => {
+    const data = doc.data();
+    const id = doc.id;
+
+    if (data.replyTo) {
+      if (!repliesByParent[data.replyTo]) {
+        repliesByParent[data.replyTo] = [];
+      }
+      repliesByParent[data.replyTo].push({ id, data });
+    } else {
+      posts.push({ id, data });
+    }
+  });
+
+  // Render ONLY top-level posts
+  posts.forEach(post => {
+    const { id, data } = post;
+    const date = new Date(data.createdAt);
+
+    const postDiv = document.createElement("div");
 
     const meta = document.createElement("div");
     meta.textContent =
-      (d.user || "Anonymous") + " — " + date.toLocaleString();
-    post.appendChild(meta);
+      (data.user || "Anonymous") + " — " + date.toLocaleString();
+    postDiv.appendChild(meta);
 
-    // Reply indicator
-    if (d.replyTo) {
-      const r = document.createElement("div");
-      r.textContent = "Reply to #" + d.replyTo;
-      post.appendChild(r);
-    }
-
-    if (d.text) {
-      d.text.split("\n").forEach(line => {
+    if (data.text) {
+      data.text.split("\n").forEach(line => {
         const l = document.createElement("div");
         l.textContent = line;
-        post.appendChild(l);
+        postDiv.appendChild(l);
       });
     }
 
-    if (!d.replyTo) {
-      const replyBtn = document.createElement("button");
-      replyBtn.textContent = "Reply";
-      replyBtn.type = "button";
+    if (data.media) {
+      let el;
 
-      replyBtn.onclick = () => {
-        replyToInput.value = id;
-        replyInfo.textContent =
-          "Replying to: " + (d.text || "").slice(0, 100);
-        window.scrollTo(0, 0);
-      };
+      if (data.media.type === "image") {
+        el = document.createElement("img");
+        el.src = data.media.url;
+      }
 
-      post.appendChild(replyBtn);
+      if (data.media.type === "audio") {
+        el = document.createElement("audio");
+        el.src = data.media.url;
+        el.controls = true;
+      }
+
+      if (data.media.type === "video") {
+        el = document.createElement("video");
+        el.src = data.media.url;
+        el.controls = true;
+      }
+
+      if (el) postDiv.appendChild(el);
     }
 
-    post.appendChild(document.createElement("br"));
-    commentsDiv.appendChild(post);
+    // Reply button (only on top-level posts)
+    const replyBtn = document.createElement("button");
+    replyBtn.type = "button";
+    replyBtn.textContent = "Reply";
+    replyBtn.onclick = () => {
+      replyToInput.value = id;
+      replyInfo.textContent =
+        "Replying to: " + (data.text || "").slice(0, 100);
+      window.scrollTo(0, 0);
+    };
+    postDiv.appendChild(replyBtn);
+
+    // Render replies UNDER the post
+    const replies = repliesByParent[id];
+    if (replies) {
+      replies.forEach(rObj => {
+        const r = rObj.data;
+        const rDate = new Date(r.createdAt);
+
+        const replyDiv = document.createElement("div");
+
+        const rMeta = document.createElement("div");
+        rMeta.textContent =
+          (r.user || "Anonymous") + " — " + rDate.toLocaleString();
+        replyDiv.appendChild(rMeta);
+
+        if (r.text) {
+          r.text.split("\n").forEach(line => {
+            const rl = document.createElement("div");
+            rl.textContent = line;
+            replyDiv.appendChild(rl);
+          });
+        }
+
+        postDiv.appendChild(replyDiv);
+      });
+    }
+
+    postDiv.appendChild(document.createElement("br"));
+    commentsDiv.appendChild(postDiv);
   });
 }
 
-/* Controls */
+/* Pagination */
 prevBtn.onclick = () => loadPage(page - 1);
 nextBtn.onclick = () => loadPage(page + 1);
 
