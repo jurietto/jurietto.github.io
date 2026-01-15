@@ -19,11 +19,13 @@ const commentsDiv = document.getElementById("comments");
 const olderBtn = document.getElementById("older");
 const newerBtn = document.getElementById("newer");
 
-/* Load a page of comments */
+/* CORE LOAD FUNCTION */
 async function loadPage(mode = "initial") {
   let q;
 
   if (mode === "initial") {
+    firstDoc = null;
+    lastDoc = null;
     q = query(
       commentsRef,
       orderBy("createdAt", "desc"),
@@ -59,51 +61,50 @@ async function loadPage(mode = "initial") {
 
   render(snap.docs);
 
-  // Button state
   olderBtn.disabled = snap.docs.length < PAGE_SIZE;
   newerBtn.disabled = mode === "initial";
 }
 
-/* Render comments */
+/* RENDER */
 function render(docs) {
   commentsDiv.innerHTML = "";
 
   docs.forEach(doc => {
-    const data = doc.data();
-    const date = new Date(data.createdAt);
+    const d = doc.data();
+    const date = new Date(d.createdAt);
 
     const post = document.createElement("div");
 
     const meta = document.createElement("div");
     meta.textContent =
-      (data.user || "Anonymous") + " — " + date.toLocaleString();
+      (d.user || "Anonymous") + " — " + date.toLocaleString();
     post.appendChild(meta);
 
-    if (data.text) {
-      data.text.split("\n").forEach(line => {
-        const lineDiv = document.createElement("div");
-        lineDiv.textContent = line;
-        post.appendChild(lineDiv);
+    if (d.text) {
+      d.text.split("\n").forEach(line => {
+        const l = document.createElement("div");
+        l.textContent = line;
+        post.appendChild(l);
       });
     }
 
-    if (data.media) {
+    if (d.media) {
       let el;
 
-      if (data.media.type === "image") {
+      if (d.media.type === "image") {
         el = document.createElement("img");
-        el.src = data.media.url;
+        el.src = d.media.url;
       }
 
-      if (data.media.type === "audio") {
+      if (d.media.type === "audio") {
         el = document.createElement("audio");
-        el.src = data.media.url;
+        el.src = d.media.url;
         el.controls = true;
       }
 
-      if (data.media.type === "video") {
+      if (d.media.type === "video") {
         el = document.createElement("video");
-        el.src = data.media.url;
+        el.src = d.media.url;
         el.controls = true;
       }
 
@@ -115,16 +116,14 @@ function render(docs) {
   });
 }
 
-/* Pagination buttons */
+/* BUTTONS */
 olderBtn.onclick = () => loadPage("older");
 newerBtn.onclick = () => loadPage("newer");
 
-/* Reload newest page after posting */
-document.addEventListener("post-added", () => {
-  firstDoc = null;
-  lastDoc = null;
+/* 🔑 EXPOSE GLOBAL RELOAD */
+window.reloadForum = () => {
   loadPage("initial");
-});
+};
 
-/* Initial load */
-loadPage();
+/* INITIAL LOAD */
+loadPage("initial");
