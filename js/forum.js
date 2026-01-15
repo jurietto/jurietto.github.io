@@ -1,50 +1,36 @@
 import { db } from "./firebase.js";
-import {
-  collection,
-  query,
-  orderBy,
-  limit,
-  startAfter,
-  endBefore,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { uploadFile } from "./storage.js";
+import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
-const PAGE_SIZE = 10;
 
-let firstDoc = null;
-let lastDoc = null;
+document.getElementById("post").onclick = async () => {
+  const textEl = document.getElementById("text");
+  const userEl = document.getElementById("username");
+  const fileInput = document.getElementById("file");
 
-const olderBtn = document.getElementById("older");
-const newerBtn = document.getElementById("newer");
+  const text = textEl.value.trim();
+  const user = userEl.value.trim() || "Anonymous";
+  const file = fileInput.files[0];
 
-async function loadPage(mode = "initial") {
-  let q;
+  if (!text && !file) return;
 
-  if (mode === "initial") {
-    q = query(
-      commentsRef,
-      orderBy("createdAt", "desc"),
-      limit(PAGE_SIZE)
-    );
+  let media = null;
+
+  if (file) {
+    media = await uploadFile(file);
+    fileInput.value = "";
   }
 
-  if (mode === "older" && lastDoc) {
-    q = query(
-      commentsRef,
-      orderBy("createdAt", "desc"),
-      startAfter(lastDoc),
-      limit(PAGE_SIZE)
-    );
-  }
+  await addDoc(commentsRef, {
+    text,
+    user,
+    media,
+    createdAt: Date.now()
+  });
 
-  if (mode === "newer" && firstDoc) {
-    q = query(
-      commentsRef,
-      orderBy("createdAt", "desc"),
-      endBefore(firstDoc),
-      limit(PAGE_SIZE)
-    );
-  }
+  textEl.value = "";
 
-  if (!q) ret
+  // 🔔 Tell the forum to reload the newest page
+  document.dispatchEvent(new Event("post-added"));
+};
