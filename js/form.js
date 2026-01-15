@@ -8,13 +8,16 @@ const postButton = document.getElementById("post");
 const textInput = document.getElementById("text");
 const userInput = document.getElementById("username");
 const fileInput = document.getElementById("file");
+const replyToInput = document.getElementById("replyTo");
+const replyInfo = document.getElementById("replyInfo");
 
 postButton.addEventListener("click", async (e) => {
-  e.preventDefault(); // extra safety
+  e.preventDefault();
 
   const text = textInput.value.trim();
   const user = userInput.value.trim() || "Anonymous";
   const file = fileInput.files[0];
+  const replyTo = replyToInput.value || null;
 
   if (!text && !file) return;
 
@@ -30,12 +33,15 @@ postButton.addEventListener("click", async (e) => {
       text,
       user,
       media,
+      replyTo,
       createdAt: Date.now()
     });
 
+    // Reset form
     textInput.value = "";
+    replyToInput.value = "";
+    replyInfo.textContent = "";
 
-    // Force forum to reload newest page
     if (window.reloadForum) {
       window.reloadForum();
     }
