@@ -9,7 +9,9 @@ const textInput = document.getElementById("text");
 const userInput = document.getElementById("username");
 const fileInput = document.getElementById("file");
 
-postButton.onclick = async () => {
+postButton.addEventListener("click", async (e) => {
+  e.preventDefault(); // extra safety
+
   const text = textInput.value.trim();
   const user = userInput.value.trim() || "Anonymous";
   const file = fileInput.files[0];
@@ -33,12 +35,11 @@ postButton.onclick = async () => {
 
     textInput.value = "";
 
-    // Notify forum to reload newest page
+    // Force forum to reload newest page
     if (window.reloadForum) {
-  window.reloadForum();
-}
-
+      window.reloadForum();
+    }
   } catch (err) {
     console.error("Post failed:", err);
   }
-};
+});
