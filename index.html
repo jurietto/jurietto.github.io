@@ -5,60 +5,53 @@
   <title>hexangel93</title>
 </head>
 
-<body bgcolor="#000000" text="#00ff00">
-
-<center>
+<body>
 
 <h1>hexangel93</h1>
 
-<p>anonymous forum</p>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+</p>
 
-<table width="320">
-  <tr>
-    <td>
-      <input
-        id="username"
-        placeholder="Anonymous"
-        size="38"
-      >
-    </td>
-  </tr>
+<h2>Post</h2>
 
-  <tr>
-    <td>
-      <textarea
-        id="text"
-        rows="10"
-        cols="38"
-        placeholder="Write something..."
-      ></textarea>
-    </td>
-  </tr>
+<form onsubmit="return false;">
+  <p>
+    Name<br>
+    <input id="username" placeholder="Anonymous" size="40">
+  </p>
 
-  <tr>
-    <td>
-      <input type="file" id="file">
-    </td>
-  </tr>
+  <p>
+    Comment<br>
+    <textarea id="text" rows="10" cols="40"></textarea>
+  </p>
 
-  <tr>
-    <td>
-      <button id="post">Post</button>
-    </td>
-  </tr>
-</table>
+  <p>
+    Attachment<br>
+    <input type="file" id="file">
+  </p>
 
-<br>
+  <p>
+    <button id="post">Post</button>
+  </p>
+</form>
+
+<h2>Forum</h2>
 
 <div id="comments"></div>
 
-</center>
+<h2>Changelog</h2>
 
-<!-- JS (logic only, no config here) -->
+<ul id="changelog">
+  <li>Loading changes…</li>
+</ul>
+
 <script type="module" src="js/firebase.js"></script>
 <script type="module" src="js/storage.js"></script>
 <script type="module" src="js/forum.js"></script>
 <script type="module" src="js/form.js"></script>
+<script type="module" src="js/changelog.js"></script>
 
 </body>
 </html>
