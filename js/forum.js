@@ -5,6 +5,7 @@ import {
   orderBy,
   limit,
   startAfter,
+  where,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -21,13 +22,14 @@ const pageNumSpan = document.getElementById("pageNum");
 const replyToInput = document.getElementById("replyTo");
 const replyInfo = document.getElementById("replyInfo");
 
-/* Load page */
+/* Load ONLY top-level posts */
 async function loadPage(pageNumber = 1) {
   let q;
 
   if (pageNumber === 1) {
     q = query(
       commentsRef,
+      where("replyTo", "==", null),
       orderBy("createdAt", "desc"),
       limit(PAGE_SIZE)
     );
@@ -37,6 +39,7 @@ async function loadPage(pageNumber = 1) {
 
     q = query(
       commentsRef,
+      where("replyTo", "==", null),
       orderBy("createdAt", "desc"),
       startAfter(cursor),
       limit(PAGE_SIZE)
@@ -50,118 +53,81 @@ async function loadPage(pageNumber = 1) {
   pageNumSpan.textContent = page;
   cursors[page] = snap.docs[snap.docs.length - 1];
 
-  render(snap.docs);
+  commentsDiv.innerHTML = "";
+
+  for (const doc of snap.docs) {
+    await renderPost(doc);
+  }
 
   prevBtn.disabled = page === 1;
   nextBtn.disabled = snap.docs.length < PAGE_SIZE;
 }
 
-/* Render posts with replies underneath */
-function render(docs) {
-  commentsDiv.innerHTML = "";
+/* Render post + its replies */
+async function renderPost(doc) {
+  const data = doc.data();
+  const id = doc.id;
+  const date = new Date(data.createdAt);
 
-  const posts = [];
-  const repliesByParent = {};
+  const postDiv = document.createElement("div");
 
-  // Separate posts and replies
-  docs.forEach(doc => {
-    const data = doc.data();
-    const id = doc.id;
+  const meta = document.createElement("div");
+  meta.textContent =
+    (data.user || "Anonymous") + " — " + date.toLocaleString();
+  postDiv.appendChild(meta);
 
-    if (data.replyTo) {
-      if (!repliesByParent[data.replyTo]) {
-        repliesByParent[data.replyTo] = [];
-      }
-      repliesByParent[data.replyTo].push({ id, data });
-    } else {
-      posts.push({ id, data });
-    }
-  });
+  if (data.text) {
+    data.text.split("\n").forEach(line => {
+      const l = document.createElement("div");
+      l.textContent = line;
+      postDiv.appendChild(l);
+    });
+  }
 
-  // Render ONLY top-level posts
-  posts.forEach(post => {
-    const { id, data } = post;
-    const date = new Date(data.createdAt);
+  const replyBtn = document.createElement("button");
+  replyBtn.type = "button";
+  replyBtn.textContent = "Reply";
+  replyBtn.onclick = () => {
+    replyToInput.value = id;
+    replyInfo.textContent =
+      "Replying to: " + (data.text || "").slice(0, 100);
+    window.scrollTo(0, 0);
+  };
+  postDiv.appendChild(replyBtn);
 
-    const postDiv = document.createElement("div");
+  /* Fetch replies for this post */
+  const repliesQuery = query(
+    commentsRef,
+    where("replyTo", "==", id),
+    orderBy("createdAt")
+  );
 
-    const meta = document.createElement("div");
-    meta.textContent =
-      (data.user || "Anonymous") + " — " + date.toLocaleString();
-    postDiv.appendChild(meta);
+  const repliesSnap = await getDocs(repliesQuery);
 
-    if (data.text) {
-      data.text.split("\n").forEach(line => {
-        const l = document.createElement("div");
-        l.textContent = line;
-        postDiv.appendChild(l);
+  repliesSnap.forEach(rDoc => {
+    const r = rDoc.data();
+    const rDate = new Date(r.createdAt);
+
+    const replyDiv = document.createElement("div");
+
+    const rMeta = document.createElement("div");
+    rMeta.textContent =
+      (r.user || "Anonymous") + " — " + rDate.toLocaleString();
+    replyDiv.appendChild(rMeta);
+
+    if (r.text) {
+      r.text.split("\n").forEach(line => {
+        const rl = document.createElement("div");
+        rl.textContent = line;
+        replyDiv.appendChild(rl);
       });
     }
 
-    if (data.media) {
-      let el;
-
-      if (data.media.type === "image") {
-        el = document.createElement("img");
-        el.src = data.media.url;
-      }
-
-      if (data.media.type === "audio") {
-        el = document.createElement("audio");
-        el.src = data.media.url;
-        el.controls = true;
-      }
-
-      if (data.media.type === "video") {
-        el = document.createElement("video");
-        el.src = data.media.url;
-        el.controls = true;
-      }
-
-      if (el) postDiv.appendChild(el);
-    }
-
-    // Reply button (only on top-level posts)
-    const replyBtn = document.createElement("button");
-    replyBtn.type = "button";
-    replyBtn.textContent = "Reply";
-    replyBtn.onclick = () => {
-      replyToInput.value = id;
-      replyInfo.textContent =
-        "Replying to: " + (data.text || "").slice(0, 100);
-      window.scrollTo(0, 0);
-    };
-    postDiv.appendChild(replyBtn);
-
-    // Render replies UNDER the post
-    const replies = repliesByParent[id];
-    if (replies) {
-      replies.forEach(rObj => {
-        const r = rObj.data;
-        const rDate = new Date(r.createdAt);
-
-        const replyDiv = document.createElement("div");
-
-        const rMeta = document.createElement("div");
-        rMeta.textContent =
-          (r.user || "Anonymous") + " — " + rDate.toLocaleString();
-        replyDiv.appendChild(rMeta);
-
-        if (r.text) {
-          r.text.split("\n").forEach(line => {
-            const rl = document.createElement("div");
-            rl.textContent = line;
-            replyDiv.appendChild(rl);
-          });
-        }
-
-        postDiv.appendChild(replyDiv);
-      });
-    }
-
-    postDiv.appendChild(document.createElement("br"));
-    commentsDiv.appendChild(postDiv);
+    postDiv.appendChild(replyDiv);
   });
+
+  postDiv.appendChild(document.createElement("br"));
+  commentsDiv.appendChild(postDiv);
 }
 
 /* Pagination */
