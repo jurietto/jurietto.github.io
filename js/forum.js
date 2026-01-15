@@ -5,67 +5,57 @@ import {
   orderBy,
   limit,
   startAfter,
-  endBefore,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const PAGE_SIZE = 10;
 
-let firstDoc = null;
+let page = 1;
+let cursors = {}; // pageNumber -> lastDoc
 let lastDoc = null;
 
 const commentsDiv = document.getElementById("comments");
-const olderBtn = document.getElementById("older");
-const newerBtn = document.getElementById("newer");
+const prevBtn = document.getElementById("prevPage");
+const nextBtn = document.getElementById("nextPage");
+const pageNumSpan = document.getElementById("pageNum");
 
-/* CORE LOAD FUNCTION */
-async function loadPage(mode = "initial") {
+async function loadPage(pageNumber = 1) {
   let q;
 
-  if (mode === "initial") {
-    firstDoc = null;
-    lastDoc = null;
+  if (pageNumber === 1) {
     q = query(
       commentsRef,
       orderBy("createdAt", "desc"),
       limit(PAGE_SIZE)
     );
-  }
+  } else {
+    const cursor = cursors[pageNumber - 1];
+    if (!cursor) return;
 
-  if (mode === "older" && lastDoc) {
     q = query(
       commentsRef,
       orderBy("createdAt", "desc"),
-      startAfter(lastDoc),
+      startAfter(cursor),
       limit(PAGE_SIZE)
     );
   }
-
-  if (mode === "newer" && firstDoc) {
-    q = query(
-      commentsRef,
-      orderBy("createdAt", "desc"),
-      endBefore(firstDoc),
-      limit(PAGE_SIZE)
-    );
-  }
-
-  if (!q) return;
 
   const snap = await getDocs(q);
   if (snap.empty) return;
 
-  firstDoc = snap.docs[0];
+  page = pageNumber;
+  pageNumSpan.textContent = page;
+
   lastDoc = snap.docs[snap.docs.length - 1];
+  cursors[page] = lastDoc;
 
   render(snap.docs);
 
-  olderBtn.disabled = snap.docs.length < PAGE_SIZE;
-  newerBtn.disabled = mode === "initial";
+  prevBtn.disabled = page === 1;
+  nextBtn.disabled = snap.docs.length < PAGE_SIZE;
 }
 
-/* RENDER */
 function render(docs) {
   commentsDiv.innerHTML = "";
 
@@ -82,9 +72,9 @@ function render(docs) {
 
     if (d.text) {
       d.text.split("\n").forEach(line => {
-        const l = document.createElement("div");
-        l.textContent = line;
-        post.appendChild(l);
+        const lineDiv = document.createElement("div");
+        lineDiv.textContent = line;
+        post.appendChild(lineDiv);
       });
     }
 
@@ -116,14 +106,21 @@ function render(docs) {
   });
 }
 
-/* BUTTONS */
-olderBtn.onclick = () => loadPage("older");
-newerBtn.onclick = () => loadPage("newer");
-
-/* 🔑 EXPOSE GLOBAL RELOAD */
-window.reloadForum = () => {
-  loadPage("initial");
+/* Controls */
+prevBtn.onclick = () => {
+  if (page > 1) loadPage(page - 1);
 };
 
-/* INITIAL LOAD */
-loadPage("initial");
+nextBtn.onclick = () => {
+  loadPage(page + 1);
+};
+
+/* Reload after posting */
+window.reloadForum = () => {
+  page = 1;
+  cursors = {};
+  loadPage(1);
+};
+
+/* Initial load */
+loadPage(1);
