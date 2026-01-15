@@ -112,4 +112,4 @@ function render(docs) {
 document.getElementById("older").onclick = () => loadPage("older");
 document.getElementById("newer").onclick = () => loadPage("newer");
 
-loadPage();
+loadPage(); 
