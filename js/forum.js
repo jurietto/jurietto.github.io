@@ -13,96 +13,65 @@ const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
 
 const PAGE_SIZE = 10;
-const DIVIDER_UNIT = "(＃ﾟДﾟ)";
 
-/* ---------------- DIVIDER ---------------- */
-/* Returns a divider element and keeps it updated on resize */
-function asciiDivider() {
-  const divider = document.createElement("div");
+/* ---------- LOAD COMMENTS ---------- */
 
-  divider.style.whiteSpace = "nowrap";
-  divider.style.overflow = "hidden";
-  divider.style.width = "100%";            // fill the comments area
-  divider.style.fontFamily = "monospace";
-  divider.style.boxSizing = "border-box";
-  divider.style.margin = "10px 0";
+async function loadComments() {
+  if (!container) return;
 
-  // measure the unit width accurately
-  function unitWidthPx() {
-    const ruler = document.createElement("span");
-    ruler.style.visibility = "hidden";
-    ruler.style.position = "absolute";
-    ruler.style.whiteSpace = "nowrap";
-    ruler.style.fontFamily = "monospace";
-    ruler.textContent = DIVIDER_UNIT;
-    document.body.appendChild(ruler);
-    const w = ruler.getBoundingClientRect().width;
-    document.body.removeChild(ruler);
-    return w || 1;
-  }
+  container.innerHTML = "";
 
-  const unitW = unitWidthPx();
+  const q = query(
+    commentsRef,
+    orderBy("createdAt", "desc"),
+    limit(PAGE_SIZE)
+  );
 
-  function update() {
-    // Use viewport width to guarantee no wrap, but clamp to container width if smaller.
-    const viewport = window.innerWidth || 320;
-    const containerW = container ? container.clientWidth : viewport;
-    const available = Math.min(viewport, containerW);
+  const snap = await getDocs(q);
+  const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    const count = Math.max(1, Math.floor(available / unitW));
-    divider.textContent = DIVIDER_UNIT.repeat(count);
-  }
+  const roots = docs.filter(d => !d.replyTo);
+  const replies = docs.filter(d => d.replyTo);
 
-  update();
-  window.addEventListener("resize", update);
-
-  return divider;
+  roots.forEach(comment => {
+    const children = replies.filter(r => r.replyTo === comment.id);
+    renderComment(comment, children);
+  });
 }
 
-/* ---------------- MEDIA ---------------- */
+/* ---------- MEDIA ---------- */
 
 function renderMedia(url, parent) {
   if (!url) return;
 
   const clean = url.split("?")[0];
   const ext = clean.split(".").pop().toLowerCase();
-
   let el;
 
-  if (["png", "jpg", "jpeg", "gif", "webp"].includes(ext)) {
+  if (["png","jpg","jpeg","gif","webp"].includes(ext)) {
     el = document.createElement("img");
     el.src = url;
-    el.style.maxWidth = "300px";
-    el.style.width = "100%";
-    el.style.height = "auto";
-    el.style.display = "block";
-  } else if (["mp4", "webm"].includes(ext)) {
+  } else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
-    el.style.maxWidth = "300px";
-    el.style.width = "100%";
-    el.style.display = "block";
-  } else if (["mp3", "ogg", "wav"].includes(ext)) {
+  } else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
-    el.style.display = "block";
   } else {
     el = document.createElement("a");
     el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
-    el.rel = "noopener";
   }
 
   parent.appendChild(el);
 }
 
-/* ---------------- INLINE REPLY FORM ---------------- */
+/* ---------- INLINE REPLY FORM ---------- */
 
 function createReplyForm(parentId, parentWrap) {
-  // avoid duplicates
   if (parentWrap.querySelector(".reply-form")) return;
 
   const savedUser = localStorage.getItem("forum_username") || "";
@@ -110,38 +79,33 @@ function createReplyForm(parentId, parentWrap) {
   const form = document.createElement("div");
   form.className = "reply-form";
 
-  // no external CSS; minimal inline spacing only
-  form.style.marginTop = "10px";
-
   form.innerHTML = `
     <p>
       Name<br>
-      <input class="reply-user" size="40" placeholder="Anonymous" value="${savedUser}">
+      <input class="reply-user" placeholder="Anonymous" value="${savedUser}">
     </p>
 
     <p>
       Reply<br>
-      <textarea class="reply-text" rows="4" cols="40"></textarea>
+      <textarea rows="3"></textarea>
     </p>
 
     <p>
       Attachment<br>
-      <input class="reply-file" type="file">
+      <input type="file">
     </p>
 
     <p>
-      <button class="reply-post" type="button">Post reply</button>
-      <button class="reply-cancel" type="button">Cancel</button>
+      <button type="button">Post reply</button>
+      <button type="button">Cancel</button>
     </p>
   `;
 
   const userInput = form.querySelector(".reply-user");
-  const textInput = form.querySelector(".reply-text");
-  const fileInput = form.querySelector(".reply-file");
-  const postBtn = form.querySelector(".reply-post");
-  const cancelBtn = form.querySelector(".reply-cancel");
+  const textInput = form.querySelector("textarea");
+  const fileInput = form.querySelector("input[type=file]");
+  const [postBtn, cancelBtn] = form.querySelectorAll("button");
 
-  // remember username
   userInput.addEventListener("input", () => {
     localStorage.setItem("forum_username", userInput.value.trim());
   });
@@ -158,10 +122,7 @@ function createReplyForm(parentId, parentWrap) {
     let media = null;
 
     try {
-      if (file) {
-        media = await uploadFile(file);
-        fileInput.value = "";
-      }
+      if (file) media = await uploadFile(file);
 
       await addDoc(commentsRef, {
         user,
@@ -181,7 +142,7 @@ function createReplyForm(parentId, parentWrap) {
   parentWrap.appendChild(form);
 }
 
-/* ---------------- RENDER COMMENT ---------------- */
+/* ---------- RENDER COMMENT ---------- */
 
 function renderComment(comment, replies) {
   const wrap = document.createElement("div");
@@ -203,11 +164,8 @@ function renderComment(comment, replies) {
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
   wrap.appendChild(replyBtn);
 
-  // replies under parent
   replies.forEach(r => {
     const rw = document.createElement("div");
-    rw.style.marginLeft = "20px";
-    rw.style.marginTop = "6px";
 
     const rm = document.createElement("div");
     rm.textContent =
@@ -223,37 +181,10 @@ function renderComment(comment, replies) {
     wrap.appendChild(rw);
   });
 
-  // divider
-  wrap.appendChild(asciiDivider());
-
   container.appendChild(wrap);
 }
 
-/* ---------------- LOAD COMMENTS ---------------- */
-
-async function loadComments() {
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  const q = query(
-    commentsRef,
-    orderBy("createdAt", "desc"),
-    limit(PAGE_SIZE)
-  );
-
-  const snap = await getDocs(q);
-  const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-  const roots = docs.filter(d => !d.replyTo);
-  const replies = docs.filter(d => d.replyTo);
-
-  roots.forEach(comment => {
-    renderComment(comment, replies.filter(r => r.replyTo === comment.id));
-  });
-}
-
-/* ---------------- INIT ---------------- */
+/* ---------- INIT ---------- */
 
 loadComments();
 window.reloadForum = loadComments;
