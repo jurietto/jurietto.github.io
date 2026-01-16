@@ -88,8 +88,6 @@ function renderMedia(media, parent) {
   parent.appendChild(el);
 }
 
-}
-
 /* ---------- RENDER COMMENT ---------- */
 
 function renderComment(comment, replies) {
