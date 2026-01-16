@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
@@ -10,7 +9,8 @@ const firebaseConfig = {
   appId: "1:650473918964:web:63be3d4f9794f315fe29a1"
 };
 
-const app = initializeApp(firebaseConfig);
+/* 🔑 THIS WAS MISSING BEFORE */
+export const app = initializeApp(firebaseConfig);
 
+/* Firestore */
 export const db = getFirestore(app);
-export const storage = getStorage(app);
