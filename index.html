@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>hexangel93</title>
+
+  <!-- CHAT STYLES -->
+  <link rel="stylesheet" href="css/chat.css">
 </head>
 
 <body>
@@ -50,27 +53,12 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 <!-- LIVE CHAT -->
 <h2>Live Chat</h2>
 
-<div id="live-chat" style="background:#000;border:2px solid #333;padding:10px;color:#fff;max-width:600px;">
-  <div
-    id="chat-messages"
-    style="height:200px;overflow-y:auto;font-family:monospace;font-size:14px;margin-bottom:8px;">
-  </div>
+<div id="live-chat">
+  <div id="chat-messages"></div>
 
-  <input
-    id="chat-name"
-    placeholder="name"
-    style="width:30%;background:#111;color:#fff;border:1px solid #333;">
-
-  <input
-    id="chat-text"
-    placeholder="message"
-    style="width:55%;background:#111;color:#fff;border:1px solid #333;">
-
-  <button
-    id="chat-send"
-    style="background:#222;color:#fff;border:1px solid #333;">
-    send
-  </button>
+  <input id="chat-name" placeholder="name">
+  <input id="chat-text" placeholder="message">
+  <button id="chat-send">send</button>
 </div>
 
 <!-- EXISTING SCRIPTS -->
@@ -80,7 +68,7 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 <script type="module" src="js/form.js"></script>
 <script type="module" src="js/changelog.js"></script>
 
-<!-- LIVE CHAT SCRIPT (NOT module) -->
+<!-- LIVE CHAT SCRIPT -->
 <script src="js/chat.js"></script>
 
 </body>
