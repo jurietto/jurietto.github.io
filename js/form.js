@@ -1,47 +1,57 @@
 import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import {
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const commentsRef = collection(db, "threads", "general", "comments");
+document.addEventListener("DOMContentLoaded", () => {
+  const commentsRef = collection(db, "threads", "general", "comments");
 
-const postBtn = document.getElementById("post");
-const textEl = document.getElementById("text");
-const userEl = document.getElementById("username");
-const fileEl = document.getElementById("file");
-const replyToEl = document.getElementById("replyTo");
-const replyInfo = document.getElementById("replyInfo");
+  const postBtn = document.getElementById("post");
+  const textEl = document.getElementById("text");
+  const userEl = document.getElementById("username");
+  const fileEl = document.getElementById("file");
 
-postBtn.onclick = async () => {
-  const text = textEl.value.trim();
-  const user = userEl.value.trim() || "Anonymous";
-  const file = fileEl.files[0];
-  const replyTo = replyToEl.value || null;
+  if (!postBtn || !textEl || !userEl || !fileEl) {
+    console.error("Form elements not found in DOM");
+    return;
+  }
 
-  if (!text && !file) return;
+  postBtn.addEventListener("click", async () => {
+    const text = textEl.value.trim();
+    const user = userEl.value.trim() || "Anonymous";
+    const file = fileEl.files[0];
 
-  let media = null;
-
-  try {
-    if (file) {
-      media = await uploadFile(file);
-      fileEl.value = "";
+    if (!text && !file) {
+      alert("Please enter text or choose a file.");
+      return;
     }
 
-    await addDoc(commentsRef, {
-      user,
-      text,
-      media,
-      replyTo,
-      createdAt: Date.now()
-    });
+    let media = null;
 
-    textEl.value = "";
-    replyToEl.value = "";
-    replyInfo.textContent = "";
+    try {
+      if (file) {
+        media = await uploadFile(file);
+        fileEl.value = "";
+      }
 
-    if (window.reloadForum) window.reloadForum();
-  } catch (err) {
-    console.error(err);
-    alert("Post failed. Check console.");
-  }
-};
+      await addDoc(commentsRef, {
+        user,
+        text,
+        media,
+        replyTo: null,
+        createdAt: Date.now()
+      });
+
+      textEl.value = "";
+
+      if (window.reloadForum) {
+        window.reloadForum();
+      }
+    } catch (err) {
+      console.error("Post failed:", err);
+      alert("Post failed. Check console.");
+    }
+  });
+});
