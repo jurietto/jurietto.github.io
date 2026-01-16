@@ -20,25 +20,30 @@ const DIVIDER_REPEAT = 20;
 
 function asciiDivider() {
   const unit = "(＃ﾟДﾟ)";
-  const div = document.createElement("pre");
+  const divider = document.createElement("pre");
 
-  // approximate character width in monospace (~8px)
-  const approxCharWidth = 8;
+  // Force single-line behavior
+  divider.style.whiteSpace = "pre";
+  divider.style.overflow = "hidden";
+  divider.style.margin = "8px 0";
 
-  // get container width (fallback to window width)
-  const maxWidth =
+  // Measure available width
+  const containerWidth =
     container.clientWidth || window.innerWidth;
 
-  // how many units fit without overflow
-  const maxUnits = Math.floor(
-    maxWidth / (unit.length * approxCharWidth)
+  // Conservative monospace width estimate (safe)
+  const charWidth = 8; // px per char
+  const unitWidth = unit.length * charWidth;
+
+  // Calculate how many units fit on ONE line
+  const count = Math.max(
+    1,
+    Math.floor(containerWidth / unitWidth)
   );
 
-  div.textContent = unit.repeat(Math.max(1, maxUnits));
-  div.style.whiteSpace = "pre-wrap";
-  div.style.wordBreak = "break-word";
+  divider.textContent = unit.repeat(count);
 
-  return div;
+  return divider;
 }
 
 
