@@ -32,10 +32,11 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 <div id="live-chat">
 
   <div id="chat-controls">
-    <a href="chat.html"
-       onclick="window.open('chat.html','chat','width=420,height=520'); return false;">
+    <button
+      id="chat-popout"
+      onclick="window.open('chat.html','chat','width=480,height=640');">
       pop out
-    </a>
+    </button>
   </div>
 
   <div id="chat-messages"></div>
@@ -44,6 +45,7 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
   <input id="chat-text" placeholder="message">
   <button id="chat-send">send</button>
 </div>
+
 
 
 <script type="module" src="js/firebase.js"></script>
