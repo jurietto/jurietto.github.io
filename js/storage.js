@@ -1,5 +1,9 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } 
-  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 import { app } from "./firebase.js";
 
@@ -13,6 +17,5 @@ export async function uploadFile(file) {
 
   await uploadBytes(fileRef, file);
 
-  const url = await getDownloadURL(fileRef);
-  return url;
+  return await getDownloadURL(fileRef);
 }
