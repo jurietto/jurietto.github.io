@@ -1,6 +1,5 @@
 const list = document.getElementById("changelog");
 
-/* CHANGE THESE IF NEEDED */
 const OWNER = "jurietto";
 const REPO = "jurietto.github.io";
 const MAX_ENTRIES = 10;
@@ -11,15 +10,18 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
     list.innerHTML = "";
 
     commits.slice(0, MAX_ENTRIES).forEach(c => {
-      const msg = c.commit.message.split("\n")[0]; // first line only
+      const msg = c.commit.message.split("\n")[0];
 
-      const li = document.createElement("li");
-      li.textContent = `★ ${msg} (・_・;)`;
+      const line = document.createElement("div");
+      line.textContent = `★ ${msg} (・_・;)`;
 
-      list.appendChild(li);
+      list.appendChild(line);
     });
   })
   .catch(err => {
-    list.innerHTML = "<li>★ Failed to load changelog (・_・;)</li>";
+    list.innerHTML = "";
+    const errLine = document.createElement("div");
+    errLine.textContent = "★ Failed to load changelog (・_・;)";
+    list.appendChild(errLine);
     console.error(err);
   });
