@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "JF-Dot";
+  src: url("../font/JF-Dot-jiskan16s-1990.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* GLOBAL FONT */
+html, body {
+  font-family: "JF-Dot", monospace;
+  font-size: 16px;
+  line-height: 1.4;
+}
