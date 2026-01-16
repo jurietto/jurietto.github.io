@@ -15,5 +15,7 @@ export async function uploadFile(file) {
   }
 
   const json = await res.json();
+
+  // RETURN STRING ONLY
   return json.url;
 }
