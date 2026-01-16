@@ -3,7 +3,7 @@ export async function uploadFile(file) {
   formData.append("file", file);
 
   const res = await fetch(
-    "https://hexangel-upload.jbanfield.workers.dev",
+    "https://hexangel-upload.jbanfieldca.workers.dev",
     {
       method: "POST",
       body: formData,
