@@ -18,7 +18,6 @@ const PAGE_SIZE = 10;
 
 async function loadComments() {
   if (!container) return;
-
   container.innerHTML = "";
 
   const q = query(
@@ -34,8 +33,10 @@ async function loadComments() {
   const replies = docs.filter(d => d.replyTo);
 
   roots.forEach(comment => {
-    const children = replies.filter(r => r.replyTo === comment.id);
-    renderComment(comment, children);
+    renderComment(
+      comment,
+      replies.filter(r => r.replyTo === comment.id)
+    );
   });
 }
 
@@ -52,6 +53,7 @@ function renderMedia(url, parent) {
     el = document.createElement("img");
     el.src = url;
     el.style.maxWidth = "250px";
+    el.style.display = "block";
   } else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
@@ -137,7 +139,7 @@ function createReplyForm(parentId, parentWrap) {
       loadComments();
     } catch (err) {
       console.error("Reply failed:", err);
-      alert("Reply failed. Check console.");
+      alert("Reply failed.");
     }
   };
 
@@ -149,48 +151,9 @@ function createReplyForm(parentId, parentWrap) {
 function renderComment(comment, replies) {
   const wrap = document.createElement("div");
 
-  const meta = document.createElement("div");
-  meta.textContent =
-    `${comment.user || "Anonymous"} — ${new Date(comment.createdAt).toLocaleString()}`;
+  /* 2px border per comment */
+  wrap.style.border = "2px solid #000";
+  wrap.style.padding = "8px";
+  wrap.style.marginBottom = "10px";
 
-  const body = document.createElement("div");
-  body.textContent = comment.text || "";
-
-  wrap.appendChild(meta);
-  wrap.appendChild(body);
-
-  // media first
-  renderMedia(comment.media, wrap);
-
-  // reply button ALWAYS under media
-  const replyBtn = document.createElement("button");
-  replyBtn.type = "button";
-  replyBtn.textContent = "Reply";
-  replyBtn.onclick = () => createReplyForm(comment.id, wrap);
-  wrap.appendChild(replyBtn);
-
-  // replies UNDER the parent comment
-  replies.forEach(r => {
-    const rw = document.createElement("div");
-
-    const rm = document.createElement("div");
-    rm.textContent =
-      `↳ ${r.user || "Anonymous"} — ${new Date(r.createdAt).toLocaleString()}`;
-
-    const rb = document.createElement("div");
-    rb.textContent = r.text || "";
-
-    rw.appendChild(rm);
-    rw.appendChild(rb);
-    renderMedia(r.media, rw);
-
-    wrap.appendChild(rw);
-  });
-
-  container.appendChild(wrap);
-}
-
-/* ---------- INIT ---------- */
-
-loadComments();
-window.reloadForum = loadComments;
+  const m
