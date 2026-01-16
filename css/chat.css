@@ -1,31 +1,20 @@
-
-@font-face {
-  font-family: "JF-Dot";
-  src: url("../font/JF-Dot-jiskan16s-1990.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 /* chat container */
 #live-chat {
-  font-family: "JF-Dot", monospace;
   font-size: 16px;
+  text-align: left;
+  margin: 0;
 }
 
 /* messages */
 #chat-messages {
   height: 200px;
   overflow-y: auto;
-  font-family: "JF-Dot", monospace;
-  font-size: 16px;
   margin-bottom: 8px;
 }
 
-/* remove all default styling */
-#live-chat input,
-#live-chat button {
+/* REMOVE styling only from text inputs (NOT buttons) */
+#live-chat input {
   all: unset;
-  font-family: "JF-Dot", monospace;
   font-size: 16px;
 }
 
@@ -37,7 +26,9 @@
 #chat-text {
   width: 55%;
 }
+
+/* controls row */
 #chat-controls {
-  text-align: right;
-  margin-bottom: 4px;
+  text-align: left;
+  margin-bottom: 6px;
 }
