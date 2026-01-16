@@ -32,8 +32,8 @@ async function loadComments() {
   const roots = docs.filter(d => !d.replyTo);
   const replies = docs.filter(d => d.replyTo);
 
-  roots.forEach(comment => {
-    renderComment(comment, replies.filter(r => r.replyTo === comment.id));
+  roots.forEach(root => {
+    renderComment(root, replies, 0);
   });
 }
 
@@ -100,7 +100,10 @@ function createReplyForm(parentId, wrap) {
     const file = fileInput.files[0];
     const user = usernameInput.value.trim() || "Anonymous";
 
-    if (!text && !file) return;
+    if (!text && !file) {
+      alert("Write something or attach a file.");
+      return;
+    }
 
     let media = null;
 
@@ -125,10 +128,11 @@ function createReplyForm(parentId, wrap) {
   wrap.appendChild(form);
 }
 
-/* ---------- RENDER COMMENT ---------- */
+/* ---------- RENDER COMMENT (RECURSIVE) ---------- */
 
-function renderComment(comment, replies) {
+function renderComment(comment, allReplies, depth) {
   const wrap = document.createElement("div");
+  wrap.style.marginLeft = depth ? "20px" : "0";
 
   const meta = document.createElement("div");
   meta.textContent =
@@ -143,28 +147,19 @@ function renderComment(comment, replies) {
 
   const replyBtn = document.createElement("button");
   replyBtn.textContent = "Reply";
+  replyBtn.type = "button";
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
+
   wrap.appendChild(replyBtn);
 
-  replies.forEach(r => {
-    const rw = document.createElement("div");
-    rw.style.marginLeft = "20px";
+  const childReplies = allReplies.filter(r => r.replyTo === comment.id);
 
-    const rm = document.createElement("div");
-    rm.textContent =
-      `↳ ${r.user || "Anonymous"} — ${new Date(r.createdAt).toLocaleString()}`;
-
-    const rb = document.createElement("div");
-    rb.textContent = r.text || "";
-
-    rw.appendChild(rm);
-    rw.appendChild(rb);
-    renderMedia(r.media, rw);
-
-    wrap.appendChild(rw);
+  childReplies.forEach(reply => {
+    renderComment(reply, allReplies, depth + 1);
   });
 
-  wrap.appendChild(document.createElement("hr"));
+  if (depth === 0) wrap.appendChild(document.createElement("hr"));
+
   container.appendChild(wrap);
 }
 
