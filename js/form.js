@@ -119,7 +119,7 @@ function renderComment(comment, replies) {
 
   replyPost.onclick = async () => {
     const text = replyText.value.trim();
-    const file = replyFile.files[0];
+    const file = replyFile.files[0]; 
 
     if (!text && !file) return;
 
