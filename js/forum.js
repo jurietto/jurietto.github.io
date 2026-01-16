@@ -18,34 +18,41 @@ const DIVIDER_REPEAT = 20;
 
 /* ---------- UTIL ---------- */
 
-function asciiDivider() {
-  const unit = "(＃ﾟДﾟ)";
-  const divider = document.createElement("pre");
+function createAsciiDivider() {
+  const divider = document.createElement("div");
 
-  // Force single-line behavior
-  divider.style.whiteSpace = "pre";
+  divider.style.whiteSpace = "nowrap";
   divider.style.overflow = "hidden";
+  divider.style.width = "100vw";           // full browser width
+  divider.style.fontFamily = "monospace";
+  divider.style.boxSizing = "border-box";
   divider.style.margin = "8px 0";
 
-  // Measure available width
-  const containerWidth =
-    container.clientWidth || window.innerWidth;
+  function update() {
+    // Measure available viewport width
+    const viewportWidth = window.innerWidth;
 
-  // Conservative monospace width estimate (safe)
-  const charWidth = 8; // px per char
-  const unitWidth = unit.length * charWidth;
+    // Temporary ruler for accurate width
+    const ruler = document.createElement("span");
+    ruler.style.visibility = "hidden";
+    ruler.style.position = "absolute";
+    ruler.style.whiteSpace = "nowrap";
+    ruler.style.fontFamily = "monospace";
+    ruler.textContent = DIVIDER_UNIT;
+    document.body.appendChild(ruler);
 
-  // Calculate how many units fit on ONE line
-  const count = Math.max(
-    1,
-    Math.floor(containerWidth / unitWidth)
-  );
+    const unitWidth = ruler.getBoundingClientRect().width;
+    document.body.removeChild(ruler);
 
-  divider.textContent = unit.repeat(count);
+    const count = Math.max(1, Math.floor(viewportWidth / unitWidth));
+    divider.textContent = DIVIDER_UNIT.repeat(count);
+  }
+
+  update();
+  window.addEventListener("resize", update);
 
   return divider;
 }
-
 
 /* ---------- LOAD COMMENTS ---------- */
 
