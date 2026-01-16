@@ -17,7 +17,6 @@ const PAGE_SIZE = 10;
 /* ---------- LOAD COMMENTS ---------- */
 
 async function loadComments() {
-  if (!container) return;
   container.innerHTML = "";
 
   const q = query(
@@ -33,10 +32,8 @@ async function loadComments() {
   const replies = docs.filter(d => d.replyTo);
 
   roots.forEach(comment => {
-    renderComment(
-      comment,
-      replies.filter(r => r.replyTo === comment.id)
-    );
+    const childReplies = replies.filter(r => r.replyTo === comment.id);
+    renderComment(comment, childReplies);
   });
 }
 
@@ -53,17 +50,22 @@ function renderMedia(url, parent) {
     el = document.createElement("img");
     el.src = url;
     el.style.maxWidth = "250px";
+    el.style.width = "100%";
     el.style.display = "block";
-  } else if (["mp4","webm"].includes(ext)) {
+  } 
+  else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
     el.style.maxWidth = "250px";
-  } else if (["mp3","ogg","wav"].includes(ext)) {
+    el.style.display = "block";
+  } 
+  else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
-  } else {
+  } 
+  else {
     el = document.createElement("a");
     el.href = url;
     el.textContent = "Download attachment";
@@ -82,36 +84,34 @@ function createReplyForm(parentId, parentWrap) {
 
   const form = document.createElement("div");
   form.className = "reply-form";
+  form.style.marginTop = "10px";
 
-  const userP = document.createElement("p");
-  userP.innerHTML = `Name<br><input class="reply-user" placeholder="Anonymous">`;
-  const userInput = userP.querySelector("input");
-  userInput.value = savedUser;
+  form.innerHTML = `
+    <p>
+      Name<br>
+      <input class="reply-user" size="40" placeholder="Anonymous" value="${savedUser}">
+    </p>
 
-  const textP = document.createElement("p");
-  textP.innerHTML = `Reply<br><textarea rows="3"></textarea>`;
-  const textInput = textP.querySelector("textarea");
+    <p>
+      Reply<br>
+      <textarea rows="4" cols="40"></textarea>
+    </p>
 
-  const fileP = document.createElement("p");
-  fileP.innerHTML = `Attachment<br><input type="file">`;
-  const fileInput = fileP.querySelector("input");
+    <p>
+      Attachment<br>
+      <input type="file">
+    </p>
 
-  const btnP = document.createElement("p");
-  const postBtn = document.createElement("button");
-  const cancelBtn = document.createElement("button");
+    <p>
+      <button type="button">Post reply</button>
+      <button type="button">Cancel</button>
+    </p>
+  `;
 
-  postBtn.type = "button";
-  cancelBtn.type = "button";
-  postBtn.textContent = "Post reply";
-  cancelBtn.textContent = "Cancel";
-
-  btnP.appendChild(postBtn);
-  btnP.appendChild(cancelBtn);
-
-  form.appendChild(userP);
-  form.appendChild(textP);
-  form.appendChild(fileP);
-  form.appendChild(btnP);
+  const userInput = form.querySelector(".reply-user");
+  const textInput = form.querySelector("textarea");
+  const fileInput = form.querySelector("input[type=file]");
+  const [postBtn, cancelBtn] = form.querySelectorAll("button");
 
   userInput.addEventListener("input", () => {
     localStorage.setItem("forum_username", userInput.value.trim());
@@ -142,7 +142,7 @@ function createReplyForm(parentId, parentWrap) {
       loadComments();
     } catch (err) {
       console.error("Reply failed:", err);
-      alert("Reply failed.");
+      alert("Reply failed. Check console.");
     }
   };
 
@@ -153,14 +153,13 @@ function createReplyForm(parentId, parentWrap) {
 
 function renderComment(comment, replies) {
   const wrap = document.createElement("div");
-
-  wrap.style.border = "2px solid black";
-  wrap.style.padding = "8px";
-  wrap.style.marginBottom = "10px";
+  wrap.style.border = "2px solid #000";
+  wrap.style.padding = "10px";
+  wrap.style.marginBottom = "12px";
 
   const meta = document.createElement("div");
-  meta.textContent =
-    `${comment.user || "Anonymous"} — ${new Date(comment.createdAt).toLocaleString()}`;
+  meta.innerHTML =
+    `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${new Date(comment.createdAt).toLocaleString()}`;
 
   const body = document.createElement("div");
   body.textContent = comment.text || "";
@@ -168,22 +167,26 @@ function renderComment(comment, replies) {
   wrap.appendChild(meta);
   wrap.appendChild(body);
 
+  // media comes BEFORE replies
   renderMedia(comment.media, wrap);
 
   const replyBtn = document.createElement("button");
-  replyBtn.type = "button";
   replyBtn.textContent = "Reply";
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
-
   wrap.appendChild(replyBtn);
+
+  /* ---------- REPLIES (UNDER COMMENT) ---------- */
 
   replies.forEach(r => {
     const rw = document.createElement("div");
-    rw.style.marginTop = "6px";
+    rw.style.marginTop = "10px";
+    rw.style.marginLeft = "20px";
+    rw.style.border = "2px solid #000";
+    rw.style.padding = "8px";
 
     const rm = document.createElement("div");
-    rm.textContent =
-      `↳ ${r.user || "Anonymous"} — ${new Date(r.createdAt).toLocaleString()}`;
+    rm.innerHTML =
+      `<strong>＼(^o^)／ ${r.user || "Anonymous"}</strong> — ${new Date(r.createdAt).toLocaleString()}`;
 
     const rb = document.createElement("div");
     rb.textContent = r.text || "";
