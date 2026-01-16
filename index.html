@@ -22,7 +22,7 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 <h2>Post</h2>
 
-<form onsubmit="return false;">
+<form>
   <p>
     Name<br>
     <input id="username" placeholder="Anonymous" size="40">
@@ -38,10 +38,6 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     <input type="file" id="file">
   </p>
 
-  <!-- Reply system -->
-  <p id="replyInfo"></p>
-  <input type="hidden" id="replyTo">
-
   <p>
     <button id="post" type="button">Post</button>
   </p>
@@ -50,12 +46,6 @@ Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 <h2>Forum</h2>
 
 <div id="comments"></div>
-
-<p>
-  <button id="prevPage" type="button">Prev</button>
-  Page <span id="pageNum">1</span>
-  <button id="nextPage" type="button">Next</button>
-</p>
 
 <script type="module" src="js/firebase.js"></script>
 <script type="module" src="js/storage.js"></script>
