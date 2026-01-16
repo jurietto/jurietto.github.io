@@ -12,44 +12,52 @@ postButton.addEventListener("click", async (e) => {
   const user = userInput.value.trim() || "Anonymous";
   const file = fileInput.files[0];
 
-  if (!text && !file) return;
+  // nothing to post
+  if (!text && !file) {
+    return;
+  }
 
   let media = null;
 
   try {
-    // Upload attachment if present
+    // 1) upload file if present
     if (file) {
-      media = await uploadFile(file);
+      media = await uploadFile(file); // STRING URL
       fileInput.value = "";
     }
 
-    // Post comment through Cloudflare Worker
+    // 2) send comment to Worker
     const res = await fetch(
       "https://comments.jbanfieldca.workers.dev/comment",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          user,
-          text,
-          media,
+          user: user,
+          text: text,
+          media: media,
           replyTo: null
         })
       }
     );
 
     if (!res.ok) {
-      throw new Error("Failed to post comment");
+      const errText = await res.text();
+      throw new Error(errText || "Failed to post comment");
     }
 
+    // 3) reset form
     textInput.value = "";
 
-    // Reload forum to first page
-    if (window.reloadForum) {
+    // 4) reload forum
+    if (typeof window.reloadForum === "function") {
       window.reloadForum();
     }
+
   } catch (err) {
     console.error("Post failed:", err);
-    alert("Post failed. Check console.");
+    alert("Post failed. See console for details.");
   }
 });
