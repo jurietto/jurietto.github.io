@@ -37,3 +37,14 @@
 #chat-text {
   width: 55%;
 }
+#chat-controls {
+  text-align: right;
+  margin-bottom: 4px;
+}
+
+/* pop out button matches other buttons */
+#chat-popout {
+  all: unset;
+  font-size: 16px;
+  cursor: pointer;
+}
