@@ -5,7 +5,7 @@
   font-style: normal;
 }
 
-/* GLOBAL BASE */
+/* GLOBAL BASE — SAFE */
 html, body {
   margin: 0;
   padding: 0;
@@ -13,3 +13,8 @@ html, body {
   font-size: 16px;
   line-height: 1.4;
 }
+
+/* IMPORTANT:
+   no button styles
+   no centering
+   no resets */
