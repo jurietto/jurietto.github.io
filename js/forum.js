@@ -35,25 +35,37 @@ async function loadComments() {
 function renderMedia(url, parent) {
   if (!url) return;
 
+  // remove query string so extensions work
+  const cleanUrl = url.split("?")[0];
+  const ext = cleanUrl.split(".").pop().toLowerCase();
+
   let el;
 
-  if (url.match(/\.(png|jpg|jpeg|gif|webp)$/i)) {
+  if (["png", "jpg", "jpeg", "gif", "webp"].includes(ext)) {
     el = document.createElement("img");
     el.src = url;
     el.style.maxWidth = "300px";
-  } else if (url.match(/\.(mp4|webm)$/i)) {
+    el.style.width = "100%";
+    el.style.height = "auto";
+    el.style.display = "block";
+  } 
+  else if (["mp4", "webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
-  } else if (url.match(/\.(mp3|ogg|wav)$/i)) {
+    el.style.maxWidth = "300px";
+  } 
+  else if (["mp3", "ogg", "wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
-  } else {
+  } 
+  else {
     el = document.createElement("a");
     el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
+    el.rel = "noopener";
   }
 
   parent.appendChild(el);
