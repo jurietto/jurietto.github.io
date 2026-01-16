@@ -1,23 +1,19 @@
-import { storage } from "./firebase.js";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
 export async function uploadFile(file) {
-  const ext = file.name.split(".").pop().toLowerCase();
-  const path = `uploads/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const form = new FormData();
+  form.append("file", file);
 
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, file);
+  const res = await fetch(
+    "https://comments.jbanfieldca.workers.dev",
+    {
+      method: "POST",
+      body: form
+    }
+  );
 
-  const url = await getDownloadURL(storageRef);
+  if (!res.ok) {
+    throw new Error("Upload failed");
+  }
 
-  let type = "file";
-  if (file.type.startsWith("image/")) type = "image";
-  else if (file.type.startsWith("audio/")) type = "audio";
-  else if (file.type.startsWith("video/")) type = "video";
-
-  return { url, type };
+  const data = await res.json();
+  return data.url;
 }
