@@ -6,11 +6,28 @@
 
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/chat.css">
+
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    #live-chat {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 
 <body>
-
-<h2>Live Chat</h2>
 
 <div id="live-chat">
   <div id="chat-messages"></div>
