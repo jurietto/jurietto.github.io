@@ -83,32 +83,35 @@ function createReplyForm(parentId, parentWrap) {
   const form = document.createElement("div");
   form.className = "reply-form";
 
-  form.innerHTML = `
-    <p>
-      Name<br>
-      <input class="reply-user" placeholder="Anonymous" value="${savedUser}">
-    </p>
+  const userP = document.createElement("p");
+  userP.innerHTML = `Name<br><input class="reply-user" placeholder="Anonymous">`;
+  const userInput = userP.querySelector("input");
+  userInput.value = savedUser;
 
-    <p>
-      Reply<br>
-      <textarea rows="3"></textarea>
-    </p>
+  const textP = document.createElement("p");
+  textP.innerHTML = `Reply<br><textarea rows="3"></textarea>`;
+  const textInput = textP.querySelector("textarea");
 
-    <p>
-      Attachment<br>
-      <input type="file">
-    </p>
+  const fileP = document.createElement("p");
+  fileP.innerHTML = `Attachment<br><input type="file">`;
+  const fileInput = fileP.querySelector("input");
 
-    <p>
-      <button type="button">Post reply</button>
-      <button type="button">Cancel</button>
-    </p>
-  `;
+  const btnP = document.createElement("p");
+  const postBtn = document.createElement("button");
+  const cancelBtn = document.createElement("button");
 
-  const userInput = form.querySelector(".reply-user");
-  const textInput = form.querySelector("textarea");
-  const fileInput = form.querySelector("input[type=file]");
-  const [postBtn, cancelBtn] = form.querySelectorAll("button");
+  postBtn.type = "button";
+  cancelBtn.type = "button";
+  postBtn.textContent = "Post reply";
+  cancelBtn.textContent = "Cancel";
+
+  btnP.appendChild(postBtn);
+  btnP.appendChild(cancelBtn);
+
+  form.appendChild(userP);
+  form.appendChild(textP);
+  form.appendChild(fileP);
+  form.appendChild(btnP);
 
   userInput.addEventListener("input", () => {
     localStorage.setItem("forum_username", userInput.value.trim());
@@ -151,9 +154,51 @@ function createReplyForm(parentId, parentWrap) {
 function renderComment(comment, replies) {
   const wrap = document.createElement("div");
 
-  /* 2px border per comment */
-  wrap.style.border = "2px solid #000";
+  wrap.style.border = "2px solid black";
   wrap.style.padding = "8px";
   wrap.style.marginBottom = "10px";
 
-  const m
+  const meta = document.createElement("div");
+  meta.textContent =
+    `${comment.user || "Anonymous"} — ${new Date(comment.createdAt).toLocaleString()}`;
+
+  const body = document.createElement("div");
+  body.textContent = comment.text || "";
+
+  wrap.appendChild(meta);
+  wrap.appendChild(body);
+
+  renderMedia(comment.media, wrap);
+
+  const replyBtn = document.createElement("button");
+  replyBtn.type = "button";
+  replyBtn.textContent = "Reply";
+  replyBtn.onclick = () => createReplyForm(comment.id, wrap);
+
+  wrap.appendChild(replyBtn);
+
+  replies.forEach(r => {
+    const rw = document.createElement("div");
+    rw.style.marginTop = "6px";
+
+    const rm = document.createElement("div");
+    rm.textContent =
+      `↳ ${r.user || "Anonymous"} — ${new Date(r.createdAt).toLocaleString()}`;
+
+    const rb = document.createElement("div");
+    rb.textContent = r.text || "";
+
+    rw.appendChild(rm);
+    rw.appendChild(rb);
+    renderMedia(r.media, rw);
+
+    wrap.appendChild(rw);
+  });
+
+  container.appendChild(wrap);
+}
+
+/* ---------- INIT ---------- */
+
+loadComments();
+window.reloadForum = loadComments;
