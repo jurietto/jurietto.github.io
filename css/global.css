@@ -10,6 +10,8 @@ html, body {
   font-family: "JF-Dot", monospace;
   font-size: 16px;
   line-height: 1.4;
+  margin: initial;
+  padding: initial;
 }
 
 /* IMPORTANT:
