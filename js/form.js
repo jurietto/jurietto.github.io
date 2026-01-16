@@ -1,8 +1,4 @@
-import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const commentsRef = collection(db, "threads", "general", "comments");
 
 const postButton = document.getElementById("post");
 const textInput = document.getElementById("text");
@@ -21,25 +17,39 @@ postButton.addEventListener("click", async (e) => {
   let media = null;
 
   try {
+    // Upload attachment if present
     if (file) {
       media = await uploadFile(file);
       fileInput.value = "";
     }
 
-    await addDoc(commentsRef, {
-      text,
-      user,
-      media,
-      replyTo: null,          // ✅ top-level post
-      createdAt: Date.now()
-    });
+    // Post comment through Cloudflare Worker
+    const res = await fetch(
+      "https://comments.jbanfieldca.workers.dev/comment",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user,
+          text,
+          media,
+          replyTo: null
+        })
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to post comment");
+    }
 
     textInput.value = "";
 
+    // Reload forum to first page
     if (window.reloadForum) {
-      window.reloadForum();   // refresh to page 1
+      window.reloadForum();
     }
   } catch (err) {
     console.error("Post failed:", err);
+    alert("Post failed. Check console.");
   }
 });
