@@ -11,7 +11,6 @@ import {
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
-const usernameInput = document.getElementById("username");
 
 const PAGE_SIZE = 10;
 
@@ -32,8 +31,8 @@ async function loadComments() {
   const roots = docs.filter(d => !d.replyTo);
   const replies = docs.filter(d => d.replyTo);
 
-  roots.forEach(root => {
-    renderComment(root, replies, 0);
+  roots.forEach(comment => {
+    renderComment(comment, replies.filter(r => r.replyTo === comment.id));
   });
 }
 
@@ -42,23 +41,23 @@ async function loadComments() {
 function renderMedia(url, parent) {
   if (!url) return;
 
-  const cleanUrl = url.split("?")[0];
-  const ext = cleanUrl.split(".").pop().toLowerCase();
+  const clean = url.split("?")[0];
+  const ext = clean.split(".").pop().toLowerCase();
   let el;
 
-  if (["png", "jpg", "jpeg", "gif", "webp"].includes(ext)) {
+  if (["png","jpg","jpeg","gif","webp"].includes(ext)) {
     el = document.createElement("img");
     el.src = url;
     el.style.maxWidth = "300px";
     el.style.width = "100%";
     el.style.height = "auto";
     el.style.display = "block";
-  } else if (["mp4", "webm"].includes(ext)) {
+  } else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
     el.style.maxWidth = "300px";
-  } else if (["mp3", "ogg", "wav"].includes(ext)) {
+  } else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
@@ -67,7 +66,6 @@ function renderMedia(url, parent) {
     el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
-    el.rel = "noopener";
   }
 
   parent.appendChild(el);
@@ -75,35 +73,55 @@ function renderMedia(url, parent) {
 
 /* ---------- INLINE REPLY FORM ---------- */
 
-function createReplyForm(parentId, wrap) {
-  if (wrap.querySelector(".reply-form")) return;
+function createReplyForm(parentId, parentWrap) {
+  if (parentWrap.querySelector(".reply-form")) return;
 
   const form = document.createElement("div");
   form.className = "reply-form";
-  form.style.marginTop = "8px";
+  form.style.marginTop = "10px";
+
+  const savedUser = localStorage.getItem("forum_username") || "";
 
   form.innerHTML = `
-    <textarea rows="3" cols="40" placeholder="Reply..."></textarea><br>
-    <input type="file"><br>
-    <button type="button">Post reply</button>
-    <button type="button">Cancel</button>
+    <p>
+      Name<br>
+      <input class="reply-user" size="40" placeholder="Anonymous" value="${savedUser}">
+    </p>
+
+    <p>
+      Reply<br>
+      <textarea rows="4" cols="40"></textarea>
+    </p>
+
+    <p>
+      Attachment<br>
+      <input type="file">
+    </p>
+
+    <p>
+      <button type="button">Post reply</button>
+      <button type="button">Cancel</button>
+    </p>
   `;
 
-  const textarea = form.querySelector("textarea");
+  const userInput = form.querySelector(".reply-user");
+  const textInput = form.querySelector("textarea");
   const fileInput = form.querySelector("input[type=file]");
   const [postBtn, cancelBtn] = form.querySelectorAll("button");
+
+  // persist username
+  userInput.addEventListener("input", () => {
+    localStorage.setItem("forum_username", userInput.value.trim());
+  });
 
   cancelBtn.onclick = () => form.remove();
 
   postBtn.onclick = async () => {
-    const text = textarea.value.trim();
+    const user = userInput.value.trim() || "Anonymous";
+    const text = textInput.value.trim();
     const file = fileInput.files[0];
-    const user = usernameInput.value.trim() || "Anonymous";
 
-    if (!text && !file) {
-      alert("Write something or attach a file.");
-      return;
-    }
+    if (!text && !file) return;
 
     let media = null;
 
@@ -125,14 +143,13 @@ function createReplyForm(parentId, wrap) {
     }
   };
 
-  wrap.appendChild(form);
+  parentWrap.appendChild(form);
 }
 
-/* ---------- RENDER COMMENT (RECURSIVE) ---------- */
+/* ---------- RENDER COMMENT ---------- */
 
-function renderComment(comment, allReplies, depth) {
+function renderComment(comment, replies) {
   const wrap = document.createElement("div");
-  wrap.style.marginLeft = depth ? "20px" : "0";
 
   const meta = document.createElement("div");
   meta.textContent =
@@ -147,19 +164,30 @@ function renderComment(comment, allReplies, depth) {
 
   const replyBtn = document.createElement("button");
   replyBtn.textContent = "Reply";
-  replyBtn.type = "button";
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
-
   wrap.appendChild(replyBtn);
 
-  const childReplies = allReplies.filter(r => r.replyTo === comment.id);
+  /* replies go UNDER the comment */
+  replies.forEach(r => {
+    const rw = document.createElement("div");
+    rw.style.marginLeft = "20px";
+    rw.style.marginTop = "6px";
 
-  childReplies.forEach(reply => {
-    renderComment(reply, allReplies, depth + 1);
+    const rm = document.createElement("div");
+    rm.textContent =
+      `↳ ${r.user || "Anonymous"} — ${new Date(r.createdAt).toLocaleString()}`;
+
+    const rb = document.createElement("div");
+    rb.textContent = r.text || "";
+
+    rw.appendChild(rm);
+    rw.appendChild(rb);
+    renderMedia(r.media, rw);
+
+    wrap.appendChild(rw);
   });
 
-  if (depth === 0) wrap.appendChild(document.createElement("hr"));
-
+  wrap.appendChild(document.createElement("hr"));
   container.appendChild(wrap);
 }
 
