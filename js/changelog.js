@@ -1,25 +1,25 @@
-const USERNAME = "jurietto";
-const REPO = "jurietto.github.io";
-const LIMIT = 5;
-
 const list = document.getElementById("changelog");
 
-fetch(`https://api.github.com/repos/${USERNAME}/${REPO}/commits?per_page=${LIMIT}`)
+/* CHANGE THESE IF NEEDED */
+const OWNER = "jurietto";
+const REPO = "jurietto.github.io";
+const MAX_ENTRIES = 10;
+
+fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
   .then(res => res.json())
   .then(commits => {
     list.innerHTML = "";
 
-    commits.forEach(commit => {
+    commits.slice(0, MAX_ENTRIES).forEach(c => {
+      const msg = c.commit.message.split("\n")[0]; // first line only
+
       const li = document.createElement("li");
+      li.textContent = `★ ${msg} (・_・;)`;
 
-      const message = commit.commit.message.split("\n")[0];
-      const date = new Date(commit.commit.author.date).toLocaleDateString();
-      const hash = commit.sha.slice(0, 7);
-
-      li.textContent = `${message} (${date}, ${hash})`;
       list.appendChild(li);
     });
   })
-  .catch(() => {
-    list.innerHTML = "<li>Unable to load changelog</li>";
+  .catch(err => {
+    list.innerHTML = "<li>★ Failed to load changelog (・_・;)</li>";
+    console.error(err);
   });
