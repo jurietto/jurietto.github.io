@@ -19,10 +19,28 @@ const DIVIDER_REPEAT = 20;
 /* ---------- UTIL ---------- */
 
 function asciiDivider() {
+  const unit = "(＃ﾟДﾟ)";
   const div = document.createElement("pre");
-  div.textContent = DIVIDER_UNIT.repeat(DIVIDER_REPEAT);
+
+  // approximate character width in monospace (~8px)
+  const approxCharWidth = 8;
+
+  // get container width (fallback to window width)
+  const maxWidth =
+    container.clientWidth || window.innerWidth;
+
+  // how many units fit without overflow
+  const maxUnits = Math.floor(
+    maxWidth / (unit.length * approxCharWidth)
+  );
+
+  div.textContent = unit.repeat(Math.max(1, maxUnits));
+  div.style.whiteSpace = "pre-wrap";
+  div.style.wordBreak = "break-word";
+
   return div;
 }
+
 
 /* ---------- LOAD COMMENTS ---------- */
 
