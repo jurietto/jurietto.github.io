@@ -51,10 +51,12 @@ function renderMedia(url, parent) {
   if (["png","jpg","jpeg","gif","webp"].includes(ext)) {
     el = document.createElement("img");
     el.src = url;
+    el.style.maxWidth = "250px";
   } else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
+    el.style.maxWidth = "250px";
   } else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
@@ -156,14 +158,18 @@ function renderComment(comment, replies) {
 
   wrap.appendChild(meta);
   wrap.appendChild(body);
+
+  // media first
   renderMedia(comment.media, wrap);
 
+  // reply button ALWAYS under media
   const replyBtn = document.createElement("button");
   replyBtn.type = "button";
   replyBtn.textContent = "Reply";
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
   wrap.appendChild(replyBtn);
 
+  // replies UNDER the parent comment
   replies.forEach(r => {
     const rw = document.createElement("div");
 
