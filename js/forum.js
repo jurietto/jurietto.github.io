@@ -44,33 +44,50 @@ async function loadComments() {
 /* ---------- MEDIA RENDER ---------- */
 
 function renderMedia(media, parent) {
-  if (!media || !media.url) return;
+  if (!media) return;
 
-  const type = media.type || "";
+  let url = null;
+  let type = "";
+
+  // Support BOTH formats:
+  // media = "url"
+  // media = { url, type }
+
+  if (typeof media === "string") {
+    url = media;
+  } else if (media.url) {
+    url = media.url;
+    type = media.type || "";
+  }
+
+  if (!url) return;
+
   let el;
 
-  if (type.startsWith("image/")) {
+  if (type.startsWith("image/") || url.match(/\.(png|jpg|jpeg|gif|webp)$/i)) {
     el = document.createElement("img");
-    el.src = media.url;
+    el.src = url;
   }
-  else if (type.startsWith("video/")) {
+  else if (type.startsWith("video/") || url.match(/\.(mp4|webm)$/i)) {
     el = document.createElement("video");
-    el.src = media.url;
+    el.src = url;
     el.controls = true;
   }
-  else if (type.startsWith("audio/")) {
+  else if (type.startsWith("audio/") || url.match(/\.(mp3|ogg|wav)$/i)) {
     el = document.createElement("audio");
-    el.src = media.url;
+    el.src = url;
     el.controls = true;
   }
   else {
     el = document.createElement("a");
-    el.href = media.url;
+    el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
   }
 
   parent.appendChild(el);
+}
+
 }
 
 /* ---------- RENDER COMMENT ---------- */
