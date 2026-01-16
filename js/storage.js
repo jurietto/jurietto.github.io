@@ -1,12 +1,12 @@
 export async function uploadFile(file) {
-  const form = new FormData();
-  form.append("file", file);
+  const formData = new FormData();
+  formData.append("file", file);
 
   const res = await fetch(
-    "https://comments.jbanfieldca.workers.dev",
+    "https://hexangel-upload.jbanfield.workers.dev",
     {
       method: "POST",
-      body: form
+      body: formData,
     }
   );
 
@@ -14,6 +14,6 @@ export async function uploadFile(file) {
     throw new Error("Upload failed");
   }
 
-  const data = await res.json();
-  return data.url;
+  const json = await res.json();
+  return json.url;
 }
