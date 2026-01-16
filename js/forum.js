@@ -13,6 +13,16 @@ const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
 
 const PAGE_SIZE = 10;
+const DIVIDER_UNIT = "(＃ﾟДﾟ)";
+const DIVIDER_REPEAT = 20;
+
+/* ---------- UTIL ---------- */
+
+function asciiDivider() {
+  const div = document.createElement("pre");
+  div.textContent = DIVIDER_UNIT.repeat(DIVIDER_REPEAT);
+  return div;
+}
 
 /* ---------- LOAD COMMENTS ---------- */
 
@@ -32,7 +42,10 @@ async function loadComments() {
   const replies = docs.filter(d => d.replyTo);
 
   roots.forEach(comment => {
-    renderComment(comment, replies.filter(r => r.replyTo === comment.id));
+    renderComment(
+      comment,
+      replies.filter(r => r.replyTo === comment.id)
+    );
   });
 }
 
@@ -52,20 +65,24 @@ function renderMedia(url, parent) {
     el.style.width = "100%";
     el.style.height = "auto";
     el.style.display = "block";
-  } else if (["mp4","webm"].includes(ext)) {
+  }
+  else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
     el.style.maxWidth = "300px";
-  } else if (["mp3","ogg","wav"].includes(ext)) {
+  }
+  else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
-  } else {
+  }
+  else {
     el = document.createElement("a");
     el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
+    el.rel = "noopener";
   }
 
   parent.appendChild(el);
@@ -78,14 +95,13 @@ function createReplyForm(parentId, parentWrap) {
 
   const form = document.createElement("div");
   form.className = "reply-form";
-  form.style.marginTop = "10px";
 
   const savedUser = localStorage.getItem("forum_username") || "";
 
   form.innerHTML = `
     <p>
       Name<br>
-      <input class="reply-user" size="40" placeholder="Anonymous" value="${savedUser}">
+      <input size="40" placeholder="Anonymous" value="${savedUser}">
     </p>
 
     <p>
@@ -104,12 +120,11 @@ function createReplyForm(parentId, parentWrap) {
     </p>
   `;
 
-  const userInput = form.querySelector(".reply-user");
+  const userInput = form.querySelector("input");
   const textInput = form.querySelector("textarea");
   const fileInput = form.querySelector("input[type=file]");
   const [postBtn, cancelBtn] = form.querySelectorAll("button");
 
-  // persist username
   userInput.addEventListener("input", () => {
     localStorage.setItem("forum_username", userInput.value.trim());
   });
@@ -167,11 +182,10 @@ function renderComment(comment, replies) {
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
   wrap.appendChild(replyBtn);
 
-  /* replies go UNDER the comment */
+  /* replies UNDER parent */
   replies.forEach(r => {
     const rw = document.createElement("div");
     rw.style.marginLeft = "20px";
-    rw.style.marginTop = "6px";
 
     const rm = document.createElement("div");
     rm.textContent =
@@ -187,11 +201,11 @@ function renderComment(comment, replies) {
     wrap.appendChild(rw);
   });
 
-  wrap.appendChild(document.createElement("hr"));
+  wrap.appendChild(asciiDivider());
   container.appendChild(wrap);
 }
 
 /* ---------- INIT ---------- */
 
 loadComments();
-window.reloadForum = loadComments; 
+window.reloadForum = loadComments;
