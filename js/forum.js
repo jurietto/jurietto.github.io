@@ -70,10 +70,17 @@ function renderMedia(url, parent) {
     el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
+    el.style.display = "inline-block";
   }
+
+  /* 🔒 media border */
+  el.style.border = "2px solid #000";
+  el.style.padding = "4px";
+  el.style.marginTop = "6px";
 
   parent.appendChild(el);
 }
+
 
 /* ---------- INLINE REPLY FORM ---------- */
 
