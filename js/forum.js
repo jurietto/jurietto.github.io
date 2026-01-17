@@ -124,15 +124,17 @@ function renderBodyWithEmbeds(text, parent) {
   const body = document.createElement("div");
   body.className = "forum-body";
 
-  const escaped = escapeHTML(text || "");
+  const rawText = text || "";
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const urls = escaped.match(urlRegex) || [];
+  const urls = rawText.match(urlRegex) || [];
 
-  // text only (links removed)
-  body.innerHTML = escaped.replace(urlRegex, "").trim();
+  // text with URLs removed, then escaped
+  const cleanText = rawText.replace(urlRegex, "").trim();
+  body.textContent = cleanText;
+
   parent.appendChild(body);
 
-  // embeds after text
+  // render embeds from raw URLs
   urls.forEach(url => {
     const wrap = document.createElement("div");
     wrap.innerHTML = renderEmbed(url);
