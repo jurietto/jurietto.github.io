@@ -14,6 +14,26 @@ html, body {
   padding: 10px; /* Add padding of 10px */
 }
 
+.text-divider {
+  border-top: 1px solid currentColor;
+  margin: 24px 0 12px;
+  overflow: hidden;
+  padding-top: 12px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.text-divider::before {
+  content: "🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 ";
+  display: block;
+  white-space: nowrap;
+}
+
+.site-footer {
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
 /* IMPORTANT:
    no button styles
    no centering
