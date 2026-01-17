@@ -1,140 +1,35 @@
 /* ================================
-   FORUM BASE
+   FORUM BASE (NO STYLING)
    ================================ */
 
 #comments {
   max-width: 900px;
   margin: 0 auto;
-  font-family: "MS PGothic", "IPAMonaPGothic", monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #111;
 }
 
 /* ================================
-   THEME VARIABLES
-   ================================ */
-
-:root {
-  --forum-bg: #f6f6f6;
-  --forum-border: #000;
-  --forum-text: #111;
-  --forum-meta: #444;
-  --forum-accent: #0055aa;
-}
-
-/* ================================
-   TOP-LEVEL COMMENTS (OUTSET)
+   TOP-LEVEL COMMENTS
+   - 5px OUTSET border
+   - light lavender purple background
    ================================ */
 
 .forum-comment {
-  background: var(--forum-bg);
-  border: 2px outset var(--forum-border);
-  padding: 10px;
-  margin-bottom: 14px;
+  border: 5px outset #000;
+  background: #e6d9ff; /* light lavender purple */
+  padding: 8px;
+  margin-bottom: 10px;
 }
 
 /* ================================
-   REPLIES (INSET)
+   REPLIES
+   - 5px INSET border
+   - light bubblegum hot pink background
    ================================ */
 
 .forum-reply {
-  background: var(--forum-bg);
-  border: 2px inset var(--forum-border);
+  border: 5px inset #000;
+  background: #ffb6d9; /* light bubblegum hot pink */
   padding: 8px;
-  margin-top: 10px;
+  margin-top: 8px;
   margin-left: 20px;
-}
-
-/* ================================
-   META (NAME + TIMESTAMP)
-   ================================ */
-
-.forum-meta {
-  font-size: 13px;
-  color: var(--forum-meta);
-  margin-bottom: 4px;
-}
-
-.forum-meta strong {
-  color: var(--forum-text);
-}
-
-/* ================================
-   BODY TEXT
-   ================================ */
-
-.forum-body {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin-bottom: 6px;
-}
-
-/* ================================
-   MEDIA
-   ================================ */
-
-.forum-media {
-  max-width: 250px;
-  width: 100%;
-  display: block;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  border: 2px solid var(--forum-border);
-}
-
-.forum-media.video,
-.forum-media.audio {
-  width: auto;
-}
-
-/* ================================
-   INLINE REPLY FORM
-   ================================ */
-
-.reply-form {
-  margin-top: 10px;
-  padding: 8px;
-  border: 1px dashed var(--forum-border);
-  background: #fafafa;
-}
-
-.reply-form input,
-.reply-form textarea {
-  font-family: inherit;
-  font-size: 13px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.reply-form textarea {
-  resize: vertical;
-}
-
-/* ================================
-   LINKS
-   ================================ */
-
-.forum-media.link {
-  border: none;
-  color: var(--forum-accent);
-  text-decoration: underline;
-}
-
-.forum-media.link:hover {
-  text-decoration: none;
-}
-
-/* ================================
-   MOBILE SAFETY
-   ================================ */
-
-@media (max-width: 600px) {
-  .forum-reply {
-    margin-left: 10px;
-  }
-
-  .forum-media {
-    max-width: 100%;
-  }
 }
