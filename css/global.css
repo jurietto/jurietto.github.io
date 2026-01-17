@@ -14,6 +14,14 @@ html, body {
   padding: 10px; /* Add padding of 10px */
 }
 
+input:not([type="button"]):not([type="submit"]):not([type="reset"]),
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .text-divider {
   border-top: 1px solid currentColor;
   margin: 24px 0 12px;
