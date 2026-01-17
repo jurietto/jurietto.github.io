@@ -32,19 +32,18 @@ body {
 body::before {
   content: "🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁";
   position: fixed;
-  top: 0;
-  left: 0;
+  top: -50%;
+  left: -50%;
   width: 200%;
   height: 200%;
   font-size: 24px;
   line-height: 80px;
   letter-spacing: 80px;
-  opacity: 0.15;
+  opacity: 0.18;
   pointer-events: none;
   white-space: pre-wrap;
-  transform: translate(-25%, -25%);
   animation: cupcake-drift 60s linear infinite;
-  z-index: 0;
+  z-index: -1;
 }
 
 /* ================================
