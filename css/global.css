@@ -14,7 +14,6 @@ html, body {
   padding: 10px; /* Add padding of 10px */
 }
 
-<<<<<<< HEAD
 body {
   position: relative;
   z-index: 1;
@@ -27,10 +26,9 @@ select {
   font-size: inherit;
   line-height: inherit;
 }
-
-parent of 5a5270e (Merge pull request #8 from jurietto/codex/uniform-input-text-font-consistency)
 .text-divider {
   border-top: 1px solid currentColor;
+  box-sizing: border-box;
   margin: 24px 0 12px;
   overflow: hidden;
   padding-top: 12px;
@@ -41,7 +39,7 @@ parent of 5a5270e (Merge pull request #8 from jurietto/codex/uniform-input-text-
 .text-divider::before {
   content: "🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 ";
   display: inline-block;
-  min-width: 100%;
+  max-width: 100%;
   white-space: nowrap;
 }
 
