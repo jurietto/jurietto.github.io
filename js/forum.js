@@ -50,19 +50,19 @@ function renderMedia(url, parent) {
     el = document.createElement("img");
     el.src = url;
     el.className = "forum-media image";
-  } 
+  }
   else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
     el.className = "forum-media video";
-  } 
+  }
   else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
     el.className = "forum-media audio";
-  } 
+  }
   else {
     el = document.createElement("a");
     el.href = url;
@@ -101,15 +101,16 @@ function createReplyForm(parentId, parentWrap) {
     </p>
 
     <p>
-      <button type="button">Post reply</button>
-      <button type="button">Cancel</button>
+      <button type="button" class="post-btn">Post reply</button>
+      <button type="button" class="cancel-btn">Cancel</button>
     </p>
   `;
 
   const userInput = form.querySelector(".reply-user");
   const textInput = form.querySelector("textarea");
   const fileInput = form.querySelector("input[type=file]");
-  const [postBtn, cancelBtn] = form.querySelectorAll("button");
+  const postBtn = form.querySelector(".post-btn");
+  const cancelBtn = form.querySelector(".cancel-btn");
 
   userInput.addEventListener("input", () => {
     localStorage.setItem("forum_username", userInput.value.trim());
@@ -124,9 +125,11 @@ function createReplyForm(parentId, parentWrap) {
 
     if (!text && !file) return;
 
-    let media = null;
+    postBtn.disabled = true;
+    postBtn.textContent = "Posting...";
 
     try {
+      let media = null;
       if (file) media = await uploadFile(file);
 
       await addDoc(commentsRef, {
@@ -137,14 +140,26 @@ function createReplyForm(parentId, parentWrap) {
         createdAt: Date.now()
       });
 
+      form.remove();
       loadComments();
     } catch (err) {
       console.error("Reply failed:", err);
       alert("Reply failed. Check console.");
+      postBtn.disabled = false;
+      postBtn.textContent = "Post reply";
     }
   };
 
   parentWrap.appendChild(form);
+}
+
+/* ---------- UTIL ---------- */
+
+function formatDate(ts) {
+  if (!ts) return "";
+  if (typeof ts === "number") return new Date(ts).toLocaleString();
+  if (ts.seconds) return new Date(ts.seconds * 1000).toLocaleString();
+  return "";
 }
 
 /* ---------- RENDER COMMENT ---------- */
@@ -156,7 +171,7 @@ function renderComment(comment, replies) {
   const meta = document.createElement("div");
   meta.className = "forum-meta";
   meta.innerHTML =
-    `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${new Date(comment.createdAt).toLocaleString()}`;
+    `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}`;
 
   const body = document.createElement("div");
   body.className = "forum-body";
@@ -165,7 +180,7 @@ function renderComment(comment, replies) {
   wrap.appendChild(meta);
   wrap.appendChild(body);
 
-  // media comes BEFORE replies
+  // media BEFORE replies
   renderMedia(comment.media, wrap);
 
   const replyBtn = document.createElement("button");
@@ -174,8 +189,6 @@ function renderComment(comment, replies) {
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
   wrap.appendChild(replyBtn);
 
-  /* ---------- REPLIES ---------- */
-
   replies.forEach(r => {
     const rw = document.createElement("div");
     rw.className = "forum-reply";
@@ -183,7 +196,7 @@ function renderComment(comment, replies) {
     const rm = document.createElement("div");
     rm.className = "forum-meta";
     rm.innerHTML =
-      `<strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong> — ${new Date(r.createdAt).toLocaleString()}`;
+      `<strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong> — ${formatDate(r.createdAt)}`;
 
     const rb = document.createElement("div");
     rb.className = "forum-body";
