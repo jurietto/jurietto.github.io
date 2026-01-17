@@ -46,16 +46,6 @@ function formatDate(ts) {
   return "";
 }
 
-function escapeHTML(str = "") {
-  return str.replace(/[&<>"']/g, m => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  }[m]));
-}
-
 function renderLink(url) {
   return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 }
@@ -64,12 +54,31 @@ function renderLink(url) {
 
 function renderEmbed(url) {
   try {
-    // image
-    if (url.match(/\.(png|jpe?g|gif|webp)$/i)) {
+    const cleanUrl = url.split("?")[0].toLowerCase();
+
+    const isImage = /\.(png|jpe?g|gif|webp|bmp|avif|svg)$/i.test(cleanUrl);
+    const isVideo = /\.(mp4|webm|ogv|mov)$/i.test(cleanUrl);
+    const isAudio = /\.(mp3|ogg|wav|flac|m4a)$/i.test(cleanUrl);
+
+    if (isImage) {
       return `<img class="forum-media image"
                    src="${url}"
                    loading="lazy"
                    alt="">`;
+    }
+
+    if (isVideo) {
+      return `<video class="forum-media video"
+                     src="${url}"
+                     controls
+                     loading="lazy"></video>`;
+    }
+
+    if (isAudio) {
+      return `<audio class="forum-media audio"
+                     src="${url}"
+                     controls
+                     loading="lazy"></audio>`;
     }
 
     // YouTube
@@ -128,13 +137,9 @@ function renderBodyWithEmbeds(text, parent) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const urls = rawText.match(urlRegex) || [];
 
-  // text with URLs removed, then escaped
-  const cleanText = rawText.replace(urlRegex, "").trim();
-  body.textContent = cleanText;
-
+  body.textContent = rawText.replace(urlRegex, "").trim();
   parent.appendChild(body);
 
-  // render embeds from raw URLs
   urls.forEach(url => {
     const wrap = document.createElement("div");
     wrap.innerHTML = renderEmbed(url);
@@ -230,7 +235,6 @@ function renderComment(comment, replies) {
     `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}`;
 
   wrap.appendChild(meta);
-
   renderBodyWithEmbeds(comment.text || "", wrap);
 
   if (comment.media) {
