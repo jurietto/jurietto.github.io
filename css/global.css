@@ -20,8 +20,7 @@ html, body {
   overflow: hidden;
   padding-top: 12px;
   white-space: nowrap;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: 100%;
 }
 
 .text-divider::before {
