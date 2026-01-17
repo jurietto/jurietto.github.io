@@ -26,39 +26,34 @@ body {
 }
 
 /* ================================
-   CUPCAKE EMOJI BACKGROUND
+   FISH CAKE SWISS-DOT BACKGROUND
    ================================ */
 
 body::before {
-  content: "🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁";
+  content: "";
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  font-size: 24px;
-  line-height: 80px;
-  letter-spacing: 80px;
-  opacity: 0.18;
+  inset: -50%;
+  background-image: url("/art/fish-cake-with-swirl_1f365.png");
+  background-repeat: repeat;
+  background-size: 32px 32px; /* size of each dot */
+  opacity: 0.15;
   pointer-events: none;
-  white-space: pre-wrap;
-  animation: cupcake-drift 60s linear infinite;
+  animation: fishcake-drift 90s linear infinite;
   z-index: -1;
 }
 
 /* ================================
-   DIAGONAL INFINITE MOTION
+   DIAGONAL (45°) INFINITE MOTION
    ================================ */
 
-@keyframes cupcake-drift {
+@keyframes fishcake-drift {
   from {
-    transform: translate(-25%, -25%);
+    background-position: 0 0;
   }
   to {
-    transform: translate(0%, 0%);
+    background-position: 400px 400px;
   }
 }
-
 /* ================================
    FORM ELEMENTS — INHERIT ONLY
    ================================ */
