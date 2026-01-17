@@ -5,19 +5,64 @@
   font-style: normal;
 }
 
-/* GLOBAL BASE — SAFE */
-html, body {
+/* ================================
+   GLOBAL BASE — SAFE
+   ================================ */
+
+html,
+body {
   font-family: "JF-Dot", monospace;
   font-size: 16px;
   line-height: 1.4;
-  margin: 10px; /* Add margin of 10px */
-  padding: 10px; /* Add padding of 10px */
+  margin: 10px;
+  padding: 10px;
 }
 
 body {
   position: relative;
   z-index: 1;
+  background-color: #ffffff; /* fallback */
+  overflow-x: hidden;
 }
+
+/* ================================
+   CUPCAKE EMOJI BACKGROUND
+   ================================ */
+
+body::before {
+  content: "🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁 🧁";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  font-size: 24px;
+  line-height: 80px;
+  letter-spacing: 80px;
+  opacity: 0.15;
+  pointer-events: none;
+  white-space: pre-wrap;
+  transform: translate(-25%, -25%);
+  animation: cupcake-drift 60s linear infinite;
+  z-index: 0;
+}
+
+/* ================================
+   DIAGONAL INFINITE MOTION
+   ================================ */
+
+@keyframes cupcake-drift {
+  from {
+    transform: translate(-25%, -25%);
+  }
+  to {
+    transform: translate(0%, 0%);
+  }
+}
+
+/* ================================
+   FORM ELEMENTS — INHERIT ONLY
+   ================================ */
 
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
@@ -26,6 +71,11 @@ select {
   font-size: inherit;
   line-height: inherit;
 }
+
+/* ================================
+   TEXT DIVIDER
+   ================================ */
+
 .text-divider {
   border-top: 1px solid currentColor;
   box-sizing: border-box;
@@ -42,6 +92,10 @@ select {
   max-width: 100%;
   white-space: nowrap;
 }
+
+/* ================================
+   FOOTER
+   ================================ */
 
 .site-footer {
   font-size: 0.9rem;
