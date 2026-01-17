@@ -37,41 +37,107 @@ async function loadComments() {
   });
 }
 
-/* ---------- MEDIA ---------- */
+/* ---------- UTIL ---------- */
 
-function renderMedia(url, parent) {
-  if (!url) return;
+function formatDate(ts) {
+  if (!ts) return "";
+  if (typeof ts === "number") return new Date(ts).toLocaleString();
+  if (ts.seconds) return new Date(ts.seconds * 1000).toLocaleString();
+  return "";
+}
 
-  const clean = url.split("?")[0];
-  const ext = clean.split(".").pop().toLowerCase();
-  let el;
+function escapeHTML(str = "") {
+  return str.replace(/[&<>"']/g, m => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[m]));
+}
 
-  if (["png","jpg","jpeg","gif","webp"].includes(ext)) {
-    el = document.createElement("img");
-    el.src = url;
-    el.className = "forum-media image";
-  }
-  else if (["mp4","webm"].includes(ext)) {
-    el = document.createElement("video");
-    el.src = url;
-    el.controls = true;
-    el.className = "forum-media video";
-  }
-  else if (["mp3","ogg","wav"].includes(ext)) {
-    el = document.createElement("audio");
-    el.src = url;
-    el.controls = true;
-    el.className = "forum-media audio";
-  }
-  else {
-    el = document.createElement("a");
-    el.href = url;
-    el.textContent = "Download attachment";
-    el.target = "_blank";
-    el.className = "forum-media link";
-  }
+function renderLink(url) {
+  return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+}
 
-  parent.appendChild(el);
+/* ---------- EMBED DETECTION ---------- */
+
+function renderEmbed(url) {
+  try {
+    // image
+    if (url.match(/\.(png|jpe?g|gif|webp)$/i)) {
+      return `<img class="forum-media image"
+                   src="${url}"
+                   loading="lazy"
+                   alt="">`;
+    }
+
+    // YouTube
+    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+    if (yt) {
+      return `
+        <div class="forum-media video">
+          <iframe
+            src="https://www.youtube.com/embed/${yt[1]}"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>`;
+    }
+
+    // Spotify
+    if (url.includes("open.spotify.com")) {
+      const parts = url.split("/");
+      const id = parts.pop() || parts.pop();
+      return `
+        <div class="forum-media audio">
+          <iframe
+            src="https://open.spotify.com/embed/${id}"
+            loading="lazy"
+            allow="encrypted-media">
+          </iframe>
+        </div>`;
+    }
+
+    // SoundCloud
+    if (url.includes("soundcloud.com")) {
+      return `
+        <div class="forum-media audio">
+          <iframe
+            src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"
+            loading="lazy">
+          </iframe>
+        </div>`;
+    }
+
+    // fallback
+    return renderLink(url);
+
+  } catch {
+    return renderLink(url);
+  }
+}
+
+/* ---------- TEXT + LINK PARSING ---------- */
+
+function renderBodyWithEmbeds(text, parent) {
+  const body = document.createElement("div");
+  body.className = "forum-body";
+
+  const escaped = escapeHTML(text || "");
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const urls = escaped.match(urlRegex) || [];
+
+  // text only (links removed)
+  body.innerHTML = escaped.replace(urlRegex, "").trim();
+  parent.appendChild(body);
+
+  // embeds after text
+  urls.forEach(url => {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = renderEmbed(url);
+    parent.appendChild(wrap);
+  });
 }
 
 /* ---------- INLINE REPLY FORM ---------- */
@@ -89,17 +155,14 @@ function createReplyForm(parentId, parentWrap) {
       Name<br>
       <input class="reply-user" size="40" placeholder="Anonymous" value="${savedUser}">
     </p>
-
     <p>
       Reply<br>
       <textarea rows="4" cols="40"></textarea>
     </p>
-
     <p>
       Attachment<br>
       <input type="file">
     </p>
-
     <p>
       <button type="button" class="post-btn">Post reply</button>
       <button type="button" class="cancel-btn">Cancel</button>
@@ -153,15 +216,6 @@ function createReplyForm(parentId, parentWrap) {
   parentWrap.appendChild(form);
 }
 
-/* ---------- UTIL ---------- */
-
-function formatDate(ts) {
-  if (!ts) return "";
-  if (typeof ts === "number") return new Date(ts).toLocaleString();
-  if (ts.seconds) return new Date(ts.seconds * 1000).toLocaleString();
-  return "";
-}
-
 /* ---------- RENDER COMMENT ---------- */
 
 function renderComment(comment, replies) {
@@ -173,15 +227,15 @@ function renderComment(comment, replies) {
   meta.innerHTML =
     `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}`;
 
-  const body = document.createElement("div");
-  body.className = "forum-body";
-  body.textContent = comment.text || "";
-
   wrap.appendChild(meta);
-  wrap.appendChild(body);
 
-  // media BEFORE replies
-  renderMedia(comment.media, wrap);
+  renderBodyWithEmbeds(comment.text || "", wrap);
+
+  if (comment.media) {
+    const mediaWrap = document.createElement("div");
+    mediaWrap.innerHTML = renderEmbed(comment.media);
+    wrap.appendChild(mediaWrap);
+  }
 
   const replyBtn = document.createElement("button");
   replyBtn.className = "forum-reply-button";
@@ -198,13 +252,14 @@ function renderComment(comment, replies) {
     rm.innerHTML =
       `<strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong> — ${formatDate(r.createdAt)}`;
 
-    const rb = document.createElement("div");
-    rb.className = "forum-body";
-    rb.textContent = r.text || "";
-
     rw.appendChild(rm);
-    rw.appendChild(rb);
-    renderMedia(r.media, rw);
+    renderBodyWithEmbeds(r.text || "", rw);
+
+    if (r.media) {
+      const mediaWrap = document.createElement("div");
+      mediaWrap.innerHTML = renderEmbed(r.media);
+      rw.appendChild(mediaWrap);
+    }
 
     wrap.appendChild(rw);
   });
@@ -215,4 +270,4 @@ function renderComment(comment, replies) {
 /* ---------- INIT ---------- */
 
 loadComments();
-window.reloadForum = loadComments; 
+window.reloadForum = loadComments;
