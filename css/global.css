@@ -97,10 +97,13 @@ select {
 }
 
 /* ================================
-   FOOTER ASCII ART
+   FOOTER ASCII ART (SIDE-BY-SIDE)
    ================================ */
 
 .footer-aa {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap; /* responsive */
   margin-bottom: 8px;
 }
 
@@ -108,12 +111,10 @@ select {
   font-family: "MS PGothic", "IPAMonaPGothic", monospace;
   font-size: 14px;
   line-height: 1.2;
-  margin: 8px 0;
-  padding: 6px 8px;
+  margin: 0;
+  padding: 0;
   background: transparent;
-  border: 1px solid currentColor;
   white-space: pre;
   overflow-x: auto;
-  max-width: 100%;
 }
 
