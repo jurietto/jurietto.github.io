@@ -18,9 +18,36 @@
 <ul id="changelog"><li>Loading changes…</li></ul>
 
 <div class="text-divider" aria-hidden="true"></div>
+
+<h2>Forum</h2>
+<p>Say hi, post something you are working on, or share a file. Replies show up under each post.</p>
+
+<div id="post-form">
+  <p>
+    Name<br>
+    <input id="username" size="40" placeholder="Anonymous">
+  </p>
+  <p>
+    Post<br>
+    <textarea id="text" rows="5" cols="50"></textarea>
+  </p>
+  <p>
+    Attachment<br>
+    <input id="file" type="file">
+  </p>
+  <p>
+    <button id="post" type="button">Post</button>
+  </p>
+</div>
+
+<div id="comments" aria-live="polite"></div>
+
+<div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">thanks for stopping by... juri made this, 2026</footer>
 
 <script type="module" src="js/changelog.js"></script>
+<script type="module" src="js/forum.js"></script>
+<script type="module" src="js/form.js"></script>
 
 </body>
 </html>
