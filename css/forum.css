@@ -1,14 +1,40 @@
+/* Forum Comments Style */
 .forum-comment {
-  border: 2px outset #000;
+  background-color: #f3e5f5; /* Light lavender color */
+  border: 2px solid #e1bee7; /* Lavender border */
   padding: 10px;
-  margin-bottom: 12px;
-  background: transparent;
+  margin-bottom: 15px;
+  overflow: hidden;
 }
 
-.forum-reply {
-  border: 2px inset #000;
-  padding: 8px;
-  margin-top: 10px;
-  margin-left: 20px;
-  background: transparent;
+.forum-comment .forum-meta {
+  font-size: 0.9em;
+  color: #6a1b9a;
 }
+
+.forum-comment .forum-body {
+  font-size: 1em;
+  color: #4a148c;
+}
+
+/* Forum Replies Style */
+.forum-reply {
+  background-color: #f8bbd0; /* Light bubblegum hot pink */
+  border: 2px solid #f48fb1; /* Bubblegum hot pink border */
+  padding: 8px;
+  margin: 10px 0 0 20px; /* Indented for nesting replies */
+  overflow: hidden;
+}
+
+.forum-reply .forum-meta {
+  font-size: 0.85em;
+  color: #ad1457;
+}
+
+.forum-reply .forum-body {
+  font-size: 0.95em;
+  color: #880e4f;
+}
+
+
+```
