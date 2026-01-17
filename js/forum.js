@@ -186,7 +186,7 @@ function renderComment(comment, replies) {
 
     const rm = document.createElement("div");
     rm.innerHTML =
-      `<strong>Σ(ﾟДﾟ) ${r.user || "Anonymous"}</strong> — ${new Date(r.createdAt).toLocaleString()}`;
+      `<strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong> — ${new Date(r.createdAt).toLocaleString()}`;
 
     const rb = document.createElement("div");
     rb.textContent = r.text || "";
