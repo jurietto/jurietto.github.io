@@ -1,18 +1,9 @@
 /* ================================
-   FORUM BASE
-   ================================ */
-
-#comments {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* ================================
    TOP-LEVEL COMMENTS
    ================================ */
 
 .forum-comment {
-  border: 5px outset #e6d9ff; /* match lavender bg */
+  border: 5px outset #e6d9ff;
   background: #e6d9ff;
   padding: 8px;
   margin-bottom: 10px;
@@ -23,7 +14,7 @@
    ================================ */
 
 .forum-reply {
-  border: 5px inset #ffb6d9; /* match pink bg */
+  border: 5px inset #ffb6d9;
   background: #ffb6d9;
   padding: 8px;
   margin-top: 8px;
@@ -31,19 +22,21 @@
 }
 
 /* ================================
-   MEDIA LIMIT ONLY
+   MEDIA (HARD STOP AT 250px)
    ================================ */
 
 .forum-media {
   max-width: 250px;
+  display: block;
 }
 
 /* ================================
-   REPLY BUTTONS ALWAYS UNDERNEATH
+   REPLY CONTROLS (ALWAYS BELOW)
    ================================ */
 
 .reply-button,
 .reply-form {
   display: block;
+  clear: both;
   margin-top: 6px;
 }
