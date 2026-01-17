@@ -14,6 +14,11 @@ html, body {
   padding: 10px; /* Add padding of 10px */
 }
 
+body {
+  position: relative;
+  z-index: 1;
+}
+
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
@@ -41,6 +46,68 @@ select {
 .site-footer {
   font-size: 0.9rem;
   margin-bottom: 16px;
+}
+
+.ascii-background {
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+.ascii {
+  color: currentColor;
+  font-family: "JF-Dot", "Noto Sans JP", monospace;
+  font-size: 14px;
+  opacity: 0.15;
+  position: absolute;
+  white-space: pre;
+  animation: ascii-drift 80s linear infinite;
+}
+
+.ascii-one {
+  top: 5vh;
+  left: -10vw;
+  animation-duration: 78s;
+  animation-delay: -12s;
+}
+
+.ascii-two {
+  top: 35vh;
+  left: -18vw;
+  animation-duration: 92s;
+  animation-delay: -28s;
+}
+
+.ascii-three {
+  top: 60vh;
+  left: -12vw;
+  animation-duration: 68s;
+  animation-delay: -6s;
+}
+
+.ascii-four {
+  top: 20vh;
+  left: -22vw;
+  animation-duration: 104s;
+  animation-delay: -40s;
+}
+
+.ascii-five {
+  top: 75vh;
+  left: -16vw;
+  animation-duration: 88s;
+  animation-delay: -20s;
+}
+
+@keyframes ascii-drift {
+  from {
+    transform: translate(-20vw, -20vh);
+  }
+  to {
+    transform: translate(120vw, 120vh);
+  }
 }
 
 /* IMPORTANT:
