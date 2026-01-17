@@ -22,19 +22,54 @@
 }
 
 /* ================================
-   MEDIA (HARD STOP AT 250px)
+   MEDIA — SAFE DEFAULTS
    ================================ */
 
-.forum-media {
+/* images */
+.forum-media.image {
   max-width: 250px;
+  height: auto;
   display: block;
+}
+
+/* video / iframe embeds */
+.forum-media iframe,
+.forum-media video {
+  max-width: 560px;
+  height: auto;
+  display: block;
+}
+
+/* YouTube / video aspect ratio */
+.forum-media.video iframe {
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+}
+
+/* Spotify / SoundCloud */
+.forum-media.audio iframe {
+  max-width: 100%;
+  height: 152px;
+}
+
+/* ================================
+   LINK FALLBACK (NOT BLUE)
+   ================================ */
+
+.forum-body a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.forum-body a:hover {
+  text-decoration: none;
 }
 
 /* ================================
    REPLY CONTROLS (ALWAYS BELOW)
    ================================ */
 
-.reply-button,
+.forum-reply-button,
 .reply-form {
   display: block;
   clear: both;
