@@ -1,0 +1,14 @@
+.forum-comment {
+  border: 2px outset #000;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: transparent;
+}
+
+.forum-reply {
+  border: 2px inset #000;
+  padding: 8px;
+  margin-top: 10px;
+  margin-left: 20px;
+  background: transparent;
+}
