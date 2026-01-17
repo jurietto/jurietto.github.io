@@ -18,38 +18,53 @@ function escapeHTML(str) {
   );
 }
 
-// load messages
-async function loadMessages() {
-  const res = await fetch(API);
-  const data = await res.json();
-
-  messagesDiv.innerHTML = data.map(m =>
-    `<div><b>${escapeHTML(m.name)}</b>: ${escapeHTML(m.text)}</div>`
-  ).join("");
-
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-
-// send message
-sendBtn.addEventListener("click", async () => {
-  if (!textInput.value.trim()) return;
+// send message (shared logic)
+async function sendMessage() {
+  const text = textInput.value.trim();
+  if (!text) return;
 
   await fetch(API, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name: nameInput.value || "anon",
-      text: textInput.value
+      text: text
     })
   });
 
   textInput.value = "";
   loadMessages();
+}
+
+// load messages
+async function loadMessages() {
+  const res = await fetch(API);
+  const data = await res.json();
+
+  messagesDiv.innerHTML = data.map(m =>
+    `<div><b>${escapeHTML(m.name)}</b>: ${
+      escapeHTML(m.text).replace(/\n/g, "<br>")
+    }</div>`
+  ).join("");
+
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// button click sends message
+sendBtn.addEventListener("click", sendMessage);
+
+// Enter vs Shift+Enter behavior
+textInput.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault(); // stop newline
+    sendMessage();
+  }
 });
 
-// allow Enter key to send
-textInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") sendBtn.click();
+// optional: auto-grow textarea for long messages
+textInput.addEventListener("input", () => {
+  textInput.style.height = "auto";
+  textInput.style.height = textInput.scrollHeight + "px";
 });
 
 // initial load + polling
