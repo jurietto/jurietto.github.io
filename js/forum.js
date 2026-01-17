@@ -49,27 +49,26 @@ function renderMedia(url, parent) {
   if (["png","jpg","jpeg","gif","webp"].includes(ext)) {
     el = document.createElement("img");
     el.src = url;
-    el.style.maxWidth = "250px";
-    el.style.width = "100%";
-    el.style.display = "block";
+    el.className = "forum-media image";
   } 
   else if (["mp4","webm"].includes(ext)) {
     el = document.createElement("video");
     el.src = url;
     el.controls = true;
-    el.style.maxWidth = "250px";
-    el.style.display = "block";
+    el.className = "forum-media video";
   } 
   else if (["mp3","ogg","wav"].includes(ext)) {
     el = document.createElement("audio");
     el.src = url;
     el.controls = true;
+    el.className = "forum-media audio";
   } 
   else {
     el = document.createElement("a");
     el.href = url;
     el.textContent = "Download attachment";
     el.target = "_blank";
+    el.className = "forum-media link";
   }
 
   parent.appendChild(el);
@@ -84,7 +83,6 @@ function createReplyForm(parentId, parentWrap) {
 
   const form = document.createElement("div");
   form.className = "reply-form";
-  form.style.marginTop = "10px";
 
   form.innerHTML = `
     <p>
@@ -153,15 +151,15 @@ function createReplyForm(parentId, parentWrap) {
 
 function renderComment(comment, replies) {
   const wrap = document.createElement("div");
-  wrap.style.border = "2px solid #000";
-  wrap.style.padding = "10px";
-  wrap.style.marginBottom = "12px";
+  wrap.className = "forum-comment";
 
   const meta = document.createElement("div");
+  meta.className = "forum-meta";
   meta.innerHTML =
     `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${new Date(comment.createdAt).toLocaleString()}`;
 
   const body = document.createElement("div");
+  body.className = "forum-body";
   body.textContent = comment.text || "";
 
   wrap.appendChild(meta);
@@ -171,24 +169,24 @@ function renderComment(comment, replies) {
   renderMedia(comment.media, wrap);
 
   const replyBtn = document.createElement("button");
+  replyBtn.className = "forum-reply-button";
   replyBtn.textContent = "Reply";
   replyBtn.onclick = () => createReplyForm(comment.id, wrap);
   wrap.appendChild(replyBtn);
 
-  /* ---------- REPLIES (UNDER COMMENT) ---------- */
+  /* ---------- REPLIES ---------- */
 
   replies.forEach(r => {
     const rw = document.createElement("div");
-    rw.style.marginTop = "10px";
-    rw.style.marginLeft = "20px";
-    rw.style.border = "2px solid #000";
-    rw.style.padding = "8px";
+    rw.className = "forum-reply";
 
     const rm = document.createElement("div");
+    rm.className = "forum-meta";
     rm.innerHTML =
       `<strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong> — ${new Date(r.createdAt).toLocaleString()}`;
 
     const rb = document.createElement("div");
+    rb.className = "forum-body";
     rb.textContent = r.text || "";
 
     rw.appendChild(rm);
