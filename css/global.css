@@ -14,6 +14,7 @@ html, body {
   padding: 10px; /* Add padding of 10px */
 }
 
+<<<<<<< HEAD
 body {
   position: relative;
   z-index: 1;
@@ -27,6 +28,7 @@ select {
   line-height: inherit;
 }
 
+parent of 5a5270e (Merge pull request #8 from jurietto/codex/uniform-input-text-font-consistency)
 .text-divider {
   border-top: 1px solid currentColor;
   margin: 24px 0 12px;
