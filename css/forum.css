@@ -1,16 +1,5 @@
 /* ================================
-   FORUM BASE (NO STYLING)
-   ================================ */
-
-#comments {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* ================================
    TOP-LEVEL COMMENTS
-   - 5px OUTSET border
-   - light lavender purple background
    ================================ */
 
 .forum-comment {
@@ -22,8 +11,6 @@
 
 /* ================================
    REPLIES
-   - 5px INSET border
-   - light bubblegum hot pink background
    ================================ */
 
 .forum-reply {
@@ -32,4 +19,12 @@
   padding: 8px;
   margin-top: 8px;
   margin-left: 20px;
+}
+
+/* ================================
+   MEDIA LIMIT ONLY
+   ================================ */
+
+.forum-media {
+  max-width: 250px;
 }
