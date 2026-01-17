@@ -19,7 +19,9 @@ html, body {
   margin: 24px 0 12px;
   overflow: hidden;
   padding-top: 12px;
-  width: 100%;
+  white-space: nowrap;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
 }
 
 .text-divider::before {
