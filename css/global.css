@@ -57,10 +57,10 @@ select {
 }
 
 .ascii {
-  color: currentColor;
+  color: #000;
   font-family: "JF-Dot", "Noto Sans JP", monospace;
   font-size: 14px;
-  opacity: 0.15;
+  opacity: 0.2;
   position: absolute;
   white-space: pre;
   animation: ascii-drift 80s linear infinite;
