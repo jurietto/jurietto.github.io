@@ -215,4 +215,4 @@ function renderComment(comment, replies) {
 /* ---------- INIT ---------- */
 
 loadComments();
-window.reloadForum = loadComments;
+window.reloadForum = loadComments; 
