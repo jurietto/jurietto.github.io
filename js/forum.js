@@ -30,15 +30,8 @@ function renderEmbed(url) {
 
     /* TENOR (best-effort, no API) */
     if (url.includes("tenor.com")) {
-      let slug = clean.replace(/\.gif$/i, "").split("/").pop();
-      if (slug.includes("-")) slug = slug.split("-").pop();
-
-      if (/^[a-zA-Z0-9]+$/.test(slug)) {
-        return `<img class="forum-media image"
-                     src="https://media.tenor.com/${slug}/tenor.gif"
-                     loading="lazy" alt="">`;
-      }
-      return renderLink(url);
+      // Instead of constructing a media URL, just link to the Tenor page
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">View GIF on Tenor</a>`;
     }
 
     const lower = clean.toLowerCase();
@@ -78,7 +71,6 @@ function renderEmbed(url) {
     return renderLink(url);
   }
 }
-
 /* ---------- BODY + LINKS ---------- */
 
 function renderBodyWithEmbeds(text, parent) {
