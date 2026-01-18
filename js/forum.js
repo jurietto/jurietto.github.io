@@ -56,17 +56,25 @@ function renderEmbed(url) {
   try {
     const cleanUrl = url.split("?")[0];
 
-    // ---------- TENOR ----------
-    if (cleanUrl.includes("tenor.com/view")) {
-      // extract the slug id at the end
-      const id = cleanUrl.split("-").pop();
-      const gifUrl = `https://media.tenor.com/${id}/tenor.gif`;
+ // ---------- TENOR (ALL VARIANTS) ----------
+if (url.includes("tenor.com")) {
+  // strip query + trailing .gif
+  const clean = url.split("?")[0].replace(/\.gif$/i, "");
 
-      return `<img class="forum-media image"
-                   src="${gifUrl}"
-                   loading="lazy"
-                   alt="">`;
-    }
+  // grab last path segment
+  const parts = clean.split("/");
+  const id = parts[parts.length - 1];
+
+  // safety check
+  if (id && /^[a-zA-Z0-9_-]+$/.test(id)) {
+    const gifUrl = `https://media.tenor.com/${id}/tenor.gif`;
+
+    return `<img class="forum-media image"
+                 src="${gifUrl}"
+                 loading="lazy"
+                 alt="">`;
+  }
+}
 
     const lower = cleanUrl.toLowerCase();
 
