@@ -17,24 +17,30 @@ const PAGE_SIZE = 10;
 /* ---------- LOAD COMMENTS ---------- */
 
 async function loadComments() {
-  container.innerHTML = "";
+  try {
+    container.innerHTML = "";
 
-  const q = query(
-    commentsRef,
-    orderBy("createdAt", "desc"),
-    limit(PAGE_SIZE)
-  );
+    const q = query(
+      commentsRef,
+      orderBy("createdAt", "desc"),
+      limit(PAGE_SIZE)
+    );
 
-  const snap = await getDocs(q);
-  const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    const snap = await getDocs(q);
+    const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-  const roots = docs.filter(d => !d.replyTo);
-  const replies = docs.filter(d => d.replyTo);
+    const roots = docs.filter(d => !d.replyTo);
+    const replies = docs.filter(d => d.replyTo);
 
-  roots.forEach(comment => {
-    const childReplies = replies.filter(r => r.replyTo === comment.id);
-    renderComment(comment, childReplies);
-  });
+    roots.forEach(comment => {
+      const childReplies = replies.filter(r => r.replyTo === comment.id);
+      renderComment(comment, childReplies);
+    });
+  } catch (err) {
+    console.error("Failed to load comments:", err);
+    container.innerHTML = "<p style='color: red;'>Failed to load comments. Please try refreshing the page.</p>";
+    alert("Failed to load comments. Please check your internet connection and try again.");
+  }
 }
 
 /* ---------- UTIL ---------- */
@@ -225,7 +231,14 @@ function createReplyForm(parentId, parentWrap) {
 
     try {
       let media = null;
-      if (file) media = await uploadFile(file);
+      if (file) {
+        try {
+          media = await uploadFile(file);
+        } catch (uploadErr) {
+          console.error("File upload failed:", uploadErr);
+          throw new Error("Failed to upload file. Please try a smaller file or check your connection.");
+        }
+      }
 
       await addDoc(commentsRef, {
         user,
@@ -239,7 +252,8 @@ function createReplyForm(parentId, parentWrap) {
       loadComments();
     } catch (err) {
       console.error("Reply failed:", err);
-      alert("Reply failed. Check console.");
+      const errorMessage = err.message || "Failed to post reply. Please check your internet connection and try again.";
+      alert(errorMessage);
       postBtn.disabled = false;
       postBtn.textContent = "Post reply";
     }
@@ -300,5 +314,18 @@ function renderComment(comment, replies) {
 
 /* ---------- INIT ---------- */
 
-loadComments();
-window.reloadForum = loadComments;
+(async () => {
+  try {
+    await loadComments();
+  } catch (err) {
+    console.error("Initial load failed:", err);
+  }
+})();
+
+window.reloadForum = async () => {
+  try {
+    await loadComments();
+  } catch (err) {
+    console.error("Reload failed:", err);
+  }
+};
