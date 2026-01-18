@@ -54,11 +54,25 @@ function renderLink(url) {
 
 function renderEmbed(url) {
   try {
-    const cleanUrl = url.split("?")[0].toLowerCase();
+    const cleanUrl = url.split("?")[0];
 
-    const isImage = /\.(png|jpe?g|gif|webp|bmp|avif|svg)$/i.test(cleanUrl);
-    const isVideo = /\.(mp4|webm|ogv|mov)$/i.test(cleanUrl);
-    const isAudio = /\.(mp3|ogg|wav|flac|m4a)$/i.test(cleanUrl);
+    // ---------- TENOR ----------
+    if (cleanUrl.includes("tenor.com/view")) {
+      // extract the slug id at the end
+      const id = cleanUrl.split("-").pop();
+      const gifUrl = `https://media.tenor.com/${id}/tenor.gif`;
+
+      return `<img class="forum-media image"
+                   src="${gifUrl}"
+                   loading="lazy"
+                   alt="">`;
+    }
+
+    const lower = cleanUrl.toLowerCase();
+
+    const isImage = /\.(png|jpe?g|gif|webp|bmp|avif|svg)$/i.test(lower);
+    const isVideo = /\.(mp4|webm|ogv|mov)$/i.test(lower);
+    const isAudio = /\.(mp3|ogg|wav|flac|m4a)$/i.test(lower);
 
     if (isImage) {
       return `<img class="forum-media image"
@@ -119,13 +133,13 @@ function renderEmbed(url) {
         </div>`;
     }
 
-    // fallback
     return renderLink(url);
 
   } catch {
     return renderLink(url);
   }
 }
+
 
 /* ---------- TEXT + LINK PARSING ---------- */
 
