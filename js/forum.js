@@ -319,6 +319,7 @@ function renderComment(comment, replies) {
     await loadComments();
   } catch (err) {
     console.error("Initial load failed:", err);
+    // Error is already handled in loadComments() with user notification
   }
 })();
 
@@ -327,5 +328,6 @@ window.reloadForum = async () => {
     await loadComments();
   } catch (err) {
     console.error("Reload failed:", err);
+    // Error is already handled in loadComments() with user notification
   }
 };
