@@ -26,34 +26,22 @@ function renderLink(url) {
 
 function renderEmbed(url) {
   try {
-    const lower = url.toLowerCase();
+    const clean = url.split("?")[0].toLowerCase();
 
-    // Handle Tenor links
+    // ❌ Tenor pages are NOT embeddable without API
     if (url.includes("tenor.com")) {
-      // Try to extract the media thumbnail from the URL
-      // Tenor URL typically has a pattern like: https://tenor.com/view/<slug>
-      // Let's replace it with a thumbnail URL pattern if possible
-
-      // Example: https://tenor.com/view/funny-cat-12345678
-      const match = url.match(/tenor\.com\/view\/([a-zA-Z0-9\-]+)/);
-      if (match && match[1]) {
-        const slug = match[1];
-        // Construct a thumbnail URL (best effort)
-        const thumbUrl = `https://media.tenor.com/${slug}.gif`;
-        return `<img class="forum-media image" src="${thumbUrl}" loading="lazy" alt="Tenor GIF">`;
-      } else {
-        // fallback: show link
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer">View GIF on Tenor</a>`;
-      }
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">
+                view gif on tenor
+              </a>`;
     }
 
-    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
+    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(clean))
       return `<img class="forum-media image" src="${url}" loading="lazy" alt="">`;
 
-    if (/\.(mp4|webm|ogv|mov)$/.test(lower))
+    if (/\.(mp4|webm|ogv|mov)$/.test(clean))
       return `<video class="forum-media video" src="${url}" controls loading="lazy"></video>`;
 
-    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
+    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(clean))
       return `<audio class="forum-media audio" src="${url}" controls loading="lazy"></audio>`;
 
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
@@ -81,7 +69,8 @@ function renderEmbed(url) {
   } catch {
     return renderLink(url);
   }
-} 
+}
+
 
 /* ---------- BODY + LINKS ---------- */
 
