@@ -28,10 +28,28 @@ function renderEmbed(url) {
   try {
     const clean = url.split("?")[0];
 
-    /* TENOR (best-effort, no API) */
+    /* TENOR (try to display GIF directly) */
     if (url.includes("tenor.com")) {
-      // Instead of constructing a media URL, just link to the Tenor page
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">View GIF on Tenor</a>`;
+      // Extract the slug or ID from the URL
+      let slug = null;
+      const parts = url.split("/");
+      // Typically, Tenor URLs are like: https://tenor.com/view/slug
+      const index = parts.findIndex(p => p.includes("tenor.com"));
+      if (index !== -1 && parts.length > index + 1) {
+        slug = parts[index + 1]; // e.g., 'view', or the slug after 'view'
+      } else {
+        // fallback: try to get last part
+        slug = parts.pop();
+      }
+
+      // If slug is found, construct a direct media URL
+      if (slug) {
+        // Example: media.tenor.com/originals/<slug>.gif
+        return `<img class="forum-media image" src="https://media.tenor.com/originals/${slug}.gif" loading="lazy" alt="">`;
+      } else {
+        // fallback: link to the original page
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">View GIF on Tenor</a>`;
+      }
     }
 
     const lower = clean.toLowerCase();
@@ -71,6 +89,7 @@ function renderEmbed(url) {
     return renderLink(url);
   }
 }
+
 /* ---------- BODY + LINKS ---------- */
 
 function renderBodyWithEmbeds(text, parent) {
