@@ -56,18 +56,21 @@ function renderEmbed(url) {
   try {
     const cleanUrl = url.split("?")[0];
 
- // ---------- TENOR (ALL VARIANTS) ----------
+// ---------- TENOR (ALL VARIANTS, FIXED) ----------
 if (url.includes("tenor.com")) {
-  // strip query + trailing .gif
   const clean = url.split("?")[0].replace(/\.gif$/i, "");
-
-  // grab last path segment
   const parts = clean.split("/");
-  const id = parts[parts.length - 1];
 
-  // safety check
-  if (id && /^[a-zA-Z0-9_-]+$/.test(id)) {
-    const gifUrl = `https://media.tenor.com/${id}/tenor.gif`;
+  let slug = parts[parts.length - 1];
+
+  // if slug contains dashes, media ID is last segment
+  if (slug.includes("-")) {
+    slug = slug.split("-").pop();
+  }
+
+  // final safety check
+  if (slug && /^[a-zA-Z0-9]+$/.test(slug)) {
+    const gifUrl = `https://media.tenor.com/${slug}/tenor.gif`;
 
     return `<img class="forum-media image"
                  src="${gifUrl}"
