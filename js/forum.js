@@ -164,11 +164,15 @@ function renderBodyWithEmbeds(text, parent) {
   const body = document.createElement("div");
   body.className = "forum-body";
 
-  const rawText = text || "";
+  const raw = text || "";
   const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const urls = rawText.match(urlRegex) || [];
+  const urls = raw.match(urlRegex) || [];
 
-  body.textContent = rawText.replace(urlRegex, "").trim();
+  const stripped = raw.replace(urlRegex, "").trim();
+
+  // 👇 IMPORTANT FIX
+  body.textContent = stripped || raw;
+
   parent.appendChild(body);
 
   urls.forEach(url => {
@@ -177,6 +181,7 @@ function renderBodyWithEmbeds(text, parent) {
     parent.appendChild(wrap);
   });
 }
+
 
 /* ---------- INLINE REPLY FORM ---------- */
 
