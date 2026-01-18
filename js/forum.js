@@ -26,33 +26,26 @@ function renderLink(url) {
 
 function renderEmbed(url) {
   try {
-    const clean = url.split("?")[0];
+    const lower = url.toLowerCase();
 
-    /* TENOR (try to display GIF directly) */
+    // Handle Tenor links
     if (url.includes("tenor.com")) {
-      // Extract the slug or ID from the URL
-      let slug = null;
-      const parts = url.split("/");
-      // Typically, Tenor URLs are like: https://tenor.com/view/slug
-      const index = parts.findIndex(p => p.includes("tenor.com"));
-      if (index !== -1 && parts.length > index + 1) {
-        slug = parts[index + 1]; // e.g., 'view', or the slug after 'view'
-      } else {
-        // fallback: try to get last part
-        slug = parts.pop();
-      }
+      // Try to extract the media thumbnail from the URL
+      // Tenor URL typically has a pattern like: https://tenor.com/view/<slug>
+      // Let's replace it with a thumbnail URL pattern if possible
 
-      // If slug is found, construct a direct media URL
-      if (slug) {
-        // Example: media.tenor.com/originals/<slug>.gif
-        return `<img class="forum-media image" src="https://media.tenor.com/originals/${slug}.gif" loading="lazy" alt="">`;
+      // Example: https://tenor.com/view/funny-cat-12345678
+      const match = url.match(/tenor\.com\/view\/([a-zA-Z0-9\-]+)/);
+      if (match && match[1]) {
+        const slug = match[1];
+        // Construct a thumbnail URL (best effort)
+        const thumbUrl = `https://media.tenor.com/${slug}.gif`;
+        return `<img class="forum-media image" src="${thumbUrl}" loading="lazy" alt="Tenor GIF">`;
       } else {
-        // fallback: link to the original page
+        // fallback: show link
         return `<a href="${url}" target="_blank" rel="noopener noreferrer">View GIF on Tenor</a>`;
       }
     }
-
-    const lower = clean.toLowerCase();
 
     if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
       return `<img class="forum-media image" src="${url}" loading="lazy" alt="">`;
