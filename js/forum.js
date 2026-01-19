@@ -24,50 +24,52 @@ const renderLink = url =>
 function renderEmbed(url) {
   try {
     const clean = url.split("?")[0];
+    const lower = clean.toLowerCase();
 
-    /* ---------- TENOR (SHOW IF WORKS) ---------- */
+    /* ---------- TENOR (SAFE MODE) ---------- */
     if (url.includes("tenor.com")) {
-      // try to extract a short ID
-      const tenorMatch = clean.match(/tenor\.com(?:\/view)?\/(\w+-)*\w+(?:-\w+)*-(\w{4,})/);
-      const id = tenorMatch ? tenorMatch[2] : clean.replace(/\.gif$/i, "").split("/").pop();
-
-      if (/^[a-zA-Z0-9]{4,}$/.test(id)) {
-        const gif = `https://media.tenor.com/${id}/tenor.gif`;
-        return `
-          <img class="forum-media image"
-               src="${gif}"
-               loading="lazy"
-               alt=""
-               onerror="this.outerHTML='${renderLink(url)}'">
-        `;
+      // Only embed if Tenor already provides a direct media file
+      if (/\.(gif|mp4)$/i.test(clean)) {
+        return `<img class="forum-media image"
+                     src="${clean}"
+                     loading="lazy"
+                     alt="">`;
       }
-
       return renderLink(url);
     }
 
-    const lower = clean.toLowerCase();
-
     if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
-      return `<img class="forum-media image" src="${url}" loading="lazy" alt="">`;
+      return `<img class="forum-media image"
+                   src="${url}"
+                   loading="lazy"
+                   alt="">`;
 
     if (/\.(mp4|webm|ogv|mov)$/.test(lower))
-      return `<video class="forum-media video" src="${url}" controls loading="lazy"></video>`;
+      return `<video class="forum-media video"
+                     src="${url}"
+                     controls
+                     loading="lazy"></video>`;
 
     if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
-      return `<audio class="forum-media audio" src="${url}" controls loading="lazy"></audio>`;
+      return `<audio class="forum-media audio"
+                     src="${url}"
+                     controls
+                     loading="lazy"></audio>`;
 
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
     if (yt)
       return `<div class="forum-media video">
                 <iframe src="https://www.youtube.com/embed/${yt[1]}"
-                        loading="lazy" allowfullscreen></iframe>
+                        loading="lazy"
+                        allowfullscreen></iframe>
               </div>`;
 
     if (url.includes("open.spotify.com")) {
       const id = url.split("/").pop();
       return `<div class="forum-media audio">
                 <iframe src="https://open.spotify.com/embed/${id}"
-                        loading="lazy" allow="encrypted-media"></iframe>
+                        loading="lazy"
+                        allow="encrypted-media"></iframe>
               </div>`;
     }
 
@@ -108,16 +110,23 @@ function renderBodyWithEmbeds(text, parent) {
 
 async function loadComments() {
   container.innerHTML = "";
-  const q = query(commentsRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
+
+  const q = query(
+    commentsRef,
+    orderBy("createdAt", "desc"),
+    limit(PAGE_SIZE)
+  );
+
   const snap = await getDocs(q);
   const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
+  // Only render root posts
   const roots = docs.filter(d => !d.replyTo);
-  const replies = docs.filter(d => d.replyTo);
 
-  roots.forEach(c =>
-    renderComment(c, replies.filter(r => r.replyTo === c.id))
-  );
+  roots.forEach(root => {
+    const replies = docs.filter(d => d.replyTo === root.id);
+    renderComment(root, replies);
+  });
 }
 
 /* ---------- REPLY FORM ---------- */
@@ -129,9 +138,15 @@ function createReplyForm(parentId, wrap) {
   const form = document.createElement("div");
   form.className = "reply-form";
   form.innerHTML = `
-    <p>Name<br><input class="reply-user" value="${saved}" placeholder="Anonymous"></p>
-    <p>Reply<br><textarea rows="4"></textarea></p>
-    <p>Attachment<br><input type="file"></p>
+    <p>Name<br>
+      <input class="reply-user" value="${saved}" placeholder="Anonymous">
+    </p>
+    <p>Reply<br>
+      <textarea rows="4"></textarea>
+    </p>
+    <p>Attachment<br>
+      <input type="file">
+    </p>
     <p>
       <button class="post-btn">Post reply</button>
       <button class="cancel-btn">Cancel</button>
@@ -150,7 +165,10 @@ function createReplyForm(parentId, wrap) {
     if (!text.value.trim() && !file.files[0]) return;
     e.target.disabled = true;
 
-    const media = file.files[0] ? await uploadFile(file.files[0]) : null;
+    const media = file.files[0]
+      ? await uploadFile(file.files[0])
+      : null;
+
     await addDoc(commentsRef, {
       user: user.value.trim() || "Anonymous",
       text: text.value.trim(),
