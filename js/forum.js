@@ -28,10 +28,8 @@ function renderEmbed(url) {
     /* ---------- TENOR (SHOW IF WORKS) ---------- */
     if (url.includes("tenor.com")) {
       // try to extract a short ID
-      let id = clean.replace(/\.gif$/i, "").split("/").pop();
-
-      // slug case → last dash segment
-      if (id.includes("-")) id = id.split("-").pop();
+      const tenorMatch = clean.match(/tenor\.com(?:\/view)?\/(\w+-)*\w+(?:-\w+)*-(\w{4,})/);
+      const id = tenorMatch ? tenorMatch[2] : clean.replace(/\.gif$/i, "").split("/").pop();
 
       if (/^[a-zA-Z0-9]{4,}$/.test(id)) {
         const gif = `https://media.tenor.com/${id}/tenor.gif`;
