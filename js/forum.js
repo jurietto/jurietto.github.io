@@ -1,13 +1,17 @@
 import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
-  collection, query, orderBy, limit,
+  collection, query, orderBy, limit, startAfter,
   getDocs, addDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
+const pager = document.getElementById("pagination"); // ← add this div in HTML
+
 const PAGE_SIZE = 10;
+let pageCursors = [];
+let currentPage = 0;
 
 /* ---------- UTIL ---------- */
 
@@ -26,58 +30,27 @@ function renderEmbed(url) {
     const clean = url.split("?")[0];
     const lower = clean.toLowerCase();
 
-    /* ---------- TENOR (SAFE MODE) ---------- */
     if (url.includes("tenor.com")) {
-      // Only embed if Tenor already provides a direct media file
       if (/\.(gif|mp4)$/i.test(clean)) {
-        return `<img class="forum-media image"
-                     src="${clean}"
-                     loading="lazy"
-                     alt="">`;
+        return `<img class="forum-media image" src="${clean}" loading="lazy">`;
       }
       return renderLink(url);
     }
 
     if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
-      return `<img class="forum-media image"
-                   src="${url}"
-                   loading="lazy"
-                   alt="">`;
+      return `<img class="forum-media image" src="${url}" loading="lazy">`;
 
     if (/\.(mp4|webm|ogv|mov)$/.test(lower))
-      return `<video class="forum-media video"
-                     src="${url}"
-                     controls
-                     loading="lazy"></video>`;
+      return `<video class="forum-media video" src="${url}" controls></video>`;
 
     if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
-      return `<audio class="forum-media audio"
-                     src="${url}"
-                     controls
-                     loading="lazy"></audio>`;
+      return `<audio class="forum-media audio" src="${url}" controls></audio>`;
 
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
     if (yt)
-      return `<div class="forum-media video">
-                <iframe src="https://www.youtube.com/embed/${yt[1]}"
-                        loading="lazy"
-                        allowfullscreen></iframe>
-              </div>`;
-
-    if (url.includes("open.spotify.com")) {
-      const id = url.split("/").pop();
-      return `<div class="forum-media audio">
-                <iframe src="https://open.spotify.com/embed/${id}"
-                        loading="lazy"
-                        allow="encrypted-media"></iframe>
-              </div>`;
-    }
-
-    if (url.includes("soundcloud.com"))
-      return `<div class="forum-media audio">
-                <iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"
-                        loading="lazy"></iframe>
-              </div>`;
+      return `<iframe class="forum-media video"
+              src="https://www.youtube.com/embed/${yt[1]}"
+              loading="lazy" allowfullscreen></iframe>`;
 
     return renderLink(url);
   } catch {
@@ -85,7 +58,7 @@ function renderEmbed(url) {
   }
 }
 
-/* ---------- BODY + LINKS ---------- */
+/* ---------- BODY ---------- */
 
 function renderBodyWithEmbeds(text, parent) {
   const raw = text || "";
@@ -100,33 +73,74 @@ function renderBodyWithEmbeds(text, parent) {
   }
 
   urls.forEach(url => {
-    const wrap = document.createElement("div");
-    wrap.innerHTML = renderEmbed(url);
-    parent.appendChild(wrap);
+    const d = document.createElement("div");
+    d.innerHTML = renderEmbed(url);
+    parent.appendChild(d);
   });
 }
 
-/* ---------- LOAD ---------- */
+/* ---------- LOAD ROOT POSTS ONLY ---------- */
 
-async function loadComments() {
+async function loadComments(page = 0) {
   container.innerHTML = "";
 
-  const q = query(
+  let q = query(
     commentsRef,
     orderBy("createdAt", "desc"),
     limit(PAGE_SIZE)
   );
 
-  const snap = await getDocs(q);
-  const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  if (pageCursors[page - 1]) {
+    q = query(
+      commentsRef,
+      orderBy("createdAt", "desc"),
+      startAfter(pageCursors[page - 1]),
+      limit(PAGE_SIZE)
+    );
+  }
 
-  // Only render root posts
-  const roots = docs.filter(d => !d.replyTo);
+  const snap = await getDocs(q);
+
+  pageCursors[page] = snap.docs[snap.docs.length - 1];
+
+  // 🔑 ONLY ROOT POSTS
+  const roots = snap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(d => !d.replyTo);
+
+  // fetch replies for these roots only
+  const allRepliesSnap = await getDocs(
+    query(commentsRef, orderBy("createdAt", "asc"))
+  );
+
+  const allReplies = allRepliesSnap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(d => d.replyTo);
 
   roots.forEach(root => {
-    const replies = docs.filter(d => d.replyTo === root.id);
+    const replies = allReplies.filter(r => r.replyTo === root.id);
     renderComment(root, replies);
   });
+
+  renderPagination(page);
+}
+
+/* ---------- PAGINATION UI ---------- */
+
+function renderPagination(active) {
+  if (!pager) return;
+  pager.innerHTML = "";
+
+  for (let i = 0; i <= pageCursors.length; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i + 1;
+    btn.disabled = i === active;
+    btn.onclick = () => {
+      currentPage = i;
+      loadComments(i);
+    };
+    pager.appendChild(btn);
+  }
 }
 
 /* ---------- REPLY FORM ---------- */
@@ -138,36 +152,18 @@ function createReplyForm(parentId, wrap) {
   const form = document.createElement("div");
   form.className = "reply-form";
   form.innerHTML = `
-    <p>Name<br>
-      <input class="reply-user" value="${saved}" placeholder="Anonymous">
-    </p>
-    <p>Reply<br>
-      <textarea rows="4"></textarea>
-    </p>
-    <p>Attachment<br>
-      <input type="file">
-    </p>
-    <p>
-      <button class="post-btn">Post reply</button>
-      <button class="cancel-btn">Cancel</button>
-    </p>`;
+    <p>Name<br><input value="${saved}" placeholder="Anonymous"></p>
+    <p>Reply<br><textarea rows="4"></textarea></p>
+    <p><input type="file"></p>
+    <button>Post</button>
+  `;
 
-  const user = form.querySelector(".reply-user");
-  const text = form.querySelector("textarea");
-  const file = form.querySelector("input[type=file]");
+  const [user, text, file, post] = form.querySelectorAll("input,textarea,button");
 
-  user.oninput = () =>
-    localStorage.setItem("forum_username", user.value.trim());
-
-  form.querySelector(".cancel-btn").onclick = () => form.remove();
-
-  form.querySelector(".post-btn").onclick = async e => {
+  post.onclick = async () => {
     if (!text.value.trim() && !file.files[0]) return;
-    e.target.disabled = true;
 
-    const media = file.files[0]
-      ? await uploadFile(file.files[0])
-      : null;
+    const media = file.files[0] ? await uploadFile(file.files[0]) : null;
 
     await addDoc(commentsRef, {
       user: user.value.trim() || "Anonymous",
@@ -177,14 +173,13 @@ function createReplyForm(parentId, wrap) {
       createdAt: Date.now()
     });
 
-    form.remove();
-    loadComments();
+    loadComments(currentPage);
   };
 
   wrap.appendChild(form);
 }
 
-/* ---------- RENDER ---------- */
+/* ---------- RENDER COMMENT ---------- */
 
 function renderComment(c, replies) {
   const wrap = document.createElement("div");
@@ -205,7 +200,6 @@ function renderComment(c, replies) {
   }
 
   const btn = document.createElement("button");
-  btn.className = "forum-reply-button";
   btn.textContent = "Reply";
   btn.onclick = () => createReplyForm(c.id, wrap);
   wrap.appendChild(btn);
@@ -233,4 +227,4 @@ function renderComment(c, replies) {
 /* ---------- INIT ---------- */
 
 loadComments();
-window.reloadForum = loadComments;
+window.reloadForum = () => loadComments(currentPage);
