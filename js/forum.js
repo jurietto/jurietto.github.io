@@ -11,37 +11,51 @@ const PAGE_SIZE = 10;
 
 /* ---------- UTIL ---------- */
 
-function formatDate(ts) {
-  if (!ts) return "";
-  if (typeof ts === "number") return new Date(ts).toLocaleString();
-  if (ts.seconds) return new Date(ts.seconds * 1000).toLocaleString();
-  return "";
-}
+const formatDate = ts =>
+  !ts ? "" :
+  typeof ts === "number" ? new Date(ts).toLocaleString() :
+  ts.seconds ? new Date(ts.seconds * 1000).toLocaleString() : "";
 
-function renderLink(url) {
-  return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-}
+const renderLink = url =>
+  `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 
 /* ---------- EMBEDS ---------- */
 
 function renderEmbed(url) {
   try {
-    const clean = url.split("?")[0].toLowerCase();
+    const clean = url.split("?")[0];
 
-    // ❌ Tenor pages are NOT embeddable without API
+    /* ---------- TENOR (SHOW IF WORKS) ---------- */
     if (url.includes("tenor.com")) {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">
-                view gif on tenor
-              </a>`;
+      // try to extract a short ID
+      let id = clean.replace(/\.gif$/i, "").split("/").pop();
+
+      // slug case → last dash segment
+      if (id.includes("-")) id = id.split("-").pop();
+
+      if (/^[a-zA-Z0-9]{4,}$/.test(id)) {
+        const gif = `https://media.tenor.com/${id}/tenor.gif`;
+        return `
+          <img class="forum-media image"
+               src="${gif}"
+               loading="lazy"
+               alt=""
+               onerror="this.outerHTML='${renderLink(url)}'">
+        `;
+      }
+
+      return renderLink(url);
     }
 
-    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(clean))
+    const lower = clean.toLowerCase();
+
+    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
       return `<img class="forum-media image" src="${url}" loading="lazy" alt="">`;
 
-    if (/\.(mp4|webm|ogv|mov)$/.test(clean))
+    if (/\.(mp4|webm|ogv|mov)$/.test(lower))
       return `<video class="forum-media video" src="${url}" controls loading="lazy"></video>`;
 
-    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(clean))
+    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
       return `<audio class="forum-media audio" src="${url}" controls loading="lazy"></audio>`;
 
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
@@ -71,16 +85,13 @@ function renderEmbed(url) {
   }
 }
 
-
 /* ---------- BODY + LINKS ---------- */
 
 function renderBodyWithEmbeds(text, parent) {
   const raw = text || "";
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
-  const urls = raw.match(urlRegex) || [];
-  const stripped = raw.replace(urlRegex, "").trim();
+  const urls = raw.match(/https?:\/\/[^\s]+/g) || [];
+  const stripped = raw.replace(/https?:\/\/[^\s]+/g, "").trim();
 
-  // only show body if there is actual text
   if (stripped) {
     const body = document.createElement("div");
     body.className = "forum-body";
@@ -88,7 +99,6 @@ function renderBodyWithEmbeds(text, parent) {
     parent.appendChild(body);
   }
 
-  // always show embeds / links
   urls.forEach(url => {
     const wrap = document.createElement("div");
     wrap.innerHTML = renderEmbed(url);
@@ -99,23 +109,17 @@ function renderBodyWithEmbeds(text, parent) {
 /* ---------- LOAD ---------- */
 
 async function loadComments() {
-  try {
-    container.innerHTML = "";
-    const q = query(commentsRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
-    const snap = await getDocs(q);
-    const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  container.innerHTML = "";
+  const q = query(commentsRef, orderBy("createdAt", "desc"), limit(PAGE_SIZE));
+  const snap = await getDocs(q);
+  const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-    const roots = docs.filter(d => !d.replyTo);
-    const replies = docs.filter(d => d.replyTo);
+  const roots = docs.filter(d => !d.replyTo);
+  const replies = docs.filter(d => d.replyTo);
 
-    roots.forEach(c =>
-      renderComment(c, replies.filter(r => r.replyTo === c.id))
-    );
-  } catch (e) {
-    console.error(e);
-    container.innerHTML = "<p style='color:red'>failed to load</p>";
-    alert("failed to load comments");
-  }
+  roots.forEach(c =>
+    renderComment(c, replies.filter(r => r.replyTo === c.id))
+  );
 }
 
 /* ---------- REPLY FORM ---------- */
@@ -145,24 +149,20 @@ function createReplyForm(parentId, wrap) {
   form.querySelector(".cancel-btn").onclick = () => form.remove();
 
   form.querySelector(".post-btn").onclick = async e => {
-    const u = user.value.trim() || "Anonymous";
-    const t = text.value.trim();
-    if (!t && !file.files[0]) return;
-
+    if (!text.value.trim() && !file.files[0]) return;
     e.target.disabled = true;
-    try {
-      const media = file.files[0] ? await uploadFile(file.files[0]) : null;
-      await addDoc(commentsRef, {
-        user: u, text: t, media,
-        replyTo: parentId, createdAt: Date.now()
-      });
-      form.remove();
-      loadComments();
-    } catch (err) {
-      console.error(err);
-      alert("reply failed");
-      e.target.disabled = false;
-    }
+
+    const media = file.files[0] ? await uploadFile(file.files[0]) : null;
+    await addDoc(commentsRef, {
+      user: user.value.trim() || "Anonymous",
+      text: text.value.trim(),
+      media,
+      replyTo: parentId,
+      createdAt: Date.now()
+    });
+
+    form.remove();
+    loadComments();
   };
 
   wrap.appendChild(form);
@@ -174,11 +174,11 @@ function renderComment(c, replies) {
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
-  wrap.innerHTML =
-    `<div class="forum-meta">
-       <strong>＼(^o^)／ ${c.user || "Anonymous"}</strong>
-       — ${formatDate(c.createdAt)}
-     </div>`;
+  wrap.innerHTML = `
+    <div class="forum-meta">
+      <strong>＼(^o^)／ ${c.user || "Anonymous"}</strong>
+      — ${formatDate(c.createdAt)}
+    </div>`;
 
   renderBodyWithEmbeds(c.text, wrap);
 
@@ -197,11 +197,11 @@ function renderComment(c, replies) {
   replies.forEach(r => {
     const rw = document.createElement("div");
     rw.className = "forum-reply";
-    rw.innerHTML =
-      `<div class="forum-meta">
-         <strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong>
-         — ${formatDate(r.createdAt)}
-       </div>`;
+    rw.innerHTML = `
+      <div class="forum-meta">
+        <strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong>
+        — ${formatDate(r.createdAt)}
+      </div>`;
     renderBodyWithEmbeds(r.text, rw);
     if (r.media) {
       const m = document.createElement("div");
