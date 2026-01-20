@@ -1,7 +1,6 @@
 @font-face {
-  font-family: "2chan Mona";
-  src: url("https://cdn.jsdelivr.net/gh/acka/2chan-mona-font@master/2chan-mona.ttf")
-    format("truetype");
+  font-family: "Mona";
+  src: url("../font/mona.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -13,7 +12,7 @@
 
 html,
 body {
-  font-family: "2chan Mona", monospace;
+  font-family: "Mona", monospace;
   font-size: 16px;
   line-height: 1.4;
   margin: 10px;
@@ -110,7 +109,7 @@ select {
 }
 
 .footer-aa pre {
-  font-family: "2chan Mona", monospace;
+  font-family: "Mona", monospace;
   font-size: 14px;
   line-height: 1.2;
   margin: 0;
