@@ -84,13 +84,13 @@ iframe.forum-media.audio {
 
 #post-form textarea,
 .reply-form textarea {
-  font-family: "Mona", sans-serif;
+  font-family: "MS PGothic", "MS Pゴシック", sans-serif;
   white-space: pre;
   tab-size: 4;
 }
 
 .forum-meta {
-  font-family: "MS PGothic", "MS Pゴシック", sans-serif;
+  font-family: "Mona", sans-serif;
 }
 
 /* ================================
