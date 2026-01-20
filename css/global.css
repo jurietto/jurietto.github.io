@@ -108,7 +108,7 @@ select {
 }
 
 .footer-aa pre {
-  font-family: "MS PGothic", "IPAMonaPGothic", monospace;
+  font-family: "JF-Dot", monospace;
   font-size: 14px;
   line-height: 1.2;
   margin: 0;
@@ -117,4 +117,3 @@ select {
   white-space: pre;
   overflow-x: auto;
 }
-
