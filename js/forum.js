@@ -11,6 +11,10 @@ const pager = document.getElementById("pagination");
 const searchInput = document.getElementById("forum-search-input");
 const searchButton = document.getElementById("forum-search-button");
 const searchClear = document.getElementById("forum-search-clear");
+const postUser = document.getElementById("username");
+const postText = document.getElementById("text");
+const postFile = document.getElementById("file");
+const postButton = document.getElementById("post");
 
 const PAGE_SIZE = 10;
 let pageCursors = [];
@@ -277,6 +281,42 @@ function renderComment(c, replies) {
 
 loadComments();
 window.reloadForum = () => loadComments(currentPage);
+
+/* ---------- POST FORM ---------- */
+
+if (postUser) {
+  postUser.value = localStorage.getItem("forum_username") || "";
+  postUser.addEventListener("input", () => {
+    localStorage.setItem("forum_username", postUser.value.trim());
+  });
+}
+
+if (postButton) {
+  postButton.addEventListener("click", async () => {
+    if (!postText?.value.trim() && !postFile?.files?.[0]) return;
+
+    postButton.disabled = true;
+    try {
+      const media = postFile?.files?.[0] ? await uploadFile(postFile.files[0]) : null;
+      await addDoc(commentsRef, {
+        user: postUser?.value.trim() || "Anonymous",
+        text: postText?.value.trim() || "",
+        media,
+        createdAt: Date.now()
+      });
+
+      if (postText) postText.value = "";
+      if (postFile) postFile.value = "";
+      currentSearch = "";
+      currentPage = 0;
+      pageCursors = [];
+      pageHasNext = [];
+      loadComments(currentPage);
+    } finally {
+      postButton.disabled = false;
+    }
+  });
+}
 
 /* ---------- SEARCH ---------- */
 
