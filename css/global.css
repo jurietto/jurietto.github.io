@@ -12,7 +12,7 @@
 
 html,
 body {
-  font-family: "Mona", sans-serif;
+  font-family: "Mona";
   font-size: 16px;
   line-height: 1.4;
   margin: 10px;
@@ -111,7 +111,7 @@ select {
 }
 
 .footer-aa pre {
-  font-family: "MS PGothic", "MS Gothic", "ＭＳ Ｐゴシック", monospace;
+  font-family: "MS PGothic", "MS Gothic", "ＭＳ Ｐゴシック";
   font-size: 14px;
   line-height: 1.2;
   margin: 0;
