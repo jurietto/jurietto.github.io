@@ -61,6 +61,13 @@ function renderEmbed(url) {
               src="https://www.youtube.com/embed/${yt[1]}"
               loading="lazy" allowfullscreen></iframe>`;
 
+    if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
+      const encoded = encodeURIComponent(url);
+      return `<iframe class="forum-media audio"
+              src="https://w.soundcloud.com/player/?url=${encoded}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+              loading="lazy" allow="autoplay"></iframe>`;
+    }
+
     return renderLink(url);
   } catch {
     return renderLink(url);
