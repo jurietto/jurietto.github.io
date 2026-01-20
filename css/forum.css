@@ -77,7 +77,7 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body {
-  font-family: "MS PGothic", "MS Pゴシック", sans-serif;
+  font-family: "MS PGothic", "MS Pゴシック";
   white-space: pre-wrap;
   tab-size: 4;
 }
@@ -90,7 +90,7 @@ iframe.forum-media.audio {
 }
 
 .forum-meta {
-  font-family: "Mona", sans-serif;
+  font-family: "Mona";
 }
 
 /* ================================
