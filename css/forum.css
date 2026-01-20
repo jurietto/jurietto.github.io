@@ -34,7 +34,9 @@
 
 /* video / iframe embeds */
 .forum-media iframe,
-.forum-media video {
+.forum-media video,
+iframe.forum-media,
+video.forum-media {
   width: 560px;
   max-width: 100%;
   height: auto;
@@ -42,14 +44,16 @@
 }
 
 /* YouTube / video aspect ratio */
-.forum-media.video iframe {
+.forum-media.video iframe,
+iframe.forum-media.video {
   width: 560px;
   max-width: 100%;
   aspect-ratio: 16 / 9;
 }
 
 /* Spotify / SoundCloud */
-.forum-media.audio iframe {
+.forum-media.audio iframe,
+iframe.forum-media.audio {
   width: 560px;
   max-width: 100%;
   height: 152px;
