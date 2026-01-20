@@ -7,11 +7,16 @@ import {
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
-const pager = document.getElementById("pagination"); // ← add this div in HTML
+const pager = document.getElementById("pagination");
+const searchInput = document.getElementById("forum-search-input");
+const searchButton = document.getElementById("forum-search-button");
+const searchClear = document.getElementById("forum-search-clear");
 
 const PAGE_SIZE = 10;
 let pageCursors = [];
 let currentPage = 0;
+let currentSearch = "";
+let pageHasNext = [];
 
 /* ---------- UTIL ---------- */
 
@@ -81,8 +86,51 @@ function renderBodyWithEmbeds(text, parent) {
 
 /* ---------- LOAD ROOT POSTS ONLY ---------- */
 
+function matchesSearch(value, term) {
+  if (!term) return true;
+  return (value || "").toLowerCase().includes(term);
+}
+
+function renderRoots(roots, allReplies) {
+  roots.forEach(root => {
+    const replies = allReplies.filter(r => r.replyTo === root.id);
+    renderComment(root, replies);
+  });
+}
+
 async function loadComments(page = 0) {
   container.innerHTML = "";
+
+  if (currentSearch) {
+    const [rootSnap, replySnap] = await Promise.all([
+      getDocs(query(commentsRef, orderBy("createdAt", "desc"))),
+      getDocs(query(commentsRef, orderBy("createdAt", "asc")))
+    ]);
+
+    const roots = rootSnap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(d => !d.replyTo);
+
+    const replies = replySnap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(d => d.replyTo);
+
+    const filteredRoots = roots.filter(root => {
+      if (matchesSearch(root.user, currentSearch) || matchesSearch(root.text, currentSearch)) {
+        return true;
+      }
+      return replies.some(reply =>
+        reply.replyTo === root.id &&
+        (matchesSearch(reply.user, currentSearch) || matchesSearch(reply.text, currentSearch))
+      );
+    });
+
+    const start = page * PAGE_SIZE;
+    const pageRoots = filteredRoots.slice(start, start + PAGE_SIZE);
+    renderRoots(pageRoots, replies);
+    renderPagination(page, Math.ceil(filteredRoots.length / PAGE_SIZE));
+    return;
+  }
 
   let q = query(
     commentsRef,
@@ -102,6 +150,7 @@ async function loadComments(page = 0) {
   const snap = await getDocs(q);
 
   pageCursors[page] = snap.docs[snap.docs.length - 1];
+  pageHasNext[page] = snap.size === PAGE_SIZE;
 
   // 🔑 ONLY ROOT POSTS
   const roots = snap.docs
@@ -117,21 +166,21 @@ async function loadComments(page = 0) {
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(d => d.replyTo);
 
-  roots.forEach(root => {
-    const replies = allReplies.filter(r => r.replyTo === root.id);
-    renderComment(root, replies);
-  });
+  renderRoots(roots, allReplies);
 
-  renderPagination(page);
+  const lastPage = pageCursors.length - 1;
+  const totalPages = pageHasNext[lastPage] ? pageCursors.length + 1 : pageCursors.length;
+  renderPagination(page, totalPages);
 }
 
 /* ---------- PAGINATION UI ---------- */
 
-function renderPagination(active) {
+function renderPagination(active, totalPages = 0) {
   if (!pager) return;
   pager.innerHTML = "";
 
-  for (let i = 0; i <= pageCursors.length; i++) {
+  const count = totalPages || pageCursors.length;
+  for (let i = 0; i < count; i++) {
     const btn = document.createElement("button");
     btn.textContent = i + 1;
     btn.disabled = i === active;
@@ -228,3 +277,37 @@ function renderComment(c, replies) {
 
 loadComments();
 window.reloadForum = () => loadComments(currentPage);
+
+/* ---------- SEARCH ---------- */
+
+function runSearch() {
+  currentSearch = (searchInput?.value || "").trim().toLowerCase();
+  currentPage = 0;
+  pageCursors = [];
+  pageHasNext = [];
+  loadComments(currentPage);
+}
+
+if (searchButton) {
+  searchButton.addEventListener("click", runSearch);
+}
+
+if (searchClear) {
+  searchClear.addEventListener("click", () => {
+    if (searchInput) searchInput.value = "";
+    currentSearch = "";
+    currentPage = 0;
+    pageCursors = [];
+    pageHasNext = [];
+    loadComments(currentPage);
+  });
+}
+
+if (searchInput) {
+  searchInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      runSearch();
+    }
+  });
+}
