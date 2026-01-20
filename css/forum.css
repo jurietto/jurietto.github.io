@@ -77,14 +77,14 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body {
-  font-family: "JF-Dot", monospace;
+  font-family: "2chan Mona", monospace;
   white-space: pre-wrap;
   tab-size: 4;
 }
 
 #post-form textarea,
 .reply-form textarea {
-  font-family: "JF-Dot", monospace;
+  font-family: "2chan Mona", monospace;
   white-space: pre;
   tab-size: 4;
 }
