@@ -77,16 +77,20 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body {
-  font-family: "JF-Dot", monospace;
+  font-family: "Mona", monospace;
   white-space: pre-wrap;
   tab-size: 4;
 }
 
 #post-form textarea,
 .reply-form textarea {
-  font-family: "JF-Dot", monospace;
+  font-family: "Mona", monospace;
   white-space: pre;
   tab-size: 4;
+}
+
+.forum-meta {
+  font-family: "MS PGothic", "MS Pゴシック", sans-serif;
 }
 
 /* ================================
