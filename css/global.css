@@ -109,7 +109,7 @@ select {
 }
 
 .footer-aa pre {
-  font-family: "Mona", monospace;
+  font-family: "MS PGothic", "MS Gothic", "ＭＳ Ｐゴシック", monospace;
   font-size: 14px;
   line-height: 1.2;
   margin: 0;
@@ -118,3 +118,4 @@ select {
   white-space: pre;
   overflow-x: auto;
 }
+
