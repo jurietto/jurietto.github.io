@@ -1,7 +1,7 @@
 import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
-  collection, query, orderBy, limit, startAfter,
+  collection, query, orderBy,
   getDocs, addDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -17,10 +17,8 @@ const postFile = document.getElementById("file");
 const postButton = document.getElementById("post");
 
 const PAGE_SIZE = 10;
-let pageCursors = [];
 let currentPage = 0;
 let currentSearch = "";
-let pageHasNext = [];
 
 /* ---------- UTIL ---------- */
 
@@ -112,21 +110,21 @@ function renderRoots(roots, allReplies) {
 async function loadComments(page = 0) {
   container.innerHTML = "";
 
-  if (currentSearch) {
-    const [rootSnap, replySnap] = await Promise.all([
-      getDocs(query(commentsRef, orderBy("createdAt", "desc"))),
-      getDocs(query(commentsRef, orderBy("createdAt", "asc")))
-    ]);
+  const [rootSnap, replySnap] = await Promise.all([
+    getDocs(query(commentsRef, orderBy("createdAt", "desc"))),
+    getDocs(query(commentsRef, orderBy("createdAt", "asc")))
+  ]);
 
-    const roots = rootSnap.docs
-      .map(d => ({ id: d.id, ...d.data() }))
-      .filter(d => !d.replyTo);
+  const roots = rootSnap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(d => !d.replyTo);
 
-    const replies = replySnap.docs
-      .map(d => ({ id: d.id, ...d.data() }))
-      .filter(d => d.replyTo);
+  const replies = replySnap.docs
+    .map(d => ({ id: d.id, ...d.data() }))
+    .filter(d => d.replyTo);
 
-    const filteredRoots = roots.filter(root => {
+  const filteredRoots = currentSearch
+    ? roots.filter(root => {
       if (matchesSearch(root.user, currentSearch) || matchesSearch(root.text, currentSearch)) {
         return true;
       }
@@ -134,54 +132,13 @@ async function loadComments(page = 0) {
         reply.replyTo === root.id &&
         (matchesSearch(reply.user, currentSearch) || matchesSearch(reply.text, currentSearch))
       );
-    });
+    })
+    : roots;
 
-    const start = page * PAGE_SIZE;
-    const pageRoots = filteredRoots.slice(start, start + PAGE_SIZE);
-    renderRoots(pageRoots, replies);
-    renderPagination(page, Math.ceil(filteredRoots.length / PAGE_SIZE));
-    return;
-  }
-
-  let q = query(
-    commentsRef,
-    orderBy("createdAt", "desc"),
-    limit(PAGE_SIZE)
-  );
-
-  if (pageCursors[page - 1]) {
-    q = query(
-      commentsRef,
-      orderBy("createdAt", "desc"),
-      startAfter(pageCursors[page - 1]),
-      limit(PAGE_SIZE)
-    );
-  }
-
-  const snap = await getDocs(q);
-
-  pageCursors[page] = snap.docs[snap.docs.length - 1];
-  pageHasNext[page] = snap.size === PAGE_SIZE;
-
-  // 🔑 ONLY ROOT POSTS
-  const roots = snap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(d => !d.replyTo);
-
-  // fetch replies for these roots only
-  const allRepliesSnap = await getDocs(
-    query(commentsRef, orderBy("createdAt", "asc"))
-  );
-
-  const allReplies = allRepliesSnap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(d => d.replyTo);
-
-  renderRoots(roots, allReplies);
-
-  const lastPage = pageCursors.length - 1;
-  const totalPages = pageHasNext[lastPage] ? pageCursors.length + 1 : pageCursors.length;
-  renderPagination(page, totalPages);
+  const start = page * PAGE_SIZE;
+  const pageRoots = filteredRoots.slice(start, start + PAGE_SIZE);
+  renderRoots(pageRoots, replies);
+  renderPagination(page, Math.ceil(filteredRoots.length / PAGE_SIZE));
 }
 
 /* ---------- PAGINATION UI ---------- */
@@ -190,8 +147,8 @@ function renderPagination(active, totalPages = 0) {
   if (!pager) return;
   pager.innerHTML = "";
 
-  const count = totalPages || pageCursors.length;
-  for (let i = 0; i < count; i++) {
+  if (totalPages === 0) return;
+  for (let i = 0; i < totalPages; i++) {
     const btn = document.createElement("button");
     btn.textContent = i + 1;
     btn.disabled = i === active;
@@ -316,8 +273,6 @@ if (postButton) {
       if (postFile) postFile.value = "";
       currentSearch = "";
       currentPage = 0;
-      pageCursors = [];
-      pageHasNext = [];
       loadComments(currentPage);
     } finally {
       postButton.disabled = false;
@@ -330,8 +285,6 @@ if (postButton) {
 function runSearch() {
   currentSearch = (searchInput?.value || "").trim().toLowerCase();
   currentPage = 0;
-  pageCursors = [];
-  pageHasNext = [];
   loadComments(currentPage);
 }
 
@@ -344,8 +297,6 @@ if (searchClear) {
     if (searchInput) searchInput.value = "";
     currentSearch = "";
     currentPage = 0;
-    pageCursors = [];
-    pageHasNext = [];
     loadComments(currentPage);
   });
 }
