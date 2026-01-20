@@ -77,14 +77,14 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body {
-  font-family: "Mona",
+  font-family: "Mona", sans-serif;
   white-space: pre-wrap;
   tab-size: 4;
 }
 
 #post-form textarea,
 .reply-form textarea {
-  font-family: "Mona",
+  font-family: "Mona", sans-serif;
   white-space: pre;
   tab-size: 4;
 }
