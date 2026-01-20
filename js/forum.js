@@ -1,19 +1,21 @@
 import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
-  collection, query, orderBy, limit, startAfter,
-  getDocs, addDoc
+  collection, query, orderBy, getDocs, addDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
-const pager = document.getElementById("pagination"); // ← add this div in HTML
+const pager = document.getElementById("pagination");
+const searchInput = document.getElementById("search");
 
 const PAGE_SIZE = 10;
-let pageCursors = [];
 let currentPage = 0;
+let allComments = [];
 
 /* ---------- UTIL ---------- */
+
+const shortId = id => id ? id.slice(-6) : "";
 
 const formatDate = ts =>
   !ts ? "" :
@@ -30,27 +32,14 @@ function renderEmbed(url) {
     const clean = url.split("?")[0];
     const lower = clean.toLowerCase();
 
-    if (url.includes("tenor.com")) {
-      if (/\.(gif|mp4)$/i.test(clean)) {
-        return `<img class="forum-media image" src="${clean}" loading="lazy">`;
-      }
-      return renderLink(url);
-    }
-
     if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
-      return `<img class="forum-media image" src="${url}" loading="lazy">`;
+      return `<img class="forum-media image" src="${clean}" loading="lazy">`;
 
     if (/\.(mp4|webm|ogv|mov)$/.test(lower))
-      return `<video class="forum-media video" src="${url}" controls></video>`;
+      return `<video class="forum-media video" src="${clean}" controls></video>`;
 
     if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
-      return `<audio class="forum-media audio" src="${url}" controls></audio>`;
-
-    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-    if (yt)
-      return `<iframe class="forum-media video"
-              src="https://www.youtube.com/embed/${yt[1]}"
-              loading="lazy" allowfullscreen></iframe>`;
+      return `<audio class="forum-media audio" src="${clean}" controls></audio>`;
 
     return renderLink(url);
   } catch {
@@ -67,7 +56,6 @@ function renderBodyWithEmbeds(text, parent) {
 
   if (stripped) {
     const body = document.createElement("div");
-    body.className = "forum-body";
     body.textContent = stripped;
     parent.appendChild(body);
   }
@@ -79,67 +67,84 @@ function renderBodyWithEmbeds(text, parent) {
   });
 }
 
-/* ---------- LOAD ROOT POSTS ONLY ---------- */
+/* ---------- LOAD ALL COMMENTS ---------- */
 
-async function loadComments(page = 0) {
-  container.innerHTML = "";
-
-  let q = query(
-    commentsRef,
-    orderBy("createdAt", "desc"),
-    limit(PAGE_SIZE)
-  );
-
-  if (pageCursors[page - 1]) {
-    q = query(
-      commentsRef,
-      orderBy("createdAt", "desc"),
-      startAfter(pageCursors[page - 1]),
-      limit(PAGE_SIZE)
-    );
-  }
-
-  const snap = await getDocs(q);
-
-  pageCursors[page] = snap.docs[snap.docs.length - 1];
-
-  // 🔑 ONLY ROOT POSTS
-  const roots = snap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(d => !d.replyTo);
-
-  // fetch replies for these roots only
-  const allRepliesSnap = await getDocs(
-    query(commentsRef, orderBy("createdAt", "asc"))
-  );
-
-  const allReplies = allRepliesSnap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(d => d.replyTo);
-
-  roots.forEach(root => {
-    const replies = allReplies.filter(r => r.replyTo === root.id);
-    renderComment(root, replies);
-  });
-
-  renderPagination(page);
+async function fetchAll() {
+  const snap = await getDocs(query(commentsRef, orderBy("createdAt", "desc")));
+  allComments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  render();
 }
 
-/* ---------- PAGINATION UI ---------- */
+/* ---------- RENDER ---------- */
 
-function renderPagination(active) {
-  if (!pager) return;
-  pager.innerHTML = "";
+function render() {
+  container.innerHTML = "";
+  if (pager) pager.innerHTML = "";
 
-  for (let i = 0; i <= pageCursors.length; i++) {
+  const q = searchInput?.value.toLowerCase() || "";
+
+  const filtered = allComments.filter(c =>
+    !q ||
+    (c.text || "").toLowerCase().includes(q) ||
+    (c.user || "").toLowerCase().includes(q)
+  );
+
+  const roots = filtered.filter(c => !c.replyTo);
+  const replies = filtered.filter(c => c.replyTo);
+
+  const pages = Math.ceil(roots.length / PAGE_SIZE);
+  const slice = roots.slice(
+    currentPage * PAGE_SIZE,
+    (currentPage + 1) * PAGE_SIZE
+  );
+
+  slice.forEach(root => {
+    const wrap = document.createElement("div");
+
+    wrap.innerHTML = `
+      <div>
+        <strong>No.${shortId(root.id)}</strong>
+        ${root.user || "Anonymous"}
+        — ${formatDate(root.createdAt)}
+      </div>
+    `;
+
+    renderBodyWithEmbeds(root.text, wrap);
+
     const btn = document.createElement("button");
-    btn.textContent = i + 1;
-    btn.disabled = i === active;
-    btn.onclick = () => {
+    btn.textContent = "Reply";
+    btn.onclick = () => createReplyForm(root.id, wrap);
+    wrap.appendChild(btn);
+
+    replies
+      .filter(r => r.replyTo === root.id)
+      .forEach(r => {
+        const rw = document.createElement("div");
+        rw.style.marginLeft = "20px";
+        rw.innerHTML = `
+          <div>
+            <strong>>${shortId(root.id)}</strong>
+            No.${shortId(r.id)}
+            ${r.user || "Anonymous"}
+            — ${formatDate(r.createdAt)}
+          </div>
+        `;
+        renderBodyWithEmbeds(r.text, rw);
+        wrap.appendChild(rw);
+      });
+
+    container.appendChild(wrap);
+  });
+
+  for (let i = 0; i < pages; i++) {
+    const b = document.createElement("button");
+    b.textContent = i + 1;
+    b.disabled = i === currentPage;
+    b.onclick = () => {
       currentPage = i;
-      loadComments(i);
+      render();
     };
-    pager.appendChild(btn);
+    pager?.appendChild(b);
   }
 }
 
@@ -148,17 +153,17 @@ function renderPagination(active) {
 function createReplyForm(parentId, wrap) {
   if (wrap.querySelector(".reply-form")) return;
 
-  const saved = localStorage.getItem("forum_username") || "";
   const form = document.createElement("div");
   form.className = "reply-form";
   form.innerHTML = `
-    <p>Name<br><input value="${saved}" placeholder="Anonymous"></p>
+    <p>Name<br><input placeholder="Anonymous"></p>
     <p>Reply<br><textarea rows="4"></textarea></p>
     <p><input type="file"></p>
     <button>Post</button>
   `;
 
-  const [user, text, file, post] = form.querySelectorAll("input,textarea,button");
+  const [user, text, file, post] =
+    form.querySelectorAll("input,textarea,button");
 
   post.onclick = async () => {
     if (!text.value.trim() && !file.files[0]) return;
@@ -173,58 +178,19 @@ function createReplyForm(parentId, wrap) {
       createdAt: Date.now()
     });
 
-    loadComments(currentPage);
+    fetchAll();
   };
 
   wrap.appendChild(form);
 }
 
-/* ---------- RENDER COMMENT ---------- */
+/* ---------- EVENTS ---------- */
 
-function renderComment(c, replies) {
-  const wrap = document.createElement("div");
-  wrap.className = "forum-comment";
-
-  wrap.innerHTML = `
-    <div class="forum-meta">
-      <strong>＼(^o^)／ ${c.user || "Anonymous"}</strong>
-      — ${formatDate(c.createdAt)}
-    </div>`;
-
-  renderBodyWithEmbeds(c.text, wrap);
-
-  if (c.media) {
-    const m = document.createElement("div");
-    m.innerHTML = renderEmbed(c.media);
-    wrap.appendChild(m);
-  }
-
-  const btn = document.createElement("button");
-  btn.textContent = "Reply";
-  btn.onclick = () => createReplyForm(c.id, wrap);
-  wrap.appendChild(btn);
-
-  replies.forEach(r => {
-    const rw = document.createElement("div");
-    rw.className = "forum-reply";
-    rw.innerHTML = `
-      <div class="forum-meta">
-        <strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong>
-        — ${formatDate(r.createdAt)}
-      </div>`;
-    renderBodyWithEmbeds(r.text, rw);
-    if (r.media) {
-      const m = document.createElement("div");
-      m.innerHTML = renderEmbed(r.media);
-      rw.appendChild(m);
-    }
-    wrap.appendChild(rw);
-  });
-
-  container.appendChild(wrap);
-}
+searchInput?.addEventListener("input", () => {
+  currentPage = 0;
+  render();
+});
 
 /* ---------- INIT ---------- */
 
-loadComments();
-window.reloadForum = () => loadComments(currentPage);
+fetchAll();
