@@ -1,8 +1,10 @@
 @font-face {
-  font-family: "JF-Dot";
-  src: url("../font/JF-Dot-jiskan16s-1990.ttf") format("truetype");
+  font-family: "2chan Mona";
+  src: url("https://cdn.jsdelivr.net/gh/acka/2chan-mona-font@master/2chan-mona.ttf")
+    format("truetype");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 /* ================================
@@ -11,7 +13,7 @@
 
 html,
 body {
-  font-family: "JF-Dot", monospace;
+  font-family: "2chan Mona", monospace;
   font-size: 16px;
   line-height: 1.4;
   margin: 10px;
@@ -108,7 +110,7 @@ select {
 }
 
 .footer-aa pre {
-  font-family: "JF-Dot", monospace;
+  font-family: "2chan Mona", monospace;
   font-size: 14px;
   line-height: 1.2;
   margin: 0;
