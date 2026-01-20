@@ -79,9 +79,9 @@ function renderEmbed(url) {
 function renderBodyWithEmbeds(text, parent) {
   const raw = text || "";
   const urls = raw.match(/https?:\/\/[^\s]+/g) || [];
-  const stripped = raw.replace(/https?:\/\/[^\s]+/g, "").trim();
+  const stripped = raw.replace(/https?:\/\/[^\s]+/g, "");
 
-  if (stripped) {
+  if (stripped.trim()) {
     const body = document.createElement("div");
     body.className = "forum-body";
     body.textContent = stripped;
