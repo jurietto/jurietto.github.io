@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Mona";
-  src: url("../font/mona.ttf") format("truetype");
+  src: url("../font/mona.woff") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 html,
 body {
-  font-family: "Mona";
+  font-family: "Mona", sans-serif;
   font-size: 16px;
   line-height: 1.4;
   margin: 10px;
