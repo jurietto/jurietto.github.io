@@ -73,6 +73,23 @@ iframe.forum-media.audio {
 }
 
 /* ================================
+   ASCII-ART FRIENDLY POSTS
+   ================================ */
+
+.forum-body {
+  font-family: "MS PGothic", "IPAMonaPGothic", monospace;
+  white-space: pre-wrap;
+  tab-size: 4;
+}
+
+#post-form textarea,
+.reply-form textarea {
+  font-family: "MS PGothic", "IPAMonaPGothic", monospace;
+  white-space: pre;
+  tab-size: 4;
+}
+
+/* ================================
    REPLY CONTROLS (ALWAYS BELOW)
    ================================ */
 
