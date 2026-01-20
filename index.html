@@ -33,6 +33,15 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 </p>
 
 
+<div id="forum-search">
+  <p>
+    Search<br>
+    <input id="forum-search-input" type="search" size="40" placeholder="Search posts">
+    <button id="forum-search-button" type="button">Search</button>
+    <button id="forum-search-clear" type="button">Clear</button>
+  </p>
+</div>
+
 <div id="post-form">
   <p>
     Name<br>
@@ -52,6 +61,7 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 </div>
 
 <div id="comments" aria-live="polite"></div>
+<div id="pagination" aria-label="Pagination"></div>
 
 <h2>Changelog</h2>
 <ul id="changelog"><li>Loading changes…</li></ul>
@@ -105,7 +115,6 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 
 <script type="module" src="js/changelog.js"></script>
 <script type="module" src="js/forum.js"></script>
-<script type="module" src="js/form.js"></script>
 
 </body>
 </html>
