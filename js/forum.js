@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy,
-  getDocs, addDoc
+  getDocs, addDoc, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
@@ -18,6 +18,8 @@ const postButton = document.getElementById("post");
 const PAGE_SIZE = 10;
 let currentPage = 0;
 let currentSearch = "";
+let latestSeen = null;
+let hasLoadedSnapshot = false;
 
 /* ---------- UTIL ---------- */
 
@@ -25,6 +27,11 @@ const formatDate = ts =>
   !ts ? "" :
   typeof ts === "number" ? new Date(ts).toLocaleString() :
   ts.seconds ? new Date(ts.seconds * 1000).toLocaleString() : "";
+
+const getCreatedAtValue = ts =>
+  !ts ? 0 :
+  typeof ts === "number" ? ts :
+  ts.seconds ? ts.seconds * 1000 : 0;
 
 const renderLink = url =>
   `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
@@ -282,6 +289,43 @@ function renderComment(c, replies, replyMap) {
 
 loadComments();
 window.reloadForum = () => loadComments(currentPage);
+
+if (notice) {
+  notice.addEventListener("click", () => {
+    notice.hidden = true;
+    loadComments(currentPage);
+  });
+}
+
+onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
+  if (snapshot.empty) {
+    if (!hasLoadedSnapshot) {
+      hasLoadedSnapshot = true;
+      latestSeen = 0;
+    }
+    return;
+  }
+
+  const newest = snapshot.docs[0];
+  const newestAt = getCreatedAtValue(newest.data().createdAt);
+
+  if (!hasLoadedSnapshot) {
+    hasLoadedSnapshot = true;
+    latestSeen = newestAt;
+    return;
+  }
+
+  if (newestAt && newestAt > (latestSeen || 0)) {
+    latestSeen = newestAt;
+    if (notice) {
+      const data = newest.data();
+      notice.textContent = data.replyTo
+        ? "New reply posted. Click to refresh."
+        : "New comment posted. Click to refresh.";
+      notice.hidden = false;
+    }
+  }
+});
 
 /* ---------- POST FORM ---------- */
 
