@@ -109,3 +109,18 @@ iframe.forum-media.audio {
   clear: both;
   margin-top: 6px;
 }
+
+body.dark-mode .forum-comment {
+  background: #001a00;
+  border-color: #001a00;
+}
+
+body.dark-mode .forum-reply {
+  background: #001400;
+  border-color: #001400;
+}
+
+body.dark-mode .forum-reply-nested {
+  background: #001000;
+  border-color: #001000;
+}

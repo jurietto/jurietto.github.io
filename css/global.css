@@ -26,6 +26,23 @@ body {
   overflow-x: hidden;
 }
 
+body.dark-mode {
+  background-color: #000000;
+  color: #00ff00;
+}
+
+body.dark-mode::before {
+  background-image: url("/art/skull-and-crossbones_2620-fe0f.png");
+  opacity: 0.15;
+}
+
+.dark-mode-toggle-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
 /* ================================
    FISH CAKE SWISS-DOT BACKGROUND
    ================================ */
