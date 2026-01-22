@@ -95,28 +95,6 @@ select {
 .site-footer {
   font-size: 0.9rem;
   margin-bottom: 16px;
-  text-align: center;
-}
-
-/* ================================
-   FOOTER ASCII ART (SIDE-BY-SIDE)
-   ================================ */
-
-.footer-aa {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap; /* responsive */
-  margin-bottom: 8px;
-  justify-content: center;
-}
-
-.footer-aa pre {
-  font-family: "MS PGothic", "MS Gothic", "ＭＳ Ｐゴシック";
-  font-size: 14px;
-  line-height: 1.2;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  white-space: pre;
-  overflow-x: auto;
+  text-align: right;
+  direction: ltr;
 }
