@@ -32,7 +32,8 @@ body.dark-mode {
 }
 
 body.dark-mode::before {
-  opacity: 0;
+  background-image: url("/art/skull-and-crossbones_2620-fe0f.png");
+  opacity: 0.15;
 }
 
 .dark-mode-toggle-container {

@@ -2,6 +2,7 @@ const toggleButton = document.getElementById("dark-mode-toggle");
 
 if (toggleButton) {
   toggleButton.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
+    const isDarkMode = document.body.classList.toggle("dark-mode");
+    toggleButton.textContent = isDarkMode ? "light mode" : "dark mode";
   });
 }
