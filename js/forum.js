@@ -15,8 +15,6 @@ const postUser = document.getElementById("username");
 const postText = document.getElementById("text");
 const postFile = document.getElementById("file");
 const postButton = document.getElementById("post");
-const notice = document.getElementById("forum-notice");
-
 const PAGE_SIZE = 10;
 let currentPage = 0;
 let currentSearch = "";
@@ -117,8 +115,6 @@ function renderRoots(roots, replyMap) {
 
 async function loadComments(page = 0) {
   container.innerHTML = "";
-  if (notice) notice.hidden = true;
-
   const [rootSnap, replySnap] = await Promise.all([
     getDocs(query(commentsRef, orderBy("createdAt", "desc"))),
     getDocs(query(commentsRef, orderBy("createdAt", "asc")))
