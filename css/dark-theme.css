@@ -1,0 +1,35 @@
+body[data-theme="dark"] {
+  background-color: #000000;
+  color: #c7ff00;
+}
+
+body[data-theme="dark"]::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  background-image: none;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body[data-theme="dark"] a {
+  color: #c7ff00;
+}
+
+body[data-theme="dark"] .forum-comment {
+  border: 5px outset #2bd600;
+  background: #0b2200;
+  color: #c7ff00;
+}
+
+body[data-theme="dark"] .forum-reply {
+  border: 5px inset #2bd600;
+  background: #0b2200;
+  color: #c7ff00;
+}
+
+body[data-theme="dark"] .forum-reply-nested {
+  border: 5px inset #1fa800;
+  background: #0f2f00;
+  color: #c7ff00;
+}
