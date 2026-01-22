@@ -1,0 +1,40 @@
+body[data-theme="light"] {
+  background-color: #ffffff;
+}
+
+body[data-theme="light"]::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  background-image: url("/art/fish-cake-with-swirl_1f365.png");
+  background-repeat: repeat;
+  background-size: 32px 32px; /* size of each dot */
+  opacity: 0.15;
+  pointer-events: none;
+  animation: fishcake-drift 90s linear infinite;
+  z-index: -1;
+}
+
+body[data-theme="light"] .forum-comment {
+  border: 5px outset #e6d9ff;
+  background: #e6d9ff;
+}
+
+body[data-theme="light"] .forum-reply {
+  border: 5px inset #ffb6d9;
+  background: #ffb6d9;
+}
+
+body[data-theme="light"] .forum-reply-nested {
+  border-color: #ffcce5;
+  background: #ffcce5;
+}
+
+@keyframes fishcake-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400px 400px;
+  }
+}

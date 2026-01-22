@@ -14,7 +14,7 @@ function applyTheme(theme) {
 function getPreferredTheme() {
   const saved = localStorage.getItem(THEME_KEY);
   if (saved) return saved;
-  return "dark";
+  return "light";
 }
 
 applyTheme(getPreferredTheme());
