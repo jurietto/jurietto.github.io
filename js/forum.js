@@ -242,6 +242,7 @@ function createReplyForm(parentId, wrap) {
 /* ---------- RENDER COMMENT ---------- */
 
 function renderComment(c, replies, replyMap) {
+  const replyKaomoji = "（　ﾟДﾟ）";
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
@@ -269,7 +270,7 @@ function renderComment(c, replies, replyMap) {
     rw.className = "forum-reply";
     rw.innerHTML = `
       <div class="forum-meta">
-        <strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong>
+        <strong>${replyKaomoji} ${r.user || "Anonymous"}</strong>
         — ${formatDate(r.createdAt)}
       </div>`;
     renderBodyWithEmbeds(r.text, rw);
@@ -290,7 +291,7 @@ function renderComment(c, replies, replyMap) {
       nw.className = "forum-reply forum-reply-nested";
       nw.innerHTML = `
         <div class="forum-meta">
-          <strong>（　ﾟДﾟ） ${nested.user || "Anonymous"}</strong>
+          <strong>${replyKaomoji} ${nested.user || "Anonymous"}</strong>
           — ${formatDate(nested.createdAt)}
         </div>`;
       renderBodyWithEmbeds(nested.text, nw);
