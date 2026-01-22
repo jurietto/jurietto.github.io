@@ -21,6 +21,12 @@
   margin-left: 20px;
 }
 
+.forum-reply-nested {
+  border-color: #ffcce5;
+  background: #ffcce5;
+  margin-left: 40px;
+}
+
 /* ================================
    MEDIA — SAFE DEFAULTS
    ================================ */
