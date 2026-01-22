@@ -188,6 +188,7 @@ function createReplyForm(parentId, wrap) {
 /* ---------- RENDER ---------- */
 
 function renderComment(c, replies) {
+  const replyKaomoji = "（　ﾟДﾟ）";
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
@@ -216,7 +217,7 @@ function renderComment(c, replies) {
     rw.className = "forum-reply";
     rw.innerHTML = `
       <div class="forum-meta">
-        <strong>（　ﾟДﾟ） ${r.user || "Anonymous"}</strong>
+        <strong>${replyKaomoji} ${r.user || "Anonymous"}</strong>
         — ${formatDate(r.createdAt)}
       </div>`;
     renderBodyWithEmbeds(r.text, rw);
