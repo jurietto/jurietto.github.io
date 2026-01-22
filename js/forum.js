@@ -113,6 +113,20 @@ function renderRoots(roots, replyMap) {
   });
 }
 
+function getLatestActivity(root, replyMap) {
+  let latest = getCreatedAtValue(root.createdAt);
+  const queue = [...(replyMap.get(root.id) || [])];
+
+  while (queue.length) {
+    const reply = queue.shift();
+    latest = Math.max(latest, getCreatedAtValue(reply.createdAt));
+    const nested = replyMap.get(reply.id) || [];
+    queue.push(...nested);
+  }
+
+  return latest;
+}
+
 async function loadComments(page = 0) {
   container.innerHTML = "";
   const [rootSnap, replySnap] = await Promise.all([
@@ -156,10 +170,18 @@ async function loadComments(page = 0) {
     })
     : roots;
 
+  const sortedRoots = filteredRoots
+    .map(root => ({
+      root,
+      latestActivity: getLatestActivity(root, replyMap)
+    }))
+    .sort((a, b) => b.latestActivity - a.latestActivity)
+    .map(entry => entry.root);
+
   const start = page * PAGE_SIZE;
-  const pageRoots = filteredRoots.slice(start, start + PAGE_SIZE);
+  const pageRoots = sortedRoots.slice(start, start + PAGE_SIZE);
   renderRoots(pageRoots, replyMap);
-  renderPagination(page, Math.ceil(filteredRoots.length / PAGE_SIZE));
+  renderPagination(page, Math.ceil(sortedRoots.length / PAGE_SIZE));
 }
 
 /* ---------- PAGINATION UI ---------- */
