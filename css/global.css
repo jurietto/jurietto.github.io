@@ -1,9 +1,9 @@
 @font-face {
   font-family: "Mona";
-  src: url("../font/mona.woff") format("truetype");
+  src: url("../font/mona.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 /* ================================
@@ -12,7 +12,7 @@
 
 html,
 body {
-  font-family: "Mona";
+  font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.4;
   margin: 10px;
