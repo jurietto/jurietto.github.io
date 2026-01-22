@@ -302,7 +302,13 @@ if (notice) {
 }
 
 onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
-  if (snapshot.empty) return;
+  if (snapshot.empty) {
+    if (!hasLoadedSnapshot) {
+      hasLoadedSnapshot = true;
+      latestSeen = 0;
+    }
+    return;
+  }
 
   const newest = snapshot.docs[0];
   const newestAt = getCreatedAtValue(newest.data().createdAt);
