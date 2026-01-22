@@ -243,6 +243,7 @@ function createReplyForm(parentId, wrap) {
 
 function renderComment(c, replies, replyMap) {
   const replyKaomoji = "（　ﾟДﾟ）";
+  const nestedReplyKaomoji = "┐('～`；)┌";
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
@@ -291,7 +292,7 @@ function renderComment(c, replies, replyMap) {
       nw.className = "forum-reply forum-reply-nested";
       nw.innerHTML = `
         <div class="forum-meta">
-          <strong>${replyKaomoji} ${nested.user || "Anonymous"}</strong>
+          <strong>${nestedReplyKaomoji} ${nested.user || "Anonymous"}</strong>
           — ${formatDate(nested.createdAt)}
         </div>`;
       renderBodyWithEmbeds(nested.text, nw);
