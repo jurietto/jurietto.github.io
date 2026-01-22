@@ -3,10 +3,16 @@
    ================================ */
 
 .forum-comment {
-  border: 5px outset #e6d9ff;
-  background: #e6d9ff;
+  border: 5px solid #2bd600;
+  background: #0b2200;
   padding: 8px;
   margin-bottom: 10px;
+}
+
+body[data-theme="dark"] .forum-comment {
+  border-color: #39ff14;
+  background: #0b1f00;
+  color: #c7ff00;
 }
 
 /* ================================
@@ -14,17 +20,30 @@
    ================================ */
 
 .forum-reply {
-  border: 5px inset #ffb6d9;
-  background: #ffb6d9;
+  border: 5px solid #2bd600;
+  background: #0b2200;
   padding: 8px;
   margin-top: 8px;
   margin-left: 20px;
 }
 
 .forum-reply-nested {
-  border-color: #ffcce5;
-  background: #ffcce5;
+  border-color: #2bd600;
+  background: #0b2200;
   margin-left: 40px;
+}
+
+body[data-theme="dark"] .forum-reply {
+  border-color: #b100ff;
+  background: #1b0030;
+  color: #c7ff00;
+}
+
+body[data-theme="dark"] .forum-reply-nested {
+  border-color: #00ff90;
+  background: #002b1a;
+  box-shadow: 0 0 0 2px #ff00ff;
+  color: #c7ff00;
 }
 
 /* ================================

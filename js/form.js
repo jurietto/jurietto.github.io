@@ -69,7 +69,7 @@ function renderEmbed(url) {
 
     /* ---------- EMBEDS ---------- */
 
-    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+    const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]+)/);
     if (yt)
       return `
         <div class="forum-media video">
