@@ -3,8 +3,8 @@
    ================================ */
 
 .forum-comment {
-  border: 5px outset #e6d9ff;
-  background: #e6d9ff;
+  border: 5px solid #2bd600;
+  background: #0b2200;
   padding: 8px;
   margin-bottom: 10px;
 }
@@ -20,16 +20,16 @@ body[data-theme="dark"] .forum-comment {
    ================================ */
 
 .forum-reply {
-  border: 5px inset #ffb6d9;
-  background: #ffb6d9;
+  border: 5px solid #2bd600;
+  background: #0b2200;
   padding: 8px;
   margin-top: 8px;
   margin-left: 20px;
 }
 
 .forum-reply-nested {
-  border-color: #ffcce5;
-  background: #ffcce5;
+  border-color: #2bd600;
+  background: #0b2200;
   margin-left: 40px;
 }
 

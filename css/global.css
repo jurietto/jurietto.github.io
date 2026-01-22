@@ -26,70 +26,10 @@ body {
   overflow-x: hidden;
 }
 
-body[data-theme="dark"] {
-  background-color: #000000;
-  color: #c7ff00;
-}
-
-body[data-theme="dark"]::before {
-  opacity: 0.06;
-}
-
-body[data-theme="dark"] a {
-  color: #c7ff00;
-}
-
 .site-controls {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 8px;
-}
-
-#theme-toggle {
-  background: #c7ff00;
-  border: 2px solid #050505;
-  color: #000000;
-  cursor: pointer;
-  font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
-  font-size: 0.9rem;
-  padding: 4px 10px;
-  text-transform: uppercase;
-}
-
-body[data-theme="dark"] #theme-toggle {
-  background: #000000;
-  border-color: #c7ff00;
-  color: #c7ff00;
-}
-
-/* ================================
-   FISH CAKE SWISS-DOT BACKGROUND
-   ================================ */
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  background-image: url("/art/fish-cake-with-swirl_1f365.png");
-  background-repeat: repeat;
-  background-size: 32px 32px; /* size of each dot */
-  opacity: 0.15;
-  pointer-events: none;
-  animation: fishcake-drift 90s linear infinite;
-  z-index: -1;
-}
-
-/* ================================
-   DIAGONAL (45°) INFINITE MOTION
-   ================================ */
-
-@keyframes fishcake-drift {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 400px 400px;
-  }
 }
 /* ================================
    FORM ELEMENTS — INHERIT ONLY
