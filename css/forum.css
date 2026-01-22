@@ -111,16 +111,16 @@ iframe.forum-media.audio {
 }
 
 body.dark-mode .forum-comment {
-  background: #001a00;
-  border-color: #001a00;
+  background: #14171d;
+  border-color: #14171d;
 }
 
 body.dark-mode .forum-reply {
-  background: #001400;
-  border-color: #001400;
+  background: #1f2d3d;
+  border-color: #1f2d3d;
 }
 
 body.dark-mode .forum-reply-nested {
-  background: #001000;
-  border-color: #001000;
+  background: #2a2238;
+  border-color: #2a2238;
 }
