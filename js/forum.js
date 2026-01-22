@@ -59,7 +59,7 @@ function renderEmbed(url) {
     if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
       return `<audio class="forum-media audio" src="${url}" controls></audio>`;
 
-    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+    const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]+)/);
     if (yt)
       return `<iframe class="forum-media video"
               src="https://www.youtube.com/embed/${yt[1]}"
