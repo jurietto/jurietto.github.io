@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy,
-  getDocs, addDoc
+  getDocs, addDoc, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
@@ -15,10 +15,13 @@ const postUser = document.getElementById("username");
 const postText = document.getElementById("text");
 const postFile = document.getElementById("file");
 const postButton = document.getElementById("post");
+const notice = document.getElementById("forum-notice");
 
 const PAGE_SIZE = 10;
 let currentPage = 0;
 let currentSearch = "";
+let latestSeen = null;
+let hasLoadedSnapshot = false;
 
 /* ---------- UTIL ---------- */
 
@@ -26,6 +29,11 @@ const formatDate = ts =>
   !ts ? "" :
   typeof ts === "number" ? new Date(ts).toLocaleString() :
   ts.seconds ? new Date(ts.seconds * 1000).toLocaleString() : "";
+
+const getCreatedAtValue = ts =>
+  !ts ? 0 :
+  typeof ts === "number" ? ts :
+  ts.seconds ? ts.seconds * 1000 : 0;
 
 const renderLink = url =>
   `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
@@ -100,15 +108,16 @@ function matchesSearch(value, term) {
   return (value || "").toLowerCase().includes(term);
 }
 
-function renderRoots(roots, allReplies) {
+function renderRoots(roots, replyMap) {
   roots.forEach(root => {
-    const replies = allReplies.filter(r => r.replyTo === root.id);
-    renderComment(root, replies);
+    const replies = replyMap.get(root.id) || [];
+    renderComment(root, replies, replyMap);
   });
 }
 
 async function loadComments(page = 0) {
   container.innerHTML = "";
+  if (notice) notice.hidden = true;
 
   const [rootSnap, replySnap] = await Promise.all([
     getDocs(query(commentsRef, orderBy("createdAt", "desc"))),
@@ -123,21 +132,37 @@ async function loadComments(page = 0) {
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(d => d.replyTo);
 
+  const replyMap = new Map();
+  replies.forEach(reply => {
+    if (!replyMap.has(reply.replyTo)) {
+      replyMap.set(reply.replyTo, []);
+    }
+    replyMap.get(reply.replyTo).push(reply);
+  });
+
   const filteredRoots = currentSearch
     ? roots.filter(root => {
       if (matchesSearch(root.user, currentSearch) || matchesSearch(root.text, currentSearch)) {
         return true;
       }
-      return replies.some(reply =>
-        reply.replyTo === root.id &&
-        (matchesSearch(reply.user, currentSearch) || matchesSearch(reply.text, currentSearch))
-      );
+      const directReplies = replyMap.get(root.id) || [];
+      if (directReplies.some(reply =>
+        matchesSearch(reply.user, currentSearch) || matchesSearch(reply.text, currentSearch)
+      )) {
+        return true;
+      }
+      return directReplies.some(reply => {
+        const nested = replyMap.get(reply.id) || [];
+        return nested.some(nestedReply =>
+          matchesSearch(nestedReply.user, currentSearch) || matchesSearch(nestedReply.text, currentSearch)
+        );
+      });
     })
     : roots;
 
   const start = page * PAGE_SIZE;
   const pageRoots = filteredRoots.slice(start, start + PAGE_SIZE);
-  renderRoots(pageRoots, replies);
+  renderRoots(pageRoots, replyMap);
   renderPagination(page, Math.ceil(filteredRoots.length / PAGE_SIZE));
 }
 
@@ -198,7 +223,7 @@ function createReplyForm(parentId, wrap) {
 
 /* ---------- RENDER COMMENT ---------- */
 
-function renderComment(c, replies) {
+function renderComment(c, replies, replyMap) {
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
@@ -235,6 +260,29 @@ function renderComment(c, replies) {
       m.innerHTML = renderEmbed(r.media);
       rw.appendChild(m);
     }
+    const replyBtn = document.createElement("button");
+    replyBtn.textContent = "Reply";
+    replyBtn.className = "forum-reply-button";
+    replyBtn.onclick = () => createReplyForm(r.id, rw);
+    rw.appendChild(replyBtn);
+
+    const nestedReplies = replyMap?.get(r.id) || [];
+    nestedReplies.forEach(nested => {
+      const nw = document.createElement("div");
+      nw.className = "forum-reply forum-reply-nested";
+      nw.innerHTML = `
+        <div class="forum-meta">
+          <strong>（　ﾟДﾟ） ${nested.user || "Anonymous"}</strong>
+          — ${formatDate(nested.createdAt)}
+        </div>`;
+      renderBodyWithEmbeds(nested.text, nw);
+      if (nested.media) {
+        const m = document.createElement("div");
+        m.innerHTML = renderEmbed(nested.media);
+        nw.appendChild(m);
+      }
+      rw.appendChild(nw);
+    });
     wrap.appendChild(rw);
   });
 
@@ -245,6 +293,43 @@ function renderComment(c, replies) {
 
 loadComments();
 window.reloadForum = () => loadComments(currentPage);
+
+if (notice) {
+  notice.addEventListener("click", () => {
+    notice.hidden = true;
+    loadComments(currentPage);
+  });
+}
+
+onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
+  if (snapshot.empty) {
+    if (!hasLoadedSnapshot) {
+      hasLoadedSnapshot = true;
+      latestSeen = 0;
+    }
+    return;
+  }
+
+  const newest = snapshot.docs[0];
+  const newestAt = getCreatedAtValue(newest.data().createdAt);
+
+  if (!hasLoadedSnapshot) {
+    hasLoadedSnapshot = true;
+    latestSeen = newestAt;
+    return;
+  }
+
+  if (newestAt && newestAt > (latestSeen || 0)) {
+    latestSeen = newestAt;
+    if (notice) {
+      const data = newest.data();
+      notice.textContent = data.replyTo
+        ? "New reply posted. Click to refresh."
+        : "New comment posted. Click to refresh.";
+      notice.hidden = false;
+    }
+  }
+});
 
 /* ---------- POST FORM ---------- */
 
