@@ -11,6 +11,7 @@ const pager = document.getElementById("pagination");
 const searchInput = document.getElementById("forum-search-input");
 const searchButton = document.getElementById("forum-search-button");
 const searchClear = document.getElementById("forum-search-clear");
+const notice = document.getElementById("forum-notice");
 const postUser = document.getElementById("username");
 const postText = document.getElementById("text");
 const postFile = document.getElementById("file");
