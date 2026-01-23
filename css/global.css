@@ -22,17 +22,17 @@ body {
 body {
   position: relative;
   z-index: 1;
-  background-color: #4c6a72; /* teal from reference image */
-  color: #f4b5ff; /* vivid lavender */
+  background-color: #ffffff; /* light-mode fallback */
+  color: #4b0f74; /* deep purple for readability */
   overflow-x: hidden;
 }
 
 body a {
-  color: #f04bff; /* bright magenta */
+  color: #d100ff; /* bright magenta from reference */
 }
 
 body a:hover {
-  color: #ffd1ff; /* soft highlight */
+  color: #ff7bff; /* lighter magenta highlight */
 }
 
 /* ================================
