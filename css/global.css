@@ -23,8 +23,16 @@ body {
   position: relative;
   z-index: 1;
   background-color: #ffffff; /* light-mode fallback */
-  color: #222;
+  color: #4b0f74; /* deep purple for readability */
   overflow-x: hidden;
+}
+
+body a {
+  color: #d100ff; /* bright magenta from reference */
+}
+
+body a:hover {
+  color: #ff7bff; /* lighter magenta highlight */
 }
 
 /* ================================
