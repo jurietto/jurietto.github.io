@@ -28,20 +28,36 @@ body {
 }
 
 /* ================================
-   DARK MODE — COLOR ONLY
+   DARK MODE — IMAGE-MATCHED
    ================================ */
 
 body.dark-mode {
-  background-color: #4f6f75; /* muted teal */
-  color: #f0c2ff;            /* neon lavender */
+  background-color: #516f76;   /* muted teal-gray */
+  color: #f2c8ff;              /* soft pink-lavender */
 }
 
+/* background pattern in dark mode */
 body.dark-mode::before {
   background-image: url("/art/339726379.png");
-  opacity: 0.16;
+  opacity: 0.18;
 }
 
-/* toggle button container */
+/* ================================
+   DARK MODE — LINKS
+   ================================ */
+
+body.dark-mode a {
+  color: #ff83f4;              /* bright pink */
+}
+
+body.dark-mode a:hover {
+  color: #ffd4fa;
+}
+
+/* ================================
+   TOGGLE CONTAINER
+   ================================ */
+
 .dark-mode-toggle-container {
   position: fixed;
   top: 10px;
@@ -109,6 +125,15 @@ select {
 }
 
 /* ================================
+   DARK MODE — DIVIDER TUNING
+   ================================ */
+
+body.dark-mode .text-divider {
+  color: #ff79f0;
+  border-top-color: #ff79f0;
+}
+
+/* ================================
    FOOTER
    ================================ */
 
@@ -120,14 +145,9 @@ select {
 }
 
 /* ================================
-   DARK MODE — ACCENTS
+   DARK MODE — FOOTER
    ================================ */
 
-body.dark-mode .text-divider {
-  color: #ff6bff;
-  border-top-color: #ff6bff;
-}
-
 body.dark-mode .site-footer {
-  color: #ff9df5;
+  color: #ffb3f7;
 }
