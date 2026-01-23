@@ -1,13 +1,76 @@
+@font-face {
+  font-family: "Mona";
+  src: url("../font/mona.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+/* ================================
+   GLOBAL BASE — CONSISTENT
+   ================================ */
+
+html,
+body {
+  font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 10px;
+  padding: 10px;
+}
+
+body {
+  position: relative;
+  z-index: 1;
+  background-color: #000000; /* true black */
+  color: #e6e6e6;
+  overflow-x: hidden;
+}
+
+/* ================================
+   PURPLE HEART TILED BACKGROUND
+   ================================ */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  background-image: url("https://raw.githubusercontent.com/jurietto/jurietto.github.io/refs/heads/main/art/339726379.png");
+  background-repeat: repeat;
+  background-size: 400px 400px;
+  opacity: 0.16;
+  pointer-events: none;
+  animation: heart-drift 1800s linear infinite;
+  z-index: -1;
+}
+
+/* ================================
+   HEART DRIFT — NON-NOTICEABLE LOOP
+   ================================ */
+
+@keyframes heart-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 10000px 10000px; }
+}
+
 /* ================================
    PROFILE LAYOUT
    ================================ */
 
-.profile-title {
-  text-align: center;
-}
-
 .profile-container {
   text-align: center;
+  margin-top: 32px;
+}
+
+/* ================================
+   AVATAR
+   ================================ */
+
+.profile-container img {
+  display: block;
+  margin: 0 auto 24px;
+  border: 3px outset #ff5fa2;
+  background-color: #2a0030;
 }
 
 /* ================================
@@ -16,47 +79,58 @@
 
 .profile-table {
   margin: 0 auto;
-  width: 860px;          /* wider table */
+  width: 860px;
   max-width: 95%;
-  border: 5px outset #aa0000;
-  background-color: #2b0033;
-  color: #444444;
+  border: 5px outset #ff5fa2;
+  background-color: #2a0030;
   border-collapse: separate;
   border-spacing: 0;
 }
 
-/* left column (labels) */
-.profile-table td:first-child {
-  font-family: "Mona", monospace;
-  white-space: nowrap;
-  width: 220px;
-}
-
-/* right column (values) */
-.profile-table td:last-child {
-  font-family: "MS PGothic", "MS Pゴシック", Arial, sans-serif;
-}
-
-/* cells */
 .profile-table td {
-  border: 2px inset #aa0000;
-  color: #444444;
-  font-size: 0.9rem;
+  border: 2px inset #ff5fa2;
+  font-size: 0.95rem;
+  padding: 10px 12px;
   vertical-align: top;
 }
 
+.profile-table td:first-child {
+  width: 220px;
+  font-family: "Mona", monospace;
+  color: #ff86c8;
+  white-space: nowrap;
+}
+
+.profile-table td:last-child {
+  font-family: "MS PGothic", "MS Pゴシック", Arial, sans-serif;
+  color: #f0f0f0;
+}
+
 /* ================================
-   NOTES
+   PROFILE NOTES — FORCE MONA
    ================================ */
 
 .profile-notes {
-  margin: 16px auto 0;
-  width: 860px;
-  max-width: 95%;
-  background-color: #2b0033;
-  border: 2px inset #aa0000;
-  padding: 12px 16px;
-  color: #444444;
-  text-align: left;
+  max-width: 100%;
+  margin: 22px 0;
+  color: #c46a8f;
+  text-align: center;
+  font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
+}
+
+.profile-notes p {
+  margin: 0 0 0.6em;
+  line-height: 1.4;
+  font-family: inherit;
+}
+
+/* ================================
+   FOOTER
+   ================================ */
+
+.site-footer {
   font-size: 0.9rem;
+  margin: 36px 0 22px;
+  text-align: center;
+  color: #b070c6;
 }
