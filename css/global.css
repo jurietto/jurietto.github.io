@@ -46,7 +46,7 @@ body.dark-mode {
 
 /* dark mode background pattern */
 body.dark-mode::before {
-  background-image: url("/art/339726373.png");
+  background-image: url("/art/339726380.png");
   opacity: 0.12;             /* subtle, no haze */
 }
 
@@ -81,7 +81,7 @@ body::before {
   content: "";
   position: fixed;
   inset: -50%;
-  background-image: url("https://raw.githubusercontent.com/jurietto/jurietto.github.io/refs/heads/main/art/339726381.png");
+  background-image: url("/art/339726381.png");
   background-repeat: repeat;
   background-size: 400px 400px;
   opacity: 0.16;
