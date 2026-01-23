@@ -22,9 +22,17 @@ body {
 body {
   position: relative;
   z-index: 1;
-  background-color: #ffffff; /* light-mode fallback */
-  color: #222;
+  background-color: #4c6a72; /* teal from reference image */
+  color: #f4b5ff; /* vivid lavender */
   overflow-x: hidden;
+}
+
+body a {
+  color: #f04bff; /* bright magenta */
+}
+
+body a:hover {
+  color: #ffd1ff; /* soft highlight */
 }
 
 /* ================================
