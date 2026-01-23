@@ -58,7 +58,6 @@ body::before {
    ================================ */
 
 .profile-container {
-  text-align: center;
   margin-top: 32px;
 }
 
@@ -68,7 +67,7 @@ body::before {
 
 .profile-container img {
   display: block;
-  margin: 0 auto 24px;
+  margin: 0 0 24px;
   border: 3px outset #ff5fa2;
   background-color: #2a0030;
 }
@@ -78,7 +77,7 @@ body::before {
    ================================ */
 
 .profile-table {
-  margin: 0 auto;
+  margin: 0;
   width: 860px;
   max-width: 95%;
   border: 5px outset #ff5fa2;
@@ -114,7 +113,6 @@ body::before {
   max-width: 100%;
   margin: 22px 0;
   color: #c46a8f;
-  text-align: center;
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
 }
 
@@ -125,12 +123,34 @@ body::before {
 }
 
 /* ================================
+   TEXT DIVIDER
+   ================================ */
+
+.text-divider {
+  border-top: 1px solid currentColor;
+  box-sizing: border-box;
+  margin: 24px 0 12px;
+  overflow: hidden;
+  padding-top: 12px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.text-divider::before {
+  content: "🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 ";
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+/* ================================
    FOOTER
    ================================ */
 
 .site-footer {
   font-size: 0.9rem;
-  margin: 36px 0 22px;
-  text-align: center;
-  color: #b070c6;
+  margin-bottom: 16px;
+  text-align: right;
+  direction: ltr;
+  color: #ff86c8;
 }

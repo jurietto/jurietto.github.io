@@ -31,7 +31,6 @@
    MEDIA — SAFE DEFAULTS
    ================================ */
 
-/* images */
 .forum-media.image {
   max-width: 250px;
   height: auto;
@@ -110,17 +109,21 @@ iframe.forum-media.audio {
   margin-top: 6px;
 }
 
+/* ================================
+   DARK MODE — IMAGE-MATCHED KAWAII
+   ================================ */
+
 body.dark-mode .forum-comment {
-  background: #150b1f;
-  border-color: #150b1f;
+  background: #0b0010;   /* ink black / hair */
+  border-color: #0b0010;
 }
 
 body.dark-mode .forum-reply {
-  background: #20122e;
-  border-color: #20122e;
+  background: #3b005c;   /* deep violet (clothes) */
+  border-color: #3b005c;
 }
 
 body.dark-mode .forum-reply-nested {
-  background: #2b1740;
-  border-color: #2b1740;
+  background: #942c93;   /* hot pink heart (softened) */
+  border-color: #942c93;
 }

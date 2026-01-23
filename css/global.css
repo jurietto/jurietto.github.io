@@ -23,7 +23,7 @@ body {
   position: relative;
   z-index: 1;
   background-color: #ffffff; /* light-mode fallback */
-  color: #4b0f74; /* deep purple for readability */
+  color: #000000; /* deep purple for readability */
   overflow-x: hidden;
 }
 
