@@ -151,3 +151,22 @@ body.dark-mode .text-divider {
 body.dark-mode .site-footer {
   color: #f5b2ff;
 }
+
+/* ================================
+   PROFILE BUTTON
+   ================================ */
+
+.profile-button {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 2px solid currentColor;
+  text-decoration: none;
+}
+
+.profile-button:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .profile-button:hover {
+  background: rgba(255, 92, 241, 0.18);
+}
