@@ -28,18 +28,18 @@ body {
 }
 
 /* ================================
-   DARK MODE — IMAGE-MATCHED
+   DARK MODE — PURPLE / PINK
    ================================ */
 
 body.dark-mode {
-  background-color: #516f76;   /* muted teal-gray */
-  color: #f2c8ff;              /* soft pink-lavender */
+  background-color: #1a0f1f;   /* deep eggplant purple */
+  color: #f5c6ff;              /* soft light pink text */
 }
 
 /* background pattern in dark mode */
 body.dark-mode::before {
   background-image: url("/art/339726379.png");
-  opacity: 0.18;
+  opacity: 0.14;               /* subtle, not gray */
 }
 
 /* ================================
@@ -47,11 +47,11 @@ body.dark-mode::before {
    ================================ */
 
 body.dark-mode a {
-  color: #ff83f4;              /* bright pink */
+  color: #ff6bd5;              /* hot pink */
 }
 
 body.dark-mode a:hover {
-  color: #ffd4fa;
+  color: #ffd1ef;
 }
 
 /* ================================
@@ -129,8 +129,8 @@ select {
    ================================ */
 
 body.dark-mode .text-divider {
-  color: #ff79f0;
-  border-top-color: #ff79f0;
+  color: #ff6bd5;
+  border-top-color: #ff6bd5;
 }
 
 /* ================================
@@ -149,5 +149,5 @@ body.dark-mode .text-divider {
    ================================ */
 
 body.dark-mode .site-footer {
-  color: #ffb3f7;
+  color: #f3a6ff;
 }
