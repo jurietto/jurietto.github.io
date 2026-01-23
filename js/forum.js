@@ -65,6 +65,12 @@ function renderEmbed(url) {
               src="https://www.youtube.com/embed/${yt[1]}"
               loading="lazy" allowfullscreen></iframe>`;
 
+    const ytShorts = url.match(/youtube\.com\/shorts\/([\w-]+)/);
+    if (ytShorts)
+      return `<iframe class="forum-media video"
+              src="https://www.youtube.com/embed/${ytShorts[1]}"
+              loading="lazy" allowfullscreen></iframe>`;
+
     if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
       const encoded = encodeURIComponent(url);
       return `<iframe class="forum-media audio"
