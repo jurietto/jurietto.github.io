@@ -22,20 +22,26 @@ body {
 body {
   position: relative;
   z-index: 1;
-  background-color: #ffffff; /* fallback */
+  background-color: #ffffff; /* light-mode fallback */
+  color: #222;
   overflow-x: hidden;
 }
 
+/* ================================
+   DARK MODE — COLOR ONLY
+   ================================ */
+
 body.dark-mode {
-  background-color: #000000;
-  color: #d3ddd4;
+  background-color: #4f6f75; /* muted teal */
+  color: #f0c2ff;            /* neon lavender */
 }
 
 body.dark-mode::before {
   background-image: url("/art/339726379.png");
-  opacity: 0.08;
+  opacity: 0.16;
 }
 
+/* toggle button container */
 .dark-mode-toggle-container {
   position: fixed;
   top: 10px;
@@ -44,9 +50,8 @@ body.dark-mode::before {
 }
 
 /* ================================
-   FISH CAKE SWISS-DOT BACKGROUND
+   FISH CAKE / HEART BACKGROUND
    ================================ */
-
 
 body::before {
   content: "";
@@ -62,13 +67,14 @@ body::before {
 }
 
 /* ================================
-   HEART DRIFT — NON-NOTICEABLE LOOP
+   HEART DRIFT — NO VISIBLE LOOP
    ================================ */
 
 @keyframes heart-drift {
   from { background-position: 0 0; }
   to   { background-position: 10000px 10000px; }
 }
+
 /* ================================
    FORM ELEMENTS — INHERIT ONLY
    ================================ */
@@ -111,4 +117,17 @@ select {
   margin-bottom: 16px;
   text-align: right;
   direction: ltr;
+}
+
+/* ================================
+   DARK MODE — ACCENTS
+   ================================ */
+
+body.dark-mode .text-divider {
+  color: #ff6bff;
+  border-top-color: #ff6bff;
+}
+
+body.dark-mode .site-footer {
+  color: #ff9df5;
 }
