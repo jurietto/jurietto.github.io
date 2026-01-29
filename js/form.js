@@ -7,6 +7,7 @@ import {
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
+const MAX_IMAGES = 10;
 const PAGE_SIZE = 10;
 
 /* ---------- UTIL ---------- */
@@ -20,6 +21,38 @@ function formatDate(ts) {
 
 function renderLink(url) {
   return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+}
+
+function getSelectedImages(input) {
+  const files = Array.from(input?.files || []);
+  if (!files.length) return { files: [] };
+  const nonImages = files.filter(file => !file.type.startsWith("image/"));
+  if (nonImages.length) {
+    return { error: "Please choose image files only." };
+  }
+  if (files.length > MAX_IMAGES) {
+    return { error: `You can upload up to ${MAX_IMAGES} images at a time.` };
+  }
+  return { files };
+}
+
+function renderMedia(media, parent) {
+  if (!media) return;
+  if (Array.isArray(media)) {
+    const group = document.createElement("div");
+    group.className = "forum-media-group";
+    media.forEach(url => {
+      const item = document.createElement("div");
+      item.className = "forum-media-item";
+      item.innerHTML = renderEmbed(url);
+      group.appendChild(item);
+    });
+    parent.appendChild(group);
+    return;
+  }
+  const wrap = document.createElement("div");
+  wrap.innerHTML = renderEmbed(media);
+  parent.appendChild(wrap);
 }
 
 // remove junk copied from HTML / smart quotes
@@ -150,7 +183,7 @@ function createReplyForm(parentId, wrap) {
   form.innerHTML = `
     <p>Name<br><input class="reply-user" value="${saved}" placeholder="Anonymous"></p>
     <p>Reply<br><textarea rows="4"></textarea></p>
-    <p>Attachment<br><input type="file"></p>
+    <p>Attachment (up to ${MAX_IMAGES} images)<br><input type="file" accept="image/*" multiple></p>
     <p>
       <button class="post-btn">Post reply</button>
       <button class="cancel-btn">Cancel</button>
@@ -166,10 +199,17 @@ function createReplyForm(parentId, wrap) {
   form.querySelector(".cancel-btn").onclick = () => form.remove();
 
   form.querySelector(".post-btn").onclick = async e => {
-    if (!text.value.trim() && !file.files[0]) return;
+    const selection = getSelectedImages(file);
+    if (selection.error) {
+      alert(selection.error);
+      return;
+    }
+    if (!text.value.trim() && selection.files.length === 0) return;
     e.target.disabled = true;
 
-    const media = file.files[0] ? await uploadFile(file.files[0]) : null;
+    const media = selection.files.length
+      ? await Promise.all(selection.files.map(uploadFile))
+      : null;
     await addDoc(commentsRef, {
       user: user.value.trim() || "Anonymous",
       text: text.value.trim(),
@@ -200,11 +240,7 @@ function renderComment(c, replies) {
 
   renderBodyWithEmbeds(c.text, wrap);
 
-  if (c.media) {
-    const m = document.createElement("div");
-    m.innerHTML = renderEmbed(c.media);
-    wrap.appendChild(m);
-  }
+  renderMedia(c.media, wrap);
 
   const btn = document.createElement("button");
   btn.className = "forum-reply-button";
@@ -221,11 +257,7 @@ function renderComment(c, replies) {
         — ${formatDate(r.createdAt)}
       </div>`;
     renderBodyWithEmbeds(r.text, rw);
-    if (r.media) {
-      const m = document.createElement("div");
-      m.innerHTML = renderEmbed(r.media);
-      rw.appendChild(m);
-    }
+    renderMedia(r.media, rw);
     wrap.appendChild(rw);
   });
 

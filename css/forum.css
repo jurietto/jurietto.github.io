@@ -65,6 +65,18 @@
   display: block;
 }
 
+.forum-media-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 6px;
+}
+
+.forum-media-item {
+  display: flex;
+}
+
 /* video / iframe embeds */
 .forum-media iframe,
 .forum-media video,
