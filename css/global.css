@@ -59,11 +59,11 @@ body {
   background: transparent;
   color: var(--masala);
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Avoid forcing viewport height so pagination doesn't add extra scroll */
 
-.profile-button:hover { background: rgba(var(--hibiscus-r), 0.18); }
 .text-divider { border-top-color: var(--cadillac); }
 .site-footer { color: var(--cadillac); }
 
@@ -195,7 +195,10 @@ select {
   text-decoration: none;
 }
 
+.profile-button:hover {
+  background: rgba(var(--hibiscus-r), 0.18);
+}
 
-.profile-button:hover { background: rgba(var(--hibiscus-r), 0.18); }
+
 
 /* dark-mode profile-button hover removed */
