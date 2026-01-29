@@ -63,12 +63,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Keep pages at least viewport high while avoiding extra scroll below footer */
-body {
-  min-height: calc(100vh - 40px);
-  display: flex;
-  flex-direction: column;
-}
+/* Avoid forcing viewport height so pagination doesn't add extra scroll */
 
 .profile-button:hover { background: rgba(var(--hibiscus-r), 0.18); }
 .text-divider { border-top-color: var(--cadillac); }
