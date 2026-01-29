@@ -117,7 +117,7 @@
   }
 
   .profile-table {
-    border: 0;
+    border: 5px outset var(--pesto);
   }
 
   .profile-table tr {
