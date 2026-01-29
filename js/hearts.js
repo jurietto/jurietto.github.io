@@ -41,6 +41,9 @@
     div.style.overflow = 'hidden';
     div.style.backgroundColor = 'transparent';
     div.style.pointerEvents = 'none';
+    div.style.fontFamily = '"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji","Mona",sans-serif';
+    div.style.lineHeight = '1';
+    div.style.textShadow = '0 0 2px rgba(0,0,0,0.15)';
     return div;
   }
 
@@ -140,15 +143,23 @@
 
   function pucker() { ox = -1; oy = -1; }
 
-  // Init on DOM ready
-  document.addEventListener('DOMContentLoaded', function () {
-    try { mwah();
+  function initHearts() {
+    try {
+      mwah();
       document.addEventListener('mousemove', mouse, { passive: true });
+      document.addEventListener('pointermove', mouse, { passive: true });
       document.addEventListener('mousedown', function(){ pucker(); }, { passive: true });
       document.addEventListener('mouseup', function(){ /* nothing */ }, { passive: true });
       window.addEventListener('resize', setWidth);
       window.addEventListener('scroll', setScroll);
     } catch (e) { /* fail silently */ }
-  });
+  }
+
+  // Init on DOM ready (or immediately if already ready)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHearts);
+  } else {
+    initHearts();
+  }
 
 })();
