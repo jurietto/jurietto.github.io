@@ -9,6 +9,9 @@
   margin-bottom: 10px;
   /* readable text on light-ish comment background */
   color: var(--masala);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* ================================
@@ -22,6 +25,9 @@
   margin-top: 8px;
   margin-left: 20px;
   color: var(--masala);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .forum-reply-nested {
@@ -31,6 +37,9 @@
   margin-left: 40px;
   /* nested replies can be darker; use light text for contrast */
   color: #ffffff;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* meta and links */
@@ -71,10 +80,12 @@
   gap: 8px;
   align-items: flex-start;
   margin-top: 6px;
+  max-width: 100%;
 }
 
 .forum-media-item {
   display: flex;
+  max-width: 100%;
 }
 
 /* video / iframe embeds */
@@ -125,6 +136,8 @@ iframe.forum-media.audio {
   font-family: "MS PGothic", "MS Pゴシック";
   white-space: pre-wrap;
   tab-size: 4;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 #post-form textarea,
@@ -132,6 +145,15 @@ iframe.forum-media.audio {
   font-family: "Mona", sans-serif;
   white-space: pre;
   tab-size: 4;
+}
+
+#forum-search input,
+#post-form input,
+#post-form textarea,
+.reply-form textarea {
+  max-width: 100%;
+  width: min(100%, 32rem);
+  box-sizing: border-box;
 }
 
 .forum-meta {
