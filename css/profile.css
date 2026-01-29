@@ -42,6 +42,12 @@ body {
 
 .profile-container {
   margin-top: 32px;
+  max-width: 100%;
+}
+
+.profile-block {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 /* ================================
@@ -61,8 +67,8 @@ body {
 
 .profile-table {
   margin: 0;
-  width: 860px;
-  max-width: 95%;
+  width: min(860px, 100%);
+  max-width: 100%;
   border: 5px outset var(--pesto);
   /* use pinks together — avoid mixing with golds */
   background: linear-gradient(90deg, rgba(var(--azalea-r),1), rgba(var(--deep-blush-r),1));
@@ -75,6 +81,8 @@ body {
   font-size: 0.95rem;
   padding: 10px 12px;
   vertical-align: top;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .profile-table td:first-child {
@@ -99,6 +107,8 @@ body {
   margin: 22px 0;
   color: var(--masala);
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .profile-notes p {
