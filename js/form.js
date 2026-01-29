@@ -51,6 +51,7 @@ function renderMedia(media, parent) {
     return;
   }
   const wrap = document.createElement("div");
+  wrap.className = "forum-media-block";
   wrap.innerHTML = renderEmbed(media);
   parent.appendChild(wrap);
 }
@@ -151,6 +152,7 @@ function renderBodyWithEmbeds(text, parent) {
   urls.forEach(rawUrl => {
     const url = cleanUrl(rawUrl);
     const wrap = document.createElement("div");
+    wrap.className = "forum-media-block";
     wrap.innerHTML = renderEmbed(url);
     parent.appendChild(wrap);
   });

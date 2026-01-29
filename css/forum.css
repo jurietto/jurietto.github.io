@@ -80,7 +80,7 @@
   flex-wrap: wrap;
   gap: 8px;
   align-items: flex-start;
-  margin-top: 6px;
+  margin-top: 8px;
   max-width: 100%;
   overflow: hidden;
 }
@@ -90,6 +90,10 @@
   flex: 1 1 auto;
   max-width: 100%;
   min-width: 0;
+}
+
+.forum-media-block {
+  margin-top: 8px;
 }
 
 /* video / iframe embeds */
