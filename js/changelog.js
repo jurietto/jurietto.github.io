@@ -13,7 +13,7 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
       const msg = c.commit.message.split("\n")[0];
 
       const line = document.createElement("div");
-      line.textContent = `☆ ${msg} (・_・;)`;
+      line.textContent = `♥ ${msg} (・_・;)`;
 
       list.appendChild(line);
     });
@@ -21,7 +21,7 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
   .catch(err => {
     list.innerHTML = "";
     const errLine = document.createElement("div");
-    errLine.textContent = "★ Failed to load changelog (・_・;)";
+    errLine.textContent = "♥ Failed to load changelog (・_・;)";
     list.appendChild(errLine);
     console.error(err);
   });

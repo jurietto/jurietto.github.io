@@ -150,6 +150,14 @@ iframe.forum-media.audio {
   color: #ffffff;
 }
 
+.forum-reply-nested .forum-body a {
+  color: #ffe8f4;
+}
+
+.forum-reply-nested .forum-body a:hover {
+  color: #ffffff;
+}
+
 /* ================================
    ASCII-ART FRIENDLY POSTS
    ================================ */
