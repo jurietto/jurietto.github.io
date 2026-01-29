@@ -63,9 +63,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Ensure page always at least viewport high to prevent large gaps below footer */
-html, body { height: 100%; }
-body { min-height: 100vh; }
+/* Avoid forcing viewport height so pagination doesn't add extra scroll */
 
 .profile-button:hover { background: rgba(var(--hibiscus-r), 0.18); }
 .text-divider { border-top-color: var(--cadillac); }
