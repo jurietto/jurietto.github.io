@@ -140,12 +140,14 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body a {
-  color: inherit;
+  color: #ffffff;
   text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
 }
 
-.forum-body a:hover {
-  text-decoration: none;
+.forum-reply-nested .forum-body a {
+  color: #ffffff;
 }
 
 /* ================================
