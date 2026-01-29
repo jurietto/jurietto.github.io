@@ -199,6 +199,11 @@ select {
   background: rgba(var(--hibiscus-r), 0.18);
 }
 
+@media (max-width: 720px) {
+  body {
+    padding: 0 12px;
+  }
+}
 
 
 /* dark-mode profile-button hover removed */
