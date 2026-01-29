@@ -116,6 +116,10 @@
     width: 100%;
   }
 
+  .profile-table {
+    border: 0;
+  }
+
   .profile-table tr {
     border: 2px inset rgba(var(--deep-blush-r),0.9);
   }
