@@ -6,72 +6,100 @@
   font-display: block;
 }
 
+:root {
+  /* Restored original palette (hex and RGB helpers) */
+  --hibiscus: #c72e6c;
+  --deep-blush: #e65a9b;
+  --alpine: #b6922e;
+  --masala: #3e3533;
+  --brilliant-rose: #f556b3;
+  --gray: #8c8586;
+  --cadillac: #9e4869;
+  --pesto: #78642e;
+  --azalea: #f1adcb;
+
+  /* RGB helpers for alpha usage */
+  --hibiscus-r: 199,46,108;
+  --deep-blush-r: 230,90,155;
+  --alpine-r: 182,146,46;
+  --masala-r: 62,53,51;
+  --brilliant-rose-r: 245,86,179;
+  --gray-r: 140,133,134;
+  --cadillac-r: 158,72,105;
+  --pesto-r: 120,100,46;
+  --azalea-r: 241,173,203;
+}
 /* ================================
    GLOBAL BASE — SAFE
    ================================ */
-
+/* warm, soft page background that pairs with the site palette */
 html,
 body {
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
-  font-size: 16px;
   line-height: 1.4;
-  margin: 10px;
+  margin: 20px;
   padding: 10px;
+  font-size: 16px;
 }
+
+/* Normalize box model and base spacing to avoid unexpected gaps */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Base typography spacing for consistent layout */
+h1,h2,h3,h4,h5,h6 { margin: 0 0 0.5rem; font-weight: 600; }
+p { margin: 0 0 1rem; }
+ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
+img,video,iframe { max-width: 100%; height: auto; display: block; }
+
+
+/* put a subtle page color on the root and let the pattern show through */
+html { background-color: var(--azalea); }
 
 body {
   position: relative;
   z-index: 1;
-  background-color: #ffffff; /* light-mode fallback */
-  color: #000000; /* deep purple for readability */
+  background: transparent;
+  color: var(--masala);
   overflow-x: hidden;
 }
 
-body a {
-  color: #d100ff; /* bright magenta from reference */
+/* Ensure page always at least viewport high to prevent large gaps below footer */
+html, body { height: 100%; }
+body { min-height: 100vh; }
+
+.profile-button:hover { background: rgba(var(--hibiscus-r), 0.18); }
+.text-divider { border-top-color: var(--cadillac); }
+.site-footer { color: var(--cadillac); }
+
+body a { color: var(--hibiscus); }
+body a:hover { color: var(--brilliant-rose); }
+
+/* Pagination layout: keep buttons inline and spaced */
+#pagination {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
-body a:hover {
-  color: #ff7bff; /* lighter magenta highlight */
+#pagination button {
+  display: inline-block;
+  min-width: 36px;
+  padding: 6px 10px;
 }
 
 /* ================================
    DARK MODE — BLACK + PURPLE/PINK
    ================================ */
 
-body.dark-mode {
-  background-color: #000000; /* TRUE BLACK */
-  color: #f5b2ff;            /* soft light pink-purple */
-}
-
-/* dark mode background pattern */
-body.dark-mode::before {
-  background-image: url("/art/339726379.png");
-  opacity: 0.12;             /* subtle, no haze */
-}
-
-/* ================================
-   DARK MODE — LINKS
-   ================================ */
-
-body.dark-mode a {
-  color: #ff5cf1;            /* neon magenta */
-}
-
-body.dark-mode a:hover {
-  color: #ffe1f6;            /* pale pink */
-}
+/* dark mode removed: site uses single color scheme */
 
 /* ================================
    TOGGLE CONTAINER
    ================================ */
 
-.dark-mode-toggle-container {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-}
+/* dark-mode toggle removed */
 
 /* ================================
    BACKGROUND PATTERN (GLOBAL)
@@ -80,11 +108,15 @@ body.dark-mode a:hover {
 body::before {
   content: "";
   position: fixed;
-  inset: -50%;
-  background-image: url("/art/339726379.png");
+  inset: 0;
+  /* use provided raw GitHub image so the pattern loads reliably */
+  background-image: url("https://raw.githubusercontent.com/jurietto/jurietto.github.io/main/art/ckst18.png");
   background-repeat: repeat;
-  background-size: 400px 400px;
-  opacity: 0.16;
+  /* keep original image size, do not scale */
+  background-size: auto;
+  /* align pattern to top center so it begins at the top with no white gap */
+  background-position: top center;
+  opacity: 0.35; /* stronger pattern visibility while keeping subtlety */
   pointer-events: none;
   animation: heart-drift 1800s linear infinite;
   z-index: -1;
@@ -136,10 +168,7 @@ select {
    DARK MODE — DIVIDER
    ================================ */
 
-body.dark-mode .text-divider {
-  color: #ff5cf1;
-  border-top-color: #ff5cf1;
-}
+/* dark-mode styles removed for text-divider */
 
 /* ================================
    FOOTER
@@ -156,9 +185,7 @@ body.dark-mode .text-divider {
    DARK MODE — FOOTER
    ================================ */
 
-body.dark-mode .site-footer {
-  color: #f5b2ff;
-}
+/* dark-mode footer styles removed */
 
 /* ================================
    PROFILE BUTTON
@@ -171,10 +198,7 @@ body.dark-mode .site-footer {
   text-decoration: none;
 }
 
-.profile-button:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
 
-body.dark-mode .profile-button:hover {
-  background: rgba(255, 92, 241, 0.18);
-}
+.profile-button:hover { background: rgba(var(--hibiscus-r), 0.18); }
+
+/* dark-mode profile-button hover removed */

@@ -15,34 +15,17 @@ body {
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.4;
-  margin: 10px;
-  padding: 10px;
 }
 
 body {
   position: relative;
   z-index: 1;
-  background-color: #000000; /* true black */
-  color: #e6e6e6;
+  /* use the global background (html + body::before) for consistency with index */
+  background: transparent;
+  color: var(--masala);
   overflow-x: hidden;
 }
 
-/* ================================
-   PURPLE HEART TILED BACKGROUND
-   ================================ */
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  background-image: url("/art/339726379.png");
-  background-repeat: repeat;
-  background-size: 400px 400px;
-  opacity: 0.16;
-  pointer-events: none;
-  animation: heart-drift 1800s linear infinite;
-  z-index: -1;
-}
 
 /* ================================
    HEART DRIFT — NON-NOTICEABLE LOOP
@@ -68,8 +51,8 @@ body::before {
 .profile-container img {
   display: block;
   margin: 0 0 24px;
-  border: 3px outset #ff5fa2;
-  background-color: #2a0030;
+  border: 3px outset var(--hibiscus);
+  background-color: var(--azalea);
 }
 
 /* ================================
@@ -80,14 +63,15 @@ body::before {
   margin: 0;
   width: 860px;
   max-width: 95%;
-  border: 5px outset #ff5fa2;
-  background-color: #2a0030;
+  border: 5px outset var(--pesto);
+  /* use pinks together — avoid mixing with golds */
+  background: linear-gradient(90deg, rgba(var(--azalea-r),1), rgba(var(--deep-blush-r),1));
   border-collapse: separate;
   border-spacing: 0;
 }
 
 .profile-table td {
-  border: 2px inset #ff5fa2;
+  border: 2px inset rgba(var(--deep-blush-r),0.9);
   font-size: 0.95rem;
   padding: 10px 12px;
   vertical-align: top;
@@ -96,13 +80,14 @@ body::before {
 .profile-table td:first-child {
   width: 220px;
   font-family: "Mona", monospace;
-  color: #ff86c8;
+  color: var(--brilliant-rose);
   white-space: nowrap;
 }
 
 .profile-table td:last-child {
   font-family: "MS PGothic", "MS Pゴシック", Arial, sans-serif;
-  color: #f0f0f0;
+  /* ensure readable text on the darker table background */
+  color: var(--masala);
 }
 
 /* ================================
@@ -112,7 +97,7 @@ body::before {
 .profile-notes {
   max-width: 100%;
   margin: 22px 0;
-  color: #c46a8f;
+  color: var(--masala);
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
 }
 
@@ -152,5 +137,5 @@ body::before {
   margin-bottom: 16px;
   text-align: right;
   direction: ltr;
-  color: #ff86c8;
+  color: var(--pesto);
 }

@@ -1,8 +1,1 @@
-const toggleButton = document.getElementById("dark-mode-toggle");
-
-if (toggleButton) {
-  toggleButton.addEventListener("click", () => {
-    const isDarkMode = document.body.classList.toggle("dark-mode");
-    toggleButton.textContent = isDarkMode ? "light mode" : "dark mode";
-  });
-}
+// dark-mode support removed from the site; this file is intentionally left as a no-op.

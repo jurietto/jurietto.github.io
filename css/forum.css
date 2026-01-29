@@ -3,10 +3,12 @@
    ================================ */
 
 .forum-comment {
-  border: 5px outset #e6d9ff;
-  background: #e6d9ff;
+  border: 5px solid var(--pesto); /* gold border for high comments */
+  background: linear-gradient(135deg, rgba(var(--azalea-r),1), rgba(var(--deep-blush-r),1));
   padding: 8px;
   margin-bottom: 10px;
+  /* readable text on light-ish comment background */
+  color: var(--masala);
 }
 
 /* ================================
@@ -14,17 +16,43 @@
    ================================ */
 
 .forum-reply {
-  border: 5px inset #ffb6d9;
-  background: #ffb6d9;
+  border: 5px inset var(--cadillac);
+  background: linear-gradient(180deg, rgba(var(--deep-blush-r),1), rgba(var(--brilliant-rose-r),1));
   padding: 8px;
   margin-top: 8px;
   margin-left: 20px;
+  color: var(--masala);
 }
 
 .forum-reply-nested {
-  border-color: #ffcce5;
-  background: #ffcce5;
+  border: 5px inset var(--gray); /* silver/grey border for nested replies */
+  /* keep nested replies in the pink family to avoid mixing golds and pinks */
+  background: linear-gradient(90deg, rgba(var(--hibiscus-r),1), rgba(var(--deep-blush-r),1));
   margin-left: 40px;
+  /* nested replies can be darker; use light text for contrast */
+  color: #ffffff;
+}
+
+/* meta and links */
+.forum-meta {
+  color: var(--masala);
+  font-size: 0.95rem;
+}
+
+/* Ensure author/name/date metadata is highly readable */
+.forum-meta .author,
+.forum-meta .name,
+.forum-author,
+.post-author,
+.post-date,
+.forum-date,
+.forum-meta time {
+  color: var(--masala);
+  font-weight: 600;
+}
+
+.forum-body a {
+  color: var(--hibiscus);
 }
 
 /* ================================
@@ -102,28 +130,15 @@ iframe.forum-media.audio {
    REPLY CONTROLS (ALWAYS BELOW)
    ================================ */
 
-.forum-reply-button,
+.forum-reply-button {
+  display: inline-block;
+  margin-top: 6px;
+}
+
 .reply-form {
   display: block;
   clear: both;
   margin-top: 6px;
 }
 
-/* ================================
-   DARK MODE — IMAGE-MATCHED KAWAII
-   ================================ */
-
-body.dark-mode .forum-comment {
-  background: #0b0010;   /* ink black / hair */
-  border-color: #0b0010;
-}
-
-body.dark-mode .forum-reply {
-  background: #3b005c;   /* deep violet (clothes) */
-  border-color: #3b005c;
-}
-
-body.dark-mode .forum-reply-nested {
-  background: #942c93;   /* hot pink heart (softened) */
-  border-color: #942c93;
-}
+/* dark-mode forum styles removed */

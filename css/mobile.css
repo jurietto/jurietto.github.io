@@ -1,0 +1,39 @@
+/* Mobile optimizations — minimal changes only */
+@media only screen and (max-width: 720px) {
+  html, body { font-size: 18px; }
+  body { padding: 8px; }
+
+  /* Buttons: no decorative styles, but large and full-width for tap targets */
+  button, .profile-button, input[type="button"], input[type="submit"], input[type="reset"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 14px 16px !important;
+    width: 100% !important;
+    font-size: 1.05rem !important;
+    text-align: center;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* On mobile, pagination buttons should be inline rows instead of stacked */
+  #pagination { display: flex !important; gap: 8px !important; flex-wrap: wrap !important; }
+  #pagination button { width: auto !important; min-width: 48px !important; padding: 12px !important; }
+
+  /* Make form controls easier to use on small screens */
+  input[type="text"], input[type="search"], textarea, select {
+    width: 100% !important;
+    padding: 12px !important;
+    font-size: 1rem;
+  }
+
+  /* Profile table: allow horizontal scrolling and stack cells visually */
+  .profile-table { width: 100%; overflow-x: auto; display: block; }
+  .profile-table td { display: block; width: 100%; box-sizing: border-box; padding: 8px 0; border: none; border-bottom: 1px solid var(--gray); }
+
+  /* Ensure post form and search inputs fit */
+  #forum-search input, #post-form input, #post-form textarea { width: 100%; }
+
+  /* Keep media responsive */
+  .forum-media.image { max-width: 100%; }
+}
