@@ -140,15 +140,14 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body a {
-  color: var(--hibiscus);
+  color: #ffffff;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }
 
-.forum-body a:hover {
-  color: var(--brilliant-rose);
-  text-decoration: none;
+.forum-reply-nested .forum-body a {
+  color: #ffffff;
 }
 
 .forum-reply-nested .forum-body a {
