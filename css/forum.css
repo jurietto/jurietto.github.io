@@ -25,7 +25,9 @@
   margin-top: 8px;
   margin-left: 20px;
   color: var(--masala);
+  width: calc(100% - 20px);
   max-width: 100%;
+  overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
@@ -37,7 +39,9 @@
   margin-left: 40px;
   /* nested replies can be darker; use light text for contrast */
   color: #ffffff;
+  width: calc(100% - 40px);
   max-width: 100%;
+  overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
 }

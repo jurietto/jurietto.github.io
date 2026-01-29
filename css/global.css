@@ -114,7 +114,7 @@ body::before {
   background-size: auto;
   /* align pattern to top center so it begins at the top with no white gap */
   background-position: top center;
-  opacity: 0.35; /* stronger pattern visibility while keeping subtlety */
+  opacity: 0.2; /* lower opacity for easier readability */
   pointer-events: none;
   animation: heart-drift 1800s linear infinite;
   z-index: -1;
