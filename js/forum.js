@@ -125,6 +125,7 @@ function renderBodyWithEmbeds(text, parent) {
 
   urls.forEach(url => {
     const d = document.createElement("div");
+    d.className = "forum-media-block";
     d.innerHTML = renderEmbed(url);
     parent.appendChild(d);
   });
@@ -147,6 +148,7 @@ function renderMedia(media, parent) {
   }
 
   const wrap = document.createElement("div");
+  wrap.className = "forum-media-block";
   wrap.innerHTML = renderEmbed(media);
   parent.appendChild(wrap);
 }
