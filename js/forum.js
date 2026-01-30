@@ -120,7 +120,7 @@ function renderAttachmentPreview(input, preview) {
   const grid = document.createElement("div");
   grid.className = "attachment-preview-grid";
 
-  files.forEach(file => {
+  files.forEach((file, index) => {
     if (!file.type.startsWith("image/")) return;
     const item = document.createElement("div");
     item.className = "attachment-preview-item";
@@ -130,6 +130,20 @@ function renderAttachmentPreview(input, preview) {
     img.alt = file.name || "Attachment preview";
     img.onload = () => URL.revokeObjectURL(url);
     item.appendChild(img);
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.textContent = "Delete";
+    removeButton.addEventListener("click", () => {
+      const dt = new DataTransfer();
+      files.forEach((existingFile, fileIndex) => {
+        if (fileIndex !== index) {
+          dt.items.add(existingFile);
+        }
+      });
+      input.files = dt.files;
+      renderAttachmentPreview(input, preview);
+    });
+    item.appendChild(removeButton);
     grid.appendChild(item);
   });
 
