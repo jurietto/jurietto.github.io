@@ -2,49 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Admin Login</title>
+  <title>Admin – Blog</title>
+  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
+<h1>Blog Admin</h1>
+
 <button id="login">Sign in with GitHub</button>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import {
-  getAuth,
-  GithubAuthProvider,
-  signInWithPopup
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+<div id="editor" hidden>
+  <p>Logged in as admin.</p>
 
-// ✅ Firebase config (correct for GitHub Pages)
-const firebaseConfig = {
-  apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
-  authDomain: "chansi-ddd7e.firebaseapp.com",
-  projectId: "chansi-ddd7e",
-  storageBucket: "chansi-ddd7e.appspot.com",
-  messagingSenderId: "650473918964",
-  appId: "1:650473918964:web:63be3d4f9794f315fe29a1"
-};
+  <input id="title" placeholder="Post title" /><br><br>
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+  <textarea id="content" placeholder="Write your post here..." rows="10" cols="50"></textarea><br><br>
 
-document.getElementById("login").onclick = async () => {
-  try {
-    const provider = new GithubAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+  <button id="publish">Publish post</button>
+</div>
 
-    alert(
-      "Logged in successfully!\n\nFirebase UID:\n" +
-      result.user.uid
-    );
-  } catch (err) {
-    console.error(err);
-    alert("Login failed:\n" + err.message);
-  }
-};
-</script>
-
+<script type="module" src="js/admin.js"></script>
 </body>
 </html>
