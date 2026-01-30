@@ -149,14 +149,6 @@ function renderAttachmentPreview(input, preview) {
   });
 
   preview.appendChild(grid);
-  const clearButton = document.createElement("button");
-  clearButton.type = "button";
-  clearButton.textContent = "Delete attachments";
-  clearButton.addEventListener("click", () => {
-    input.value = "";
-    renderAttachmentPreview(input, preview);
-  });
-  preview.appendChild(clearButton);
   preview.hidden = grid.children.length === 0;
 }
 
