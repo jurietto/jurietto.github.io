@@ -182,6 +182,27 @@ iframe.forum-media.audio {
   box-sizing: border-box;
 }
 
+.attachment-preview {
+  margin-top: 6px;
+}
+
+.attachment-preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.attachment-preview-item img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid var(--pesto);
+  border-radius: 2px;
+  background: rgba(var(--azalea-r), 0.2);
+  display: block;
+}
+
 .forum-meta {
   font-family: "Mona";
 }

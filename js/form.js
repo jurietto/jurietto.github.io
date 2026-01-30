@@ -36,6 +36,30 @@ function getSelectedImages(input) {
   return { files };
 }
 
+function syncInputImages(input) {
+  const files = Array.from(input?.files || []);
+  if (!files.length) return [];
+  const images = files.filter(file => file.type.startsWith("image/"));
+  const nonImages = files.length - images.length;
+
+  if (nonImages) {
+    alert("Please choose image files only.");
+  }
+
+  if (images.length > MAX_IMAGES) {
+    alert(`You can upload up to ${MAX_IMAGES} images at a time.`);
+  }
+
+  const trimmed = images.slice(0, MAX_IMAGES);
+  if (trimmed.length !== files.length) {
+    const dt = new DataTransfer();
+    trimmed.forEach(file => dt.items.add(file));
+    input.files = dt.files;
+  }
+
+  return trimmed;
+}
+
 function appendImagesToInput(input, files) {
   if (!input) return { added: 0 };
   const existing = Array.from(input.files || []);
@@ -58,7 +82,46 @@ function appendImagesToInput(input, files) {
   };
 }
 
-function handlePasteImages(event, input) {
+function createAttachmentPreview(input) {
+  if (!input) return null;
+  const preview = document.createElement("div");
+  preview.className = "attachment-preview";
+  preview.hidden = true;
+  input.insertAdjacentElement("afterend", preview);
+  return preview;
+}
+
+function renderAttachmentPreview(input, preview) {
+  if (!preview || !input) return;
+  const files = Array.from(input.files || []);
+  preview.innerHTML = "";
+
+  if (!files.length) {
+    preview.hidden = true;
+    return;
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "attachment-preview-grid";
+
+  files.forEach(file => {
+    if (!file.type.startsWith("image/")) return;
+    const item = document.createElement("div");
+    item.className = "attachment-preview-item";
+    const img = document.createElement("img");
+    const url = URL.createObjectURL(file);
+    img.src = url;
+    img.alt = file.name || "Attachment preview";
+    img.onload = () => URL.revokeObjectURL(url);
+    item.appendChild(img);
+    grid.appendChild(item);
+  });
+
+  preview.appendChild(grid);
+  preview.hidden = grid.children.length === 0;
+}
+
+function handlePasteImages(event, input, preview) {
   const items = Array.from(event.clipboardData?.items || []);
   const files = items
     .filter(item => item.kind === "file")
@@ -81,6 +144,42 @@ function handlePasteImages(event, input) {
     }
     alert(`Added ${result.added} image(s) from clipboard.`);
   }
+
+  syncInputImages(input);
+  renderAttachmentPreview(input, preview);
+}
+
+function handleDropImages(event, input, preview) {
+  const files = Array.from(event.dataTransfer?.files || []);
+  if (!files.length) return;
+  event.preventDefault();
+
+  const images = files.filter(file => file.type.startsWith("image/"));
+  if (!images.length) {
+    alert("Please choose image files only.");
+    return;
+  }
+
+  if (images.length !== files.length) {
+    alert("Please choose image files only.");
+  }
+
+  const result = appendImagesToInput(input, images);
+  if (result.error) {
+    alert(result.error);
+    return;
+  }
+
+  if (result.added) {
+    if (result.dropped) {
+      alert(`Added ${result.added} image(s). ${result.dropped} extra image(s) skipped (max ${MAX_IMAGES}).`);
+    } else {
+      alert(`Added ${result.added} image(s) from drop.`);
+    }
+  }
+
+  syncInputImages(input);
+  renderAttachmentPreview(input, preview);
 }
 
 function renderMedia(media, parent) {
@@ -241,11 +340,21 @@ function createReplyForm(parentId, wrap) {
   const user = form.querySelector(".reply-user");
   const text = form.querySelector("textarea");
   const file = form.querySelector("input[type=file]");
+  const preview = createAttachmentPreview(file);
 
   user.oninput = () =>
     localStorage.setItem("forum_username", user.value.trim());
 
-  text.addEventListener("paste", event => handlePasteImages(event, file));
+  text.addEventListener("paste", event => handlePasteImages(event, file, preview));
+  form.addEventListener("dragover", event => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
+  });
+  form.addEventListener("drop", event => handleDropImages(event, file, preview));
+  file.addEventListener("change", () => {
+    syncInputImages(file);
+    renderAttachmentPreview(file, preview);
+  });
 
   form.querySelector(".cancel-btn").onclick = () => form.remove();
 
