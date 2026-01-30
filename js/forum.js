@@ -431,6 +431,8 @@ function createReplyForm(parentId, wrap) {
     renderAttachmentPreview(file, preview);
   });
 
+  text.addEventListener("paste", event => handlePasteImages(event, file));
+
   post.onclick = async () => {
     const selection = getSelectedImages(file);
     if (selection.error) {

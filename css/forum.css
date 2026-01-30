@@ -101,7 +101,7 @@
 .forum-media video,
 .forum-media audio,
 iframe.forum-media,
-video.forum-media,
+videos.forum-media,
 audio.forum-media {
   width: min(560px, 100%);
   max-width: 100%;
@@ -139,23 +139,19 @@ iframe.forum-media.audio {
    LINK FALLBACK (NOT BLUE)
    ================================ */
 
-.forum-body a {
-  color: #ffffff;
-  text-decoration: underline;
+.forum-comment .forum-body a,
+.forum-reply .forum-body a,
+.forum-reply-nested .forum-body a {
+  color: inherit; /* Match the color of the surrounding text */
+  text-decoration: underline; /* Always underline */
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }
 
-.forum-reply-nested .forum-body a {
-  color: #ffffff;
-}
-
-.forum-reply-nested .forum-body a {
-  color: #ffe8f4;
-}
-
-.forum-reply-nested .forum-body a:hover {
-  color: #ffffff;
+.forum-comment .forum-body a[target="_blank"],
+.forum-reply .forum-body a[target="_blank"],
+.forum-reply-nested .forum-body a[target="_blank"] {
+  target-new: new; /* Indication to open links in new tab */
 }
 
 /* ================================
