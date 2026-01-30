@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Admin Login</title>
@@ -10,19 +10,39 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getAuth, GithubAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import {
+  getAuth,
+  GithubAuthProvider,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
+// ✅ Firebase config (correct for GitHub Pages)
 const firebaseConfig = {
-  // 👇 use the SAME config you already use for your forum
+  apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
+  authDomain: "chansi-ddd7e.firebaseapp.com",
+  projectId: "chansi-ddd7e",
+  storageBucket: "chansi-ddd7e.appspot.com",
+  messagingSenderId: "650473918964",
+  appId: "1:650473918964:web:63be3d4f9794f315fe29a1"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 document.getElementById("login").onclick = async () => {
-  const provider = new GithubAuthProvider();
-  const result = await signInWithPopup(auth, provider);
-  alert("Logged in as UID:\n" + result.user.uid);
+  try {
+    const provider = new GithubAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+
+    alert(
+      "Logged in successfully!\n\nFirebase UID:\n" +
+      result.user.uid
+    );
+  } catch (err) {
+    console.error(err);
+    alert("Login failed:\n" + err.message);
+  }
 };
 </script>
 
