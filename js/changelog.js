@@ -13,7 +13,7 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
       const msg = c.commit.message.split("\n")[0];
 
       const line = document.createElement("div");
-      line.textContent = `♥ ${msg} (・_・;)`;
+      line.textContent = `♠️ ${msg} (・_・;)`;
 
       list.appendChild(line);
     });
