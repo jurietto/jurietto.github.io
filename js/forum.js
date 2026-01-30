@@ -51,6 +51,52 @@ function getSelectedImages(input) {
   return { files };
 }
 
+function appendImagesToInput(input, files) {
+  if (!input) return { added: 0 };
+  const existing = Array.from(input.files || []);
+  const images = files.filter(file => file?.type?.startsWith("image/"));
+  if (!images.length) return { added: 0 };
+
+  const remaining = MAX_IMAGES - existing.length;
+  if (remaining <= 0) {
+    return { error: `You can upload up to ${MAX_IMAGES} images at a time.` };
+  }
+
+  const addedFiles = images.slice(0, remaining);
+  const dt = new DataTransfer();
+  [...existing, ...addedFiles].forEach(file => dt.items.add(file));
+  input.files = dt.files;
+
+  return {
+    added: addedFiles.length,
+    dropped: images.length - addedFiles.length
+  };
+}
+
+function handlePasteImages(event, input) {
+  const items = Array.from(event.clipboardData?.items || []);
+  const files = items
+    .filter(item => item.kind === "file")
+    .map(item => item.getAsFile())
+    .filter(Boolean);
+
+  if (!files.length) return;
+
+  const result = appendImagesToInput(input, files);
+  if (result.error) {
+    showNoticeMessage(result.error);
+    return;
+  }
+
+  if (result.added) {
+    event.preventDefault();
+    const message = result.dropped
+      ? `Added ${result.added} image(s). ${result.dropped} extra image(s) skipped (max ${MAX_IMAGES}).`
+      : `Added ${result.added} image(s) from clipboard.`;
+    showNoticeMessage(message);
+  }
+}
+
 function showNoticeMessage(message) {
   if (!message) return;
   if (!notice) {
@@ -268,11 +314,13 @@ function createReplyForm(parentId, wrap) {
   form.innerHTML = `
     <p>Name<br><input value="${saved}" placeholder="Anonymous"></p>
     <p>Reply<br><textarea rows="4"></textarea></p>
-    <p>Attachment (up to ${MAX_IMAGES} images)<br><input type="file" accept="image/*" multiple></p>
+    <p>Attachment (up to ${MAX_IMAGES} images, or paste from clipboard)<br><input type="file" accept="image/*" multiple></p>
     <button>Post</button>
   `;
 
   const [user, text, file, post] = form.querySelectorAll("input,textarea,button");
+
+  text.addEventListener("paste", event => handlePasteImages(event, file));
 
   post.onclick = async () => {
     const selection = getSelectedImages(file);
@@ -439,6 +487,10 @@ if (postButton) {
       postButton.disabled = false;
     }
   });
+}
+
+if (postText) {
+  postText.addEventListener("paste", event => handlePasteImages(event, postFile));
 }
 
 /* ---------- SEARCH ---------- */
