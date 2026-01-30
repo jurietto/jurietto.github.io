@@ -2,25 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Admin – Blog</title>
+  <title>Admin</title>
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
-<h1>Blog Admin</h1>
+<h1>Admin Panel</h1>
 
 <button id="login">Sign in with GitHub</button>
 
 <div id="editor" hidden>
-  <p>Logged in as admin.</p>
 
-  <input id="title" placeholder="Post title" /><br><br>
+  <!-- =====================
+       BLOG EDITOR
+       ===================== -->
+  <section id="blog-admin">
+    <h2>Blog</h2>
 
-  <textarea id="content" placeholder="Write your post here..." rows="10" cols="50"></textarea><br><br>
+    <input id="title" placeholder="Post title"><br><br>
 
-  <button id="publish">Publish post</button>
+    <textarea
+      id="content"
+      placeholder="Write your post here…"
+      rows="10"
+      cols="50"></textarea><br><br>
+
+    <button id="publish">Publish post</button>
+  </section>
+
+  <hr>
+
+  <!-- =====================
+       FORUM MODERATION
+       ===================== -->
+  <section id="forum-admin">
+    <h2>Forum moderation</h2>
+
+    <div id="forum-controls">
+      <button id="prev">Prev</button>
+      <button id="next">Next</button>
+    </div>
+
+    <div id="forum-comments">
+      <p>Loading…</p>
+    </div>
+  </section>
+
 </div>
 
+<!-- Core admin logic -->
 <script type="module" src="js/admin.js"></script>
+
+<!-- Forum moderation logic -->
+<script type="module" src="js/admin_forum.js"></script>
+
 </body>
 </html>
