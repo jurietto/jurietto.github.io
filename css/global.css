@@ -67,9 +67,6 @@ body {
 .text-divider { border-top-color: var(--cadillac); }
 .site-footer { color: var(--cadillac); }
 
-body a { color: var(--hibiscus); }
-body a:hover { color: var(--brilliant-rose); }
-
 /* Pagination layout: keep buttons inline and spaced */
 #pagination {
   display: flex;
