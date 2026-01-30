@@ -139,23 +139,13 @@ iframe.forum-media.audio {
    LINK FALLBACK (NOT BLUE)
    ================================ */
 
-.forum-body a {
-  color: #ffffff;
+.forum-comment .forum-body a,
+.forum-reply .forum-body a,
+.forum-reply-nested .forum-body a {
+  color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
-}
-
-.forum-reply-nested .forum-body a {
-  color: #ffffff;
-}
-
-.forum-reply-nested .forum-body a {
-  color: #ffe8f4;
-}
-
-.forum-reply-nested .forum-body a:hover {
-  color: #ffffff;
 }
 
 /* ================================
