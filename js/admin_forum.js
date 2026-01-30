@@ -9,14 +9,6 @@ import {
   doc
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-/*
-  IMPORTANT:
-  admin.js must expose:
-    window.db = db;
-*/
-
-const db = window.db;
-
 const commentsEl = document.getElementById("forum-comments");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
@@ -24,9 +16,35 @@ const nextBtn = document.getElementById("next");
 const PAGE_SIZE = 10;
 
 let lastDoc = null;
-let pageStack = []; // for going backwards
+let pageStack = [];
+
+/* =====================
+   WAIT FOR ADMIN READY
+   ===================== */
+
+function waitForAdmin() {
+  return new Promise(resolve => {
+    if (window.__ADMIN_READY__ && window.db) {
+      resolve();
+      return;
+    }
+
+    const interval = setInterval(() => {
+      if (window.__ADMIN_READY__ && window.db) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 50);
+  });
+}
+
+/* =====================
+   PAGINATED LOAD
+   ===================== */
 
 async function loadPage(direction = "next") {
+  const db = window.db; // 🔑 grab AFTER ready
+
   commentsEl.innerHTML = "<p>Loading…</p>";
 
   let q;
@@ -39,7 +57,6 @@ async function loadPage(direction = "next") {
       limit(PAGE_SIZE)
     );
   } else if (direction === "prev" && pageStack.length > 1) {
-    // pop current page
     pageStack.pop();
     const prevCursor = pageStack[pageStack.length - 1];
 
@@ -62,7 +79,7 @@ async function loadPage(direction = "next") {
   commentsEl.innerHTML = "";
 
   if (snap.empty) {
-    commentsEl.innerHTML = "<p>No comments found.</p>";
+    commentsEl.innerHTML = "<p>No comments.</p>";
     return;
   }
 
@@ -92,8 +109,13 @@ async function loadPage(direction = "next") {
   });
 }
 
+/* =====================
+   INIT (SAFE)
+   ===================== */
+
+await waitForAdmin();
+
 nextBtn.onclick = () => loadPage("next");
 prevBtn.onclick = () => loadPage("prev");
 
-// initial load
 loadPage();
