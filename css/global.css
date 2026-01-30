@@ -6,6 +6,14 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: "harringt";
+  src: url("../font/HARRINGT.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
 :root {
   /* Restored original palette (hex and RGB helpers) */
   --hibiscus: #c72e6c;
@@ -45,6 +53,7 @@ body {
 
 /* Base typography spacing for consistent layout */
 h1,h2,h3,h4,h5,h6 { margin: 0 0 0.5rem; font-weight: 600; }
+h1,h2,h3 { font-family: "harringt"; }
 p { margin: 0 0 1rem; }
 ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
 img,video,iframe { max-width: 100%; height: auto; display: block; }
@@ -151,9 +160,8 @@ select {
 }
 
 .text-divider::before {
-  content: "🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 🍭(¬‿¬) 凸 ";
+  content: "♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ♕ ♡ ♤ ♧ ♢ ";
   display: inline-block;
-  max-width: 100%;
   white-space: nowrap;
 }
 
@@ -205,3 +213,17 @@ select {
 
 
 /* dark-mode profile-button hover removed */
+
+/* ================================
+   SCROLL BUTTONS
+   ================================ */
+
+.scroll-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+}

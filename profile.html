@@ -25,7 +25,11 @@
 
 <body>
 
-<button type="button" onclick="location.href='index.html'">Back</button>
+<h1><img src="art/ckp88_orig.png" alt="Profile"></h1>
+
+<p>
+  <button type="button" onclick="location.href='index.html'">Back to Forum</button>
+</p>
 
 <main class="profile-container">
 
@@ -70,7 +74,7 @@
   </table>
 </section>
 
-
+<h2>Notes</h2>
     <!-- Notes -->
     <div class="profile-notes">
       <p>
@@ -94,6 +98,11 @@ I also have a long-running attachment to Charmmy Kitty. It’s something familia
   </section>
 
 </main>
+
+<div class="scroll-buttons">
+  <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Top</button>
+  <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Bottom</button>
+</div>
 
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
