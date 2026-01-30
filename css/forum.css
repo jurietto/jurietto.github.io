@@ -101,7 +101,7 @@
 .forum-media video,
 .forum-media audio,
 iframe.forum-media,
-video.forum-media,
+videos.forum-media,
 audio.forum-media {
   width: min(560px, 100%);
   max-width: 100%;
@@ -142,10 +142,16 @@ iframe.forum-media.audio {
 .forum-comment .forum-body a,
 .forum-reply .forum-body a,
 .forum-reply-nested .forum-body a {
-  color: inherit;
-  text-decoration: underline;
+  color: inherit; /* Match the color of the surrounding text */
+  text-decoration: underline; /* Always underline */
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
+}
+
+.forum-comment .forum-body a[target="_blank"],
+.forum-reply .forum-body a[target="_blank"],
+.forum-reply-nested .forum-body a[target="_blank"] {
+  target-new: new; /* Indication to open links in new tab */
 }
 
 /* ================================
