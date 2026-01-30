@@ -117,6 +117,7 @@ function renderAttachmentPreview(input, preview) {
     const removeButton = document.createElement("button");
     removeButton.type = "button";
     removeButton.textContent = "Delete";
+    removeButton.style.width = "100%";
     removeButton.addEventListener("click", () => {
       const dt = new DataTransfer();
       files.forEach((existingFile, fileIndex) => {
