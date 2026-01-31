@@ -24,6 +24,30 @@ async function initForumAdmin() {
   let currentDirection = "next";
 
   async function waitForReady(timeout = 5000) {
+  const start = Date.now();
+
+  while (true) {
+    const container = document.getElementById("forum-comments");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    console.log("Checking readiness...");
+    console.log("Admin Ready:", window.__ADMIN_READY__);
+    console.log("Database:", window.db);
+    console.log("Container:", container);
+    console.log("Previous Button:", prevBtn);
+    console.log("Next Button:", nextBtn);
+
+    if (window.__ADMIN_READY__ && window.db && container && prevBtn && nextBtn) {
+      return { db: window.db, container, prevBtn, nextBtn };
+    }
+
+    if (Date.now() - start > timeout) {
+      throw new Error("Forum admin not ready — missing DOM or auth/db");
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 100)); // Wait a bit before checking again
+  }
     const start = Date.now();
 
     while (true) {
