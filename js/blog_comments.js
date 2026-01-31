@@ -3,7 +3,8 @@ import {
   query,
   orderBy,
   getDocs,
-  addDoc
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { uploadFile } from "./storage.js";
 
@@ -406,7 +407,7 @@ export function setupCommentForm(postId, firebaseDb) {
         text,
         media,
         hashtags: [],
-        createdAt: Date.now()
+        createdAt: serverTimestamp()
       });
 
       commentText.value = "";
