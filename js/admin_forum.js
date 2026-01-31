@@ -4,8 +4,17 @@ import {
   orderBy,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  limit,
+  startAfter,
+  endBefore
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+/* =====================
+   CONFIG
+   ===================== */
+
+const PAGE_SIZE = 20;
 
 /* =====================
    WAIT FOR ADMIN
@@ -30,21 +39,59 @@ const db = window.db;
    ===================== */
 
 const container = document.getElementById("forum-comments");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+
 container.innerHTML = "<p>Loading forum…</p>";
 
 /* =====================
-   LOAD & GROUP COMMENTS
+   PAGINATION STATE
    ===================== */
 
-async function loadForum() {
+let firstVisible = null;
+let lastVisible = null;
+let currentDirection = "next";
+
+/* =====================
+   LOAD FORUM
+   ===================== */
+
+async function loadForum(direction = "next") {
   container.innerHTML = "";
 
-  const q = query(
+  let q = query(
     collectionGroup(db, "comments"),
-    orderBy("createdAt", "desc") // ✅ MATCHES INDEX
+    orderBy("createdAt", "desc"),
+    limit(PAGE_SIZE)
   );
 
+  if (direction === "next" && lastVisible) {
+    q = query(
+      collectionGroup(db, "comments"),
+      orderBy("createdAt", "desc"),
+      startAfter(lastVisible),
+      limit(PAGE_SIZE)
+    );
+  }
+
+  if (direction === "prev" && firstVisible) {
+    q = query(
+      collectionGroup(db, "comments"),
+      orderBy("createdAt", "desc"),
+      endBefore(firstVisible),
+      limit(PAGE_SIZE)
+    );
+  }
+
   const snap = await getDocs(q);
+
+  if (snap.empty) {
+    container.innerHTML = "<p>No more comments.</p>";
+    return;
+  }
+
+  firstVisible = snap.docs[0];
+  lastVisible = snap.docs[snap.docs.length - 1];
 
   const threads = {};
 
@@ -61,14 +108,8 @@ async function loadForum() {
     });
   });
 
-  if (!Object.keys(threads).length) {
-    container.innerHTML = "<p>No comments found.</p>";
-    return;
-  }
-
   for (const threadId in threads) {
     const threadBox = document.createElement("div");
-    threadBox.className = "admin-thread";
     threadBox.style.border = "1px solid #444";
     threadBox.style.padding = "10px";
     threadBox.style.marginBottom = "25px";
@@ -81,15 +122,13 @@ async function loadForum() {
 
     topLevel.forEach(c => {
       const commentEl = document.createElement("div");
-      commentEl.className = "admin-comment";
       commentEl.style.marginBottom = "12px";
-      commentEl.style.paddingBottom = "8px";
       commentEl.style.borderBottom = "1px dashed #333";
 
       commentEl.innerHTML = `
         <strong>${c.user}</strong>
         <p>${c.text}</p>
-        ${c.media ? `<img src="${c.media}" style="max-width:200px;display:block;margin:6px 0;">` : ""}
+        ${c.media ? `<img src="${c.media}" style="max-width:200px;margin:6px 0;">` : ""}
         <button class="delete-comment">Delete comment</button>
       `;
 
@@ -101,31 +140,28 @@ async function loadForum() {
         }
 
         await deleteDoc(doc(db, c.path));
-        loadForum();
+        loadForum(currentDirection);
       };
 
-      // replies
       replies
         .filter(r => r.replyTo === c.id)
         .forEach(r => {
           const replyEl = document.createElement("div");
-          replyEl.className = "admin-reply";
           replyEl.style.marginLeft = "20px";
-          replyEl.style.marginTop = "6px";
-          replyEl.style.paddingLeft = "10px";
           replyEl.style.borderLeft = "2px solid #666";
+          replyEl.style.paddingLeft = "10px";
 
           replyEl.innerHTML = `
             <strong>${r.user}</strong>
             <p>${r.text}</p>
-            ${r.media ? `<img src="${r.media}" style="max-width:150px;display:block;margin:4px 0;">` : ""}
+            ${r.media ? `<img src="${r.media}" style="max-width:150px;">` : ""}
             <button class="delete-reply">Delete reply</button>
           `;
 
           replyEl.querySelector(".delete-reply").onclick = async () => {
-            if (!confirm("Delete this reply?")) return;
+            if (!confirm("Delete reply?")) return;
             await deleteDoc(doc(db, r.path));
-            loadForum();
+            loadForum(currentDirection);
           };
 
           commentEl.appendChild(replyEl);
@@ -137,5 +173,23 @@ async function loadForum() {
     container.appendChild(threadBox);
   }
 }
+
+/* =====================
+   CONTROLS
+   ===================== */
+
+nextBtn.onclick = () => {
+  currentDirection = "next";
+  loadForum("next");
+};
+
+prevBtn.onclick = () => {
+  currentDirection = "prev";
+  loadForum("prev");
+};
+
+/* =====================
+   INITIAL LOAD
+   ===================== */
 
 loadForum();
