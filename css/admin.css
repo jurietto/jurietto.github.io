@@ -1,0 +1,17 @@
+/* ================================
+   FORM SIZING (CONSISTENT WITH FORUM)
+   ================================ */
+
+#blog-admin input,
+#blog-admin textarea,
+#blog-admin button {
+  max-width: 100%;
+  width: min(100%, 32rem);
+  box-sizing: border-box;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#blog-admin p {
+  margin: 0 0 0.5rem;
+}

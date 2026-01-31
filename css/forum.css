@@ -173,15 +173,6 @@ iframe.forum-media.audio {
   tab-size: 4;
 }
 
-#forum-search input,
-#post-form input,
-#post-form textarea,
-.reply-form textarea {
-  max-width: 100%;
-  width: min(100%, 32rem);
-  box-sizing: border-box;
-}
-
 .attachment-preview {
   margin-top: 6px;
 }

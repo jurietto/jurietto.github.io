@@ -213,24 +213,13 @@ select {
 }
 
 @media (max-width: 720px) {
-  body {
-    padding: 0 12px;
+  .scroll-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 9999;
   }
-}
-
-
-/* dark-mode profile-button hover removed */
-
-/* ================================
-   SCROLL BUTTONS
-   ================================ */
-
-.scroll-buttons {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 9999;
 }
