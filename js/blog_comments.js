@@ -265,6 +265,32 @@ function renderMedia(media, parent) {
       if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
         return `<audio class="forum-media audio" src="${url}" controls></audio>`;
 
+      const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+      if (yt)
+        return `<iframe class="forum-media video"
+                src="https://www.youtube.com/embed/${yt[1]}"
+                loading="lazy" allowfullscreen></iframe>`;
+
+      const ytShorts = url.match(/youtube\.com\/shorts\/([\w-]+)/);
+      if (ytShorts)
+        return `<iframe class="forum-media video"
+                src="https://www.youtube.com/embed/${ytShorts[1]}"
+                loading="lazy" allowfullscreen></iframe>`;
+
+      if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
+        const encoded = encodeURIComponent(url);
+        return `<iframe class="forum-media audio" loading="lazy"
+                src="https://w.soundcloud.com/player/?url=${encoded}"></iframe>`;
+      }
+
+      if (/spotify\.com\//i.test(url)) {
+        const match = url.match(/spotify\.com\/([^/?]+)\/([\w-]+)/i);
+        if (match) {
+          return `<iframe class="forum-media audio" loading="lazy"
+                  src="https://open.spotify.com/embed/${match[1]}/${match[2]}"></iframe>`;
+        }
+      }
+
       return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     } catch {
       return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
