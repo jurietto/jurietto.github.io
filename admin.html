@@ -3,48 +3,35 @@
 <head>
   <meta charset="utf-8">
   <title>Admin</title>
-  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
-  <h1>Admin Panel</h1>
+  <h1>🌸 Admin Panel</h1>
 
-  <button id="login">Sign in with GitHub</button>
+  <!-- Login Button -->
+  <p><button id="login">Sign in with GitHub</button></p>
 
+  <!-- Hidden editor area, shown after login -->
   <div id="editor" hidden>
 
-    <!-- =====================
-         BLOG EDITOR
-         ===================== -->
+    <!-- ─────────────────────
+         📒 Blog Post Editor
+         ───────────────────── -->
     <section id="blog-admin">
-      <h2>Write blog post</h2>
+      <h2>Write a New Blog Post</h2>
 
-      <label for="title" class="visually-hidden">Post title</label>
-      <input
-        id="title"
-        type="text"
-        placeholder="Post title"
-        style="width: 100%; max-width: 600px;"
-      ><br><br>
-
-      <label for="content" class="visually-hidden">Post content</label>
-      <textarea
-        id="content"
-        placeholder="Write your post here…"
-        rows="10"
-        style="width: 100%; max-width: 600px;"
-      ></textarea><br><br>
-
-      <button id="publish">Publish post</button>
+      <p><input id="title" placeholder="Post title"></p>
+      <p><textarea id="content" placeholder="Write your post here…" rows="10"></textarea></p>
+      <p><button id="publish">Publish post</button></p>
     </section>
 
     <hr>
 
-    <!-- =====================
-         BLOG MANAGEMENT
-         ===================== -->
+    <!-- ─────────────────────
+         📚 Blog Post Manager
+         ───────────────────── -->
     <section id="blog-manage">
-      <h2>Blog posts</h2>
+      <h2>Manage Blog Posts</h2>
       <div id="blog-posts">
         <p>Loading…</p>
       </div>
@@ -52,19 +39,19 @@
 
     <hr>
 
-    <!-- =====================
-         FORUM MODERATION
-         ===================== -->
+    <!-- ─────────────────────
+         🛠 Forum Moderation
+         ───────────────────── -->
     <section id="forum-admin">
-      <h2>Forum moderation</h2>
+      <h2>Moderate Forum Threads</h2>
 
-      <!-- Pagination controls -->
-      <div id="forum-pagination" style="margin-bottom: 1em;">
-        <button id="prev" type="button">← Previous</button>
-        <button id="next" type="button">Next →</button>
-      </div>
+      <!-- Pagination Controls -->
+      <p id="forum-pagination">
+        <button id="prev">← Prev</button>
+        <button id="next">Next →</button>
+      </p>
 
-      <!-- Comments container -->
+      <!-- Comment Threads -->
       <div id="forum-comments">
         <p>Loading…</p>
       </div>
@@ -72,13 +59,9 @@
 
   </div>
 
-  <!-- Core admin logic (auth + publish) -->
+  <!-- Scripts -->
   <script type="module" src="js/admin.js"></script>
-
-  <!-- Forum moderation (grouped comments + replies + images) -->
   <script type="module" src="js/admin_forum.js"></script>
-
-  <!-- Blog delete management -->
   <script type="module" src="js/admin_blog.js"></script>
 
 </body>
