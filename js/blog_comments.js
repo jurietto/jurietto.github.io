@@ -228,3 +228,43 @@ export function showCommentSection(show = true) {
     commentsSection.hidden = !show;
   }
 }
+
+async function postComment() {
+  const username = document.getElementById('username').value.trim() || 'Anonymous';
+  const text = document.getElementById('text').value.trim();
+  const fileInput = document.getElementById('file');
+
+  if (!text) {
+    alert('Please enter a comment.');
+    return;
+  }
+
+  try {
+    const commentData = {
+      user: username,
+      text: text,
+      createdAt: Date.now()
+    };
+
+    // Handle file uploads if present
+    if (fileInput.files.length > 0) {
+      const mediaUrls = await uploadMedia(fileInput.files);
+      if (mediaUrls.length > 0) {
+        commentData.media = mediaUrls;
+      }
+    }
+
+    const postId = new URLSearchParams(window.location.search).get('id');
+    const docRef = db.collection('blogPosts').doc(postId).collection('comments').doc();
+    
+    await docRef.set(commentData);
+
+    document.getElementById('text').value = '';
+    fileInput.value = '';
+    document.getElementById('file-label').textContent = 'No file chosen';
+
+    await loadComments();
+  } catch (error) {
+    console.error('Error posting comment:', error);
+  }
+}
