@@ -20,7 +20,6 @@ const PAGE_SIZE = 20;
    ===================== */
 async function waitForReady(timeout = 5000) {
   const start = Date.now();
-
   while (true) {
     const container = document.getElementById("forum-comments");
     const prevBtn = document.getElementById("prev");
@@ -31,18 +30,14 @@ async function waitForReady(timeout = 5000) {
     }
 
     if (Date.now() - start > timeout) {
-      console.error("Forum admin elements not found");
-      return null;
+      throw new Error("Forum admin not ready — missing DOM or auth/db");
     }
 
     await new Promise(r => setTimeout(r, 50));
   }
 }
 
-const state = await waitForReady();
-if (!state) return;
-
-const { db, container, prevBtn, nextBtn } = state;
+const { db, container, prevBtn, nextBtn } = await waitForReady();
 
 /* =====================
    PAGINATION STATE
@@ -64,21 +59,11 @@ async function loadForum(direction = "next") {
   );
 
   if (direction === "next" && lastVisible) {
-    q = query(
-      collectionGroup(db, "comments"),
-      orderBy("createdAt", "desc"),
-      startAfter(lastVisible),
-      limit(PAGE_SIZE)
-    );
+    q = query(q, startAfter(lastVisible));
   }
 
   if (direction === "prev" && firstVisible) {
-    q = query(
-      collectionGroup(db, "comments"),
-      orderBy("createdAt", "desc"),
-      endBefore(firstVisible),
-      limit(PAGE_SIZE)
-    );
+    q = query(q, endBefore(firstVisible));
   }
 
   const snap = await getDocs(q);
@@ -93,15 +78,15 @@ async function loadForum(direction = "next") {
 
   const threads = {};
 
-  snap.forEach(d => {
-    const data = d.data();
-    const threadId = d.ref.path.split("/")[1];
+  snap.forEach(docSnap => {
+    const data = docSnap.data();
+    const threadId = docSnap.ref.path.split("/")[1];
 
     if (!threads[threadId]) threads[threadId] = [];
 
     threads[threadId].push({
-      id: d.id,
-      path: d.ref.path,
+      id: docSnap.id,
+      path: docSnap.ref.path,
       ...data
     });
   });
@@ -153,6 +138,7 @@ async function loadForum(direction = "next") {
           replyEl.style.marginLeft = "20px";
           replyEl.style.borderLeft = "2px solid #666";
           replyEl.style.paddingLeft = "10px";
+          replyEl.style.marginTop = "6px";
 
           replyEl.innerHTML = `
             <strong>${r.user}</strong>
