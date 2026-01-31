@@ -19,12 +19,15 @@
     <section id="blog-admin">
       <h2>Write blog post</h2>
 
+      <label for="title" class="visually-hidden">Post title</label>
       <input
         id="title"
+        type="text"
         placeholder="Post title"
         style="width: 100%; max-width: 600px;"
       ><br><br>
 
+      <label for="content" class="visually-hidden">Post content</label>
       <textarea
         id="content"
         placeholder="Write your post here…"
@@ -55,13 +58,13 @@
     <section id="forum-admin">
       <h2>Forum moderation</h2>
 
-      <!-- Pagination buttons -->
+      <!-- Pagination controls -->
       <div id="forum-pagination" style="margin-bottom: 1em;">
-        <button id="prev">Prev</button>
-        <button id="next">Next</button>
+        <button id="prev" type="button">← Previous</button>
+        <button id="next" type="button">Next →</button>
       </div>
 
-      <!-- Forum content container -->
+      <!-- Comments container -->
       <div id="forum-comments">
         <p>Loading…</p>
       </div>
