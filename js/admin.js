@@ -93,19 +93,27 @@ onAuthStateChanged(auth, user => {
 publishBtn?.addEventListener("click", async () => {
   const titleEl = document.getElementById("title");
   const contentEl = document.getElementById("content");
+  const hashtagsEl = document.getElementById("hashtags");
 
   const title = titleEl.value.trim();
   const content = contentEl.value.trim();
+  const hashtagsRaw = hashtagsEl.value.trim();
 
   if (!title || !content) {
     alert("Title and content required.");
     return;
   }
 
+  // Parse hashtags
+  const hashtags = hashtagsRaw
+    ? hashtagsRaw.split(/\s+/).filter(tag => tag.startsWith("#"))
+    : [];
+
   try {
     await addDoc(collection(db, "blogPosts"), {
       title,
       content,
+      hashtags,
       author: "Juri",
       published: true,
       createdAt: serverTimestamp()
@@ -115,6 +123,7 @@ publishBtn?.addEventListener("click", async () => {
 
     titleEl.value = "";
     contentEl.value = "";
+    hashtagsEl.value = "";
   } catch (err) {
     console.error(err);
     alert("Failed to publish post.");

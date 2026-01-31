@@ -56,26 +56,10 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
   </p>
 </div>
 
-<div id="post-form">
-  <p>
-    Name<br>
-    <input id="username" size="40" placeholder="Anonymous">
-  </p>
-  <p>
-    Post<br>
-    <textarea id="text" rows="5" cols="50"></textarea>
-  </p>
-  <p>
-    Attachment (up to 10 images)<br>
-    <input id="file" type="file" accept="image/*" multiple>
-    <br><small>You can also paste or drop images from your clipboard.</small>
-  </p>
-  <p>
-    <button id="post" type="button">Post</button>
-  </p>
-</div>
-
-<div id="forum-notice" class="forum-notice" role="status" aria-live="polite" hidden></div>
+<h2>Profile</h2>
+<p>
+  <button type="button" onclick="location.href='profile.html'">About me</button>
+</p>
 <div id="comments" aria-live="polite"></div>
 <div id="pagination" aria-label="Pagination"></div>
 
@@ -87,6 +71,11 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
   <button type="button" onclick="location.href='profile.html'">About me</button>
 </p>
 
+<h2>Writings</h2>
+<p>
+  <button type="button" onclick="location.href='blog.html'">Blog</button>
+</p>
+
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
   Thanks for stopping by... Juri made this, 2026
@@ -94,7 +83,7 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 
 <div class="scroll-buttons">
   <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Top</button>
-  <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Bottom</button>
+  <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Down</button>
 </div>
 
 <script type="module" src="js/changelog.js"></script>

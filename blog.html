@@ -35,12 +35,60 @@
     <button type="button" onclick="location.href='/profile.html'">Profile</button>
   </p>
 
-  <main>
+  <h2>Writings</h2>
 
+  <div id="blog-search">
+    <p>
+      Search<br>
+      <input id="blog-search-input" type="search" size="40" placeholder="Search posts">
+      <button id="blog-search-button" type="button">Search</button>
+      <button id="blog-search-clear" type="button">Clear</button>
+    </p>
+  </div>
+
+  <main>
     <div id="posts">
       <p>Loading posts…</p>
     </div>
   </main>
+
+  <div id="pagination" aria-label="Pagination"></div>
+
+  <!-- Comments Section (will be populated by JS) -->
+  <div id="comments-section" hidden>
+    <h2>Comments</h2>
+    <p>
+      Feel free to comment, be nice!
+    </p>
+
+    <p>
+      Tip: Tenor embeds only work with <strong>direct GIF links</strong>.<br>
+      Open a GIF on Tenor → right-click the image → copy the image address
+      (the URL must end in <code>.gif</code>).<br>
+      Do not paste the Tenor page link — it won't embed.
+    </p>
+
+    <div id="comment-form">
+      <p>
+        Name<br>
+        <input id="comment-username" size="40" placeholder="Anonymous">
+      </p>
+      <p>
+        Comment<br>
+        <textarea id="comment-text" rows="5" cols="50"></textarea>
+      </p>
+      <p>
+        Attachment (up to 10 images)<br>
+        <input id="comment-file" type="file" accept="image/*" multiple>
+        <br><small>You can also paste or drop images from your clipboard.</small>
+      </p>
+      <p>
+        <button id="comment-submit" type="button">Post</button>
+      </p>
+    </div>
+
+    <div id="comments"></div>
+  </div>
 
   <!-- FOOTER (shared language) -->
   <div class="text-divider" aria-hidden="true"></div>
@@ -51,11 +99,12 @@
   <!-- SCROLL BUTTONS (shared) -->
   <div class="scroll-buttons">
     <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Top</button>
-    <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Bottom</button>
+    <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Down</button>
   </div>
 
   <!-- BLOG SCRIPT ONLY -->
   <script type="module" src="/js/blog.js"></script>
+  <script type="module" src="/js/blog_comments.js"></script>
 
 </body>
 </html>
