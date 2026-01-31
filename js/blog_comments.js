@@ -3,8 +3,7 @@ import {
   query,
   orderBy,
   getDocs,
-  addDoc,
-  serverTimestamp
+  addDoc
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { uploadFile } from "./storage.js";
 
@@ -14,6 +13,7 @@ let db;
 const commentsSection = document.getElementById("comments-section");
 const commentsEl = document.getElementById("comments");
 const commentForm = document.getElementById("comment-form");
+const notice = document.getElementById("blog-notice");
 const commentUsername = document.getElementById("comment-username");
 const commentText = document.getElementById("comment-text");
 const commentFile = document.getElementById("comment-file");
@@ -30,6 +30,188 @@ const formatDate = (ts) =>
     : ts.seconds
     ? new Date(ts.seconds * 1000).toLocaleString()
     : "";
+
+function showNoticeMessage(message) {
+  if (!message) return;
+  if (!notice) {
+    alert(message);
+    return;
+  }
+  notice.textContent = message;
+  notice.hidden = false;
+}
+
+function getSelectedImages(input) {
+  const files = Array.from(input?.files || []);
+  if (!files.length) return { files: [] };
+  const nonImages = files.filter(file => !file.type.startsWith("image/"));
+  if (nonImages.length) {
+    return { error: "Please choose image files only." };
+  }
+  if (files.length > MAX_IMAGES) {
+    return { error: `You can upload up to ${MAX_IMAGES} images at a time.` };
+  }
+  return { files };
+}
+
+function syncInputImages(input) {
+  const files = Array.from(input?.files || []);
+  if (!files.length) return [];
+  const images = files.filter(file => file.type.startsWith("image/"));
+  const nonImages = files.length - images.length;
+
+  if (nonImages) {
+    showNoticeMessage("Please choose image files only.");
+  }
+
+  if (images.length > MAX_IMAGES) {
+    showNoticeMessage(`You can upload up to ${MAX_IMAGES} images at a time.`);
+  }
+
+  const trimmed = images.slice(0, MAX_IMAGES);
+  if (trimmed.length !== files.length) {
+    const dt = new DataTransfer();
+    trimmed.forEach(file => dt.items.add(file));
+    input.files = dt.files;
+  }
+
+  return trimmed;
+}
+
+function appendImagesToInput(input, files) {
+  if (!input) return { added: 0 };
+  const existing = Array.from(input.files || []);
+  const images = files.filter(file => file?.type?.startsWith("image/"));
+  if (!images.length) return { added: 0 };
+
+  const remaining = MAX_IMAGES - existing.length;
+  if (remaining <= 0) {
+    return { error: `You can upload up to ${MAX_IMAGES} images at a time.` };
+  }
+
+  const addedFiles = images.slice(0, remaining);
+  const dt = new DataTransfer();
+  [...existing, ...addedFiles].forEach(file => dt.items.add(file));
+  input.files = dt.files;
+
+  return {
+    added: addedFiles.length,
+    dropped: images.length - addedFiles.length
+  };
+}
+
+function createAttachmentPreview(input) {
+  if (!input) return null;
+  const preview = document.createElement("div");
+  preview.className = "attachment-preview";
+  preview.hidden = true;
+  input.insertAdjacentElement("afterend", preview);
+  return preview;
+}
+
+function renderAttachmentPreview(input, preview) {
+  if (!preview || !input) return;
+  const files = Array.from(input.files || []);
+  preview.innerHTML = "";
+
+  if (!files.length) {
+    preview.hidden = true;
+    return;
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "attachment-preview-grid";
+
+  files.forEach((file, index) => {
+    if (!file.type.startsWith("image/")) return;
+    const item = document.createElement("div");
+    item.className = "attachment-preview-item";
+    const img = document.createElement("img");
+    const url = URL.createObjectURL(file);
+    img.src = url;
+    img.alt = file.name || "Attachment preview";
+    img.onload = () => URL.revokeObjectURL(url);
+    item.appendChild(img);
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.textContent = "Delete";
+    removeButton.style.width = "100%";
+    removeButton.addEventListener("click", () => {
+      const dt = new DataTransfer();
+      files.forEach((existingFile, fileIndex) => {
+        if (fileIndex !== index) {
+          dt.items.add(existingFile);
+        }
+      });
+      input.files = dt.files;
+      renderAttachmentPreview(input, preview);
+    });
+    item.appendChild(removeButton);
+    grid.appendChild(item);
+  });
+
+  preview.appendChild(grid);
+  preview.hidden = grid.children.length === 0;
+}
+
+function handlePasteImages(event, input, preview) {
+  const items = Array.from(event.clipboardData?.items || []);
+  const files = items
+    .filter(item => item.kind === "file")
+    .map(item => item.getAsFile())
+    .filter(Boolean);
+
+  if (!files.length) return;
+
+  const result = appendImagesToInput(input, files);
+  if (result.error) {
+    showNoticeMessage(result.error);
+    return;
+  }
+
+  if (result.added) {
+    event.preventDefault();
+    const message = result.dropped
+      ? `Added ${result.added} image(s). ${result.dropped} extra image(s) skipped (max ${MAX_IMAGES}).`
+      : `Added ${result.added} image(s) from clipboard.`;
+    showNoticeMessage(message);
+  }
+
+  syncInputImages(input);
+  renderAttachmentPreview(input, preview);
+}
+
+function handleDropImages(event, input, preview) {
+  const files = Array.from(event.dataTransfer?.files || []);
+  if (!files.length) return;
+  event.preventDefault();
+
+  const images = files.filter(file => file.type.startsWith("image/"));
+  if (!images.length) {
+    showNoticeMessage("Please choose image files only.");
+    return;
+  }
+
+  if (images.length !== files.length) {
+    showNoticeMessage("Please choose image files only.");
+  }
+
+  const result = appendImagesToInput(input, images);
+  if (result.error) {
+    showNoticeMessage(result.error);
+    return;
+  }
+
+  if (result.added) {
+    const message = result.dropped
+      ? `Added ${result.added} image(s). ${result.dropped} extra image(s) skipped (max ${MAX_IMAGES}).`
+      : `Added ${result.added} image(s) from drop.`;
+    showNoticeMessage(message);
+  }
+
+  syncInputImages(input);
+  renderAttachmentPreview(input, preview);
+}
 
 function renderHashtags(hashtags) {
   if (!hashtags || hashtags.length === 0) {
@@ -177,30 +359,45 @@ export function setupCommentForm(postId, firebaseDb) {
   const newBtn = commentSubmit.cloneNode(true);
   commentSubmit.parentNode.replaceChild(newBtn, commentSubmit);
 
+  let preview = null;
+  if (commentFile) {
+    preview = createAttachmentPreview(commentFile);
+    commentFile.addEventListener("change", () => {
+      syncInputImages(commentFile);
+      renderAttachmentPreview(commentFile, preview);
+    });
+  }
+
+  if (commentForm) {
+    commentForm.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = "copy";
+    });
+    commentForm.addEventListener("drop", (event) => handleDropImages(event, commentFile, preview));
+  }
+
+  if (commentText) {
+    commentText.addEventListener("paste", (event) => handlePasteImages(event, commentFile, preview));
+  }
+
   newBtn.addEventListener("click", async () => {
     const user = commentUsername.value.trim() || "Anonymous";
     const text = commentText.value.trim();
-    const files = Array.from(commentFile?.files || []);
-
-    if (!text && files.length === 0) {
-      alert("Comment cannot be empty.");
+    const selection = getSelectedImages(commentFile);
+    if (selection.error) {
+      showNoticeMessage(selection.error);
       return;
     }
 
-    const nonImages = files.filter(file => !file.type.startsWith("image/"));
-    if (nonImages.length) {
-      alert("Please choose image files only.");
-      return;
-    }
-
-    if (files.length > MAX_IMAGES) {
-      alert(`You can upload up to ${MAX_IMAGES} images at a time.`);
+    if (!text && selection.files.length === 0) {
+      showNoticeMessage("Comment cannot be empty.");
       return;
     }
 
     try {
-      const media = files.length
-        ? await Promise.all(files.map(uploadFile))
+      newBtn.disabled = true;
+      const media = selection.files.length
+        ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
       const commentsRef = collection(db, "blogPosts", postId, "comments");
@@ -209,16 +406,19 @@ export function setupCommentForm(postId, firebaseDb) {
         text,
         media,
         hashtags: [],
-        createdAt: serverTimestamp()
+        createdAt: Date.now()
       });
 
       commentText.value = "";
       if (commentFile) commentFile.value = "";
+      renderAttachmentPreview(commentFile, preview);
       localStorage.setItem("blog_username", user);
       await loadComments(postId, db);
     } catch (err) {
       console.error("Error posting comment:", err);
       alert("Failed to post comment.");
+    } finally {
+      newBtn.disabled = false;
     }
   });
 }
@@ -226,45 +426,5 @@ export function setupCommentForm(postId, firebaseDb) {
 export function showCommentSection(show = true) {
   if (commentsSection) {
     commentsSection.hidden = !show;
-  }
-}
-
-async function postComment() {
-  const username = document.getElementById('username').value.trim() || 'Anonymous';
-  const text = document.getElementById('text').value.trim();
-  const fileInput = document.getElementById('file');
-
-  if (!text) {
-    alert('Please enter a comment.');
-    return;
-  }
-
-  try {
-    const commentData = {
-      user: username,
-      text: text,
-      createdAt: Date.now()
-    };
-
-    // Handle file uploads if present
-    if (fileInput.files.length > 0) {
-      const mediaUrls = await uploadMedia(fileInput.files);
-      if (mediaUrls.length > 0) {
-        commentData.media = mediaUrls;
-      }
-    }
-
-    const postId = new URLSearchParams(window.location.search).get('id');
-    const docRef = db.collection('blogPosts').doc(postId).collection('comments').doc();
-    
-    await docRef.set(commentData);
-
-    document.getElementById('text').value = '';
-    fileInput.value = '';
-    document.getElementById('file-label').textContent = 'No file chosen';
-
-    await loadComments();
-  } catch (error) {
-    console.error('Error posting comment:', error);
   }
 }
