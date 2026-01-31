@@ -39,7 +39,7 @@ if (snapshot.empty) {
 
 const docs = snapshot.docs.filter(doc => doc.data().published);
 
-docs.forEach((doc, i) => {
+docs.forEach(doc => {
   const post = doc.data();
   const dateStr = post.createdAt?.toDate?.().toLocaleString?.() || "";
 
@@ -49,17 +49,6 @@ docs.forEach((doc, i) => {
     <div class="post-date">${dateStr}</div>
     <div>${post.content.replace(/\n/g, "<br>")}</div>
   `;
-  postsEl.appendChild(article);
 
-  // Divider (not after last post)
-  if (i < docs.length - 1) {
-    const divider = document.createElement("div");
-    divider.className = "blog-divider";
-    divider.innerHTML = `
-      ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ 
-      <span class="divider-text">お体に気をつけて</span> 
-      ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥
-    `;
-    postsEl.appendChild(divider);
-  }
+  postsEl.appendChild(article);
 });

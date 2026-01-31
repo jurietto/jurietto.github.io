@@ -152,9 +152,14 @@ select {
 .text-divider {
   border-top: 1px solid currentColor;
   box-sizing: border-box;
-  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  margin: 24px 0;
   overflow: hidden;
   padding-top: 12px;
+  text-align: center;
   white-space: nowrap;
   width: 100%;
 }
@@ -162,6 +167,8 @@ select {
 .text-divider::before {
   content: "🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ 🎀 ♡ ♤ ♧ ♢ ";
   display: inline-block;
+  font-size: clamp(0.55rem, 1vw, 0.9rem);
+  line-height: 1;
   white-space: nowrap;
 }
 

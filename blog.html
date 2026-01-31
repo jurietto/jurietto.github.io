@@ -1,18 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Blog</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>🍭(¬‿¬) 凸 — Blog</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="🍭(¬‿¬) 凸">
+  <meta property="og:description" content="Life stuff and writings .">
+  <meta property="og:image" content="https://raw.githubusercontent.com/jurietto/jurietto.github.io/refs/heads/main/art/ckp88_orig.png">
+  <meta property="og:url" content="https://jurietto.github.io/blog.html">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🍭(¬‿¬) 凸">
+  <meta name="twitter:description" content="Life stuff and writings .">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/jurietto/jurietto.github.io/refs/heads/main/art/ckp88_orig.png">
+
+  <link rel="preload" href="/font/mona.woff" as="font" type="font/woff" crossorigin>
+
   <link rel="stylesheet" href="/css/global.css">
   <link rel="stylesheet" href="/css/blog.css">
 </head>
+
 <body>
 
+  <!-- HEADER (matches forum + profile) -->
+  <h1><img src="/art/ckp88_orig.png" alt="Blog"></h1>
+
+  <p>
+    <button type="button" onclick="location.href='/index.html'">Back to Forum</button>
+    <button type="button" onclick="location.href='/profile.html'">Profile</button>
+  </p>
+
   <main>
-    <h1>Stuff (</h1>
-    <div id="posts"><p>Loading posts…</p></div>
+
+    <div id="posts">
+      <p>Loading posts…</p>
+    </div>
   </main>
 
+  <!-- FOOTER (shared language) -->
+  <div class="text-divider" aria-hidden="true"></div>
+  <footer class="site-footer">
+    Thanks for stopping by... Juri made this, 2026
+  </footer>
+
+  <!-- SCROLL BUTTONS (shared) -->
+  <div class="scroll-buttons">
+    <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Top</button>
+    <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Bottom</button>
+  </div>
+
+  <!-- BLOG SCRIPT ONLY -->
   <script type="module" src="/js/blog.js"></script>
+
 </body>
 </html>
