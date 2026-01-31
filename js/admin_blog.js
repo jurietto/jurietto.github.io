@@ -1,46 +1,105 @@
 import {
   collection,
+  query,
+  orderBy,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  limit,
+  startAfter,
+  endBefore
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-async function waitForAdmin() {
-  while (!window.__ADMIN_READY__ || !window.db) {
-    await new Promise(r => setTimeout(r, 50));
+const PAGE_SIZE = 1;
+
+const blogContainer = document.getElementById("blog-posts");
+const prevBtn = document.getElementById("prev-blog");
+const nextBtn = document.getElementById("next-blog");
+
+let firstVisible = null;
+let lastVisible = null;
+let currentDirection = "next";
+
+export async function loadBlogPosts(db, direction = "next") {
+  blogContainer.innerHTML = "<p>Loading blog posts…</p>";
+
+  let q = query(
+    collection(db, "blogPosts"),
+    orderBy("createdAt", "desc"),
+    limit(PAGE_SIZE)
+  );
+
+  if (direction === "next" && lastVisible) {
+    q = query(q, startAfter(lastVisible));
   }
-}
 
-await waitForAdmin();
-const db = window.db;
+  if (direction === "prev" && firstVisible) {
+    q = query(q, endBefore(firstVisible));
+  }
 
-const container = document.getElementById("blog-posts");
-container.innerHTML = "<p>Loading posts…</p>";
+  const snap = await getDocs(q);
 
-async function loadPosts() {
-  container.innerHTML = "";
+  if (snap.empty) {
+    blogContainer.innerHTML = "<p>No blog posts found.</p>";
+    return;
+  }
 
-  const snap = await getDocs(collection(db, "blogPosts"));
+  firstVisible = snap.docs[0];
+  lastVisible = snap.docs[snap.docs.length - 1];
 
-  snap.forEach(d => {
-    const data = d.data();
+  blogContainer.innerHTML = "";
 
-    const el = document.createElement("div");
-    el.style.marginBottom = "10px";
-
-    el.innerHTML = `
-      <strong>${data.title}</strong>
-      <button>Delete</button>
+  snap.forEach(docSnap => {
+    const data = docSnap.data();
+    const postDiv = document.createElement("div");
+    postDiv.className = "blog-post";
+    postDiv.innerHTML = `
+      <h3>${data.title}</h3>
+      <p><strong>By:</strong> ${data.author}</p>
+      <p>${data.content}</p>
+      <p><em>Published: ${data.published}</em></p>
+      <button class="delete-blog">Delete</button>
     `;
 
-    el.querySelector("button").onclick = async () => {
+    postDiv.querySelector(".delete-blog").onclick = async () => {
       if (!confirm("Delete this blog post?")) return;
-      await deleteDoc(doc(db, "blogPosts", d.id));
-      loadPosts();
+      await deleteDoc(doc(db, "blogPosts", docSnap.id));
+      loadBlogPosts(db, currentDirection);
     };
 
-    container.appendChild(el);
+    blogContainer.appendChild(postDiv);
   });
 }
 
-loadPosts();
+// Wait until everything is ready
+async function waitForReady(timeout = 5000) {
+  const start = Date.now();
+
+  while (true) {
+    if (window.__ADMIN_READY__ && window.db && blogContainer && prevBtn && nextBtn) {
+      return { db: window.db };
+    }
+
+    if (Date.now() - start > timeout) {
+      throw new Error("Blog admin not ready");
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+}
+
+// Init
+(async () => {
+  const { db } = await waitForReady();
+  loadBlogPosts(db);
+
+  prevBtn.onclick = () => {
+    currentDirection = "prev";
+    loadBlogPosts(db, "prev");
+  };
+
+  nextBtn.onclick = () => {
+    currentDirection = "next";
+    loadBlogPosts(db, "next");
+  };
+})();
