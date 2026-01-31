@@ -2,86 +2,195 @@ import {
   collectionGroup,
   query,
   orderBy,
-  limit,
-  startAfter,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  limit,
+  startAfter,
+  endBefore
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const db = window.db;
-  if (!db) {
-    console.error("Firestore not available");
+/* =====================
+   CONFIG
+   ===================== */
+const PAGE_SIZE = 20;
+
+/* =====================
+   WAIT FOR ADMIN + DOM
+   ===================== */
+async function waitForReady(timeout = 5000) {
+  const start = Date.now();
+
+  while (true) {
+    const container = document.getElementById("forum-comments");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    if (window.__ADMIN_READY__ && window.db && container && prevBtn && nextBtn) {
+      return { db: window.db, container, prevBtn, nextBtn };
+    }
+
+    if (Date.now() - start > timeout) {
+      console.error("Forum admin elements not found");
+      return null;
+    }
+
+    await new Promise(r => setTimeout(r, 50));
+  }
+}
+
+const state = await waitForReady();
+if (!state) return;
+
+const { db, container, prevBtn, nextBtn } = state;
+
+/* =====================
+   PAGINATION STATE
+   ===================== */
+let firstVisible = null;
+let lastVisible = null;
+let currentDirection = "next";
+
+/* =====================
+   LOAD FORUM
+   ===================== */
+async function loadForum(direction = "next") {
+  container.innerHTML = "<p>Loading forum…</p>";
+
+  let q = query(
+    collectionGroup(db, "comments"),
+    orderBy("createdAt", "desc"),
+    limit(PAGE_SIZE)
+  );
+
+  if (direction === "next" && lastVisible) {
+    q = query(
+      collectionGroup(db, "comments"),
+      orderBy("createdAt", "desc"),
+      startAfter(lastVisible),
+      limit(PAGE_SIZE)
+    );
+  }
+
+  if (direction === "prev" && firstVisible) {
+    q = query(
+      collectionGroup(db, "comments"),
+      orderBy("createdAt", "desc"),
+      endBefore(firstVisible),
+      limit(PAGE_SIZE)
+    );
+  }
+
+  const snap = await getDocs(q);
+
+  if (snap.empty) {
+    container.innerHTML = "<p>No more comments.</p>";
     return;
   }
 
-  const commentsEl = document.getElementById("forum-comments");
-  const prevBtn = document.getElementById("prev");
-  const nextBtn = document.getElementById("next");
+  firstVisible = snap.docs[0];
+  lastVisible = snap.docs[snap.docs.length - 1];
 
-  if (!commentsEl || !prevBtn || !nextBtn) {
-    console.error("Forum admin elements not found");
-    return;
-  }
+  const threads = {};
 
-  let lastVisible = null;
-  const PAGE_SIZE = 10;
+  snap.forEach(d => {
+    const data = d.data();
+    const threadId = d.ref.path.split("/")[1];
 
-  async function loadComments(startAfterDoc = null) {
-    commentsEl.innerHTML = "<p>Loading…</p>";
+    if (!threads[threadId]) threads[threadId] = [];
 
-    let q;
+    threads[threadId].push({
+      id: d.id,
+      path: d.ref.path,
+      ...data
+    });
+  });
 
-    if (startAfterDoc) {
-      q = query(
-        collectionGroup(db, "comments"),
-        orderBy("createdAt", "desc"),
-        startAfter(startAfterDoc),
-        limit(PAGE_SIZE)
-      );
-    } else {
-      q = query(
-        collectionGroup(db, "comments"),
-        orderBy("createdAt", "desc"),
-        limit(PAGE_SIZE)
-      );
-    }
+  container.innerHTML = "";
 
-    const snap = await getDocs(q);
+  for (const threadId in threads) {
+    const threadBox = document.createElement("div");
+    threadBox.className = "admin-thread";
+    threadBox.style.border = "1px solid #444";
+    threadBox.style.padding = "10px";
+    threadBox.style.marginBottom = "25px";
 
-    commentsEl.innerHTML = "";
+    threadBox.innerHTML = `<h3>Thread: ${threadId}</h3>`;
 
-    if (snap.empty) {
-      commentsEl.innerHTML = "<p>No comments.</p>";
-      return;
-    }
+    const comments = threads[threadId];
+    const topLevel = comments.filter(c => !c.replyTo);
+    const replies = comments.filter(c => c.replyTo);
 
-    lastVisible = snap.docs[snap.docs.length - 1];
+    topLevel.forEach(c => {
+      const commentEl = document.createElement("div");
+      commentEl.className = "admin-comment";
+      commentEl.style.marginBottom = "12px";
+      commentEl.style.borderBottom = "1px dashed #333";
 
-    snap.forEach(d => {
-      const data = d.data();
-
-      const div = document.createElement("div");
-      div.innerHTML = `
-        <p><strong>${data.user}</strong></p>
-        <p>${data.text}</p>
-        <button class="delete">Delete</button>
-        <hr>
+      commentEl.innerHTML = `
+        <strong>${c.user}</strong>
+        <p>${c.text}</p>
+        ${c.media ? `<img src="${c.media}" style="max-width:200px;margin:6px 0;">` : ""}
+        <button class="delete-comment">Delete comment</button>
       `;
 
-      div.querySelector(".delete").onclick = async () => {
-        if (!confirm("Delete this comment?")) return;
-        await deleteDoc(doc(db, d.ref.path));
-        loadComments();
+      commentEl.querySelector(".delete-comment").onclick = async () => {
+        if (!confirm("Delete this comment and all replies?")) return;
+
+        for (const r of replies.filter(r => r.replyTo === c.id)) {
+          await deleteDoc(doc(db, r.path));
+        }
+
+        await deleteDoc(doc(db, c.path));
+        loadForum(currentDirection);
       };
 
-      commentsEl.appendChild(div);
+      replies
+        .filter(r => r.replyTo === c.id)
+        .forEach(r => {
+          const replyEl = document.createElement("div");
+          replyEl.className = "admin-reply";
+          replyEl.style.marginLeft = "20px";
+          replyEl.style.borderLeft = "2px solid #666";
+          replyEl.style.paddingLeft = "10px";
+
+          replyEl.innerHTML = `
+            <strong>${r.user}</strong>
+            <p>${r.text}</p>
+            ${r.media ? `<img src="${r.media}" style="max-width:150px;">` : ""}
+            <button class="delete-reply">Delete reply</button>
+          `;
+
+          replyEl.querySelector(".delete-reply").onclick = async () => {
+            if (!confirm("Delete reply?")) return;
+            await deleteDoc(doc(db, r.path));
+            loadForum(currentDirection);
+          };
+
+          commentEl.appendChild(replyEl);
+        });
+
+      threadBox.appendChild(commentEl);
     });
+
+    container.appendChild(threadBox);
   }
+}
 
-  nextBtn.onclick = () => loadComments(lastVisible);
-  prevBtn.onclick = () => loadComments();
+/* =====================
+   PAGINATION BUTTONS
+   ===================== */
+nextBtn.onclick = () => {
+  currentDirection = "next";
+  loadForum("next");
+};
 
-  loadComments();
-});
+prevBtn.onclick = () => {
+  currentDirection = "prev";
+  loadForum("prev");
+};
+
+/* =====================
+   INITIAL LOAD
+   ===================== */
+loadForum();
