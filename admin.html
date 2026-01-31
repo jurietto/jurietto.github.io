@@ -7,69 +7,76 @@
 </head>
 <body>
 
-<h1>Admin Panel</h1>
+  <h1>Admin Panel</h1>
 
-<button id="login">Sign in with GitHub</button>
+  <button id="login">Sign in with GitHub</button>
 
-<div id="editor" hidden>
+  <div id="editor" hidden>
 
-  <!-- =====================
-       BLOG EDITOR
-       ===================== -->
-  <section id="blog-admin">
-    <h2>Write blog post</h2>
+    <!-- =====================
+         BLOG EDITOR
+         ===================== -->
+    <section id="blog-admin">
+      <h2>Write blog post</h2>
 
-    <input
-      id="title"
-      placeholder="Post title"
-      style="width: 100%; max-width: 600px;"
-    ><br><br>
+      <input
+        id="title"
+        placeholder="Post title"
+        style="width: 100%; max-width: 600px;"
+      ><br><br>
 
-    <textarea
-      id="content"
-      placeholder="Write your post here…"
-      rows="10"
-      style="width: 100%; max-width: 600px;"
-    ></textarea><br><br>
+      <textarea
+        id="content"
+        placeholder="Write your post here…"
+        rows="10"
+        style="width: 100%; max-width: 600px;"
+      ></textarea><br><br>
 
-    <button id="publish">Publish post</button>
-  </section>
+      <button id="publish">Publish post</button>
+    </section>
 
-  <hr>
+    <hr>
 
-  <!-- =====================
-       BLOG MANAGEMENT
-       ===================== -->
-  <section id="blog-manage">
-    <h2>Blog posts</h2>
-    <div id="blog-posts">
-      <p>Loading…</p>
-    </div>
-  </section>
+    <!-- =====================
+         BLOG MANAGEMENT
+         ===================== -->
+    <section id="blog-manage">
+      <h2>Blog posts</h2>
+      <div id="blog-posts">
+        <p>Loading…</p>
+      </div>
+    </section>
 
-  <hr>
+    <hr>
 
-  <!-- =====================
-       FORUM MODERATION
-       ===================== -->
-  <section id="forum-admin">
-    <h2>Forum moderation</h2>
+    <!-- =====================
+         FORUM MODERATION
+         ===================== -->
+    <section id="forum-admin">
+      <h2>Forum moderation</h2>
 
-    <div id="forum-comments">
-      <p>Loading…</p>
-    </div>
-  </section>
+      <!-- Pagination buttons -->
+      <div id="forum-pagination" style="margin-bottom: 1em;">
+        <button id="prev">Prev</button>
+        <button id="next">Next</button>
+      </div>
 
-</div>
+      <!-- Forum content container -->
+      <div id="forum-comments">
+        <p>Loading…</p>
+      </div>
+    </section>
 
-<!-- Core admin logic (auth + publish) -->
-<script type="module" src="js/admin.js"></script>
+  </div>
 
-<!-- Forum moderation (grouped comments + replies + images) -->
-<script type="module" src="js/admin_forum.js"></script>
+  <!-- Core admin logic (auth + publish) -->
+  <script type="module" src="js/admin.js"></script>
 
-<!-- Blog delete management -->
-<script type="module" src="js/admin_blog.js"></script>
+  <!-- Forum moderation (grouped comments + replies + images) -->
+  <script type="module" src="js/admin_forum.js"></script>
+
+  <!-- Blog delete management -->
+  <script type="module" src="js/admin_blog.js"></script>
 
 </body>
 </html>

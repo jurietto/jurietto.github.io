@@ -13,43 +13,34 @@ import {
 const PAGE_SIZE = 20;
 
 document.addEventListener("DOMContentLoaded", () => {
-  initForumAdmin();
+  initForumAdmin().catch(err => {
+    console.error("Forum admin failed to init:", err);
+  });
 });
 
 async function initForumAdmin() {
-  const { db, container, prevBtn, nextBtn } = await waitForReady();
+  // ─────────────────────────────────────────────
+  // WAIT FOR ADMIN AUTH + DB
+  // ─────────────────────────────────────────────
+  await waitForAdmin();
+
+  const db = window.db;
+  const container = document.getElementById("forum-comments");
+  if (!container) {
+    throw new Error("#forum-comments not found in DOM");
+  }
+
+  // Pagination buttons are OPTIONAL
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
 
   let firstVisible = null;
   let lastVisible = null;
   let currentDirection = "next";
 
-  async function waitForReady(timeout = 5000) {
-    const startTime = Date.now(); // Renamed from `start`
-
-    while (true) {
-      const container = document.getElementById("forum-comments");
-      const prevBtn = document.getElementById("prev");
-      const nextBtn = document.getElementById("next");
-
-      console.log("Checking readiness...");
-      console.log("Admin Ready:", window.__ADMIN_READY__);
-      console.log("Database:", window.db);
-      console.log("Container:", container);
-      console.log("Previous Button:", prevBtn);
-      console.log("Next Button:", nextBtn);
-
-      if (window.__ADMIN_READY__ && window.db && container && prevBtn && nextBtn) {
-        return { db: window.db, container, prevBtn, nextBtn };
-      }
-
-      if (Date.now() - startTime > timeout) {
-        throw new Error("Forum admin not ready — missing DOM or auth/db");
-      }
-
-      await new Promise(resolve => setTimeout(resolve, 100));
-    }
-  }
-
+  // ─────────────────────────────────────────────
+  // LOAD FORUM PAGE
+  // ─────────────────────────────────────────────
   async function loadForum(direction = "next") {
     container.innerHTML = "<p>Loading forum…</p>";
 
@@ -82,8 +73,8 @@ async function initForumAdmin() {
     snap.forEach(docSnap => {
       const data = docSnap.data();
       const threadId = docSnap.ref.path.split("/")[1];
-      if (!threads[threadId]) threads[threadId] = [];
 
+      if (!threads[threadId]) threads[threadId] = [];
       threads[threadId].push({
         id: docSnap.id,
         path: docSnap.ref.path,
@@ -108,8 +99,8 @@ async function initForumAdmin() {
       topLevel.forEach(c => {
         const commentEl = document.createElement("div");
         commentEl.className = "admin-comment";
-        commentEl.style.marginBottom = "12px";
         commentEl.style.borderBottom = "1px dashed #333";
+        commentEl.style.marginBottom = "12px";
 
         commentEl.innerHTML = `
           <strong>${c.user}</strong>
@@ -124,7 +115,6 @@ async function initForumAdmin() {
           for (const r of replies.filter(r => r.replyTo === c.id)) {
             await deleteDoc(doc(db, r.path));
           }
-
           await deleteDoc(doc(db, c.path));
           loadForum(currentDirection);
         };
@@ -137,7 +127,6 @@ async function initForumAdmin() {
             replyEl.style.marginLeft = "20px";
             replyEl.style.borderLeft = "2px solid #666";
             replyEl.style.paddingLeft = "10px";
-            replyEl.style.marginTop = "6px";
 
             replyEl.innerHTML = `
               <strong>${r.user}</strong>
@@ -162,15 +151,44 @@ async function initForumAdmin() {
     }
   }
 
-  prevBtn.onclick = () => {
-    currentDirection = "prev";
-    loadForum("prev");
-  };
+  // ─────────────────────────────────────────────
+  // PAGINATION CONTROLS (OPTIONAL)
+  // ─────────────────────────────────────────────
+  if (prevBtn) {
+    prevBtn.onclick = () => {
+      currentDirection = "prev";
+      loadForum("prev");
+    };
+  }
 
-  nextBtn.onclick = () => {
-    currentDirection = "next";
-    loadForum("next");
-  };
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      currentDirection = "next";
+      loadForum("next");
+    };
+  }
 
   loadForum();
+}
+
+// ─────────────────────────────────────────────
+// ADMIN READY WAIT (AUTH SETS THIS)
+// ─────────────────────────────────────────────
+function waitForAdmin(timeout = 5000) {
+  const start = Date.now();
+
+  return new Promise((resolve, reject) => {
+    const tick = () => {
+      if (window.__ADMIN_READY__ && window.db) {
+        resolve();
+        return;
+      }
+      if (Date.now() - start > timeout) {
+        reject(new Error("Admin auth/db not ready"));
+        return;
+      }
+      setTimeout(tick, 50);
+    };
+    tick();
+  });
 }
