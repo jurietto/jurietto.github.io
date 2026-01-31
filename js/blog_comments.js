@@ -241,61 +241,77 @@ function renderHashtags(hashtags) {
   return hashtagsEl;
 }
 
+const renderLink = (url) =>
+  `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+
+function renderEmbed(url) {
+  try {
+    const clean = url.split("?")[0];
+    const lower = clean.toLowerCase();
+
+    if (url.includes("tenor.com")) {
+      if (/\.(gif|mp4)$/i.test(clean)) {
+        return `<img class="forum-media image" src="${clean}" loading="lazy">`;
+      }
+      return renderLink(url);
+    }
+
+    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
+      return `<img class="forum-media image" src="${url}" loading="lazy">`;
+
+    if (/\.(mp4|webm|ogv|mov)$/.test(lower))
+      return `<video class="forum-media video" src="${url}" controls></video>`;
+
+    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
+      return `<audio class="forum-media audio" src="${url}" controls></audio>`;
+
+    const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+    if (yt)
+      return `<iframe class="forum-media video"
+              src="https://www.youtube.com/embed/${yt[1]}"
+              loading="lazy" allowfullscreen></iframe>`;
+
+    const ytShorts = url.match(/youtube\.com\/shorts\/([\w-]+)/);
+    if (ytShorts)
+      return `<iframe class="forum-media video"
+              src="https://www.youtube.com/embed/${ytShorts[1]}"
+              loading="lazy" allowfullscreen></iframe>`;
+
+    if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
+      const encoded = encodeURIComponent(url);
+      return `<iframe class="forum-media audio"
+              src="https://w.soundcloud.com/player/?url=${encoded}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+              loading="lazy" allow="autoplay"></iframe>`;
+    }
+
+    return renderLink(url);
+  } catch {
+    return renderLink(url);
+  }
+}
+
+function renderBodyWithEmbeds(text, target) {
+  const raw = text || "";
+  const urls = raw.match(/https?:\/\/[^\s]+/g) || [];
+  const stripped = raw.replace(/https?:\/\/[^\s]+/g, "");
+
+  if (stripped.trim()) {
+    const body = document.createElement("div");
+    body.className = "forum-body";
+    body.textContent = stripped;
+    target.appendChild(body);
+  }
+
+  urls.forEach(url => {
+    const d = document.createElement("div");
+    d.className = "forum-media-block";
+    d.innerHTML = renderEmbed(url);
+    target.appendChild(d);
+  });
+}
+
 function renderMedia(media, parent) {
   if (!media) return;
-
-  const renderEmbed = (url) => {
-    try {
-      const clean = url.split("?")[0];
-      const lower = clean.toLowerCase();
-
-      if (url.includes("tenor.com")) {
-        if (/\.(gif|mp4)$/i.test(clean)) {
-          return `<img class="forum-media image" src="${clean}" loading="lazy">`;
-        }
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-      }
-
-      if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
-        return `<img class="forum-media image" src="${url}" loading="lazy">`;
-
-      if (/\.(mp4|webm|ogv|mov)$/.test(lower))
-        return `<video class="forum-media video" src="${url}" controls></video>`;
-
-      if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
-        return `<audio class="forum-media audio" src="${url}" controls></audio>`;
-
-      const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-      if (yt)
-        return `<iframe class="forum-media video"
-                src="https://www.youtube.com/embed/${yt[1]}"
-                loading="lazy" allowfullscreen></iframe>`;
-
-      const ytShorts = url.match(/youtube\.com\/shorts\/([\w-]+)/);
-      if (ytShorts)
-        return `<iframe class="forum-media video"
-                src="https://www.youtube.com/embed/${ytShorts[1]}"
-                loading="lazy" allowfullscreen></iframe>`;
-
-      if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
-        const encoded = encodeURIComponent(url);
-        return `<iframe class="forum-media audio" loading="lazy"
-                src="https://w.soundcloud.com/player/?url=${encoded}"></iframe>`;
-      }
-
-      if (/spotify\.com\//i.test(url)) {
-        const match = url.match(/spotify\.com\/([^/?]+)\/([\w-]+)/i);
-        if (match) {
-          return `<iframe class="forum-media audio" loading="lazy"
-                  src="https://open.spotify.com/embed/${match[1]}/${match[2]}"></iframe>`;
-        }
-      }
-
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-    } catch {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-    }
-  };
 
   if (Array.isArray(media)) {
     const group = document.createElement("div");
@@ -343,10 +359,7 @@ export async function loadComments(postId, firebaseDb) {
       meta.innerHTML = `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}`;
       wrap.appendChild(meta);
 
-      const body = document.createElement("div");
-      body.className = "forum-body";
-      body.textContent = comment.text;
-      wrap.appendChild(body);
+      renderBodyWithEmbeds(comment.text, wrap);
 
       // Render media
       if (comment.media) {
