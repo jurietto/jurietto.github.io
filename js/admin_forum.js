@@ -1,8 +1,6 @@
 import {
-  collection,
   collectionGroup,
   query,
-  where,
   orderBy,
   getDocs,
   deleteDoc,
@@ -26,13 +24,12 @@ const container = document.getElementById("forum-comments");
 container.innerHTML = "<p>Loading forum…</p>";
 
 /* =====================
-   LOAD THREAD COMMENTS
+   LOAD & GROUP COMMENTS
    ===================== */
 
 async function loadForum() {
   container.innerHTML = "";
 
-  // get ALL comments (admin-only)
   const q = query(
     collectionGroup(db, "comments"),
     orderBy("createdAt", "asc")
@@ -40,16 +37,13 @@ async function loadForum() {
 
   const snap = await getDocs(q);
 
-  // group by thread
   const threads = {};
 
   snap.forEach(d => {
     const data = d.data();
     const threadId = d.ref.path.split("/")[1];
 
-    if (!threads[threadId]) {
-      threads[threadId] = [];
-    }
+    if (!threads[threadId]) threads[threadId] = [];
 
     threads[threadId].push({
       id: d.id,
@@ -58,7 +52,6 @@ async function loadForum() {
     });
   });
 
-  // render
   for (const threadId in threads) {
     const threadBox = document.createElement("div");
     threadBox.style.border = "1px solid #444";
@@ -83,17 +76,14 @@ async function loadForum() {
       commentEl.querySelector("button").onclick = async () => {
         if (!confirm("Delete comment + replies?")) return;
 
-        // delete replies
         for (const r of replies.filter(r => r.replyTo === c.id)) {
           await deleteDoc(doc(db, r.path));
         }
 
-        // delete comment
         await deleteDoc(doc(db, c.path));
         loadForum();
       };
 
-      // replies
       replies
         .filter(r => r.replyTo === c.id)
         .forEach(r => {
