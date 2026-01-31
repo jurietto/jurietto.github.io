@@ -17,21 +17,30 @@ import {
 const PAGE_SIZE = 20;
 
 /* =====================
-   WAIT FOR ADMIN
+   WAIT FOR ADMIN + DOM
    ===================== */
 
-async function waitForAdmin(timeout = 5000) {
+async function waitForReady(timeout = 5000) {
   const start = Date.now();
 
-  while ((!window.__ADMIN_READY__ || !window.db)) {
-    if (Date.now() - start > timeout) {
-      throw new Error("Admin not ready (auth or db missing)");
+  while (true) {
+    if (
+      window.__ADMIN_READY__ &&
+      window.db &&
+      document.getElementById("forum-comments")
+    ) {
+      return;
     }
+
+    if (Date.now() - start > timeout) {
+      throw new Error("Admin forum not ready (DOM or auth missing)");
+    }
+
     await new Promise(r => setTimeout(r, 50));
   }
 }
 
-await waitForAdmin();
+await waitForReady();
 const db = window.db;
 
 /* =====================
@@ -110,6 +119,7 @@ async function loadForum(direction = "next") {
 
   for (const threadId in threads) {
     const threadBox = document.createElement("div");
+    threadBox.className = "admin-thread";
     threadBox.style.border = "1px solid #444";
     threadBox.style.padding = "10px";
     threadBox.style.marginBottom = "25px";
@@ -122,6 +132,7 @@ async function loadForum(direction = "next") {
 
     topLevel.forEach(c => {
       const commentEl = document.createElement("div");
+      commentEl.className = "admin-comment";
       commentEl.style.marginBottom = "12px";
       commentEl.style.borderBottom = "1px dashed #333";
 
@@ -147,6 +158,7 @@ async function loadForum(direction = "next") {
         .filter(r => r.replyTo === c.id)
         .forEach(r => {
           const replyEl = document.createElement("div");
+          replyEl.className = "admin-reply";
           replyEl.style.marginLeft = "20px";
           replyEl.style.borderLeft = "2px solid #666";
           replyEl.style.paddingLeft = "10px";
@@ -175,18 +187,22 @@ async function loadForum(direction = "next") {
 }
 
 /* =====================
-   CONTROLS
+   CONTROLS (SAFE)
    ===================== */
 
-nextBtn.onclick = () => {
-  currentDirection = "next";
-  loadForum("next");
-};
+if (nextBtn) {
+  nextBtn.onclick = () => {
+    currentDirection = "next";
+    loadForum("next");
+  };
+}
 
-prevBtn.onclick = () => {
-  currentDirection = "prev";
-  loadForum("prev");
-};
+if (prevBtn) {
+  prevBtn.onclick = () => {
+    currentDirection = "prev";
+    loadForum("prev");
+  };
+}
 
 /* =====================
    INITIAL LOAD
