@@ -4,10 +4,11 @@ body {
   margin: 2em auto;
   padding: 0 1em;
   line-height: 1.6;
+  background: #fff;
+  color: #222;
 }
 
 article {
-  border-bottom: 1px solid #ccc;
   padding-bottom: 1em;
   margin-bottom: 2em;
 }
@@ -20,4 +21,46 @@ h2 {
 
 #posts p {
   color: #666;
+}
+
+.blog-divider {
+  text-align: center;
+  font-size: 1.1em;
+  font-family: "JF Dot M Plus 12", "Mona", sans-serif;
+  line-height: 2;
+  letter-spacing: 0.25em;
+  color: #444;
+  padding: 1.2em 0;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+  margin: 3em 0;
+}
+
+.divider-text {
+  margin: 0 0.5em;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #333;
+}
+.post-date {
+  color: #666;
+  font-size: 0.85em;
+  margin-bottom: 0.5em;
+}
+
+.blog-divider {
+  text-align: center;
+  margin: 2em 0;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  color: #999;
+}
+
+.blog-divider .divider-text {
+  margin: 0 0.5em;
+  font-weight: bold;
+  color: #555;
 }
