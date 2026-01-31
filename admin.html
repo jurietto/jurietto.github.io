@@ -17,17 +17,34 @@
        BLOG EDITOR
        ===================== -->
   <section id="blog-admin">
-    <h2>Blog</h2>
+    <h2>Write blog post</h2>
 
-    <input id="title" placeholder="Post title"><br><br>
+    <input
+      id="title"
+      placeholder="Post title"
+      style="width: 100%; max-width: 600px;"
+    ><br><br>
 
     <textarea
       id="content"
       placeholder="Write your post here…"
       rows="10"
-      cols="50"></textarea><br><br>
+      style="width: 100%; max-width: 600px;"
+    ></textarea><br><br>
 
     <button id="publish">Publish post</button>
+  </section>
+
+  <hr>
+
+  <!-- =====================
+       BLOG MANAGEMENT
+       ===================== -->
+  <section id="blog-manage">
+    <h2>Blog posts</h2>
+    <div id="blog-posts">
+      <p>Loading…</p>
+    </div>
   </section>
 
   <hr>
@@ -38,11 +55,6 @@
   <section id="forum-admin">
     <h2>Forum moderation</h2>
 
-    <div id="forum-controls">
-      <button id="prev">Prev</button>
-      <button id="next">Next</button>
-    </div>
-
     <div id="forum-comments">
       <p>Loading…</p>
     </div>
@@ -50,11 +62,14 @@
 
 </div>
 
-<!-- Core admin logic -->
+<!-- Core admin logic (auth + publish) -->
 <script type="module" src="js/admin.js"></script>
 
-<!-- Forum moderation logic -->
+<!-- Forum moderation (grouped comments + replies + images) -->
 <script type="module" src="js/admin_forum.js"></script>
+
+<!-- Blog delete management -->
+<script type="module" src="js/admin_blog.js"></script>
 
 </body>
 </html>
