@@ -667,3 +667,10 @@ if (searchInput) {
     }
   });
 }
+
+window.addEventListener('beforeunload', () => {
+  const threadsEl = document.getElementById('threads');
+  if (threadsEl) {
+    threadsEl.replaceChildren();
+  }
+});

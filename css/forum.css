@@ -1,4 +1,17 @@
 /* ================================
+   NOTICE
+   ================================ */
+
+.forum-notice {
+  background: rgba(var(--pesto-r), 0.15);
+  border: 2px solid var(--pesto);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  color: var(--masala);
+  font-size: 0.9rem;
+}
+
+/* ================================
    TOP-LEVEL COMMENTS
    ================================ */
 

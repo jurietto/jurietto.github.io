@@ -89,8 +89,8 @@ function renderPagination(active, totalPages = 0) {
   prevBtn.textContent = "Previous";
   prevBtn.disabled = active === 0;
   prevBtn.onclick = () => {
-    if (active > 0) {
-      currentPage = active - 1;
+    if (currentPage > 0) {
+      currentPage--;
       renderPosts();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -101,8 +101,8 @@ function renderPagination(active, totalPages = 0) {
   nextBtn.textContent = "Next";
   nextBtn.disabled = active === totalPages - 1;
   nextBtn.onclick = () => {
-    if (active < totalPages - 1) {
-      currentPage = active + 1;
+    if (currentPage < totalPages - 1) {
+      currentPage++;
       renderPosts();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }

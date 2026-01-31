@@ -198,21 +198,6 @@ select {
 /* dark-mode footer styles removed */
 
 /* ================================
-   PROFILE BUTTON
-   ================================ */
-
-.profile-button {
-  display: inline-block;
-  padding: 6px 14px;
-  border: 2px solid currentColor;
-  text-decoration: none;
-}
-
-.profile-button:hover {
-  background: rgba(var(--hibiscus-r), 0.18);
-}
-
-/* ================================
    SCROLL BUTTONS
    ================================ */
 

@@ -341,7 +341,7 @@ export async function loadComments(postId, firebaseDb) {
 
   try {
     const commentsRef = collection(db, "blogPosts", postId, "comments");
-    const q = query(commentsRef, orderBy("createdAt", "asc"));
+    const q = query(commentsRef, orderBy("createdAt", "desc"));
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
@@ -395,9 +395,11 @@ export function setupCommentForm(postId, firebaseDb) {
     localStorage.setItem("blog_username", commentUsername.value.trim());
   });
 
-  // Clear previous listener by cloning
-  const newBtn = commentSubmit.cloneNode(true);
-  commentSubmit.parentNode.replaceChild(newBtn, commentSubmit);
+  // Get fresh reference to button and clear previous listeners by cloning
+  const btn = document.getElementById("comment-submit");
+  if (!btn) return;
+  const newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
 
   let preview = null;
   if (commentFile) {
@@ -468,3 +470,9 @@ export function showCommentSection(show = true) {
     commentsSection.hidden = !show;
   }
 }
+
+window.addEventListener('beforeunload', () => {
+  if (commentsEl) {
+    commentsEl.replaceChildren();
+  }
+});
