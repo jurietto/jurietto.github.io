@@ -1,111 +1,100 @@
 import {
   collection,
-  query,
-  orderBy,
+  addDoc,
   getDocs,
   deleteDoc,
   doc,
-  limit,
-  startAfter,
-  endBefore
+  serverTimestamp,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-
-const PAGE_SIZE = 1; // Show 1 blog post at a time
 
 document.addEventListener("DOMContentLoaded", () => {
   initBlogAdmin();
 });
 
 async function initBlogAdmin() {
-  const { db, container, prevBtn, nextBtn } = await waitForReady();
+  const { db, titleInput, contentInput, publishBtn, postsContainer } = await waitForReady();
 
-  let firstVisible = null;
-  let lastVisible = null;
-  let currentDirection = "next";
+  publishBtn.onclick = async () => {
+    const title = titleInput.value.trim();
+    const content = contentInput.value.trim();
+
+    if (!title || !content) {
+      alert("Please fill in title and content");
+      return;
+    }
+
+    await addDoc(collection(db, "blogPosts"), {
+      title,
+      content,
+      author: "Admin",
+      published: true,
+      createdAt: serverTimestamp()
+    });
+
+    titleInput.value = "";
+    contentInput.value = "";
+    loadPosts();
+  };
 
   async function waitForReady(timeout = 5000) {
     const start = Date.now();
     while (true) {
-      const container = document.getElementById("blog-posts");
-      const prevBtn = document.getElementById("blog-prev");
-      const nextBtn = document.getElementById("blog-next");
+      const titleInput = document.getElementById("title");
+      const contentInput = document.getElementById("content");
+      const publishBtn = document.getElementById("publish");
+      const postsContainer = document.getElementById("blog-posts");
 
-      if (window.__ADMIN_READY__ && window.db && container && prevBtn && nextBtn) {
-        return { db: window.db, container, prevBtn, nextBtn };
+      if (window.__ADMIN_READY__ && window.db && titleInput && contentInput && publishBtn && postsContainer) {
+        return { db: window.db, titleInput, contentInput, publishBtn, postsContainer };
       }
 
       if (Date.now() - start > timeout) {
         throw new Error("Blog admin not ready");
       }
 
-      await new Promise(r => setTimeout(r, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
 
-  async function loadPosts(direction = "next") {
-    container.innerHTML = "<p>Loading post…</p>";
+  async function loadPosts() {
+    postsContainer.innerHTML = "<p>Loading…</p>";
 
-    let q = query(
-      collection(db, "blogPosts"),
-      orderBy("createdAt", "desc"),
-      limit(PAGE_SIZE)
-    );
-
-    if (direction === "next" && lastVisible) {
-      q = query(q, startAfter(lastVisible));
-    }
-
-    if (direction === "prev" && firstVisible) {
-      q = query(q, endBefore(firstVisible));
-    }
-
+    const q = query(collection(db, "blogPosts"), orderBy("createdAt", "desc"));
     const snap = await getDocs(q);
 
     if (snap.empty) {
-      container.innerHTML = "<p>No more posts.</p>";
+      postsContainer.innerHTML = "<p>No posts found.</p>";
       return;
     }
 
-    firstVisible = snap.docs[0];
-    lastVisible = snap.docs[snap.docs.length - 1];
-
-    container.innerHTML = "";
-
+    postsContainer.innerHTML = "";
     snap.forEach(docSnap => {
       const data = docSnap.data();
-      const box = document.createElement("div");
-      box.className = "admin-blog";
-      box.style.border = "1px solid #666";
-      box.style.padding = "1em";
-      box.style.marginBottom = "2em";
+      const postEl = document.createElement("div");
+      postEl.style.border = "1px solid #888";
+      postEl.style.padding = "10px";
+      postEl.style.marginBottom = "20px";
 
-      box.innerHTML = `
-        <h3>${data.title}</h3>
-        <p><strong>By:</strong> ${data.author}</p>
-        <p>${data.content}</p>
-        <p><em>${new Date(data.createdAt.toDate()).toLocaleString()}</em></p>
-        <button class="delete-post">Delete</button>
+      const dateStr = data.createdAt?.toDate?.().toLocaleString?.() || "Unknown date";
+
+      postEl.innerHTML = `
+        <strong>${data.title}</strong>
+        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">${dateStr}</div>
+        <div>${data.content}</div>
+        <button class="delete-post" style="margin-top: 10px;">Delete</button>
       `;
 
-      box.querySelector(".delete-post").onclick = async () => {
-        if (!confirm("Delete this blog post?")) return;
+      postEl.querySelector(".delete-post").onclick = async () => {
+        if (!confirm("Delete this post?")) return;
         await deleteDoc(doc(db, "blogPosts", docSnap.id));
-        loadPosts(currentDirection);
+        loadPosts();
       };
 
-      container.appendChild(box);
+      postsContainer.appendChild(postEl);
     });
   }
-
-  prevBtn.onclick = () => {
-    currentDirection = "prev";
-    loadPosts("prev");
-  };
-
-  nextBtn.onclick = () => {
-    currentDirection = "next";
-    loadPosts("next");
-  };
 
   loadPosts();
 }
