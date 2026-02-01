@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy,
-  getDocs, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc
+  getDocs, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
@@ -565,13 +565,26 @@ function createReplyForm(parentId, wrap) {
       ? await Promise.all(selection.files.map(uploadFile))
       : null;
 
-    await addDoc(commentsRef, {
-      user: user.value.trim() || "Anonymous",
-      text: text.value.trim(),
-      media,
-      replyTo: parentId,
-      createdAt: Date.now()
-    });
+    try {
+      await addDoc(commentsRef, {
+        user: user.value.trim() || "Anonymous",
+        text: text.value.trim(),
+        media,
+        replyTo: parentId,
+        createdAt: serverTimestamp(),
+        userId: currentUserId
+      });
+    } catch (error) {
+      if (error.message.includes("blocked")) {
+        alert("⚠️ Unable to post: Your browser extension may be blocking Firestore.\n\nPlease disable ad blockers or privacy extensions and try again.");
+      } else if (error.message.includes("Missing or insufficient permissions")) {
+        alert("⚠️ Unable to post: You don't have permission to write to the forum.\n\nPlease check your Firestore security rules.");
+      } else {
+        alert(`⚠️ Error posting comment: ${error.message}`);
+      }
+      console.error("Post error:", error);
+      return;
+    }
 
     loadComments(currentPage);
   };
@@ -658,7 +671,7 @@ function renderComment(c, replies, replyMap) {
         </p>
       `;
       
-      wrap.insertBefore(form, wrap.querySelector(".comment-edit-btn").parentElement.nextSibling);
+      wrap.appendChild(form);
       
       const saveBtn = form.querySelector(".edit-save-btn");
       const cancelBtn = form.querySelector(".edit-cancel-btn");
@@ -811,7 +824,7 @@ if (postButton) {
         user: postUser?.value.trim() || "Anonymous",
         text: postText?.value.trim() || "",
         media,
-        createdAt: Date.now(),
+        createdAt: serverTimestamp(),
         userId: currentUserId
       });
 
