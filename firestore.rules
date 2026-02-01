@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    // Rate limiting: Check if user posted within last 2 seconds
+    function canPostNow(userId) {
+      let lastPost = get(/databases/$(database)/documents/users/$(userId)).data.lastPostTime;
+      return lastPost == null || (request.time.toMillis() - lastPost) > 2000;
+    }
+
+    // Users collection - stores user metadata and rate limit data
+    match /users/{userId} {
+      allow create: if request.auth.uid == userId;
+      allow read: if true;
+      allow update: if isOwner(userId) && 
+                      request.resource.data.lastPostTime == request.time.toMillis();
+      allow delete: if false;
+    }
+
+    // Main forum threads
+    match /threads/{threadId} {
+      allow read: if true;
+      allow create, update, delete: if false; // Admin only
+      
+      // Comments within threads
+      match /comments/{commentId} {
+        
+        // ALLOW: Anyone can read comments
+        allow read: if true;
+        
+        // ALLOW: Create new posts/replies with restrictions
+        allow create: if 
+          // Must have userId
+          request.resource.data.userId != null &&
+          request.resource.data.userId is string &&
+          
+          // Required fields
+          request.resource.data.user is string &&
+          request.resource.data.text is string &&
+          request.resource.data.createdAt is timestamp &&
+          
+          // Field length limits
+          request.resource.data.user.size() <= 100 &&
+          request.resource.data.text.size() <= 10000 &&
+          
+          // Optional media field must be array if present
+          (!('media' in request.resource.data) || request.resource.data.media is list) &&
+          
+          // No editing on create
+          !('editedAt' in request.resource.data) &&
+          
+          // Validate replyTo field if present
+          (!('replyTo' in request.resource.data) || request.resource.data.replyTo is string) &&
+          
+          // No flags on create
+          !('flags' in request.resource.data) &&
+          !('flagCount' in request.resource.data);
+        
+        // ALLOW: Update own posts only (text and media, not metadata)
+        allow update: if 
+          // Must be owner
+          isOwner(resource.data.userId) &&
+          
+          // Can only update text and media
+          request.resource.data.text is string &&
+          request.resource.data.text.size() <= 10000 &&
+          (!('media' in request.resource.data) || request.resource.data.media is list) &&
+          
+          // Must update editedAt timestamp
+          request.resource.data.editedAt is timestamp &&
+          
+          // All other fields unchanged
+          request.resource.data.userId == resource.data.userId &&
+          request.resource.data.user == resource.data.user &&
+          request.resource.data.createdAt == resource.data.createdAt &&
+          (!('replyTo' in resource.data) || request.resource.data.replyTo == resource.data.replyTo) &&
+          (!('flags' in request.resource.data) || request.resource.data.flags == resource.data.flags) &&
+          (!('flagCount' in request.resource.data) || request.resource.data.flagCount == resource.data.flagCount) &&
+          !('deletedAt' in request.resource.data);
+        
+        // ALLOW: Delete own posts (soft delete with timestamp)
+        allow delete: if isOwner(resource.data.userId);
+        
+        // ALLOW: Add flags/reports (moderation)
+        match /flags/{flagId} {
+          allow create: if 
+            request.resource.data.userId != null &&
+            request.resource.data.reason is string &&
+            request.resource.data.reason in ['spam', 'harassment', 'nsfw', 'other'] &&
+            request.resource.data.createdAt is timestamp;
+          allow read: if isAdmin();
+          allow delete: if isAdmin();
+        }
+      }
+    }
+  }
+}

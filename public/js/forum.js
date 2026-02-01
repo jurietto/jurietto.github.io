@@ -4,9 +4,11 @@ import {
   collection, query, orderBy,
   getDocs, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
+const functions = getFunctions();
 
 // Only run forum.js if the comments container exists
 if (!container) {
@@ -24,6 +26,11 @@ const postFile = document.getElementById("file");
 const postButton = document.getElementById("post");
 const MAX_IMAGES = 10;
 const PAGE_SIZE = 10;
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB per file
+const MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50MB per post
+const POST_COOLDOWN_MS = 2000; // 2 seconds between posts
+const MAX_POST_LENGTH = 10000; // Max characters per post
+
 let currentPage = 0;
 let currentSearch = "";
 let latestSeen = null;
@@ -32,6 +39,7 @@ let postPreview = null;
 let postAccumulatedFiles = [];
 let currentUserId = null;
 let isPostingInProgress = false;
+let lastPostTime = 0;
 
 /* ---------- HELPER FUNCTION ---------- */
 function isImageFile(file) {
@@ -100,9 +108,31 @@ const renderLink = url => {
   return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer noindex">${url}</a>`;
 };
 
+// Validate file sizes
+function validateFileSize(files) {
+  let totalSize = 0;
+  for (let file of files) {
+    if (file.size > MAX_FILE_SIZE) {
+      return { error: `File too large: "${file.name}" (max 5MB)` };
+    }
+    totalSize += file.size;
+  }
+  if (totalSize > MAX_TOTAL_SIZE) {
+    return { error: `Total upload size exceeds 50MB limit` };
+  }
+  return { ok: true };
+}
+
 function getSelectedImages(input) {
   const files = Array.from(input?.files || []);
   if (!files.length) return { files: [] };
+  
+  // Validate file sizes
+  const sizeCheck = validateFileSize(files);
+  if (sizeCheck.error) {
+    return { error: sizeCheck.error };
+  }
+  
   const nonImages = files.filter(file => !isImageFile(file));
   if (nonImages.length) {
     return { error: "Please choose image files only." };
@@ -640,6 +670,78 @@ async function deleteComment(commentId) {
   }
 }
 
+/* ---------- MODERATION: FLAG/REPORT ---------- */
+
+async function flagComment(commentId, threadId = "general") {
+  const form = document.createElement("div");
+  form.style.cssText = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 10000; max-width: 500px; width: 90%;";
+  
+  form.innerHTML = `
+    <h3>Report Comment</h3>
+    <p>Why are you reporting this?</p>
+    <div style="margin: 1rem 0;">
+      <label style="display: block; margin: 0.5rem 0;">
+        <input type="radio" name="reason" value="spam"> Spam
+      </label>
+      <label style="display: block; margin: 0.5rem 0;">
+        <input type="radio" name="reason" value="harassment"> Harassment
+      </label>
+      <label style="display: block; margin: 0.5rem 0;">
+        <input type="radio" name="reason" value="nsfw"> NSFW Content
+      </label>
+      <label style="display: block; margin: 0.5rem 0;">
+        <input type="radio" name="reason" value="misinformation"> Misinformation
+      </label>
+      <label style="display: block; margin: 0.5rem 0;">
+        <input type="radio" name="reason" value="other"> Other
+      </label>
+    </div>
+    <textarea placeholder="Additional details (optional)" style="width: 100%; padding: 0.5rem; margin: 1rem 0; border-radius: 4px; border: 1px solid #ccc;" rows="3"></textarea>
+    <div style="display: flex; gap: 1rem;">
+      <button class="flag-submit" style="flex: 1; padding: 0.5rem; background: #ff6b6b; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit Report</button>
+      <button class="flag-cancel" style="flex: 1; padding: 0.5rem; background: #ccc; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+    </div>
+  `;
+
+  document.body.appendChild(form);
+
+  const submitBtn = form.querySelector(".flag-submit");
+  const cancelBtn = form.querySelector(".flag-cancel");
+  const reasonInputs = form.querySelectorAll('input[name="reason"]');
+  const textarea = form.querySelector("textarea");
+
+  cancelBtn.onclick = () => form.remove();
+
+  submitBtn.onclick = async () => {
+    const reason = Array.from(reasonInputs).find(r => r.checked)?.value;
+    if (!reason) {
+      alert("Please select a reason");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    try {
+      const flagComment = httpsCallable(functions, 'flagComment');
+      await flagComment({
+        commentId,
+        threadId,
+        reason,
+        details: textarea.value
+      });
+
+      showNoticeMessage("✓ Report submitted. Thank you for helping keep the forum safe.");
+      form.remove();
+    } catch (error) {
+      console.error('Flag error:', error);
+      alert("Error submitting report: " + error.message);
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Report";
+    }
+  };
+}
+
 /* ---------- RENDER COMMENT ---------- */
 
 function renderComment(c, replies, replyMap) {
@@ -654,7 +756,10 @@ function renderComment(c, replies, replyMap) {
     <div style="display: inline; margin-left: 1rem;">
       <button class="comment-edit-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
       <button class="comment-delete-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
-    </div>` : "";
+    </div>` : `
+    <div style="display: inline; margin-left: 1rem;">
+      <button class="comment-flag-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; color: #999;">⚠️</button>
+    </div>`;
   
   wrap.innerHTML = `
     <div class="forum-meta">
@@ -763,16 +868,131 @@ function renderComment(c, replies, replyMap) {
     };
   }
 
+  // Add flag button handler for root comments
+  const flagBtn = wrap.querySelector(".comment-flag-btn");
+  if (flagBtn) {
+    flagBtn.onclick = () => flagComment(c.id, "general");
+  }
+
   replies.forEach(r => {
     const rw = document.createElement("div");
     rw.className = "forum-reply";
+    
+    const isReplyOwner = r.userId && r.userId === currentUserId;
+    const replyEditedText = r.editedAt ? ` (edited ${formatDate(r.editedAt)})` : "";
+    const replyButtonHtml = isReplyOwner ? `
+      <div style="display: inline; margin-left: 1rem;">
+        <button class="comment-edit-btn" data-id="${r.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
+        <button class="comment-delete-btn" data-id="${r.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+      </div>` : `
+      <div style="display: inline; margin-left: 1rem;">
+        <button class="comment-flag-btn" data-id="${r.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; color: #999;">⚠️</button>
+      </div>`;
+    
     rw.innerHTML = `
       <div class="forum-meta">
         <strong>${replyKaomoji} ${r.user || "Anonymous"}</strong>
-        — ${formatDate(r.createdAt)}
+        — ${formatDate(r.createdAt)}${replyEditedText}${replyButtonHtml}
       </div>`;
     renderBodyWithEmbeds(r.text, rw);
     renderMedia(r.media, rw);
+    
+    // Add edit/delete handlers for reply
+    const replyEditBtn = rw.querySelector(".comment-edit-btn");
+    const replyDeleteBtn = rw.querySelector(".comment-delete-btn");
+    
+    if (replyEditBtn) {
+      replyEditBtn.onclick = () => {
+        const existingForm = rw.querySelector("div[data-edit-form]");
+        if (existingForm) existingForm.remove();
+        
+        const form = document.createElement("div");
+        form.setAttribute("data-edit-form", "true");
+        form.style.margin = "1rem 0";
+        form.style.padding = "1rem";
+        form.style.borderRadius = "4px";
+        
+        let mediaArray = Array.isArray(r.media) ? [...r.media] : (r.media ? [r.media] : []);
+        
+        const renderForm = () => {
+          let mediaHtml = "";
+          if (mediaArray.length > 0) {
+            mediaHtml = `
+              <p style="margin-top: 1rem;">
+                <label>Media attachments:</label><br>
+                <div class="edit-media-list">
+                  ${mediaArray.map((url, idx) => `
+                    <div>
+                      <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
+                      <span>attachment_${idx}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </p>
+            `;
+          }
+          
+          form.innerHTML = `
+            <p>
+              <label>Edit reply</label><br>
+              <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${r.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+            </p>
+            ${mediaHtml}
+            <p>
+              <button type="button" class="edit-save-btn">Save</button>
+              <button type="button" class="edit-cancel-btn">Cancel</button>
+            </p>
+          `;
+          
+          const saveBtn = form.querySelector(".edit-save-btn");
+          const cancelBtn = form.querySelector(".edit-cancel-btn");
+          const textarea = form.querySelector("textarea");
+          
+          const deleteMediaBtns = form.querySelectorAll(".delete-media-btn");
+          deleteMediaBtns.forEach(btn => {
+            btn.onclick = (e) => {
+              e.preventDefault();
+              const idx = parseInt(btn.dataset.index);
+              mediaArray.splice(idx, 1);
+              renderForm();
+            };
+          });
+          
+          if (saveBtn) {
+            saveBtn.onclick = async () => {
+              const newText = textarea.value.trim();
+              if (!newText) {
+                showNoticeMessage("Post cannot be empty");
+                return;
+              }
+              await editComment(r.id, newText, mediaArray.length > 0 ? mediaArray : null);
+            };
+          }
+          
+          if (cancelBtn) {
+            cancelBtn.onclick = () => form.remove();
+          }
+        };
+        
+        renderForm();
+        rw.appendChild(form);
+      };
+    }
+    
+    if (replyDeleteBtn) {
+      replyDeleteBtn.onclick = async () => {
+        if (confirm("Are you sure you want to delete this reply?")) {
+          await deleteComment(r.id);
+        }
+      };
+    }
+
+    // Add flag button handler for replies
+    const replyFlagBtn = rw.querySelector(".comment-flag-btn");
+    if (replyFlagBtn) {
+      replyFlagBtn.onclick = () => flagComment(r.id, "general");
+    }
+    
     const replyBtn = document.createElement("button");
     replyBtn.textContent = "Reply";
     replyBtn.className = "forum-reply-button";
@@ -783,13 +1003,122 @@ function renderComment(c, replies, replyMap) {
     nestedReplies.forEach(nested => {
       const nw = document.createElement("div");
       nw.className = "forum-reply forum-reply-nested";
+      
+      const isNestedOwner = nested.userId && nested.userId === currentUserId;
+      const nestedEditedText = nested.editedAt ? ` (edited ${formatDate(nested.editedAt)})` : "";
+      const nestedButtonHtml = isNestedOwner ? `
+        <div style="display: inline; margin-left: 1rem;">
+          <button class="comment-edit-btn" data-id="${nested.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
+          <button class="comment-delete-btn" data-id="${nested.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+        </div>` : `
+        <div style="display: inline; margin-left: 1rem;">
+          <button class="comment-flag-btn" data-id="${nested.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; color: #999;">⚠️</button>
+        </div>`;
+      
       nw.innerHTML = `
         <div class="forum-meta">
           <strong>${nestedReplyKaomoji} ${nested.user || "Anonymous"}</strong>
-          — ${formatDate(nested.createdAt)}
+          — ${formatDate(nested.createdAt)}${nestedEditedText}${nestedButtonHtml}
         </div>`;
       renderBodyWithEmbeds(nested.text, nw);
       renderMedia(nested.media, nw);
+      
+      // Add edit/delete handlers for nested reply
+      const nestedEditBtn = nw.querySelector(".comment-edit-btn");
+      const nestedDeleteBtn = nw.querySelector(".comment-delete-btn");
+      
+      if (nestedEditBtn) {
+        nestedEditBtn.onclick = () => {
+          const existingForm = nw.querySelector("div[data-edit-form]");
+          if (existingForm) existingForm.remove();
+          
+          const form = document.createElement("div");
+          form.setAttribute("data-edit-form", "true");
+          form.style.margin = "1rem 0";
+          form.style.padding = "1rem";
+          form.style.borderRadius = "4px";
+          
+          let mediaArray = Array.isArray(nested.media) ? [...nested.media] : (nested.media ? [nested.media] : []);
+          
+          const renderForm = () => {
+            let mediaHtml = "";
+            if (mediaArray.length > 0) {
+              mediaHtml = `
+                <p style="margin-top: 1rem;">
+                  <label>Media attachments:</label><br>
+                  <div class="edit-media-list">
+                    ${mediaArray.map((url, idx) => `
+                      <div>
+                        <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
+                        <span>attachment_${idx}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </p>
+              `;
+            }
+            
+            form.innerHTML = `
+              <p>
+                <label>Edit reply</label><br>
+                <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${nested.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+              </p>
+              ${mediaHtml}
+              <p>
+                <button type="button" class="edit-save-btn">Save</button>
+                <button type="button" class="edit-cancel-btn">Cancel</button>
+              </p>
+            `;
+            
+            const saveBtn = form.querySelector(".edit-save-btn");
+            const cancelBtn = form.querySelector(".edit-cancel-btn");
+            const textarea = form.querySelector("textarea");
+            
+            const deleteMediaBtns = form.querySelectorAll(".delete-media-btn");
+            deleteMediaBtns.forEach(btn => {
+              btn.onclick = (e) => {
+                e.preventDefault();
+                const idx = parseInt(btn.dataset.index);
+                mediaArray.splice(idx, 1);
+                renderForm();
+              };
+            });
+            
+            if (saveBtn) {
+              saveBtn.onclick = async () => {
+                const newText = textarea.value.trim();
+                if (!newText) {
+                  showNoticeMessage("Post cannot be empty");
+                  return;
+                }
+                await editComment(nested.id, newText, mediaArray.length > 0 ? mediaArray : null);
+              };
+            }
+            
+            if (cancelBtn) {
+              cancelBtn.onclick = () => form.remove();
+            }
+          };
+          
+          renderForm();
+          nw.appendChild(form);
+        };
+      }
+      
+      if (nestedDeleteBtn) {
+        nestedDeleteBtn.onclick = async () => {
+          if (confirm("Are you sure you want to delete this reply?")) {
+            await deleteComment(nested.id);
+          }
+        };
+      }
+
+      // Add flag button handler for nested replies
+      const nestedFlagBtn = nw.querySelector(".comment-flag-btn");
+      if (nestedFlagBtn) {
+        nestedFlagBtn.onclick = () => flagComment(nested.id, "general");
+      }
+      
       rw.appendChild(nw);
     });
     wrap.appendChild(rw);
@@ -892,12 +1221,27 @@ if (postButton) {
   postButton.addEventListener("click", async () => {
     if (isPostingInProgress) return;
     
+    // Rate limiting check
+    const timeSinceLastPost = Date.now() - lastPostTime;
+    if (timeSinceLastPost < POST_COOLDOWN_MS) {
+      showNoticeMessage(`Please wait ${Math.ceil((POST_COOLDOWN_MS - timeSinceLastPost) / 1000)}s before posting again...`);
+      return;
+    }
+    
     const selection = getSelectedImages(postFile);
     if (selection.error) {
       showNoticeMessage(selection.error);
       return;
     }
-    if (!postText?.value.trim() && selection.files.length === 0) return;
+    
+    const postContent = postText?.value.trim() || "";
+    if (!postContent && selection.files.length === 0) return;
+    
+    // Validate post length
+    if (postContent.length > MAX_POST_LENGTH) {
+      showNoticeMessage(`Post too long (max ${MAX_POST_LENGTH} characters)`);
+      return;
+    }
 
     isPostingInProgress = true;
     postButton.disabled = true;
@@ -907,12 +1251,13 @@ if (postButton) {
         : null;
       await addDoc(commentsRef, {
         user: postUser?.value.trim() || "Anonymous",
-        text: postText?.value.trim() || "",
+        text: postContent,
         media,
         createdAt: serverTimestamp(),
         userId: currentUserId
       });
 
+      lastPostTime = Date.now();
       if (postText) postText.value = "";
       if (postFile) postFile.value = "";
       postAccumulatedFiles = [];
