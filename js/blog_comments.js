@@ -244,6 +244,58 @@ function renderHashtags(hashtags) {
 const renderLink = (url) =>
   `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 
+function createYouTubeEmbed(videoId) {
+  const container = document.createElement('div');
+  container.className = 'forum-media video';
+  container.style.position = 'relative';
+  container.style.cursor = 'pointer';
+  container.style.maxWidth = 'min(560px, 100%)';
+  container.style.aspectRatio = '16 / 9';
+  
+  const img = document.createElement('img');
+  img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  img.alt = 'YouTube video thumbnail';
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.objectFit = 'cover';
+  img.style.display = 'block';
+  
+  const playBtn = document.createElement('div');
+  playBtn.style.position = 'absolute';
+  playBtn.style.top = '50%';
+  playBtn.style.left = '50%';
+  playBtn.style.transform = 'translate(-50%, -50%)';
+  playBtn.style.width = '68px';
+  playBtn.style.height = '48px';
+  playBtn.style.background = 'rgba(0, 0, 0, 0.7)';
+  playBtn.style.borderRadius = '8px';
+  playBtn.style.display = 'flex';
+  playBtn.style.alignItems = 'center';
+  playBtn.style.justifyContent = 'center';
+  playBtn.innerHTML = '▶';
+  playBtn.style.color = 'white';
+  playBtn.style.fontSize = '24px';
+  
+  container.appendChild(img);
+  container.appendChild(playBtn);
+  
+  container.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.className = 'forum-media video';
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+    iframe.style.width = '100%';
+    iframe.style.aspectRatio = '16 / 9';
+    iframe.style.border = 'none';
+    iframe.style.borderRadius = '8px';
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    container.replaceWith(iframe);
+  });
+  
+  return container;
+}
+
 function renderEmbed(url) {
   try {
     const clean = url.split("?")[0];
@@ -266,16 +318,56 @@ function renderEmbed(url) {
       return `<audio class="forum-media audio" src="${url}" controls></audio>`;
 
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
-    if (yt)
-      return `<iframe class="forum-media video"
-              src="https://www.youtube.com/embed/${yt[1]}"
-              loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>`;
+    if (yt) {
+      const wrapper = document.createElement('div');
+      wrapper.appendChild(createYouTubeEmbed(yt[1]));
+      return wrapper.innerHTML;
+    }
 
     const ytShorts = url.match(/youtube\.com\/shorts\/([\w-]+)/);
-    if (ytShorts)
-      return `<iframe class="forum-media video"
-              src="https://www.youtube.com/embed/${ytShorts[1]}"
-              loading="lazy" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>`;
+    if (ytShorts) {
+      const wrapper = document.createElement('div');
+      wrapper.appendChild(createYouTubeEmbed(ytShorts[1]));
+      return wrapper.innerHTML;
+    }
+
+    if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
+      const encoded = encodeURIComponent(url);
+      return `<iframe class="forum-media audio"
+              src="https://w.soundcloud.com/player/?url=${encoded}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+              loading="lazy" allow="autoplay"></iframe>`;
+    }
+
+    return renderLink(url);
+  } catch {
+    return renderLink(url);
+  }
+}
+
+const renderLink = (url) =>
+  `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+
+function renderEmbed(url) {
+  try {
+    const clean = url.split("?")[0];
+    const lower = clean.toLowerCase();
+
+    if (url.includes("tenor.com")) {
+      if (/\.(gif|mp4)$/i.test(clean)) {
+        return `<img class="forum-media image" src="${clean}" loading="lazy">`;
+      }
+      return renderLink(url);
+    }
+
+    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower))
+      return `<img class="forum-media image" src="${url}" loading="lazy">`;
+
+    if (/\.(mp4|webm|ogv|mov)$/.test(lower))
+      return `<video class="forum-media video" src="${url}" controls></video>`;
+
+    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower))
+      return `<audio class="forum-media audio" src="${url}" controls></audio>`;
+
 
     if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
       const encoded = encodeURIComponent(url);
