@@ -53,29 +53,30 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 
 <div id="forum-search">
   <p>
-    Search<br>
-    <input id="forum-search-input" type="search" size="40" placeholder="Search posts">
-    <button id="forum-search-button" type="button">Search</button>
-    <button id="forum-search-clear" type="button">Clear</button>
+    <label for="forum-search-input">Search</label><br>
+    <input id="forum-search-input" type="search" size="40" placeholder="Search posts" aria-label="Search forum posts">
+    <button id="forum-search-button" type="button" aria-label="Search posts">Search</button>
+    <button id="forum-search-clear" type="button" aria-label="Clear search results">Clear</button>
   </p>
 </div>
 
-<div id="post-form">
+<div id="post-form" role="region" aria-labelledby="post-form-title">
+  <h3 id="post-form-title" style="display:none">Post Form</h3>
   <p>
-    Name<br>
-    <input id="username" size="40" placeholder="Anonymous">
+    <label for="username">Name</label><br>
+    <input id="username" size="40" placeholder="Anonymous" aria-label="Your name or username">
   </p>
   <p>
-    Post<br>
-    <textarea id="text" rows="5" cols="50"></textarea>
+    <label for="text">Post</label><br>
+    <textarea id="text" rows="5" cols="50" aria-label="Your forum post message"></textarea>
   </p>
   <p>
-    Attachment (up to 10 images)<br>
-    <input id="file" type="file" accept="image/*" multiple>
+    <label for="file">Attachment (up to 10 images)</label><br>
+    <input id="file" type="file" accept="image/*" multiple aria-label="Upload images to attach to your post">
     <br><small>You can also paste or drop images from your clipboard.</small>
   </p>
   <p>
-    <button id="post" type="button">Post</button>
+    <button id="post" type="button" aria-label="Submit your forum post">Post</button>
   </p>
 </div>
 
@@ -88,22 +89,22 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 
 <h2>Profile</h2>
 <p>
-  <button type="button" onclick="location.href='profile.html'">About me</button>
+  <button type="button" id="profile-btn">About me</button>
 </p>
 
 <h2>Writings</h2>
 <p>
-  <button type="button" onclick="location.href='blog.html'">Blog</button>
+  <button type="button" id="blog-btn">Blog</button>
 </p>
 
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
-  Thanks for stopping by... Juri made this, 2026 | <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy</a>
+  Thanks for stopping by... Juri made this, 2026 | <a href="/privacy.html" style="color: inherit; text-decoration: underline;">Privacy</a>
 </footer>
 
 <div class="scroll-buttons">
-  <button type="button" id="scroll-top-btn">Top</button>
-  <button type="button" id="scroll-bottom-btn">Down</button>
+  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">Top</button>
+  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">Down</button>
 </div>
 
 <script type="module" src="js/changelog.js"></script>

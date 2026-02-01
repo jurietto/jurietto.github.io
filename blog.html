@@ -36,18 +36,18 @@
   <h1><img src="/art/ckp88_orig.png" alt="Blog" loading="lazy"></h1>
 
   <p>
-    <button type="button" onclick="location.href='/index.html'">Back to Forum</button>
-    <button type="button" onclick="location.href='/profile.html'">Profile</button>
+    <button type="button" id="back-btn" aria-label="Back to forum">Back to Forum</button>
+    <button type="button" id="profile-btn" aria-label="View profile">Profile</button>
   </p>
 
   <h2>Writings</h2>
 
   <div id="blog-search">
     <p>
-      Search<br>
-      <input id="blog-search-input" type="search" size="40" placeholder="Search posts">
-      <button id="blog-search-button" type="button">Search</button>
-      <button id="blog-search-clear" type="button">Clear</button>
+      <label for="blog-search-input">Search</label><br>
+      <input id="blog-search-input" type="search" size="40" placeholder="Search posts" aria-label="Search blog posts">
+      <button id="blog-search-button" type="button" aria-label="Search posts">Search</button>
+      <button id="blog-search-clear" type="button" aria-label="Clear search results">Clear</button>
     </p>
   </div>
 
@@ -74,20 +74,20 @@
 
     <div id="comment-form">
       <p>
-        Name<br>
-        <input id="comment-username" size="40" placeholder="Anonymous">
+        <label for="comment-username">Name</label><br>
+        <input id="comment-username" size="40" placeholder="Anonymous" aria-label="Your name or username">
       </p>
       <p>
-        Comment<br>
-        <textarea id="comment-text" rows="5" cols="50"></textarea>
+        <label for="comment-text">Comment</label><br>
+        <textarea id="comment-text" rows="5" cols="50" aria-label="Your comment on this blog post"></textarea>
       </p>
       <p>
-        Attachment (up to 10 images)<br>
-        <input id="comment-file" type="file" accept="image/*" multiple>
+        <label for="comment-file">Attachment (up to 10 images)</label><br>
+        <input id="comment-file" type="file" accept="image/*" multiple aria-label="Upload images to attach to your comment">
         <br><small>You can also paste or drop images from your clipboard.</small>
       </p>
       <p>
-        <button id="comment-submit" type="button">Post</button>
+        <button id="comment-submit" type="button" aria-label="Submit your comment">Post</button>
       </p>
     </div>
 
@@ -104,8 +104,8 @@
 
   <!-- SCROLL BUTTONS (shared) -->
   <div class="scroll-buttons">
-    <button type="button" id="scroll-top-btn">Top</button>
-    <button type="button" id="scroll-bottom-btn">Down</button>
+    <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">Top</button>
+    <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">Down</button>
   </div>
 
   <!-- BLOG SCRIPT ONLY -->

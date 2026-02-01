@@ -2,7 +2,7 @@ import { db } from "./firebase.js";
 import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy,
-  getDocs, addDoc, onSnapshot
+  getDocs, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
@@ -23,8 +23,24 @@ let currentSearch = "";
 let latestSeen = null;
 let hasLoadedSnapshot = false;
 let postPreview = null;
+let currentUserId = null;
 
-/* ---------- UTIL ---------- */
+/* ---------- USER ID MANAGEMENT ---------- */
+
+function generateUserId() {
+  return "user_" + Math.random().toString(36).substr(2, 9) + "_" + Date.now();
+}
+
+function getCurrentUserId() {
+  let userId = localStorage.getItem("forum_user_id");
+  if (!userId) {
+    userId = generateUserId();
+    localStorage.setItem("forum_user_id", userId);
+  }
+  return userId;
+}
+
+currentUserId = getCurrentUserId();
 
 const formatDate = ts =>
   !ts ? "" :
@@ -563,6 +579,32 @@ function createReplyForm(parentId, wrap) {
   wrap.appendChild(form);
 }
 
+/* ---------- EDIT/DELETE FUNCTIONS ---------- */
+
+async function editComment(commentId, newText, newMedia) {
+  try {
+    const docRef = doc(db, "threads", "general", "comments", commentId);
+    await updateDoc(docRef, {
+      text: newText,
+      media: newMedia,
+      editedAt: Date.now()
+    });
+    loadComments(currentPage);
+  } catch (err) {
+    showNoticeMessage("Error editing comment: " + err.message);
+  }
+}
+
+async function deleteComment(commentId) {
+  try {
+    const docRef = doc(db, "threads", "general", "comments", commentId);
+    await deleteDoc(docRef);
+    loadComments(currentPage);
+  } catch (err) {
+    showNoticeMessage("Error deleting comment: " + err.message);
+  }
+}
+
 /* ---------- RENDER COMMENT ---------- */
 
 function renderComment(c, replies, replyMap) {
@@ -571,10 +613,18 @@ function renderComment(c, replies, replyMap) {
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
+  const editedText = c.editedAt ? ` (edited ${formatDate(c.editedAt)})` : "";
+  const isOwner = c.userId && c.userId === currentUserId;
+  const buttonHtml = isOwner ? `
+    <div style="display: inline; margin-left: 1rem;">
+      <button class="comment-edit-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
+      <button class="comment-delete-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+    </div>` : "";
+  
   wrap.innerHTML = `
     <div class="forum-meta">
       <strong>＼(^o^)／ ${c.user || "Anonymous"}</strong>
-      — ${formatDate(c.createdAt)}
+      — ${formatDate(c.createdAt)}${editedText}${buttonHtml}
     </div>`;
 
   renderBodyWithEmbeds(c.text, wrap);
@@ -585,6 +635,59 @@ function renderComment(c, replies, replyMap) {
   btn.textContent = "Reply";
   btn.onclick = () => createReplyForm(c.id, wrap);
   wrap.appendChild(btn);
+
+  // Add event listeners for edit/delete
+  const editBtn = wrap.querySelector(".comment-edit-btn");
+  const deleteBtn = wrap.querySelector(".comment-delete-btn");
+  
+  if (editBtn) {
+    editBtn.onclick = () => {
+      const form = document.createElement("div");
+      form.style.margin = "1rem 0";
+      form.style.padding = "1rem";
+      form.style.border = "1px solid var(--masala)";
+      form.style.borderRadius = "4px";
+      form.innerHTML = `
+        <p>
+          <label>Edit post</label><br>
+          <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${c.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+        </p>
+        <p>
+          <button type="button" class="edit-save-btn">Save</button>
+          <button type="button" class="edit-cancel-btn">Cancel</button>
+        </p>
+      `;
+      
+      wrap.insertBefore(form, wrap.querySelector(".comment-edit-btn").parentElement.nextSibling);
+      
+      const saveBtn = form.querySelector(".edit-save-btn");
+      const cancelBtn = form.querySelector(".edit-cancel-btn");
+      const textarea = form.querySelector("textarea");
+      
+      if (saveBtn) {
+        saveBtn.onclick = async () => {
+          const newText = textarea.value.trim();
+          if (!newText) {
+            showNoticeMessage("Post cannot be empty");
+            return;
+          }
+          await editComment(c.id, newText, c.media);
+        };
+      }
+      
+      if (cancelBtn) {
+        cancelBtn.onclick = () => form.remove();
+      }
+    };
+  }
+  
+  if (deleteBtn) {
+    deleteBtn.onclick = async () => {
+      if (confirm("Are you sure you want to delete this post?")) {
+        await deleteComment(c.id);
+      }
+    };
+  }
 
   replies.forEach(r => {
     const rw = document.createElement("div");
@@ -708,7 +811,8 @@ if (postButton) {
         user: postUser?.value.trim() || "Anonymous",
         text: postText?.value.trim() || "",
         media,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        userId: currentUserId
       });
 
       if (postText) postText.value = "";

@@ -4,7 +4,10 @@ import {
   orderBy,
   getDocs,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  updateDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { uploadFile } from "./storage.js";
 
@@ -22,6 +25,24 @@ const commentSubmit = document.getElementById("comment-submit");
 
 const MAX_IMAGES = 10;
 let currentPostId = null;
+let currentUserId = null;
+
+/* ---------- USER ID MANAGEMENT ---------- */
+
+function generateUserId() {
+  return "user_" + Math.random().toString(36).substr(2, 9) + "_" + Date.now();
+}
+
+function getCurrentUserId() {
+  let userId = localStorage.getItem("blog_user_id");
+  if (!userId) {
+    userId = generateUserId();
+    localStorage.setItem("blog_user_id", userId);
+  }
+  return userId;
+}
+
+currentUserId = getCurrentUserId();
 
 const formatDate = (ts) =>
   !ts
@@ -419,6 +440,30 @@ function renderMedia(media, parent) {
   parent.appendChild(wrap);
 }
 
+async function editBlogComment(postId, commentId, newText, newMedia) {
+  try {
+    const docRef = doc(db, "blogPosts", postId, "comments", commentId);
+    await updateDoc(docRef, {
+      text: newText,
+      media: newMedia,
+      editedAt: Date.now()
+    });
+    await loadComments(postId, db);
+  } catch (err) {
+    showNoticeMessage("Error editing comment: " + err.message);
+  }
+}
+
+async function deleteBlogComment(postId, commentId) {
+  try {
+    const docRef = doc(db, "blogPosts", postId, "comments", commentId);
+    await deleteDoc(docRef);
+    await loadComments(postId, db);
+  } catch (err) {
+    showNoticeMessage("Error deleting comment: " + err.message);
+  }
+}
+
 export async function loadComments(postId, firebaseDb) {
   if (!firebaseDb) return;
   db = firebaseDb;
@@ -438,12 +483,21 @@ export async function loadComments(postId, firebaseDb) {
 
     snapshot.forEach((doc) => {
       const comment = doc.data();
+      const commentId = doc.id;
       const wrap = document.createElement("div");
       wrap.className = "forum-comment";
 
+      const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
+      const isOwner = comment.userId && comment.userId === currentUserId;
+      const buttonHtml = isOwner ? `
+        <div style="display: inline; margin-left: 1rem;">
+          <button class="comment-edit-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
+          <button class="comment-delete-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+        </div>` : "";
+      
       const meta = document.createElement("div");
       meta.className = "forum-meta";
-      meta.innerHTML = `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}`;
+      meta.innerHTML = `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}${editedText}${buttonHtml}`;
       wrap.appendChild(meta);
 
       renderBodyWithEmbeds(comment.text, wrap);
@@ -459,6 +513,59 @@ export async function loadComments(postId, firebaseDb) {
         if (hashtagEl) {
           wrap.appendChild(hashtagEl);
         }
+      }
+
+      // Add edit/delete listeners
+      const editBtn = meta.querySelector(".comment-edit-btn");
+      const deleteBtn = meta.querySelector(".comment-delete-btn");
+      
+      if (editBtn) {
+        editBtn.onclick = () => {
+          const form = document.createElement("div");
+          form.style.margin = "1rem 0";
+          form.style.padding = "1rem";
+          form.style.border = "1px solid var(--masala)";
+          form.style.borderRadius = "4px";
+          form.innerHTML = `
+            <p>
+              <label>Edit comment</label><br>
+              <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${comment.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+            </p>
+            <p>
+              <button type="button" class="edit-save-btn">Save</button>
+              <button type="button" class="edit-cancel-btn">Cancel</button>
+            </p>
+          `;
+          
+          wrap.insertBefore(form, wrap.querySelector(".forum-meta").nextSibling);
+          
+          const saveBtn = form.querySelector(".edit-save-btn");
+          const cancelBtn = form.querySelector(".edit-cancel-btn");
+          const textarea = form.querySelector("textarea");
+          
+          if (saveBtn) {
+            saveBtn.onclick = async () => {
+              const newText = textarea.value.trim();
+              if (!newText) {
+                showNoticeMessage("Comment cannot be empty");
+                return;
+              }
+              await editBlogComment(postId, commentId, newText, comment.media);
+            };
+          }
+          
+          if (cancelBtn) {
+            cancelBtn.onclick = () => form.remove();
+          }
+        };
+      }
+      
+      if (deleteBtn) {
+        deleteBtn.onclick = async () => {
+          if (confirm("Are you sure you want to delete this comment?")) {
+            await deleteBlogComment(postId, commentId);
+          }
+        };
       }
 
       commentsEl.appendChild(wrap);
@@ -535,7 +642,8 @@ export function setupCommentForm(postId, firebaseDb) {
         text,
         media,
         hashtags: [],
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
+        userId: currentUserId
       });
 
       commentText.value = "";
