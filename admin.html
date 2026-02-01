@@ -17,9 +17,7 @@
        ================================================================ -->
   <header>
     <h1>🔐 Admin Portal</h1>
-    <p style="font-size: 0.95em; color: #666;">
-      Manage blog posts, moderate forum comments, and control site content.
-    </p>
+    <p>Manage blog posts, moderate forum comments, and control site content.</p>
   </header>
 
   <nav>
@@ -31,12 +29,10 @@
        LOGIN SECTION
        ================================================================ -->
   <div id="login-section">
-    <article style="border: 2px solid #007bff; padding: 2em; text-align: center; max-width: 400px;">
+    <article>
       <h2>Authentication Required</h2>
       <p>You must sign in with GitHub to access the admin panel.</p>
-      <button id="login" type="button" style="padding: 0.75em 1.5em; font-size: 1em; cursor: pointer;">
-        🔑 Sign In with GitHub
-      </button>
+      <button id="login" type="button">🔑 Sign In with GitHub</button>
     </article>
   </div>
 
@@ -48,67 +44,52 @@
     <!-- ====================================================================
          SECTION 1: BLOG EDITOR & PUBLISHER
          ==================================================================== -->
-    <section id="blog-admin" style="margin-bottom: 3em; padding-bottom: 2em; border-bottom: 3px solid #333;">
+    <section id="blog-admin">
       <header>
         <h2>📝 Blog Post Editor</h2>
-        <p style="font-size: 0.95em; color: #666;">
-          Create and publish new blog posts to the site.
-        </p>
+        <p>Create and publish new blog posts to the site.</p>
       </header>
 
-      <form id="post-form" style="max-width: 700px;">
-        <fieldset style="padding: 1em; border: 1px solid #ccc;">
+      <form id="post-form">
+        <fieldset>
           <legend>📋 Post Details</legend>
 
-          <div style="margin-bottom: 1em;">
-            <label for="title" style="display: block; font-weight: bold; margin-bottom: 0.25em;">
-              Post Title *
-            </label>
+          <div>
+            <label for="title">Post Title *</label>
             <input 
               id="title" 
               type="text"
-              size="50"
               placeholder="Enter the title of your blog post"
               required
-              aria-required="true"
-              style="width: 100%; padding: 0.5em; font-size: 1em; box-sizing: border-box;">
-            <small style="color: #666;">Required. Keep it concise and descriptive.</small>
+              aria-required="true">
+            <small>Required. Keep it concise and descriptive.</small>
           </div>
 
-          <div style="margin-bottom: 1em;">
-            <label for="content" style="display: block; font-weight: bold; margin-bottom: 0.25em;">
-              Post Content *
-            </label>
+          <div>
+            <label for="content">Post Content *</label>
             <textarea 
               id="content" 
               rows="12"
               placeholder="Write your blog post content here…"
               required
-              aria-required="true"
-              style="width: 100%; padding: 0.5em; font-size: 1em; font-family: monospace; box-sizing: border-box;">
+              aria-required="true">
             </textarea>
-            <small style="color: #666;">Required. This is the main body of your post.</small>
+            <small>Required. This is the main body of your post.</small>
           </div>
 
-          <div style="margin-bottom: 1em;">
-            <label for="hashtags" style="display: block; font-weight: bold; margin-bottom: 0.25em;">
-              Hashtags (Optional)
-            </label>
+          <div>
+            <label for="hashtags">Hashtags (Optional)</label>
             <input 
               id="hashtags" 
               type="text"
-              size="50"
-              placeholder="e.g., #life #tech #thoughts #photography"
-              style="width: 100%; padding: 0.5em; font-size: 1em; box-sizing: border-box;">
-            <small style="color: #666;">Space-separated tags starting with #. Helps with post discovery.</small>
+              placeholder="e.g., #life #tech #thoughts #photography">
+            <small>Space-separated tags starting with #. Helps with post discovery.</small>
           </div>
         </fieldset>
 
-        <div style="margin-top: 1.5em;">
-          <button id="publish" type="button" style="padding: 0.75em 1.5em; font-size: 1em; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 4px;">
-            ✓ Publish Post
-          </button>
-          <span id="publish-status" style="display: none; margin-left: 1em; color: #666;"></span>
+        <div>
+          <button id="publish" type="button">✓ Publish Post</button>
+          <span id="publish-status" hidden></span>
         </div>
       </form>
     </section>
@@ -116,63 +97,68 @@
     <!-- ====================================================================
          SECTION 2: BLOG MANAGEMENT & DELETION
          ==================================================================== -->
-    <section id="blog-manage" style="margin-bottom: 3em; padding-bottom: 2em; border-bottom: 3px solid #333;">
+    <section id="blog-manage">
       <header>
         <h2>📚 Manage Blog Posts</h2>
-        <p style="font-size: 0.95em; color: #666;">
-          View, edit, and delete published blog posts.
-        </p>
+        <p>View, edit, and delete published blog posts.</p>
       </header>
 
-      <div style="margin-bottom: 1.5em;">
-        <label for="blog-pagination" style="display: block; font-weight: bold; margin-bottom: 0.5em;">
-          Pagination Controls:
-        </label>
-        <div id="blog-pagination" style="display: flex; gap: 0.5em;">
-          <button id="blog-prev" type="button" style="padding: 0.5em 1em; cursor: pointer;">
-            ← Previous Page
-          </button>
-          <button id="blog-next" type="button" style="padding: 0.5em 1em; cursor: pointer;">
-            Next Page →
-          </button>
+      <div>
+        <label for="blog-pagination">Pagination Controls:</label>
+        <div id="blog-pagination">
+          <button id="blog-prev" type="button">← Previous Page</button>
+          <button id="blog-next" type="button">Next Page →</button>
         </div>
       </div>
 
-      <div id="blog-posts" style="border: 1px solid #ddd; padding: 1em; min-height: 200px;">
-        <p style="color: #999;">Loading blog posts…</p>
+      <div id="blog-posts">
+        <p>Loading blog posts…</p>
       </div>
     </section>
 
     <!-- ====================================================================
-         SECTION 3: FORUM MODERATION
+         SECTION 3: BLOG COMMENTS
          ==================================================================== -->
-    <section id="forum-admin" style="margin-bottom: 3em;">
+    <section id="blog-comments-admin">
       <header>
-        <h2>🛡️ Forum Moderation</h2>
-        <p style="font-size: 0.95em; color: #666;">
-          Review and moderate forum comments and replies. Delete inappropriate content.
-        </p>
+        <h2>💬 Blog Comments</h2>
+        <p>Review, moderate, and manage comments on published blog posts.</p>
       </header>
 
-      <div style="margin-bottom: 1.5em;">
-        <label for="forum-pagination" style="display: block; font-weight: bold; margin-bottom: 0.5em;">
-          Pagination Controls:
-        </label>
-        <div id="forum-pagination" style="display: flex; gap: 0.5em;">
-          <button id="prev" type="button" style="padding: 0.5em 1em; cursor: pointer;">
-            ← Previous Page
-          </button>
-          <button id="next" type="button" style="padding: 0.5em 1em; cursor: pointer;">
-            Next Page →
-          </button>
+      <div>
+        <label for="blog-comments-pagination">Pagination Controls:</label>
+        <div id="blog-comments-pagination">
+          <button id="blog-comments-prev" type="button">← Previous Page</button>
+          <button id="blog-comments-next" type="button">Next Page →</button>
         </div>
-        <small style="color: #666; display: block; margin-top: 0.5em;">
-          Showing up to 20 comments per page.
-        </small>
+        <small>Showing blog post comments.</small>
       </div>
 
-      <div id="forum-comments" style="border: 1px solid #ddd; padding: 1em; min-height: 300px;">
-        <p style="color: #999;">Loading forum comments…</p>
+      <div id="blog-comments-list">
+        <p>Loading blog comments…</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 4: FORUM MODERATION
+         ==================================================================== -->
+    <section id="forum-admin">
+      <header>
+        <h2>🛡️ Forum Moderation</h2>
+        <p>Review and moderate forum comments and replies. Delete inappropriate content.</p>
+      </header>
+
+      <div>
+        <label for="forum-pagination">Pagination Controls:</label>
+        <div id="forum-pagination">
+          <button id="prev" type="button">← Previous Page</button>
+          <button id="next" type="button">Next Page →</button>
+        </div>
+        <small>Showing up to 20 comments per page.</small>
+      </div>
+
+      <div id="forum-comments">
+        <p>Loading forum comments…</p>
       </div>
     </section>
 
@@ -183,6 +169,9 @@
        ================================================================ -->
   <!-- Core admin logic (auth + publish) -->
   <script type="module" src="js/admin.js"></script>
+
+  <!-- Blog comments moderation -->
+  <script type="module" src="js/admin_blog_comments.js"></script>
 
   <!-- Forum moderation (grouped comments + replies + images) -->
   <script type="module" src="js/admin_forum.js"></script>
