@@ -18,6 +18,7 @@ import {
    ===================== */
 
 const ADMIN_UID = "Qrwkm5Rg16W1w77Whv4I39NKfXH2";
+let isPublishingInProgress = false;
 
 const firebaseConfig = {
   apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
@@ -91,6 +92,8 @@ onAuthStateChanged(auth, user => {
    ===================== */
 
 publishBtn?.addEventListener("click", async () => {
+  if (isPublishingInProgress) return;
+  
   const titleEl = document.getElementById("title");
   const contentEl = document.getElementById("content");
   const hashtagsEl = document.getElementById("hashtags");
@@ -109,6 +112,8 @@ publishBtn?.addEventListener("click", async () => {
     ? hashtagsRaw.split(/\s+/).filter(tag => tag.startsWith("#"))
     : [];
 
+  isPublishingInProgress = true;
+  publishBtn.disabled = true;
   try {
     await addDoc(collection(db, "blogPosts"), {
       title,
@@ -127,6 +132,9 @@ publishBtn?.addEventListener("click", async () => {
   } catch (err) {
     console.error(err);
     alert("Failed to publish post.");
+  } finally {
+    isPublishingInProgress = false;
+    publishBtn.disabled = false;
   }
 });
 
