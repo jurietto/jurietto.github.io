@@ -16,28 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 async function initBlogAdmin() {
   const { db, titleInput, contentInput, publishBtn, postsContainer } = await waitForReady();
 
-  publishBtn.onclick = async () => {
-    const title = titleInput.value.trim();
-    const content = contentInput.value.trim();
-
-    if (!title || !content) {
-      alert("Please fill in title and content");
-      return;
-    }
-
-    await addDoc(collection(db, "blogPosts"), {
-      title,
-      content,
-      author: "Admin",
-      published: true,
-      createdAt: serverTimestamp()
-    });
-
-    titleInput.value = "";
-    contentInput.value = "";
-    loadPosts();
-  };
-
   async function waitForReady(timeout = 5000) {
     const start = Date.now();
     while (true) {
