@@ -139,4 +139,5 @@ async function initBlogCommentsAdmin() {
   });
 
   loadComments();
+}  loadComments();
 }

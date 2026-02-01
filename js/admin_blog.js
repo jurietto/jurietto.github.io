@@ -6,26 +6,34 @@ import {
   doc,
   serverTimestamp,
   query,
-  orderBy
+  orderBy,
+  limit,
+  startAfter,
+  endBefore
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+const PAGE_SIZE = 20;
 
 document.addEventListener("DOMContentLoaded", () => {
   initBlogAdmin();
 });
 
 async function initBlogAdmin() {
-  const { db, titleInput, contentInput, publishBtn, postsContainer } = await waitForReady();
+  const { db, postsContainer, prevBtn, nextBtn } = await waitForReady();
+
+  let firstVisible = null;
+  let lastVisible = null;
+  let currentDirection = "next";
 
   async function waitForReady(timeout = 5000) {
     const start = Date.now();
     while (true) {
-      const titleInput = document.getElementById("title");
-      const contentInput = document.getElementById("content");
-      const publishBtn = document.getElementById("publish");
       const postsContainer = document.getElementById("blog-posts");
+      const prevBtn = document.getElementById("blog-prev");
+      const nextBtn = document.getElementById("blog-next");
 
-      if (window.__ADMIN_READY__ && window.db && titleInput && contentInput && publishBtn && postsContainer) {
-        return { db: window.db, titleInput, contentInput, publishBtn, postsContainer };
+      if (window.__ADMIN_READY__ && window.db && postsContainer && prevBtn && nextBtn) {
+        return { db: window.db, postsContainer, prevBtn, nextBtn };
       }
 
       if (Date.now() - start > timeout) {
@@ -36,43 +44,109 @@ async function initBlogAdmin() {
     }
   }
 
-  async function loadPosts() {
-    postsContainer.innerHTML = "<p>Loading…</p>";
+  function formatDate(ts) {
+    if (!ts) return "Unknown date";
+    if (typeof ts === "number") return new Date(ts).toLocaleString();
+    if (ts.toDate) return ts.toDate().toLocaleString();
+    return "Unknown date";
+  }
 
-    const q = query(collection(db, "blogPosts"), orderBy("createdAt", "desc"));
+  async function loadPosts(direction = "next") {
+    postsContainer.innerHTML = "<p>Loading blog posts…</p>";
+
+    let q = query(
+      collection(db, "blogPosts"),
+      orderBy("createdAt", "desc"),
+      limit(PAGE_SIZE)
+    );
+
+    if (direction === "next" && lastVisible) {
+      q = query(
+        collection(db, "blogPosts"),
+        orderBy("createdAt", "desc"),
+        startAfter(lastVisible),
+        limit(PAGE_SIZE)
+      );
+    }
+
+    if (direction === "prev" && firstVisible) {
+      q = query(
+        collection(db, "blogPosts"),
+        orderBy("createdAt", "desc"),
+        endBefore(firstVisible),
+        limit(PAGE_SIZE)
+      );
+    }
+
     const snap = await getDocs(q);
 
     if (snap.empty) {
-      postsContainer.innerHTML = "<p>No posts found.</p>";
+      postsContainer.innerHTML = "<p>No blog posts found.</p>";
       return;
     }
 
+    firstVisible = snap.docs[0];
+    lastVisible = snap.docs[snap.docs.length - 1];
+
     postsContainer.innerHTML = "";
-    snap.forEach(docSnap => {
+
+    snap.docs.forEach(docSnap => {
       const data = docSnap.data();
-      const postEl = document.createElement("div");
-      postEl.style.border = "1px solid #888";
-      postEl.style.padding = "10px";
-      postEl.style.marginBottom = "20px";
+      const postEl = document.createElement("article");
 
-      const dateStr = data.createdAt?.toDate?.().toLocaleString?.() || "Unknown date";
+      const dateStr = formatDate(data.createdAt);
 
-      postEl.innerHTML = `
-        <strong>${data.title}</strong>
-        <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">${dateStr}</div>
-        <div>${data.content}</div>
-        <button class="delete-post" style="margin-top: 10px;">Delete</button>
-      `;
+      const header = document.createElement("header");
+      const titleEl = document.createElement("strong");
+      titleEl.textContent = data.title || "Untitled";
+      header.appendChild(titleEl);
 
-      postEl.querySelector(".delete-post").onclick = async () => {
-        if (!confirm("Delete this post?")) return;
-        await deleteDoc(doc(db, "blogPosts", docSnap.id));
-        loadPosts();
-      };
+      const metaEl = document.createElement("p");
+      metaEl.textContent = dateStr;
+
+      const contentEl = document.createElement("section");
+      contentEl.textContent = data.content || "(no content)";
+
+      const tagsEl = document.createElement("p");
+      if (data.hashtags && data.hashtags.length > 0) {
+        tagsEl.textContent = `Tags: ${data.hashtags.join(" ")}`;
+      } else {
+        tagsEl.textContent = "Tags: None";
+      }
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.textContent = "Delete Post";
+
+      deleteBtn.addEventListener("click", async () => {
+        if (!confirm("Delete this blog post?")) return;
+        try {
+          await deleteDoc(doc(db, "blogPosts", docSnap.id));
+          loadPosts(currentDirection);
+        } catch (err) {
+          alert("Error deleting post: " + err.message);
+        }
+      });
+
+      postEl.appendChild(header);
+      postEl.appendChild(metaEl);
+      postEl.appendChild(tagsEl);
+      postEl.appendChild(contentEl);
+      postEl.appendChild(deleteBtn);
 
       postsContainer.appendChild(postEl);
     });
   }
+
+  prevBtn.addEventListener("click", () => {
+    currentDirection = "prev";
+    loadPosts("prev");
+  });
+
+  nextBtn.addEventListener("click", () => {
+    currentDirection = "next";
+    loadPosts("next");
+  });
 
   loadPosts();
 }
