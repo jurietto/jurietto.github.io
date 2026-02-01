@@ -674,32 +674,40 @@ async function deleteComment(commentId) {
 
 async function flagComment(commentId, threadId = "general") {
   const form = document.createElement("div");
-  form.style.cssText = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 10000; max-width: 500px; width: 90%;";
+  form.style.position = "fixed";
+  form.style.top = "50%";
+  form.style.left = "50%";
+  form.style.transform = "translate(-50%, -50%)";
+  form.style.zIndex = "10000";
+  form.style.background = "#ffffff";
+  form.style.border = "1px solid #ccc";
+  form.style.padding = "1rem";
+  form.style.borderRadius = "4px";
   
   form.innerHTML = `
     <h3>Report Comment</h3>
     <p>Why are you reporting this?</p>
-    <div style="margin: 1rem 0;">
-      <label style="display: block; margin: 0.5rem 0;">
+    <div>
+      <label>
         <input type="radio" name="reason" value="spam"> Spam
       </label>
-      <label style="display: block; margin: 0.5rem 0;">
+      <label>
         <input type="radio" name="reason" value="harassment"> Harassment
       </label>
-      <label style="display: block; margin: 0.5rem 0;">
+      <label>
         <input type="radio" name="reason" value="nsfw"> NSFW Content
       </label>
-      <label style="display: block; margin: 0.5rem 0;">
+      <label>
         <input type="radio" name="reason" value="misinformation"> Misinformation
       </label>
-      <label style="display: block; margin: 0.5rem 0;">
+      <label>
         <input type="radio" name="reason" value="other"> Other
       </label>
     </div>
-    <textarea placeholder="Additional details (optional)" style="width: 100%; padding: 0.5rem; margin: 1rem 0; border-radius: 4px; border: 1px solid #ccc;" rows="3"></textarea>
-    <div style="display: flex; gap: 1rem;">
-      <button class="flag-submit" style="flex: 1; padding: 0.5rem; background: #ff6b6b; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit Report</button>
-      <button class="flag-cancel" style="flex: 1; padding: 0.5rem; background: #ccc; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+    <textarea placeholder="Additional details (optional)" rows="3"></textarea>
+    <div>
+      <button class="flag-submit">Submit Report</button>
+      <button class="flag-cancel">Cancel</button>
     </div>
   `;
 

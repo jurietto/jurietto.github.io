@@ -186,7 +186,7 @@ select {
   font-size: 0.9rem;
   margin-top: auto;
   margin-bottom: 16px;
-  text-align: right;
+  text-align: left;
   direction: ltr;
   color: var(--pesto);
 }

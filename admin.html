@@ -7,87 +7,180 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://api.github.com https://www.gstatic.com wss://*.googleapis.com wss://*.firebaseio.com; frame-src https://chansi-ddd7e.firebaseapp.com; object-src 'none'">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
-  <title>Admin</title>
+  <title>Admin Portal</title>
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
-  <h1>Admin Panel</h1>
+  <!-- ================================================================
+       HEADER & AUTHENTICATION
+       ================================================================ -->
+  <header>
+    <h1>🔐 Admin Portal</h1>
+    <p style="font-size: 0.95em; color: #666;">
+      Manage blog posts, moderate forum comments, and control site content.
+    </p>
+  </header>
 
-  <p>
-    <button type="button" id="back-btn" aria-label="Back to forum">Back to Forum</button>
-  </p>
+  <nav>
+    <button type="button" id="back-btn" aria-label="Back to forum">← Back to Forum</button>
+    <button type="button" id="logout" aria-label="Sign out" hidden>Sign Out</button>
+  </nav>
 
-  <button id="login">Sign in with GitHub</button>
+  <!-- ================================================================
+       LOGIN SECTION
+       ================================================================ -->
+  <div id="login-section">
+    <article style="border: 2px solid #007bff; padding: 2em; text-align: center; max-width: 400px;">
+      <h2>Authentication Required</h2>
+      <p>You must sign in with GitHub to access the admin panel.</p>
+      <button id="login" type="button" style="padding: 0.75em 1.5em; font-size: 1em; cursor: pointer;">
+        🔑 Sign In with GitHub
+      </button>
+    </article>
+  </div>
 
+  <!-- ================================================================
+       ADMIN DASHBOARD (Hidden until authenticated)
+       ================================================================ -->
   <div id="editor" hidden>
 
-    <!-- =====================
-         BLOG EDITOR
-         ===================== -->
-    <section id="blog-admin">
-      <h2>Write blog post</h2>
+    <!-- ====================================================================
+         SECTION 1: BLOG EDITOR & PUBLISHER
+         ==================================================================== -->
+    <section id="blog-admin" style="margin-bottom: 3em; padding-bottom: 2em; border-bottom: 3px solid #333;">
+      <header>
+        <h2>📝 Blog Post Editor</h2>
+        <p style="font-size: 0.95em; color: #666;">
+          Create and publish new blog posts to the site.
+        </p>
+      </header>
 
-      <p>
-        Title<br>
-        <input id="title" size="40" placeholder="Post title">
-      </p>
+      <form id="post-form" style="max-width: 700px;">
+        <fieldset style="padding: 1em; border: 1px solid #ccc;">
+          <legend>📋 Post Details</legend>
 
-      <p>
-        Post<br>
-        <textarea id="content" rows="10" cols="50" placeholder="Write your post here…"></textarea>
-      </p>
+          <div style="margin-bottom: 1em;">
+            <label for="title" style="display: block; font-weight: bold; margin-bottom: 0.25em;">
+              Post Title *
+            </label>
+            <input 
+              id="title" 
+              type="text"
+              size="50"
+              placeholder="Enter the title of your blog post"
+              required
+              aria-required="true"
+              style="width: 100%; padding: 0.5em; font-size: 1em; box-sizing: border-box;">
+            <small style="color: #666;">Required. Keep it concise and descriptive.</small>
+          </div>
 
-      <p>
-        Hashtags<br>
-        <input id="hashtags" size="40" placeholder="Hashtags (space-separated, e.g. #life #tech #thoughts)">
-      </p>
+          <div style="margin-bottom: 1em;">
+            <label for="content" style="display: block; font-weight: bold; margin-bottom: 0.25em;">
+              Post Content *
+            </label>
+            <textarea 
+              id="content" 
+              rows="12"
+              placeholder="Write your blog post content here…"
+              required
+              aria-required="true"
+              style="width: 100%; padding: 0.5em; font-size: 1em; font-family: monospace; box-sizing: border-box;">
+            </textarea>
+            <small style="color: #666;">Required. This is the main body of your post.</small>
+          </div>
 
-      <p>
-        <button id="publish" type="button">Post</button>
-      </p>
+          <div style="margin-bottom: 1em;">
+            <label for="hashtags" style="display: block; font-weight: bold; margin-bottom: 0.25em;">
+              Hashtags (Optional)
+            </label>
+            <input 
+              id="hashtags" 
+              type="text"
+              size="50"
+              placeholder="e.g., #life #tech #thoughts #photography"
+              style="width: 100%; padding: 0.5em; font-size: 1em; box-sizing: border-box;">
+            <small style="color: #666;">Space-separated tags starting with #. Helps with post discovery.</small>
+          </div>
+        </fieldset>
+
+        <div style="margin-top: 1.5em;">
+          <button id="publish" type="button" style="padding: 0.75em 1.5em; font-size: 1em; cursor: pointer; background-color: #28a745; color: white; border: none; border-radius: 4px;">
+            ✓ Publish Post
+          </button>
+          <span id="publish-status" style="display: none; margin-left: 1em; color: #666;"></span>
+        </div>
+      </form>
     </section>
 
-    <hr>
+    <!-- ====================================================================
+         SECTION 2: BLOG MANAGEMENT & DELETION
+         ==================================================================== -->
+    <section id="blog-manage" style="margin-bottom: 3em; padding-bottom: 2em; border-bottom: 3px solid #333;">
+      <header>
+        <h2>📚 Manage Blog Posts</h2>
+        <p style="font-size: 0.95em; color: #666;">
+          View, edit, and delete published blog posts.
+        </p>
+      </header>
 
-    <!-- =====================
-         BLOG MANAGEMENT
-         ===================== -->
-    <section id="blog-manage">
-      <h2>Blog posts</h2>
-
-      <div id="blog-pagination" style="margin-bottom: 1em;">
-        <button id="blog-prev">Prev</button>
-        <button id="blog-next">Next</button>
+      <div style="margin-bottom: 1.5em;">
+        <label for="blog-pagination" style="display: block; font-weight: bold; margin-bottom: 0.5em;">
+          Pagination Controls:
+        </label>
+        <div id="blog-pagination" style="display: flex; gap: 0.5em;">
+          <button id="blog-prev" type="button" style="padding: 0.5em 1em; cursor: pointer;">
+            ← Previous Page
+          </button>
+          <button id="blog-next" type="button" style="padding: 0.5em 1em; cursor: pointer;">
+            Next Page →
+          </button>
+        </div>
       </div>
 
-      <div id="blog-posts">
-        <p>Loading…</p>
+      <div id="blog-posts" style="border: 1px solid #ddd; padding: 1em; min-height: 200px;">
+        <p style="color: #999;">Loading blog posts…</p>
       </div>
     </section>
 
-    <hr>
+    <!-- ====================================================================
+         SECTION 3: FORUM MODERATION
+         ==================================================================== -->
+    <section id="forum-admin" style="margin-bottom: 3em;">
+      <header>
+        <h2>🛡️ Forum Moderation</h2>
+        <p style="font-size: 0.95em; color: #666;">
+          Review and moderate forum comments and replies. Delete inappropriate content.
+        </p>
+      </header>
 
-    <!-- =====================
-         FORUM MODERATION
-         ===================== -->
-    <section id="forum-admin">
-      <h2>Forum moderation</h2>
-
-      <!-- Pagination buttons -->
-      <div id="forum-pagination" style="margin-bottom: 1em;">
-        <button id="prev">Prev</button>
-        <button id="next">Next</button>
+      <div style="margin-bottom: 1.5em;">
+        <label for="forum-pagination" style="display: block; font-weight: bold; margin-bottom: 0.5em;">
+          Pagination Controls:
+        </label>
+        <div id="forum-pagination" style="display: flex; gap: 0.5em;">
+          <button id="prev" type="button" style="padding: 0.5em 1em; cursor: pointer;">
+            ← Previous Page
+          </button>
+          <button id="next" type="button" style="padding: 0.5em 1em; cursor: pointer;">
+            Next Page →
+          </button>
+        </div>
+        <small style="color: #666; display: block; margin-top: 0.5em;">
+          Showing up to 20 comments per page.
+        </small>
       </div>
 
-      <!-- Forum content container -->
-      <div id="forum-comments">
-        <p>Loading…</p>
+      <div id="forum-comments" style="border: 1px solid #ddd; padding: 1em; min-height: 300px;">
+        <p style="color: #999;">Loading forum comments…</p>
       </div>
     </section>
 
   </div>
 
+  <!-- ================================================================
+       SCRIPTS
+       ================================================================ -->
   <!-- Core admin logic (auth + publish) -->
   <script type="module" src="js/admin.js"></script>
 
