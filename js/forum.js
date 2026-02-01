@@ -769,12 +769,18 @@ onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
 
   if (newestAt && newestAt > (latestSeen || 0)) {
     latestSeen = newestAt;
+    // Automatically reload comments when new ones arrive
+    loadComments(currentPage);
     if (notice) {
       const data = newest.data();
       notice.textContent = data.replyTo
-        ? "New reply posted. Click to refresh."
-        : "New comment posted. Click to refresh.";
+        ? "New reply posted!"
+        : "New comment posted!";
       notice.hidden = false;
+      // Hide notice after 3 seconds
+      setTimeout(() => {
+        notice.hidden = true;
+      }, 3000);
     }
   }
 });
