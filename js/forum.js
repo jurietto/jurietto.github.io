@@ -31,6 +31,7 @@ let hasLoadedSnapshot = false;
 let postPreview = null;
 let postAccumulatedFiles = [];
 let currentUserId = null;
+let isPostingInProgress = false;
 
 /* ---------- HELPER FUNCTION ---------- */
 function isImageFile(file) {
@@ -571,6 +572,8 @@ function createReplyForm(parentId, wrap) {
   });
 
   post.onclick = async () => {
+    if (post.disabled) return;
+    
     const selection = getSelectedImages(file);
     if (selection.error) {
       showNoticeMessage(selection.error);
@@ -578,11 +581,12 @@ function createReplyForm(parentId, wrap) {
     }
     if (!text.value.trim() && selection.files.length === 0) return;
 
-    const media = selection.files.length
-      ? await Promise.all(selection.files.map(uploadFile))
-      : null;
-
+    post.disabled = true;
     try {
+      const media = selection.files.length
+        ? await Promise.all(selection.files.map(uploadFile))
+        : null;
+
       await addDoc(commentsRef, {
         user: user.value.trim() || "Anonymous",
         text: text.value.trim(),
@@ -600,6 +604,7 @@ function createReplyForm(parentId, wrap) {
         alert(`⚠️ Error posting comment: ${error.message}`);
       }
       console.error("Post error:", error);
+      post.disabled = false;
       return;
     }
 
@@ -885,6 +890,8 @@ if (postButton) {
     postForm.addEventListener("drop", event => handleDropImages(event, postFile, postPreview));
   }
   postButton.addEventListener("click", async () => {
+    if (isPostingInProgress) return;
+    
     const selection = getSelectedImages(postFile);
     if (selection.error) {
       showNoticeMessage(selection.error);
@@ -892,6 +899,7 @@ if (postButton) {
     }
     if (!postText?.value.trim() && selection.files.length === 0) return;
 
+    isPostingInProgress = true;
     postButton.disabled = true;
     try {
       const media = selection.files.length
@@ -913,6 +921,7 @@ if (postButton) {
       currentPage = 0;
       // Don't manually reload - let the snapshot listener handle it
     } finally {
+      isPostingInProgress = false;
       postButton.disabled = false;
     }
   });
