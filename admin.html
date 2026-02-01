@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://storage.googleapis.com https://api.github.com https://www.gstatic.com; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://api.github.com https://www.gstatic.com; object-src 'none'">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>Admin</title>
@@ -13,6 +13,10 @@
 <body>
 
   <h1>Admin Panel</h1>
+
+  <p>
+    <button type="button" id="back-btn" aria-label="Back to forum">Back to Forum</button>
+  </p>
 
   <button id="login">Sign in with GitHub</button>
 
@@ -92,6 +96,9 @@
 
   <!-- Blog delete management with pagination -->
   <script type="module" src="js/admin_blog.js"></script>
+
+  <!-- Common navigation -->
+  <script src="js/common.js"></script>
 
 </body>
 </html>
