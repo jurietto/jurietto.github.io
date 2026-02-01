@@ -762,11 +762,11 @@ function renderComment(c, replies, replyMap) {
   const isOwner = c.userId && c.userId === currentUserId;
   const buttonHtml = isOwner ? `
     <div style="display: inline; margin-left: 1rem;">
-      <button class="comment-edit-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
-      <button class="comment-delete-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+      <button class="comment-edit-btn" data-id="${c.id}">Edit</button>
+      <button class="comment-delete-btn" data-id="${c.id}">Delete</button>
     </div>` : `
     <div style="display: inline; margin-left: 1rem;">
-      <button class="comment-flag-btn" data-id="${c.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; color: #999;">⚠️</button>
+      <button class="comment-flag-btn" data-id="${c.id}">Report</button>
     </div>`;
   
   wrap.innerHTML = `
@@ -890,11 +890,11 @@ function renderComment(c, replies, replyMap) {
     const replyEditedText = r.editedAt ? ` (edited ${formatDate(r.editedAt)})` : "";
     const replyButtonHtml = isReplyOwner ? `
       <div style="display: inline; margin-left: 1rem;">
-        <button class="comment-edit-btn" data-id="${r.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
-        <button class="comment-delete-btn" data-id="${r.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+        <button class="comment-edit-btn" data-id="${r.id}">Edit</button>
+        <button class="comment-delete-btn" data-id="${r.id}">Delete</button>
       </div>` : `
       <div style="display: inline; margin-left: 1rem;">
-        <button class="comment-flag-btn" data-id="${r.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; color: #999;">⚠️</button>
+        <button class="comment-flag-btn" data-id="${r.id}">Report</button>
       </div>`;
     
     rw.innerHTML = `
@@ -1016,11 +1016,11 @@ function renderComment(c, replies, replyMap) {
       const nestedEditedText = nested.editedAt ? ` (edited ${formatDate(nested.editedAt)})` : "";
       const nestedButtonHtml = isNestedOwner ? `
         <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-edit-btn" data-id="${nested.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
-          <button class="comment-delete-btn" data-id="${nested.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
+          <button class="comment-edit-btn" data-id="${nested.id}">Edit</button>
+          <button class="comment-delete-btn" data-id="${nested.id}">Delete</button>
         </div>` : `
         <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-flag-btn" data-id="${nested.id}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; color: #999;">⚠️</button>
+          <button class="comment-flag-btn" data-id="${nested.id}">Report</button>
         </div>`;
       
       nw.innerHTML = `
