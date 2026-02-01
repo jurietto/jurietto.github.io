@@ -1,5 +1,6 @@
 import {
   collection,
+  collectionGroup,
   getDocs,
   deleteDoc,
   doc,
@@ -53,14 +54,14 @@ async function initBlogCommentsAdmin() {
     container.innerHTML = "<p>Loading blog comments…</p>";
 
     let q = query(
-      collection(db, "blogComments"),
+      collectionGroup(db, "comments"),
       orderBy("createdAt", "desc"),
       limit(PAGE_SIZE)
     );
 
     if (direction === "next" && lastVisible) {
       q = query(
-        collection(db, "blogComments"),
+        collectionGroup(db, "comments"),
         orderBy("createdAt", "desc"),
         startAfter(lastVisible),
         limit(PAGE_SIZE)
@@ -69,7 +70,7 @@ async function initBlogCommentsAdmin() {
 
     if (direction === "prev" && firstVisible) {
       q = query(
-        collection(db, "blogComments"),
+        collectionGroup(db, "comments"),
         orderBy("createdAt", "desc"),
         endBefore(firstVisible),
         limit(PAGE_SIZE)
@@ -93,6 +94,8 @@ async function initBlogCommentsAdmin() {
       const commentEl = document.createElement("article");
 
       const dateStr = formatDate(data.createdAt);
+      const path = docSnap.ref.path;
+      const postId = path.split("/")[1];
 
       const header = document.createElement("header");
       const titleEl = document.createElement("strong");
@@ -100,7 +103,7 @@ async function initBlogCommentsAdmin() {
       header.appendChild(titleEl);
 
       const metaEl = document.createElement("p");
-      metaEl.textContent = `Blog Post: ${data.postId || "Unknown"} | ${dateStr}`;
+      metaEl.textContent = `Blog Post ID: ${postId} | ${dateStr}`;
 
       const bodyEl = document.createElement("section");
       bodyEl.textContent = data.text || "(no text)";
@@ -112,7 +115,7 @@ async function initBlogCommentsAdmin() {
       deleteBtn.addEventListener("click", async () => {
         if (!confirm("Delete this blog comment?")) return;
         try {
-          await deleteDoc(doc(db, "blogComments", docSnap.id));
+          await deleteDoc(doc(db, path));
           loadComments(currentDirection);
         } catch (err) {
           alert("Error deleting comment: " + err.message);
