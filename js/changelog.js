@@ -1,5 +1,11 @@
 const list = document.getElementById("changelog");
 
+// Only run if the changelog element exists
+if (!list) {
+  console.log("Changelog element not found, skipping...");
+  throw new Error("Changelog element not found");
+}
+
 const OWNER = "jurietto";
 const REPO = "jurietto.github.io";
 const MAX_ENTRIES = 10;

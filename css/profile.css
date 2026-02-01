@@ -2,8 +2,18 @@
    PROFILE LAYOUT
    ================================ */
 
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
 .profile-container {
   max-width: 100%;
+  flex: 1;
 }
 
 .profile-block {
@@ -81,11 +91,33 @@
 }
 
 /* ================================
+   SCROLL BUTTONS
+   ================================ */
+
+.scroll-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+@media (max-width: 720px) {
+  .scroll-buttons {
+    display: flex;
+  }
+}
+
+/* ================================
    FOOTER
    ================================ */
 
 .site-footer {
   font-size: 0.9rem;
+  margin-top: auto;
   margin-bottom: 16px;
   text-align: right;
   direction: ltr;

@@ -7,6 +7,12 @@ import {
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");
+
+// Only run forum.js if the comments container exists
+if (!container) {
+  throw new Error("Forum comments container not found, skipping forum initialization");
+}
+
 const pager = document.getElementById("pagination");
 const searchInput = document.getElementById("forum-search-input");
 const searchButton = document.getElementById("forum-search-button");
@@ -23,7 +29,13 @@ let currentSearch = "";
 let latestSeen = null;
 let hasLoadedSnapshot = false;
 let postPreview = null;
+let postAccumulatedFiles = [];
 let currentUserId = null;
+
+/* ---------- HELPER FUNCTION ---------- */
+function isImageFile(file) {
+  return file.type.startsWith("image/") || /\.(gif|png|jpg|jpeg|webp|bmp|svg)$/i.test(file.name);
+}
 
 /* ---------- USER ID MANAGEMENT ---------- */
 
@@ -90,7 +102,7 @@ const renderLink = url => {
 function getSelectedImages(input) {
   const files = Array.from(input?.files || []);
   if (!files.length) return { files: [] };
-  const nonImages = files.filter(file => !file.type.startsWith("image/"));
+  const nonImages = files.filter(file => !isImageFile(file));
   if (nonImages.length) {
     return { error: "Please choose image files only." };
   }
@@ -103,7 +115,7 @@ function getSelectedImages(input) {
 function syncInputImages(input) {
   const files = Array.from(input?.files || []);
   if (!files.length) return [];
-  const images = files.filter(file => file.type.startsWith("image/"));
+  const images = files.filter(file => isImageFile(file));
   const nonImages = files.length - images.length;
 
   if (nonImages) {
@@ -127,7 +139,7 @@ function syncInputImages(input) {
 function appendImagesToInput(input, files) {
   if (!input) return { added: 0 };
   const existing = Array.from(input.files || []);
-  const images = files.filter(file => file?.type?.startsWith("image/"));
+  const images = files.filter(file => isImageFile(file));
   if (!images.length) return { added: 0 };
 
   const remaining = MAX_IMAGES - existing.length;
@@ -148,7 +160,12 @@ function appendImagesToInput(input, files) {
 
 function createAttachmentPreview(input) {
   if (!input) return null;
-  const preview = document.createElement("div");
+  // Check if preview already exists
+  let preview = input.nextElementSibling;
+  if (preview && preview.className === "attachment-preview") {
+    return preview;
+  }
+  preview = document.createElement("div");
   preview.className = "attachment-preview";
   preview.hidden = true;
   input.insertAdjacentElement("afterend", preview);
@@ -165,23 +182,19 @@ function renderAttachmentPreview(input, preview) {
     return;
   }
 
-  const grid = document.createElement("div");
-  grid.className = "attachment-preview-grid";
+  const list = document.createElement("div");
+  list.className = "attachment-preview-list";
 
   files.forEach((file, index) => {
-    if (!file.type.startsWith("image/")) return;
+    // Check if it's an image by MIME type or file extension
+    if (!isImageFile(file)) return;
+    
     const item = document.createElement("div");
     item.className = "attachment-preview-item";
-    const img = document.createElement("img");
-    const url = URL.createObjectURL(file);
-    img.src = url;
-    img.alt = file.name || "Attachment preview";
-    img.onload = () => URL.revokeObjectURL(url);
-    item.appendChild(img);
+    
     const removeButton = document.createElement("button");
     removeButton.type = "button";
     removeButton.textContent = "Delete";
-    removeButton.style.width = "100%";
     removeButton.addEventListener("click", () => {
       const dt = new DataTransfer();
       files.forEach((existingFile, fileIndex) => {
@@ -190,14 +203,20 @@ function renderAttachmentPreview(input, preview) {
         }
       });
       input.files = dt.files;
+      postAccumulatedFiles = Array.from(input.files || []);
       renderAttachmentPreview(input, preview);
     });
     item.appendChild(removeButton);
-    grid.appendChild(item);
+    
+    const filename = document.createElement("span");
+    filename.textContent = file.name;
+    item.appendChild(filename);
+    
+    list.appendChild(item);
   });
 
-  preview.appendChild(grid);
-  preview.hidden = grid.children.length === 0;
+  preview.appendChild(list);
+  preview.hidden = list.children.length === 0;
 }
 
 function handlePasteImages(event, input, preview) {
@@ -655,42 +674,81 @@ function renderComment(c, replies, replyMap) {
   
   if (editBtn) {
     editBtn.onclick = () => {
+      // Remove existing edit form if any
+      const existingForm = wrap.querySelector("div[data-edit-form]");
+      if (existingForm) existingForm.remove();
+      
       const form = document.createElement("div");
+      form.setAttribute("data-edit-form", "true");
       form.style.margin = "1rem 0";
       form.style.padding = "1rem";
-      form.style.border = "1px solid var(--masala)";
       form.style.borderRadius = "4px";
-      form.innerHTML = `
-        <p>
-          <label>Edit post</label><br>
-          <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${c.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
-        </p>
-        <p>
-          <button type="button" class="edit-save-btn">Save</button>
-          <button type="button" class="edit-cancel-btn">Cancel</button>
-        </p>
-      `;
       
+      let mediaArray = Array.isArray(c.media) ? [...c.media] : (c.media ? [c.media] : []);
+      
+      const renderForm = () => {
+        let mediaHtml = "";
+        if (mediaArray.length > 0) {
+          mediaHtml = `
+            <p style="margin-top: 1rem;">
+              <label>Media attachments:</label><br>
+              <div class="edit-media-list">
+                ${mediaArray.map((url, idx) => `
+                  <div>
+                    <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
+                    <span>attachment_${idx}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </p>
+          `;
+        }
+        
+        form.innerHTML = `
+          <p>
+            <label>Edit post</label><br>
+            <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${c.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+          </p>
+          ${mediaHtml}
+          <p>
+            <button type="button" class="edit-save-btn">Save</button>
+            <button type="button" class="edit-cancel-btn">Cancel</button>
+          </p>
+        `;
+        
+        const saveBtn = form.querySelector(".edit-save-btn");
+        const cancelBtn = form.querySelector(".edit-cancel-btn");
+        const textarea = form.querySelector("textarea");
+        
+        // Handle media deletion
+        const deleteMediaBtns = form.querySelectorAll(".delete-media-btn");
+        deleteMediaBtns.forEach(btn => {
+          btn.onclick = (e) => {
+            e.preventDefault();
+            const idx = parseInt(btn.dataset.index);
+            mediaArray.splice(idx, 1);
+            renderForm();
+          };
+        });
+        
+        if (saveBtn) {
+          saveBtn.onclick = async () => {
+            const newText = textarea.value.trim();
+            if (!newText) {
+              showNoticeMessage("Post cannot be empty");
+              return;
+            }
+            await editComment(c.id, newText, mediaArray.length > 0 ? mediaArray : null);
+          };
+        }
+        
+        if (cancelBtn) {
+          cancelBtn.onclick = () => form.remove();
+        }
+      };
+      
+      renderForm();
       wrap.appendChild(form);
-      
-      const saveBtn = form.querySelector(".edit-save-btn");
-      const cancelBtn = form.querySelector(".edit-cancel-btn");
-      const textarea = form.querySelector("textarea");
-      
-      if (saveBtn) {
-        saveBtn.onclick = async () => {
-          const newText = textarea.value.trim();
-          if (!newText) {
-            showNoticeMessage("Post cannot be empty");
-            return;
-          }
-          await editComment(c.id, newText, c.media);
-        };
-      }
-      
-      if (cancelBtn) {
-        cancelBtn.onclick = () => form.remove();
-      }
     };
   }
   
@@ -770,6 +828,7 @@ onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
   if (newestAt && newestAt > (latestSeen || 0)) {
     latestSeen = newestAt;
     // Automatically reload comments when new ones arrive
+    currentPage = 0;
     loadComments(currentPage);
     if (notice) {
       const data = newest.data();
@@ -801,7 +860,21 @@ if (postFile) {
 if (postButton) {
   if (postFile) {
     postFile.addEventListener("change", () => {
-      syncInputImages(postFile);
+      const newFiles = Array.from(postFile.files || []);
+      // Add new files to accumulated list
+      postAccumulatedFiles = [...postAccumulatedFiles, ...newFiles].filter(f => isImageFile(f));
+      
+      // Limit to MAX_IMAGES
+      if (postAccumulatedFiles.length > MAX_IMAGES) {
+        showNoticeMessage(`You can upload up to ${MAX_IMAGES} images at a time.`);
+        postAccumulatedFiles = postAccumulatedFiles.slice(0, MAX_IMAGES);
+      }
+      
+      // Update input.files with accumulated files
+      const dt = new DataTransfer();
+      postAccumulatedFiles.forEach(file => dt.items.add(file));
+      postFile.files = dt.files;
+      
       renderAttachmentPreview(postFile, postPreview);
     });
   }
@@ -836,10 +909,11 @@ if (postButton) {
 
       if (postText) postText.value = "";
       if (postFile) postFile.value = "";
+      postAccumulatedFiles = [];
       renderAttachmentPreview(postFile, postPreview);
       currentSearch = "";
       currentPage = 0;
-      loadComments(currentPage);
+      // Don't manually reload - let the snapshot listener handle it
     } finally {
       postButton.disabled = false;
     }

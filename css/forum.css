@@ -84,7 +84,7 @@
 
 .forum-media-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
   align-items: flex-start;
   margin-top: 8px;
@@ -223,10 +223,6 @@ iframe.forum-media.audio {
 /* dark-mode forum styles removed */
 
 @media (max-width: 720px) {
-  .forum-media-group {
-    flex-direction: column;
-  }
-
   .forum-media-item {
     width: 100%;
   }

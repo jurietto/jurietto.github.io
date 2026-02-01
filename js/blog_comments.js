@@ -27,6 +27,11 @@ const MAX_IMAGES = 10;
 let currentPostId = null;
 let currentUserId = null;
 
+/* ---------- HELPER FUNCTION ---------- */
+function isImageFile(file) {
+  return file.type.startsWith("image/") || /\.(gif|png|jpg|jpeg|webp|bmp|svg)$/i.test(file.name);
+}
+
 /* ---------- USER ID MANAGEMENT ---------- */
 
 function generateUserId() {
@@ -84,7 +89,7 @@ function showNoticeMessage(message) {
 function getSelectedImages(input) {
   const files = Array.from(input?.files || []);
   if (!files.length) return { files: [] };
-  const nonImages = files.filter(file => !file.type.startsWith("image/"));
+  const nonImages = files.filter(file => !isImageFile(file));
   if (nonImages.length) {
     return { error: "Please choose image files only." };
   }
@@ -97,7 +102,7 @@ function getSelectedImages(input) {
 function syncInputImages(input) {
   const files = Array.from(input?.files || []);
   if (!files.length) return [];
-  const images = files.filter(file => file.type.startsWith("image/"));
+  const images = files.filter(file => isImageFile(file));
   const nonImages = files.length - images.length;
 
   if (nonImages) {
@@ -121,7 +126,7 @@ function syncInputImages(input) {
 function appendImagesToInput(input, files) {
   if (!input) return { added: 0 };
   const existing = Array.from(input.files || []);
-  const images = files.filter(file => file?.type?.startsWith("image/"));
+  const images = files.filter(file => isImageFile(file));
   if (!images.length) return { added: 0 };
 
   const remaining = MAX_IMAGES - existing.length;
@@ -142,7 +147,12 @@ function appendImagesToInput(input, files) {
 
 function createAttachmentPreview(input) {
   if (!input) return null;
-  const preview = document.createElement("div");
+  // Check if preview already exists
+  let preview = input.nextElementSibling;
+  if (preview && preview.className === "attachment-preview") {
+    return preview;
+  }
+  preview = document.createElement("div");
   preview.className = "attachment-preview";
   preview.hidden = true;
   input.insertAdjacentElement("afterend", preview);
@@ -159,23 +169,19 @@ function renderAttachmentPreview(input, preview) {
     return;
   }
 
-  const grid = document.createElement("div");
-  grid.className = "attachment-preview-grid";
+  const list = document.createElement("div");
+  list.className = "attachment-preview-list";
 
   files.forEach((file, index) => {
-    if (!file.type.startsWith("image/")) return;
+    // Check if it's an image by MIME type or file extension
+    if (!isImageFile(file)) return;
+    
     const item = document.createElement("div");
     item.className = "attachment-preview-item";
-    const img = document.createElement("img");
-    const url = URL.createObjectURL(file);
-    img.src = url;
-    img.alt = file.name || "Attachment preview";
-    img.onload = () => URL.revokeObjectURL(url);
-    item.appendChild(img);
+    
     const removeButton = document.createElement("button");
     removeButton.type = "button";
     removeButton.textContent = "Delete";
-    removeButton.style.width = "100%";
     removeButton.addEventListener("click", () => {
       const dt = new DataTransfer();
       files.forEach((existingFile, fileIndex) => {
@@ -184,14 +190,20 @@ function renderAttachmentPreview(input, preview) {
         }
       });
       input.files = dt.files;
+      accumulatedFiles = Array.from(input.files || []);
       renderAttachmentPreview(input, preview);
     });
     item.appendChild(removeButton);
-    grid.appendChild(item);
+    
+    const filename = document.createElement("span");
+    filename.textContent = file.name;
+    item.appendChild(filename);
+    
+    list.appendChild(item);
   });
 
-  preview.appendChild(grid);
-  preview.hidden = grid.children.length === 0;
+  preview.appendChild(list);
+  preview.hidden = list.children.length === 0;
 }
 
 function handlePasteImages(event, input, preview) {
@@ -521,42 +533,81 @@ export async function loadComments(postId, firebaseDb) {
       
       if (editBtn) {
         editBtn.onclick = () => {
+          // Remove existing edit form if any
+          const existingForm = wrap.querySelector("div[data-edit-form]");
+          if (existingForm) existingForm.remove();
+          
           const form = document.createElement("div");
+          form.setAttribute("data-edit-form", "true");
           form.style.margin = "1rem 0";
           form.style.padding = "1rem";
-          form.style.border = "1px solid var(--masala)";
           form.style.borderRadius = "4px";
-          form.innerHTML = `
-            <p>
-              <label>Edit comment</label><br>
-              <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${comment.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
-            </p>
-            <p>
-              <button type="button" class="edit-save-btn">Save</button>
-              <button type="button" class="edit-cancel-btn">Cancel</button>
-            </p>
-          `;
           
+          let mediaArray = Array.isArray(comment.media) ? [...comment.media] : (comment.media ? [comment.media] : []);
+          
+          const renderForm = () => {
+            let mediaHtml = "";
+            if (mediaArray.length > 0) {
+              mediaHtml = `
+                <p style="margin-top: 1rem;">
+                  <label>Media attachments:</label><br>
+                  <div class="edit-media-list">
+                    ${mediaArray.map((url, idx) => `
+                      <div>
+                        <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
+                        <span>attachment_${idx}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </p>
+              `;
+            }
+            
+            form.innerHTML = `
+              <p>
+                <label>Edit comment</label><br>
+                <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${comment.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+              </p>
+              ${mediaHtml}
+              <p>
+                <button type="button" class="edit-save-btn">Save</button>
+                <button type="button" class="edit-cancel-btn">Cancel</button>
+              </p>
+            `;
+            
+            const saveBtn = form.querySelector(".edit-save-btn");
+            const cancelBtn = form.querySelector(".edit-cancel-btn");
+            const textarea = form.querySelector("textarea");
+            
+            // Handle media deletion
+            const deleteMediaBtns = form.querySelectorAll(".delete-media-btn");
+            deleteMediaBtns.forEach(btn => {
+              btn.onclick = (e) => {
+                e.preventDefault();
+                const idx = parseInt(btn.dataset.index);
+                mediaArray.splice(idx, 1);
+                renderForm();
+              };
+            });
+            
+            if (saveBtn) {
+              saveBtn.onclick = async () => {
+                const newText = textarea.value.trim();
+                if (!newText) {
+                  showNoticeMessage("Comment cannot be empty");
+                  return;
+                }
+                await editBlogComment(postId, commentId, newText, mediaArray.length > 0 ? mediaArray : null);
+              };
+            }
+            
+            if (cancelBtn) {
+              cancelBtn.onclick = () => form.remove();
+            }
+          };
+          
+          renderForm();
           wrap.insertBefore(form, wrap.querySelector(".forum-meta").nextSibling);
-          
-          const saveBtn = form.querySelector(".edit-save-btn");
-          const cancelBtn = form.querySelector(".edit-cancel-btn");
-          const textarea = form.querySelector("textarea");
-          
-          if (saveBtn) {
-            saveBtn.onclick = async () => {
-              const newText = textarea.value.trim();
-              if (!newText) {
-                showNoticeMessage("Comment cannot be empty");
-                return;
-              }
-              await editBlogComment(postId, commentId, newText, comment.media);
-            };
-          }
-          
-          if (cancelBtn) {
-            cancelBtn.onclick = () => form.remove();
-          }
         };
       }
       
@@ -596,10 +647,25 @@ export function setupCommentForm(postId, firebaseDb) {
   btn.parentNode.replaceChild(newBtn, btn);
 
   let preview = null;
+  let accumulatedFiles = [];
   if (commentFile) {
     preview = createAttachmentPreview(commentFile);
     commentFile.addEventListener("change", () => {
-      syncInputImages(commentFile);
+      const newFiles = Array.from(commentFile.files || []);
+      // Add new files to accumulated list
+      accumulatedFiles = [...accumulatedFiles, ...newFiles].filter(f => isImageFile(f));
+      
+      // Limit to MAX_IMAGES
+      if (accumulatedFiles.length > MAX_IMAGES) {
+        showNoticeMessage(`You can upload up to ${MAX_IMAGES} images at a time.`);
+        accumulatedFiles = accumulatedFiles.slice(0, MAX_IMAGES);
+      }
+      
+      // Update input.files with accumulated files
+      const dt = new DataTransfer();
+      accumulatedFiles.forEach(file => dt.items.add(file));
+      commentFile.files = dt.files;
+      
       renderAttachmentPreview(commentFile, preview);
     });
   }
@@ -648,9 +714,14 @@ export function setupCommentForm(postId, firebaseDb) {
 
       commentText.value = "";
       if (commentFile) commentFile.value = "";
+      accumulatedFiles = [];
       renderAttachmentPreview(commentFile, preview);
       localStorage.setItem("blog_username", user);
       await loadComments(postId, db);
+      // Scroll to comments section to see new comment
+      if (commentsSection) {
+        commentsSection.scrollIntoView({ behavior: "smooth" });
+      }
     } catch (err) {
       console.error("Error posting comment:", err);
       alert("Failed to post comment.");
