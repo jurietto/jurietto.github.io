@@ -36,8 +36,40 @@ const getCreatedAtValue = ts =>
   typeof ts === "number" ? ts :
   ts.seconds ? ts.seconds * 1000 : 0;
 
-const renderLink = url =>
-  `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+const sanitizeInput = text => {
+  if (!text) return "";
+  return text.trim().slice(0, 10000); // Max 10k characters, trim whitespace
+};
+
+const validateUsername = name => {
+  const sanitized = sanitizeInput(name);
+  return sanitized || "Anonymous";
+};
+
+const validatePostText = text => {
+  const sanitized = sanitizeInput(text);
+  if (!sanitized) {
+    return { error: "Post cannot be empty" };
+  }
+  return { ok: true, text: sanitized };
+};
+
+const stripTrackingParams = url => {
+  try {
+    const u = new URL(url);
+    // Remove common tracking parameters
+    const params = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'msclkid'];
+    params.forEach(param => u.searchParams.delete(param));
+    return u.toString();
+  } catch {
+    return url;
+  }
+};
+
+const renderLink = url => {
+  const cleanUrl = stripTrackingParams(url);
+  return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer noindex">${url}</a>`;
+};
 
 function getSelectedImages(input) {
   const files = Array.from(input?.files || []);
@@ -232,7 +264,7 @@ function createYouTubeEmbed(videoId) {
   container.style.aspectRatio = '16 / 9';
   
   const img = document.createElement('img');
-  img.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   img.alt = 'YouTube video thumbnail';
   img.style.width = '100%';
   img.style.height = '100%';
@@ -259,17 +291,7 @@ function createYouTubeEmbed(videoId) {
   container.appendChild(playBtn);
   
   container.addEventListener('click', () => {
-    const iframe = document.createElement('iframe');
-    iframe.className = 'forum-media video';
-    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
-    iframe.style.width = '100%';
-    iframe.style.aspectRatio = '16 / 9';
-    iframe.style.border = 'none';
-    iframe.style.borderRadius = '8px';
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('allowfullscreen', '');
-    iframe.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-    container.replaceWith(iframe);
+    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
   });
   
   return container;
@@ -298,16 +320,12 @@ function renderEmbed(url) {
 
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
     if (yt) {
-      const wrapper = document.createElement('div');
-      wrapper.appendChild(createYouTubeEmbed(yt[1]));
-      return wrapper.innerHTML;
+      return createYouTubeEmbed(yt[1]);
     }
 
     const ytShorts = url.match(/youtube\.com\/shorts\/([\w-]+)/);
     if (ytShorts) {
-      const wrapper = document.createElement('div');
-      wrapper.appendChild(createYouTubeEmbed(ytShorts[1]));
-      return wrapper.innerHTML;
+      return createYouTubeEmbed(ytShorts[1]);
     }
 
     if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
@@ -340,7 +358,12 @@ function renderBodyWithEmbeds(text, parent) {
   urls.forEach(url => {
     const d = document.createElement("div");
     d.className = "forum-media-block";
-    d.innerHTML = renderEmbed(url);
+    const embed = renderEmbed(url);
+    if (typeof embed === "string") {
+      d.innerHTML = embed;
+    } else {
+      d.appendChild(embed);
+    }
     parent.appendChild(d);
   });
 }
@@ -354,7 +377,12 @@ function renderMedia(media, parent) {
     media.forEach(url => {
       const item = document.createElement("div");
       item.className = "forum-media-item";
-      item.innerHTML = renderEmbed(url);
+      const embed = renderEmbed(url);
+      if (typeof embed === "string") {
+        item.innerHTML = embed;
+      } else {
+        item.appendChild(embed);
+      }
       group.appendChild(item);
     });
     parent.appendChild(group);
@@ -363,7 +391,12 @@ function renderMedia(media, parent) {
 
   const wrap = document.createElement("div");
   wrap.className = "forum-media-block";
-  wrap.innerHTML = renderEmbed(media);
+  const embed = renderEmbed(media);
+  if (typeof embed === "string") {
+    wrap.innerHTML = embed;
+  } else {
+    wrap.appendChild(embed);
+  }
   parent.appendChild(wrap);
 }
 
@@ -463,9 +496,11 @@ function renderPagination(active, totalPages = 0) {
     const btn = document.createElement("button");
     btn.textContent = i + 1;
     btn.disabled = i === active;
-    btn.onclick = () => {
+    btn.onclick = async () => {
       currentPage = i;
-      loadComments(i);
+      const scrollPos = window.scrollY;
+      await loadComments(i);
+      window.scrollTo(0, scrollPos);
     };
     pager.appendChild(btn);
   }

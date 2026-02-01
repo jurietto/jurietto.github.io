@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://storage.googleapis.com https://www.youtube.com https://api.github.com https://www.gstatic.com; frame-src https://www.youtube.com; object-src 'none'">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
 
   <title>🍭(¬‿¬) 凸 — Blog</title>
 
@@ -96,18 +99,19 @@
   <!-- FOOTER (shared language) -->
   <div class="text-divider" aria-hidden="true"></div>
   <footer class="site-footer">
-    Thanks for stopping by... Juri made this, 2026
+    Thanks for stopping by... Juri made this, 2026 | <a href="/privacy.html" style="color: inherit; text-decoration: underline;">Privacy</a>
   </footer>
 
   <!-- SCROLL BUTTONS (shared) -->
   <div class="scroll-buttons">
-    <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Top</button>
-    <button type="button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Down</button>
+    <button type="button" id="scroll-top-btn">Top</button>
+    <button type="button" id="scroll-bottom-btn">Down</button>
   </div>
 
   <!-- BLOG SCRIPT ONLY -->
   <script type="module" src="/js/blog.js"></script>
   <script type="module" src="/js/blog_comments.js"></script>
+  <script src="/js/common.js"></script>
 
 </body>
 </html>

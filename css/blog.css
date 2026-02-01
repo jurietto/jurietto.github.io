@@ -112,7 +112,7 @@ article::after {
   width: calc(100% + 32px);
 
   font-family: "Mona", "MS PGothic", monospace;
-  font-size: clamp(0.55rem, 1vw, 0.9rem);
+  font-size: 1.2rem;
   line-height: 1;
   letter-spacing: 0.35em;
 
