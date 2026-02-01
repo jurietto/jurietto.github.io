@@ -723,14 +723,22 @@ async function flagComment(commentId, threadId = "general") {
     submitBtn.textContent = "Submitting...";
 
     try {
-      const flagComment = httpsCallable(functions, 'flagComment');
-      await flagComment({
-        commentId,
-        threadId,
-        reason,
-        details: textarea.value
+      const response = await fetch('https://us-central1-chansi-ddd7e.cloudfunctions.net/flagComment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          commentId,
+          threadId,
+          reason,
+          details: textarea.value
+        })
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
       showNoticeMessage("✓ Report submitted. Thank you for helping keep the forum safe.");
       form.remove();
     } catch (error) {

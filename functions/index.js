@@ -4,6 +4,7 @@
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -79,67 +80,57 @@ exports.recordPostTime = functions.firestore
 // ==================== CONTENT MODERATION ====================
 
 /**
- * HTTP Cloud Function to flag/report a comment
+ * Cloud Function to flag/report a comment
  */
-exports.flagComment = functions.https.onCall(async (data, context) => {
-  // Require authentication
-  if (!context.auth) {
-    throw new functions.https.HttpsError(
-      'unauthenticated',
-      'Must be signed in to report content'
-    );
-  }
+exports.flagComment = functions.https.onRequest((req, res) => {
+  return cors(req, res, async () => {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-  const { commentId, threadId, reason, details } = data;
-  const reporterId = context.auth.uid;
+    const { commentId, threadId, reason, details } = req.body;
+    const reporterId = req.body.uid || 'anonymous';
 
-  // Validate input
-  if (!commentId || !threadId || !reason) {
-    throw new functions.https.HttpsError(
-      'invalid-argument',
-      'Missing required fields: commentId, threadId, reason'
-    );
-  }
+    // Validate input
+    if (!commentId || !threadId || !reason) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
 
-  const validReasons = ['spam', 'harassment', 'nsfw', 'misinformation', 'other'];
-  if (!validReasons.includes(reason)) {
-    throw new functions.https.HttpsError(
-      'invalid-argument',
-      'Invalid reason. Must be: ' + validReasons.join(', ')
-    );
-  }
+    const validReasons = ['spam', 'harassment', 'nsfw', 'misinformation', 'other'];
+    if (!validReasons.includes(reason)) {
+      return res.status(400).json({ error: 'Invalid reason' });
+    }
 
-  try {
-    const flagRef = db.collection('threads').doc(threadId)
-      .collection('comments').doc(commentId)
-      .collection('flags').doc();
+    try {
+      // Create flag document
+      const flagRef = db.collection('threads').doc(threadId)
+        .collection('comments').doc(commentId)
+        .collection('flags').doc();
 
-    await flagRef.set({
-      reason,
-      details: details || '',
-      reporterId,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      status: 'pending',
-      resolvedAt: null,
-      resolvedBy: null
-    });
+      await flagRef.set({
+        reason,
+        details: details || '',
+        reporterId,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        status: 'pending',
+        resolvedAt: null,
+        resolvedBy: null
+      });
 
-    // Increment flag count on comment
-    const commentRef = db.collection('threads').doc(threadId)
-      .collection('comments').doc(commentId);
-    
-    await commentRef.update({
-      flagCount: admin.firestore.FieldValue.increment(1)
-    });
+      // Increment flag count on comment
+      const commentRef = db.collection('threads').doc(threadId)
+        .collection('comments').doc(commentId);
+      
+      await commentRef.update({
+        flagCount: admin.firestore.FieldValue.increment(1)
+      });
 
-    return { success: true, message: 'Report submitted' };
-  } catch (error) {
-    console.error('Error flagging comment:', error);
-    throw new functions.https.HttpsError(
-      'internal',
-      'Error submitting report'
-    );
-  }
+      return res.status(200).json({ success: true, message: 'Report submitted successfully' });
+    } catch (error) {
+      console.error('Error flagging comment:', error);
+      return res.status(500).json({ error: 'Error submitting report: ' + error.message });
+    }
+  });
 });
 
 /**
