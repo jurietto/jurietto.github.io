@@ -46,10 +46,6 @@ body {
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
   line-height: 1.4;
   font-size: 16px;
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 /* Normalize box model and base spacing to avoid unexpected gaps */
