@@ -72,12 +72,14 @@ onAuthStateChanged(auth, user => {
     loginBtn.hidden = false;
     editor.hidden = true;
     logoutBtn && (logoutBtn.hidden = true);
+    window.__ADMIN_READY__ = false;
     return;
   }
 
   if (user.uid !== ADMIN_UID) {
     alert("Unauthorized user.");
     signOut(auth);
+    window.__ADMIN_READY__ = false;
     return;
   }
 
@@ -85,6 +87,7 @@ onAuthStateChanged(auth, user => {
   loginBtn.hidden = true;
   editor.hidden = false;
   logoutBtn && (logoutBtn.hidden = false);
+  window.__ADMIN_READY__ = true;
 });
 
 /* =====================
@@ -145,5 +148,6 @@ publishBtn?.addEventListener("click", async () => {
 /*
   This flag lets admin sub-modules (forum moderation, blog edit/delete)
   wait until auth + db are guaranteed ready.
+  
+  It's now set dynamically in the onAuthStateChanged handler above.
 */
-window.__ADMIN_READY__ = true;

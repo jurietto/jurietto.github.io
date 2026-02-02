@@ -11,6 +11,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { uploadFile } from "./storage.js";
 
+// Report modal state
+let reportModalOpen = false;
+let reportingComment = null;
+
 // Will be set by blog.js
 let db;
 
@@ -23,9 +27,127 @@ const commentText = document.getElementById("comment-text");
 const commentFile = document.getElementById("comment-file");
 const commentSubmit = document.getElementById("comment-submit");
 
+// Create report modal if it doesn't exist
+function ensureReportModalExists() {
+  if (document.getElementById("report-comment-modal")) return;
+  
+  const modal = document.createElement("div");
+  modal.id = "report-comment-modal";
+  modal.style.display = "none";
+  modal.style.position = "fixed";
+  modal.style.top = "0";
+  modal.style.left = "0";
+  modal.style.width = "100%";
+  modal.style.height = "100%";
+  modal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+  modal.style.zIndex = "10000";
+  
+  const content = document.createElement("div");
+  content.style.position = "absolute";
+  content.style.top = "50%";
+  content.style.left = "50%";
+  content.style.transform = "translate(-50%, -50%)";
+  content.style.backgroundColor = "white";
+  content.style.padding = "2rem";
+  content.style.borderRadius = "8px";
+  content.style.maxWidth = "500px";
+  content.style.width = "90%";
+  content.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+  
+  content.innerHTML = `
+    <h3>Report Comment</h3>
+    <p style="color: #666; margin-bottom: 1rem;">Help us keep the community safe. Please let us know why you're reporting this comment.</p>
+    
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem;">Reason for reporting</label>
+      <select id="report-reason" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;">
+        <option value="">-- Select a reason --</option>
+        <option value="spam">Spam</option>
+        <option value="harassment">Harassment or bullying</option>
+        <option value="nsfw">Inappropriate content</option>
+        <option value="misinformation">Misinformation</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    
+    <div style="margin-bottom: 1rem;">
+      <label style="display: block; margin-bottom: 0.5rem;">Additional details (optional)</label>
+      <textarea id="report-details" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-family: inherit;" rows="4" placeholder="Please provide any additional context..."></textarea>
+    </div>
+    
+    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+      <button id="report-cancel" type="button" style="padding: 0.5rem 1rem; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">Cancel</button>
+      <button id="report-submit" type="button" style="padding: 0.5rem 1rem; background-color: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit Report</button>
+    </div>
+  `;
+  
+  modal.appendChild(content);
+  document.body.appendChild(modal);
+  
+  // Setup modal handlers
+  document.getElementById("report-cancel").addEventListener("click", closeReportModal);
+  document.getElementById("report-submit").addEventListener("click", submitReport);
+  
+  // Close on background click
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeReportModal();
+  });
+}
+
 const MAX_IMAGES = 10;
 let currentPostId = null;
 let currentUserId = null;
+
+/* ---------- REPORT FUNCTIONS ---------- */
+
+function openReportModal(commentData) {
+  ensureReportModalExists();
+  reportingComment = commentData;
+  document.getElementById("report-comment-modal").style.display = "block";
+  document.getElementById("report-reason").value = "";
+  document.getElementById("report-details").value = "";
+}
+
+function closeReportModal() {
+  document.getElementById("report-comment-modal").style.display = "none";
+  reportingComment = null;
+}
+
+async function submitReport() {
+  const reason = document.getElementById("report-reason").value.trim();
+  const details = document.getElementById("report-details").value.trim();
+  
+  if (!reason) {
+    alert("Please select a reason for the report.");
+    return;
+  }
+  
+  if (!reportingComment) {
+    alert("Error: No comment to report.");
+    return;
+  }
+  
+  try {
+    const flaggedCommentsRef = collection(db, "flaggedComments");
+    await addDoc(flaggedCommentsRef, {
+      commentId: reportingComment.commentId,
+      commentText: reportingComment.text || "(no text)",
+      commentUser: reportingComment.user || "Anonymous",
+      commentPath: reportingComment.path,
+      postId: reportingComment.postId,
+      reason: reason,
+      details: details || null,
+      reportedAt: serverTimestamp(),
+      reportedBy: currentUserId || "anonymous"
+    });
+    
+    showNoticeMessage("Thank you! Your report has been submitted.");
+    closeReportModal();
+  } catch (err) {
+    console.error("Error submitting report:", err);
+    alert("Failed to submit report: " + err.message);
+  }
+}
 
 /* ---------- HELPER FUNCTION ---------- */
 function isImageFile(file) {
@@ -505,7 +627,11 @@ export async function loadComments(postId, firebaseDb) {
         <div style="display: inline; margin-left: 1rem;">
           <button class="comment-edit-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
           <button class="comment-delete-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
-        </div>` : "";
+          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Report</button>
+        </div>` : `
+        <div style="display: inline; margin-left: 1rem;">
+          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Report</button>
+        </div>`;
       
       const meta = document.createElement("div");
       meta.className = "forum-meta";
@@ -530,6 +656,19 @@ export async function loadComments(postId, firebaseDb) {
       // Add edit/delete listeners
       const editBtn = meta.querySelector(".comment-edit-btn");
       const deleteBtn = meta.querySelector(".comment-delete-btn");
+      const reportBtn = meta.querySelector(".comment-report-btn");
+      
+      if (reportBtn) {
+        reportBtn.onclick = () => {
+          openReportModal({
+            commentId: commentId,
+            postId: currentPostId,
+            text: comment.text,
+            user: comment.user,
+            path: `blogPosts/${currentPostId}/comments/${commentId}`
+          });
+        };
+      }
       
       if (editBtn) {
         editBtn.onclick = () => {
@@ -631,6 +770,9 @@ export function setupCommentForm(postId, firebaseDb) {
   if (!firebaseDb) return;
   db = firebaseDb;
   currentPostId = postId;
+  
+  // Ensure report modal exists
+  ensureReportModalExists();
 
   // Load saved username
   const saved = localStorage.getItem("blog_username") || "";

@@ -106,5 +106,26 @@ service cloud.firestore {
         }
       }
     }
+
+    // Flagged/Reported comments collection
+    match /flaggedComments/{reportId} {
+      allow create: if 
+        // Must have required fields
+        request.resource.data.reason is string &&
+        request.resource.data.reason in ['spam', 'harassment', 'nsfw', 'misinformation', 'other'] &&
+        request.resource.data.reportedAt is timestamp &&
+        
+        // Optional fields
+        (!('details' in request.resource.data) || request.resource.data.details is string) &&
+        (!('commentText' in request.resource.data) || request.resource.data.commentText is string) &&
+        (!('commentUser' in request.resource.data) || request.resource.data.commentUser is string) &&
+        (!('commentPath' in request.resource.data) || request.resource.data.commentPath is string) &&
+        (!('postId' in request.resource.data) || request.resource.data.postId is string) &&
+        (!('reportedBy' in request.resource.data) || request.resource.data.reportedBy is string);
+      
+      allow read: if isAdmin();
+      allow delete: if isAdmin();
+      allow update: if false;
+    }
   }
 }
