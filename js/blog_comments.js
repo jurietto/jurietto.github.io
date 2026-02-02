@@ -881,15 +881,19 @@ export function setupCommentForm(postId, firebaseDb) {
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
-      const commentsRef = collection(db, "blogPosts", postId, "comments");
-      await addDoc(commentsRef, {
+      const commentData = {
         user,
         text,
-        media,
-        hashtags: [],
         createdAt: serverTimestamp(),
         userId: currentUserId
-      });
+      };
+
+      if (media) {
+        commentData.media = media;
+      }
+
+      const commentsRef = collection(db, "blogPosts", postId, "comments");
+      await addDoc(commentsRef, commentData);
 
       commentText.value = "";
       if (commentFile) commentFile.value = "";

@@ -678,14 +678,19 @@ function createReplyForm(parentId, wrap) {
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
-      await addDoc(commentsRef, {
+      const replyData = {
         user: user.value.trim() || "Anonymous",
         text: text.value.trim(),
-        media,
         replyTo: parentId,
         createdAt: serverTimestamp(),
         userId: currentUserId
-      });
+      };
+
+      if (media) {
+        replyData.media = media;
+      }
+      
+      await addDoc(commentsRef, replyData);
     } catch (error) {
       if (error.message.includes("blocked")) {
         alert("⚠️ Unable to post: Your browser extension may be blocking Firestore.\n\nPlease disable ad blockers or privacy extensions and try again.");
@@ -1335,13 +1340,19 @@ if (postButton) {
       const media = selection.files.length
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
-      await addDoc(commentsRef, {
+      
+      const postData = {
         user: postUser?.value.trim() || "Anonymous",
         text: postContent,
-        media,
         createdAt: serverTimestamp(),
         userId: currentUserId
-      });
+      };
+
+      if (media) {
+        postData.media = media;
+      }
+
+      await addDoc(commentsRef, postData);
 
       lastPostTime = Date.now();
       if (postText) postText.value = "";
