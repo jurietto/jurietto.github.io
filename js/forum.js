@@ -501,6 +501,9 @@ async function loadComments(page = 0) {
     getDocs(query(commentsRef, orderBy("createdAt", "asc")))
   ]);
 
+  console.log("Total docs in rootSnap:", rootSnap.docs.length);
+  console.log("Total docs in replySnap:", replySnap.docs.length);
+
   const roots = rootSnap.docs
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(d => !d.replyTo);
@@ -509,6 +512,10 @@ async function loadComments(page = 0) {
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(d => d.replyTo);
 
+  console.log("Root posts:", roots.length);
+  console.log("Replies:", replies.length);
+  console.log("Replies data:", replies);
+
   const replyMap = new Map();
   replies.forEach(reply => {
     if (!replyMap.has(reply.replyTo)) {
@@ -516,6 +523,19 @@ async function loadComments(page = 0) {
     }
     replyMap.get(reply.replyTo).push(reply);
   });
+
+  console.log("ReplyMap entries:", [...replyMap.entries()]);
+
+  // Debug: Check if specific post has replies
+  const testParentId = "qKII0I85BU64Huxyu3mH";
+  const testReplies = replyMap.get(testParentId);
+  console.log(`Replies for ${testParentId}:`, testReplies);
+  
+  // Check if this ID is a root post or a reply
+  const isRoot = roots.find(r => r.id === testParentId);
+  const isReply = replies.find(r => r.id === testParentId);
+  console.log(`Is ${testParentId} a root post?`, !!isRoot);
+  console.log(`Is ${testParentId} a reply?`, !!isReply);
 
   const filteredRoots = currentSearch
     ? roots.filter(root => {
@@ -673,6 +693,7 @@ function createReplyForm(parentId, wrap) {
     if (!text.value.trim() && selection.files.length === 0) return;
 
     post.disabled = true;
+    post.textContent = "Posting...";
     try {
       const media = selection.files.length
         ? await Promise.all(selection.files.map(uploadFile))
@@ -690,7 +711,40 @@ function createReplyForm(parentId, wrap) {
         replyData.media = media;
       }
       
+      console.log("Submitting reply:", replyData);
       await addDoc(commentsRef, replyData);
+      console.log("Reply submitted successfully");
+      
+      // Remove the form after successful post
+      form.remove();
+      
+      // Find the root post for this reply chain and go to its page
+      // First, we need to trace back from parentId to find the root
+      let currentId = parentId;
+      let rootId = null;
+      
+      // Fetch all comments to trace the chain
+      const allSnap = await getDocs(query(commentsRef));
+      const allComments = new Map();
+      allSnap.docs.forEach(d => allComments.set(d.id, d.data()));
+      
+      // Trace back to root
+      while (currentId) {
+        const comment = allComments.get(currentId);
+        if (!comment || !comment.replyTo) {
+          rootId = currentId;
+          break;
+        }
+        currentId = comment.replyTo;
+      }
+      
+      console.log("Root post ID for this reply:", rootId);
+      
+      // Reset to page 0 and reload - the sorting by latest activity should bring the post to the top
+      currentPage = 0;
+      
+      // Reload comments to show the new reply
+      await loadComments(currentPage);
     } catch (error) {
       if (error.message.includes("blocked")) {
         alert("⚠️ Unable to post: Your browser extension may be blocking Firestore.\n\nPlease disable ad blockers or privacy extensions and try again.");
@@ -701,10 +755,9 @@ function createReplyForm(parentId, wrap) {
       }
       console.error("Post error:", error);
       post.disabled = false;
+      post.textContent = "Post";
       return;
     }
-
-    loadComments(currentPage);
   };
 
   wrap.appendChild(form);
@@ -1084,6 +1137,147 @@ function renderComment(c, replies, replyMap) {
     }
 
     const nestedReplies = replyMap?.get(r.id) || [];
+    
+    // Recursively render all nested replies
+    function renderNestedReplies(parentReply, parentElement, depth = 0) {
+      const childReplies = replyMap?.get(parentReply.id) || [];
+      childReplies.forEach(nested => {
+        const nw = document.createElement("div");
+        nw.className = "forum-reply forum-reply-nested";
+        // Add extra indentation for deeper nesting
+        if (depth > 0) {
+          nw.style.marginLeft = `${Math.min(depth * 1, 3)}rem`;
+        }
+        
+        const isNestedOwner = nested.userId && nested.userId === currentUserId;
+        const nestedEditedText = nested.editedAt ? ` (edited ${formatDate(nested.editedAt)})` : "";
+        const nestedButtonHtml = isNestedOwner ? `
+          <div style="display: inline; margin-left: 1rem;">
+            <button class="comment-edit-btn" data-id="${nested.id}">Edit</button>
+            <button class="comment-delete-btn" data-id="${nested.id}">Delete</button>
+          </div>` : ``;
+        
+        nw.innerHTML = `
+          <div class="forum-meta">
+            <strong>${nestedReplyKaomoji} ${nested.user || "Anonymous"}</strong>
+            — ${formatDate(nested.createdAt)}${nestedEditedText}${nestedButtonHtml}
+          </div>`;
+        renderBodyWithEmbeds(nested.text, nw);
+        renderMedia(nested.media, nw);
+        
+        // Add edit/delete handlers for nested reply
+        const nestedEditBtn = nw.querySelector(".comment-edit-btn");
+        const nestedDeleteBtn = nw.querySelector(".comment-delete-btn");
+        
+        if (nestedEditBtn) {
+          nestedEditBtn.onclick = () => {
+            const existingForm = nw.querySelector("div[data-edit-form]");
+            if (existingForm) existingForm.remove();
+            
+            const form = document.createElement("div");
+            form.setAttribute("data-edit-form", "true");
+            form.style.margin = "1rem 0";
+            form.style.padding = "1rem";
+            form.style.borderRadius = "4px";
+            
+            let mediaArray = Array.isArray(nested.media) ? [...nested.media] : (nested.media ? [nested.media] : []);
+            
+            const renderForm = () => {
+              let mediaHtml = "";
+              if (mediaArray.length > 0) {
+                mediaHtml = `
+                  <p style="margin-top: 1rem;">
+                    <label>Media attachments:</label><br>
+                    <div class="edit-media-list">
+                      ${mediaArray.map((url, idx) => `
+                        <div>
+                          <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
+                          <span>attachment_${idx}</span>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </p>
+                `;
+              }
+              
+              form.innerHTML = `
+                <p>
+                  <label>Edit reply</label><br>
+                  <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${nested.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
+                </p>
+                ${mediaHtml}
+                <p>
+                  <button type="button" class="edit-save-btn">Save</button>
+                  <button type="button" class="edit-cancel-btn">Cancel</button>
+                </p>
+              `;
+              
+              const saveBtn = form.querySelector(".edit-save-btn");
+              const cancelBtn = form.querySelector(".edit-cancel-btn");
+              const textarea = form.querySelector("textarea");
+              
+              const deleteMediaBtns = form.querySelectorAll(".delete-media-btn");
+              deleteMediaBtns.forEach(btn => {
+                btn.onclick = (e) => {
+                  e.preventDefault();
+                  const idx = parseInt(btn.dataset.index);
+                  mediaArray.splice(idx, 1);
+                  renderForm();
+                };
+              });
+              
+              if (saveBtn) {
+                saveBtn.onclick = async () => {
+                  const newText = textarea.value.trim();
+                  if (!newText) {
+                    showNoticeMessage("Post cannot be empty");
+                    return;
+                  }
+                  await editComment(nested.id, newText, mediaArray.length > 0 ? mediaArray : null);
+                };
+              }
+              
+              if (cancelBtn) {
+                cancelBtn.onclick = () => form.remove();
+              }
+            };
+            
+            renderForm();
+            nw.appendChild(form);
+          };
+        }
+        
+        if (nestedDeleteBtn) {
+          nestedDeleteBtn.onclick = async () => {
+            if (confirm("Are you sure you want to delete this reply?")) {
+              await deleteComment(nested.id);
+            }
+          };
+        }
+        
+        const nestedBtn = document.createElement("button");
+        nestedBtn.textContent = "Reply";
+        nestedBtn.className = "forum-reply-button";
+        nestedBtn.onclick = () => createReplyForm(nested.id, nw);
+        nw.appendChild(nestedBtn);
+        
+        // Add flag button next to reply button if not owner
+        if (!isNestedOwner) {
+          const nestedFlagBtn = document.createElement("button");
+          nestedFlagBtn.className = "comment-flag-btn";
+          nestedFlagBtn.dataset.id = nested.id;
+          nestedFlagBtn.textContent = "Report";
+          nestedFlagBtn.onclick = () => flagComment(nested.id, "general");
+          nw.appendChild(nestedFlagBtn);
+        }
+        
+        parentElement.appendChild(nw);
+        
+        // Recursively render replies to this nested reply
+        renderNestedReplies(nested, nw, depth + 1);
+      });
+    }
+    
     nestedReplies.forEach(nested => {
       const nw = document.createElement("div");
       nw.className = "forum-reply forum-reply-nested";
@@ -1211,6 +1405,9 @@ function renderComment(c, replies, replyMap) {
       }
       
       rw.appendChild(nw);
+      
+      // Recursively render deeper nested replies
+      renderNestedReplies(nested, nw, 1);
     });
     wrap.appendChild(rw);
   });
