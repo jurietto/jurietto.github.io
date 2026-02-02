@@ -152,7 +152,7 @@ async function initBlogCommentsAdmin() {
         if (!confirm("Delete this blog comment?")) return;
         try {
           await deleteDoc(doc(db, path));
-          loadComments(currentDirection);
+          loadComments();
         } catch (err) {
           alert("Error deleting comment: " + err.message);
         }
