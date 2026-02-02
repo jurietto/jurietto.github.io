@@ -66,10 +66,21 @@ async function initForumAdmin() {
       return;
     }
 
+    // Filter to only include comments from threads subcollections
+    const forumDocs = snap.docs.filter(docSnap => {
+      const path = docSnap.ref.path;
+      return path.startsWith("threads/");
+    });
+
+    if (forumDocs.length === 0) {
+      container.innerHTML = "<p>No forum comments found.</p>";
+      return;
+    }
+
     firstVisible = snap.docs[0];
     lastVisible = snap.docs[snap.docs.length - 1];
 
-    const all = snap.docs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() }));
+    const all = forumDocs.map(d => ({ id: d.id, path: d.ref.path, ...d.data() }));
     const grouped = groupByThreadAndReplies(all);
 
     container.innerHTML = "";
