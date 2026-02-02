@@ -25,11 +25,11 @@ article {
 
 article h2 {
   margin: 0 0 6px;
-  padding-top: 0;
+  padding-top: 0.3em;
   font-family: "harringt", "Mona", monospace;
   font-size: 1.45rem;
   color: var(--masala);
-  line-height: 1.2;
+  line-height: 1.4;
   overflow: visible;
 }
 
