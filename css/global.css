@@ -46,6 +46,8 @@ body {
   font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
   line-height: 1.4;
   font-size: 16px;
+  margin: 0;
+  padding: 0;
 }
 
 /* Normalize box model and base spacing to avoid unexpected gaps */
@@ -54,6 +56,8 @@ body {
 /* Base typography spacing for consistent layout */
 h1,h2,h3,h4,h5,h6 { margin: 0 0 0.5rem; font-weight: 600; }
 h1,h2,h3 { font-family: "harringt"; }
+h1 { margin-bottom: 1.5rem; }
+h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
 ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
 img,video,iframe { max-width: 100%; height: auto; display: block; }
@@ -69,6 +73,13 @@ body {
   color: var(--masala);
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
+  padding: 1rem;
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 0.75rem;
+  }
 }
 
 /* Avoid forcing viewport height so pagination doesn't add extra scroll */
@@ -152,6 +163,22 @@ select {
   }
 }
 
+/* Consistent sizing for all pages */
+input[type="search"],
+input[type="text"],
+input[type="email"],
+textarea {
+  max-width: 100%;
+}
+
+@media (min-width: 721px) {
+  input[type="search"],
+  input[type="text"],
+  input[type="email"] {
+    min-width: 300px;
+  }
+}
+
 /* ================================
    TEXT DIVIDER
    ================================ */
@@ -163,11 +190,22 @@ select {
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
-  margin: 24px 0;
+  margin: 2rem -1rem 1rem -1rem;
   padding-top: 12px;
+  padding-left: 1rem;
+  padding-right: 1rem;
   text-align: center;
   white-space: nowrap;
-  width: 100%;
+  width: calc(100% + 2rem);
+}
+
+@media (max-width: 720px) {
+  .text-divider {
+    margin: 1.5rem -0.75rem 0.75rem -0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    width: calc(100% + 1.5rem);
+  }
 }
 
 .text-divider::before {
@@ -190,11 +228,17 @@ select {
 
 .site-footer {
   font-size: 0.9rem;
-  margin-top: auto;
-  margin-bottom: 16px;
+  margin-top: 2rem;
+  margin-bottom: 0;
   text-align: left;
   direction: ltr;
   color: var(--pesto);
+  line-height: 1.6;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 /* ================================
@@ -244,10 +288,20 @@ ul li::marker {
    ================================ */
 .site-nav {
   display: block;
-  padding: 1em 0;
-  margin-bottom: 1.5em;
+  padding: 1rem 0;
+  margin: -1rem -1rem 1.5rem -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   border-bottom: 1px solid rgba(var(--hibiscus-r), 1);
   font-size: 0.95em;
+}
+
+@media (max-width: 720px) {
+  .site-nav {
+    margin: -0.75rem -0.75rem 1rem -0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 }
 
 .site-nav a {

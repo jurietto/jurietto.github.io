@@ -2,23 +2,18 @@
    PROFILE LAYOUT
    ================================ */
 
-html, body {
-  height: 100%;
-}
-
 body {
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
 .profile-container {
   max-width: 100%;
-  flex: 1;
+  overflow-x: hidden;
 }
 
 .profile-block {
   max-width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 /* ================================
