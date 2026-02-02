@@ -2,17 +2,17 @@
 
 // Animated page title
 (function animateTitle() {
-  const baseTitle = document.title;
-  const message = 'HAVE A NICE DAY ♥ TAKE CARE OF YOURSELF YOU ROCK ♣ ';
+  const baseTitle = document.title.trim().toUpperCase();
+  const message = 'HAVE A NICE DAY ♥ TAKE CARE OF YOURSELF ♣ YOU ROCK !!! ';
   
-  // Extract the page name after the dash
-  const pageName = baseTitle.includes('—') ? baseTitle.split('—')[1].trim().toUpperCase() : '';
-  let charIndex = 0;
-  
-  if (pageName) {
+  if (baseTitle) {
+    let charIndex = 0;
+    // Set initial title immediately
+    document.title = `${baseTitle} | ${message}`;
+    
     setInterval(() => {
       const scrollingText = message.slice(charIndex) + message.slice(0, charIndex);
-      document.title = `${pageName} ♠ ${scrollingText}`;
+      document.title = `${baseTitle} | ${scrollingText}`;
       charIndex = (charIndex + 1) % message.length;
     }, 300);
   }

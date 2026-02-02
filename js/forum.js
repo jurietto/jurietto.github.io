@@ -501,9 +501,6 @@ async function loadComments(page = 0) {
     getDocs(query(commentsRef, orderBy("createdAt", "asc")))
   ]);
 
-  console.log("Total docs in rootSnap:", rootSnap.docs.length);
-  console.log("Total docs in replySnap:", replySnap.docs.length);
-
   const roots = rootSnap.docs
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(d => !d.replyTo);
@@ -512,10 +509,6 @@ async function loadComments(page = 0) {
     .map(d => ({ id: d.id, ...d.data() }))
     .filter(d => d.replyTo);
 
-  console.log("Root posts:", roots.length);
-  console.log("Replies:", replies.length);
-  console.log("Replies data:", replies);
-
   const replyMap = new Map();
   replies.forEach(reply => {
     if (!replyMap.has(reply.replyTo)) {
@@ -523,19 +516,6 @@ async function loadComments(page = 0) {
     }
     replyMap.get(reply.replyTo).push(reply);
   });
-
-  console.log("ReplyMap entries:", [...replyMap.entries()]);
-
-  // Debug: Check if specific post has replies
-  const testParentId = "qKII0I85BU64Huxyu3mH";
-  const testReplies = replyMap.get(testParentId);
-  console.log(`Replies for ${testParentId}:`, testReplies);
-  
-  // Check if this ID is a root post or a reply
-  const isRoot = roots.find(r => r.id === testParentId);
-  const isReply = replies.find(r => r.id === testParentId);
-  console.log(`Is ${testParentId} a root post?`, !!isRoot);
-  console.log(`Is ${testParentId} a reply?`, !!isReply);
 
   const filteredRoots = currentSearch
     ? roots.filter(root => {
