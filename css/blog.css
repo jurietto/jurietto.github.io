@@ -78,16 +78,6 @@ article code {
 }
 
 .hashtag-btn {
-  background: none;
-  border: none;
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  font-family: "Mona", monospace;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  padding: 0;
-  margin: 0;
 }
 
 .hashtag-btn:hover {
@@ -149,41 +139,12 @@ article a {
    COMMENT BUTTONS
    ================================ */
 
-.comment-edit-btn,
-.comment-delete-btn,
-.comment-report-btn {
-  padding: 0.4rem 0.8rem;
-  font-size: 0.85rem;
-  background: #fff;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  border-radius: 3px;
-  font-family: inherit;
-  margin-right: 0.3rem;
-  transition: all 0.2s ease;
-}
-
-.comment-edit-btn:hover {
-  background: #f0f0f0;
-  border-color: #999;
-}
-
 .comment-delete-btn {
   border-color: #d9534f;
   color: #d9534f;
 }
 
 .comment-delete-btn:hover {
-  background: #ffe6e6;
-  border-color: #a02830;
-}
-
-.comment-report-btn {
-  border-color: #d9534f;
-  color: #d9534f;
-}
-
-.comment-report-btn:hover {
   background: #ffe6e6;
   border-color: #a02830;
 }

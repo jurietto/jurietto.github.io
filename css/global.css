@@ -3,7 +3,7 @@
   src: url("../font/mona.woff") format("woff");
   font-weight: normal;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -85,11 +85,7 @@ body {
   justify-content: center;
 }
 
-#pagination button {
-  display: inline-block;
-  min-width: 36px;
-  padding: 6px 10px;
-}
+
 
 /* ================================
    DARK MODE — BLACK + PURPLE/PINK
@@ -157,7 +153,6 @@ select {
   justify-content: center;
   flex-wrap: nowrap;
   margin: 24px 0;
-  overflow: hidden;
   padding-top: 12px;
   text-align: center;
   white-space: nowrap;
@@ -217,3 +212,40 @@ select {
     display: flex;
   }
 }
+
+/* ================================
+   LIST STYLING
+   ================================ */
+ul {
+  margin-left: 3em;
+  padding-left: 0;
+}
+
+ul li::marker {
+  content: "♠️ ";
+}
+
+
+
+
+/* ================================
+   SITE NAVIGATION
+   ================================ */
+.site-nav {
+  display: block;
+  padding: 1em 0;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid rgba(var(--hibiscus-r), 1);
+  font-size: 0.95em;
+}
+
+.site-nav a {
+  color: inherit;
+  text-decoration: underline;
+  margin-right: 0.5em;
+}
+
+.site-nav span {
+  margin: 0 0.3em;
+}
+

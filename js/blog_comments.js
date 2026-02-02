@@ -663,11 +663,7 @@ export async function loadComments(postId, firebaseDb) {
         <div style="display: inline; margin-left: 1rem;">
           <button class="comment-edit-btn" data-id="${commentId}">Edit</button>
           <button class="comment-delete-btn" data-id="${commentId}">Delete</button>
-          <button class="comment-report-btn" data-id="${commentId}">Report</button>
-        </div>` : `
-        <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-report-btn" data-id="${commentId}">Report</button>
-        </div>`;
+        </div>` : ``;
       
       const meta = document.createElement("div");
       meta.className = "forum-meta";
@@ -692,23 +688,24 @@ export async function loadComments(postId, firebaseDb) {
       // Add edit/delete listeners
       const editBtn = meta.querySelector(".comment-edit-btn");
       const deleteBtn = meta.querySelector(".comment-delete-btn");
-      const reportBtn = meta.querySelector(".comment-report-btn");
       
-      if (reportBtn) {
-        reportBtn.onclick = (e) => {
-          e.preventDefault();
-          console.log("Report button clicked for comment:", commentId);
-          openReportModal({
-            commentId: commentId,
-            postId: currentPostId,
-            text: comment.text,
-            user: comment.user,
-            path: `blogPosts/${currentPostId}/comments/${commentId}`
-          });
-        };
-      } else {
-        console.warn("Report button not found for comment:", commentId);
-      }
+      // Create report button separately to place next to reply button
+      const reportBtn = document.createElement("button");
+      reportBtn.className = "comment-report-btn";
+      reportBtn.dataset.id = commentId;
+      reportBtn.textContent = "Report";
+      reportBtn.onclick = (e) => {
+        e.preventDefault();
+        console.log("Report button clicked for comment:", commentId);
+        openReportModal({
+          commentId: commentId,
+          postId: currentPostId,
+          text: comment.text,
+          user: comment.user,
+          path: `blogPosts/${currentPostId}/comments/${commentId}`
+        });
+      };
+      wrap.appendChild(reportBtn);
       
       if (editBtn) {
         editBtn.onclick = () => {

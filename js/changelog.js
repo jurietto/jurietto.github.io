@@ -18,16 +18,17 @@ fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
     commits.slice(0, MAX_ENTRIES).forEach(c => {
       const msg = c.commit.message.split("\n")[0];
 
-      const line = document.createElement("div");
-      line.textContent = `♠️ ${msg} (・_・;)`;
+      const item = document.createElement("li");
+      item.textContent = `${msg} (・_・;)`;
 
-      list.appendChild(line);
+      list.appendChild(item);
     });
   })
   .catch(err => {
     list.innerHTML = "";
-    const errLine = document.createElement("div");
-    errLine.textContent = "♥ Failed to load changelog (・_・;)";
-    list.appendChild(errLine);
+    const errItem = document.createElement("li");
+    errItem.textContent = "Failed to load changelog (・_・;)";
+    list.appendChild(errItem);
     console.error(err);
   });
+

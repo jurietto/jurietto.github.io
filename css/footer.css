@@ -1,0 +1,27 @@
+/* ================================================================
+   FOOTER STYLES
+   ================================================================ */
+
+.text-divider {
+  border-top: 1px solid var(--masala);
+  margin: 2rem 0 1rem 0;
+}
+
+.site-footer {
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: var(--masala);
+  opacity: 1;
+  line-height: 1.6;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.scroll-buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}

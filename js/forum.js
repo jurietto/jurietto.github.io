@@ -558,18 +558,79 @@ function renderPagination(active, totalPages = 0) {
   pager.innerHTML = "";
 
   if (totalPages === 0) return;
-  for (let i = 0; i < totalPages; i++) {
-    const btn = document.createElement("button");
-    btn.textContent = i + 1;
-    btn.disabled = i === active;
-    btn.onclick = async () => {
-      currentPage = i;
+  
+  // Previous button
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "←";
+  prevBtn.disabled = active === 0;
+  prevBtn.onclick = async () => {
+    if (active > 0) {
+      currentPage = active - 1;
       const scrollPos = window.scrollY;
-      await loadComments(i);
+      await loadComments(active - 1);
+      window.scrollTo(0, scrollPos);
+    }
+  };
+  pager.appendChild(prevBtn);
+  
+  // Determine which pages to show
+  const pages = [];
+  const range = 2; // Show 2 pages on each side of current
+  
+  // Always show first page
+  pages.push(0);
+  
+  // Show pages around current
+  for (let i = Math.max(1, active - range); i <= Math.min(totalPages - 2, active + range); i++) {
+    if (!pages.includes(i)) pages.push(i);
+  }
+  
+  // Always show last page if more than 1 page
+  if (totalPages > 1 && !pages.includes(totalPages - 1)) {
+    pages.push(totalPages - 1);
+  }
+  
+  // Sort pages
+  pages.sort((a, b) => a - b);
+  
+  // Render pages with ellipsis
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+    
+    // Add ellipsis if there's a gap
+    if (i > 0 && pages[i - 1] < page - 1) {
+      const ellipsis = document.createElement("span");
+      ellipsis.textContent = "…";
+      ellipsis.style.padding = "0.25rem 0.5rem";
+      pager.appendChild(ellipsis);
+    }
+    
+    // Add page button
+    const btn = document.createElement("button");
+    btn.textContent = page + 1;
+    btn.disabled = page === active;
+    btn.onclick = async () => {
+      currentPage = page;
+      const scrollPos = window.scrollY;
+      await loadComments(page);
       window.scrollTo(0, scrollPos);
     };
     pager.appendChild(btn);
   }
+  
+  // Next button
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "→";
+  nextBtn.disabled = active === totalPages - 1;
+  nextBtn.onclick = async () => {
+    if (active < totalPages - 1) {
+      currentPage = active + 1;
+      const scrollPos = window.scrollY;
+      await loadComments(active + 1);
+      window.scrollTo(0, scrollPos);
+    }
+  };
+  pager.appendChild(nextBtn);
 }
 
 /* ---------- REPLY FORM ---------- */
@@ -772,10 +833,7 @@ function renderComment(c, replies, replyMap) {
     <div style="display: inline; margin-left: 1rem;">
       <button class="comment-edit-btn" data-id="${c.id}">Edit</button>
       <button class="comment-delete-btn" data-id="${c.id}">Delete</button>
-    </div>` : `
-    <div style="display: inline; margin-left: 1rem;">
-      <button class="comment-flag-btn" data-id="${c.id}">Report</button>
-    </div>`;
+    </div>` : ``;
   
   wrap.innerHTML = `
     <div class="forum-meta">
@@ -791,6 +849,16 @@ function renderComment(c, replies, replyMap) {
   btn.textContent = "Reply";
   btn.onclick = () => createReplyForm(c.id, wrap);
   wrap.appendChild(btn);
+  
+  // Add report button next to reply button if not owner
+  if (!isOwner) {
+    const flagBtn = document.createElement("button");
+    flagBtn.className = "comment-flag-btn";
+    flagBtn.dataset.id = c.id;
+    flagBtn.textContent = "Report";
+    flagBtn.onclick = () => openFlagForm(c.id, c.user || "Anonymous", c.text);
+    wrap.appendChild(flagBtn);
+  }
 
   // Add event listeners for edit/delete
   const editBtn = wrap.querySelector(".comment-edit-btn");
@@ -884,12 +952,6 @@ function renderComment(c, replies, replyMap) {
     };
   }
 
-  // Add flag button handler for root comments
-  const flagBtn = wrap.querySelector(".comment-flag-btn");
-  if (flagBtn) {
-    flagBtn.onclick = () => flagComment(c.id, "general");
-  }
-
   replies.forEach(r => {
     const rw = document.createElement("div");
     rw.className = "forum-reply";
@@ -900,10 +962,7 @@ function renderComment(c, replies, replyMap) {
       <div style="display: inline; margin-left: 1rem;">
         <button class="comment-edit-btn" data-id="${r.id}">Edit</button>
         <button class="comment-delete-btn" data-id="${r.id}">Delete</button>
-      </div>` : `
-      <div style="display: inline; margin-left: 1rem;">
-        <button class="comment-flag-btn" data-id="${r.id}">Report</button>
-      </div>`;
+      </div>` : ``;
     
     rw.innerHTML = `
       <div class="forum-meta">
@@ -1002,18 +1061,22 @@ function renderComment(c, replies, replyMap) {
         }
       };
     }
-
-    // Add flag button handler for replies
-    const replyFlagBtn = rw.querySelector(".comment-flag-btn");
-    if (replyFlagBtn) {
-      replyFlagBtn.onclick = () => flagComment(r.id, "general");
-    }
     
     const replyBtn = document.createElement("button");
     replyBtn.textContent = "Reply";
     replyBtn.className = "forum-reply-button";
     replyBtn.onclick = () => createReplyForm(r.id, rw);
     rw.appendChild(replyBtn);
+    
+    // Add flag button next to reply button if not owner
+    if (!isReplyOwner) {
+      const replyFlagBtn = document.createElement("button");
+      replyFlagBtn.className = "comment-flag-btn";
+      replyFlagBtn.dataset.id = r.id;
+      replyFlagBtn.textContent = "Report";
+      replyFlagBtn.onclick = () => flagComment(r.id, "general");
+      rw.appendChild(replyFlagBtn);
+    }
 
     const nestedReplies = replyMap?.get(r.id) || [];
     nestedReplies.forEach(nested => {
@@ -1026,10 +1089,7 @@ function renderComment(c, replies, replyMap) {
         <div style="display: inline; margin-left: 1rem;">
           <button class="comment-edit-btn" data-id="${nested.id}">Edit</button>
           <button class="comment-delete-btn" data-id="${nested.id}">Delete</button>
-        </div>` : `
-        <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-flag-btn" data-id="${nested.id}">Report</button>
-        </div>`;
+        </div>` : ``;
       
       nw.innerHTML = `
         <div class="forum-meta">
@@ -1128,11 +1188,21 @@ function renderComment(c, replies, replyMap) {
           }
         };
       }
-
-      // Add flag button handler for nested replies
-      const nestedFlagBtn = nw.querySelector(".comment-flag-btn");
-      if (nestedFlagBtn) {
+      
+      const nestedBtn = document.createElement("button");
+      nestedBtn.textContent = "Reply";
+      nestedBtn.className = "forum-reply-button";
+      nestedBtn.onclick = () => createReplyForm(nested.id, nw);
+      nw.appendChild(nestedBtn);
+      
+      // Add flag button next to reply button if not owner
+      if (!isNestedOwner) {
+        const nestedFlagBtn = document.createElement("button");
+        nestedFlagBtn.className = "comment-flag-btn";
+        nestedFlagBtn.dataset.id = nested.id;
+        nestedFlagBtn.textContent = "Report";
         nestedFlagBtn.onclick = () => flagComment(nested.id, "general");
+        nw.appendChild(nestedFlagBtn);
       }
       
       rw.appendChild(nw);

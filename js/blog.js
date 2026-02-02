@@ -85,24 +85,70 @@ function renderPagination(active, totalPages = 0) {
 
   if (totalPages === 0) return;
 
+  // Previous button
   const prevBtn = document.createElement("button");
-  prevBtn.textContent = "Previous";
+  prevBtn.textContent = "←";
   prevBtn.disabled = active === 0;
   prevBtn.onclick = () => {
-    if (currentPage > 0) {
-      currentPage--;
+    if (active > 0) {
+      currentPage = active - 1;
       renderPosts();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
   pager.appendChild(prevBtn);
 
+  // Determine which pages to show
+  const pages = [];
+  const range = 2; // Show 2 pages on each side of current
+  
+  // Always show first page
+  pages.push(0);
+  
+  // Show pages around current
+  for (let i = Math.max(1, active - range); i <= Math.min(totalPages - 2, active + range); i++) {
+    if (!pages.includes(i)) pages.push(i);
+  }
+  
+  // Always show last page if more than 1 page
+  if (totalPages > 1 && !pages.includes(totalPages - 1)) {
+    pages.push(totalPages - 1);
+  }
+  
+  // Sort pages
+  pages.sort((a, b) => a - b);
+  
+  // Render pages with ellipsis
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+    
+    // Add ellipsis if there's a gap
+    if (i > 0 && pages[i - 1] < page - 1) {
+      const ellipsis = document.createElement("span");
+      ellipsis.textContent = "…";
+      ellipsis.style.padding = "0.25rem 0.5rem";
+      pager.appendChild(ellipsis);
+    }
+    
+    // Add page button
+    const btn = document.createElement("button");
+    btn.textContent = page + 1;
+    btn.disabled = page === active;
+    btn.onclick = () => {
+      currentPage = page;
+      renderPosts();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    pager.appendChild(btn);
+  }
+  
+  // Next button
   const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next";
+  nextBtn.textContent = "→";
   nextBtn.disabled = active === totalPages - 1;
   nextBtn.onclick = () => {
-    if (currentPage < totalPages - 1) {
-      currentPage++;
+    if (active < totalPages - 1) {
+      currentPage = active + 1;
       renderPosts();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
