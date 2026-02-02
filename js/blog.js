@@ -4,11 +4,7 @@ import {
   collection,
   query,
   orderBy,
-  getDocs,
-  deleteDoc,
-  doc,
-  onAuthStateChanged,
-  getAuth
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { loadComments, setupCommentForm, showCommentSection } from "./blog_comments.js";
 
@@ -24,13 +20,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
-
-// Track authentication state
-let isAdmin = false;
-onAuthStateChanged(auth, (user) => {
-  isAdmin = !!user;
-});
 
 // DOM elements
 const postsEl = document.getElementById("posts");
@@ -165,31 +154,6 @@ function renderPosts() {
       if (hashtagEl) {
         article.appendChild(hashtagEl);
       }
-    }
-
-    // Delete button for admin
-    if (isAdmin) {
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete Post";
-      deleteBtn.style.backgroundColor = "red";
-      deleteBtn.style.color = "white";
-      deleteBtn.style.padding = "8px 16px";
-      deleteBtn.style.border = "none";
-      deleteBtn.style.borderRadius = "4px";
-      deleteBtn.style.cursor = "pointer";
-      deleteBtn.style.marginTop = "10px";
-      
-      deleteBtn.addEventListener("click", async () => {
-        if (!confirm("Are you sure you want to delete this post? This cannot be undone.")) return;
-        try {
-          await deleteDoc(doc(db, "blogPosts", post.id));
-          await loadPosts();
-        } catch (err) {
-          alert("Error deleting post: " + err.message);
-        }
-      });
-      
-      article.appendChild(deleteBtn);
     }
 
     postsEl.appendChild(article);

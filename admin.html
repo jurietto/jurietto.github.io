@@ -95,7 +95,30 @@
     </section>
 
     <!-- ====================================================================
-         SECTION 2: BLOG COMMENTS
+         SECTION 2: FORUM MODERATION
+         ==================================================================== -->
+    <section id="forum-admin">
+      <header>
+        <h2>🛡️ Forum Moderation</h2>
+        <p>Review and moderate forum comments and replies. Delete inappropriate content.</p>
+      </header>
+
+      <div>
+        <label for="forum-pagination">Pagination Controls:</label>
+        <div id="forum-pagination">
+          <button id="prev" type="button">← Previous Page</button>
+          <button id="next" type="button">Next Page →</button>
+        </div>
+        <small>Showing up to 20 comments per page.</small>
+      </div>
+
+      <div id="forum-comments">
+        <p>Loading forum comments…</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SECTION 3: BLOG COMMENTS
          ==================================================================== -->
     <section id="blog-comments-admin">
       <header>
@@ -135,6 +158,9 @@
 
   <!-- Blog comments moderation -->
   <script type="module" src="js/admin_blog_comments.js"></script>
+
+  <!-- Forum moderation (grouped comments + replies + images) -->
+  <script type="module" src="js/admin_forum.js"></script>
 
   <!-- Reported comments -->
   <script type="module" src="js/admin_reported_comments.js"></script>
