@@ -116,7 +116,8 @@ service cloud.firestore {
         request.resource.data.reason in ['spam', 'harassment', 'nsfw', 'misinformation', 'other'] &&
         request.resource.data.reportedAt is timestamp &&
         
-        // Optional fields
+        // Optional fields - allow any of these if present
+        (!('commentId' in request.resource.data) || request.resource.data.commentId is string) &&
         (!('details' in request.resource.data) || request.resource.data.details is string) &&
         (!('commentText' in request.resource.data) || request.resource.data.commentText is string) &&
         (!('commentUser' in request.resource.data) || request.resource.data.commentUser is string) &&

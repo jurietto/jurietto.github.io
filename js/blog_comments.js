@@ -76,22 +76,34 @@ function ensureReportModalExists() {
     </div>
     
     <div style="display: flex; gap: 1rem; justify-content: flex-end;">
-      <button id="report-cancel" type="button" style="padding: 0.5rem 1rem; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">Cancel</button>
-      <button id="report-submit" type="button" style="padding: 0.5rem 1rem; background-color: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer;">Submit Report</button>
+      <button id="report-cancel" type="button" style="padding: 0.75rem 1.5rem; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem;">Cancel</button>
+      <button id="report-submit" type="button" style="padding: 0.75rem 1.5rem; background-color: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem;">Submit Report</button>
     </div>
   `;
   
   modal.appendChild(content);
   document.body.appendChild(modal);
   
-  // Setup modal handlers
-  document.getElementById("report-cancel").addEventListener("click", closeReportModal);
-  document.getElementById("report-submit").addEventListener("click", submitReport);
+  // Setup modal handlers with arrow functions to maintain this context
+  const cancelBtn = document.getElementById("report-cancel");
+  const submitBtn = document.getElementById("report-submit");
+  
+  if (cancelBtn) {
+    cancelBtn.onclick = () => {
+      closeReportModal();
+    };
+  }
+  
+  if (submitBtn) {
+    submitBtn.onclick = async () => {
+      await handleSubmitReport();
+    };
+  }
   
   // Close on background click
-  modal.addEventListener("click", (e) => {
+  modal.onclick = (e) => {
     if (e.target === modal) closeReportModal();
-  });
+  };
 }
 
 const MAX_IMAGES = 10;
@@ -101,19 +113,31 @@ let currentUserId = null;
 /* ---------- REPORT FUNCTIONS ---------- */
 
 function openReportModal(commentData) {
+  console.log("openReportModal called with:", commentData);
   ensureReportModalExists();
   reportingComment = commentData;
-  document.getElementById("report-comment-modal").style.display = "block";
-  document.getElementById("report-reason").value = "";
-  document.getElementById("report-details").value = "";
+  const modalEl = document.getElementById("report-comment-modal");
+  if (modalEl) {
+    modalEl.style.display = "block";
+    document.getElementById("report-reason").value = "";
+    document.getElementById("report-details").value = "";
+    console.log("Modal opened");
+  } else {
+    console.error("Modal element not found");
+  }
 }
 
 function closeReportModal() {
-  document.getElementById("report-comment-modal").style.display = "none";
+  const modalEl = document.getElementById("report-comment-modal");
+  if (modalEl) {
+    modalEl.style.display = "none";
+  }
   reportingComment = null;
 }
 
-async function submitReport() {
+async function handleSubmitReport() {
+  console.log("handleSubmitReport called, db is:", !!db, "reportingComment is:", !!reportingComment);
+  
   const reason = document.getElementById("report-reason").value.trim();
   const details = document.getElementById("report-details").value.trim();
   
@@ -127,9 +151,16 @@ async function submitReport() {
     return;
   }
   
+  if (!db) {
+    alert("Error: Database not initialized. Please reload the page.");
+    console.error("Database not initialized");
+    return;
+  }
+  
   try {
+    console.log("Submitting report with reason:", reason, "details:", details);
     const flaggedCommentsRef = collection(db, "flaggedComments");
-    await addDoc(flaggedCommentsRef, {
+    const reportData = {
       commentId: reportingComment.commentId,
       commentText: reportingComment.text || "(no text)",
       commentUser: reportingComment.user || "Anonymous",
@@ -139,9 +170,14 @@ async function submitReport() {
       details: details || null,
       reportedAt: serverTimestamp(),
       reportedBy: currentUserId || "anonymous"
-    });
+    };
     
-    showNoticeMessage("Thank you! Your report has been submitted.");
+    console.log("Report data:", reportData);
+    
+    const docRef = await addDoc(flaggedCommentsRef, reportData);
+    console.log("Report submitted successfully with ID:", docRef.id);
+    
+    alert("Thank you! Your report has been submitted.");
     closeReportModal();
   } catch (err) {
     console.error("Error submitting report:", err);
@@ -625,12 +661,12 @@ export async function loadComments(postId, firebaseDb) {
       const isOwner = comment.userId && comment.userId === currentUserId;
       const buttonHtml = isOwner ? `
         <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-edit-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Edit</button>
-          <button class="comment-delete-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Delete</button>
-          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Report</button>
+          <button class="comment-edit-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #ccc; cursor: pointer; border-radius: 3px;">Edit</button>
+          <button class="comment-delete-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #ccc; cursor: pointer; border-radius: 3px;">Delete</button>
+          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #d9534f; cursor: pointer; border-radius: 3px; color: #d9534f;">Report</button>
         </div>` : `
         <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.2rem 0.5rem; font-size: 0.9rem;">Report</button>
+          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #d9534f; cursor: pointer; border-radius: 3px; color: #d9534f;">Report</button>
         </div>`;
       
       const meta = document.createElement("div");
@@ -659,7 +695,9 @@ export async function loadComments(postId, firebaseDb) {
       const reportBtn = meta.querySelector(".comment-report-btn");
       
       if (reportBtn) {
-        reportBtn.onclick = () => {
+        reportBtn.onclick = (e) => {
+          e.preventDefault();
+          console.log("Report button clicked for comment:", commentId);
           openReportModal({
             commentId: commentId,
             postId: currentPostId,
@@ -668,6 +706,8 @@ export async function loadComments(postId, firebaseDb) {
             path: `blogPosts/${currentPostId}/comments/${commentId}`
           });
         };
+      } else {
+        console.warn("Report button not found for comment:", commentId);
       }
       
       if (editBtn) {
@@ -876,6 +916,10 @@ export function setupCommentForm(postId, firebaseDb) {
 export function showCommentSection(show = true) {
   if (commentsSection) {
     commentsSection.hidden = !show;
+  }
+  // Ensure modal exists when comment section is shown
+  if (show) {
+    ensureReportModalExists();
   }
 }
 
