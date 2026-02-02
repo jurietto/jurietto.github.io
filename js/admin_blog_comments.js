@@ -136,6 +136,28 @@ async function initBlogCommentsAdmin() {
       commentEl.appendChild(header);
       commentEl.appendChild(metaEl);
       commentEl.appendChild(bodyEl);
+
+      // Render media if present
+      if (data.media) {
+        if (Array.isArray(data.media)) {
+          data.media.forEach(url => {
+            const img = document.createElement("img");
+            img.src = url;
+            img.style.maxWidth = "300px";
+            img.style.marginTop = "10px";
+            img.style.marginBottom = "10px";
+            commentEl.appendChild(img);
+          });
+        } else {
+          const img = document.createElement("img");
+          img.src = data.media;
+          img.style.maxWidth = "300px";
+          img.style.marginTop = "10px";
+          img.style.marginBottom = "10px";
+          commentEl.appendChild(img);
+        }
+      }
+
       commentEl.appendChild(deleteBtn);
 
       container.appendChild(commentEl);
