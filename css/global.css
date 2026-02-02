@@ -262,12 +262,24 @@ ul li::marker {
   font-size: 0.95em;
 }
 
+.site-nav a {
+  color: inherit;
+  text-decoration: underline;
+  margin-right: 0.5em;
+}
+
+.site-nav a:visited {
+  color: inherit;
+}
+
 @media (max-width: 720px) {
   .site-nav {
     margin: -0.75rem -0.75rem 1rem -0.75rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
+}
+
 .site-nav span {
   margin: 0 0.3em;
 }

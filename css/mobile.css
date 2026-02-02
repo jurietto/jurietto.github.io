@@ -1,0 +1,54 @@
+/* ================================
+   MOBILE STYLES (screens ≤ 720px)
+   ================================ */
+
+@media (max-width: 720px) {
+  /* ================================
+     BODY & LAYOUT
+     ================================ */
+
+  body {
+    padding: 0.75rem;
+  }
+
+  /* ================================
+     FORM ELEMENTS
+     ================================ */
+
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]),
+  textarea,
+  select {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ================================
+     TEXT DIVIDER
+     ================================ */
+
+  .text-divider {
+    margin: 1.5rem -0.75rem 0.75rem -0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    width: calc(100% + 1.5rem);
+  }
+
+  /* ================================
+     SITE NAVIGATION
+     ================================ */
+
+  .site-nav {
+    margin: -0.75rem -0.75rem 1rem -0.75rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  /* ================================
+     FORUM MEDIA
+     ================================ */
+
+  .forum-media-item {
+    width: 100%;
+  }
+}
