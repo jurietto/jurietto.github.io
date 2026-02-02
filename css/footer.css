@@ -27,12 +27,12 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  max-width: 100%;
 }
 
 .scroll-buttons button {
-  flex: 1 1 auto;
-  min-width: auto;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
 }
 
 /* Mobile responsive adjustments */
