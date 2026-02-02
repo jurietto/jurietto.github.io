@@ -4,12 +4,14 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
   serverTimestamp,
   query,
   orderBy,
   limit,
   startAfter,
-  endBefore
+  endBefore,
+  limitToLast
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const PAGE_SIZE = 20;
@@ -114,6 +116,19 @@ async function initBlogAdmin() {
         tagsEl.textContent = "Tags: None";
       }
 
+      const btnContainer = document.createElement("div");
+      btnContainer.style.display = "flex";
+      btnContainer.style.gap = "10px";
+      btnContainer.style.marginTop = "10px";
+
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.textContent = "Edit Post";
+
+      editBtn.addEventListener("click", () => {
+        showEditForm(postEl, docSnap.id, data);
+      });
+
       const deleteBtn = document.createElement("button");
       deleteBtn.type = "button";
       deleteBtn.textContent = "Delete Post";
@@ -128,14 +143,75 @@ async function initBlogAdmin() {
         }
       });
 
+      btnContainer.appendChild(editBtn);
+      btnContainer.appendChild(deleteBtn);
+
       postEl.appendChild(header);
       postEl.appendChild(metaEl);
       postEl.appendChild(tagsEl);
       postEl.appendChild(contentEl);
-      postEl.appendChild(deleteBtn);
+      postEl.appendChild(btnContainer);
 
       postsContainer.appendChild(postEl);
     });
+  }
+
+  function showEditForm(postEl, postId, data) {
+    // Replace post content with edit form
+    postEl.innerHTML = "";
+
+    const form = document.createElement("form");
+    form.innerHTML = `
+      <div>
+        <label>Title:</label>
+        <input type="text" name="title" value="${escapeHtml(data.title || "")}" required style="width: 100%; padding: 8px; margin: 5px 0;">
+      </div>
+      <div>
+        <label>Content:</label>
+        <textarea name="content" rows="8" required style="width: 100%; padding: 8px; margin: 5px 0;">${escapeHtml(data.content || "")}</textarea>
+      </div>
+      <div>
+        <label>Hashtags:</label>
+        <input type="text" name="hashtags" value="${escapeHtml((data.hashtags || []).join(" "))}" style="width: 100%; padding: 8px; margin: 5px 0;">
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button type="submit">Save Changes</button>
+        <button type="button" class="cancel-btn">Cancel</button>
+      </div>
+    `;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const title = formData.get("title").trim();
+      const content = formData.get("content").trim();
+      const hashtagsRaw = formData.get("hashtags").trim();
+      const hashtags = hashtagsRaw ? hashtagsRaw.split(/\s+/).filter(t => t.startsWith("#")) : [];
+
+      try {
+        await updateDoc(doc(db, "blogPosts", postId), {
+          title,
+          content,
+          hashtags,
+          updatedAt: serverTimestamp()
+        });
+        loadPosts(currentDirection);
+      } catch (err) {
+        alert("Error updating post: " + err.message);
+      }
+    });
+
+    form.querySelector(".cancel-btn").addEventListener("click", () => {
+      loadPosts(currentDirection);
+    });
+
+    postEl.appendChild(form);
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
   }
 
   prevBtn.addEventListener("click", () => {

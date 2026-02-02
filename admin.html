@@ -108,6 +108,29 @@
     </section>
 
     <!-- ====================================================================
+         SECTION 1b: BLOG POSTS MANAGEMENT
+         ==================================================================== -->
+    <section id="blog-posts-admin">
+      <header>
+        <h2>📚 Manage Blog Posts</h2>
+        <p>Edit or delete existing blog posts.</p>
+      </header>
+
+      <div>
+        <label for="blog-pagination">Pagination Controls:</label>
+        <div id="blog-pagination">
+          <button id="blog-prev" type="button">← Previous Page</button>
+          <button id="blog-next" type="button">Next Page →</button>
+        </div>
+        <small>Showing up to 20 posts per page.</small>
+      </div>
+
+      <div id="blog-posts">
+        <p>Loading blog posts…</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
          SECTION 2: FORUM MODERATION
          ==================================================================== -->
     <section id="forum-admin">
@@ -185,6 +208,9 @@
      ================================================================ -->
   <!-- Core admin logic (auth + publish) -->
   <script type="module" src="js/admin.js"></script>
+
+  <!-- Blog posts management -->
+  <script type="module" src="js/admin_blog.js"></script>
 
   <!-- Blog comments moderation -->
   <script type="module" src="js/admin_blog_comments.js"></script>
