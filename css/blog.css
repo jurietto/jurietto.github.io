@@ -6,6 +6,7 @@ article {
   max-width: 100%;
   margin: 0 auto 28px;
   padding: 14px 16px;
+  padding-top: 18px; /* Extra top padding for title on iOS */
 
   border: 5px solid var(--pesto);
   background: linear-gradient(
@@ -17,6 +18,7 @@ article {
   color: var(--masala);
   overflow-wrap: anywhere;
   word-break: break-word;
+  overflow: visible; /* Prevent clipping on iOS */
 }
 
 /* ================================
@@ -25,12 +27,15 @@ article {
 
 article h2 {
   margin: 0 0 6px;
-  padding-top: 0.3em;
+  margin-top: -2px;
+  padding-top: 0.35em;
   font-family: "harringt", "Mona", monospace;
   font-size: 1.45rem;
   color: var(--masala);
-  line-height: 1.4;
+  line-height: 1.5;
   overflow: visible;
+  -webkit-transform: translateZ(0); /* Force GPU layer on iOS */
+  transform: translateZ(0);
 }
 
 /* ================================
