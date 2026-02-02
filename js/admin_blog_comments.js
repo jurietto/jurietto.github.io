@@ -84,12 +84,23 @@ async function initBlogCommentsAdmin() {
       return;
     }
 
+    // Filter to only include comments from blogPosts subcollections
+    const blogComments = snap.docs.filter(docSnap => {
+      const path = docSnap.ref.path;
+      return path.startsWith("blogPosts/");
+    });
+
+    if (blogComments.length === 0) {
+      container.innerHTML = "<p>No blog comments found.</p>";
+      return;
+    }
+
     firstVisible = snap.docs[0];
     lastVisible = snap.docs[snap.docs.length - 1];
 
     container.innerHTML = "";
 
-    snap.docs.forEach(docSnap => {
+    blogComments.forEach(docSnap => {
       const data = docSnap.data();
       const commentEl = document.createElement("article");
 
