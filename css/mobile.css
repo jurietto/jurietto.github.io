@@ -18,12 +18,15 @@
 
   article h2 {
     margin-top: 0;
-    padding-top: 0;
+    padding-top: 0.4em;
     overflow: visible;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
   }
 
   article {
     overflow: visible;
+    padding-top: 20px; /* More room for title on mobile iOS */
   }
 
   /* ================================
