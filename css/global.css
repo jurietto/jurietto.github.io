@@ -230,10 +230,22 @@ select {
 ul {
   margin-left: 3em;
   padding-left: 0;
+  list-style-type: none;
 }
 
-ul li::marker {
+ul li {
+  margin-left: 0;
+}
+
+ul li::before {
   content: "♠️ ";
+  margin-right: 0.5em;
+}
+
+@media (max-width: 720px) {
+  ul {
+    margin-left: 2em;
+  }
 }
 
 
