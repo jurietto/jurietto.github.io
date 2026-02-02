@@ -8,7 +8,8 @@ import {
   orderBy,
   limit,
   startAfter,
-  endBefore
+  endBefore,
+  limitToLast
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const PAGE_SIZE = 20;
@@ -22,7 +23,7 @@ async function initBlogCommentsAdmin() {
 
   let firstVisible = null;
   let lastVisible = null;
-  let currentDirection = "next";
+  let isFirstPage = true;
 
   async function waitForReady(timeout = 5000) {
     const startTime = Date.now();
@@ -50,53 +51,77 @@ async function initBlogCommentsAdmin() {
     return "Unknown date";
   }
 
+  function updateButtons(hasMore) {
+    prevBtn.disabled = isFirstPage;
+    nextBtn.disabled = !hasMore;
+  }
+
   async function loadComments(direction = "next") {
     container.innerHTML = "<p>Loading blog comments…</p>";
 
-    let q = query(
-      collectionGroup(db, "comments"),
-      orderBy("createdAt", "desc"),
-      limit(PAGE_SIZE)
-    );
+    let q;
 
     if (direction === "next" && lastVisible) {
       q = query(
         collectionGroup(db, "comments"),
         orderBy("createdAt", "desc"),
         startAfter(lastVisible),
-        limit(PAGE_SIZE)
+        limit(PAGE_SIZE + 1)
       );
-    }
-
-    if (direction === "prev" && firstVisible) {
+      isFirstPage = false;
+    } else if (direction === "prev" && firstVisible) {
       q = query(
         collectionGroup(db, "comments"),
         orderBy("createdAt", "desc"),
         endBefore(firstVisible),
-        limit(PAGE_SIZE)
+        limitToLast(PAGE_SIZE + 1)
       );
+    } else {
+      // Initial load
+      q = query(
+        collectionGroup(db, "comments"),
+        orderBy("createdAt", "desc"),
+        limit(PAGE_SIZE + 1)
+      );
+      isFirstPage = true;
     }
 
     const snap = await getDocs(q);
 
     if (snap.empty) {
       container.innerHTML = "<p>No blog comments found.</p>";
+      updateButtons(false);
       return;
     }
 
     // Filter to only include comments from blogPosts subcollections
-    const blogComments = snap.docs.filter(docSnap => {
+    let blogComments = snap.docs.filter(docSnap => {
       const path = docSnap.ref.path;
       return path.startsWith("blogPosts/");
     });
 
     if (blogComments.length === 0) {
       container.innerHTML = "<p>No blog comments found.</p>";
+      updateButtons(false);
       return;
     }
 
-    firstVisible = snap.docs[0];
-    lastVisible = snap.docs[snap.docs.length - 1];
+    // Check if there are more results
+    const hasMore = blogComments.length > PAGE_SIZE;
+    if (hasMore) {
+      blogComments = blogComments.slice(0, PAGE_SIZE);
+    }
+
+    // For prev direction, check if we're back at first page
+    if (direction === "prev" && snap.docs.length <= PAGE_SIZE) {
+      isFirstPage = true;
+    }
+
+    // Set cursors from the filtered blog comments
+    firstVisible = blogComments[0];
+    lastVisible = blogComments[blogComments.length - 1];
+
+    updateButtons(hasMore);
 
     container.innerHTML = "";
 
@@ -165,12 +190,10 @@ async function initBlogCommentsAdmin() {
   }
 
   prevBtn.addEventListener("click", () => {
-    currentDirection = "prev";
     loadComments("prev");
   });
 
   nextBtn.addEventListener("click", () => {
-    currentDirection = "next";
     loadComments("next");
   });
 
