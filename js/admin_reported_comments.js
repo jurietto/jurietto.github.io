@@ -1,10 +1,10 @@
 import {
   collection,
-  getDocs,
-  deleteDoc,
-  doc,
   query,
-  orderBy
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,7 +40,92 @@ async function initReportedCommentsAdmin() {
     return "Unknown date";
   }
 
-  async function loadReportedComments() {
+  function renderReportedComments(docs) {
+    if (docs.length === 0) {
+      container.innerHTML = "<p>No reported comments.</p>";
+      return;
+    }
+
+    container.innerHTML = "";
+
+    docs.forEach(docSnap => {
+      const data = docSnap.data();
+      const reportEl = document.createElement("article");
+      reportEl.style.border = "1px solid #d9534f";
+      reportEl.style.padding = "10px";
+      reportEl.style.marginBottom = "15px";
+      reportEl.style.backgroundColor = "#fff5f5";
+
+      const header = document.createElement("header");
+      const titleEl = document.createElement("strong");
+      titleEl.textContent = `Report on comment by ${data.commentUser || "Anonymous"}`;
+      header.appendChild(titleEl);
+
+      const metaEl = document.createElement("p");
+      metaEl.style.fontSize = "0.9em";
+      metaEl.style.color = "#666";
+      metaEl.textContent = `Reason: ${data.reason} | Reported: ${formatDate(data.reportedAt)}`;
+
+      const bodyEl = document.createElement("section");
+      bodyEl.style.marginTop = "10px";
+      bodyEl.style.marginBottom = "10px";
+      bodyEl.innerHTML = `<strong>Comment:</strong> ${data.commentText || "(no text)"}`;
+
+      const detailsEl = document.createElement("p");
+      detailsEl.style.fontSize = "0.9em";
+      detailsEl.style.marginTop = "10px";
+      if (data.details) {
+        detailsEl.innerHTML = `<strong>Additional details:</strong> ${data.details}`;
+      } else {
+        detailsEl.innerHTML = "<strong>Additional details:</strong> None";
+      }
+
+      const dismissBtn = document.createElement("button");
+      dismissBtn.type = "button";
+      dismissBtn.textContent = "Dismiss Report";
+      dismissBtn.style.marginRight = "10px";
+
+      const deleteCommentBtn = document.createElement("button");
+      deleteCommentBtn.type = "button";
+      deleteCommentBtn.textContent = "Delete Comment";
+      deleteCommentBtn.style.backgroundColor = "#d9534f";
+      deleteCommentBtn.style.color = "white";
+
+      dismissBtn.addEventListener("click", async () => {
+        if (!confirm("Dismiss this report?")) return;
+        try {
+          await deleteDoc(doc(db, "flaggedComments", docSnap.id));
+        } catch (err) {
+          alert("Error dismissing report: " + err.message);
+        }
+      });
+
+      deleteCommentBtn.addEventListener("click", async () => {
+        if (!confirm("Delete this comment? This action cannot be undone.")) return;
+        try {
+          // Delete the actual comment
+          if (data.commentPath) {
+            await deleteDoc(doc(db, data.commentPath));
+          }
+          // Delete the report
+          await deleteDoc(doc(db, "flaggedComments", docSnap.id));
+        } catch (err) {
+          alert("Error deleting comment: " + err.message);
+        }
+      });
+
+      reportEl.appendChild(header);
+      reportEl.appendChild(metaEl);
+      reportEl.appendChild(bodyEl);
+      reportEl.appendChild(detailsEl);
+      reportEl.appendChild(dismissBtn);
+      reportEl.appendChild(deleteCommentBtn);
+
+      container.appendChild(reportEl);
+    });
+  }
+
+  function loadReportedComments() {
     container.innerHTML = "<p>Loading reported comments…</p>";
 
     try {
@@ -49,100 +134,19 @@ async function initReportedCommentsAdmin() {
         orderBy("reportedAt", "desc")
       );
 
-      const snap = await getDocs(q);
-      console.log(`Loaded ${snap.docs.length} reported comments`);
-
-      if (snap.empty) {
-        container.innerHTML = "<p>No reported comments.</p>";
-        return;
-      }
-
-      container.innerHTML = "";
-
-      snap.docs.forEach(docSnap => {
-        const data = docSnap.data();
-        const reportEl = document.createElement("article");
-        reportEl.style.border = "1px solid #d9534f";
-        reportEl.style.padding = "10px";
-        reportEl.style.marginBottom = "15px";
-        reportEl.style.backgroundColor = "#fff5f5";
-
-        const header = document.createElement("header");
-        const titleEl = document.createElement("strong");
-        titleEl.textContent = `Report on comment by ${data.commentUser || "Anonymous"}`;
-        header.appendChild(titleEl);
-
-        const metaEl = document.createElement("p");
-        metaEl.style.fontSize = "0.9em";
-        metaEl.style.color = "#666";
-        metaEl.textContent = `Reason: ${data.reason} | Reported: ${formatDate(data.reportedAt)}`;
-
-        const bodyEl = document.createElement("section");
-        bodyEl.style.marginTop = "10px";
-        bodyEl.style.marginBottom = "10px";
-        bodyEl.innerHTML = `<strong>Comment:</strong> ${data.commentText || "(no text)"}`;
-
-        const detailsEl = document.createElement("p");
-        detailsEl.style.fontSize = "0.9em";
-        detailsEl.style.marginTop = "10px";
-        if (data.details) {
-          detailsEl.innerHTML = `<strong>Additional details:</strong> ${data.details}`;
-        } else {
-          detailsEl.innerHTML = "<strong>Additional details:</strong> None";
-        }
-
-        const dismissBtn = document.createElement("button");
-        dismissBtn.type = "button";
-        dismissBtn.textContent = "Dismiss Report";
-        dismissBtn.style.marginRight = "10px";
-
-        const deleteCommentBtn = document.createElement("button");
-        deleteCommentBtn.type = "button";
-        deleteCommentBtn.textContent = "Delete Comment";
-        deleteCommentBtn.style.backgroundColor = "#d9534f";
-        deleteCommentBtn.style.color = "white";
-
-        dismissBtn.addEventListener("click", async () => {
-          if (!confirm("Dismiss this report?")) return;
-          try {
-            await deleteDoc(doc(db, "flaggedComments", docSnap.id));
-            loadReportedComments();
-          } catch (err) {
-            alert("Error dismissing report: " + err.message);
-          }
-        });
-
-        deleteCommentBtn.addEventListener("click", async () => {
-          if (!confirm("Delete this comment? This action cannot be undone.")) return;
-          try {
-            // Delete the actual comment
-            if (data.commentPath) {
-              await deleteDoc(doc(db, data.commentPath));
-            }
-            // Delete the report
-            await deleteDoc(doc(db, "flaggedComments", docSnap.id));
-            loadReportedComments();
-          } catch (err) {
-            alert("Error deleting comment: " + err.message);
-          }
-        });
-
-        reportEl.appendChild(header);
-        reportEl.appendChild(metaEl);
-        reportEl.appendChild(bodyEl);
-        reportEl.appendChild(detailsEl);
-        reportEl.appendChild(dismissBtn);
-        reportEl.appendChild(deleteCommentBtn);
-
-        container.appendChild(reportEl);
+      // Use real-time listener instead of one-time fetch
+      onSnapshot(q, (snapshot) => {
+        console.log(`Loaded ${snapshot.docs.length} reported comments`);
+        renderReportedComments(snapshot.docs);
+      }, (error) => {
+        console.error("Error loading reported comments:", error);
+        container.innerHTML = `<p>Error loading reported comments: ${error.message}</p>`;
       });
     } catch (error) {
-      console.error("Error loading reported comments:", error);
+      console.error("Error setting up listener:", error);
       container.innerHTML = `<p>Error loading reported comments: ${error.message}</p>`;
     }
   }
 
   loadReportedComments();
-  // Refresh every 30 seconds
-  setInterval(loadReportedComments, 30000);
 }
