@@ -141,6 +141,17 @@ select {
   line-height: inherit;
 }
 
+/* Mobile-friendly input sizing */
+@media (max-width: 720px) {
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]),
+  textarea,
+  select {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 /* ================================
    TEXT DIVIDER
    ================================ */
