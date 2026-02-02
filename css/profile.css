@@ -100,9 +100,3 @@ body {
   pointer-events: auto;
 }
 
-@media (max-width: 720px) {
-  .scroll-buttons {
-    display: flex;
-  }
-}
-

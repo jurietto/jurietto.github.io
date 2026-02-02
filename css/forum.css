@@ -231,9 +231,3 @@ iframe.forum-media.audio {
 }
 
 /* dark-mode forum styles removed */
-
-@media (max-width: 720px) {
-  .forum-media-item {
-    width: 100%;
-  }
-}

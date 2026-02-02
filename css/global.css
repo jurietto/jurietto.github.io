@@ -76,12 +76,6 @@ body {
   padding: 1rem;
 }
 
-@media (max-width: 720px) {
-  body {
-    padding: 0.75rem;
-  }
-}
-
 /* Avoid forcing viewport height so pagination doesn't add extra scroll */
 
 .text-divider { border-top-color: var(--cadillac); }
@@ -152,17 +146,6 @@ select {
   line-height: inherit;
 }
 
-/* Mobile-friendly input sizing */
-@media (max-width: 720px) {
-  input:not([type="button"]):not([type="submit"]):not([type="reset"]),
-  textarea,
-  select {
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-
 /* Consistent sizing for all pages */
 input[type="search"],
 input[type="text"],
@@ -171,12 +154,10 @@ textarea {
   max-width: 100%;
 }
 
-@media (min-width: 721px) {
-  input[type="search"],
-  input[type="text"],
-  input[type="email"] {
-    min-width: 300px;
-  }
+input[type="search"],
+input[type="text"],
+input[type="email"] {
+  min-width: 300px;
 }
 
 /* ================================
@@ -197,15 +178,6 @@ textarea {
   text-align: center;
   white-space: nowrap;
   width: calc(100% + 2rem);
-}
-
-@media (max-width: 720px) {
-  .text-divider {
-    margin: 1.5rem -0.75rem 0.75rem -0.75rem;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-    width: calc(100% + 1.5rem);
-  }
 }
 
 .text-divider::before {
@@ -262,12 +234,6 @@ textarea {
   pointer-events: auto;
 }
 
-@media (max-width: 720px) {
-  .scroll-buttons {
-    display: flex;
-  }
-}
-
 /* ================================
    LIST STYLING
    ================================ */
@@ -302,14 +268,6 @@ ul li::marker {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }
-}
-
-.site-nav a {
-  color: inherit;
-  text-decoration: underline;
-  margin-right: 0.5em;
-}
-
 .site-nav span {
   margin: 0 0.3em;
 }
