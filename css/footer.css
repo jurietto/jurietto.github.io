@@ -5,6 +5,8 @@
 .text-divider {
   border-top: 1px solid var(--masala);
   margin: 2rem 0 1rem 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .site-footer {
