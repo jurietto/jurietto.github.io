@@ -144,19 +144,5 @@ article a {
 }
 
 /* ================================
-   COMMENT BUTTONS
-   ================================ */
-
-.comment-delete-btn {
-  border-color: #d9534f;
-  color: #d9534f;
-}
-
-.comment-delete-btn:hover {
-  background: #ffe6e6;
-  border-color: #a02830;
-}
-
-/* ================================
    FORM SIZING (CONSISTENT WITH FORUM)
    ================================ */
