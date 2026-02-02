@@ -1,5 +1,23 @@
 // Common event listeners that comply with CSP
 
+// Animated page title
+(function animateTitle() {
+  const baseTitle = document.title;
+  const message = 'HAVE A NICE DAY ♥ TAKE CARE OF YOURSELF YOU ROCK ♣ ';
+  
+  // Extract the page name after the dash
+  const pageName = baseTitle.includes('—') ? baseTitle.split('—')[1].trim().toUpperCase() : '';
+  let charIndex = 0;
+  
+  if (pageName) {
+    setInterval(() => {
+      const scrollingText = message.slice(charIndex) + message.slice(0, charIndex);
+      document.title = `${pageName} ♠ ${scrollingText}`;
+      charIndex = (charIndex + 1) % message.length;
+    }, 300);
+  }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   const backBtn = document.getElementById('back-btn');
   const profileBtn = document.getElementById('profile-btn');
