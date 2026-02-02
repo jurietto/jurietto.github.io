@@ -29,13 +29,24 @@
 
 <body>
 
-<h1><img src="art/ckp88_orig.png" alt="Profile" loading="lazy"></h1>
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header role="banner">
+  <h1><img src="art/ckp88_orig.png" alt="Profile" loading="lazy"></h1>
+  <p>
+    <strong>About me.</strong>
+  </p>
+</header>
 
-<p>
-  <button type="button" id="back-btn" aria-label="Back to forum">Back to Forum</button>
-</p>
+<nav role="navigation" aria-label="Main navigation">
+  <button type="button" id="back-btn" aria-label="Back to forum">← Back to Forum</button>
+</nav>
 
-<main class="profile-container">
+<!-- ================================================================
+     MAIN CONTENT
+     ================================================================ -->
+<main role="main" class="profile-container">
 
   <!-- Avatar -->
   <img
@@ -102,6 +113,9 @@ I also have a long-running attachment to Charmmy Kitty. It’s something familia
 
 </main>
 
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
   Thanks for stopping by... Juri made this, 2026

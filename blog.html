@@ -32,15 +32,27 @@
 
 <body>
 
-  <!-- HEADER (matches forum + profile) -->
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header role="banner">
   <h1><img src="art/ckp88_orig.png" alt="Blog" loading="lazy"></h1>
-
   <p>
-    <button type="button" id="back-btn" aria-label="Back to forum">Back to Forum</button>
-    <button type="button" id="profile-btn" aria-label="View profile">Profile</button>
+    <strong>Writings and thoughts.</strong>
   </p>
+</header>
 
-  <h2>Writings</h2>
+<nav role="navigation" aria-label="Main navigation">
+  <button type="button" id="back-btn" aria-label="Back to forum">← Back to Forum</button>
+  <button type="button" id="profile-btn" aria-label="View profile">Profile</button>
+</nav>
+
+<!-- ================================================================
+     MAIN CONTENT
+     ================================================================ -->
+<main role="main">
+
+<h2>Writings</h2>
 
   <div id="blog-search">
     <p>
@@ -96,8 +108,12 @@
     <div id="comments"></div>
   </div>
 
-  <!-- FOOTER (shared language) -->
-  <div class="text-divider" aria-hidden="true"></div>
+</main>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<div class="text-divider" aria-hidden="true"></div>
   <footer class="site-footer">
   Thanks for stopping by... Juri made this, 2026
   <br><a href="/privacy.html" style="color: inherit; text-decoration: underline;">Privacy</a>

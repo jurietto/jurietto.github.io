@@ -661,12 +661,12 @@ export async function loadComments(postId, firebaseDb) {
       const isOwner = comment.userId && comment.userId === currentUserId;
       const buttonHtml = isOwner ? `
         <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-edit-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #ccc; cursor: pointer; border-radius: 3px;">Edit</button>
-          <button class="comment-delete-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #ccc; cursor: pointer; border-radius: 3px;">Delete</button>
-          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #d9534f; cursor: pointer; border-radius: 3px; color: #d9534f;">Report</button>
+          <button class="comment-edit-btn" data-id="${commentId}">Edit</button>
+          <button class="comment-delete-btn" data-id="${commentId}">Delete</button>
+          <button class="comment-report-btn" data-id="${commentId}">Report</button>
         </div>` : `
         <div style="display: inline; margin-left: 1rem;">
-          <button class="comment-report-btn" data-id="${commentId}" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; background: #fff; border: 1px solid #d9534f; cursor: pointer; border-radius: 3px; color: #d9534f;">Report</button>
+          <button class="comment-report-btn" data-id="${commentId}">Report</button>
         </div>`;
       
       const meta = document.createElement("div");

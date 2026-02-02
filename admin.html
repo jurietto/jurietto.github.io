@@ -12,18 +12,25 @@
 </head>
 <body>
 
-  <!-- ================================================================
-       HEADER & AUTHENTICATION
-       ================================================================ -->
-  <header>
-    <h1>🔐 Admin Portal</h1>
-    <p>Manage blog posts, moderate forum comments, and control site content.</p>
-  </header>
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header role="banner">
+  <h1>🔐 Admin Portal</h1>
+  <p>
+    <strong>Manage content and moderate the site.</strong>
+  </p>
+</header>
 
-  <nav>
-    <button type="button" id="back-btn" aria-label="Back to forum">← Back to Forum</button>
-    <button type="button" id="logout" aria-label="Sign out" hidden>Sign Out</button>
-  </nav>
+<nav role="navigation" aria-label="Main navigation">
+  <button type="button" id="back-btn" aria-label="Back to forum">← Back to Forum</button>
+  <button type="button" id="logout" aria-label="Sign out" hidden>Sign Out</button>
+</nav>
+
+<!-- ================================================================
+     MAIN CONTENT
+     ================================================================ -->
+<main role="main">
 
   <!-- ================================================================
        LOGIN SECTION
@@ -153,6 +160,12 @@
     </section>
 
   </div>
+
+</main>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
   <!-- Core admin logic (auth + publish) -->
   <script type="module" src="js/admin.js"></script>
 

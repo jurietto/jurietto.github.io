@@ -28,15 +28,35 @@
 </head>
 
 <body>
-<h1><img src="art/ckp88_orig.png" alt="Welcome" loading="lazy"></h1>
 
-<p>
-This is a simple message board.<br>
-You can post and read messages.<br>
-Posts are shown in the order they arrive.<br>
-There are no rankings or special features.<br>
-It’s just meant for net friends. (´ー`)y-~~
-</p>
+<!-- ================================================================
+     HEADER
+     ================================================================ -->
+<header role="banner">
+  <h1><img src="art/ckp88_orig.png" alt="Forum Home" loading="lazy"></h1>
+  <p>
+    <strong>A simple message board for net friends.</strong>
+  </p>
+</header>
+
+<nav role="navigation" aria-label="Main navigation">
+  <button type="button" id="blog-btn" aria-label="View blog">Blog</button>
+  <button type="button" id="profile-btn" aria-label="View profile">Profile</button>
+</nav>
+
+<!-- ================================================================
+     MAIN CONTENT
+     ================================================================ -->
+<main role="main">
+
+<section>
+  <p>
+    This is a simple message board.<br>
+    You can post and read messages.<br>
+    Posts are shown in the order they arrive.<br>
+    There are no rankings or special features.<br>
+    It's just meant for net friends. (´ー`)y-~~
+  </p>
 
   <h2>Forum</h2>
 <p>
@@ -84,18 +104,27 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 <div id="comments" aria-live="polite"></div>
 <div id="pagination" aria-label="Pagination"></div>
 
-<h2>Changelog</h2>
-<ul id="changelog"><li>Loading changes…</li></ul>
+</section>
 
-<h2>Profile</h2>
-<p>
-  <button type="button" id="profile-btn">About me</button>
-</p>
+</main>
 
-<h2>Writings</h2>
-<p>
-  <button type="button" id="blog-btn">Blog</button>
-</p>
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<section aria-label="Additional info">
+  <h2>Changelog</h2>
+  <ul id="changelog"><li>Loading changes…</li></ul>
+
+  <h2>Profile</h2>
+  <p>
+    <button type="button" id="profile-btn">About me</button>
+  </p>
+
+  <h2>Writings</h2>
+  <p>
+    <button type="button" id="blog-btn">Blog</button>
+  </p>
+</section>
 
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
