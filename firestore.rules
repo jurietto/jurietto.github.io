@@ -12,7 +12,8 @@ service cloud.firestore {
     }
     
     function isAdmin() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+      // Admin is the specific authenticated user with the admin UID
+      return request.auth.uid == "Qrwkm5Rg16W1w77Whv4I39NKfXH2";
     }
 
     // Rate limiting: Check if user posted within last 2 seconds

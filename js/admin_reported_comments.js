@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function initReportedCommentsAdmin() {
+  console.log("initReportedCommentsAdmin called");
   const { db, container } = await waitForReady();
+  console.log("Reported comments admin ready, db:", !!db, "container:", !!container);
 
   async function waitForReady(timeout = 5000) {
     const startTime = Date.now();
@@ -48,6 +50,7 @@ async function initReportedCommentsAdmin() {
       );
 
       const snap = await getDocs(q);
+      console.log(`Loaded ${snap.docs.length} reported comments`);
 
       if (snap.empty) {
         container.innerHTML = "<p>No reported comments.</p>";
@@ -135,7 +138,7 @@ async function initReportedCommentsAdmin() {
       });
     } catch (error) {
       console.error("Error loading reported comments:", error);
-      container.innerHTML = "<p>Error loading reported comments. Make sure the flaggedComments collection exists.</p>";
+      container.innerHTML = `<p>Error loading reported comments: ${error.message}</p>`;
     }
   }
 
