@@ -17,7 +17,13 @@ import {
 const PAGE_SIZE = 20;
 
 document.addEventListener("DOMContentLoaded", () => {
-  initBlogAdmin();
+  initBlogAdmin().catch(err => {
+    console.error("Blog admin init failed:", err);
+    const container = document.getElementById("blog-posts");
+    if (container) {
+      container.innerHTML = `<p>Error loading blog posts: ${err.message}</p>`;
+    }
+  });
 });
 
 async function initBlogAdmin() {
