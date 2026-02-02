@@ -9,6 +9,21 @@
 
   body {
     padding: 0.75rem;
+    padding-top: 0.75rem;
+  }
+
+  /* ================================
+     BLOG POST TITLES - prevent cutoff
+     ================================ */
+
+  article h2 {
+    margin-top: 0;
+    padding-top: 0;
+    overflow: visible;
+  }
+
+  article {
+    overflow: visible;
   }
 
   /* ================================
