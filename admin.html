@@ -117,11 +117,28 @@
       </div>
     </section>
 
-    
+    <!-- ====================================================================
+         SECTION 3: BLOG COMMENTS
+         ==================================================================== -->
+    <section id="blog-comments-admin">
+      <header>
+        <h2>💬 Blog Comments</h2>
+      </header>
 
-  <!-- ================================================================
-       SCRIPTS
-       ================================================================ -->
+      <div>
+        <label for="blog-comments-pagination">Pagination Controls:</label>
+        <div id="blog-comments-pagination">
+          <button id="blog-comments-prev" type="button">← Previous Page</button>
+          <button id="blog-comments-next" type="button">Next Page →</button>
+        </div>
+      </div>
+
+      <div id="blog-comments-list">
+        <p>Loading blog comments…</p>
+      </div>
+    </section>
+
+  </div>
   <!-- Core admin logic (auth + publish) -->
   <script type="module" src="js/admin.js"></script>
 
