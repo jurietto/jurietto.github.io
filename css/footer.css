@@ -13,6 +13,8 @@
   color: var(--masala);
   opacity: 1;
   line-height: 1.6;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .site-footer a {
@@ -24,4 +26,32 @@
   margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.scroll-buttons button {
+  flex: 1 1 auto;
+  min-width: auto;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 720px) {
+  .text-divider {
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  .site-footer {
+    padding: 0.75rem 0;
+    font-size: 0.85rem;
+  }
+
+  .scroll-buttons {
+    gap: 0.25rem;
+  }
+
+  .scroll-buttons button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
 }
