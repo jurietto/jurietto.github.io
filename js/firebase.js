@@ -18,14 +18,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// Enable offline persistence for faster subsequent loads
-enableIndexedDbPersistence(db, { cacheSizeBytes: CACHE_SIZE_UNLIMITED })
-  .catch(err => {
-    if (err.code === 'failed-precondition') {
-      // Multiple tabs open - persistence only works in one
-      console.warn('[Firebase] Persistence failed: multiple tabs');
-    } else if (err.code === 'unimplemented') {
-      // Browser doesn't support persistence
-      console.warn('[Firebase] Persistence not supported');
-    }
-  });
+// ...existing code...

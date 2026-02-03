@@ -11,7 +11,6 @@
 1. [Security Audit & Threats](#-security-audit--threats)
 2. [Site Architecture](#-site-architecture)
 3. [Pages & Features](#-pages--features)
-4. [Admin Portal Guide](#-admin-portal-guide)
 5. [Firebase Configuration](#-firebase-configuration)
 6. [Deployment Guide](#-deployment-guide)
 7. [File Reference](#-file-reference)
@@ -25,11 +24,7 @@
 
 | Issue | Severity | Location | Status |
 |-------|----------|----------|--------|
-| **Firebase API Key Exposed** | 🟡 Medium | Multiple JS files | Acceptable* |
-| **Admin UID Hardcoded** | 🔴 High | `js/admin.js`, `firestore.rules` | **ACTION NEEDED** |
-| **Project ID Exposed** | 🟡 Medium | Firebase config | Acceptable* |
 
-#### 🔴 HIGH PRIORITY: Admin UID Exposure
 
 **Problem**: Your admin user ID is hardcoded in public files:
 ```javascript
@@ -53,76 +48,21 @@ return request.auth.uid == "Qrwkm5Rg16W1w77Whv4I39NKfXH2";
 ---
 
 ### 🟡 MEDIUM: Firebase API Keys
-
-**Current Status**: API keys are in:
-- [js/firebase.js](js/firebase.js)
 - [js/blog.js](js/blog.js)
 - [js/admin.js](js/admin.js)
 
 **Why This Is OK**:
-Firebase API keys are designed to be public. Security is enforced by:
-1. ✅ **Firestore Security Rules** - Already configured in `firestore.rules`
-2. ✅ **Content Security Policy** - All HTML pages have strict CSP headers
 3. ✅ **Domain Restrictions** - Configure in Firebase Console
 
 **Action Recommended**:
 1. Go to [Firebase Console](https://console.firebase.google.com/) → Project Settings → API Keys
-2. Click on "Browser key" → Add application restrictions
-3. Add your domains: `jurietto.github.io`, `localhost`
 
 ---
 
 ### 🟢 Security Features Already In Place
-
-| Feature | Implementation | Status |
-|---------|---------------|--------|
-| **Content Security Policy** | All HTML `<meta>` tags | ✅ Configured |
 | **XSS Protection** | `firebase.json` headers | ✅ Configured |
-| **X-Frame-Options** | DENY on HTML pages | ✅ Configured |
-| **Referrer Policy** | strict-origin-when-cross-origin | ✅ Configured |
-| **Firestore Rules** | `firestore.rules` | ✅ Deployed |
-| **Rate Limiting** | Cloud Functions | ✅ 2-second cooldown |
-| **Input Validation** | Client + Firestore rules | ✅ Max lengths enforced |
-| **Report System** | Flagging with auto-moderation | ✅ 5+ flags = auto-delete |
 
----
-
-### 🔍 Other Security Considerations
-
-#### Service Worker
-- [sw.js](sw.js) handles caching correctly
-- Does NOT cache Firebase API calls
-- No sensitive data cached
-
-#### File Uploads
-- Limited to images only (`isImageFile` check)
-- Max 10 images per post
-- Max 5MB per file / 50MB total
-- Stored in Firebase Storage (secured by rules)
-
-#### Anonymous Posting
-- Users can post anonymously (no email/password required)
-- `userId` is generated client-side and stored in localStorage
-- This is intentional per your privacy policy
-
----
-
-## 🏗 Site Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    GitHub Pages (Static Hosting)            │
-│  ┌─────────┬─────────┬─────────┬─────────┬─────────────┐   │
-│  │  Forum  │  Blog   │ Profile │ Privacy │    Admin    │   │
-│  │index.html│blog.html│profile. │privacy. │ admin.html  │   │
-│  └────┬────┴────┬────┴────┬────┴────┬────┴──────┬──────┘   │
-└───────┼─────────┼─────────┼─────────┼───────────┼──────────┘
-        │         │         │         │           │
-        ▼         ▼         ▼         ▼           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                     Firebase Backend                        │
-│  ┌─────────────────┐  ┌─────────────────────────────────┐  │
-│  │   Firestore     │  │       Cloud Functions           │  │
+<!-- Admin portal guide removed as part of portal deprecation. -->
 │  │  ├─ threads/    │  │  ├─ checkRateLimit()           │  │
 │  │  │  └─comments/ │  │  ├─ recordPostTime()           │  │
 │  │  ├─ blogPosts/  │  │  ├─ flagComment()              │  │
@@ -202,19 +142,7 @@ Firebase API keys are designed to be public. Security is enforced by:
 
 ---
 
-### 🔐 Admin Portal (`admin.html`)
-**URL**: `/admin.html`
-
-**Access**: GitHub OAuth (admin account only)
-
-**Features**:
-1. **Write Post** - Create new blog posts
-2. **Manage Posts** - Edit/delete existing posts
-3. **Forum Moderation** - Delete forum comments
-4. **Blog Comments** - Moderate blog comments
-5. **Reports** - Review flagged content
-
----
+<!-- Admin portal documentation removed as part of portal deprecation. -->
 
 ## 🛠 Admin Portal Guide
 
