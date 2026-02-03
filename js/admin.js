@@ -1,8 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import {
   getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
@@ -97,19 +96,31 @@ function initTabs() {
 /* =====================
    AUTH HANDLERS
    ===================== */
+
+// Email/password login handler
 loginBtn?.addEventListener("click", async () => {
+  const emailInput = document.getElementById("login-email");
+  const passwordInput = document.getElementById("login-password");
+  if (!emailInput || !passwordInput) {
+    alert("Email/password fields not found");
+    return;
+  }
+  const email = emailInput.value;
+  const password = passwordInput.value;
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
   loginBtn.disabled = true;
   loginBtn.textContent = "Signing in...";
-  
   try {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     console.error("Login error:", err);
     showStatus(publishStatus, "Login failed: " + err.message, "error");
   } finally {
     loginBtn.disabled = false;
-    loginBtn.textContent = "Sign In with Google";
+    loginBtn.textContent = "Sign In";
   }
 });
 
