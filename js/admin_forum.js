@@ -195,8 +195,7 @@ function renderThreads(grouped) {
   
   Object.keys(grouped).forEach(threadId => {
     const threadEl = document.createElement("div");
-    threadEl.className = "thread-group";
-    
+    // Thread header
     const threadHeader = document.createElement("div");
     threadHeader.innerHTML = `<small style="color: var(--admin-text-muted);">Thread: ${threadId}</small>`;
     threadEl.appendChild(threadHeader);

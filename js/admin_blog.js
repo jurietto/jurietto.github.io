@@ -166,28 +166,37 @@ function createPostCard(postId, data, formatDate, escapeHtml) {
     ? data.hashtags.join(" ") 
     : "No tags";
   
-  article.innerHTML = `
-    <header>
-      <strong>${escapeHtml ? escapeHtml(data.title || "Untitled") : (data.title || "Untitled")}</strong>
-    </header>
-    <p>${dateStr}</p>
-    <p>Tags: ${tagsText}</p>
-    <section>${escapeHtml ? escapeHtml(data.content || "(no content)") : (data.content || "(no content)")}</section>
-    <div>
-      <button type="button" class="edit-btn btn-secondary">Edit</button>
-      <button type="button" class="delete-btn btn-danger">Delete</button>
-    </div>
-  `;
-  
-  // Edit handler
-  article.querySelector(".edit-btn").onclick = () => {
+  // Header
+  const header = document.createElement("header");
+  const titleEl = document.createElement("strong");
+  titleEl.textContent = escapeHtml ? escapeHtml(data.title || "Untitled") : (data.title || "Untitled");
+  header.appendChild(titleEl);
+  article.appendChild(header);
+  // Date
+  const dateEl = document.createElement("p");
+  dateEl.textContent = dateStr;
+  article.appendChild(dateEl);
+  // Tags
+  const tagsEl = document.createElement("p");
+  tagsEl.textContent = `Tags: ${tagsText}`;
+  article.appendChild(tagsEl);
+  // Content
+  const section = document.createElement("section");
+  section.textContent = escapeHtml ? escapeHtml(data.content || "(no content)") : (data.content || "(no content)");
+  article.appendChild(section);
+  // Actions
+  const actions = document.createElement("div");
+  const editBtn = document.createElement("button");
+  editBtn.type = "button";
+  editBtn.textContent = "Edit";
+  editBtn.onclick = () => {
     showEditForm(article, postId, data);
   };
-  
-  // Delete handler
-  article.querySelector(".delete-btn").onclick = async () => {
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.textContent = "Delete";
+  deleteBtn.onclick = async () => {
     if (!confirm("Delete this post? This cannot be undone.")) return;
-    
     try {
       await deleteDoc(doc(db, "blogPosts", postId));
       loadPosts(currentDirection === "first" ? "first" : currentDirection);
@@ -195,7 +204,9 @@ function createPostCard(postId, data, formatDate, escapeHtml) {
       alert("Error deleting: " + err.message);
     }
   };
-  
+  actions.appendChild(editBtn);
+  actions.appendChild(deleteBtn);
+  article.appendChild(actions);
   return article;
 }
 

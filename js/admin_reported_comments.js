@@ -107,70 +107,68 @@ function renderReports(docs) {
 function createReportCard(reportId, data, formatDate, escapeHtml) {
   const escape = escapeHtml || (t => t || "");
   const article = document.createElement("article");
-  article.className = "report-card";
-  
-  const dateStr = formatDate 
-    ? formatDate(data.reportedAt) 
-    : "Unknown date";
-  
+  const dateStr = formatDate ? formatDate(data.reportedAt) : "Unknown date";
   const reasonLabels = {
-    spam: "🚫 Spam",
-    harassment: "⚠️ Harassment", 
-    inappropriate: "🔞 Inappropriate",
-    other: "📝 Other"
+    spam: "Spam",
+    harassment: "Harassment", 
+    inappropriate: "Inappropriate",
+    other: "Other"
   };
-  
   const reasonDisplay = reasonLabels[data.reason] || data.reason || "Unknown";
-  
-  article.innerHTML = `
-    <header>
-      <strong>Report: ${escape(data.commentUser || "Anonymous")}</strong>
-    </header>
-    <p style="color: var(--admin-danger); font-weight: 500;">
-      ${reasonDisplay} • Reported: ${dateStr}
-    </p>
-    <section style="background: #fff0f0; border-color: var(--admin-danger);">
-      <strong>Flagged comment:</strong><br>
-      ${escape(data.commentText || "(no text)")}
-    </section>
-    ${data.details ? `
-      <p style="font-size: 0.9rem; color: var(--admin-text-muted);">
-        <strong>Reporter's note:</strong> ${escape(data.details)}
-      </p>
-    ` : ""}
-    <div class="card-actions">
-      <button type="button" class="dismiss-btn btn-secondary">Dismiss Report</button>
-      <button type="button" class="delete-btn btn-danger">Delete Comment</button>
-    </div>
-  `;
-  
-  // Dismiss handler - just removes the report
-  article.querySelector(".dismiss-btn").onclick = async () => {
+  // Header
+  const header = document.createElement("header");
+  const userEl = document.createElement("strong");
+  userEl.textContent = `Report: ${escape(data.commentUser || "Anonymous")}`;
+  header.appendChild(userEl);
+  article.appendChild(header);
+  // Reason and date
+  const info = document.createElement("p");
+  info.textContent = `${reasonDisplay} • Reported: ${dateStr}`;
+  article.appendChild(info);
+  // Flagged comment
+  const flagged = document.createElement("section");
+  const flaggedLabel = document.createElement("strong");
+  flaggedLabel.textContent = "Flagged comment:";
+  flagged.appendChild(flaggedLabel);
+  flagged.appendChild(document.createElement("br"));
+  flagged.appendChild(document.createTextNode(escape(data.commentText || "(no text)")));
+  article.appendChild(flagged);
+  // Details
+  if (data.details) {
+    const details = document.createElement("p");
+    details.textContent = `Reporter's note: ${escape(data.details)}`;
+    article.appendChild(details);
+  }
+  // Actions
+  const actions = document.createElement("div");
+  const dismissBtn = document.createElement("button");
+  dismissBtn.type = "button";
+  dismissBtn.textContent = "Dismiss Report";
+  dismissBtn.onclick = async () => {
     if (!confirm("Dismiss this report? The comment will remain.")) return;
-    
     try {
       await deleteDoc(doc(db, "flaggedComments", reportId));
     } catch (err) {
       alert("Error dismissing: " + err.message);
     }
   };
-  
-  // Delete handler - removes both comment and report
-  article.querySelector(".delete-btn").onclick = async () => {
+  const deleteBtn = document.createElement("button");
+  deleteBtn.type = "button";
+  deleteBtn.textContent = "Delete Comment";
+  deleteBtn.onclick = async () => {
     if (!confirm("Delete this comment? This cannot be undone.")) return;
-    
     try {
-      // Delete the actual comment if path exists
       if (data.commentPath) {
         await deleteDoc(doc(db, data.commentPath));
       }
-      // Delete the report
       await deleteDoc(doc(db, "flaggedComments", reportId));
     } catch (err) {
       alert("Error deleting: " + err.message);
     }
   };
-  
+  actions.appendChild(dismissBtn);
+  actions.appendChild(deleteBtn);
+  article.appendChild(actions);
   return article;
 }
 

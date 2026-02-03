@@ -17,46 +17,7 @@ const STATIC_ASSETS = [
   '/404.html',
   '/css/global.css',
   '/css/forum.css',
-  '/css/blog.css',
-  '/css/footer.css',
-  '/css/mobile.css',
-  '/css/profile.css',
-  '/font/mona.woff',
-  '/art/ckp88_orig.png'
-];
-
-// Install: Pre-cache static assets
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(STATIC_CACHE)
-      .then(cache => {
-        console.log('[SW] Pre-caching static assets');
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => self.skipWaiting())
-  );
-});
-
-// Activate: Clean up old caches
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(
-        keys
-          .filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
-          .map(key => {
-            console.log('[SW] Removing old cache:', key);
-            return caches.delete(key);
-          })
-      ))
-      .then(() => self.clients.claim())
-  );
-});
-
-// Fetch: Network-first for API, Cache-first for static
-self.addEventListener('fetch', event => {
-  const { request } = event;
-  const url = new URL(request.url);
+// Service worker disabled for PWA removal
 
   // Skip non-GET requests
   if (request.method !== 'GET') return;

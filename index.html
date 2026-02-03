@@ -9,12 +9,7 @@
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>FORUM</title>
 
-  <!-- PWA Support -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#c72e6c">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/art/ckp88_orig.png">
+
 
   <!-- Preconnect to external resources -->
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
@@ -142,16 +137,7 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 <script src="js/common.js" defer></script>
 <script type="module" src="js/changelog.js"></script>
 
-<!-- Register Service Worker for offline support -->
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered'))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
+
 
 </body>
 </html>

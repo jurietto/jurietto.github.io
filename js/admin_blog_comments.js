@@ -203,45 +203,39 @@ function renderComments(docs) {
     const postId = path.split("/")[1];
     
     const article = document.createElement("article");
-    
     const dateStr = formatDate ? formatDate(data.createdAt) : "Unknown date";
-    
-    article.innerHTML = `
-      <header>
-        <strong>Comment by ${escapeHtml ? escapeHtml(data.user || "Anonymous") : (data.user || "Anonymous")}</strong>
-      </header>
-      <p>Post ID: ${postId} • ${dateStr}</p>
-      <section>${escapeHtml ? escapeHtml(data.text || "(no text)") : (data.text || "(no text)")}</section>
-    `;
-    
-    // Render media
+    // Header
+    const header = document.createElement("header");
+    const userEl = document.createElement("strong");
+    userEl.textContent = escapeHtml ? escapeHtml(data.user || "Anonymous") : (data.user || "Anonymous");
+    header.appendChild(userEl);
+    article.appendChild(header);
+    // Info
+    const info = document.createElement("p");
+    info.textContent = `Post ID: ${postId} • ${dateStr}`;
+    article.appendChild(info);
+    // Text
+    const section = document.createElement("section");
+    section.textContent = escapeHtml ? escapeHtml(data.text || "(no text)") : (data.text || "(no text)");
+    article.appendChild(section);
+    // Media
     if (data.media) {
       const mediaContainer = document.createElement("div");
-      mediaContainer.style.marginBottom = "1rem";
-      
       const mediaUrls = Array.isArray(data.media) ? data.media : [data.media];
       mediaUrls.forEach(url => {
         const img = document.createElement("img");
         img.src = url;
         img.alt = "Comment media";
-        img.style.maxWidth = "300px";
-        img.style.marginRight = "0.5rem";
-        img.style.marginBottom = "0.5rem";
-        img.style.borderRadius = "var(--admin-radius)";
         mediaContainer.appendChild(img);
       });
-      
       article.appendChild(mediaContainer);
     }
-    
     // Delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
-    deleteBtn.className = "btn-danger";
     deleteBtn.textContent = "Delete Comment";
     deleteBtn.onclick = async () => {
       if (!confirm("Delete this comment?")) return;
-      
       try {
         await deleteDoc(doc(db, path));
         loadComments("first");
@@ -249,7 +243,6 @@ function renderComments(docs) {
         alert("Error deleting: " + err.message);
       }
     };
-    
     article.appendChild(deleteBtn);
     container.appendChild(article);
   });
