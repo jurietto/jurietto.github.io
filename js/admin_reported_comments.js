@@ -5,12 +5,12 @@ import {
   onSnapshot,
   deleteDoc,
   doc
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from "./firebase.js";
 
 /* =====================
    STATE
    ===================== */
-let db = null;
 let container = null;
 let unsubscribe = null;
 
@@ -39,19 +39,14 @@ async function init() {
 
 async function waitForElements(timeout = 5000) {
   const start = Date.now();
-  
   while (true) {
     container = document.getElementById("reported-comments-list");
-    
-    if (window.__ADMIN_READY__ && window.db && container) {
-      db = window.db;
+    if (window.__ADMIN_READY__ && container) {
       return;
     }
-    
     if (Date.now() - start > timeout) {
       throw new Error("Reported comments initialization timeout");
     }
-    
     await new Promise(r => setTimeout(r, 100));
   }
 }

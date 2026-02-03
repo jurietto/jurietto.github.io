@@ -1,4 +1,3 @@
-import {
   collectionGroup,
   getDocs,
   deleteDoc,
@@ -11,6 +10,19 @@ import {
   limitToLast
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
+import {
+  collectionGroup,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+  limit,
+  startAfter,
+  endBefore,
+  limitToLast
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from "./firebase.js";
 /* =====================
    CONSTANTS
    ===================== */
@@ -19,7 +31,6 @@ const PAGE_SIZE = 20;
 /* =====================
    STATE
    ===================== */
-let db = null;
 let container = null;
 let prevBtn = null;
 let nextBtn = null;
@@ -50,7 +61,6 @@ async function init() {
   }
 }
 
-async function waitForElements(timeout = 5000) {
   const start = Date.now();
   
   while (true) {
@@ -71,6 +81,23 @@ async function waitForElements(timeout = 5000) {
       throw new Error("Blog comments admin initialization timeout");
     }
     
+    await new Promise(r => setTimeout(r, 100));
+  }
+}
+async function waitForElements(timeout = 5000) {
+  const start = Date.now();
+  while (true) {
+    container = document.getElementById("blog-comments-list");
+    prevBtn = document.getElementById("blog-comments-prev");
+    nextBtn = document.getElementById("blog-comments-next");
+    if (window.__ADMIN_READY__ && container && prevBtn && nextBtn) {
+      prevBtn.onclick = () => loadComments("prev");
+      nextBtn.onclick = () => loadComments("next");
+      return;
+    }
+    if (Date.now() - start > timeout) {
+      throw new Error("Blog comments admin initialization timeout");
+    }
     await new Promise(r => setTimeout(r, 100));
   }
 }

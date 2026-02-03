@@ -10,7 +10,8 @@ import {
   limit,
   startAfter,
   endBefore
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from "./firebase.js";
 
 /* =====================
    CONSTANTS
@@ -20,7 +21,6 @@ const PAGE_SIZE = 20;
 /* =====================
    STATE
    ===================== */
-let db = null;
 let postsContainer = null;
 let prevBtn = null;
 let nextBtn = null;
@@ -59,26 +59,18 @@ async function init() {
 
 async function waitForElements(timeout = 5000) {
   const start = Date.now();
-  
   while (true) {
     postsContainer = document.getElementById("blog-posts");
     prevBtn = document.getElementById("blog-prev");
     nextBtn = document.getElementById("blog-next");
-    
-    if (window.__ADMIN_READY__ && window.db && postsContainer && prevBtn && nextBtn) {
-      db = window.db;
-      
-      // Setup button handlers
+    if (window.__ADMIN_READY__ && postsContainer && prevBtn && nextBtn) {
       prevBtn.onclick = () => loadPosts("prev");
       nextBtn.onclick = () => loadPosts("next");
-      
       return;
     }
-    
     if (Date.now() - start > timeout) {
       throw new Error("Blog admin initialization timeout");
     }
-    
     await new Promise(r => setTimeout(r, 100));
   }
 }
