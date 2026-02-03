@@ -216,6 +216,14 @@ const formatDate = (ts) =>
     ? new Date(ts.seconds * 1000).toLocaleString()
     : "";
 
+// Security: Escape HTML to prevent XSS attacks
+const escapeHtml = (text) => {
+  if (!text) return "";
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+};
+
 const sanitizeInput = text => {
   if (!text) return "";
   return text.trim().slice(0, 10000); // Max 10k characters, trim whitespace
@@ -667,7 +675,7 @@ export async function loadComments(postId, firebaseDb) {
       
       const meta = document.createElement("div");
       meta.className = "forum-meta";
-      meta.innerHTML = `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}${editedText}${buttonHtml}`;
+      meta.innerHTML = `<strong>＼(^o^)／ ${escapeHtml(comment.user) || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}${editedText}${buttonHtml}`;
       wrap.appendChild(meta);
 
       renderBodyWithEmbeds(comment.text, wrap);

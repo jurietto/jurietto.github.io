@@ -7,7 +7,15 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://www.youtube.com https://api.github.com https://www.gstatic.com wss://*.googleapis.com wss://*.firebaseio.com; frame-src https://www.youtube.com https://*.soundcloud.com; object-src 'none'">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
-  <title>Writings</title>
+  <title>BLOG</title>
+
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://img.youtube.com">
+
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="font/mona.woff" as="font" type="font/woff" crossorigin>
 
   <!-- Open Graph -->
   <meta property="og:title" content="🍭(¬‿¬) 凸">
@@ -117,8 +125,7 @@
 </div>
 
 <script type="module" src="js/blog.js"></script>
-  <script type="module" src="js/blog_comments.js"></script>
-  <script src="js/common.js"></script>
+<script src="js/common.js" defer></script>
 
 </body>
 </html>

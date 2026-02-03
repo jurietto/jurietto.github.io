@@ -16,16 +16,16 @@
    ================================ */
 
 .forum-comment {
-  border: 5px solid var(--pesto); /* gold border for high comments */
+  border: 5px solid var(--pesto);
   background: linear-gradient(135deg, rgba(var(--azalea-r),1), rgba(var(--deep-blush-r),1));
   padding: 8px;
   margin-bottom: 10px;
-  /* readable text on light-ish comment background */
   color: var(--masala);
   max-width: 100%;
   overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
+  contain: content;
 }
 
 /* ================================
@@ -161,11 +161,7 @@ iframe.forum-media.audio {
   text-underline-offset: 2px;
 }
 
-.forum-comment .forum-body a[target="_blank"],
-.forum-reply .forum-body a[target="_blank"],
-.forum-reply-nested .forum-body a[target="_blank"] {
-  target-new: new; /* Indication to open links in new tab */
-}
+/* Links that open in new tab - styling handled via HTML target attribute */
 
 /* ================================
    ASCII-ART FRIENDLY POSTS

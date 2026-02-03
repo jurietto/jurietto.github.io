@@ -7,7 +7,26 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://www.youtube.com https://api.github.com https://www.gstatic.com https://*.cloudfunctions.net wss://*.googleapis.com wss://*.firebaseio.com; frame-src https://www.youtube.com https://*.soundcloud.com; object-src 'none'">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
-  <title>Forum</title>
+  <title>FORUM</title>
+
+  <!-- PWA Support -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#c72e6c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/art/ckp88_orig.png">
+
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="dns-prefetch" href="https://img.youtube.com">
+
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="font/mona.woff" as="font" type="font/woff" crossorigin>
+  
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="css/global.css" as="style">
+  <link rel="preload" href="css/forum.css" as="style">
   
 <!-- Open Graph (link preview) -->
 <meta property="og:title" content="🍭(¬‿¬) 凸">
@@ -119,9 +138,20 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
   <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">Down</button>
 </div>
 
-<script type="module" src="js/changelog.js"></script>
 <script type="module" src="js/forum.js"></script>
-<script src="js/common.js"></script>
+<script src="js/common.js" defer></script>
+<script type="module" src="js/changelog.js"></script>
+
+<!-- Register Service Worker for offline support -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered'))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
 
 </body>
 </html>

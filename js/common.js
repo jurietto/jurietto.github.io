@@ -1,57 +1,25 @@
 // Common event listeners that comply with CSP
-
-// Animated page title
-(function animateTitle() {
-  const baseTitle = document.title.trim().toUpperCase();
-  const message = 'HAVE A NICE DAY ♥ TAKE CARE OF YOURSELF ♣ YOU ROCK !!! ';
-  
-  if (baseTitle) {
-    let charIndex = 0;
-    // Set initial title immediately
-    document.title = `${baseTitle} | ${message}`;
-    
-    setInterval(() => {
-      const scrollingText = message.slice(charIndex) + message.slice(0, charIndex);
-      document.title = `${baseTitle} | ${scrollingText}`;
-      charIndex = (charIndex + 1) % message.length;
-    }, 300);
-  }
-})();
+// Uses event delegation for better performance
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Cache DOM elements
   const backBtn = document.getElementById('back-btn');
   const profileBtn = document.getElementById('profile-btn');
   const blogBtn = document.getElementById('blog-btn');
   const scrollTopBtn = document.getElementById('scroll-top-btn');
   const scrollBottomBtn = document.getElementById('scroll-bottom-btn');
 
-  if (backBtn) {
-    backBtn.addEventListener('click', () => {
-      location.href = '/index.html';
-    });
-  }
+  // Navigation handlers
+  backBtn?.addEventListener('click', () => location.href = '/index.html');
+  profileBtn?.addEventListener('click', () => location.href = '/profile.html');
+  blogBtn?.addEventListener('click', () => location.href = '/blog.html');
 
-  if (profileBtn) {
-    profileBtn.addEventListener('click', () => {
-      location.href = '/profile.html';
-    });
-  }
+  // Scroll handlers with passive listeners for better scroll performance
+  scrollTopBtn?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, { passive: true });
 
-  if (blogBtn) {
-    blogBtn.addEventListener('click', () => {
-      location.href = '/blog.html';
-    });
-  }
-
-  if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
-  if (scrollBottomBtn) {
-    scrollBottomBtn.addEventListener('click', () => {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    });
-  }
+  scrollBottomBtn?.addEventListener('click', () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }, { passive: true });
 });

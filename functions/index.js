@@ -4,7 +4,17 @@
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const cors = require('cors')({ origin: true });
+
+// Security: Restrict CORS to allowed origins only
+const cors = require('cors')({
+  origin: [
+    'https://jurietto.github.io',
+    'http://localhost:5000',
+    'http://localhost:3000',
+    'http://127.0.0.1:5000',
+    'http://127.0.0.1:3000'
+  ]
+});
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -81,6 +91,7 @@ exports.recordPostTime = functions.firestore
 
 /**
  * Cloud Function to flag/report a comment
+ * Includes: input validation, rate limiting, duplicate detection
  */
 exports.flagComment = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
@@ -91,9 +102,23 @@ exports.flagComment = functions.https.onRequest((req, res) => {
     const { commentId, threadId, reason, details } = req.body;
     const reporterId = req.body.uid || 'anonymous';
 
-    // Validate input
+    // ========== INPUT VALIDATION ==========
     if (!commentId || !threadId || !reason) {
       return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Validate string types and lengths
+    if (typeof commentId !== 'string' || commentId.length > 128) {
+      return res.status(400).json({ error: 'Invalid commentId' });
+    }
+    if (typeof threadId !== 'string' || threadId.length > 128) {
+      return res.status(400).json({ error: 'Invalid threadId' });
+    }
+    if (typeof reporterId !== 'string' || reporterId.length > 128) {
+      return res.status(400).json({ error: 'Invalid reporterId' });
+    }
+    if (details && (typeof details !== 'string' || details.length > 1000)) {
+      return res.status(400).json({ error: 'Details too long (max 1000 chars)' });
     }
 
     const validReasons = ['spam', 'harassment', 'nsfw', 'misinformation', 'other'];
@@ -102,14 +127,45 @@ exports.flagComment = functions.https.onRequest((req, res) => {
     }
 
     try {
-      // Create flag document
+      // ========== RATE LIMITING FOR REPORTS ==========
+      if (reporterId !== 'anonymous') {
+        const reporterRef = db.collection('users').doc(reporterId);
+        const reporterDoc = await reporterRef.get();
+        
+        if (reporterDoc.exists) {
+          const lastReportTime = reporterDoc.data().lastReportTime || 0;
+          const now = Date.now();
+          const reportCooldown = 10000; // 10 seconds between reports
+          
+          if (now - lastReportTime < reportCooldown) {
+            const waitTime = Math.ceil((reportCooldown - (now - lastReportTime)) / 1000);
+            return res.status(429).json({ 
+              error: `Please wait ${waitTime}s before submitting another report`
+            });
+          }
+        }
+      }
+
+      // ========== CHECK FOR DUPLICATE REPORTS ==========
+      const commentPath = `threads/${threadId}/comments/${commentId}`;
+      const existingReport = await db.collection('flaggedComments')
+        .where('commentPath', '==', commentPath)
+        .where('reporterId', '==', reporterId)
+        .limit(1)
+        .get();
+
+      if (!existingReport.empty) {
+        return res.status(409).json({ error: 'You have already reported this comment' });
+      }
+
+      // ========== CREATE FLAG IN COMMENT SUBCOLLECTION ==========
       const flagRef = db.collection('threads').doc(threadId)
         .collection('comments').doc(commentId)
         .collection('flags').doc();
 
       await flagRef.set({
         reason,
-        details: details || '',
+        details: (details || '').substring(0, 1000),
         reporterId,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         status: 'pending',
@@ -117,7 +173,7 @@ exports.flagComment = functions.https.onRequest((req, res) => {
         resolvedBy: null
       });
 
-      // Increment flag count on comment
+      // ========== INCREMENT FLAG COUNT ==========
       const commentRef = db.collection('threads').doc(threadId)
         .collection('comments').doc(commentId);
       
@@ -125,10 +181,18 @@ exports.flagComment = functions.https.onRequest((req, res) => {
         flagCount: admin.firestore.FieldValue.increment(1)
       });
 
+      // ========== UPDATE REPORTER'S LAST REPORT TIME ==========
+      if (reporterId !== 'anonymous') {
+        await db.collection('users').doc(reporterId).set(
+          { lastReportTime: Date.now() },
+          { merge: true }
+        );
+      }
+
       return res.status(200).json({ success: true, message: 'Report submitted successfully' });
     } catch (error) {
       console.error('Error flagging comment:', error);
-      return res.status(500).json({ error: 'Error submitting report: ' + error.message });
+      return res.status(500).json({ error: 'Failed to submit report' });
     }
   });
 });

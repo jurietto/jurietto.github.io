@@ -12,8 +12,10 @@ service cloud.firestore {
     }
     
     function isAdmin() {
-      // Admin is the specific authenticated user with the admin UID
-      return request.auth != null && request.auth.uid == "Qrwkm5Rg16W1w77Whv4I39NKfXH2";
+      // Admin check via Firestore - no hardcoded UID!
+      return request.auth != null && 
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
 
     // Rate limiting: Check if user posted within last 2 seconds
@@ -24,10 +26,11 @@ service cloud.firestore {
 
     // Users collection - stores user metadata and rate limit data
     match /users/{userId} {
-      allow create: if request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId;
       allow read: if true;
+      // Users can update their own data BUT cannot set isAdmin field
       allow update: if isOwner(userId) && 
-                      request.resource.data.lastPostTime == request.time.toMillis();
+                      !request.resource.data.diff(resource.data).affectedKeys().hasAny(['isAdmin']);
       allow delete: if false;
     }
 

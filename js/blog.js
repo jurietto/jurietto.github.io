@@ -6,7 +6,16 @@ import {
   orderBy,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-import { loadComments, setupCommentForm, showCommentSection } from "./blog_comments.js";
+import { loadComments, setupCommentForm, showCommentSection } from "./blog-comments.js";
+import { formatDate, matchesSearch } from "./utils.js";
+
+// Security: Escape HTML to prevent XSS attacks
+function escapeHtml(text) {
+  if (!text) return "";
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
 
 // Firebase setup
 const firebaseConfig = {
@@ -21,7 +30,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// DOM elements
+// DOM elements - cached once
 const postsEl = document.getElementById("posts");
 const pager = document.getElementById("pagination");
 const searchInput = document.getElementById("blog-search-input");
@@ -29,27 +38,11 @@ const searchButton = document.getElementById("blog-search-button");
 const searchClear = document.getElementById("blog-search-clear");
 
 // Constants and state
-const PAGE_SIZE = 1; // One post per page
+const PAGE_SIZE = 1;
 let allPosts = [];
 let currentPage = 0;
 let currentSearch = "";
 let filteredPosts = [];
-
-/* ---------- UTILITY FUNCTIONS ---------- */
-
-const formatDate = (ts) =>
-  !ts
-    ? ""
-    : typeof ts === "number"
-    ? new Date(ts).toLocaleString()
-    : ts.seconds
-    ? new Date(ts.seconds * 1000).toLocaleString()
-    : "";
-
-function matchesSearch(value, term) {
-  if (!term) return true;
-  return (value || "").toLowerCase().includes(term.toLowerCase());
-}
 
 /* ---------- HASHTAG RENDERING ---------- */
 
@@ -159,6 +152,8 @@ function renderPagination(active, totalPages = 0) {
 /* ---------- RENDER POSTS ---------- */
 
 function renderPosts() {
+  // Use DocumentFragment for better performance
+  const fragment = document.createDocumentFragment();
   postsEl.innerHTML = "";
 
   if (filteredPosts.length === 0) {
@@ -170,39 +165,33 @@ function renderPosts() {
 
   // Paginate
   const start = currentPage * PAGE_SIZE;
-  const end = start + PAGE_SIZE;
-  const pagePost = filteredPosts.slice(start, end);
+  const pagePost = filteredPosts.slice(start, start + PAGE_SIZE);
 
   pagePost.forEach((post) => {
-    const dateStr = formatDate(post.createdAt);
-
     const article = document.createElement("article");
 
     // Title
     const title = document.createElement("h2");
     title.textContent = post.title;
-    article.appendChild(title);
 
     // Date
     const dateEl = document.createElement("div");
     dateEl.className = "post-date";
-    dateEl.textContent = dateStr;
-    article.appendChild(dateEl);
+    dateEl.textContent = formatDate(post.createdAt);
 
-    // Content
+    // Content - escaped to prevent XSS
     const content = document.createElement("div");
-    content.innerHTML = post.content.replace(/\n/g, "<br>");
-    article.appendChild(content);
+    content.innerHTML = escapeHtml(post.content).replace(/\n/g, "<br>");
+
+    article.append(title, dateEl, content);
 
     // Hashtags from post
-    if (post.hashtags && post.hashtags.length > 0) {
+    if (post.hashtags?.length) {
       const hashtagEl = renderHashtags(post.hashtags);
-      if (hashtagEl) {
-        article.appendChild(hashtagEl);
-      }
+      if (hashtagEl) article.appendChild(hashtagEl);
     }
 
-    postsEl.appendChild(article);
+    fragment.appendChild(article);
 
     // Show comment section
     showCommentSection(true);
@@ -210,6 +199,9 @@ function renderPosts() {
     setupCommentForm(post.id, db);
   });
 
+  // Single DOM update
+  postsEl.appendChild(fragment);
+  
   const totalPages = Math.ceil(filteredPosts.length / PAGE_SIZE);
   renderPagination(currentPage, totalPages);
 }
@@ -217,17 +209,16 @@ function renderPosts() {
 /* ---------- SEARCH ---------- */
 
 export function performSearch() {
-  currentSearch = (searchInput.value || "").trim();
+  currentSearch = (searchInput?.value || "").trim();
   currentPage = 0;
 
   if (currentSearch) {
-    filteredPosts = allPosts.filter((post) => {
-      return (
-        matchesSearch(post.title, currentSearch) ||
-        matchesSearch(post.content, currentSearch) ||
-        (post.hashtags && post.hashtags.some(tag => tag.toLowerCase().includes(currentSearch.toLowerCase())))
-      );
-    });
+    const searchLower = currentSearch.toLowerCase();
+    filteredPosts = allPosts.filter((post) => (
+      matchesSearch(post.title, currentSearch) ||
+      matchesSearch(post.content, currentSearch) ||
+      post.hashtags?.some(tag => tag.toLowerCase().includes(searchLower))
+    ));
   } else {
     filteredPosts = [...allPosts];
   }
@@ -236,7 +227,7 @@ export function performSearch() {
 }
 
 function clearSearch() {
-  searchInput.value = "";
+  if (searchInput) searchInput.value = "";
   currentSearch = "";
   currentPage = 0;
   filteredPosts = [...allPosts];
@@ -266,21 +257,11 @@ async function loadPosts() {
 
 /* ---------- EVENT LISTENERS ---------- */
 
-if (searchButton) {
-  searchButton.addEventListener("click", performSearch);
-}
-
-if (searchInput) {
-  searchInput.addEventListener("keyup", (e) => {
-    if (e.key === "Enter") {
-      performSearch();
-    }
-  });
-}
-
-if (searchClear) {
-  searchClear.addEventListener("click", clearSearch);
-}
+searchButton?.addEventListener("click", performSearch);
+searchInput?.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") performSearch();
+});
+searchClear?.addEventListener("click", clearSearch);
 
 // Expose for comments module
 window.performBlogSearch = performSearch;

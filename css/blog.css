@@ -5,20 +5,13 @@
 article {
   max-width: 100%;
   margin: 0 auto 28px;
-  padding: 14px 16px;
-  padding-top: 18px; /* Extra top padding for title on iOS */
-
+  padding: 18px 16px 14px;
   border: 5px solid var(--pesto);
-  background: linear-gradient(
-    135deg,
-    rgba(var(--azalea-r), 0.95),
-    rgba(var(--deep-blush-r), 0.95)
-  );
-
+  background: linear-gradient(135deg, rgba(var(--azalea-r), .95), rgba(var(--deep-blush-r), .95));
   color: var(--masala);
   overflow-wrap: anywhere;
   word-break: break-word;
-  overflow: visible; /* Prevent clipping on iOS */
+  contain: content;
 }
 
 /* ================================
@@ -26,16 +19,10 @@ article {
    ================================ */
 
 article h2 {
-  margin: 0 0 6px;
-  margin-top: -2px;
-  padding-top: 0.35em;
-  font-family: "harringt", "Mona", monospace;
-  font-size: 1.45rem;
+  margin: -2px 0 6px;
+  padding-top: .35em;
+  font: 1.45rem/1.5 "harringt", "Mona", monospace;
   color: var(--masala);
-  line-height: 1.5;
-  overflow: visible;
-  -webkit-transform: translateZ(0); /* Force GPU layer on iOS */
-  transform: translateZ(0);
 }
 
 /* ================================
@@ -44,10 +31,9 @@ article h2 {
 
 .post-date {
   margin-bottom: 10px;
-  font-size: 0.85rem;
-  font-family: "Mona";
+  font: .85rem "Mona", monospace;
   color: var(--masala);
-  opacity: 0.8;
+  opacity: .8;
 }
 
 /* ================================
@@ -55,13 +41,11 @@ article h2 {
    ================================ */
 
 #posts p {
-  margin: 0 0 0.9em;
-  line-height: 1.45;
-  font-family: "MS PGothic", "MS Pゴシック", Arial, sans-serif;
+  margin: 0 0 .9em;
+  font: normal 1em/1.45 "MS PGothic", "MS Pゴシック", Arial, sans-serif;
   color: var(--masala);
 }
 
-/* ASCII / mono-friendly */
 article pre,
 article code {
   font-family: "MS PGothic", "MS Pゴシック", monospace;
@@ -76,16 +60,11 @@ article code {
 .post-hashtags {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 2px solid rgba(var(--masala-r), 0.3);
-  font-family: "Mona", monospace;
-  font-size: 0.9rem;
+  border-top: 2px solid rgba(var(--masala-r), .3);
+  font: .9rem "Mona", monospace;
   display: flex;
-  flex-wrap: nowrap;
   gap: 8px;
   overflow-x: auto;
-}
-
-.hashtag-btn {
 }
 
 .hashtag-btn:hover {
@@ -97,32 +76,22 @@ article code {
    ================================ */
 
 article::after {
-  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇";
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-
+  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
+  display: block;
   margin: 12px -16px 0;
   padding-top: 6px;
-
   width: calc(100% + 32px);
-
-  font-family: "Mona", "MS PGothic", monospace;
-  font-size: 1.2rem;
-  line-height: 1;
-  letter-spacing: 0.35em;
-
+  font: 1.2rem/1 "Mona", monospace;
+  letter-spacing: .35em;
   white-space: nowrap;
   overflow: hidden;
-
   color: var(--masala);
-  opacity: 0.6;
+  opacity: .6;
+  text-align: center;
 }
 
 /* ================================
-   LINKS — MATCH FORUM STYLE
+   LINKS
    ================================ */
 
 article a {
@@ -142,7 +111,3 @@ article a {
   justify-content: center;
   margin: 28px auto;
 }
-
-/* ================================
-   FORM SIZING (CONSISTENT WITH FORUM)
-   ================================ */
