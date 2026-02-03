@@ -1,31 +1,35 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import {
   getAuth,
-  GithubAuthProvider,
   signInWithPopup,
+  GithubAuthProvider,
+  signOut,
   onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 import {
   getFirestore,
   collection,
   addDoc,
-  serverTimestamp,
+  getDocs,
+  deleteDoc,
   doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  updateDoc,
+  query,
+  orderBy,
+  limit,
+  startAfter,
+  getDoc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
 
-/* =====================
-   CONFIG
-   ===================== */
-// Admin check now uses Firestore users/{uid}.isAdmin field instead of hardcoded UID
+// Firebase configuration - UPDATED API KEY
 const firebaseConfig = {
   apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
   authDomain: "chansi-ddd7e.firebaseapp.com",
   projectId: "chansi-ddd7e",
-  storageBucket: "chansi-ddd7e.appspot.com",
-  messagingSenderId: "650473918964",
-  appId: "1:650473918964:web:63be3d4f9794f315fe29a1"
+  storageBucket: "chansi-ddd7e.firebasestorage.app",
+  messagingSenderId: "708292058055",
+  appId: "1:708292058055:web:e84a71316e23718aa99e84",
 };
 
 /* =====================

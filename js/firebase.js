@@ -5,12 +5,14 @@ import {
   CACHE_SIZE_UNLIMITED 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// Firebase configuration - UPDATED API KEY
 const firebaseConfig = {
   apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
   authDomain: "chansi-ddd7e.firebaseapp.com",
   projectId: "chansi-ddd7e",
   storageBucket: "chansi-ddd7e.firebasestorage.app",
-  appId: "1:650473918964:web:63be3d4f9794f315fe29a1"
+  messagingSenderId: "708292058055",
+  appId: "1:708292058055:web:e84a71316e23718aa99e84",
 };
 
 export const app = initializeApp(firebaseConfig);
