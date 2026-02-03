@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebas
 import {
   getAuth,
   signInWithPopup,
-  GithubAuthProvider,
+  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
@@ -102,14 +102,14 @@ loginBtn?.addEventListener("click", async () => {
   loginBtn.textContent = "Signing in...";
   
   try {
-    const provider = new GithubAuthProvider();
+    const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   } catch (err) {
     console.error("Login error:", err);
     showStatus(publishStatus, "Login failed: " + err.message, "error");
   } finally {
     loginBtn.disabled = false;
-    loginBtn.textContent = "Sign In with GitHub";
+    loginBtn.textContent = "Sign In with Google";
   }
 });
 
