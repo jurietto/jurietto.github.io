@@ -362,12 +362,6 @@ article,
 
 /* Print styles */
 @media print {
-  .scroll-buttons,
-  .site-nav,
-  #post-form,
-  button {
-    display: none !important;
-  }
   
   body {
     background: white;

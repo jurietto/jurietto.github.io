@@ -1,14 +1,3 @@
-  collectionGroup,
-  getDocs,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  limit,
-  startAfter,
-  endBefore,
-  limitToLast
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 import {
   collectionGroup,

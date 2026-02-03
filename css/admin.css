@@ -246,6 +246,9 @@ textarea {
   border-radius: var(--admin-radius);
   background: var(--admin-bg);
   color: var(--admin-text);
+/* ================================
+   SCROLL BUTTONS (OVERRIDE)
+   ================================ */
   transition: var(--admin-transition);
 }
 

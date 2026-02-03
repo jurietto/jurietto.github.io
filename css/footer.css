@@ -24,18 +24,6 @@
   text-decoration: underline;
 }
 
-.scroll-buttons {
-  margin-top: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  max-width: 100%;
-}
-
-.scroll-buttons button {
-  padding: 0.5rem 1rem;
-  white-space: nowrap;
-}
 
 /* Mobile responsive adjustments */
 @media (max-width: 720px) {
@@ -48,12 +36,4 @@
     font-size: 0.85rem;
   }
 
-  .scroll-buttons {
-    gap: 0.25rem;
-  }
-
-  .scroll-buttons button {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.85rem;
-  }
 }

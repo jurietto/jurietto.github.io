@@ -195,16 +195,10 @@
   }
 
   /* Inline edit form */
-  #blog-posts form,
-  .inline-edit-form {
-    padding: 1rem;
-  }
 
-  #blog-posts form div:last-child,
-  .inline-edit-form .form-actions {
-    flex-direction: column;
-  }
-
+    /* Removed scroll buttons styling */
+  
+  
   #blog-posts form button,
   .inline-edit-form button {
     width: 100%;
