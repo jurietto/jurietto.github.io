@@ -49,30 +49,6 @@ async function init() {
     }
   }
 }
-
-  const start = Date.now();
-  
-  while (true) {
-    container = document.getElementById("blog-comments-list");
-    prevBtn = document.getElementById("blog-comments-prev");
-    nextBtn = document.getElementById("blog-comments-next");
-    
-    if (window.__ADMIN_READY__ && window.db && container && prevBtn && nextBtn) {
-      db = window.db;
-      
-      prevBtn.onclick = () => loadComments("prev");
-      nextBtn.onclick = () => loadComments("next");
-      
-      return;
-    }
-    
-    if (Date.now() - start > timeout) {
-      throw new Error("Blog comments admin initialization timeout");
-    }
-    
-    await new Promise(r => setTimeout(r, 100));
-  }
-}
 async function waitForElements(timeout = 5000) {
   const start = Date.now();
   while (true) {

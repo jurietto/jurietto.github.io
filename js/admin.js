@@ -298,3 +298,12 @@ window.adminUtils = {
   
   showStatus
 };
+
+// Show current user's UID on page load for debugging
+auth.onAuthStateChanged(user => {
+  if (user) {
+    alert("Current UID: " + user.uid);
+  } else {
+    alert("No user signed in.");
+  }
+});
