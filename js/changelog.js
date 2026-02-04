@@ -2,7 +2,9 @@ const list = document.getElementById("changelog");
 
 // Only run if the changelog element exists
 if (!list) {
-  throw new Error("Changelog element not found");
+  console.warn("Changelog element not found — skipping changelog fetch");
+  // Nothing to do on pages without a changelog container
+  return;
 }
 
 const OWNER = "jurietto";

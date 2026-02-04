@@ -1,0 +1,11 @@
+.error-container{
+  text-align:center;
+  padding:2rem;
+  max-width:600px;
+  margin:2rem auto;
+}
+.error-code{font-size:4rem;font-weight:700;color:var(--cadillac);margin:1rem 0}
+.error-message{font-size:1.5rem;margin:1rem 0;color:var(--masala)}
+.error-description{margin:2rem 0;color:var(--masala);opacity:.8}
+.error-container p{line-height:1.6}
+.error-container button{margin-top:1rem}
