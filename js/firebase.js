@@ -1,9 +1,9 @@
-import { initializeApp } from "../vendor/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import { 
   getFirestore, 
   enableIndexedDbPersistence,
   CACHE_SIZE_UNLIMITED 
-} from "../vendor/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
 // Load Firebase configuration from an external, gitignored file `js/config.js`.
 // Create `js/config.js` by copying `js/config.example.js` and filling values.

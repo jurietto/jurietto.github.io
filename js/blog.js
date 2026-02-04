@@ -1,11 +1,11 @@
-import { initializeApp } from "../vendor/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import {
   getFirestore,
   collection,
   query,
   orderBy,
   getDocs
-} from "../vendor/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 import { loadComments, setupCommentForm, showCommentSection } from "./blog-comments.js";
 import { formatDate, matchesSearch } from "./utils.js";
 
