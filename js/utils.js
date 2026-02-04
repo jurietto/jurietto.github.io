@@ -1,6 +1,5 @@
 /**
- * Shared utility functions for forum and blog
- * Centralizes common code to reduce bundle size and improve maintainability
+ * Clean, single copy of utils module
  */
 
 // ============ DATE FORMATTING ============
