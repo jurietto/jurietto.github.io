@@ -73,3 +73,6 @@ js/config.js
 
 # Ignore backup folders created during cleanup
 backup_removed_*/
+
+# Private operational files (should not be committed)
+scripts/PRIVATE_README.md
