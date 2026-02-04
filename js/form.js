@@ -3,7 +3,7 @@ import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy, limit,
   getDocs, addDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const container = document.getElementById("comments");

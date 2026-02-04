@@ -76,18 +76,16 @@ article code {
    ================================ */
 
 article::after {
-  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
+  content: "";
   display: block;
   margin: 12px -16px 0;
   padding-top: 6px;
   width: calc(100% + 32px);
-  font: 1.2rem/1 "Mona", monospace;
-  letter-spacing: .35em;
-  white-space: nowrap;
-  overflow: hidden;
-  color: var(--masala);
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='20'%3E%3Ctext x='0' y='15' font-family='Mona, monospace' font-size='14' fill='%23716458'%3E♠ ◇ ♣ ◇ ♥ ◇%3C/text%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
   opacity: .6;
-  text-align: center;
 }
 
 /* ================================

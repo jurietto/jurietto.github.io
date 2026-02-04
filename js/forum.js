@@ -17,7 +17,7 @@ import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy, getDocs, addDoc, onSnapshot, 
   doc, updateDoc, deleteDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
 // Shared utilities
 import {
