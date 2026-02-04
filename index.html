@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://www.youtube.com https://api.github.com https://www.gstatic.com https://*.cloudfunctions.net wss://*.googleapis.com wss://*.firebaseio.com; frame-src https://www.youtube.com https://*.soundcloud.com; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' https://www.gstatic.com/firebasejs/ https://apis.google.com; style-src 'self'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://chansi-ddd7e.firebaseio.com https://www.youtube.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src https://www.youtube.com https://w.soundcloud.com https://chansi-ddd7e.firebaseapp.com; object-src 'none'; form-action 'self'; frame-ancestors 'none'; report-uri /csp-report">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>FORUM</title>
@@ -19,14 +19,28 @@
   <!-- Preload critical fonts -->
   <link rel="preload" href="font/mona.woff" as="font" type="font/woff" crossorigin>
   
-  <!-- Preload critical CSS -->
-  <link rel="preload" href="css/global.css" as="style">
-  <link rel="preload" href="css/forum.css" as="style">
+  <!-- Inlined critical CSS for faster first paint -->
+  <style>
+/* Critical CSS - Above the fold styles */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+@font-face { font-family: "Mona"; src: url("font/mona.woff") format("woff"); font-display: swap; }
+:root { --hibiscus: #c72e6c; --masala: #3e3533; --azalea: #f1adcb; --cadillac: #9e4869; }
+html { background-color: var(--azalea); }
+body { font-family: "Mona", "MS PGothic", Arial, sans-serif; line-height: 1.4; font-size: 16px; color: var(--masala); padding: 1rem; }
+.site-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 0.5rem 1rem; margin: -1rem -1rem 1rem; background: var(--hibiscus); }
+.site-nav a { color: #fff; text-decoration: none; }
+.loading-skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; }
+@keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  </style>
+
+  <!-- Combined stylesheet -->
+  <link rel="stylesheet" href="css/site.min.css">
   
 <!-- Open Graph (link preview) -->
 <meta property="og:title" content="🍭(¬‿¬) 凸">
 <meta property="og:description" content="Message board for net friends .">
-<meta property="og:image" content="https://raw.githubusercontent.com/jurietto/jurietto.github.io/refs/heads/main/art/ckp88_orig.png">
+<meta property="og:image" content="/art/ckp88_orig.png">
 <meta property="og:url" content="https://jurietto.github.io/">
 <meta property="og:type" content="website">
 
@@ -34,12 +48,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="🍭(¬‿¬) 凸">
 <meta name="twitter:description" content="A simple message board for net friends .">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/jurietto/jurietto.github.io/refs/heads/main/art/ckp88_orig.png">
+<meta name="twitter:image" content="/art/ckp88_orig.png">
 
-  <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/forum.css">
-  <link rel="stylesheet" href="css/footer.css">
-  <link rel="stylesheet" href="css/mobile.css">
+  <!-- Legacy individual CSS removed; using combined stylesheet -->
+  <link rel="stylesheet" href="css/site.min.css">
 </head>
 
 <body>
@@ -88,7 +100,7 @@ Replies appear under each post. ヽ(´ー`)人(´∇｀)人(`Д´)ノ
 </div>
 
 <div id="post-form" role="region" aria-labelledby="post-form-title">
-  <h3 id="post-form-title" style="display:none">Post Form</h3>
+  <h3 id="post-form-title" class="visually-hidden">Post Form</h3>
   <p>
     <label for="username">Name</label><br>
     <input id="username" size="40" placeholder="Anonymous" aria-label="Your name or username">

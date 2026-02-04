@@ -205,7 +205,8 @@ function renderMedia(media, parent) {
     media.forEach(url => {
       const item = document.createElement("div");
       item.className = "forum-media-item";
-      item.innerHTML = renderEmbed(url);
+      const embed = renderEmbed(url);
+      safeInsertEmbed(item, embed, url);
       group.appendChild(item);
     });
     parent.appendChild(group);
@@ -213,7 +214,8 @@ function renderMedia(media, parent) {
   }
   const wrap = document.createElement("div");
   wrap.className = "forum-media-block";
-  wrap.innerHTML = renderEmbed(media);
+  const embed = renderEmbed(media);
+  safeInsertEmbed(wrap, embed, media);
   parent.appendChild(wrap);
 }
 
@@ -314,9 +316,76 @@ function renderBodyWithEmbeds(text, parent) {
     const url = cleanUrl(rawUrl);
     const wrap = document.createElement("div");
     wrap.className = "forum-media-block";
-    wrap.innerHTML = renderEmbed(url);
+    const embed = renderEmbed(url);
+    safeInsertEmbed(wrap, embed, url);
     parent.appendChild(wrap);
   });
+}
+
+// Safe embed insertion helper (avoid innerHTML for untrusted strings)
+function safeInsertEmbed(container, embed, urlHint) {
+  if (!embed) return;
+  if (embed instanceof Node) {
+    container.appendChild(embed);
+    return;
+  }
+  const s = String(embed).trim();
+
+  if (/^<img\b/i.test(s)) {
+    const m = s.match(/src=["']([^"']+)["']/i);
+    const src = m ? m[1] : urlHint;
+    const img = document.createElement('img');
+    img.className = 'forum-media image';
+    img.loading = 'lazy';
+    img.src = src || '';
+    container.appendChild(img);
+    return;
+  }
+
+  if (/^<video\b/i.test(s)) {
+    const m = s.match(/src=["']([^"']+)["']/i);
+    const src = m ? m[1] : urlHint;
+    const v = document.createElement('video');
+    v.className = 'forum-media video';
+    v.controls = true;
+    v.src = src || '';
+    container.appendChild(v);
+    return;
+  }
+
+  if (/^<audio\b/i.test(s)) {
+    const m = s.match(/src=["']([^"']+)["']/i);
+    const src = m ? m[1] : urlHint;
+    const a = document.createElement('audio');
+    a.className = 'forum-media audio';
+    a.controls = true;
+    a.src = src || '';
+    container.appendChild(a);
+    return;
+  }
+
+  if (/^<iframe\b/i.test(s)) {
+    const m = s.match(/src=["']([^"']+)["']/i);
+    const src = m ? m[1] : urlHint;
+    const ifr = document.createElement('iframe');
+    ifr.className = 'forum-media audio';
+    ifr.loading = 'lazy';
+    ifr.src = src || '';
+    ifr.setAttribute('allow', 'autoplay');
+    container.appendChild(ifr);
+    return;
+  }
+
+  try {
+    const a = document.createElement('a');
+    a.href = urlHint || s.replace(/<[^>]*>/g, '');
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer noindex';
+    a.textContent = a.href;
+    container.appendChild(a);
+  } catch (e) {
+    container.textContent = s;
+  }
 }
 
 /* ---------- LOAD ---------- */
@@ -343,14 +412,43 @@ function createReplyForm(parentId, wrap) {
   const saved = localStorage.getItem("forum_username") || "";
   const form = document.createElement("div");
   form.className = "reply-form";
-  form.innerHTML = `
-    <p>Name<br><input class="reply-user" value="${saved}" placeholder="Anonymous"></p>
-    <p>Reply<br><textarea rows="4"></textarea></p>
-    <p>Attachment (up to ${MAX_IMAGES} images, or paste from clipboard)<br><input type="file" accept="image/*" multiple></p>
-    <p>
-      <button class="post-btn">Post reply</button>
-      <button class="cancel-btn">Cancel</button>
-    </p>`;
+  // Build reply form elements safely (avoid innerHTML with untrusted data)
+  const p1 = document.createElement('p');
+  p1.innerHTML = 'Name<br>';
+  const inputUser = document.createElement('input');
+  inputUser.className = 'reply-user';
+  inputUser.value = saved || '';
+  inputUser.placeholder = 'Anonymous';
+  p1.appendChild(inputUser);
+
+  const p2 = document.createElement('p');
+  p2.innerHTML = 'Reply<br>';
+  const textarea = document.createElement('textarea');
+  textarea.rows = 4;
+  p2.appendChild(textarea);
+
+  const p3 = document.createElement('p');
+  p3.innerHTML = `Attachment (up to ${MAX_IMAGES} images, or paste from clipboard)<br>`;
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'image/*';
+  fileInput.multiple = true;
+  p3.appendChild(fileInput);
+
+  const p4 = document.createElement('p');
+  const postBtn = document.createElement('button');
+  postBtn.className = 'post-btn';
+  postBtn.textContent = 'Post reply';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'cancel-btn';
+  cancelBtn.textContent = 'Cancel';
+  p4.appendChild(postBtn);
+  p4.appendChild(cancelBtn);
+
+  form.appendChild(p1);
+  form.appendChild(p2);
+  form.appendChild(p3);
+  form.appendChild(p4);
 
   const user = form.querySelector(".reply-user");
   const text = form.querySelector("textarea");
@@ -407,11 +505,13 @@ function renderComment(c, replies) {
   const wrap = document.createElement("div");
   wrap.className = "forum-comment";
 
-  wrap.innerHTML = `
-    <div class="forum-meta">
-      <strong>＼(^o^)／ ${c.user || "Anonymous"}</strong>
-      — ${formatDate(c.createdAt)}
-    </div>`;
+  const metaDiv = document.createElement('div');
+  metaDiv.className = 'forum-meta';
+  const strong = document.createElement('strong');
+  strong.textContent = `＼(^o^)／ ${c.user || "Anonymous"}`;
+  metaDiv.appendChild(strong);
+  metaDiv.appendChild(document.createTextNode(' — ' + formatDate(c.createdAt)));
+  wrap.appendChild(metaDiv);
 
   renderBodyWithEmbeds(c.text, wrap);
 

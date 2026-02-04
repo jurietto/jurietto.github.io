@@ -227,3 +227,9 @@ iframe.forum-media.audio {
 }
 
 /* dark-mode forum styles removed */
+
+/* Styles for flag/report modal (moved from inline) */
+.flag-title { margin-top: 0; }
+.flag-reasons { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.flag-details { width: 100%; box-sizing: border-box; margin-bottom: 1rem; }
+.flag-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }

@@ -1,11 +1,11 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { initializeApp } from "../vendor/firebase-app.js";
 import {
   getFirestore,
   collection,
   query,
   orderBy,
   getDocs
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+} from "../vendor/firebase-firestore.js";
 import { loadComments, setupCommentForm, showCommentSection } from "./blog-comments.js";
 import { formatDate, matchesSearch } from "./utils.js";
 
@@ -17,18 +17,15 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-// Firebase setup
-const firebaseConfig = {
-  apiKey: "AIzaSyA8cIAiNrasL-cgjQMcN0V-7s3kYdtiRjs",
-  authDomain: "chansi-ddd7e.firebaseapp.com",
-  projectId: "chansi-ddd7e",
-  storageBucket: "chansi-ddd7e.firebasestorage.app",
-  messagingSenderId: "708292058055",
-  appId: "1:708292058055:web:e84a71316e23718aa99e84",
-};
+// Firebase setup - load config from external file `js/config.js` (gitignored)
+const firebaseConfig = (window.__APP_CONFIG__ && window.__APP_CONFIG__.firebaseConfig) || null;
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+if (!firebaseConfig) {
+  console.error('Missing Firebase config. Copy js/config.example.js to js/config.js and add your values.');
+}
+
+const app = firebaseConfig ? initializeApp(firebaseConfig) : null;
+const db = app ? getFirestore(app) : null;
 
 // DOM elements - cached once
 const postsEl = document.getElementById("posts");
