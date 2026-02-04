@@ -14,7 +14,7 @@ import {
   formatDate, getUserId, isImageFile, getSelectedImages,
   createAttachmentPreview, handlePasteImages, handleDropImages,
   renderBodyWithEmbeds, renderMedia, MAX_IMAGES
-} from "./utils.js";
+} from "./utils.clean.js";
 
 // UI components
 import { createEditForm, createFlagModal } from "./forum-ui.js";

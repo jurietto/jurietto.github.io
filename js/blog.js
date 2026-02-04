@@ -7,7 +7,7 @@ import {
   getDocs
 } from "../vendor/firebase-firestore.js";
 import { loadComments, setupCommentForm, showCommentSection } from "./blog-comments.js";
-import { formatDate, matchesSearch } from "./utils.js";
+import { formatDate, matchesSearch } from "./utils.clean.js";
 
 // Security: Escape HTML to prevent XSS attacks
 function escapeHtml(text) {
