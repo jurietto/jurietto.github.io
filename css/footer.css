@@ -24,6 +24,11 @@
   text-decoration: underline;
 }
 
+.footer-privacy-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
 
 /* Mobile responsive adjustments */
 @media (max-width: 720px) {

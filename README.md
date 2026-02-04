@@ -1,2 +1,0 @@
-# jurietto.github.io
-STUFF

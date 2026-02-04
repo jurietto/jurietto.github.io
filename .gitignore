@@ -67,3 +67,9 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Local app config (do not commit)
+js/config.js
+
+# Ignore backup folders created during cleanup
+backup_removed_*/

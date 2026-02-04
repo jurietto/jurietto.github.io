@@ -33,33 +33,61 @@ export function createEditForm(comment, onSave, onCancel, showNotice) {
     : (comment.media ? [comment.media] : []);
   
   function render() {
-    const mediaHtml = mediaArray.length > 0 ? `
-      <p style="margin-top: 1rem;">
-        <label>Media attachments:</label><br>
-        <div class="edit-media-list">
-          ${mediaArray.map((_, idx) => `
-            <div>
-              <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
-              <span>attachment_${idx}</span>
-            </div>
-          `).join('')}
-        </div>
-      </p>
-    ` : "";
-    
-    const escapedText = (comment.text || "").replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    
-    form.innerHTML = `
-      <p>
-        <label>Edit ${comment.replyTo ? 'reply' : 'post'}</label><br>
-        <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${escapedText}</textarea>
-      </p>
-      ${mediaHtml}
-      <p>
-        <button type="button" class="edit-save-btn">Save</button>
-        <button type="button" class="edit-cancel-btn">Cancel</button>
-      </p>
-    `;
+    form.innerHTML = '';
+    // Text area
+    const p = document.createElement('p');
+    const lbl = document.createElement('label');
+    lbl.textContent = `Edit ${comment.replyTo ? 'reply' : 'post'}`;
+    p.appendChild(lbl);
+    p.appendChild(document.createElement('br'));
+    const ta = document.createElement('textarea');
+    ta.style.width = '100%';
+    ta.style.maxWidth = '600px';
+    ta.style.padding = '0.5rem';
+    ta.rows = 5;
+    ta.value = comment.text || '';
+    p.appendChild(ta);
+    form.appendChild(p);
+
+    // Media list
+    if (mediaArray.length > 0) {
+      const pm = document.createElement('p');
+      pm.style.marginTop = '1rem';
+      const ml = document.createElement('label');
+      ml.textContent = 'Media attachments:';
+      pm.appendChild(ml);
+      pm.appendChild(document.createElement('br'));
+      const list = document.createElement('div');
+      list.className = 'edit-media-list';
+      mediaArray.forEach((_, idx) => {
+        const row = document.createElement('div');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'delete-media-btn';
+        btn.dataset.index = String(idx);
+        btn.textContent = 'Delete';
+        const span = document.createElement('span');
+        span.textContent = `attachment_${idx}`;
+        row.appendChild(btn);
+        row.appendChild(span);
+        list.appendChild(row);
+      });
+      pm.appendChild(list);
+      form.appendChild(pm);
+    }
+
+    const pbtn = document.createElement('p');
+    const saveBtn = document.createElement('button');
+    saveBtn.type = 'button';
+    saveBtn.className = 'edit-save-btn';
+    saveBtn.textContent = 'Save';
+    const cancelBtn = document.createElement('button');
+    cancelBtn.type = 'button';
+    cancelBtn.className = 'edit-cancel-btn';
+    cancelBtn.textContent = 'Cancel';
+    pbtn.appendChild(saveBtn);
+    pbtn.appendChild(cancelBtn);
+    form.appendChild(pbtn);
     
     // Media delete handlers
     form.querySelectorAll(".delete-media-btn").forEach(btn => {
@@ -122,18 +150,18 @@ export function createFlagModal(commentId, threadId, onSubmit, onClose) {
     width: "90%"
   });
   
-  form.innerHTML = `
-    <h3 style="margin-top:0">Report Comment</h3>
+    form.innerHTML = `
+    <h3 class="flag-title">Report Comment</h3>
     <p>Why are you reporting this?</p>
-    <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1rem">
+    <div class="flag-reasons">
       <label><input type="radio" name="reason" value="spam"> Spam</label>
       <label><input type="radio" name="reason" value="harassment"> Harassment</label>
       <label><input type="radio" name="reason" value="nsfw"> NSFW Content</label>
       <label><input type="radio" name="reason" value="misinformation"> Misinformation</label>
       <label><input type="radio" name="reason" value="other"> Other</label>
     </div>
-    <textarea placeholder="Additional details (optional)" rows="3" style="width:100%;box-sizing:border-box;margin-bottom:1rem"></textarea>
-    <div style="display:flex;gap:0.5rem;justify-content:flex-end">
+    <textarea placeholder="Additional details (optional)" rows="3" class="flag-details"></textarea>
+    <div class="flag-actions">
       <button class="flag-cancel">Cancel</button>
       <button class="flag-submit">Submit Report</button>
     </div>
@@ -184,14 +212,35 @@ export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, se
   const saved = localStorage.getItem("forum_username") || "";
   const form = document.createElement("div");
   form.className = "reply-form";
-  form.innerHTML = `
-    <p>Name<br><input value="${saved}" placeholder="Anonymous"></p>
-    <p>Reply<br><textarea rows="4"></textarea></p>
-    <p>Attachment (up to ${MAX_IMAGES} images, or paste from clipboard)<br><input type="file" accept="image/*" multiple></p>
-    <button>Post</button>
-  `;
+  // Build reply form safely
+  const p1 = document.createElement('p');
+  p1.innerHTML = 'Name<br>';
+  const userInput = document.createElement('input');
+  userInput.value = saved || '';
+  userInput.placeholder = 'Anonymous';
+  p1.appendChild(userInput);
 
-  const [userInput, textInput, fileInput, postBtn] = form.querySelectorAll("input,textarea,button");
+  const p2 = document.createElement('p');
+  p2.innerHTML = 'Reply<br>';
+  const textInput = document.createElement('textarea');
+  textInput.rows = 4;
+  p2.appendChild(textInput);
+
+  const p3 = document.createElement('p');
+  p3.innerHTML = `Attachment (up to ${MAX_IMAGES} images, or paste from clipboard)<br>`;
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'image/*';
+  fileInput.multiple = true;
+  p3.appendChild(fileInput);
+
+  const postBtn = document.createElement('button');
+  postBtn.textContent = 'Post';
+
+  form.appendChild(p1);
+  form.appendChild(p2);
+  form.appendChild(p3);
+  form.appendChild(postBtn);
   const preview = createAttachmentPreview(fileInput);
 
   // Event handlers
@@ -215,13 +264,19 @@ export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, se
         files.forEach((f, i) => {
           const item = document.createElement("div");
           item.className = "attachment-preview-item";
-          item.innerHTML = `<button type="button">Delete</button><span>${f.name}</span>`;
-          item.querySelector("button").onclick = () => {
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.textContent = 'Delete';
+          delBtn.onclick = () => {
             const dt = new DataTransfer();
             files.forEach((file, idx) => idx !== i && dt.items.add(file));
             fileInput.files = dt.files;
-            fileInput.dispatchEvent(new Event("change"));
+            fileInput.dispatchEvent(new Event('change'));
           };
+          const span = document.createElement('span');
+          span.textContent = f.name;
+          item.appendChild(delBtn);
+          item.appendChild(span);
           list.appendChild(item);
         });
         preview.appendChild(list);
@@ -299,15 +354,25 @@ export function renderCommentElement(comment, options) {
   const isOwner = comment.userId && comment.userId === currentUserId;
   const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
   
-  const ownerButtons = isOwner ? `
-    <span style="margin-left: 1rem;">
-      <button class="comment-edit-btn">Edit</button>
-      <button class="comment-delete-btn">Delete</button>
-    </span>` : "";
-  
-  const meta = document.createElement("div");
-  meta.className = "forum-meta";
-  meta.innerHTML = `<strong>${kaomoji} ${escapeHtml(comment.user) || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}${editedText}${ownerButtons}`;
+  const meta = document.createElement('div');
+  meta.className = 'forum-meta';
+  const strong = document.createElement('strong');
+  strong.textContent = `${kaomoji} ${escapeHtml(comment.user) || 'Anonymous'}`;
+  meta.appendChild(strong);
+  meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
+  if (isOwner) {
+    const span = document.createElement('span');
+    span.style.marginLeft = '1rem';
+    const editBtn = document.createElement('button');
+    editBtn.className = 'comment-edit-btn';
+    editBtn.textContent = 'Edit';
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'comment-delete-btn';
+    deleteBtn.textContent = 'Delete';
+    span.appendChild(editBtn);
+    span.appendChild(deleteBtn);
+    meta.appendChild(span);
+  }
   wrap.appendChild(meta);
   
   renderBodyWithEmbeds(comment.text, wrap);

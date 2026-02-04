@@ -573,16 +573,12 @@ function renderBodyWithEmbeds(text, target) {
     target.appendChild(body);
   }
 
-  urls.forEach(url => {
-    const d = document.createElement("div");
-    d.className = "forum-media-block";
-    const embed = renderEmbed(url);
-    if (typeof embed === "string") {
-      d.innerHTML = embed;
-    } else {
-      d.appendChild(embed);
-    }
-    target.appendChild(d);
+    urls.forEach(url => {
+      const d = document.createElement("div");
+      d.className = "forum-media-block";
+      const embed = renderEmbed(url);
+      safeInsertEmbed(d, embed, url);
+      target.appendChild(d);
   });
 }
 
@@ -596,11 +592,7 @@ function renderMedia(media, parent) {
       const item = document.createElement("div");
       item.className = "forum-media-item";
       const embed = renderEmbed(url);
-      if (typeof embed === "string") {
-        item.innerHTML = embed;
-      } else {
-        item.appendChild(embed);
-      }
+        safeInsertEmbed(item, embed, url);
       group.appendChild(item);
     });
     parent.appendChild(group);
@@ -610,11 +602,7 @@ function renderMedia(media, parent) {
   const wrap = document.createElement("div");
   wrap.className = "forum-media-block";
   const embed = renderEmbed(media);
-  if (typeof embed === "string") {
-    wrap.innerHTML = embed;
-  } else {
-    wrap.appendChild(embed);
-  }
+    safeInsertEmbed(wrap, embed, media);
   parent.appendChild(wrap);
 }
 
@@ -675,7 +663,26 @@ export async function loadComments(postId, firebaseDb) {
       
       const meta = document.createElement("div");
       meta.className = "forum-meta";
-      meta.innerHTML = `<strong>＼(^o^)／ ${escapeHtml(comment.user) || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}${editedText}${buttonHtml}`;
+      const strong = document.createElement('strong');
+      strong.textContent = `＼(^o^)／ ${escapeHtml(comment.user) || "Anonymous"}`;
+      meta.appendChild(strong);
+      meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
+      if (isOwner) {
+        const btnContainer = document.createElement('div');
+        btnContainer.style.display = 'inline';
+        btnContainer.style.marginLeft = '1rem';
+        const editBtn = document.createElement('button');
+        editBtn.className = 'comment-edit-btn';
+        editBtn.dataset.id = commentId;
+        editBtn.textContent = 'Edit';
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'comment-delete-btn';
+        deleteBtn.dataset.id = commentId;
+        deleteBtn.textContent = 'Delete';
+        btnContainer.appendChild(editBtn);
+        btnContainer.appendChild(deleteBtn);
+        meta.appendChild(btnContainer);
+      }
       wrap.appendChild(meta);
 
       renderBodyWithEmbeds(comment.text, wrap);
@@ -723,6 +730,71 @@ export async function loadComments(postId, firebaseDb) {
           
           const form = document.createElement("div");
           form.setAttribute("data-edit-form", "true");
+    // Safe embed insertion to avoid using innerHTML with untrusted strings
+    function safeInsertEmbed(container, embed, urlHint) {
+      if (!embed) return;
+      if (embed instanceof Node) {
+        container.appendChild(embed);
+        return;
+      }
+      const s = String(embed).trim();
+
+      if (/^<img\b/i.test(s)) {
+        const m = s.match(/src=["']([^"']+)["']/i);
+        const src = m ? m[1] : urlHint;
+        const img = document.createElement('img');
+        img.className = 'forum-media image';
+        img.loading = 'lazy';
+        img.src = src || '';
+        container.appendChild(img);
+        return;
+      }
+
+      if (/^<video\b/i.test(s)) {
+        const m = s.match(/src=["']([^"']+)["']/i);
+        const src = m ? m[1] : urlHint;
+        const v = document.createElement('video');
+        v.className = 'forum-media video';
+        v.controls = true;
+        v.src = src || '';
+        container.appendChild(v);
+        return;
+      }
+
+      if (/^<audio\b/i.test(s)) {
+        const m = s.match(/src=["']([^"']+)["']/i);
+        const src = m ? m[1] : urlHint;
+        const a = document.createElement('audio');
+        a.className = 'forum-media audio';
+        a.controls = true;
+        a.src = src || '';
+        container.appendChild(a);
+        return;
+      }
+
+      if (/^<iframe\b/i.test(s)) {
+        const m = s.match(/src=["']([^"']+)["']/i);
+        const src = m ? m[1] : urlHint;
+        const ifr = document.createElement('iframe');
+        ifr.className = 'forum-media audio';
+        ifr.loading = 'lazy';
+        ifr.src = src || '';
+        ifr.setAttribute('allow', 'autoplay');
+        container.appendChild(ifr);
+        return;
+      }
+
+      try {
+        const a = document.createElement('a');
+        a.href = urlHint || s.replace(/<[^>]*>/g, '');
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer noindex';
+        a.textContent = a.href;
+        container.appendChild(a);
+      } catch (e) {
+        container.textContent = s;
+      }
+    }
           form.style.margin = "1rem 0";
           form.style.padding = "1rem";
           form.style.borderRadius = "4px";
@@ -730,34 +802,60 @@ export async function loadComments(postId, firebaseDb) {
           let mediaArray = Array.isArray(comment.media) ? [...comment.media] : (comment.media ? [comment.media] : []);
           
           const renderForm = () => {
-            let mediaHtml = "";
+            // Build form DOM safely
+            form.innerHTML = '';
+            const p = document.createElement('p');
+            const label = document.createElement('label');
+            label.textContent = 'Edit comment';
+            p.appendChild(label);
+            p.appendChild(document.createElement('br'));
+            const ta = document.createElement('textarea');
+            ta.style.width = '100%';
+            ta.style.maxWidth = '600px';
+            ta.style.padding = '0.5rem';
+            ta.rows = 5;
+            ta.value = comment.text || '';
+            p.appendChild(ta);
+            form.appendChild(p);
+
             if (mediaArray.length > 0) {
-              mediaHtml = `
-                <p style="margin-top: 1rem;">
-                  <label>Media attachments:</label><br>
-                  <div class="edit-media-list">
-                    ${mediaArray.map((url, idx) => `
-                      <div>
-                        <button type="button" class="delete-media-btn" data-index="${idx}">Delete</button>
-                        <span>attachment_${idx}</span>
-                      </div>
-                    `).join('')}
-                  </div>
-                </p>
-              `;
+              const pm = document.createElement('p');
+              pm.style.marginTop = '1rem';
+              const lbl = document.createElement('label');
+              lbl.textContent = 'Media attachments:';
+              pm.appendChild(lbl);
+              pm.appendChild(document.createElement('br'));
+              const listDiv = document.createElement('div');
+              listDiv.className = 'edit-media-list';
+              mediaArray.forEach((url, idx) => {
+                const row = document.createElement('div');
+                const del = document.createElement('button');
+                del.type = 'button';
+                del.className = 'delete-media-btn';
+                del.dataset.index = String(idx);
+                del.textContent = 'Delete';
+                const span = document.createElement('span');
+                span.textContent = `attachment_${idx}`;
+                row.appendChild(del);
+                row.appendChild(span);
+                listDiv.appendChild(row);
+              });
+              pm.appendChild(listDiv);
+              form.appendChild(pm);
             }
-            
-            form.innerHTML = `
-              <p>
-                <label>Edit comment</label><br>
-                <textarea style="width: 100%; max-width: 600px; padding: 0.5rem;" rows="5">${comment.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</textarea>
-              </p>
-              ${mediaHtml}
-              <p>
-                <button type="button" class="edit-save-btn">Save</button>
-                <button type="button" class="edit-cancel-btn">Cancel</button>
-              </p>
-            `;
+
+            const pbtn = document.createElement('p');
+            const saveBtn = document.createElement('button');
+            saveBtn.type = 'button';
+            saveBtn.className = 'edit-save-btn';
+            saveBtn.textContent = 'Save';
+            const cancelBtn = document.createElement('button');
+            cancelBtn.type = 'button';
+            cancelBtn.className = 'edit-cancel-btn';
+            cancelBtn.textContent = 'Cancel';
+            pbtn.appendChild(saveBtn);
+            pbtn.appendChild(cancelBtn);
+            form.appendChild(pbtn);
             
             const saveBtn = form.querySelector(".edit-save-btn");
             const cancelBtn = form.querySelector(".edit-cancel-btn");

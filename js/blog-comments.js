@@ -146,7 +146,10 @@ export async function loadComments(postId, firebaseDb) {
       // Meta with edit/delete buttons
       const meta = document.createElement("div");
       meta.className = "forum-meta";
-      meta.innerHTML = `<strong>＼(^o^)／ ${comment.user || "Anonymous"}</strong> — ${formatDate(comment.createdAt)}${editedText}`;
+      const strong = document.createElement('strong');
+      strong.textContent = `＼(^o^)／ ${comment.user || "Anonymous"}`;
+      meta.appendChild(strong);
+      meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
       
       if (isOwner) {
         const btnContainer = document.createElement("span");

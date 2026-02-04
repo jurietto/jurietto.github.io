@@ -10,9 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollBottomBtn = document.getElementById('scroll-bottom-btn');
 
   // Navigation handlers
-  backBtn?.addEventListener('click', () => location.href = '/index.html');
+  backBtn?.addEventListener('click', () => location.href = '/');
   profileBtn?.addEventListener('click', () => location.href = '/profile.html');
   blogBtn?.addEventListener('click', () => location.href = '/blog.html');
+  const homeBtn = document.getElementById('home-btn');
+  homeBtn?.addEventListener('click', () => location.href = '/');
 
   // Scroll handlers with passive listeners for better scroll performance
   scrollTopBtn?.addEventListener('click', () => {
