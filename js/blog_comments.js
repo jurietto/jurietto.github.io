@@ -476,37 +476,24 @@ const renderLink = (url) => {
 };
 
 function createYouTubeEmbed(videoId) {
-  const wrapper = document.createElement('div');
-  
-  // Text link above
-  const textLink = document.createElement('a');
-  textLink.href = `https://www.youtube.com/watch?v=${videoId}`;
-  textLink.target = '_blank';
-  textLink.rel = 'noopener noreferrer';
-  textLink.textContent = '▶ Watch on YouTube';
-  textLink.style.display = 'block';
-  textLink.style.marginBottom = '8px';
-  
-  // Thumbnail link with play button
-  const thumbLink = document.createElement('a');
-  thumbLink.href = `https://www.youtube.com/watch?v=${videoId}`;
-  thumbLink.target = '_blank';
-  thumbLink.rel = 'noopener noreferrer';
-  thumbLink.style.cssText = 'display:block;position:relative;';
+  const link = document.createElement('a');
+  link.href = `https://www.youtube.com/watch?v=${videoId}`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;';
   
   const img = document.createElement('img');
   img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   img.alt = 'YouTube video';
-  img.className = 'forum-media image';
   img.loading = 'lazy';
+  img.style.cssText = 'display:block;width:100%;';
   
   const playBtn = document.createElement('div');
   playBtn.textContent = '▶';
-  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;color:#fff;text-shadow:0 0 10px #000;pointer-events:none;';
+  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.5);';
   
-  thumbLink.append(img, playBtn);
-  wrapper.append(textLink, thumbLink);
-  return wrapper;
+  link.append(img, playBtn);
+  return link;
 }
 
 function renderEmbed(url) {

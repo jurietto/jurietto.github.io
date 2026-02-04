@@ -118,39 +118,26 @@ export const renderLink = url => {
 };
 
 // Privacy-friendly embed helpers
-// Thumbnail with play button + text link above
+// Thumbnail with play button, responsive, max 560px on desktop
 function createPrivateYouTubeEmbed(videoId) {
-  const wrapper = document.createElement('div');
-  
-  // Text link above
-  const textLink = document.createElement('a');
-  textLink.href = `https://www.youtube.com/watch?v=${videoId}`;
-  textLink.target = '_blank';
-  textLink.rel = 'noopener noreferrer';
-  textLink.textContent = '▶ Watch on YouTube';
-  textLink.style.display = 'block';
-  textLink.style.marginBottom = '8px';
-  
-  // Thumbnail link with play button
-  const thumbLink = document.createElement('a');
-  thumbLink.href = `https://www.youtube.com/watch?v=${videoId}`;
-  thumbLink.target = '_blank';
-  thumbLink.rel = 'noopener noreferrer';
-  thumbLink.style.cssText = 'display:block;position:relative;';
+  const link = document.createElement('a');
+  link.href = `https://www.youtube.com/watch?v=${videoId}`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;';
   
   const thumb = document.createElement('img');
   thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   thumb.alt = 'YouTube video';
   thumb.loading = 'lazy';
-  thumb.className = 'forum-media image';
+  thumb.style.cssText = 'display:block;width:100%;';
   
   const playBtn = document.createElement('div');
   playBtn.textContent = '▶';
-  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;color:#fff;text-shadow:0 0 10px #000;pointer-events:none;';
+  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.5);';
   
-  thumbLink.append(thumb, playBtn);
-  wrapper.append(textLink, thumbLink);
-  return wrapper;
+  link.append(thumb, playBtn);
+  return link;
 }
 
 // Wikipedia link - zero tracking, no styling
