@@ -7,7 +7,7 @@ import {
 
 import { app } from "./firebase.js";
 
-const storage = getStorage(app);
+const storage = app ? getStorage(app) : null;
 
 // Compress image before upload
 async function compressImage(file, quality = 0.75, maxWidth = 1920, maxHeight = 1920) {
@@ -52,6 +52,10 @@ async function compressImage(file, quality = 0.75, maxWidth = 1920, maxHeight = 
 }
 
 export async function uploadFile(file) {
+  if (!storage) {
+    throw new Error("Firebase Storage not configured. Please set up js/config.js with your Firebase credentials.");
+  }
+  
   let fileToUpload = file;
 
   // Compress images before upload

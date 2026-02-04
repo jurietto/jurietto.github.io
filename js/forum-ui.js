@@ -7,7 +7,7 @@ import {
   formatDate, renderBodyWithEmbeds, renderMedia, 
   createAttachmentPreview, syncInputImages, getSelectedImages,
   handlePasteImages, handleDropImages, MAX_IMAGES
-} from "./utils.clean.js";
+} from "./utils.js";
 import { uploadFile } from "./storage.js";
 
 // Security: Escape HTML to prevent XSS attacks
@@ -99,7 +99,6 @@ export function createEditForm(comment, onSave, onCancel, showNotice) {
     });
     
     // Save handler
-    const saveBtn = form.querySelector(".edit-save-btn");
     if (saveBtn) {
       saveBtn.onclick = async () => {
         const newText = form.querySelector("textarea").value.trim();
