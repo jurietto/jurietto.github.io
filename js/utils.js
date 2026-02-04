@@ -117,10 +117,75 @@ export const renderLink = url => {
   return a;
 };
 
+// Privacy-friendly embed helpers
+function createPrivateYouTubeEmbed(videoId) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'forum-media video-wrapper';
+  const iframe = document.createElement('iframe');
+  // Use youtube-nocookie.com for privacy (no cookies until playback)
+  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`;
+  iframe.className = 'forum-media video';
+  iframe.setAttribute('loading', 'lazy');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+  iframe.setAttribute('referrerpolicy', 'no-referrer');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+  wrapper.appendChild(iframe);
+  return wrapper;
+}
+
+function createPrivateSpotifyEmbed(spotifyType, spotifyId) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'forum-media spotify-wrapper';
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://open.spotify.com/embed/${spotifyType}/${spotifyId}?utm_source=oembed`;
+  iframe.className = 'forum-media audio';
+  iframe.setAttribute('loading', 'lazy');
+  iframe.setAttribute('allow', 'encrypted-media');
+  iframe.setAttribute('referrerpolicy', 'no-referrer');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+  iframe.style.height = spotifyType === 'track' ? '152px' : '352px';
+  wrapper.appendChild(iframe);
+  return wrapper;
+}
+
+function createPrivateSoundCloudEmbed(url) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'forum-media soundcloud-wrapper';
+  const iframe = document.createElement('iframe');
+  // SoundCloud widget with minimal params (no auto_play, no buying, no sharing trackers)
+  const encodedUrl = encodeURIComponent(url);
+  iframe.src = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
+  iframe.className = 'forum-media audio';
+  iframe.setAttribute('loading', 'lazy');
+  iframe.setAttribute('allow', 'autoplay');
+  iframe.setAttribute('referrerpolicy', 'no-referrer');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+  wrapper.appendChild(iframe);
+  return wrapper;
+}
+
 export function renderEmbed(url) {
   try {
-    const clean = url.split("?")[0];
+    const clean = stripTrackingParams(url).split("#")[0]; // Remove tracking and hash
     const lower = clean.toLowerCase();
+
+    // YouTube - privacy-enhanced (youtube-nocookie.com)
+    const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+    if (ytMatch) {
+      return createPrivateYouTubeEmbed(ytMatch[1]);
+    }
+
+    // Spotify - minimal embed
+    const spotifyMatch = url.match(/open\.spotify\.com\/(track|album|playlist|artist|episode|show)\/([\w]+)/);
+    if (spotifyMatch) {
+      return createPrivateSpotifyEmbed(spotifyMatch[1], spotifyMatch[2]);
+    }
+
+    // SoundCloud - widget embed
+    if (url.includes('soundcloud.com') && !url.includes('w.soundcloud.com/player')) {
+      return createPrivateSoundCloudEmbed(clean);
+    }
 
     if (url.includes("tenor.com")) {
       return /\.(gif|mp4)$/i.test(clean)
@@ -131,7 +196,7 @@ export function renderEmbed(url) {
     if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower)) {
       const img = document.createElement('img');
       img.className = 'forum-media image';
-      img.src = url;
+      img.src = clean;
       img.loading = 'lazy';
       return img;
     }
@@ -139,7 +204,7 @@ export function renderEmbed(url) {
     if (/\.(mp4|webm|ogv|mov)$/.test(lower)) {
       const v = document.createElement('video');
       v.className = 'forum-media video';
-      v.src = url;
+      v.src = clean;
       v.controls = true;
       v.preload = 'metadata';
       return v;
@@ -148,7 +213,7 @@ export function renderEmbed(url) {
     if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower)) {
       const a = document.createElement('audio');
       a.className = 'forum-media audio';
-      a.src = url;
+      a.src = clean;
       a.controls = true;
       a.preload = 'metadata';
       return a;

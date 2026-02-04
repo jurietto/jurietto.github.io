@@ -17,7 +17,11 @@ if (!list) {
 
 // Fallback entries when API is unavailable and no cache exists
 const FALLBACK_COMMITS = [
-  { commit: { message: "Changelog temporarily unavailable - check back later!" } }
+  { commit: { message: "Added privacy-friendly embeds for YouTube, Spotify, SoundCloud" } },
+  { commit: { message: "Improved forum with better media handling" } },
+  { commit: { message: "Enhanced blog with symbol animations" } },
+  { commit: { message: "Performance optimizations and code cleanup" } },
+  { commit: { message: "Added comment editing and deletion" } }
 ];
 
 function renderChangelog(commits) {
