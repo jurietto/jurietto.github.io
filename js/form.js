@@ -269,9 +269,13 @@ function renderEmbed(url) {
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
     if (yt)
       return `
-        <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;">
-          <img src="https://img.youtube.com/vi/${yt[1]}/hqdefault.jpg" alt="YouTube video" loading="lazy" class="forum-media image">
-        </a>`;
+        <div>
+          <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;margin-bottom:8px;">▶ Watch on YouTube</a>
+          <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;position:relative;">
+            <img src="https://img.youtube.com/vi/${yt[1]}/hqdefault.jpg" alt="YouTube video" loading="lazy" class="forum-media image">
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:3rem;color:#fff;text-shadow:0 0 10px #000;pointer-events:none;">▶</div>
+          </a>
+        </div>`;
 
     if (lower.includes("open.spotify.com")) {
       return `<a href="${url}" target="_blank" rel="noopener noreferrer">🎵 Listen on Spotify</a>`;
