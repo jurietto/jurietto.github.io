@@ -4,6 +4,15 @@
  */
 
 import { db } from "./firebase.js";
+
+// Graceful handling when Firebase is not configured
+if (!db) {
+  const container = document.getElementById("comments");
+  if (container) {
+    container.innerHTML = '<p style="color:#888;text-align:center;padding:2rem;">Forum is currently unavailable. Firebase not configured.</p>';
+  }
+  throw new Error("Firebase not configured - forum disabled");
+}
 import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy, getDocs, addDoc, onSnapshot, 

@@ -22,6 +22,10 @@ const firebaseConfig = (window.__APP_CONFIG__ && window.__APP_CONFIG__.firebaseC
 
 if (!firebaseConfig) {
   console.error('Missing Firebase config. Copy js/config.example.js to js/config.js and add your values.');
+  const postsContainer = document.getElementById("posts");
+  if (postsContainer) {
+    postsContainer.innerHTML = '<p style="color:#888;text-align:center;padding:2rem;">Blog is currently unavailable. Firebase not configured.</p>';
+  }
 }
 
 const app = firebaseConfig ? initializeApp(firebaseConfig) : null;
