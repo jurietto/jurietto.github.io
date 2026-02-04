@@ -5,6 +5,10 @@ if (!list) {
   console.warn("Changelog element not found — skipping changelog fetch");
 } else {
 
+  // GitHub API cannot access private repos without auth
+  // Set to false to disable API fetch, or provide a personal access token
+  const ENABLE_GITHUB_FETCH = false;
+  
   const OWNER = "jurietto";
   const REPO = "jurietto.github.io";
   const MAX_ENTRIES = 10;
@@ -63,6 +67,9 @@ function setCacheData(data) {
   const cachedCommits = getCachedData();
   if (cachedCommits) {
     renderChangelog(cachedCommits);
+  } else if (!ENABLE_GITHUB_FETCH) {
+    // GitHub fetch disabled (private repo)
+    renderChangelog(FALLBACK_COMMITS);
   } else {
     // Fetch fresh data
     fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
