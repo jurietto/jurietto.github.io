@@ -68,8 +68,9 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 
-# Local app config (do not commit)
-js/config.js
+# NOTE: js/config.js is NOT gitignored because Firebase client API keys
+# are designed to be public. Security is enforced via Firestore Security Rules.
+# js/config.js
 
 # Ignore backup folders created during cleanup
 backup_removed_*/
