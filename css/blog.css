@@ -86,8 +86,12 @@ article::after {
   white-space: nowrap;
   overflow: hidden;
   color: var(--masala);
-  opacity: .6;
+  opacity: .6;  animation: symbol-scroll 20s linear infinite;
 }
+
+@keyframes symbol-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }}
 
 /* ================================
    LINKS

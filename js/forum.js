@@ -40,7 +40,11 @@ const MAX_POST_LENGTH = 10000;
 
 // ============ DOM ELEMENTS ============
 const container = document.getElementById("comments");
-if (!container) throw new Error("Forum container not found");
+if (!container) {
+  console.warn("Forum container not found — skipping forum initialization");
+  // Stop module execution gracefully
+  throw new Error("Forum container not found - skipping");
+}
 
 const commentsRef = collection(db, "threads", "general", "comments");
 const pager = document.getElementById("pagination");
