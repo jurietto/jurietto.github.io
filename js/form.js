@@ -269,26 +269,16 @@ function renderEmbed(url) {
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
     if (yt)
       return `
-        <div class="forum-media video">
-          <iframe src="https://www.youtube.com/embed/${yt[1]}"
-                  loading="lazy" allowfullscreen></iframe>
-        </div>`;
+        <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;">
+          <img src="https://img.youtube.com/vi/${yt[1]}/hqdefault.jpg" alt="YouTube video" loading="lazy" class="forum-media image">
+        </a>`;
 
     if (lower.includes("open.spotify.com")) {
-      const id = url.split("/").pop();
-      return `
-        <div class="forum-media audio">
-          <iframe src="https://open.spotify.com/embed/${id}"
-                  loading="lazy" allow="encrypted-media"></iframe>
-        </div>`;
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">🎵 Listen on Spotify</a>`;
     }
 
     if (lower.includes("soundcloud.com"))
-      return `
-        <div class="forum-media audio">
-          <iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"
-                  loading="lazy"></iframe>
-        </div>`;
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">🎵 Listen on SoundCloud</a>`;
 
     return renderLink(url);
   } catch {

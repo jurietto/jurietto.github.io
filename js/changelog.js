@@ -17,6 +17,7 @@ if (!list) {
 
 // Fallback entries when API is unavailable and no cache exists
 const FALLBACK_COMMITS = [
+  { commit: { message: "Fixed image uploads - Firebase storage images now display properly" } },
   { commit: { message: "Added privacy-friendly embeds for YouTube, Spotify, SoundCloud" } },
   { commit: { message: "Improved forum with better media handling" } },
   { commit: { message: "Enhanced blog with symbol animations" } },

@@ -118,57 +118,61 @@ export const renderLink = url => {
 };
 
 // Privacy-friendly embed helpers
+// Just a thumbnail that links to YouTube - zero tracking
 function createPrivateYouTubeEmbed(videoId) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'forum-media video-wrapper';
-  const iframe = document.createElement('iframe');
-  // Use youtube-nocookie.com for privacy (no cookies until playback)
-  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`;
-  iframe.className = 'forum-media video';
-  iframe.setAttribute('loading', 'lazy');
-  iframe.setAttribute('allowfullscreen', '');
-  iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-  iframe.setAttribute('referrerpolicy', 'no-referrer');
-  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-  wrapper.appendChild(iframe);
-  return wrapper;
+  const link = document.createElement('a');
+  link.href = `https://www.youtube.com/watch?v=${videoId}`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  
+  const thumb = document.createElement('img');
+  thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  thumb.alt = 'Watch on YouTube';
+  thumb.loading = 'lazy';
+  thumb.className = 'forum-media image';
+  
+  link.appendChild(thumb);
+  return link;
 }
 
+// Wikipedia link - zero tracking, no styling
+function createPrivateWikipediaEmbed(articleTitle, lang = 'en') {
+  const cleanTitle = encodeURIComponent(articleTitle.replace(/ /g, '_'));
+  const link = document.createElement('a');
+  link.href = `https://${lang}.wikipedia.org/wiki/${cleanTitle}`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = `📖 ${articleTitle} - Wikipedia`;
+  return link;
+}
+
+// Spotify - plain link, no styling
 function createPrivateSpotifyEmbed(spotifyType, spotifyId) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'forum-media spotify-wrapper';
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://open.spotify.com/embed/${spotifyType}/${spotifyId}?utm_source=oembed`;
-  iframe.className = 'forum-media audio';
-  iframe.setAttribute('loading', 'lazy');
-  iframe.setAttribute('allow', 'encrypted-media');
-  iframe.setAttribute('referrerpolicy', 'no-referrer');
-  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-  iframe.style.height = spotifyType === 'track' ? '152px' : '352px';
-  wrapper.appendChild(iframe);
-  return wrapper;
+  const link = document.createElement('a');
+  link.href = `https://open.spotify.com/${spotifyType}/${spotifyId}`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = `🎵 Listen on Spotify`;
+  return link;
 }
 
+// SoundCloud - plain link, no styling
 function createPrivateSoundCloudEmbed(url) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'forum-media soundcloud-wrapper';
-  const iframe = document.createElement('iframe');
-  // SoundCloud widget with minimal params (no auto_play, no buying, no sharing trackers)
-  const encodedUrl = encodeURIComponent(url);
-  iframe.src = `https://w.soundcloud.com/player/?url=${encodedUrl}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
-  iframe.className = 'forum-media audio';
-  iframe.setAttribute('loading', 'lazy');
-  iframe.setAttribute('allow', 'autoplay');
-  iframe.setAttribute('referrerpolicy', 'no-referrer');
-  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-  wrapper.appendChild(iframe);
-  return wrapper;
+  const link = document.createElement('a');
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = `🎵 Listen on SoundCloud`;
+  return link;
 }
 
 export function renderEmbed(url) {
   try {
     const clean = stripTrackingParams(url).split("#")[0]; // Remove tracking and hash
     const lower = clean.toLowerCase();
+    
+    // Extract path without query params for extension checking
+    const pathOnly = lower.split('?')[0];
 
     // YouTube - privacy-enhanced (youtube-nocookie.com)
     const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
@@ -187,13 +191,51 @@ export function renderEmbed(url) {
       return createPrivateSoundCloudEmbed(clean);
     }
 
+    // Wikipedia - just render as a plain link (no special handling)
+    // Falls through to renderLink() at the end
+
     if (url.includes("tenor.com")) {
       return /\.(gif|mp4)$/i.test(clean)
         ? (function(){ const img = document.createElement('img'); img.className='forum-media image'; img.src = clean; img.loading='lazy'; return img; })()
         : renderLink(url);
     }
 
-    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(lower)) {
+    // Firebase Storage URLs - detect file type from encoded path
+    if (url.includes('firebasestorage.googleapis.com') && url.includes('uploads%2F')) {
+      // Decode the URL to get the actual filename
+      const decodedUrl = decodeURIComponent(url);
+      const decodedLower = decodedUrl.toLowerCase();
+      
+      // Check for video files
+      if (/uploads\/[^?]*\.(mp4|webm|ogv|mov)/i.test(decodedLower)) {
+        const v = document.createElement('video');
+        v.className = 'forum-media video';
+        v.src = url; // Use original URL with token
+        v.controls = true;
+        v.preload = 'metadata';
+        return v;
+      }
+      
+      // Check for audio files
+      if (/uploads\/[^?]*\.(mp3|ogg|wav|flac|m4a)/i.test(decodedLower)) {
+        const a = document.createElement('audio');
+        a.className = 'forum-media audio';
+        a.src = url;
+        a.controls = true;
+        a.preload = 'metadata';
+        return a;
+      }
+      
+      // Default to image for Firebase uploads (png, jpg, gif, webp, etc.)
+      const img = document.createElement('img');
+      img.className = 'forum-media image';
+      img.src = url;
+      img.loading = 'lazy';
+      return img;
+    }
+
+    // Check extension without query params
+    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(pathOnly)) {
       const img = document.createElement('img');
       img.className = 'forum-media image';
       img.src = clean;

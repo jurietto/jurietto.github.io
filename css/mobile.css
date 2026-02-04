@@ -212,15 +212,5 @@
     width: calc(100% + 1.5rem);
   }
 
-  /* Scroll buttons */
-  .scroll-buttons {
-    bottom: 1rem;
-    right: 1rem;
-  }
-
-  .scroll-buttons button {
-    width: 40px;
-    height: 40px;
-    font-size: 0.75rem;
-  }
+  /* Scroll buttons - handled in global.css */
 }

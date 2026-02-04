@@ -476,45 +476,20 @@ const renderLink = (url) => {
 };
 
 function createYouTubeEmbed(videoId) {
-  const container = document.createElement('div');
-  container.className = 'forum-media video';
-  container.style.position = 'relative';
-  container.style.cursor = 'pointer';
-  container.style.maxWidth = 'min(560px, 100%)';
-  container.style.aspectRatio = '16 / 9';
+  const link = document.createElement('a');
+  link.href = `https://www.youtube.com/watch?v=${videoId}`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.style.display = 'block';
   
   const img = document.createElement('img');
   img.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   img.alt = 'YouTube video thumbnail';
-  img.style.width = '100%';
-  img.style.height = '100%';
-  img.style.objectFit = 'cover';
-  img.style.display = 'block';
+  img.className = 'forum-media image';
+  img.loading = 'lazy';
   
-  const playBtn = document.createElement('div');
-  playBtn.style.position = 'absolute';
-  playBtn.style.top = '50%';
-  playBtn.style.left = '50%';
-  playBtn.style.transform = 'translate(-50%, -50%)';
-  playBtn.style.width = '68px';
-  playBtn.style.height = '48px';
-  playBtn.style.background = 'rgba(0, 0, 0, 0.7)';
-  playBtn.style.borderRadius = '8px';
-  playBtn.style.display = 'flex';
-  playBtn.style.alignItems = 'center';
-  playBtn.style.justifyContent = 'center';
-  playBtn.innerHTML = '▶';
-  playBtn.style.color = 'white';
-  playBtn.style.fontSize = '24px';
-  
-  container.appendChild(img);
-  container.appendChild(playBtn);
-  
-  container.addEventListener('click', () => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
-  });
-  
-  return container;
+  link.appendChild(img);
+  return link;
 }
 
 function renderEmbed(url) {

@@ -1,11 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
 import {
-  getFirestore,
   collection,
   query,
   orderBy,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+import { db } from "./firebase.js";
 import { loadComments, setupCommentForm, showCommentSection } from "./blog-comments.js";
 import { formatDate, matchesSearch } from "./utils.js";
 
@@ -17,19 +16,14 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-// Firebase setup - load config from external file `js/config.js` (gitignored)
-const firebaseConfig = (window.__APP_CONFIG__ && window.__APP_CONFIG__.firebaseConfig) || null;
-
-if (!firebaseConfig) {
+// Check if Firebase is configured
+if (!db) {
   console.error('Missing Firebase config. Copy js/config.example.js to js/config.js and add your values.');
   const postsContainer = document.getElementById("posts");
   if (postsContainer) {
     postsContainer.innerHTML = '<p style="color:#888;text-align:center;padding:2rem;">Blog is currently unavailable. Firebase not configured.</p>';
   }
 }
-
-const app = firebaseConfig ? initializeApp(firebaseConfig) : null;
-const db = app ? getFirestore(app) : null;
 
 // DOM elements - cached once
 const postsEl = document.getElementById("posts");
@@ -269,4 +263,9 @@ window.performBlogSearch = performSearch;
 
 /* ---------- INIT ---------- */
 
-loadPosts();
+// Only load posts if db is available
+if (db) {
+  loadPosts();
+} else {
+  console.error('Database not initialized - cannot load posts');
+}
