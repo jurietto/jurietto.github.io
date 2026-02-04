@@ -7,7 +7,7 @@ import {
   formatDate, renderBodyWithEmbeds, renderMedia, 
   createAttachmentPreview, syncInputImages, getSelectedImages,
   handlePasteImages, handleDropImages, MAX_IMAGES
-} from "./utils.js";
+} from "./utils.clean.js";
 import { uploadFile } from "./storage.js";
 
 // Security: Escape HTML to prevent XSS attacks

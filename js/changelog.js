@@ -3,15 +3,13 @@ const list = document.getElementById("changelog");
 // Only run if the changelog element exists
 if (!list) {
   console.warn("Changelog element not found — skipping changelog fetch");
-  // Nothing to do on pages without a changelog container
-  return;
-}
+} else {
 
-const OWNER = "jurietto";
-const REPO = "jurietto.github.io";
-const MAX_ENTRIES = 10;
-const CACHE_KEY = "changelog_cache";
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+  const OWNER = "jurietto";
+  const REPO = "jurietto.github.io";
+  const MAX_ENTRIES = 10;
+  const CACHE_KEY = "changelog_cache";
+  const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 // Fallback entries when API is unavailable and no cache exists
 const FALLBACK_COMMITS = [
@@ -61,35 +59,37 @@ function setCacheData(data) {
   }
 }
 
-// Try to use cached data first
-const cachedCommits = getCachedData();
-if (cachedCommits) {
-  renderChangelog(cachedCommits);
-} else {
-  // Fetch fresh data
-  fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`GitHub API error: ${res.status}`);
-      }
-      return res.json();
-    })
-    .then(commits => {
-      if (!Array.isArray(commits)) {
-        throw new Error("Invalid response from GitHub API");
-      }
-      setCacheData(commits);
-      renderChangelog(commits);
-    })
-    .catch(err => {
-      // Try to use stale cache as fallback
-      const staleCache = getCachedData(true);
-      if (staleCache) {
-        renderChangelog(staleCache);
-      } else {
-        renderChangelog(FALLBACK_COMMITS);
-      }
-      console.error(err);
-    });
+  // Try to use cached data first
+  const cachedCommits = getCachedData();
+  if (cachedCommits) {
+    renderChangelog(cachedCommits);
+  } else {
+    // Fetch fresh data
+    fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`GitHub API error: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(commits => {
+        if (!Array.isArray(commits)) {
+          throw new Error("Invalid response from GitHub API");
+        }
+        setCacheData(commits);
+        renderChangelog(commits);
+      })
+      .catch(err => {
+        // Try to use stale cache as fallback
+        const staleCache = getCachedData(true);
+        if (staleCache) {
+          renderChangelog(staleCache);
+        } else {
+          renderChangelog(FALLBACK_COMMITS);
+        }
+        console.error(err);
+      });
+  }
+
 }
 

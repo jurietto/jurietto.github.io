@@ -16,7 +16,7 @@ import {
   isImageFile, getSelectedImages, syncInputImages, validateFileSize,
   createAttachmentPreview, handlePasteImages, handleDropImages,
   renderBodyWithEmbeds, renderMedia, MAX_IMAGES
-} from "./utils.js";
+} from "./utils.clean.js";
 
 // UI components
 import { 
