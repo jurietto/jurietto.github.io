@@ -115,30 +115,6 @@ export function createEditForm(comment, onSave, onCancel, showNotice) {
         render();
       };
     });
-        mediaArray.splice(parseInt(btn.dataset.index), 1);
-        render();
-      };
-    });
-    
-    // Save handler
-    if (saveBtn) {
-      saveBtn.onclick = async () => {
-        const newText = form.querySelector("textarea").value.trim();
-        if (!newText) {
-          showNotice?.("Post cannot be empty");
-          return;
-        }
-        saveBtn.disabled = true;
-        saveBtn.textContent = "Saving...";
-        await onSave(newText, mediaArray.length > 0 ? mediaArray : null);
-      };
-    }
-    
-    // Cancel handler
-    form.querySelector(".edit-cancel-btn")?.addEventListener("click", () => {
-      form.remove();
-      onCancel?.();
-    });
   }
   
   render();
