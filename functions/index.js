@@ -80,7 +80,7 @@ exports.editComment = functions.https.onRequest((req, res) => {
       return res.status(200).json({ success: true });
     } catch (error) {
       console.error('Edit error:', error);
-      return res.status(500).type('text/plain').send(error.message);
+      return res.status(500).json({ error: error.message });
     }
   });
 });
@@ -135,7 +135,7 @@ exports.deleteComment = functions.https.onRequest((req, res) => {
       return res.status(200).json({ success: true });
     } catch (error) {
       console.error('Delete error:', error);
-      return res.status(500).type('text/plain').send(error.message);
+      return res.status(500).json({ error: error.message });
     }
   });
 });
@@ -185,7 +185,7 @@ exports.postComment = functions.https.onRequest((req, res) => {
       return res.status(200).json({ success: true, id: docRef.id });
     } catch (error) {
       console.error('Post error:', error);
-      return res.status(500).type('text/plain').send(error.message);
+      return res.status(500).json({ error: error.message });
     }
   });
 });

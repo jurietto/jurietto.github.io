@@ -372,7 +372,10 @@ export function setupCommentForm(postId, firebaseDb) {
       
       const meta = document.createElement('div');
       meta.className = 'forum-meta';
-      meta.innerHTML = `<strong>＼(^o^)／ ${user}</strong> — Just now`;
+      const strong = document.createElement('strong');
+      strong.textContent = `＼(^o^)／ ${user}`;
+      meta.appendChild(strong);
+      meta.appendChild(document.createTextNode(' — Just now'));
       wrap.appendChild(meta);
       
       renderBodyWithEmbeds(text, wrap);
