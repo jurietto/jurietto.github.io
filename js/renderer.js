@@ -238,10 +238,10 @@ export function renderBodyWithEmbeds(text, parent) {
   const raw = text || "";
   const urls = raw.match(/https?:\/\/[^\s]+/g) || [];
   
-  // Safe URL stripping without regex replace (recursive sanitization safe)
-  const stripped = raw.split(/\s+/).filter(word => !/^https?:\/\/[^\s]+$/.test(word)).join(" ");
+  // Strip URLs but preserve whitespace for ASCII art
+  const stripped = raw.replace(/https?:\/\/[^\s]+/g, "");
 
-  if (stripped) {
+  if (stripped.trim()) {
     const body = document.createElement("div");
     body.className = "forum-body";
     body.textContent = stripped;

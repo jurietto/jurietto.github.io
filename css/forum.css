@@ -168,7 +168,7 @@ iframe.forum-media.audio {
    ================================ */
 
 .forum-body {
-  font-family: "MS PGothic", "MS Pゴシック";
+  font-family: "MS PGothic", "MS Pゴシック", "Mona", monospace;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -183,7 +183,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: "Mona", sans-serif;
+  font-family: "MS PGothic", "MS Pゴシック", "Mona", monospace;
   white-space: pre;
   tab-size: 4;
 }
