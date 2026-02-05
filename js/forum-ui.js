@@ -351,6 +351,8 @@ export function renderCommentElement(comment, options) {
   wrap.className = className;
   
   const isOwner = comment.userId && comment.userId === currentUserId;
+  // Debug: log ownership check
+  console.log('Comment ownership check:', { commentUserId: comment.userId, currentUserId, isOwner });
   const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
   
   const meta = document.createElement('div');

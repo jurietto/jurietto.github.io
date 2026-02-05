@@ -72,14 +72,30 @@ function showNotice(message) {
   notice.hidden = false;
 }
 
-// ============ EDIT/DELETE ============
+// ============ EDIT/DELETE (REST API to bypass ad blocker WebChannel blocks) ============
+const PROJECT_ID = "chansi-ddd7e";
+const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
+
 async function editComment(id, newText, newMedia) {
   try {
-    await updateDoc(doc(db, "threads", "general", "comments", id), {
-      text: newText,
-      media: newMedia,
-      editedAt: Date.now()
+    const docPath = `${FIRESTORE_BASE}/threads/general/comments/${id}`;
+    const fields = {
+      text: { stringValue: newText },
+      editedAt: { integerValue: Date.now().toString() }
+    };
+    if (newMedia && newMedia.length > 0) {
+      fields.media = { arrayValue: { values: newMedia.map(m => ({ stringValue: m })) } };
+    } else {
+      fields.media = { nullValue: null };
+    }
+    
+    const response = await fetch(`${docPath}?updateMask.fieldPaths=text&updateMask.fieldPaths=media&updateMask.fieldPaths=editedAt`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields })
     });
+    
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     loadComments(currentPage);
   } catch (err) {
     showNotice("Error editing: " + err.message);
@@ -88,7 +104,9 @@ async function editComment(id, newText, newMedia) {
 
 async function deleteComment(id) {
   try {
-    await deleteDoc(doc(db, "threads", "general", "comments", id));
+    const docPath = `${FIRESTORE_BASE}/threads/general/comments/${id}`;
+    const response = await fetch(docPath, { method: 'DELETE' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     loadComments(currentPage);
   } catch (err) {
     showNotice("Error deleting: " + err.message);
