@@ -6,13 +6,14 @@ import {
 
 const CF_BASE = 'https://us-central1-chansi-ddd7e.cloudfunctions.net';
 
-export async function apiEditComment(id, userId, text, media) {
+export async function apiEditComment(id, userId, text, media, collectionPath) {
   const response = await fetch(`${CF_BASE}/editComment`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       commentId: id,
-      threadId: "general",
+      threadId: "general", // Fallback for forum
+      collectionPath,      // Optional override for Blog
       userId,
       text,
       media
@@ -26,13 +27,14 @@ export async function apiEditComment(id, userId, text, media) {
   }
 }
 
-export async function apiDeleteComment(id, userId) {
+export async function apiDeleteComment(id, userId, collectionPath) {
   const response = await fetch(`${CF_BASE}/deleteComment`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       commentId: id,
-      threadId: "general",
+      threadId: "general", // Fallback for forum
+      collectionPath,      // Optional override for Blog
       userId
     })
   });
@@ -53,15 +55,27 @@ export async function apiFlagComment(commentId, reason, details) {
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
 }
 
-export async function apiPostComment(collectionRef, user, text, media, userId) {
-  const data = {
-    user: user || "Anonymous",
-    text,
-    createdAt: serverTimestamp(),
-    userId
-  };
-  if (media) data.media = media;
-  return await addDoc(collectionRef, data);
+export async function apiPostComment(collectionRef, user, text, media, userId, replyTo, collectionPath) {
+  // collectionRef is unused because we use collectionPath or threadId
+  const response = await fetch(`${CF_BASE}/postComment`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      threadId: "general", // Fallback for forum
+      collectionPath,      // Optional override for blog
+      user,
+      text,
+      media,
+      userId,
+      replyTo: replyTo || null
+    })
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(errText || `Server error ${response.status}`);
+  }
+  return await response.json();
 }
 
 export async function apiFetchAllComments(collectionRef) {

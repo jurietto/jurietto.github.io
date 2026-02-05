@@ -34,7 +34,9 @@ const cors = (req, res, handler) => {
 
 /**
  * Edit a comment
- * Expects: { commentId, threadId, userId, text, media }
+ * Expects: { commentId, threadId, userId, text, media, collectionPath }
+ * If collectionPath is provided, it uses that (e.g. "blogPosts/article-1/comments")
+ * Otherwise defaults to "threads/{threadId}/comments"
  */
 exports.editComment = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
@@ -43,13 +45,21 @@ exports.editComment = functions.https.onRequest((req, res) => {
     }
     
     try {
-      const { commentId, threadId, userId, text, media } = req.body;
+      const { commentId, threadId, userId, text, media, collectionPath } = req.body;
       
-      if (!commentId || !threadId || !userId) {
+      if (!commentId || !userId) {
         return res.status(400).send('Missing required fields');
       }
       
-      const commentRef = db.collection('threads').doc(threadId).collection('comments').doc(commentId);
+      let commentRef;
+      if (collectionPath) {
+        commentRef = db.collection(collectionPath.split('/')[0]).doc(collectionPath.split('/')[1]).collection(collectionPath.split('/')[2]).doc(commentId);
+      } else if (threadId) {
+        commentRef = db.collection('threads').doc(threadId).collection('comments').doc(commentId);
+      } else {
+        return res.status(400).send('Missing threadId or collectionPath');
+      }
+
       const commentDoc = await commentRef.get();
       
       if (!commentDoc.exists) {
@@ -77,7 +87,7 @@ exports.editComment = functions.https.onRequest((req, res) => {
 
 /**
  * Delete a comment
- * Expects: { commentId, threadId, userId }
+ * Expects: { commentId, threadId, userId, collectionPath }
  */
 exports.deleteComment = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
@@ -86,13 +96,29 @@ exports.deleteComment = functions.https.onRequest((req, res) => {
     }
     
     try {
-      const { commentId, threadId, userId } = req.body;
+      const { commentId, threadId, userId, collectionPath } = req.body;
       
-      if (!commentId || !threadId || !userId) {
+      if (!commentId || !userId) {
         return res.status(400).send('Missing required fields');
       }
       
-      const commentRef = db.collection('threads').doc(threadId).collection('comments').doc(commentId);
+      let commentRef;
+      if (collectionPath) {
+        // Handle nested paths dynamically "col/doc/subcol/doc"
+        const parts = collectionPath.split('/');
+        if (parts.length === 3) {
+            // "blogPosts/123/comments" -> docId is passed separately as commentId
+             commentRef = db.collection(parts[0]).doc(parts[1]).collection(parts[2]).doc(commentId);
+        } else {
+             // Fallback or error
+             return res.status(400).send('Invalid collectionPath format');
+        }
+      } else if (threadId) {
+        commentRef = db.collection('threads').doc(threadId).collection('comments').doc(commentId);
+      } else {
+        return res.status(400).send('Missing threadId or collectionPath');
+      }
+
       const commentDoc = await commentRef.get();
       
       if (!commentDoc.exists) {
@@ -109,6 +135,55 @@ exports.deleteComment = functions.https.onRequest((req, res) => {
       return res.status(200).json({ success: true });
     } catch (error) {
       console.error('Delete error:', error);
+      return res.status(500).send(error.message);
+    }
+  });
+});
+
+/**
+ * Post a comment
+ * Expects: { threadId, user, userId, text, media, replyTo, collectionPath }
+ */
+exports.postComment = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    if (req.method !== 'POST') {
+      return res.status(405).send('Method not allowed');
+    }
+    
+    try {
+      const { threadId, user, userId, text, media, replyTo, collectionPath } = req.body;
+      
+      if (!userId || !text) {
+        return res.status(400).send('Missing required fields');
+      }
+      
+      const newComment = {
+        user: user || 'Anonymous',
+        text: text,
+        userId: userId,
+        createdAt: Date.now(), // Use server time
+        media: media || null
+      };
+
+      if (replyTo) {
+        newComment.replyTo = replyTo;
+      }
+      
+      let colRef;
+      if (collectionPath) {
+         const parts = collectionPath.split('/');
+         colRef = db.collection(parts[0]).doc(parts[1]).collection(parts[2]);
+      } else if (threadId) {
+         colRef = db.collection('threads').doc(threadId).collection('comments');
+      } else {
+        return res.status(400).send('Missing threadId or collectionPath');
+      }
+
+      const docRef = await colRef.add(newComment);
+      
+      return res.status(200).json({ success: true, id: docRef.id });
+    } catch (error) {
+      console.error('Post error:', error);
       return res.status(500).send(error.message);
     }
   });

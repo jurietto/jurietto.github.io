@@ -9,6 +9,7 @@ import {
 } from "./utils.js";
 import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 import { uploadFile } from "./storage.js";
+import { apiPostComment } from "./forum-api.js";
 
 // Security: Escape HTML to prevent XSS attacks
 function escapeHtml(text) {
@@ -306,18 +307,16 @@ export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, se
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
-      const replyData = {
-        user: userInput.value.trim() || "Anonymous",
+      await apiPostComment(
+        commentsRef,
+        userInput.value.trim() || "Anonymous",
         text,
-        replyTo: parentId,
-        createdAt: serverTimestamp(),
-        userId: currentUserId
-      };
-
-      if (media) replyData.media = media;
+        media,
+        currentUserId,
+        parentId // replyTo
+      );
       
-      await addDoc(commentsRef, replyData);
-      localStorage.setItem("forum_username", replyData.user);
+      localStorage.setItem("forum_username", userInput.value);
       form.remove();
       onSuccess?.();
     } catch (error) {

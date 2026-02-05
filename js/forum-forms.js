@@ -1,6 +1,6 @@
 import { createAttachmentPreview, handleDropImages, handlePasteImages, getSelectedImages, isImageFile, MAX_IMAGES } from "./utils.js";
 import { uploadFile } from "./storage.js";
-import { serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+import { apiPostComment } from "./forum-api.js";
 
 export function setupPostForm(
   postUser, postFile, postText, postButton, 
@@ -125,15 +125,13 @@ export function setupPostForm(
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
-      const data = {
-        user: postUser?.value.trim() || "Anonymous",
-        text: content,
-        createdAt: serverTimestamp(),
-        userId: currentUserId
-      };
-      if (media) data.media = media;
-
-      await addDoc(commentsRef, data);
+      await apiPostComment(
+        commentsRef, 
+        postUser?.value.trim(), 
+        content,
+        media,
+        currentUserId
+      );
 
       lastPostTime = Date.now();
       if (postText) postText.value = "";
