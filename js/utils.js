@@ -120,12 +120,18 @@ function simpleHash(str) {
 export function getUserId(storageKey) {
   let baseId = localStorage.getItem(storageKey);
   if (!baseId) {
-    baseId = crypto.randomUUID ? crypto.randomUUID() :
-      'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
+    if (crypto.randomUUID) {
+      baseId = crypto.randomUUID();
+    } else {
+      // Fallback using crypto.getRandomValues for better entropy than Math.random
+      baseId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const rnd = new Uint8Array(1);
+        crypto.getRandomValues(rnd);
+        const r = (rnd[0] % 16);
         const v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
       });
+    }
     localStorage.setItem(storageKey, baseId);
   }
 

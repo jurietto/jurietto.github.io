@@ -97,37 +97,47 @@ export function renderEmbed(url) {
 
     // Tenor GIF
     if (url.includes("tenor.com")) {
-      return /\.(gif|mp4)$/i.test(clean)
-        ? (function(){ const img = document.createElement('img'); img.className='forum-media image'; img.src = clean; img.loading='lazy'; return img; })()
-        : renderLink(url);
+      // Basic hostname check to prevent "evil-tenor.com"
+      const u = new URL(url);
+      if (u.hostname === 'tenor.com' || u.hostname.endsWith('.tenor.com')) {
+        return /\.(gif|mp4)$/i.test(clean)
+          ? (function(){ const img = document.createElement('img'); img.className='forum-media image'; img.src = clean; img.loading='lazy'; return img; })()
+          : renderLink(url);
+      }
     }
 
     // Firebase Storage
     if (url.includes('firebasestorage.googleapis.com') && url.includes('uploads%2F')) {
-      const decodedUrl = decodeURIComponent(url);
-      const decodedLower = decodedUrl.toLowerCase();
-      
-      if (/uploads\/[^?]*\.(mp4|webm|ogv|mov)/i.test(decodedLower)) {
-        const v = document.createElement('video');
-        v.className = 'forum-media video';
-        v.src = url;
-        v.controls = true;
-        v.preload = 'metadata';
-        return v;
+      const u = new URL(url);
+      if (u.hostname === 'firebasestorage.googleapis.com') {
+        const decodedUrl = decodeURIComponent(url);
+        const decodedLower = decodedUrl.toLowerCase();
+        
+        // Ensure path starts with expected pattern
+        if (decodedLower.includes('/o/uploads%2f') || decodedLower.includes('/o/uploads/')) {
+          if (/\.(mp4|webm|ogv|mov)(\?|$)/i.test(decodedLower)) {
+            const v = document.createElement('video');
+            v.className = 'forum-media video';
+            v.src = url;
+            v.controls = true;
+            v.preload = 'metadata';
+            return v;
+          }
+          if (/\.(mp3|ogg|wav|flac|m4a)(\?|$)/i.test(decodedLower)) {
+            const a = document.createElement('audio');
+            a.className = 'forum-media audio';
+            a.src = url;
+            a.controls = true;
+            a.preload = 'metadata';
+            return a;
+          }
+          const img = document.createElement('img');
+          img.className = 'forum-media image';
+          img.src = url;
+          img.loading = 'lazy';
+          return img;
+        }
       }
-      if (/uploads\/[^?]*\.(mp3|ogg|wav|flac|m4a)/i.test(decodedLower)) {
-        const a = document.createElement('audio');
-        a.className = 'forum-media audio';
-        a.src = url;
-        a.controls = true;
-        a.preload = 'metadata';
-        return a;
-      }
-      const img = document.createElement('img');
-      img.className = 'forum-media image';
-      img.src = url;
-      img.loading = 'lazy';
-      return img;
     }
 
     // Generic Image
@@ -191,7 +201,9 @@ function safeInsertEmbed(container, embed, urlHint) {
 export function renderBodyWithEmbeds(text, parent) {
   const raw = text || "";
   const urls = raw.match(/https?:\/\/[^\s]+/g) || [];
-  const stripped = raw.replace(/https?:\/\/[^\s]+/g, "").trim();
+  
+  // Safe URL stripping without regex replace (recursive sanitization safe)
+  const stripped = raw.split(/\s+/).filter(word => !/^https?:\/\/[^\s]+$/.test(word)).join(" ");
 
   if (stripped) {
     const body = document.createElement("div");
