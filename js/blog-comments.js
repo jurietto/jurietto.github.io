@@ -5,7 +5,7 @@
 
 import {
   collection, query, orderBy, getDocs, addDoc, 
-  serverTimestamp, doc, updateDoc, deleteDoc
+  serverTimestamp, doc, updateDoc, deleteDoc, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 import { uploadFile } from "./storage.js";
 import { apiPostComment, apiEditComment, apiDeleteComment, apiFlagComment } from "./forum-api.js";
@@ -24,6 +24,7 @@ import { createEditForm, createFlagModal } from "./forum-ui.js";
 // ============ STATE ============
 let db = null;
 let currentPostId = null;
+let unsubscribe = null;
 const currentUserId = getUserId("blog_user_id");
 
 // ============ DOM ELEMENTS ============
@@ -69,43 +70,31 @@ function renderHashtags(hashtags) {
 }
 
 // ============ EDIT/DELETE ============
-// Note: We are now using Cloud Functions for blog comments too, to bypass blockers
 async function editComment(postId, commentId, newText, newMedia) {
   try {
-    // Current Cloud Function expects (commentId, threadId, userId, text, media)
-    // For blog posts, we treat 'postId' as the 'threadId' if the CF supports it.
-    // However, our CF is currently hardcoded for 'general'.
-    // We need to update the CF to accept dynamic collection paths OR just use new CFs.
-    // For now, let's assume the user wants access to the FORUM behavior, but Blog uses "blogPosts" collection.
-    //
-    // WAIT: The Blog is completely separate in Firestore topology ("blogPosts/{postId}/comments") vs Forum ("threads/general/comments").
-    // The current CFs are hardcoded to "threads/{threadId}/comments".
-    // We cannot use the CURRENT CFs for blog edits without updating the CFs.
-    
-    // For now, let's try direct SDK first, but we know it fails.
-    // We will need to update the Cloud Functions to be generic collection-aware.
-    
-    // Fallback: Show alert
-    alert("Full edit support for blog comments is pending Cloud Function update. If this fails, it's due to ad blocker.");
-    
-    await updateDoc(doc(db, "blogPosts", postId, "comments", commentId), {
-      text: newText,
-      media: newMedia,
-      editedAt: Date.now()
-    });
-    await loadComments(postId, db);
+    await apiEditComment(
+      commentId,
+      currentUserId,
+      newText,
+      newMedia,
+      `blogPosts/${postId}/comments`
+    );
+    // showNotice("Comment updated!"); 
   } catch (err) {
-    showNotice("Error editing: " + err.message);
+    console.error("Edit failed:", err);
   }
 }
 
 async function deleteComment(postId, commentId) {
   try {
-    // Same issue as edit. Direct SDK call will be blocked.
-    await deleteDoc(doc(db, "blogPosts", postId, "comments", commentId));
-    await loadComments(postId, db);
+    await apiDeleteComment(
+      commentId,
+      currentUserId,
+      `blogPosts/${postId}/comments`
+    );
+    // showNotice("Comment deleted.");
   } catch (err) {
-    showNotice("Error deleting: " + err.message);
+    console.error("Delete failed:", err);
   }
 }
 
@@ -137,98 +126,118 @@ function openReportModal(commentData) {
 export async function loadComments(postId, firebaseDb) {
   if (!firebaseDb) return;
   db = firebaseDb;
-  currentPostId = postId;
 
-  commentsEl.innerHTML = "";
+  // Real-time listener setup
+  if (currentPostId === postId && unsubscribe) {
+    return;
+  }
+  
+  if (unsubscribe) {
+    unsubscribe();
+    unsubscribe = null;
+  }
+
+  currentPostId = postId;
+  commentsEl.innerHTML = '<div style="text-align:center;padding:1rem;color:#888;">Loading discussion...</div>';
 
   try {
     const commentsRef = collection(db, "blogPosts", postId, "comments");
     const q = query(commentsRef, orderBy("createdAt", "desc"));
-    const snapshot = await getDocs(q);
 
-    if (snapshot.empty) {
-      commentsEl.innerHTML = "<p>No comments at this time...</p>";
-      return;
-    }
+    unsubscribe = onSnapshot(q, (snapshot) => {
+      commentsEl.innerHTML = "";
 
-    const fragment = document.createDocumentFragment();
-
-    snapshot.forEach((docSnap) => {
-      const comment = docSnap.data();
-      const commentId = docSnap.id;
-      
-      const wrap = document.createElement("div");
-      wrap.className = "forum-comment";
-
-      const isOwner = comment.userId === currentUserId;
-      const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
-      
-      // Meta with edit/delete buttons
-      const meta = document.createElement("div");
-      meta.className = "forum-meta";
-      const strong = document.createElement('strong');
-      strong.textContent = `＼(^o^)／ ${comment.user || "Anonymous"}`;
-      meta.appendChild(strong);
-      meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
-      
-      if (isOwner) {
-        const btnContainer = document.createElement("span");
-        btnContainer.style.marginLeft = "1rem";
-        
-        const editBtn = document.createElement("button");
-        editBtn.textContent = "Edit";
-        editBtn.onclick = () => {
-          wrap.querySelector("[data-edit-form]")?.remove();
-          const form = createEditForm(
-            comment,
-            (text, media) => editComment(postId, commentId, text, media),
-            null,
-            showNotice
-          );
-          wrap.insertBefore(form, meta.nextSibling);
-        };
-        
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
-        deleteBtn.onclick = () => {
-          if (confirm("Delete this comment?")) deleteComment(postId, commentId);
-        };
-        
-        btnContainer.append(editBtn, deleteBtn);
-        meta.appendChild(btnContainer);
-      }
-      
-      wrap.appendChild(meta);
-
-      // Body and media
-      renderBodyWithEmbeds(comment.text, wrap);
-      if (comment.media) renderMedia(comment.media, wrap);
-
-      // Hashtags
-      if (comment.hashtags?.length) {
-        const hashtagEl = renderHashtags(comment.hashtags);
-        if (hashtagEl) wrap.appendChild(hashtagEl);
+      if (snapshot.empty) {
+        commentsEl.innerHTML = "<p>No comments at this time...</p>";
+        return;
       }
 
-      // Report button
-      const reportBtn = document.createElement("button");
-      reportBtn.className = "comment-report-btn";
-      reportBtn.textContent = "Report";
-      reportBtn.onclick = () => openReportModal({
-        commentId,
-        postId: currentPostId,
-        text: comment.text,
-        user: comment.user,
-        path: `blogPosts/${currentPostId}/comments/${commentId}`
+      const fragment = document.createDocumentFragment();
+
+      snapshot.forEach((docSnap) => {
+        const comment = docSnap.data();
+        const commentId = docSnap.id;
+        
+        const wrap = document.createElement("div");
+        wrap.className = "forum-comment";
+
+        const isOwner = comment.userId === currentUserId;
+        const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
+        
+        // Meta with edit/delete buttons
+        const meta = document.createElement("div");
+        meta.className = "forum-meta";
+        const strong = document.createElement('strong');
+        strong.textContent = `＼(^o^)／ ${comment.user || "Anonymous"}`;
+        meta.appendChild(strong);
+        meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
+        
+        if (isOwner) {
+          const btnContainer = document.createElement("span");
+          btnContainer.style.marginLeft = "1rem";
+          
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "Edit";
+          editBtn.onclick = () => {
+            wrap.querySelector("[data-edit-form]")?.remove();
+            const form = createEditForm(
+              comment,
+              (text, media) => editComment(postId, commentId, text, media),
+              null,
+              (msg) => console.log(msg)
+            );
+            wrap.insertBefore(form, meta.nextSibling);
+          };
+          
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.onclick = () => {
+            if (confirm("Delete this comment?")) deleteComment(postId, commentId);
+          };
+          
+          btnContainer.append(editBtn, deleteBtn);
+          meta.appendChild(btnContainer);
+        }
+        
+        wrap.appendChild(meta);
+
+        // Body and media
+        renderBodyWithEmbeds(comment.text, wrap);
+        if (comment.media) renderMedia(comment.media, wrap);
+
+        // Hashtags
+        if (comment.hashtags?.length) {
+          const hashtagEl = renderHashtags(comment.hashtags);
+          if (hashtagEl) wrap.appendChild(hashtagEl);
+        }
+
+        // Report button
+        const reportBtn = document.createElement("button");
+        reportBtn.className = "comment-report-btn";
+        reportBtn.textContent = "Report";
+        reportBtn.onclick = () => openReportModal({
+          commentId,
+          postId: currentPostId,
+          text: comment.text,
+          user: comment.user,
+          path: `blogPosts/${currentPostId}/comments/${commentId}`
+        });
+        wrap.appendChild(reportBtn);
+
+        fragment.appendChild(wrap);
       });
-      wrap.appendChild(reportBtn);
 
-      fragment.appendChild(wrap);
+      commentsEl.appendChild(fragment);
+    }, (err) => {
+      console.error("Snapshot error:", err);
+      // Silent fail or minimal UI indication
+      if (commentsEl.innerHTML.includes("Loading")) {
+         commentsEl.innerHTML = "<p>Comments unavailable.</p>";
+      }
     });
 
-    commentsEl.appendChild(fragment);
   } catch (err) {
-    console.error("Error loading comments:", err);
+    console.error("Error setting up listener:", err);
     commentsEl.innerHTML = "<p>Error loading comments.</p>";
   }
 }
@@ -339,11 +348,10 @@ export function setupCommentForm(postId, firebaseDb) {
       updatePreview(commentFile, preview, []);
       localStorage.setItem("blog_username", user);
       
-      await loadComments(postId, db);
+      // Real-time listener handles UI update
       commentsSection?.scrollIntoView({ behavior: "smooth" });
     } catch (err) {
       console.error("Error posting:", err);
-      alert("Failed to post comment.");
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Post";
