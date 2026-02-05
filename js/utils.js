@@ -96,6 +96,16 @@ export function appendImagesToInput(input, files) {
 }
 
 
+export function matchesSearch(text, query) {
+  if (!query) return true;
+  try {
+    const q = query.toLowerCase().trim();
+    return String(text || '').toLowerCase().includes(q);
+  } catch {
+    return false;
+  }
+}
+
 // ============ USER ID ============
 function simpleHash(str) {
   let hash = 0;

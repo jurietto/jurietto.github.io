@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Update Files",
+			"type": "shell",
+			"command": "echo \"Updating files...\"",
+			"args": [],
+			"group": "build"
+		}
+	]
+}

@@ -7,7 +7,7 @@ if (!list) {
 
   // GitHub API cannot access private repos without auth
   // Set to false to disable API fetch, or provide a personal access token
-  const ENABLE_GITHUB_FETCH = false;
+  const ENABLE_GITHUB_FETCH = true;
   
   const OWNER = "jurietto";
   const REPO = "jurietto.github.io";
