@@ -268,6 +268,11 @@ async function loadComments(page = 0) {
     replyMap.get(r.replyTo).push(r);
   });
 
+  // Ensure replies are sorted Oldest -> Newest
+  replyMap.forEach(list => {
+      list.sort((a, b) => getCreatedAtValue(a.createdAt) - getCreatedAtValue(b.createdAt));
+  });
+
   // Filter by search
   const searchLower = currentSearch.toLowerCase();
   const filteredRoots = currentSearch
