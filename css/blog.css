@@ -78,25 +78,19 @@ article code {
    ================================ */
 
 article::after {
-  /* Duplicate the pattern so animation loops seamlessly */
-  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
+  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
   display: block;
-  position: absolute;
-  bottom: 0;
-  left: -16px;
-  right: -16px;
+  margin-top: 12px;
   padding-top: 6px;
   font: 1.2rem/1 "Mona", monospace;
   letter-spacing: .35em;
   white-space: nowrap;
+  overflow: hidden;
   color: var(--masala);
   opacity: .6;
-  animation: symbol-scroll 30s linear infinite;
+  text-align: center;
+  pointer-events: none;
 }
-
-@keyframes symbol-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }}
 
 /* ================================
    LINKS
@@ -118,4 +112,20 @@ article a {
   gap: 8px;
   justify-content: center;
   margin: 28px auto;
+}
+
+/* ================================
+   FORM INPUTS - MONA FONT
+   ================================ */
+
+#blog-search-input,
+#comment-username,
+#comment-text {
+  font-family: "Mona", sans-serif;
+}
+
+#blog-search-input::placeholder,
+#comment-username::placeholder,
+#comment-text::placeholder {
+  font-family: "Mona", sans-serif;
 }

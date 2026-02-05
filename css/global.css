@@ -141,9 +141,14 @@ body::before {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: inherit;
+  font-family: "Mona", sans-serif;
   font-size: inherit;
   line-height: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: "Mona", sans-serif;
 }
 
 /* Consistent sizing for all pages */
