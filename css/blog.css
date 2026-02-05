@@ -78,7 +78,8 @@ article code {
    ================================ */
 
 article::after {
-  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
+  /* Repeating pattern for marquee effect */
+  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
   display: block;
   margin-top: 12px;
   padding-top: 6px;
@@ -90,6 +91,16 @@ article::after {
   opacity: .6;
   text-align: center;
   pointer-events: none;
+  
+  /* Animation */
+  width: 200%;
+  margin-left: -50%;
+  animation: dividerMarquee 25s linear infinite;
+}
+
+@keyframes dividerMarquee {
+  0% { transform: translateX(-12%); }
+  100% { transform: translateX(12%); }
 }
 
 /* ================================
