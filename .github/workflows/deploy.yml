@@ -28,10 +28,13 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Inject Configuration
-        # This takes the secret content and writes it to js/config.js
-        # The secret MUST contain the full 'window.__APP_CONFIG__ = ...' content
+        env:
+           # Use an environment variable to pass the secret safely to the script
+           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG_JSON }}
+        shell: bash
         run: |
-          echo "${{ secrets.FIREBASE_CONFIG_JSON }}" > js/config.js
+          # Use Node.js to write the file to avoid shell quoting/encoding issues
+          node -e "const fs = require('fs'); fs.writeFileSync('js/config.js', process.env.FIREBASE_CONFIG);"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
