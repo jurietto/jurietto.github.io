@@ -5,7 +5,7 @@ import { apiPostComment } from "./forum-api.js";
 export function setupPostForm(
   postUser, postFile, postText, postButton, 
   commentsRef, currentUserId, 
-  onPostSuccess, showNotice
+  onPostSuccess, showNotice, onOptimisticAdd
 ) {
   let isPostingInProgress = false;
   let lastPostTime = 0;
@@ -125,12 +125,31 @@ export function setupPostForm(
       const content = postText?.value.trim() || "";
       const savedUser = postUser?.value.trim();
       const tempMediaCount = selection.files.length;
+      
+      const filesForOptimistic = [...selection.files];
 
       // Clear immediately
       if (postText) postText.value = "";
       if (postFile) postFile.value = "";
       postAccumulatedFiles = [];
       updatePreview(postFile, postPreview);
+      
+      // OPTIMISTIC UI: Show it now!
+      if (onOptimisticAdd) {
+        const optimisticComment = {
+            id: "temp-" + Date.now(),
+            user: savedUser || "Anonymous",
+            text: content,
+            // Create object URLs for images for immediate display
+            media: filesForOptimistic.map(f => ({ 
+                type: f.type.startsWith('video') ? 'video' : 'image', 
+                url: URL.createObjectURL(f) 
+            })),
+            userId: currentUserId,
+            createdAt: { seconds: Date.now() / 1000 },
+        };
+        onOptimisticAdd(optimisticComment);
+      }
       
       // Visual feedback
       if (postButton) {

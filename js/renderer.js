@@ -86,6 +86,23 @@ function createPrivateSoundCloudEmbed(url) {
 }
 
 export function renderEmbed(url) {
+  // Handle explicit type object for Optimistic UI
+  if (typeof url === 'object' && url !== null && url.url && url.type) {
+      if (url.type === 'video') {
+          const v = document.createElement('video');
+          v.className = 'forum-media video';
+          v.src = url.url;
+          v.controls = true;
+          return v;
+      } else {
+          // Assume image for everything else for now
+          const img = document.createElement('img');
+          img.className = 'forum-media image';
+          img.src = url.url;
+          return img;
+      }
+  }
+
   try {
     const clean = stripTrackingParams(url).split("#")[0];
     const lower = clean.toLowerCase();

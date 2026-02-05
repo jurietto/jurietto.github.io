@@ -420,7 +420,20 @@ setupPostForm(
   postUser, postFile, postText, postButton, 
   commentsRef, currentUserId, 
   () => { currentPage = 0; loadComments(0); }, 
-  showNotice
+  showNotice,
+  (comment) => {
+    if (currentPage === 0 && !currentSearch) {
+      const wrap = renderCommentElement(comment, {
+        className: "forum-comment",
+        kaomoji: "(*^ω^)",
+        currentUserId,
+        onEdit: null, onDelete: null, onReply: null, onFlag: null
+      });
+      wrap.style.opacity = "0.8"; 
+      wrap.style.transition = "opacity 0.5s";
+      container.prepend(wrap);
+    }
+  }
 );
 loadComments();
 window.reloadForum = () => loadComments(currentPage);

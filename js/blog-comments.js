@@ -341,6 +341,8 @@ export function setupCommentForm(postId, firebaseDb) {
       // Optimistic Reset - Clear form immediately
       const text = commentText?.value.trim() || "";
       const user = commentUsername?.value.trim() || "Anonymous";
+
+      const filesForOptimistic = [...selection.files]; // Capture files
       
       // Clear immediately
       if (commentText) commentText.value = "";
@@ -350,6 +352,38 @@ export function setupCommentForm(postId, firebaseDb) {
       accumulatedFiles = [];
       updatePreview(commentFile, preview, []);
       localStorage.setItem("blog_username", user);
+
+        // OPTIMISTIC RENDER
+      const optimisticComment = {
+        user,
+        text,
+        media: filesForOptimistic.map(f => ({ 
+            type: f.type.startsWith('video') ? 'video' : 'image', 
+            url: URL.createObjectURL(f) 
+        })),
+        createdAt: { seconds: Date.now() / 1000 },
+        userId: currentUserId
+      };
+      
+      const wrap = document.createElement("div");
+      wrap.className = "forum-comment";
+      wrap.style.opacity = "0.7";
+      wrap.style.borderLeft = "4px solid #4CAF50";
+      
+      const meta = document.createElement('div');
+      meta.className = 'forum-meta';
+      meta.innerHTML = `<strong>＼(^o^)／ ${user}</strong> — Just now`;
+      wrap.appendChild(meta);
+      
+      renderBodyWithEmbeds(text, wrap);
+      renderMedia(optimisticComment.media, wrap);
+      
+      if (commentsEl) {
+         if (commentsEl.querySelector('p')?.textContent === "No comments at this time...") {
+             commentsEl.innerHTML = "";
+         }
+         commentsEl.prepend(wrap);
+      }
 
       // Visual feedback
       submitBtn.disabled = true;
