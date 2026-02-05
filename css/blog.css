@@ -79,28 +79,30 @@ article code {
 
 article::after {
   /* Repeating pattern for marquee effect */
-  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥";
+  content: "♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇ ♠ ◇ ♣ ◇ ♥ ◇";
   display: block;
   margin-top: 12px;
   padding-top: 6px;
   font: 1.2rem/1 "Mona", monospace;
   letter-spacing: .35em;
   white-space: nowrap;
-  overflow: hidden;
+  
+  /* Layout for animation */
+  width: 200%;           /* Make wide enough to slide */
+  margin-left: -50%;     /* Center the wide block roughly */
+  text-align: center;
+  
   color: var(--masala);
   opacity: .6;
-  text-align: center;
   pointer-events: none;
   
-  /* Animation */
-  width: 200%;
-  margin-left: -50%;
-  animation: dividerMarquee 25s linear infinite;
+  will-change: transform;
+  animation: dividerMarquee 30s linear infinite;
 }
 
 @keyframes dividerMarquee {
-  0% { transform: translateX(-12%); }
-  100% { transform: translateX(12%); }
+  0% { transform: translateX(-10%); }
+  100% { transform: translateX(10%); }
 }
 
 /* ================================
