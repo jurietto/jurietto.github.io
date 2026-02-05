@@ -28,15 +28,18 @@ export const renderLink = url => {
 // --- Embed Helpers ---
 
 function createPrivateYouTubeEmbed(videoId) {
-  // Container for the embed facade
-  const container = document.createElement('div');
+  // Container as a link
+  const container = document.createElement('a');
+  container.href = `https://www.youtube.com/watch?v=${videoId}`;
+  container.target = '_blank';
+  container.rel = 'noopener noreferrer';
   container.className = 'youtube-embed';
-  container.style.cssText = 'position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;cursor:pointer;border-radius:4px;';
+  container.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:4px;text-decoration:none;';
   
   // Thumbnail image
   const thumb = document.createElement('img');
   thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  thumb.alt = 'Load YouTube Video';
+  thumb.alt = 'Watch on YouTube';
   thumb.loading = 'lazy';
   thumb.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;opacity:0.8;transition:opacity 0.2s;';
   
@@ -50,21 +53,6 @@ function createPrivateYouTubeEmbed(videoId) {
   // Hover effect
   container.onmouseenter = () => thumb.style.opacity = '1';
   container.onmouseleave = () => thumb.style.opacity = '0.8';
-
-  // Click handler to load the actual iframe
-  container.onclick = () => {
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
-    iframe.title = "YouTube video player";
-    iframe.frameBorder = "0";
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    iframe.allowFullscreen = true;
-    iframe.style.cssText = "width:100%;height:100%;border:none;";
-    
-    // Clear the facade and add the iframe
-    container.innerHTML = '';
-    container.append(iframe);
-  };
 
   return container;
 }
