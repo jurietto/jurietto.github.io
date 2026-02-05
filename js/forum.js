@@ -72,14 +72,26 @@ function showNotice(message) {
   notice.hidden = false;
 }
 
-// ============ EDIT/DELETE ============
+// ============ EDIT/DELETE (via Cloud Functions to bypass ad blocker) ============
+const CF_BASE = 'https://us-central1-chansi-ddd7e.cloudfunctions.net';
+
 async function editComment(id, newText, newMedia) {
   try {
-    await updateDoc(doc(db, "threads", "general", "comments", id), {
-      text: newText,
-      media: newMedia,
-      editedAt: Date.now()
+    const response = await fetch(`${CF_BASE}/editComment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        commentId: id,
+        threadId: 'general',
+        userId: currentUserId,
+        text: newText,
+        media: newMedia
+      })
     });
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(err || `HTTP ${response.status}`);
+    }
     loadComments(currentPage);
   } catch (err) {
     showNotice("Error editing: " + err.message);
@@ -88,7 +100,19 @@ async function editComment(id, newText, newMedia) {
 
 async function deleteComment(id) {
   try {
-    await deleteDoc(doc(db, "threads", "general", "comments", id));
+    const response = await fetch(`${CF_BASE}/deleteComment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        commentId: id,
+        threadId: 'general',
+        userId: currentUserId
+      })
+    });
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(err || `HTTP ${response.status}`);
+    }
     loadComments(currentPage);
   } catch (err) {
     showNotice("Error deleting: " + err.message);
