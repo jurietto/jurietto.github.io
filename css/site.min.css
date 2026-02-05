@@ -98,7 +98,6 @@ img,video,iframe { max-width: 100%; height: auto; display: block; }
 
 /* put a subtle page color on the root and let the pattern show through */
 html { background-color: var(--azalea); }
-html[data-theme="purple"] { background-color: #000000; }
 
 body {
   position: relative;
@@ -157,6 +156,11 @@ body::before {
   pointer-events: none;
   animation: heart-drift 1800s linear infinite;
   z-index: -1;
+}
+
+html[data-theme="purple"] body::before {
+  /* Shift heart color from pink to purple */
+  filter: hue-rotate(-60deg);
 }
 
 /* ================================
@@ -273,9 +277,30 @@ input[type="email"] {
   pointer-events: auto;
 }
 
+.scroll-buttons button {
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
 @media (max-width: 720px) {
   .scroll-buttons {
-    display: none;
+    /* Keep visible on mobile */
+    display: flex; 
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .scroll-buttons button {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    opacity: 0.8; /* Slight transparency on mobile to see content behind */
   }
 }
 
