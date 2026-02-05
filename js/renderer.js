@@ -28,24 +28,45 @@ export const renderLink = url => {
 // --- Embed Helpers ---
 
 function createPrivateYouTubeEmbed(videoId) {
-  const link = document.createElement('a');
-  link.href = `https://www.youtube.com/watch?v=${videoId}`;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;';
+  // Container for the embed facade
+  const container = document.createElement('div');
+  container.className = 'youtube-embed';
+  container.style.cssText = 'position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;cursor:pointer;border-radius:4px;';
   
+  // Thumbnail image
   const thumb = document.createElement('img');
   thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  thumb.alt = 'YouTube video';
+  thumb.alt = 'Load YouTube Video';
   thumb.loading = 'lazy';
-  thumb.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;';
+  thumb.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;opacity:0.8;transition:opacity 0.2s;';
   
+  // Play button overlay
   const playBtn = document.createElement('div');
-  playBtn.textContent = '▶';
-  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;';
+  playBtn.innerHTML = '<svg viewBox="0 0 68 48" height="48" width="68" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00" fill-opacity="0.8"></path><path d="M 45,24 27,14 27,34" fill="#fff"></path></svg>';
+  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 0 10px rgba(0,0,0,0.5));pointer-events:none;';
   
-  link.append(thumb, playBtn);
-  return link;
+  container.append(thumb, playBtn);
+
+  // Hover effect
+  container.onmouseenter = () => thumb.style.opacity = '1';
+  container.onmouseleave = () => thumb.style.opacity = '0.8';
+
+  // Click handler to load the actual iframe
+  container.onclick = () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+    iframe.title = "YouTube video player";
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = "width:100%;height:100%;border:none;";
+    
+    // Clear the facade and add the iframe
+    container.innerHTML = '';
+    container.append(iframe);
+  };
+
+  return container;
 }
 
 function createPrivateWikipediaEmbed(articleTitle, lang = 'en') {

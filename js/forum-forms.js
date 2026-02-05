@@ -121,27 +121,48 @@ export function setupPostForm(
     postButton.disabled = true;
 
     try {
-      const media = selection.files.length
+      // Optimistic Reset - Clear form immediately to make it feel instant
+      const content = postText?.value.trim() || "";
+      const savedUser = postUser?.value.trim();
+      const tempMediaCount = selection.files.length;
+
+      // Clear immediately
+      if (postText) postText.value = "";
+      if (postFile) postFile.value = "";
+      postAccumulatedFiles = [];
+      updatePreview(postFile, postPreview);
+      
+      // Visual feedback
+      if (postButton) {
+        postButton.disabled = true;
+        postButton.textContent = "Posting...";
+      }
+
+      // Do the actual heavy lifting
+      const media = tempMediaCount
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
       await apiPostComment(
         commentsRef, 
-        postUser?.value.trim() || "Anonymous", 
+        savedUser || "Anonymous", 
         content,
         media,
         currentUserId
       );
 
       lastPostTime = Date.now();
-      if (postText) postText.value = "";
-      if (postFile) postFile.value = "";
-      postAccumulatedFiles = [];
-      updatePreview(postFile, postPreview);
       onPostSuccess?.();
+    } catch (err) {
+       // Revert on failure (or show detailed error)
+       console.error("Post failed", err);
+       showNotice("Failed to post. Please try again.");
     } finally {
       isPostingInProgress = false;
-      postButton.disabled = false;
+      if (postButton) {
+        postButton.disabled = false;
+        postButton.textContent = "Post";
+      }
     }
   };
 

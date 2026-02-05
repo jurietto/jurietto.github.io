@@ -323,10 +323,24 @@ export function setupCommentForm(postId, firebaseDb) {
     }
 
     try {
+      // Optimistic Reset - Clear form immediately
+      const text = commentText?.value.trim() || "";
+      const user = commentUsername?.value.trim() || "Anonymous";
+      
+      // Clear immediately
+      if (commentText) commentText.value = "";
+      if (commentFile) commentFile.value = "";
+      const tempMediaCount = selection.files.length;
+           
+      accumulatedFiles = [];
+      updatePreview(commentFile, preview, []);
+      localStorage.setItem("blog_username", user);
+
+      // Visual feedback
       submitBtn.disabled = true;
       submitBtn.textContent = "Posting...";
-      
-      const media = selection.files.length
+
+      const media = tempMediaCount
         ? await Promise.all(selection.files.map(uploadFile))
         : null;
 
@@ -340,18 +354,11 @@ export function setupCommentForm(postId, firebaseDb) {
         null, // replyTo
         `blogPosts/${postId}/comments` // collectionPath
       );
-
-      // Reset form
-      if (commentText) commentText.value = "";
-      if (commentFile) commentFile.value = "";
-      accumulatedFiles = [];
-      updatePreview(commentFile, preview, []);
-      localStorage.setItem("blog_username", user);
       
       // Real-time listener handles UI update
-      commentsSection?.scrollIntoView({ behavior: "smooth" });
     } catch (err) {
       console.error("Error posting:", err);
+      showNotice("Failed to post comment");
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Post";
