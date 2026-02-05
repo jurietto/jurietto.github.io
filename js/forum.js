@@ -82,7 +82,14 @@ async function editComment(id, newText, newMedia) {
     });
     loadComments(currentPage);
   } catch (err) {
-    showNotice("Error editing: " + err.message);
+    console.error("Edit failed:", err);
+    if (err.code === 'permission-denied') {
+      showNotice("Permission denied. You might have been logged out or the rules changed.");
+    } else if (err.code === 'unavailable') {
+      showNotice("Network error: Firebase is blocked by ad blocker or offline.");
+    } else {
+      showNotice("Error editing: " + err.message);
+    }
   }
 }
 
@@ -91,7 +98,14 @@ async function deleteComment(id) {
     await deleteDoc(doc(db, "threads", "general", "comments", id));
     loadComments(currentPage);
   } catch (err) {
-    showNotice("Error deleting: " + err.message);
+    console.error("Delete failed:", err);
+    if (err.code === 'permission-denied') {
+      showNotice("Permission denied. You might have been logged out or the rules changed.");
+    } else if (err.code === 'unavailable') {
+      showNotice("Network error: Firebase is blocked by ad blocker or offline.");
+    } else {
+      showNotice("Error deleting: " + err.message);
+    }
   }
 }
 
