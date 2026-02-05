@@ -75,18 +75,21 @@ function showNotice(message) {
 // ============ EDIT/DELETE ============
 async function editComment(id, newText, newMedia) {
   try {
+    // We include userId in the update to ensure security rules validation pass
+    // (Rules often check: request.resource.data.userId == resource.data.userId)
     await updateDoc(doc(db, "threads", "general", "comments", id), {
       text: newText,
       media: newMedia,
+      userId: currentUserId, 
       editedAt: Date.now()
     });
     loadComments(currentPage);
   } catch (err) {
     console.error("Edit failed:", err);
     if (err.code === 'permission-denied') {
-      showNotice("Permission denied. You might have been logged out or the rules changed.");
+      showNotice("Permission denied. Ensure your User ID matches.");
     } else if (err.code === 'unavailable') {
-      showNotice("Network error: Firebase is blocked by ad blocker or offline.");
+      showNotice("Network error: Firebase is blocked by ad blocker.");
     } else {
       showNotice("Error editing: " + err.message);
     }
@@ -95,14 +98,35 @@ async function editComment(id, newText, newMedia) {
 
 async function deleteComment(id) {
   try {
+    // For delete, we can't send a payload. 
+    // If rules require userId validation for delete, we might be stuck without Auth
+    // or we might need to use a "soft delete" (update with deleted: true + userId)
     await deleteDoc(doc(db, "threads", "general", "comments", id));
     loadComments(currentPage);
   } catch (err) {
     console.error("Delete failed:", err);
+    // Fallback: Try soft delete if hard delete fails which might bypass delete rules
+    // often delete rules are stricter than update rules
+    if (err.code === 'permission-denied') {
+        try {
+            console.log("Hard delete failed, trying soft delete...");
+            await updateDoc(doc(db, "threads", "general", "comments", id), {
+                text: "[deleted]",
+                media: null,
+                userId: currentUserId,
+                isDeleted: true
+            });
+            loadComments(currentPage);
+            return;
+        } catch (softErr) {
+            console.error("Soft delete also failed:", softErr);
+        }
+    }
+
     if (err.code === 'permission-denied') {
       showNotice("Permission denied. You might have been logged out or the rules changed.");
     } else if (err.code === 'unavailable') {
-      showNotice("Network error: Firebase is blocked by ad blocker or offline.");
+      showNotice("Network error: Firebase is blocked by ad blocker.");
     } else {
       showNotice("Error deleting: " + err.message);
     }

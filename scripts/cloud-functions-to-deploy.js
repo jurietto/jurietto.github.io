@@ -3,13 +3,13 @@
  * 
  * DEPLOY INSTRUCTIONS:
  * 1. Copy these functions to your Firebase Functions project (functions/index.js)
- * 2. Run: npm install cors (in functions folder)
- * 3. Run: firebase deploy --only functions
+ * 2. Run: firebase deploy --only functions
+ * 
+ * NOTE: This version does NOT require 'npm install cors'. It handles CORS manually.
  */
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const cors = require('cors')({ origin: true });
 
 // Initialize if not already
 if (!admin.apps.length) {
@@ -17,6 +17,20 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+
+// Manual CORS helper - Handles Preflight OPTIONS requests
+const cors = (req, res, handler) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.set('Access-Control-Max-Age', '3600');
+  
+  if (req.method === 'OPTIONS') {
+    res.status(204).send('');
+    return;
+  }
+  return handler(req, res);
+};
 
 /**
  * Edit a comment
@@ -35,7 +49,6 @@ exports.editComment = functions.https.onRequest((req, res) => {
         return res.status(400).send('Missing required fields');
       }
       
-      // Get the comment to verify ownership
       const commentRef = db.collection('threads').doc(threadId).collection('comments').doc(commentId);
       const commentDoc = await commentRef.get();
       
@@ -48,7 +61,6 @@ exports.editComment = functions.https.onRequest((req, res) => {
         return res.status(403).send('Not authorized to edit this comment');
       }
       
-      // Update the comment
       await commentRef.update({
         text: text,
         media: media || null,
@@ -58,7 +70,7 @@ exports.editComment = functions.https.onRequest((req, res) => {
       return res.status(200).json({ success: true });
     } catch (error) {
       console.error('Edit error:', error);
-      return res.status(500).send('Internal server error');
+      return res.status(500).send(error.message);
     }
   });
 });
@@ -80,7 +92,6 @@ exports.deleteComment = functions.https.onRequest((req, res) => {
         return res.status(400).send('Missing required fields');
       }
       
-      // Get the comment to verify ownership
       const commentRef = db.collection('threads').doc(threadId).collection('comments').doc(commentId);
       const commentDoc = await commentRef.get();
       
@@ -93,13 +104,12 @@ exports.deleteComment = functions.https.onRequest((req, res) => {
         return res.status(403).send('Not authorized to delete this comment');
       }
       
-      // Delete the comment
       await commentRef.delete();
       
       return res.status(200).json({ success: true });
     } catch (error) {
       console.error('Delete error:', error);
-      return res.status(500).send('Internal server error');
+      return res.status(500).send(error.message);
     }
   });
 });
