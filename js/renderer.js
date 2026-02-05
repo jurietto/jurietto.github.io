@@ -161,7 +161,7 @@ export function renderEmbed(url) {
             if (/\.(gif|mp4)$/i.test(pathOnly)) {
                 const img = document.createElement('img'); 
                 img.className='forum-media image'; 
-                img.src = clean; 
+                img.src = u.href; 
                 img.loading='lazy'; 
                 return img; 
             }
@@ -178,7 +178,7 @@ export function renderEmbed(url) {
               if (/\.(mp4|webm|ogv|mov)(\?|$)/i.test(decodedLower)) {
                 const v = document.createElement('video');
                 v.className = 'forum-media video';
-                v.src = clean;
+                v.src = u.href;
                 v.controls = true;
                 v.preload = 'metadata';
                 return v;
@@ -186,47 +186,51 @@ export function renderEmbed(url) {
               if (/\.(mp3|ogg|wav|flac|m4a)(\?|$)/i.test(decodedLower)) {
                 const a = document.createElement('audio');
                 a.className = 'forum-media audio';
-                a.src = clean;
+                a.src = u.href;
                 a.controls = true;
                 a.preload = 'metadata';
                 return a;
               }
               const img = document.createElement('img');
               img.className = 'forum-media image';
-              img.src = clean;
+              img.src = u.href;
               img.loading = 'lazy';
               return img;
             }
         }
     }
 
-    // Generic Image
-    if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(pathOnly)) {
-      const img = document.createElement('img');
-      img.className = 'forum-media image';
-      img.src = clean;
-      img.loading = 'lazy';
-      return img;
-    }
+    const safeSrc = u ? u.href : ( !/^\s*[a-zA-Z0-9+.-]+:/.test(clean) ? clean : null );
 
-    // Generic Video
-    if (/\.(mp4|webm|ogv|mov)$/.test(lower)) {
-      const v = document.createElement('video');
-      v.className = 'forum-media video';
-      v.src = clean;
-      v.controls = true;
-      v.preload = 'metadata';
-      return v;
-    }
+    if (safeSrc) {
+        // Generic Image
+        if (/\.(png|jpe?g|gif|webp|bmp|avif|svg)$/.test(pathOnly)) {
+          const img = document.createElement('img');
+          img.className = 'forum-media image';
+          img.src = safeSrc;
+          img.loading = 'lazy';
+          return img;
+        }
 
-    // Generic Audio
-    if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower)) {
-      const a = document.createElement('audio');
-      a.className = 'forum-media audio';
-      a.src = clean;
-      a.controls = true;
-      a.preload = 'metadata';
-      return a;
+        // Generic Video
+        if (/\.(mp4|webm|ogv|mov)$/.test(lower)) {
+          const v = document.createElement('video');
+          v.className = 'forum-media video';
+          v.src = safeSrc;
+          v.controls = true;
+          v.preload = 'metadata';
+          return v;
+        }
+
+        // Generic Audio
+        if (/\.(mp3|ogg|wav|flac|m4a)$/.test(lower)) {
+          const a = document.createElement('audio');
+          a.className = 'forum-media audio';
+          a.src = safeSrc;
+          a.controls = true;
+          a.preload = 'metadata';
+          return a;
+        }
     }
 
     return renderLink(url);
