@@ -37,6 +37,39 @@
   --pesto-r: 120,100,46;
   --azalea-r: 241,173,203;
 }
+
+[data-theme="purple"] {
+  /* Purple-shifted palette (pink → purple equivalents) */
+  --hibiscus: #6c2ec7;        /* deep purple-magenta */
+  --deep-blush: #9b5ae6;      /* soft lavender-purple */
+  --alpine: #b6922e;          /* unchanged */
+  --masala: #3e3533;          /* unchanged */
+  --brilliant-rose: #b356f5;  /* vibrant neon violet */
+  --gray: #8c8586;            /* unchanged */
+  --cadillac: #69489e;        /* muted dusty purple */
+  --pesto: #78642e;           /* unchanged */
+  --azalea: #cbadf1;          /* pale lilac */
+  
+  /* RGB Override for alpha usage if needed, approximated from hex */
+  /* --hibiscus-r: 108, 46, 199; */
+  /* --deep-blush-r: 155, 90, 230; */
+  /* ... others ... */
+  /* Re-calculating specific RGBs used in gradients/backgrounds if critical, 
+     but user only provided hex. Browsers can handle var(--hex) in many places, 
+     but gradients often use rgba(var(--name-r), ...).
+     
+     Let's attempt to provide RGBA versions for consistency if existing CSS uses them heavily.
+     azalea (#cbadf1) -> 203, 173, 241
+     deep-blush (#9b5ae6) -> 155, 90, 230
+     hibiscus (#6c2ec7) -> 108, 46, 199
+     brilliant-rose (#b356f5) -> 179, 86, 245
+  */
+  --hibiscus-r: 108, 46, 199;
+  --deep-blush-r: 155, 90, 230;
+  --brilliant-rose-r: 179, 86, 245;
+  --azalea-r: 203, 173, 241;
+}
+
 /* ================================
    GLOBAL BASE — SAFE
    ================================ */
@@ -65,6 +98,7 @@ img,video,iframe { max-width: 100%; height: auto; display: block; }
 
 /* put a subtle page color on the root and let the pattern show through */
 html { background-color: var(--azalea); }
+html[data-theme="purple"] { background-color: #000000; }
 
 body {
   position: relative;

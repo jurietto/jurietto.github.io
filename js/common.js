@@ -9,24 +9,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     if (themeToggle) {
-      themeToggle.innerText = theme === 'dark' ? '☀️' : '🌙';
-      themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      // If theme is purple, show Pink Heart (switch to light). 
+      // If theme is light, show Purple Heart (switch to purple).
+      themeToggle.innerText = theme === 'purple' ? '💗' : '💜';
+      themeToggle.setAttribute('aria-label', theme === 'purple' ? 'Switch to light mode' : 'Switch to purple mode');
     }
   };
 
   // Initialize theme
   const savedTheme = localStorage.getItem('theme');
-  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // Optional: check system preference if we want to map dark mode system setting to purple mode automatically
+  // const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
   if (savedTheme) {
     setTheme(savedTheme);
-  } else if (systemDark) {
-    setTheme('dark');
-  }
+  } 
+  // else if (systemDark) {
+  //   setTheme('purple');
+  // }
 
   themeToggle?.addEventListener('click', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const newTheme = currentTheme === 'purple' ? 'light' : 'purple';
     setTheme(newTheme);
   });
 
