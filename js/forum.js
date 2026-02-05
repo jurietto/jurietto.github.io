@@ -16,15 +16,16 @@ if (!db) {
 import { uploadFile } from "./storage.js";
 import {
   collection, query, orderBy, getDocs, addDoc, onSnapshot, 
-  doc, updateDoc, deleteDoc, serverTimestamp
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+import { 
+  apiEditComment, apiDeleteComment, apiFlagComment, apiFetchAllComments 
+} from "./forum-api.js";
+import { setupPostForm } from "./forum-forms.js";
 
 // Shared utilities
 import {
-  formatDate, getCreatedAtValue, getUserId, matchesSearch,
-  isImageFile, getSelectedImages, syncInputImages, validateFileSize,
-  createAttachmentPreview, handlePasteImages, handleDropImages,
-  renderBodyWithEmbeds, renderMedia, MAX_IMAGES
+  getCreatedAtValue, getUserId, matchesSearch
 } from "./utils.js";
 
 // UI components
@@ -34,9 +35,6 @@ import {
 
 // ============ CONSTANTS ============
 const PAGE_SIZE = 10;
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
-const POST_COOLDOWN_MS = 2000;
-const MAX_POST_LENGTH = 10000;
 
 // ============ DOM ELEMENTS ============
 const container = document.getElementById("comments");
@@ -57,10 +55,6 @@ let currentPage = 0;
 let currentSearch = "";
 let latestSeen = null;
 let hasLoadedSnapshot = false;
-let postPreview = null;
-let postAccumulatedFiles = [];
-let isPostingInProgress = false;
-let lastPostTime = 0;
 
 const currentUserId = getUserId("forum_user_id");
 
@@ -72,30 +66,10 @@ function showNotice(message) {
   notice.hidden = false;
 }
 
-// ============ EDIT/DELETE (Cloud Functions) ============
-// Bypasses local permission issues and ad blockers by running as Admin
-const CF_BASE = 'https://us-central1-chansi-ddd7e.cloudfunctions.net';
-
+// ============ EDIT/DELETE ============
 async function editComment(id, newText, newMedia) {
   try {
-    const response = await fetch(`${CF_BASE}/editComment`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        commentId: id,
-        threadId: "general",
-        userId: currentUserId,
-        text: newText,
-        media: newMedia
-      })
-    });
-
-    if (!response.ok) {
-      if (response.status === 403) throw new Error("Permission denied: You do not own this comment.");
-      const errText = await response.text();
-      throw new Error(errText || `Server error ${response.status}`);
-    }
-
+    await apiEditComment(id, currentUserId, newText, newMedia);
     loadComments(currentPage);
   } catch (err) {
     console.error("Edit failed:", err);
@@ -107,22 +81,7 @@ async function editComment(id, newText, newMedia) {
 
 async function deleteComment(id) {
   try {
-    const response = await fetch(`${CF_BASE}/deleteComment`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        commentId: id,
-        threadId: "general",
-        userId: currentUserId
-      })
-    });
-
-    if (!response.ok) {
-        if (response.status === 403) throw new Error("Permission denied: You do not own this comment.");
-        const errText = await response.text();
-        throw new Error(errText || `Server error ${response.status}`);
-    }
-
+    await apiDeleteComment(id, currentUserId);
     loadComments(currentPage);
   } catch (err) {
     console.error("Delete failed:", err);
@@ -135,13 +94,12 @@ async function deleteComment(id) {
 // ============ FLAG/REPORT ============
 function openFlagModal(commentId) {
   const modal = createFlagModal(commentId, "general", async ({ reason, details }) => {
-    const response = await fetch('https://us-central1-chansi-ddd7e.cloudfunctions.net/flagComment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ commentId, threadId: "general", reason, details })
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    showNotice("✓ Report submitted. Thank you!");
+    try {
+      await apiFlagComment(commentId, reason, details);
+      showNotice("✓ Report submitted. Thank you!");
+    } catch (e) {
+      throw new Error(`Submit failed: ${e.message}`);
+    }
   });
   document.body.appendChild(modal);
 }
@@ -228,18 +186,11 @@ function renderNestedReplies(parent, parentEl, replyMap, depth) {
 async function loadComments(page = 0) {
   container.innerHTML = "";
   
-  const [rootSnap, replySnap] = await Promise.all([
-    getDocs(query(commentsRef, orderBy("createdAt", "desc"))),
-    getDocs(query(commentsRef, orderBy("createdAt", "asc")))
-  ]);
+  const snap = await apiFetchAllComments(commentsRef);
+  const allDocs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
-  const roots = rootSnap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(d => !d.replyTo);
-
-  const replies = replySnap.docs
-    .map(d => ({ id: d.id, ...d.data() }))
-    .filter(d => d.replyTo);
+  const roots = allDocs.filter(d => !d.replyTo);
+  const replies = allDocs.filter(d => d.replyTo);
 
   // Build reply map
   const replyMap = new Map();
@@ -335,143 +286,7 @@ function renderPagination(active, totalPages) {
   }));
 }
 
-// ============ POST FORM ============
-function setupPostForm() {
-  if (postUser) {
-    postUser.value = localStorage.getItem("forum_username") || "";
-    postUser.addEventListener("input", () => {
-      localStorage.setItem("forum_username", postUser.value.trim());
-    });
-  }
 
-  if (postFile) {
-    postPreview = createAttachmentPreview(postFile);
-    postFile.addEventListener("change", () => {
-      postAccumulatedFiles = [...postAccumulatedFiles, ...Array.from(postFile.files || [])]
-        .filter(isImageFile)
-        .slice(0, MAX_IMAGES);
-      
-      if (postAccumulatedFiles.length >= MAX_IMAGES) {
-        showNotice(`Max ${MAX_IMAGES} images allowed`);
-      }
-      
-      const dt = new DataTransfer();
-      postAccumulatedFiles.forEach(f => dt.items.add(f));
-      postFile.files = dt.files;
-      
-      updatePreview(postFile, postPreview);
-    });
-  }
-
-  const postForm = document.getElementById("post-form");
-  if (postForm) {
-    postForm.addEventListener("dragover", e => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "copy";
-    });
-    postForm.addEventListener("drop", e => {
-      handleDropImages(e, postFile, postPreview, showNotice, () => updatePreview(postFile, postPreview));
-    });
-  }
-
-  postText?.addEventListener("paste", e => {
-    handlePasteImages(e, postFile, postPreview, showNotice, () => updatePreview(postFile, postPreview));
-  });
-
-  postButton?.addEventListener("click", submitPost);
-}
-
-function updatePreview(input, preview) {
-  if (!preview || !input) return;
-  const files = Array.from(input.files || []);
-  preview.innerHTML = "";
-  
-  if (!files.length) {
-    preview.hidden = true;
-    return;
-  }
-
-  const list = document.createElement("div");
-  list.className = "attachment-preview-list";
-  
-  files.forEach((f, i) => {
-    const item = document.createElement("div");
-    item.className = "attachment-preview-item";
-    
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.textContent = "Delete";
-    btn.onclick = () => {
-      const dt = new DataTransfer();
-      files.forEach((file, idx) => idx !== i && dt.items.add(file));
-      input.files = dt.files;
-      postAccumulatedFiles = Array.from(input.files);
-      updatePreview(input, preview);
-    };
-    
-    const name = document.createElement("span");
-    name.textContent = f.name;
-    
-    item.append(btn, name);
-    list.appendChild(item);
-  });
-
-  preview.appendChild(list);
-  preview.hidden = false;
-}
-
-async function submitPost() {
-  if (isPostingInProgress) return;
-
-  const timeSince = Date.now() - lastPostTime;
-  if (timeSince < POST_COOLDOWN_MS) {
-    showNotice(`Please wait ${Math.ceil((POST_COOLDOWN_MS - timeSince) / 1000)}s...`);
-    return;
-  }
-
-  const selection = getSelectedImages(postFile);
-  if (selection.error) {
-    showNotice(selection.error);
-    return;
-  }
-
-  const content = postText?.value.trim() || "";
-  if (!content && !selection.files.length) return;
-
-  if (content.length > MAX_POST_LENGTH) {
-    showNotice(`Post too long (max ${MAX_POST_LENGTH} chars)`);
-    return;
-  }
-
-  isPostingInProgress = true;
-  postButton.disabled = true;
-
-  try {
-    const media = selection.files.length
-      ? await Promise.all(selection.files.map(uploadFile))
-      : null;
-
-    const data = {
-      user: postUser?.value.trim() || "Anonymous",
-      text: content,
-      createdAt: serverTimestamp(),
-      userId: currentUserId
-    };
-    if (media) data.media = media;
-
-    await addDoc(commentsRef, data);
-
-    lastPostTime = Date.now();
-    if (postText) postText.value = "";
-    if (postFile) postFile.value = "";
-    postAccumulatedFiles = [];
-    updatePreview(postFile, postPreview);
-    currentPage = 0;
-  } finally {
-    isPostingInProgress = false;
-    postButton.disabled = false;
-  }
-}
 
 // ============ SEARCH ============
 function runSearch() {
@@ -532,7 +347,12 @@ notice?.addEventListener("click", () => {
 });
 
 // ============ INIT ============
-setupPostForm();
+setupPostForm(
+  postUser, postFile, postText, postButton, 
+  commentsRef, currentUserId, 
+  () => { currentPage = 0; loadComments(0); }, 
+  showNotice
+);
 loadComments();
 window.reloadForum = () => loadComments(currentPage);
 

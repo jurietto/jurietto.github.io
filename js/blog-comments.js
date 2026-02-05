@@ -13,8 +13,9 @@ import { uploadFile } from "./storage.js";
 import {
   formatDate, getUserId, isImageFile, getSelectedImages,
   createAttachmentPreview, handlePasteImages, handleDropImages,
-  renderBodyWithEmbeds, renderMedia, MAX_IMAGES
+  MAX_IMAGES
 } from "./utils.js";
+import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 
 // UI components
 import { createEditForm, createFlagModal } from "./forum-ui.js";

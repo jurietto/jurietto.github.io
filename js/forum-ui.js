@@ -4,10 +4,10 @@
  */
 
 import {
-  formatDate, renderBodyWithEmbeds, renderMedia, 
-  createAttachmentPreview, syncInputImages, getSelectedImages,
+  formatDate, createAttachmentPreview, syncInputImages, getSelectedImages,
   handlePasteImages, handleDropImages, MAX_IMAGES
 } from "./utils.js";
+import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 import { uploadFile } from "./storage.js";
 
 // Security: Escape HTML to prevent XSS attacks
