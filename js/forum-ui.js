@@ -351,8 +351,6 @@ export function renderCommentElement(comment, options) {
   wrap.className = className;
   
   const isOwner = comment.userId && comment.userId === currentUserId;
-  // Debug: log ownership check
-  console.log('Comment ownership check:', { commentUserId: comment.userId, currentUserId, isOwner });
   const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
   
   const meta = document.createElement('div');
@@ -379,12 +377,14 @@ export function renderCommentElement(comment, options) {
   renderBodyWithEmbeds(comment.text, wrap);
   renderMedia(comment.media, wrap);
   
-  // Reply button
-  const replyBtn = document.createElement("button");
-  replyBtn.textContent = "Reply";
-  replyBtn.className = "forum-reply-button";
-  replyBtn.onclick = () => onReply?.(comment.id, wrap);
-  wrap.appendChild(replyBtn);
+  // Reply button (only if onReply is provided)
+  if (onReply) {
+    const replyBtn = document.createElement("button");
+    replyBtn.textContent = "Reply";
+    replyBtn.className = "forum-reply-button";
+    replyBtn.onclick = () => onReply(comment.id, wrap);
+    wrap.appendChild(replyBtn);
+  }
   
   // Flag button (if not owner)
   if (!isOwner && onFlag) {
