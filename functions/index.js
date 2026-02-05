@@ -153,7 +153,8 @@ exports.postComment = functions.https.onRequest((req, res) => {
     try {
       const { threadId, user, userId, text, media, replyTo, collectionPath } = req.body;
       
-      if (!userId || !text) {
+      // Allow empty text if media is present
+      if (!userId || (!text && (!media || !media.length))) {
         return res.status(400).send('Missing required fields');
       }
       
