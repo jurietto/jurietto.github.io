@@ -92,18 +92,23 @@ export function renderEmbed(url) {
 
     // SoundCloud
     if (url.includes('soundcloud.com') && !url.includes('w.soundcloud.com/player')) {
-      return createPrivateSoundCloudEmbed(clean);
+      const u = new URL(url);
+      if (u.hostname === 'soundcloud.com' || u.hostname === 'm.soundcloud.com') {
+        return createPrivateSoundCloudEmbed(clean);
+      }
     }
 
     // Tenor GIF
     if (url.includes("tenor.com")) {
       // Basic hostname check to prevent "evil-tenor.com"
-      const u = new URL(url);
-      if (u.hostname === 'tenor.com' || u.hostname.endsWith('.tenor.com')) {
-        return /\.(gif|mp4)$/i.test(clean)
-          ? (function(){ const img = document.createElement('img'); img.className='forum-media image'; img.src = clean; img.loading='lazy'; return img; })()
-          : renderLink(url);
-      }
+      try {
+        const u = new URL(url);
+        if (u.hostname === 'tenor.com' || u.hostname === 'media.tenor.com') {
+          return /\.(gif|mp4)$/i.test(clean)
+            ? (function(){ const img = document.createElement('img'); img.className='forum-media image'; img.src = clean; img.loading='lazy'; return img; })()
+            : renderLink(url);
+        }
+      } catch (e) { return renderLink(url); }
     }
 
     // Firebase Storage
@@ -183,18 +188,23 @@ function safeInsertEmbed(container, embed, urlHint) {
     container.appendChild(embed);
     return;
   }
-  // Fallback for string returns (shouldn't happen with updated renderEmbed logic, but safe to keep)
-  const s = String(embed).trim();
-  try {
-    const a = document.createElement('a');
-    const href = urlHint || s.replace(/<[^>]*>/g, '');
-    a.href = href;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer noindex';
-    a.textContent = href;
-    container.appendChild(a);
-  } catch {
+  // Fallback for string returns
+  // Use textContent directly instead of regex replacement to prevent XSS
+  if (typeof embed === 'string') {
+    const s = embed.trim();
+    if (s.startsWith('http://') || s.startsWith('https://')) {
+       // Safe link creation
+       const a = document.createElement('a');
+       a.href = s;
+       a.target = '_blank';
+       a.rel = 'noopener noreferrer noindex';
+       a.textContent = s;
+       container.appendChild(a);
+       return;
+    }
+    // Just text
     container.textContent = s;
+    return;
   }
 }
 
