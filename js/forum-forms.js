@@ -127,7 +127,7 @@ export function setupPostForm(
 
       await apiPostComment(
         commentsRef, 
-        postUser?.value.trim(), 
+        postUser?.value.trim() || "Anonymous", 
         content,
         media,
         currentUserId
