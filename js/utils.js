@@ -321,6 +321,7 @@ export function getUserId(storageKey) {
   } catch {
     return baseId;
   }
+}
 
 // ============ RENDER HELPERS ============
 function safeInsertEmbed(container, embed, urlHint) {
