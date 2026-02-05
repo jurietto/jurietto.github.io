@@ -269,9 +269,9 @@ function renderEmbed(url) {
     const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
     if (yt)
       return `
-        <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;position:relative;max-width:560px;width:100%;">
-          <img src="https://img.youtube.com/vi/${yt[1]}/hqdefault.jpg" alt="YouTube video" loading="lazy" style="display:block;width:100%;">
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.5);">▶</div>
+        <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;">
+          <img src="https://img.youtube.com/vi/${yt[1]}/hqdefault.jpg" alt="YouTube video" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;">
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 0 10px #000,0 0 20px #000,0 0 30px #000,2px 2px 4px #000;">▶</div>
         </a>`;
 
     if (lower.includes("open.spotify.com")) {

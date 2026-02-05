@@ -118,23 +118,23 @@ export const renderLink = url => {
 };
 
 // Privacy-friendly embed helpers
-// Thumbnail with play button, responsive, max 560px on desktop
+// Thumbnail with play button, 16:9 ratio, responsive, max 560px on desktop
 function createPrivateYouTubeEmbed(videoId) {
   const link = document.createElement('a');
   link.href = `https://www.youtube.com/watch?v=${videoId}`;
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
-  link.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;';
+  link.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;';
   
   const thumb = document.createElement('img');
   thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   thumb.alt = 'YouTube video';
   thumb.loading = 'lazy';
-  thumb.style.cssText = 'display:block;width:100%;';
+  thumb.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;';
   
   const playBtn = document.createElement('div');
   playBtn.textContent = '▶';
-  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.5);';
+  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 0 10px #000,0 0 20px #000,0 0 30px #000,2px 2px 4px #000;';
   
   link.append(thumb, playBtn);
   return link;
