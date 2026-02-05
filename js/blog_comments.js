@@ -490,7 +490,7 @@ function createYouTubeEmbed(videoId) {
   
   const playBtn = document.createElement('div');
   playBtn.textContent = '▶';
-  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 0 10px #000,0 0 20px #000,0 0 30px #000,2px 2px 4px #000;';
+  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;';
   
   link.append(img, playBtn);
   return link;
@@ -528,10 +528,7 @@ function renderEmbed(url) {
     }
 
     if (/\/\/(?:www\.)?soundcloud\.com\//i.test(url) || /\/\/on\.soundcloud\.com\//i.test(url)) {
-      const encoded = encodeURIComponent(url);
-      return `<iframe class="forum-media audio"
-              src="https://w.soundcloud.com/player/?url=${encoded}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
-              loading="lazy" allow="autoplay"></iframe>`;
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     }
 
     return renderLink(url);
@@ -752,14 +749,15 @@ export async function loadComments(postId, firebaseDb) {
       }
 
       if (/^<iframe\b/i.test(s)) {
+        // Convert iframe to plain link
         const m = s.match(/src=["']([^"']+)["']/i);
         const src = m ? m[1] : urlHint;
-        const ifr = document.createElement('iframe');
-        ifr.className = 'forum-media audio';
-        ifr.loading = 'lazy';
-        ifr.src = src || '';
-        ifr.setAttribute('allow', 'autoplay');
-        container.appendChild(ifr);
+        const a = document.createElement('a');
+        a.href = src || urlHint || '#';
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer noindex';
+        a.textContent = a.href;
+        container.appendChild(a);
         return;
       }
 

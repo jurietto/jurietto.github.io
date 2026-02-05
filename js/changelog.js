@@ -22,7 +22,11 @@ const FALLBACK_COMMITS = [
   { commit: { message: "Improved forum with better media handling" } },
   { commit: { message: "Enhanced blog with symbol animations" } },
   { commit: { message: "Performance optimizations and code cleanup" } },
-  { commit: { message: "Added comment editing and deletion" } }
+  { commit: { message: "Added comment editing and deletion" } },
+  { commit: { message: "Zero tracking - removed all iframes and external cookies" } },
+  { commit: { message: "Updated CSP headers for enhanced security" } },
+  { commit: { message: "Fixed responsive design for mobile devices" } },
+  { commit: { message: "Added reply threading to forum comments" } }
 ];
 
 function renderChangelog(commits) {

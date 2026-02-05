@@ -175,11 +175,25 @@ iframe.forum-media.audio {
   word-break: break-word;
 }
 
+#post-form input[type="text"],
+#post-form input[type="search"],
+#post-form input:not([type]),
 #post-form textarea,
+#forum-search-input,
+#blog-search-input,
+#comment-username,
 .reply-form textarea {
   font-family: "Mona", sans-serif;
   white-space: pre;
   tab-size: 4;
+}
+
+#post-form input::placeholder,
+#forum-search-input::placeholder,
+#blog-search-input::placeholder,
+#comment-username::placeholder,
+.reply-form input::placeholder {
+  font-family: "Mona", sans-serif;
 }
 
 .attachment-preview {

@@ -5,7 +5,7 @@ addEventListener('fetch', event => {
 async function handle(request) {
   const res = await fetch(request)
   const headers = new Headers(res.headers)
-  headers.set('Content-Security-Policy', "default-src 'self'; base-uri 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://chansi-ddd7e.firebaseio.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src https://www.youtube-nocookie.com https://w.soundcloud.com https://open.spotify.com https://chansi-ddd7e.firebaseapp.com; object-src 'none'; form-action 'self'; frame-ancestors 'none'; report-uri https://REPLACE_WITH_REPORT_HOST/csp-report")
+  headers.set('Content-Security-Policy', "default-src 'self'; base-uri 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://chansi-ddd7e.firebaseio.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; report-uri https://REPLACE_WITH_REPORT_HOST/csp-report")
   headers.set('X-Content-Type-Options', 'nosniff')
   headers.set('Referrer-Policy', 'no-referrer-when-downgrade')
   headers.set('X-Frame-Options', 'DENY')

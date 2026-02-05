@@ -134,7 +134,7 @@ function createPrivateYouTubeEmbed(videoId) {
   
   const playBtn = document.createElement('div');
   playBtn.textContent = '▶';
-  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 0 10px #000,0 0 20px #000,0 0 30px #000,2px 2px 4px #000;';
+  playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;';
   
   link.append(thumb, playBtn);
   return link;
@@ -157,7 +157,7 @@ function createPrivateSpotifyEmbed(spotifyType, spotifyId) {
   link.href = `https://open.spotify.com/${spotifyType}/${spotifyId}`;
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
-  link.textContent = `🎵 Listen on Spotify`;
+  link.textContent = link.href;
   return link;
 }
 
@@ -167,7 +167,7 @@ function createPrivateSoundCloudEmbed(url) {
   link.href = url;
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
-  link.textContent = `🎵 Listen on SoundCloud`;
+  link.textContent = url;
   return link;
 }
 

@@ -271,15 +271,15 @@ function renderEmbed(url) {
       return `
         <a href="https://www.youtube.com/watch?v=${yt[1]}" target="_blank" rel="noopener noreferrer" style="display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;">
           <img src="https://img.youtube.com/vi/${yt[1]}/hqdefault.jpg" alt="YouTube video" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover;">
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;text-shadow:0 0 10px #000,0 0 20px #000,0 0 30px #000,2px 2px 4px #000;">▶</div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:4rem;color:#fff;">▶</div>
         </a>`;
 
     if (lower.includes("open.spotify.com")) {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">🎵 Listen on Spotify</a>`;
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     }
 
     if (lower.includes("soundcloud.com"))
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">🎵 Listen on SoundCloud</a>`;
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
 
     return renderLink(url);
   } catch {
@@ -356,14 +356,15 @@ function safeInsertEmbed(container, embed, urlHint) {
   }
 
   if (/^<iframe\b/i.test(s)) {
+    // Convert iframe to plain link
     const m = s.match(/src=["']([^"']+)["']/i);
     const src = m ? m[1] : urlHint;
-    const ifr = document.createElement('iframe');
-    ifr.className = 'forum-media audio';
-    ifr.loading = 'lazy';
-    ifr.src = src || '';
-    ifr.setAttribute('allow', 'autoplay');
-    container.appendChild(ifr);
+    const a = document.createElement('a');
+    a.href = src || urlHint || '#';
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer noindex';
+    a.textContent = a.href;
+    container.appendChild(a);
     return;
   }
 
