@@ -72,64 +72,63 @@ function showNotice(message) {
   notice.hidden = false;
 }
 
-// ============ EDIT/DELETE ============
+// ============ EDIT/DELETE (Cloud Functions) ============
+// Bypasses local permission issues and ad blockers by running as Admin
+const CF_BASE = 'https://us-central1-chansi-ddd7e.cloudfunctions.net';
+
 async function editComment(id, newText, newMedia) {
   try {
-    // We include userId in the update to ensure security rules validation pass
-    // (Rules often check: request.resource.data.userId == resource.data.userId)
-    await updateDoc(doc(db, "threads", "general", "comments", id), {
-      text: newText,
-      media: newMedia,
-      userId: currentUserId, 
-      editedAt: Date.now()
+    const response = await fetch(`${CF_BASE}/editComment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        commentId: id,
+        threadId: "general",
+        userId: currentUserId,
+        text: newText,
+        media: newMedia
+      })
     });
+
+    if (!response.ok) {
+      if (response.status === 403) throw new Error("Permission denied: You do not own this comment.");
+      const errText = await response.text();
+      throw new Error(errText || `Server error ${response.status}`);
+    }
+
     loadComments(currentPage);
   } catch (err) {
     console.error("Edit failed:", err);
-    if (err.code === 'permission-denied') {
-      showNotice("Permission denied. Ensure your User ID matches.");
-    } else if (err.code === 'unavailable') {
-      showNotice("Network error: Firebase is blocked by ad blocker.");
-    } else {
-      showNotice("Error editing: " + err.message);
-    }
+    showNotice(err.message.includes("Failed to fetch") 
+      ? "Network error: API may be blocked or not deployed." 
+      : "Error editing: " + err.message);
   }
 }
 
 async function deleteComment(id) {
   try {
-    // For delete, we can't send a payload. 
-    // If rules require userId validation for delete, we might be stuck without Auth
-    // or we might need to use a "soft delete" (update with deleted: true + userId)
-    await deleteDoc(doc(db, "threads", "general", "comments", id));
+    const response = await fetch(`${CF_BASE}/deleteComment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        commentId: id,
+        threadId: "general",
+        userId: currentUserId
+      })
+    });
+
+    if (!response.ok) {
+        if (response.status === 403) throw new Error("Permission denied: You do not own this comment.");
+        const errText = await response.text();
+        throw new Error(errText || `Server error ${response.status}`);
+    }
+
     loadComments(currentPage);
   } catch (err) {
     console.error("Delete failed:", err);
-    // Fallback: Try soft delete if hard delete fails which might bypass delete rules
-    // often delete rules are stricter than update rules
-    if (err.code === 'permission-denied') {
-        try {
-            console.log("Hard delete failed, trying soft delete...");
-            await updateDoc(doc(db, "threads", "general", "comments", id), {
-                text: "[deleted]",
-                media: null,
-                userId: currentUserId,
-                isDeleted: true
-            });
-            loadComments(currentPage);
-            return;
-        } catch (softErr) {
-            console.error("Soft delete also failed:", softErr);
-        }
-    }
-
-    if (err.code === 'permission-denied') {
-      showNotice("Permission denied. You might have been logged out or the rules changed.");
-    } else if (err.code === 'unavailable') {
-      showNotice("Network error: Firebase is blocked by ad blocker.");
-    } else {
-      showNotice("Error deleting: " + err.message);
-    }
+    showNotice(err.message.includes("Failed to fetch") 
+      ? "Network error: API may be blocked or not deployed." 
+      : "Error deleting: " + err.message);
   }
 }
 
