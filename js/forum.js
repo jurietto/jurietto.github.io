@@ -33,6 +33,9 @@ import {
   createEditForm, createFlagModal, createReplyForm, renderCommentElement 
 } from "./forum-ui.js";
 
+// Import renderer for optimistic updates if needed, though we use renderCommentElement
+import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
+
 // ============ CONSTANTS ============
 const PAGE_SIZE = 10;
 
@@ -67,27 +70,93 @@ function showNotice(message) {
 }
 
 // ============ EDIT/DELETE ============
-async function editComment(id, newText, newMedia) {
+async function editComment(id, newText, newMedia, originalComment) {
+  // Optimistic Update
+  const el = document.querySelector(`div[data-id="${id}"]`);
+  
+  if (el && originalComment) {
+    const updatedComment = { 
+      ...originalComment, 
+      text: newText, 
+      media: newMedia, 
+      editedAt: { seconds: Date.now() / 1000 } // Simulate Timestamp
+    };
+    
+    // We need to preserve nested replies if this is a root comment!
+    // renderCommentElement returns just the comment block.
+    // If we replace 'el', we might lose children appended to it?
+    // In renderComment (line ~160), replies are appended to 'wrap' (el).
+    // So if we replace 'el', we lose replies.
+    // We must RE-RENDER only the content, OR move replies to the new element.
+    
+    // Strategy: Re-render body and meta, keep children (replies).
+    
+    // 1. Clear everything EXCEPT replies?
+    // Replies have class "forum-reply-wrapper" or similar?
+    // Looking at renderComment:
+    // wrap.appendChild(meta); renderBody... renderMedia... wrap.appendChild(replyBtn)...
+    // then container.appendChild(wrap);
+    // AND THEN: if (replies.length > 0) ... wrap.appendChild(replyWrap).
+    
+    // So replies are children of 'el'.
+    
+    // Easier Plan: Update META and BODY/MEDIA in place?
+    // Or: Generate new element, move replies to it, replace old.
+    
+    const newEl = renderCommentElement(updatedComment, {
+        className: el.className,
+        kaomoji: originalComment.replyTo ? "（　ﾟДﾟ）" : "＼(^o^)／",
+        currentUserId,
+        onEdit: handleEdit,
+        onDelete: deleteComment,
+        onReply: handleReply,
+        onFlag: openFlagModal
+    });
+    
+    // Move replies from old el to new el
+    // Assuming replies are always at the end?
+    // We can identify replies by class?
+    // In renderComment, replies are wrapped in a div? 
+    // "const replyWrap = document.createElement("div");" 
+    // It doesn't seem to have a class. Loop and check?
+    
+    const children = Array.from(el.children);
+    children.forEach(child => {
+       // If it looks like a reply container
+       if (child.querySelector && child.querySelector('.forum-reply')) {
+           newEl.appendChild(child);
+       }
+       // If it is the "Reply" button or "Report" button, they are re-created by renderCommentElement.
+    });
+    
+    el.replaceWith(newEl);
+  }
+
   try {
     await apiEditComment(id, currentUserId, newText, newMedia);
-    loadComments(currentPage);
+    showNotice("Comment updated.");
   } catch (err) {
     console.error("Edit failed:", err);
-    showNotice(err.message.includes("Failed to fetch") 
-      ? "Network error: API may be blocked or not deployed." 
-      : "Error editing: " + err.message);
+    showNotice("Error editing: " + err.message);
+    // Revert? Hard to do perfectly. Reloading might be safer on error.
+    loadComments(currentPage);
   }
 }
 
 async function deleteComment(id) {
+  // Optimistic Delete
+  const el = document.querySelector(`div[data-id="${id}"]`);
+  if (el) el.style.display = 'none'; // Hide immediately
+
   try {
     await apiDeleteComment(id, currentUserId);
-    loadComments(currentPage);
+    // DO NOT CALL loadComments(currentPage).
+    showNotice("Comment deleted.");
+    if (el) el.remove(); // Fully remove on success
   } catch (err) {
     console.error("Delete failed:", err);
-    showNotice(err.message.includes("Failed to fetch") 
-      ? "Network error: API may be blocked or not deployed." 
-      : "Error deleting: " + err.message);
+    if (el) el.style.display = ''; // Restore
+    showNotice("Error deleting: " + err.message);
   }
 }
 
@@ -109,7 +178,7 @@ function handleEdit(comment, wrap) {
   wrap.querySelector("[data-edit-form]")?.remove();
   const form = createEditForm(
     comment,
-    (text, media) => editComment(comment.id, text, media),
+    (text, media) => editComment(comment.id, text, media, comment), // Pass original object
     null,
     showNotice
   );

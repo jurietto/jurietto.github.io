@@ -86,14 +86,35 @@ export function createEditForm(comment, onSave, onCancel, showNotice) {
     cancelBtn.type = 'button';
     cancelBtn.className = 'edit-cancel-btn';
     cancelBtn.textContent = 'Cancel';
+    cancelBtn.onclick = () => {
+      form.remove();
+      onCancel?.();
+    };
     pbtn.appendChild(saveBtn);
     pbtn.appendChild(cancelBtn);
     form.appendChild(pbtn);
     
+    saveBtn.onclick = async () => {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+      try {
+        await onSave(ta.value, mediaArray);
+        form.remove();
+      } catch (e) {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save';
+        showNotice?.(e.message);
+      }
+    };
+
     // Media delete handlers
     form.querySelectorAll(".delete-media-btn").forEach(btn => {
       btn.onclick = (e) => {
         e.preventDefault();
+        mediaArray.splice(parseInt(btn.dataset.index), 1);
+        render();
+      };
+    });
         mediaArray.splice(parseInt(btn.dataset.index), 1);
         render();
       };
@@ -348,6 +369,7 @@ export function renderCommentElement(comment, options) {
   
   const wrap = document.createElement("div");
   wrap.className = className;
+  wrap.dataset.id = comment.id; // Store ID for easy lookup
   
   const isOwner = comment.userId && comment.userId === currentUserId;
   const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";

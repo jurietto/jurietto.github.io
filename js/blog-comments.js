@@ -71,6 +71,13 @@ function renderHashtags(hashtags) {
 
 // ============ EDIT/DELETE ============
 async function editComment(postId, commentId, newText, newMedia) {
+  // Optimistic Update
+  const el = document.querySelector(`div[data-id="${commentId}"]`);
+  if (el) {
+    // Ideally update text. For now, we trust the user sees the "Saving..." on the button.
+    // The edit form is separate.
+  }
+  
   try {
     await apiEditComment(
       commentId,
@@ -79,22 +86,29 @@ async function editComment(postId, commentId, newText, newMedia) {
       newMedia,
       `blogPosts/${postId}/comments`
     );
-    // showNotice("Comment updated!"); 
+     // Success
   } catch (err) {
     console.error("Edit failed:", err);
+    showNotice?.("Edit failed: " + err.message);
   }
 }
 
 async function deleteComment(postId, commentId) {
+  // Optimistic Delete
+  const el = document.querySelector(`div[data-id="${commentId}"]`);
+  if (el) el.style.display = 'none';
+
   try {
     await apiDeleteComment(
       commentId,
       currentUserId,
       `blogPosts/${postId}/comments`
     );
-    // showNotice("Comment deleted.");
+    if(el) el.remove();
   } catch (err) {
     console.error("Delete failed:", err);
+    if (el) el.style.display = ''; // Restore
+    showNotice?.("Delete failed: " + err.message);
   }
 }
 
@@ -160,6 +174,7 @@ export async function loadComments(postId, firebaseDb) {
         
         const wrap = document.createElement("div");
         wrap.className = "forum-comment";
+        wrap.dataset.id = commentId; // For optimistic lookup
 
         const isOwner = comment.userId === currentUserId;
         const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
