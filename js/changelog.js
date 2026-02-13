@@ -15,20 +15,6 @@ if (!list) {
   const CACHE_KEY = "changelog_cache";
   const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-// Fallback entries when API is unavailable and no cache exists
-const FALLBACK_COMMITS = [
-  { commit: { message: "Fixed image uploads - Firebase storage images now display properly" } },
-  { commit: { message: "Added privacy-friendly embeds for YouTube, Spotify, SoundCloud" } },
-  { commit: { message: "Improved forum with better media handling" } },
-  { commit: { message: "Enhanced blog with symbol animations" } },
-  { commit: { message: "Performance optimizations and code cleanup" } },
-  { commit: { message: "Added comment editing and deletion" } },
-  { commit: { message: "Zero tracking - removed all iframes and external cookies" } },
-  { commit: { message: "Updated CSP headers for enhanced security" } },
-  { commit: { message: "Fixed responsive design for mobile devices" } },
-  { commit: { message: "Added reply threading to forum comments" } }
-];
-
 function renderChangelog(commits) {
   list.innerHTML = "";
   commits.slice(0, MAX_ENTRIES).forEach(c => {
@@ -78,7 +64,7 @@ function setCacheData(data) {
     renderChangelog(cachedCommits);
   } else if (!ENABLE_GITHUB_FETCH) {
     // GitHub fetch disabled (private repo)
-    renderChangelog(FALLBACK_COMMITS);
+    showError();
   } else {
     // Fetch fresh data
     fetch(`https://api.github.com/repos/${OWNER}/${REPO}/commits`)
@@ -101,7 +87,7 @@ function setCacheData(data) {
         if (staleCache) {
           renderChangelog(staleCache);
         } else {
-          renderChangelog(FALLBACK_COMMITS);
+          showError();
         }
         console.error(err);
       });
