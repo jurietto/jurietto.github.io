@@ -12,8 +12,8 @@ if (!list) {
   const OWNER = "jurietto";
   const REPO = "jurietto.github.io";
   const MAX_ENTRIES = 10;
-  const CACHE_KEY = "changelog_cache";
-  const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+  const CACHE_KEY = "changelog_cache_v2";
+  const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
 
 function renderChangelog(commits) {
   list.innerHTML = "";
