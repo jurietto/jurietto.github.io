@@ -2,16 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script src="js/theme-init.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://chansi-ddd7e.firebaseio.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src 'self' https://www.youtube-nocookie.com; object-src 'none'; form-action 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://firebasestorage.googleapis.com https://chansi-ddd7e.firebaseio.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src 'self' https://www.youtube-nocookie.com; object-src 'none'; form-action 'self';">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>PRIVACY</title>
 
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+
   <!-- Preload critical fonts -->
   <link rel="preload" href="font/mona.woff" as="font" type="font/woff" crossorigin>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="🍭(¬‿¬) 凸">
+  <meta property="og:description" content="Privacy policy for the message board.">
+  <meta property="og:image" content="/art/ckp88_orig.png">
+  <meta property="og:url" content="https://jurietto.github.io/privacy.html">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🍭(¬‿¬) 凸">
+  <meta name="twitter:description" content="Privacy policy for the message board.">
+  <meta name="twitter:image" content="/art/ckp88_orig.png">
+
   <link rel="stylesheet" href="css/site.min.css">
 </head>
 
@@ -26,7 +43,6 @@
   <a href="/profile.html">Profile</a>
   <span aria-hidden="true">♣</span>
   <a href="/privacy.html">Privacy</a>
-  <button id="theme-toggle" aria-label="Toggle purple mode" style="background:none;border:none;cursor:pointer;font-size:1.2rem;margin-left:8px;padding:0;color:inherit;">💜</button>
 </nav>
 
 <h1><img src="art/ckp88_orig.png" alt="Privacy Policy" loading="lazy"></h1>
@@ -52,35 +68,55 @@ This site collects minimal data. When you post or comment, we store:
 </ul>
 
 <p>
-We do NOT collect:
+<strong>What I don't collect:</strong>
 </p>
 
 <ul>
-  <li>IP addresses</li>
-  <li>Cookies</li>
-  <li>Browser/device information</li>
-  <li>Location data</li>
-  <li>Any tracking pixels or analytics</li>
+  <li>No advertising cookies or tracking pixels</li>
+  <li>No third-party analytics (Google Analytics, etc.)</li>
+  <li>No email addresses or contact information</li>
+  <li>No intentional profiling or behavioral tracking</li>
 </ul>
+
+<p>
+<strong>What Firebase/Google may collect:</strong>
+</p>
+
+<ul>
+  <li>IP addresses (for Firebase security and abuse prevention)</li>
+  <li>Browser/device information (user agent strings)</li>
+  <li>Authentication tokens if you log in</li>
+  <li>Basic usage metrics for Firebase services</li>
+</ul>
+
+<p>
+I don't control or have access to most of what Firebase collects. Google has their own privacy policies for Firebase services.
+</p>
 
 <h3>Data Storage</h3>
 
 <p>
 All posts and comments are stored in <strong>Google Firebase Firestore</strong>, a cloud database service.
 Data is publicly readable—anyone can see your posts and comments.
-We do not use any analytics platforms.
+Your content is stored on Google's servers and subject to their infrastructure and policies.
 </p>
 
 <h3>External Services</h3>
 
 <p>
-<strong>YouTube videos:</strong> We use privacy-enhanced YouTube embeds. Videos only load when you click to play them.
-YouTube does not track your presence on this site until you click a video.
+<strong>YouTube videos:</strong> We display static JPEG thumbnails, not actual YouTube embeds.
+When you click a video, it opens YouTube in a new tab - nothing from YouTube loads on this site until you click.
+Google can only track you after you leave this site and visit YouTube.
 </p>
 
 <p>
 <strong>Links:</strong> We strip tracking parameters (utm_*, fbclid, gclid) from user-shared links.
 Links open in a new tab with no referrer information.
+</p>
+
+<p>
+<strong>GitHub Pages:</strong> This site is hosted on GitHub Pages. GitHub may collect visitor logs and technical information.
+See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">GitHub's Privacy Statement</a> for details.
 </p>
 
 <h3>Security</h3>
@@ -97,30 +133,47 @@ This site uses:
   <li><strong>HTTPS/TLS encryption</strong> for all data in transit (via GitHub Pages)</li>
 </ul>
 
+<h3>Editing and Deleting Your Posts</h3>
+
+<p>
+<strong>You can edit or delete your own posts without creating an account.</strong> Here's how it works:
+</p>
+
+<ul>
+  <li>When you visit the site, a random ID is generated and saved in your browser's localStorage</li>
+  <li>This ID is attached to any posts or comments you make</li>
+  <li>You can edit/delete posts made from the same browser because your browser ID matches</li>
+  <li>If you clear your browser data, switch browsers, or use a different device, you lose the ability to edit/delete your posts</li>
+  <li>The ID includes a browser fingerprint (user agent, platform, language) to prevent simple ID theft</li>
+  <li>This is not a security feature - it's a convenience feature to let you fix typos or remove posts</li>
+</ul>
+
 <h3>Your Rights</h3>
 
 <p>
-Since this is a small personal project on GitHub:
+This is a small personal project:
 </p>
 
 <ul>
   <li>Posts and comments are public by default</li>
-  <li>We do not sell or share your data</li>
-  <li>To delete your content, contact the site administrator</li>
-  <li>We have no ads, no sponsorships, and no third-party tracking</li>
+  <li>I don't sell or share your data with third parties</li>
+  <li>If you lost access to edit/delete (cleared browser data, new device), contact me to remove content manually</li>
+  <li>No ads, no sponsorships, no affiliate marketing</li>
+  <li>I'm not a lawyer and this isn't legal advice - if you have serious privacy concerns, don't post personal information</li>
 </ul>
 
 <h3>Changes to This Policy</h3>
 
 <p>
-We may update this privacy policy. Changes will be posted here.
-Last updated: January 31, 2026
+I may update this privacy policy if things change. Check back occasionally.
+Last updated: February 12, 2026
 </p>
 
-<h3>Questions?</h3>
+<h3>The Bottom Line</h3>
 
 <p>
-This is a privacy-first site built for net friends. If you have concerns about privacy or security, feel free to ask.
+I built this to be as privacy-respecting as reasonably possible while using free hosting and database services.
+Firebase/Google/GitHub collect some stuff I can't control. I don't monetize this site or use your data for anything besides running the forum.
 </p>
 
 </main>
@@ -132,8 +185,8 @@ This is a privacy-first site built for net friends. If you have concerns about p
 </footer>
 
 <div class="scroll-buttons">
-  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">↑</button>
-  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">↓</button>
+  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">top</button>
+  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">down</button>
 </div>
 
 <script src="js/common.js"></script>

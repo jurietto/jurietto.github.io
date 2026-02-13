@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script src="js/theme-init.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' https://www.gstatic.com/firebasejs/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://firebasestorage.googleapis.com https://chansi-ddd7e.firebaseio.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src 'self' https://www.youtube-nocookie.com; object-src 'none'; form-action 'self';">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="Permissions-Policy" content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
   <title>PROFILE</title>
+
+  <!-- Preconnect to external resources -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 
   <!-- Preload critical fonts -->
   <link rel="preload" href="font/mona.woff" as="font" type="font/woff" crossorigin>
@@ -40,7 +43,6 @@
   <a href="/profile.html">Profile</a>
   <span aria-hidden="true">♣</span>
   <a href="/privacy.html">Privacy</a>
-  <button id="theme-toggle" aria-label="Toggle purple mode" style="background:none;border:none;cursor:pointer;font-size:1.2rem;margin-left:8px;padding:0;color:inherit;">💜</button>
 </nav>
 
 <h1><img src="art/ckp88_orig.png" alt="Profile" loading="lazy"></h1>
@@ -116,9 +118,6 @@ I also have a long-running attachment to Charmmy Kitty. It’s something familia
 
 </main>
 
-<!-- ================================================================
-     FOOTER
-     ================================================================ -->
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
   Thanks for stopping by... Juri made this, 2026
@@ -126,8 +125,8 @@ I also have a long-running attachment to Charmmy Kitty. It’s something familia
 </footer>
 
 <div class="scroll-buttons">
-  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">↑</button>
-  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">↓</button>
+  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">top</button>
+  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">down</button>
 </div>
 
 <script src="js/config.js"></script>

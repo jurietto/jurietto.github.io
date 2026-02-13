@@ -2,38 +2,6 @@
 // Uses event delegation for better performance
 
 document.addEventListener('DOMContentLoaded', () => {
-  // -- Dark Mode Logic --
-  const themeToggle = document.getElementById('theme-toggle');
-  
-  const setTheme = (theme) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    if (themeToggle) {
-      // If theme is purple, show Pink Heart (switch to light). 
-      // If theme is light, show Purple Heart (switch to purple).
-      themeToggle.innerText = theme === 'purple' ? '💗' : '💜';
-      themeToggle.setAttribute('aria-label', theme === 'purple' ? 'Switch to light mode' : 'Switch to purple mode');
-    }
-  };
-
-  // Initialize theme
-  const savedTheme = localStorage.getItem('theme');
-  // Optional: check system preference if we want to map dark mode system setting to purple mode automatically
-  // const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  if (savedTheme) {
-    setTheme(savedTheme);
-  } 
-  // else if (systemDark) {
-  //   setTheme('purple');
-  // }
-
-  themeToggle?.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'purple' ? 'light' : 'purple';
-    setTheme(newTheme);
-  });
-
   // Cache DOM elements
   const backBtn = document.getElementById('back-btn');
   const profileBtn = document.getElementById('profile-btn');

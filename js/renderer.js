@@ -43,7 +43,7 @@ function createPrivateYouTubeEmbed(videoId) {
   container.target = '_blank';
   container.rel = 'noopener noreferrer';
   container.className = 'youtube-embed';
-  container.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:4px;text-decoration:none;';
+  container.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;text-decoration:none;';
   
   // Thumbnail image
   const thumb = document.createElement('img');

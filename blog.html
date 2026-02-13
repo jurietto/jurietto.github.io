@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <script src="js/theme-init.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; script-src 'self' https://www.gstatic.com/firebasejs/ https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://firebasestorage.googleapis.com https://chansi-ddd7e.firebaseio.com https://api.github.com https://www.gstatic.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://us-central1-chansi-ddd7e.cloudfunctions.net wss://chansi-ddd7e.firebaseio.com; frame-src 'self' https://www.youtube-nocookie.com; object-src 'none'; form-action 'self';">
@@ -45,7 +44,7 @@
     <a href="/profile.html">Profile</a>
     <span aria-hidden="true">♣</span>
     <a href="/privacy.html">Privacy</a>
-  <button id="theme-toggle" aria-label="Toggle purple mode" style="background:none;border:none;cursor:pointer;font-size:1.2rem;margin-left:8px;padding:0;color:inherit;">💜</button>
+</nav>
 
   <!-- HEADER (matches forum + profile) -->
   <h1><img src="art/ckp88_orig.png" alt="Blog" loading="lazy"></h1>
@@ -110,6 +109,8 @@
     <div id="comments"></div>
   </div>
 
+</main>
+
 <div class="text-divider" aria-hidden="true"></div>
 <footer class="site-footer">
   Thanks for stopping by... Juri made this, 2026
@@ -117,8 +118,8 @@
 </footer>
 
 <div class="scroll-buttons">
-  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">↑</button>
-  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">↓</button>
+  <button type="button" id="scroll-top-btn" aria-label="Scroll to top of page">top</button>
+  <button type="button" id="scroll-bottom-btn" aria-label="Scroll to bottom of page">down</button>
 </div>
 
 <!-- Config must load and execute BEFORE blog.js module -->
