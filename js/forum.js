@@ -19,7 +19,7 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 import { 
-  apiEditComment, apiDeleteComment, apiFlagComment, apiFetchAllComments 
+  apiEditComment, apiDeleteComment, apiFetchAllComments 
 } from "./forum-api.js";
 import { setupPostForm } from "./forum-forms.js";
 
@@ -30,7 +30,7 @@ import {
 
 // UI components
 import { 
-  createEditForm, createFlagModal, createReplyForm, renderCommentElement 
+  createEditForm, createReplyForm, renderCommentElement
 } from "./forum-ui.js";
 
 // Import renderer for optimistic updates if needed, though we use renderCommentElement
@@ -160,18 +160,11 @@ async function deleteComment(id) {
   }
 }
 
-// ============ FLAG/REPORT ============
+// ============ FLAG/REPORT - Removed ============
 function openFlagModal(commentId) {
-  const modal = createFlagModal(commentId, "general", async ({ reason, details }) => {
-    try {
-      await apiFlagComment(commentId, reason, details);
-      showNotice("✓ Report submitted. Thank you!");
-    } catch (e) {
-      throw new Error(`Submit failed: ${e.message}`);
-    }
-  });
-  document.body.appendChild(modal);
+  // Report functionality disabled
 }
+
 
 // ============ COMMENT HANDLERS ============
 function handleEdit(comment, wrap) {

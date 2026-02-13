@@ -8,7 +8,7 @@ import {
   serverTimestamp, doc, updateDoc, deleteDoc, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 import { uploadFile } from "./storage.js";
-import { apiPostComment, apiEditComment, apiDeleteComment, apiFlagComment } from "./forum-api.js";
+import { apiPostComment, apiEditComment, apiDeleteComment } from "./forum-api.js";
 
 // Shared utilities
 import {
@@ -19,7 +19,7 @@ import {
 import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 
 // UI components
-import { createEditForm, createFlagModal } from "./forum-ui.js";
+import { createEditForm } from "./forum-ui.js";
 
 // ============ STATE ============
 let db = null;
@@ -112,29 +112,11 @@ async function deleteComment(postId, commentId) {
   }
 }
 
-// ============ REPORT MODAL ============
+// ============ REPORT MODAL - Removed ============
 function openReportModal(commentData) {
-  const modal = createFlagModal(
-    commentData.commentId,
-    currentPostId,
-    async ({ reason, details }) => {
-      const flaggedCommentsRef = collection(db, "flaggedComments");
-      await addDoc(flaggedCommentsRef, {
-        commentId: commentData.commentId,
-        commentText: commentData.text || "(no text)",
-        commentUser: commentData.user || "Anonymous",
-        commentPath: commentData.path,
-        postId: commentData.postId,
-        reason,
-        details: details || null,
-        reportedAt: serverTimestamp(),
-        reportedBy: currentUserId || "anonymous"
-      });
-      showNotice("Thank you! Your report has been submitted.");
-    }
-  );
-  document.body.appendChild(modal);
+   // Report functionality disabled
 }
+
 
 // ============ LOAD COMMENTS ============
 export async function loadComments(postId, firebaseDb) {
@@ -226,18 +208,7 @@ export async function loadComments(postId, firebaseDb) {
           if (hashtagEl) wrap.appendChild(hashtagEl);
         }
 
-        // Report button
-        const reportBtn = document.createElement("button");
-        reportBtn.className = "comment-report-btn";
-        reportBtn.textContent = "Report";
-        reportBtn.onclick = () => openReportModal({
-          commentId,
-          postId: currentPostId,
-          text: comment.text,
-          user: comment.user,
-          path: `blogPosts/${currentPostId}/comments/${commentId}`
-        });
-        wrap.appendChild(reportBtn);
+// Report button removed
 
         fragment.appendChild(wrap);
       });

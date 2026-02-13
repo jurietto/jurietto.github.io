@@ -121,88 +121,8 @@ export function createEditForm(comment, onSave, onCancel, showNotice) {
   return form;
 }
 
-// ============ FLAG/REPORT MODAL ============
-export function createFlagModal(commentId, threadId, onSubmit, onClose) {
-  const overlay = document.createElement("div");
-  Object.assign(overlay.style, {
-    position: "fixed",
-    top: "0",
-    left: "0",
-    right: "0",
-    bottom: "0",
-    background: "rgba(0,0,0,0.5)",
-    zIndex: "9999",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  });
-  
-  const form = document.createElement("div");
-  Object.assign(form.style, {
-    background: "#ffffff",
-    border: "1px solid #ccc",
-    padding: "1.5rem",
-    borderRadius: "8px",
-    maxWidth: "400px",
-    width: "90%"
-  });
-  
-    form.innerHTML = `
-    <h3 class="flag-title">Report Comment</h3>
-    <p>Why are you reporting this?</p>
-    <div class="flag-reasons">
-      <label><input type="radio" name="reason" value="spam"> Spam</label>
-      <label><input type="radio" name="reason" value="harassment"> Harassment</label>
-      <label><input type="radio" name="reason" value="nsfw"> NSFW Content</label>
-      <label><input type="radio" name="reason" value="misinformation"> Misinformation</label>
-      <label><input type="radio" name="reason" value="other"> Other</label>
-    </div>
-    <textarea placeholder="Additional details (optional)" rows="3" class="flag-details"></textarea>
-    <div class="flag-actions">
-      <button class="flag-cancel">Cancel</button>
-      <button class="flag-submit">Submit Report</button>
-    </div>
-  `;
-  
-  overlay.appendChild(form);
-  
-  const submitBtn = form.querySelector(".flag-submit");
-  const cancelBtn = form.querySelector(".flag-cancel");
-  const textarea = form.querySelector("textarea");
-  
-  const close = () => {
-    overlay.remove();
-    onClose?.();
-  };
-  
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) close();
-  });
-  
-  cancelBtn.onclick = close;
-  
-  submitBtn.onclick = async () => {
-    const reason = form.querySelector('input[name="reason"]:checked')?.value;
-    if (!reason) {
-      alert("Please select a reason");
-      return;
-    }
-    
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Submitting...";
-    
-    try {
-      await onSubmit({ commentId, threadId, reason, details: textarea.value });
-      close();
-    } catch (err) {
-      alert("Error submitting report: " + err.message);
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Submit Report";
-    }
-  };
-  
-  return overlay;
-}
+// ============ FLAG/REPORT MODAL - Removed ============
+
 
 // ============ REPLY FORM ============
 export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, serverTimestamp, showNotice, onSuccess) {
@@ -384,13 +304,7 @@ export function renderCommentElement(comment, options) {
   }
   
   // Flag button (if not owner)
-  if (!isOwner && onFlag) {
-    const flagBtn = document.createElement("button");
-    flagBtn.className = "comment-flag-btn";
-    flagBtn.textContent = "Report";
-    flagBtn.onclick = () => onFlag(comment.id);
-    wrap.appendChild(flagBtn);
-  }
+/* Report button removed */
   
   // Edit/Delete handlers
   if (isOwner) {

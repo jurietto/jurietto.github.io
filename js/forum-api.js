@@ -46,14 +46,8 @@ export async function apiDeleteComment(id, userId, collectionPath) {
   }
 }
 
-export async function apiFlagComment(commentId, reason, details) {
-  const response = await fetch(`${CF_BASE}/flagComment`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ commentId, threadId: "general", reason, details })
-  });
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-}
+// apiFlagComment removed
+
 
 export async function apiPostComment(collectionRef, user, text, media, userId, replyTo, collectionPath) {
   // collectionRef is unused because we use collectionPath or threadId
