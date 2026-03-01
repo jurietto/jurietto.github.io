@@ -1,87 +1,63 @@
-@font-face {
-  font-family: "Mona";
-  src: url("../font/mona.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "harringt";
-  src: url("../font/HARRINGT.TTF") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&display=swap');
 
 :root {
-  /* Restored original palette (hex and RGB helpers) */
-  --hibiscus: #c72e6c;
-  --deep-blush: #e65a9b;
-  --alpine: #b6922e;
-  --masala: #3e3533;
-  --brilliant-rose: #f556b3;
-  --gray: #8c8586;
-  --cadillac: #9e4869;
-  --pesto: #78642e;
-  --azalea: #f1adcb;
-
-  /* RGB helpers for alpha usage */
-  --hibiscus-r: 199,46,108;
-  --deep-blush-r: 230,90,155;
-  --alpine-r: 182,146,46;
-  --masala-r: 62,53,51;
-  --brilliant-rose-r: 245,86,179;
-  --gray-r: 140,133,134;
-  --cadillac-r: 158,72,105;
-  --pesto-r: 120,100,46;
-  --azalea-r: 241,173,203;
+  --bg-color: #000000;
+  --text-color: #00ff00;
+  --highlight-color: #ffffff;
 }
-/* ================================
-   GLOBAL BASE — SAFE
-   ================================ */
-/* warm, soft page background that pairs with the site palette */
+
 html,
 body {
-  font-family: "Mona", "MS PGothic", "MS Pゴシック", Arial, sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   line-height: 1.4;
   font-size: 16px;
   margin: 0;
   padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
-/* Normalize box model and base spacing to avoid unexpected gaps */
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { 
+  box-sizing: border-box; 
+}
 
-/* Base typography spacing for consistent layout */
-h1,h2,h3,h4,h5,h6 { margin: 0 0 0.5rem; font-weight: 600; }
-h1,h2,h3 { font-family: "harringt"; }
+h1,h2,h3,h4,h5,h6 { 
+  margin: 0 0 0.5rem; 
+  font-weight: 600; 
+  color: var(--highlight-color); 
+}
+h1,h2,h3 { font-family: "Noto Sans JP", sans-serif; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
 ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
-img,video,iframe { max-width: 100%; height: auto; display: block; }
+img,video,iframe { 
+  max-width: 100%; 
+  height: auto; 
+  display: block; 
+}
 
-
-/* put a subtle page color on the root and let the pattern show through */
-html { background-color: var(--azalea); }
+html { 
+  background-color: var(--bg-color); 
+}
 
 body {
   position: relative;
   z-index: 1;
-  background: transparent;
-  color: var(--masala);
+  background: var(--bg-color);
+  color: var(--text-color);
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   padding: 1rem;
 }
 
-/* Avoid forcing viewport height so pagination doesn't add extra scroll */
+.text-divider { 
+  border-top-color: var(--text-color); 
+}
+.site-footer { 
+  color: var(--text-color); 
+}
 
-.text-divider { border-top-color: var(--cadillac); }
-.site-footer { color: var(--cadillac); }
-
-/* Pagination layout: keep buttons inline and spaced */
 #pagination {
   display: flex;
   gap: 6px;
@@ -90,65 +66,17 @@ body {
   justify-content: center;
 }
 
-
-
-/* ================================
-   DARK MODE — BLACK + PURPLE/PINK
-   ================================ */
-
-/* dark mode removed: site uses single color scheme */
-
-/* ================================
-   TOGGLE CONTAINER
-   ================================ */
-
-/* dark-mode toggle removed */
-
-/* ================================
-   BACKGROUND PATTERN (GLOBAL)
-   ================================ */
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  /* use provided raw GitHub image so the pattern loads reliably */
-  background-image: url("https://raw.githubusercontent.com/jurietto/jurietto.github.io/main/art/ckst18.png");
-  background-repeat: repeat;
-  /* keep original image size, do not scale */
-  background-size: auto;
-  /* align pattern to top center so it begins at the top with no white gap */
-  background-position: top center;
-  opacity: 0.2; /* lower opacity for easier readability */
-  pointer-events: none;
-  animation: heart-drift 1800s linear infinite;
-  z-index: -1;
-}
-
-/* ================================
-   HEART DRIFT — NO VISIBLE LOOP
-   ================================ */
-
-@keyframes heart-drift {
-  from { background-position: 0 0; }
-  to   { background-position: 10000px 10000px; }
-}
-
-/* ================================
-   FORM ELEMENTS — INHERIT ONLY
-   ================================ */
-
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: "Mona", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: "Mona", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 /* Consistent sizing for all pages */
@@ -164,10 +92,6 @@ input[type="text"],
 input[type="email"] {
   min-width: 300px;
 }
-
-/* ================================
-   TEXT DIVIDER
-   ================================ */
 
 .text-divider {
   border-top: 1px solid currentColor;
@@ -186,22 +110,8 @@ input[type="email"] {
 }
 
 .text-divider::before {
-  content: "⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ⚜️ ♡ ♤ ♧ ♢ ";
-  display: inline-block;
-  font-size: 1.2rem;
-  line-height: 1;
-  white-space: nowrap;
+  content: "";
 }
-
-/* ================================
-   DARK MODE — DIVIDER
-   ================================ */
-
-/* dark-mode styles removed for text-divider */
-
-/* ================================
-   FOOTER
-   ================================ */
 
 .site-footer {
   font-size: 0.9rem;
@@ -209,7 +119,7 @@ input[type="email"] {
   margin-bottom: 0;
   text-align: left;
   direction: ltr;
-  color: var(--pesto);
+  color: var(--text-color);
   line-height: 1.6;
 }
 
@@ -217,16 +127,6 @@ input[type="email"] {
   color: inherit;
   text-decoration: underline;
 }
-
-/* ================================
-   DARK MODE — FOOTER
-   ================================ */
-
-/* dark-mode footer styles removed */
-
-/* ================================
-   SCROLL BUTTONS
-   ================================ */
 
 .scroll-buttons {
   position: fixed;
@@ -245,9 +145,6 @@ input[type="email"] {
   font-style: normal;
 }
 
-/* ================================
-   LIST STYLING
-   ================================ */
 ul {
   margin-left: 3em;
   padding-left: 0;
@@ -258,23 +155,32 @@ ul {
 }
 
 ul li::before {
-  content: "♠️ ";
+  content: "";
   margin-right: 0.25em;
 }
 
+/* Remove indentation from changelog */
+#changelog {
+  margin-left: 0;
+  padding-left: 0;
+}
 
+#changelog li {
+  margin-left: 0;
+  padding-left: 0;
+}
 
+#changelog li::before {
+  content: none;
+}
 
-/* ================================
-   SITE NAVIGATION
-   ================================ */
 .site-nav {
   display: block;
   padding: 1rem 0;
   margin: -1rem -1rem 1.5rem -1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-bottom: 1px solid rgba(var(--hibiscus-r), 1);
+  border-bottom: 1px solid var(--text-color);
   font-size: 0.95em;
 }
 
@@ -300,12 +206,6 @@ ul li::before {
   margin: 0 0.3em;
 }
 
-
-/* ================================
-   PERFORMANCE OPTIMIZATIONS
-   ================================ */
-
-/* Content-visibility for off-screen content */
 .forum-comment,
 article,
 .comment-thread {
@@ -313,50 +213,18 @@ article,
   contain-intrinsic-size: auto 200px;
 }
 
-/* GPU acceleration for animations */
-.forum-media,
-.lazy-loaded {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Reduce layout thrashing */
 .forum-media img,
 .forum-media video {
   aspect-ratio: 16 / 9;
   object-fit: contain;
 }
 
-/* Smooth scrolling (respect user preferences) */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
   }
 }
 
-/* Loading skeleton animation */
-.loading-skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite ease-in-out;
-}
-
-@keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Lazy-loaded image transition */
-.lazy-loaded {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Print styles */
 @media print {
   
   body {
@@ -365,6 +233,18 @@ article,
   }
 }
 
-/* Utility classes */
-.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
-.mr-05 { margin-right: 0.5rem; }
+.visually-hidden { 
+  position: absolute !important; 
+  width: 1px !important; 
+  height: 1px !important; 
+  padding: 0 !important; 
+  margin: -1px !important; 
+  overflow: hidden !important; 
+  clip: rect(0 0 0 0) !important; 
+  white-space: nowrap !important; 
+  border: 0 !important; 
+}
+
+.mr-05 { 
+  margin-right: 0.5rem; 
+}

@@ -255,7 +255,7 @@ export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, se
 export function renderCommentElement(comment, options) {
   const {
     className,
-    kaomoji = "＼(^o^)／",
+    kaomoji = "",
     currentUserId,
     onEdit,
     onDelete,

@@ -24,4 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
   scrollBottomBtn?.addEventListener('click', () => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }, { passive: true });
+
+  // Lazy load changelog when it comes into view
+  const changelogEl = document.getElementById('changelog');
+  if (changelogEl && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          import('./changelog.js').catch(err => {
+            console.warn('Failed to load changelog:', err);
+          });
+          observer.disconnect();
+        }
+      });
+    }, { rootMargin: '100px' });
+    observer.observe(changelogEl);
+  }
 });

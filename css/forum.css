@@ -1,26 +1,19 @@
-/* ================================
-   NOTICE
-   ================================ */
-
 .forum-notice {
   padding: 10px;
   margin-bottom: 15px;
-  border-radius: 4px;
-  background-color: rgba(var(--azalea-r), 0.3);
-  color: var(--masala);
+  border-radius: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-size: 0.95rem;
+  border: 1px solid var(--text-color);
 }
 
-/* ================================
-   TOP-LEVEL COMMENTS
-   ================================ */
-
 .forum-comment {
-  border: 5px solid var(--pesto);
-  background: linear-gradient(135deg, rgba(var(--azalea-r),1), rgba(var(--deep-blush-r),1));
+  border: 1px solid var(--text-color);
+  background: var(--bg-color);
   padding: 8px;
   margin-bottom: 10px;
-  color: var(--masala);
+  color: var(--text-color);
   max-width: 100%;
   overflow: hidden;
   overflow-wrap: anywhere;
@@ -28,17 +21,13 @@
   contain: content;
 }
 
-/* ================================
-   REPLIES
-   ================================ */
-
 .forum-reply {
-  border: 5px inset var(--cadillac);
-  background: linear-gradient(180deg, rgba(var(--deep-blush-r),1), rgba(var(--brilliant-rose-r),1));
+  border: 1px solid var(--text-color);
+  background: var(--bg-color);
   padding: 8px;
   margin-top: 8px;
   margin-left: 20px;
-  color: var(--masala);
+  color: var(--text-color);
   max-width: calc(100% - 20px);
   box-sizing: border-box;
   overflow: hidden;
@@ -47,12 +36,10 @@
 }
 
 .forum-reply-nested {
-  border: 5px inset var(--gray); /* silver/grey border for nested replies */
-  /* keep nested replies in the pink family to avoid mixing golds and pinks */
-  background: linear-gradient(90deg, rgba(var(--hibiscus-r),1), rgba(var(--deep-blush-r),1));
+  border: 1px solid var(--text-color);
+  background: var(--bg-color);
   margin-left: 40px;
-  /* nested replies can be darker; use light text for contrast */
-  color: #ffffff;
+  color: var(--text-color);
   width: calc(100% - 40px);
   max-width: 100%;
   overflow: hidden;
@@ -60,9 +47,8 @@
   word-break: break-word;
 }
 
-/* meta and links */
 .forum-meta {
-  color: var(--masala);
+  color: var(--highlight-color);
   font-size: 0.95rem;
 }
 
@@ -74,13 +60,9 @@
 .post-date,
 .forum-date,
 .forum-meta time {
-  color: var(--masala);
+  color: var(--highlight-color);
   font-weight: 600;
 }
-
-/* ================================
-   MEDIA — SAFE DEFAULTS
-   ================================ */
 
 .forum-media.image {
   max-width: min(250px, 100%);
@@ -148,10 +130,6 @@ iframe.forum-media.audio {
   overflow: hidden;
 }
 
-/* ================================
-   LINK FALLBACK (NOT BLUE)
-   ================================ */
-
 .forum-comment .forum-body a,
 .forum-reply .forum-body a,
 .forum-reply-nested .forum-body a {
@@ -161,14 +139,8 @@ iframe.forum-media.audio {
   text-underline-offset: 2px;
 }
 
-/* Links that open in new tab - styling handled via HTML target attribute */
-
-/* ================================
-   ASCII-ART FRIENDLY POSTS
-   ================================ */
-
 .forum-body {
-  font-family: "MS PGothic", "MS Pゴシック", "Mona", monospace;
+  font-family: "Noto Sans JP", monospace;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -183,7 +155,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: "MS PGothic", "MS Pゴシック", "Mona", monospace;
+  font-family: "Noto Sans JP", monospace;
   white-space: pre;
   tab-size: 4;
 }
@@ -193,7 +165,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: "Mona", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 .attachment-preview {
@@ -211,23 +183,15 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 1px solid var(--pesto);
-  border-radius: 2px;
-  background: rgba(var(--azalea-r), 0.2);
+  border: 1px solid var(--text-color);
+  border-radius: 0;
+  background: var(--bg-color);
   display: block;
 }
 
 .forum-meta {
-  font-family: "Mona";
+  font-family: "Noto Sans JP", sans-serif;
 }
-
-/* ================================
-   COMMENT ACTION BUTTONS
-   ================================ */
-
-/* ================================
-   REPLY CONTROLS (ALWAYS BELOW)
-   ================================ */
 
 .forum-reply-button {
   display: inline-block;
@@ -240,10 +204,9 @@ iframe.forum-media.audio {
   margin-top: 6px;
 }
 
-/* dark-mode forum styles removed */
-
-/* Styles for flag/report modal (moved from inline) */
-.flag-title { margin-top: 0; }
+.flag-title { 
+  margin-top: 0; 
+}
 .flag-reasons { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
 .flag-details { width: 100%; box-sizing: border-box; margin-bottom: 1rem; }
 .flag-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
