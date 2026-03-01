@@ -509,6 +509,21 @@ iframe.forum-media.audio {
     width: 100%;
   }
 
+  /* Images 100% width on mobile */
+  .forum-media.image,
+  .forum-media img,
+  .forum-media-item img,
+  img {
+    max-width: 100% !important;
+    width: 100%;
+    height: auto;
+  }
+
+  .attachment-preview-item img {
+    width: 72px !important;
+    height: 72px;
+  }
+
   .admin-tabs {
     gap: 0.25rem;
     padding: 0.375rem;
@@ -562,8 +577,25 @@ iframe.forum-media.audio {
 
   /* Form fields */
   #post-form input,
-  #post-form textarea {
+  #post-form textarea,
+  #post-form button,
+  #post-form select,
+  #forum-search input,
+  #forum-search button {
     font-size: 16px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #post-form input[type="file"] {
+    font-size: 14px;
+  }
+
+  #post-form,
+  #forum-search {
+    max-width: 100%;
+    overflow: hidden;
   }
 
   #blog-pagination,
@@ -630,6 +662,28 @@ iframe.forum-media.audio {
   #blog-posts form button,
   .inline-edit-form button {
     width: 100%;
+  }
+
+  /* Reply forms on mobile */
+  .reply-form input,
+  .reply-form textarea,
+  .reply-form button {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  /* Nested replies fit within screen */
+  .forum-reply {
+    margin-left: 10px;
+    max-width: calc(100% - 10px);
+  }
+
+  .forum-reply-nested {
+    margin-left: 20px;
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
   }
 
   /* Login section */
