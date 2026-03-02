@@ -318,12 +318,6 @@ export function renderCommentElement(comment, options) {
   // Don't render media for optimistic comments
   if (!comment.isOptimistic) {
     renderMedia(comment.media, wrap);
-  } else if (comment.media && comment.media.length > 0) {
-    const uploadingNote = document.createElement('p');
-    uploadingNote.style.color = '#888';
-    uploadingNote.style.fontStyle = 'italic';
-    uploadingNote.textContent = `Uploading ${comment.media.length} image${comment.media.length > 1 ? 's' : ''}...`;
-    wrap.appendChild(uploadingNote);
   }
   
   // Reply button (only if onReply is provided)

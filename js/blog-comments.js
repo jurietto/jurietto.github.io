@@ -356,15 +356,6 @@ export function setupCommentForm(postId, firebaseDb) {
       
       renderBodyWithEmbeds(text, wrap);
       
-      // Show upload indicator instead of broken images
-      if (tempMediaCount > 0) {
-        const uploadingNote = document.createElement('p');
-        uploadingNote.style.color = '#888';
-        uploadingNote.style.fontStyle = 'italic';
-        uploadingNote.textContent = `Uploading ${tempMediaCount} image${tempMediaCount > 1 ? 's' : ''}...`;
-        wrap.appendChild(uploadingNote);
-      }
-      
       if (commentsEl) {
          if (commentsEl.querySelector('p')?.textContent === "No comments at this time...") {
              commentsEl.innerHTML = "";
