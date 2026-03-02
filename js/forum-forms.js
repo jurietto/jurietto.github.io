@@ -61,7 +61,12 @@ export function setupPostForm(
   };
 
   if (postFile) {
-    postPreview = createAttachmentPreview(postFile);
+    // Create empty preview container
+    postPreview = document.createElement('div');
+    postPreview.className = 'attachment-preview';
+    postPreview.hidden = true;
+    postFile.parentNode.insertBefore(postPreview, postFile.nextSibling);
+    
     postFile.addEventListener("change", () => {
       postAccumulatedFiles = [...postAccumulatedFiles, ...Array.from(postFile.files || [])]
         .filter(isImageFile)
@@ -86,12 +91,12 @@ export function setupPostForm(
       e.dataTransfer.dropEffect = "copy";
     });
     postForm.addEventListener("drop", e => {
-      handleDropImages(e, postFile, postPreview, showNotice, () => updatePreview(postFile, postPreview));
+      handleDropImages(e, postFile, showNotice, () => updatePreview(postFile, postPreview));
     });
   }
 
   postText?.addEventListener("paste", e => {
-    handlePasteImages(e, postFile, postPreview, showNotice, () => updatePreview(postFile, postPreview));
+    handlePasteImages(e, postFile, showNotice, () => updatePreview(postFile, postPreview));
   });
 
   const submitPost = async () => {
@@ -140,13 +145,11 @@ export function setupPostForm(
             id: "temp-" + Date.now(),
             user: savedUser || "Anonymous",
             text: content,
-            // Create object URLs for images for immediate display
-            media: filesForOptimistic.map(f => ({ 
-                type: f.type.startsWith('video') ? 'video' : 'image', 
-                url: URL.createObjectURL(f) 
-            })),
+            // Don't show media in optimistic UI to avoid object URL issues
+            media: tempMediaCount > 0 ? Array(tempMediaCount).fill({ type: 'image', url: '' }) : null,
             userId: currentUserId,
             createdAt: { seconds: Date.now() / 1000 },
+            isOptimistic: true
         };
         onOptimisticAdd(optimisticComment);
       }

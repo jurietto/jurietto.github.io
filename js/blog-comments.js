@@ -86,10 +86,10 @@ async function editComment(postId, commentId, newText, newMedia) {
       newMedia,
       `blogPosts/${postId}/comments`
     );
-     // Success
+     // Success - no notification needed
   } catch (err) {
     console.error("Edit failed:", err);
-    showNotice?.("Edit failed: " + err.message);
+    // Error - no notification, just console log
   }
 }
 
@@ -108,7 +108,7 @@ async function deleteComment(postId, commentId) {
   } catch (err) {
     console.error("Delete failed:", err);
     if (el) el.style.display = ''; // Restore
-    showNotice?.("Delete failed: " + err.message);
+    // Error - no notification, just console log
   }
 }
 
@@ -141,6 +141,8 @@ export async function loadComments(postId, firebaseDb) {
     const q = query(commentsRef, orderBy("createdAt", "desc"));
 
     unsubscribe = onSnapshot(q, (snapshot) => {
+      // Remove optimistic comments before rendering
+      document.querySelectorAll('.optimistic-comment').forEach(el => el.remove());
       commentsEl.innerHTML = "";
 
       if (snapshot.empty) {
@@ -253,7 +255,11 @@ export function setupCommentForm(postId, firebaseDb) {
   let accumulatedFiles = [];
 
   if (commentFile) {
-    preview = createAttachmentPreview(commentFile);
+    // Create empty preview container
+    preview = document.createElement('div');
+    preview.className = 'attachment-preview';
+    preview.hidden = true;
+    commentFile.parentNode.insertBefore(preview, commentFile.nextSibling);
     
     commentFile.addEventListener("change", () => {
       accumulatedFiles = [...accumulatedFiles, ...Array.from(commentFile.files || [])]
@@ -278,7 +284,7 @@ export function setupCommentForm(postId, firebaseDb) {
     e.dataTransfer.dropEffect = "copy";
   });
   commentForm?.addEventListener("drop", e => {
-    handleDropImages(e, commentFile, preview, showNotice, () => {
+    handleDropImages(e, commentFile, showNotice, () => {
       accumulatedFiles = Array.from(commentFile.files || []);
       updatePreview(commentFile, preview, accumulatedFiles);
     });
@@ -286,7 +292,7 @@ export function setupCommentForm(postId, firebaseDb) {
 
   // Paste
   commentText?.addEventListener("paste", e => {
-    handlePasteImages(e, commentFile, preview, showNotice, () => {
+    handlePasteImages(e, commentFile, showNotice, () => {
       accumulatedFiles = Array.from(commentFile.files || []);
       updatePreview(commentFile, preview, accumulatedFiles);
     });
@@ -324,22 +330,21 @@ export function setupCommentForm(postId, firebaseDb) {
       updatePreview(commentFile, preview, []);
       localStorage.setItem("blog_username", user);
 
-        // OPTIMISTIC RENDER
+      // OPTIMISTIC RENDER
       const optimisticComment = {
         user,
         text,
-        media: filesForOptimistic.map(f => ({ 
-            type: f.type.startsWith('video') ? 'video' : 'image', 
-            url: URL.createObjectURL(f) 
-        })),
+        media: tempMediaCount > 0 ? Array(tempMediaCount).fill({ type: 'image', url: '' }) : null,
         createdAt: { seconds: Date.now() / 1000 },
-        userId: currentUserId
+        userId: currentUserId,
+        isOptimistic: true
       };
       
       const wrap = document.createElement("div");
-      wrap.className = "forum-comment";
-      wrap.style.opacity = "0.7";
-      wrap.style.borderLeft = "4px solid #4CAF50";
+      wrap.className = "forum-comment optimistic-comment";
+      wrap.dataset.id = "temp-" + Date.now();
+      wrap.style.opacity = "0.6";
+      wrap.style.pointerEvents = "none";
       
       const meta = document.createElement('div');
       meta.className = 'forum-meta';
@@ -350,7 +355,15 @@ export function setupCommentForm(postId, firebaseDb) {
       wrap.appendChild(meta);
       
       renderBodyWithEmbeds(text, wrap);
-      renderMedia(optimisticComment.media, wrap);
+      
+      // Show upload indicator instead of broken images
+      if (tempMediaCount > 0) {
+        const uploadingNote = document.createElement('p');
+        uploadingNote.style.color = '#888';
+        uploadingNote.style.fontStyle = 'italic';
+        uploadingNote.textContent = `Uploading ${tempMediaCount} image${tempMediaCount > 1 ? 's' : ''}...`;
+        wrap.appendChild(uploadingNote);
+      }
       
       if (commentsEl) {
          if (commentsEl.querySelector('p')?.textContent === "No comments at this time...") {
@@ -378,9 +391,11 @@ export function setupCommentForm(postId, firebaseDb) {
         `blogPosts/${postId}/comments` // collectionPath
       );
       
-      // Real-time listener handles UI update
+      // Optimistic comment will be removed by the real-time listener
     } catch (err) {
       console.error("Error posting:", err);
+      // Remove the optimistic comment on error
+      document.querySelectorAll('.optimistic-comment').forEach(el => el.remove());
       showNotice("Failed to post comment");
     } finally {
       submitBtn.disabled = false;

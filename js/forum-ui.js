@@ -153,22 +153,44 @@ export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, se
 
   const postBtn = document.createElement('button');
   postBtn.textContent = 'Post';
+  
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.type = 'button';
+  cancelBtn.onclick = () => form.remove();
 
   form.appendChild(p1);
   form.appendChild(p2);
   form.appendChild(p3);
-  form.appendChild(postBtn);
-  const preview = createAttachmentPreview(fileInput);
+  
+  const btnContainer = document.createElement('p');
+  btnContainer.appendChild(postBtn);
+  btnContainer.appendChild(cancelBtn);
+  form.appendChild(btnContainer);
+  // Create empty preview container
+  const preview = document.createElement('div');
+  preview.className = 'attachment-preview';
+  preview.hidden = true;
+  p3.appendChild(preview);
+
+  // Focus the text input after a brief delay
+  setTimeout(() => textInput.focus(), 150);
 
   // Event handlers
-  textInput.addEventListener("paste", e => handlePasteImages(e, fileInput, preview, showNotice, () => syncInputImages(fileInput, showNotice)));
+  textInput.addEventListener("paste", e => handlePasteImages(e, fileInput, showNotice, () => {
+    syncInputImages(fileInput, showNotice);
+    fileInput.dispatchEvent(new Event('change'));
+  }));
   
   form.addEventListener("dragover", e => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "copy";
   });
   
-  form.addEventListener("drop", e => handleDropImages(e, fileInput, preview, showNotice, () => syncInputImages(fileInput, showNotice)));
+  form.addEventListener("drop", e => handleDropImages(e, fileInput, showNotice, () => {
+    syncInputImages(fileInput, showNotice);
+    fileInput.dispatchEvent(new Event('change'));
+  }));
   
   fileInput.addEventListener("change", () => {
     syncInputImages(fileInput, showNotice);
@@ -292,7 +314,17 @@ export function renderCommentElement(comment, options) {
   wrap.appendChild(meta);
   
   renderBodyWithEmbeds(comment.text, wrap);
-  renderMedia(comment.media, wrap);
+  
+  // Don't render media for optimistic comments
+  if (!comment.isOptimistic) {
+    renderMedia(comment.media, wrap);
+  } else if (comment.media && comment.media.length > 0) {
+    const uploadingNote = document.createElement('p');
+    uploadingNote.style.color = '#888';
+    uploadingNote.style.fontStyle = 'italic';
+    uploadingNote.textContent = `Uploading ${comment.media.length} image${comment.media.length > 1 ? 's' : ''}...`;
+    wrap.appendChild(uploadingNote);
+  }
   
   // Reply button (only if onReply is provided)
   if (onReply) {

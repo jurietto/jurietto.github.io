@@ -29,8 +29,6 @@ if (!db) {
 const postsEl = document.getElementById("posts");
 const pager = document.getElementById("pagination");
 const searchInput = document.getElementById("blog-search-input");
-const searchButton = document.getElementById("blog-search-button");
-const searchClear = document.getElementById("blog-search-clear");
 
 // Constants and state
 const PAGE_SIZE = 1;
@@ -252,11 +250,10 @@ async function loadPosts() {
 
 /* ---------- EVENT LISTENERS ---------- */
 
-searchButton?.addEventListener("click", performSearch);
+// Search on Enter key
 searchInput?.addEventListener("keyup", (e) => {
   if (e.key === "Enter") performSearch();
 });
-searchClear?.addEventListener("click", clearSearch);
 
 // Expose for comments module
 window.performBlogSearch = performSearch;

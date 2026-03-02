@@ -60,7 +60,7 @@ body {
 
 #pagination {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -94,14 +94,14 @@ input[type="email"] {
 }
 
 .text-divider {
-  border-top: 1px solid currentColor;
+  border-top: 3px solid currentColor;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
   margin: 2rem -1rem 1rem -1rem;
-  padding-top: 12px;
+  padding-top: 14px;
   padding-left: 1rem;
   padding-right: 1rem;
   text-align: center;
@@ -134,12 +134,12 @@ input[type="email"] {
   right: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   z-index: 9999;
 }
 
 .scroll-buttons button {
-  padding: 8px 12px;
+  padding: 10px 14px;
   text-transform: none;
   font-weight: normal;
   font-style: normal;
@@ -180,7 +180,7 @@ ul li::before {
   margin: -1rem -1rem 1.5rem -1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-bottom: 1px solid var(--text-color);
+  border-bottom: 3px solid var(--text-color);
   font-size: 0.95em;
 }
 

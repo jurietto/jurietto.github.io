@@ -1,18 +1,18 @@
 .forum-notice {
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
   border-radius: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
   font-size: 0.95rem;
-  border: 1px solid var(--text-color);
+  border: 3px solid var(--text-color);
 }
 
 .forum-comment {
-  border: 1px solid var(--text-color);
+  border: 3px solid var(--text-color);
   background: var(--bg-color);
-  padding: 8px;
-  margin-bottom: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
   color: var(--text-color);
   max-width: 100%;
   overflow: hidden;
@@ -22,10 +22,10 @@
 }
 
 .forum-reply {
-  border: 1px solid var(--text-color);
+  border: 3px solid var(--text-color);
   background: var(--bg-color);
-  padding: 8px;
-  margin-top: 8px;
+  padding: 12px;
+  margin-top: 10px;
   margin-left: 20px;
   color: var(--text-color);
   max-width: calc(100% - 20px);
@@ -36,8 +36,9 @@
 }
 
 .forum-reply-nested {
-  border: 1px solid var(--text-color);
+  border: 3px solid var(--text-color);
   background: var(--bg-color);
+  padding: 12px;
   margin-left: 40px;
   color: var(--text-color);
   width: calc(100% - 40px);
@@ -73,9 +74,9 @@
 .forum-media-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   align-items: flex-start;
-  margin-top: 8px;
+  margin-top: 10px;
   max-width: 100%;
   overflow: hidden;
 }
@@ -88,7 +89,7 @@
 }
 
 .forum-media-block {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 /* video / iframe embeds */
@@ -168,14 +169,10 @@ iframe.forum-media.audio {
   font-family: "Noto Sans JP", sans-serif;
 }
 
-.attachment-preview {
-  margin-top: 6px;
-}
-
 .attachment-preview-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
   align-items: flex-start;
 }
 
@@ -183,7 +180,7 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 1px solid var(--text-color);
+  border: 3px solid var(--text-color);
   border-radius: 0;
   background: var(--bg-color);
   display: block;

@@ -113,7 +113,10 @@ function createPrivateSoundCloudEmbed(url) {
 
 export function renderEmbed(url) {
   // Handle explicit type object for Optimistic UI
-  if (typeof url === 'object' && url !== null && url.url && url.type) {
+  if (typeof url === 'object' && url !== null && url.type) {
+      // Skip if no URL (optimistic placeholder)
+      if (!url.url) return null;
+      
       if (url.type === 'video') {
           const v = document.createElement('video');
           v.className = 'forum-media video';

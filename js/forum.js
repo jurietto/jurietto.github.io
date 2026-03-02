@@ -45,8 +45,6 @@ const container = document.getElementById("comments");
 const commentsRef = collection(db, "threads", "general", "comments");
 const pager = document.getElementById("pagination");
 const searchInput = document.getElementById("forum-search-input");
-const searchButton = document.getElementById("forum-search-button");
-const searchClear = document.getElementById("forum-search-clear");
 const notice = document.getElementById("forum-notice");
 const postUser = document.getElementById("username");
 const postText = document.getElementById("text");
@@ -134,7 +132,7 @@ async function editComment(id, newText, newMedia, originalComment) {
 
   try {
     await apiEditComment(id, currentUserId, newText, newMedia);
-    showNotice("Comment updated.");
+    // Success - no notification needed
   } catch (err) {
     console.error("Edit failed:", err);
     showNotice("Error editing: " + err.message);
@@ -151,7 +149,6 @@ async function deleteComment(id) {
   try {
     await apiDeleteComment(id, currentUserId);
     // DO NOT CALL loadComments(currentPage).
-    showNotice("Comment deleted.");
     if (el) el.remove(); // Fully remove on success
   } catch (err) {
     console.error("Delete failed:", err);
@@ -188,7 +185,15 @@ function handleReply(parentId, wrap) {
       await loadComments(currentPage);
     }
   );
-  wrap.appendChild(form);
+  // Insert the form right after the reply button, not at the end
+  const replyBtn = wrap.querySelector(".forum-reply-button");
+  if (replyBtn && replyBtn.nextSibling) {
+    wrap.insertBefore(form, replyBtn.nextSibling);
+  } else {
+    wrap.appendChild(form);
+  }
+  // Scroll the form into view smoothly
+  setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
 }
 
 // ============ RENDER COMMENTS ============
@@ -246,6 +251,8 @@ function renderNestedReplies(parent, parentEl, replyMap, depth) {
 
 // ============ LOAD COMMENTS ============
 async function loadComments(page = 0) {
+  // Remove optimistic comments before clearing
+  document.querySelectorAll('[data-id^="temp-"]').forEach(el => el.remove());
   container.innerHTML = "";
   
   const snap = await apiFetchAllComments(commentsRef);
@@ -362,13 +369,7 @@ function runSearch() {
   loadComments(currentPage);
 }
 
-searchButton?.addEventListener("click", runSearch);
-searchClear?.addEventListener("click", () => {
-  if (searchInput) searchInput.value = "";
-  currentSearch = "";
-  currentPage = 0;
-  loadComments(currentPage);
-});
+// Search on Enter key
 searchInput?.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -417,18 +418,24 @@ notice?.addEventListener("click", () => {
 setupPostForm(
   postUser, postFile, postText, postButton, 
   commentsRef, currentUserId, 
-  () => { currentPage = 0; loadComments(0); }, 
+  () => { 
+    // Remove any optimistic comments before reloading
+    document.querySelectorAll('[data-id^="temp-"]').forEach(el => el.remove());
+    currentPage = 0; 
+    loadComments(0); 
+  }, 
   showNotice,
   (comment) => {
     if (currentPage === 0 && !currentSearch) {
       const wrap = renderCommentElement(comment, {
-        className: "forum-comment",
+        className: "forum-comment optimistic-comment",
         kaomoji: "(*^ω^)",
         currentUserId,
         onEdit: null, onDelete: null, onReply: null, onFlag: null
       });
-      wrap.style.opacity = "0.8"; 
-      wrap.style.transition = "opacity 0.5s";
+      wrap.style.opacity = "0.6"; 
+      wrap.style.transition = "opacity 0.3s";
+      wrap.style.pointerEvents = "none";
       container.prepend(wrap);
     }
   }
