@@ -1,15 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&display=swap');
+
+@font-face {
+  font-family: 'Segoe Print';
+  src: url('../art/segoeprint.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Segoe Print';
+  src: url('../art/segoeprint_bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
 
 :root {
   --bg-color: #000000;
-  --text-color: #00ff00;
+  --text-color: #ff00d4;
   --highlight-color: #ffffff;
-  --accent-color: #006400;
+  --accent-color: #670089;
 }
 
 html,
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Segoe Print", sans-serif;
   line-height: 1.4;
   font-size: 16px;
   margin: 0;
@@ -27,7 +40,7 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 600; 
   color: var(--highlight-color); 
 }
-h1,h2,h3 { font-family: "Noto Sans JP", sans-serif; }
+h1,h2,h3 { font-family: "Segoe Print", sans-serif; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
@@ -70,14 +83,14 @@ body {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Segoe Print", sans-serif;
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Segoe Print", sans-serif;
 }
 
 /* Consistent sizing for all pages */
@@ -392,7 +405,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: "Noto Sans JP", monospace;
+  font-family: "Segoe Print", sans-serif;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -407,7 +420,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: "Noto Sans JP", monospace;
+  font-family: "Segoe Print", sans-serif;
   white-space: pre;
   tab-size: 4;
 }
@@ -417,7 +430,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Segoe Print", sans-serif;
 }
 
 .attachment-preview-grid {
@@ -438,7 +451,7 @@ iframe.forum-media.audio {
 }
 
 .forum-meta {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Segoe Print", sans-serif;
 }
 
 .forum-reply-button {
