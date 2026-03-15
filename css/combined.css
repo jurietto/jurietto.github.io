@@ -58,7 +58,11 @@ html {
 body {
   position: relative;
   z-index: 1;
-  background: var(--bg-color);
+  background: var(--bg-color) url('../art/giphy.gif');
+  background-size: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-attachment: fixed;
   color: var(--text-color);
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
