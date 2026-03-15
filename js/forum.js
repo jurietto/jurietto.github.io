@@ -378,36 +378,30 @@ searchInput?.addEventListener("keydown", e => {
 });
 
 // ============ REAL-TIME UPDATES ============
-onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
-  if (snapshot.empty) {
-    if (!hasLoadedSnapshot) {
+function setupRealtimeUpdates() {
+  onSnapshot(query(commentsRef, orderBy("createdAt", "desc")), snapshot => {
+    if (snapshot.empty || !hasLoadedSnapshot) {
       hasLoadedSnapshot = true;
-      latestSeen = 0;
+      latestSeen = snapshot.empty ? 0 : getCreatedAtValue(snapshot.docs[0].data().createdAt);
+      return;
     }
-    return;
-  }
 
-  const newest = snapshot.docs[0];
-  const newestAt = getCreatedAtValue(newest.data().createdAt);
+    const newest = snapshot.docs[0];
+    const newestAt = getCreatedAtValue(newest.data().createdAt);
 
-  if (!hasLoadedSnapshot) {
-    hasLoadedSnapshot = true;
-    latestSeen = newestAt;
-    return;
-  }
-
-  if (newestAt && newestAt > (latestSeen || 0)) {
-    latestSeen = newestAt;
-    currentPage = 0;
-    loadComments(currentPage);
-    
-    if (notice) {
-      notice.textContent = newest.data().replyTo ? "New reply posted!" : "New comment posted!";
-      notice.hidden = false;
-      setTimeout(() => { notice.hidden = true; }, 3000);
+    if (newestAt && newestAt > (latestSeen || 0)) {
+      latestSeen = newestAt;
+      currentPage = 0;
+      loadComments(currentPage);
+      
+      if (notice) {
+        notice.textContent = newest.data().replyTo ? "New reply posted!" : "New comment posted!";
+        notice.hidden = false;
+        setTimeout(() => { notice.hidden = true; }, 3000);
+      }
     }
-  }
-});
+  });
+}
 
 notice?.addEventListener("click", () => {
   notice.hidden = true;
@@ -440,9 +434,10 @@ setupPostForm(
     }
   }
 );
-loadComments();
-window.reloadForum = () => loadComments(currentPage);
 
-window.addEventListener('beforeunload', () => {
-  document.getElementById('threads')?.replaceChildren();
+// Load comments first, then set up real-time updates
+loadComments().then(() => {
+  setupRealtimeUpdates();
 });
+
+window.reloadForum = () => loadComments(currentPage);

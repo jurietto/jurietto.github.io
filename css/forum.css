@@ -5,11 +5,11 @@
   background-color: var(--bg-color);
   color: var(--text-color);
   font-size: 0.95rem;
-  border: 3px solid var(--text-color);
+  border: 3px solid var(--accent-color);
 }
 
 .forum-comment {
-  border: 3px solid var(--text-color);
+  border: 3px solid var(--accent-color);
   background: var(--bg-color);
   padding: 12px;
   margin-bottom: 12px;
@@ -22,7 +22,7 @@
 }
 
 .forum-reply {
-  border: 3px solid var(--text-color);
+  border: 3px solid var(--accent-color);
   background: var(--bg-color);
   padding: 12px;
   margin-top: 10px;
@@ -36,7 +36,7 @@
 }
 
 .forum-reply-nested {
-  border: 3px solid var(--text-color);
+  border: 3px solid var(--accent-color);
   background: var(--bg-color);
   padding: 12px;
   margin-left: 40px;
@@ -180,7 +180,7 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 3px solid var(--text-color);
+  border: 3px solid var(--accent-color);
   border-radius: 0;
   background: var(--bg-color);
   display: block;
