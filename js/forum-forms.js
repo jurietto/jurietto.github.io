@@ -1,4 +1,4 @@
-import { createAttachmentPreview, handleDropImages, handlePasteImages, getSelectedImages, isImageFile, MAX_IMAGES } from "./utils.js";
+import { createAttachmentPreview, handleDropImages, handlePasteImages, getSelectedImages, isImageFile, isMediaFile, MAX_IMAGES, MAX_FILES } from "./utils.js";
 import { uploadFile } from "./storage.js";
 import { apiPostComment } from "./forum-api.js";
 

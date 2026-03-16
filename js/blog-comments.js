@@ -12,9 +12,9 @@ import { apiPostComment, apiEditComment, apiDeleteComment } from "./forum-api.js
 
 // Shared utilities
 import {
-  formatDate, getUserId, isImageFile, getSelectedImages,
+  formatDate, getUserId, isImageFile, isMediaFile, getSelectedImages,
   createAttachmentPreview, handlePasteImages, handleDropImages,
-  MAX_IMAGES
+  MAX_IMAGES, MAX_FILES
 } from "./utils.js";
 import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 
@@ -263,11 +263,11 @@ export function setupCommentForm(postId, firebaseDb) {
     
     commentFile.addEventListener("change", () => {
       accumulatedFiles = [...accumulatedFiles, ...Array.from(commentFile.files || [])]
-        .filter(isImageFile)
-        .slice(0, MAX_IMAGES);
+        .filter(isMediaFile)
+        .slice(0, MAX_FILES);
       
-      if (accumulatedFiles.length >= MAX_IMAGES) {
-        showNotice(`Max ${MAX_IMAGES} images allowed`);
+      if (accumulatedFiles.length >= MAX_FILES) {
+        showNotice(`Max ${MAX_FILES} files allowed`);
       }
       
       const dt = new DataTransfer();

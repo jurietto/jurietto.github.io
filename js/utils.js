@@ -28,7 +28,13 @@ export const validateText = text => {
 export const isImageFile = file =>
   (file && file.type && file.type.startsWith && file.type.startsWith("image/")) || /\.(gif|png|jpg|jpeg|webp|bmp|svg)$/i.test(String(file?.name || ""));
 
+export const isVideoFile = file =>
+  (file && file.type && file.type.startsWith && file.type.startsWith("video/")) || /\.(mp4|mkv|mov|avi|webm|flv|wmv|m4v)$/i.test(String(file?.name || ""));
+
+export const isMediaFile = file => isImageFile(file) || isVideoFile(file);
+
 export const MAX_IMAGES = 10;
+export const MAX_FILES = 10;
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 export const MAX_TOTAL_SIZE = 50 * 1024 * 1024; // 50MB
 
@@ -52,9 +58,9 @@ export function getSelectedImages(input) {
   const sizeCheck = validateFileSize(files);
   if (sizeCheck.error) return sizeCheck;
 
-  const nonImages = files.filter(f => !isImageFile(f));
-  if (nonImages.length) return { error: "Please choose image files only." };
-  if (files.length > MAX_IMAGES) return { error: `You can upload up to ${MAX_IMAGES} images at a time.` };
+  const nonMedia = files.filter(f => !isMediaFile(f));
+  if (nonMedia.length) return { error: "Please choose image or video files only." };
+  if (files.length > MAX_FILES) return { error: `You can upload up to ${MAX_FILES} files at a time.` };
 
   return { files };
 }
@@ -63,13 +69,13 @@ export function syncInputImages(input, showNotice) {
   const files = Array.from(input?.files || []);
   if (!files.length) return [];
 
-  const images = files.filter(isImageFile);
-  const nonImages = files.length - images.length;
+  const mediaFiles = files.filter(isMediaFile);
+  const nonMedia = files.length - mediaFiles.length;
 
-  if (nonImages) showNotice?.("Please choose image files only.");
-  if (images.length > MAX_IMAGES) showNotice?.(`You can upload up to ${MAX_IMAGES} images at a time.`);
+  if (nonMedia) showNotice?.("Please choose image or video files only.");
+  if (mediaFiles.length > MAX_FILES) showNotice?.(`You can upload up to ${MAX_FILES} files at a time.`);
 
-  const trimmed = images.slice(0, MAX_IMAGES);
+  const trimmed = mediaFiles.slice(0, MAX_FILES);
   if (trimmed.length !== files.length) {
     const dt = new DataTransfer();
     trimmed.forEach(f => dt.items.add(f));
@@ -81,18 +87,18 @@ export function syncInputImages(input, showNotice) {
 export function appendImagesToInput(input, files) {
   if (!input) return { added: 0 };
   const existing = Array.from(input.files || []);
-  const images = files.filter(isImageFile);
-  if (!images.length) return { added: 0 };
+  const mediaFiles = files.filter(isMediaFile);
+  if (!mediaFiles.length) return { added: 0 };
 
-  const remaining = MAX_IMAGES - existing.length;
-  if (remaining <= 0) return { error: `You can upload up to ${MAX_IMAGES} images at a time.` };
+  const remaining = MAX_FILES - existing.length;
+  if (remaining <= 0) return { error: `You can upload up to ${MAX_FILES} files at a time.` };
 
-  const added = images.slice(0, remaining);
+  const added = mediaFiles.slice(0, remaining);
   const dt = new DataTransfer();
   [...existing, ...added].forEach(f => dt.items.add(f));
   input.files = dt.files;
 
-  return { added: added.length, dropped: images.length - added.length };
+  return { added: added.length, dropped: mediaFiles.length - added.length };
 }
 
 
@@ -164,15 +170,29 @@ export function createAttachmentPreview(files, onRemove) {
       height: '80px'
     });
 
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-    img.alt = file.name;
-    Object.assign(img.style, {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      borderRadius: '4px'
-    });
+    let media;
+    if (isVideoFile(file)) {
+      media = document.createElement('video');
+      media.src = URL.createObjectURL(file);
+      media.muted = true;
+      media.preload = 'metadata';
+      Object.assign(media.style, {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        borderRadius: '4px'
+      });
+    } else {
+      media = document.createElement('img');
+      media.src = URL.createObjectURL(file);
+      media.alt = file.name;
+      Object.assign(media.style, {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        borderRadius: '4px'
+      });
+    }
 
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
@@ -196,7 +216,7 @@ export function createAttachmentPreview(files, onRemove) {
       onRemove?.(idx);
     });
 
-    wrapper.append(img, removeBtn);
+    wrapper.append(media, removeBtn);
     container.appendChild(wrapper);
   });
 
@@ -208,22 +228,22 @@ export function handlePasteImages(e, input, showNotice, updatePreview) {
   const items = e.clipboardData?.items;
   if (!items) return;
 
-  const images = [];
+  const mediaFiles = [];
   for (const item of items) {
-    if (item.type.startsWith('image/')) {
+    if (item.type.startsWith('image/') || item.type.startsWith('video/')) {
       const file = item.getAsFile();
-      if (file) images.push(file);
+      if (file) mediaFiles.push(file);
     }
   }
 
-  if (images.length) {
+  if (mediaFiles.length) {
     e.preventDefault();
     const dt = new DataTransfer();
     Array.from(input.files || []).forEach(f => dt.items.add(f));
-    images.forEach(f => dt.items.add(f));
+    mediaFiles.forEach(f => dt.items.add(f));
     
-    if (dt.files.length > MAX_IMAGES) {
-      showNotice?.(`You can upload up to ${MAX_IMAGES} images at a time.`);
+    if (dt.files.length > MAX_FILES) {
+      showNotice?.(`You can upload up to ${MAX_FILES} files at a time.`);
       return;
     }
     

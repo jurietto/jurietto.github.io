@@ -5,7 +5,7 @@
 
 import {
   formatDate, createAttachmentPreview, syncInputImages, getSelectedImages,
-  handlePasteImages, handleDropImages, MAX_IMAGES
+  handlePasteImages, handleDropImages, MAX_IMAGES, MAX_FILES, isMediaFile
 } from "./utils.js";
 import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 import { uploadFile } from "./storage.js";
@@ -144,10 +144,10 @@ export function createReplyForm(parentId, currentUserId, commentsRef, addDoc, se
   p2.appendChild(textInput);
 
   const p3 = document.createElement('p');
-  p3.innerHTML = `Attachment (up to ${MAX_IMAGES} images, or paste from clipboard)<br>`;
+  p3.innerHTML = `Attachment (up to ${MAX_IMAGES} files, or paste from clipboard)<br>`;
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
-  fileInput.accept = 'image/*';
+  fileInput.accept = 'image/*,video/*';
   fileInput.multiple = true;
   p3.appendChild(fileInput);
 
