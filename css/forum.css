@@ -141,7 +141,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: "Noto Sans JP", monospace;
+  font-family: 'Times New Roman', Times, serif;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -156,7 +156,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: "Noto Sans JP", monospace;
+  font-family: 'Times New Roman', Times, serif;
   white-space: pre;
   tab-size: 4;
 }
@@ -166,7 +166,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .attachment-preview-grid {
@@ -187,7 +187,7 @@ iframe.forum-media.audio {
 }
 
 .forum-meta {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .forum-reply-button {
@@ -199,6 +199,12 @@ iframe.forum-media.audio {
   display: block;
   clear: both;
   margin-top: 6px;
+}
+
+.reply-form input,
+.reply-form textarea {
+  width: 250px;
+  box-sizing: border-box;
 }
 
 .flag-title { 

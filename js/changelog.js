@@ -19,16 +19,26 @@ function renderChangelog(commits) {
   list.innerHTML = "";
   commits.slice(0, MAX_ENTRIES).forEach(c => {
     const msg = c.commit.message.split("\n")[0];
+    const date = new Date(c.commit.author.date).toLocaleDateString();
     const item = document.createElement("li");
-    item.textContent = `${msg} (・_・;)`;
+    item.textContent = `${date} — ${msg}`;
     list.appendChild(item);
   });
+  
+  // Update last-updated timestamp with most recent commit
+  if (commits.length > 0) {
+    const lastUpdatedEl = document.getElementById('last-updated');
+    if (lastUpdatedEl) {
+      const latestDate = new Date(commits[0].commit.author.date).toLocaleDateString();
+      lastUpdatedEl.textContent = `Last updated: ${latestDate}`;
+    }
+  }
 }
 
 function showError() {
   list.innerHTML = "";
   const errItem = document.createElement("li");
-  errItem.textContent = "Failed to load changelog (・_・;)";
+  errItem.textContent = "Failed to load changelog";
   list.appendChild(errItem);
 }
 
