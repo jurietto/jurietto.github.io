@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Cthulhumbus';
+  src: url('../art/JMH_Cthulhumbus.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg-color: #000000;
   --text-color: #00ff00;
@@ -7,7 +15,7 @@
 
 html,
 body {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
   line-height: 1.4;
   font-size: 16px;
   margin: 0;
@@ -30,7 +38,7 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 600; 
   color: var(--highlight-color); 
 }
-h1,h2,h3 { font-family: 'Times New Roman', Times, serif; }
+h1,h2,h3 { font-family: 'Cthulhumbus'; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
@@ -38,7 +46,14 @@ ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
 img,video,iframe { 
   max-width: 100%; 
   height: auto; 
-  display: block; 
+  display: block;
+  border: 3px solid #FF1493;
+}
+
+/* No border on heart images and youtube thumbnails */
+img[src*="heart.gif"],
+.youtube-embed img {
+  border: none !important;
 }
 
 html { 
@@ -73,14 +88,14 @@ body {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
 }
 
 /* Consistent sizing for all pages */

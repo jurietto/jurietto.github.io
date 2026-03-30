@@ -37,20 +37,46 @@ export const renderLink = url => {
 // --- Embed Helpers ---
 
 function createPrivateYouTubeEmbed(videoId) {
+  // Wrapper for title + video
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'margin: 10px 0;';
+  
+  // Video title
+  const title = document.createElement('div');
+  title.textContent = 'YouTube Video';
+  title.style.cssText = 'color: var(--text-color); font-weight: 600; margin-bottom: 8px; font-size: 0.95em;';
+  
+  // Fetch video title from YouTube oEmbed API
+  fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.title) {
+        title.textContent = data.title;
+      }
+    })
+    .catch(() => {
+      // Keep default title if fetch fails
+    });
+  
   // Container as a link
   const container = document.createElement('a');
   container.href = `https://www.youtube.com/watch?v=${videoId}`;
   container.target = '_blank';
   container.rel = 'noopener noreferrer';
   container.className = 'youtube-embed';
-  container.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;text-decoration:none;';
+  container.style.cssText = 'display:block;position:relative;max-width:560px;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;text-decoration:none;border:3px solid #FF1493;';
   
-  // Thumbnail image
+  // Thumbnail image - using sddefault for reliable high quality
   const thumb = document.createElement('img');
-  thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  thumb.src = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
   thumb.alt = 'Watch on YouTube';
   thumb.loading = 'lazy';
-  thumb.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;opacity:0.8;transition:opacity 0.2s;';
+  thumb.style.cssText = 'display:block;width:100%;height:100%;object-fit:cover;';
+  
+  // Fallback to hqdefault if sddefault fails
+  thumb.onerror = () => {
+    thumb.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  };
   
   // Play button overlay
   const playBtn = document.createElement('div');
@@ -75,12 +101,9 @@ function createPrivateYouTubeEmbed(videoId) {
   playBtn.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 0 10px rgba(0,0,0,0.5));pointer-events:none;';
   
   container.append(thumb, playBtn);
-
-  // Hover effect
-  container.onmouseenter = () => thumb.style.opacity = '1';
-  container.onmouseleave = () => thumb.style.opacity = '0.8';
-
-  return container;
+  
+  wrapper.append(title, container);
+  return wrapper;
 }
 
 function createPrivateWikipediaEmbed(articleTitle, lang = 'en') {

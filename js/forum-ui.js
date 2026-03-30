@@ -295,7 +295,23 @@ export function renderCommentElement(comment, options) {
   const meta = document.createElement('div');
   meta.className = 'forum-meta';
   const strong = document.createElement('strong');
-  strong.textContent = `${kaomoji} ${escapeHtml(comment.user) || 'Anonymous'}`;
+  
+  // Add heart image if kaomoji exists
+  if (kaomoji) {
+    const heart = document.createElement('img');
+    heart.src = '../art/heart.gif';
+    heart.alt = '♥';
+    heart.style.width = '1em';
+    heart.style.height = '1em';
+    heart.style.display = 'inline-block';
+    heart.style.verticalAlign = 'middle';
+    heart.style.marginRight = '0.3em';
+    heart.style.border = 'none';
+    strong.appendChild(heart);
+  }
+  
+  const userName = document.createTextNode(`${escapeHtml(comment.user) || 'Anonymous'}`);
+  strong.appendChild(userName);
   meta.appendChild(strong);
   meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
   if (isOwner) {

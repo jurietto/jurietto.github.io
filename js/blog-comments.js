@@ -163,11 +163,24 @@ export async function loadComments(postId, firebaseDb) {
         const isOwner = comment.userId === currentUserId;
         const editedText = comment.editedAt ? ` (edited ${formatDate(comment.editedAt)})` : "";
         
-        // Meta with edit/delete buttons
         const meta = document.createElement("div");
         meta.className = "forum-meta";
         const strong = document.createElement('strong');
-        strong.textContent = `＼(^o^)／ ${comment.user || "Anonymous"}`;
+        
+        // Add heart image
+        const heart = document.createElement('img');
+        heart.src = '../art/heart.gif';
+        heart.alt = '♥';
+        heart.style.width = '1em';
+        heart.style.height = '1em';
+        heart.style.display = 'inline-block';
+        heart.style.verticalAlign = 'middle';
+        heart.style.marginRight = '0.3em';
+        heart.style.border = 'none';
+        strong.appendChild(heart);
+        
+        const userName = document.createTextNode(`${comment.user || "Anonymous"}`);
+        strong.appendChild(userName);
         meta.appendChild(strong);
         meta.appendChild(document.createTextNode(' — ' + formatDate(comment.createdAt) + editedText));
         
@@ -349,7 +362,21 @@ export function setupCommentForm(postId, firebaseDb) {
       const meta = document.createElement('div');
       meta.className = 'forum-meta';
       const strong = document.createElement('strong');
-      strong.textContent = `＼(^o^)／ ${user}`;
+      
+      // Add heart image
+      const heart = document.createElement('img');
+      heart.src = '../art/heart.gif';
+      heart.alt = '♥';
+      heart.style.width = '1em';
+      heart.style.height = '1em';
+      heart.style.display = 'inline-block';
+      heart.style.verticalAlign = 'middle';
+      heart.style.marginRight = '0.3em';
+      heart.style.border = 'none';
+      strong.appendChild(heart);
+      
+      const userName = document.createTextNode(`${user}`);
+      strong.appendChild(userName);
       meta.appendChild(strong);
       meta.appendChild(document.createTextNode(' — Just now'));
       wrap.appendChild(meta);

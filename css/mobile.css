@@ -163,6 +163,7 @@
   #blog-comments-list img {
     max-width: 100%;
     max-height: 150px;
+    border: 3px solid #FF1493;
   }
 
   #blog-posts form button,
@@ -177,4 +178,4 @@
     border-radius: 0;
     width: calc(100% + 1.5rem);
   }
-
+}

@@ -1,8 +1,22 @@
+@font-face {
+  font-family: 'Cthulhumbus';
+  src: url('../art/JMH_Cthulhumbus.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* No border on heart images and youtube thumbnails */
+img[src*="heart.gif"],
+.youtube-embed img {
+  border: none !important;
+}
+
 .forum-notice {
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 0;
-  background-color: var(--bg-color);
+  background-color: rgba(0, 0, 0, 0.75);
   color: var(--text-color);
   font-size: 0.95rem;
   border: 3px solid var(--accent-color);
@@ -10,7 +24,7 @@
 
 .forum-comment {
   border: 3px solid var(--accent-color);
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.7);
   padding: 12px;
   margin-bottom: 12px;
   color: var(--text-color);
@@ -23,7 +37,7 @@
 
 .forum-reply {
   border: 3px solid var(--accent-color);
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.7);
   padding: 12px;
   margin-top: 10px;
   margin-left: 20px;
@@ -37,7 +51,7 @@
 
 .forum-reply-nested {
   border: 3px solid var(--accent-color);
-  background: var(--bg-color);
+  background: rgba(0, 0, 0, 0.7);
   padding: 12px;
   margin-left: 40px;
   color: var(--text-color);
@@ -69,6 +83,7 @@
   max-width: min(250px, 100%);
   height: auto;
   display: block;
+  border: 3px solid #FF1493;
 }
 
 .forum-media-group {
@@ -86,6 +101,10 @@
   flex: 1 1 auto;
   max-width: 100%;
   min-width: 0;
+}
+
+.forum-media-item img {
+  border: 3px solid #FF1493;
 }
 
 .forum-media-block {
@@ -141,7 +160,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -156,7 +175,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
   white-space: pre;
   tab-size: 4;
 }
@@ -166,7 +185,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
 }
 
 .attachment-preview-grid {
@@ -180,14 +199,14 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 3px solid var(--accent-color);
+  border: 3px solid #FF1493;
   border-radius: 0;
   background: var(--bg-color);
   display: block;
 }
 
 .forum-meta {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Cthulhumbus';
 }
 
 .forum-reply-button {
