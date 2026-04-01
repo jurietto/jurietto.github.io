@@ -296,18 +296,12 @@ export function renderCommentElement(comment, options) {
   meta.className = 'forum-meta';
   const strong = document.createElement('strong');
   
-  // Add heart image if kaomoji exists
+  // Add skull emoji if kaomoji exists
   if (kaomoji) {
-    const heart = document.createElement('img');
-    heart.src = '../art/heart.gif';
-    heart.alt = '♥';
-    heart.style.width = '1em';
-    heart.style.height = '1em';
-    heart.style.display = 'inline-block';
-    heart.style.verticalAlign = 'middle';
-    heart.style.marginRight = '0.3em';
-    heart.style.border = 'none';
-    strong.appendChild(heart);
+    const skull = document.createElement('span');
+    skull.textContent = '☠️';
+    skull.style.marginRight = '0.3em';
+    strong.appendChild(skull);
   }
   
   const userName = document.createTextNode(`${escapeHtml(comment.user) || 'Anonymous'}`);

@@ -1,21 +1,13 @@
-@font-face {
-  font-family: 'Cthulhumbus';
-  src: url('../art/JMH_Cthulhumbus.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  --bg-color: #000000;
-  --text-color: #00ff00;
-  --highlight-color: #ffffff;
-  --accent-color: #006400;
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --highlight-color: #000000;
+  --accent-color: #555555;
 }
 
 html,
 body {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   line-height: 1.4;
   font-size: 16px;
   margin: 0;
@@ -28,17 +20,12 @@ body {
   box-sizing: border-box; 
 }
 
-button {
-  background-color: var(--accent-color);
-  color: var(--text-color);
-}
-
 h1,h2,h3,h4,h5,h6 { 
   margin: 0 0 0.5rem; 
   font-weight: 600; 
   color: var(--highlight-color); 
 }
-h1,h2,h3 { font-family: 'Cthulhumbus'; }
+h1,h2,h3 { font-family: system-ui; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
@@ -47,7 +34,7 @@ img,video,iframe {
   max-width: 100%; 
   height: auto; 
   display: block;
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
 }
 
 /* No border on heart images and youtube thumbnails */
@@ -88,14 +75,14 @@ body {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
 }
 
 /* Consistent sizing for all pages */

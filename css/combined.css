@@ -1,22 +1,13 @@
-
-@font-face {
-  font-family: 'Cthulhumbus';
-  src: url('../art/JMH_Cthulhumbus.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  --bg-color: #000000;
-  --text-color: #ff00d4;
-  --highlight-color: #ffffff;
-  --accent-color: #670089;
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --highlight-color: #000000;
+  --accent-color: #555555;
 }
 
 html,
 body {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   line-height: 1.4;
   font-size: 16px;
   margin: 0;
@@ -29,17 +20,12 @@ body {
   box-sizing: border-box; 
 }
 
-button {
-  background-color: var(--accent-color);
-  color: var(--text-color);
-}
-
 h1,h2,h3,h4,h5,h6 { 
   margin: 0 0 0.5rem; 
   font-weight: 600; 
   color: var(--highlight-color); 
 }
-h1,h2,h3 { font-family: 'Cthulhumbus'; }
+h1,h2,h3 { font-family: system-ui; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
@@ -48,7 +34,7 @@ img,video,iframe {
   max-width: 100%; 
   height: auto; 
   display: block;
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
 }
 
 /* No border on heart images and youtube thumbnails */
@@ -64,11 +50,7 @@ html {
 body {
   position: relative;
   z-index: 1;
-  background: var(--bg-color) url('../art/giphy.gif');
-  background-size: auto;
-  background-position: center;
-  background-repeat: repeat;
-  background-attachment: fixed;
+  background: var(--bg-color);
   color: var(--text-color);
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
@@ -93,14 +75,14 @@ body {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
 }
 
 /* Consistent sizing for all pages */
@@ -276,7 +258,7 @@ article,
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #ffffff;
   color: var(--text-color);
   font-size: 0.95rem;
   border: 3px solid var(--accent-color);
@@ -284,7 +266,7 @@ article,
 
 .forum-comment {
   border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: #ffffff;
   padding: 12px;
   margin-bottom: 12px;
   color: var(--text-color);
@@ -297,7 +279,7 @@ article,
 
 .forum-reply {
   border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: #ffffff;
   padding: 12px;
   margin-top: 10px;
   margin-left: 20px;
@@ -311,7 +293,7 @@ article,
 
 .forum-reply-nested {
   border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: #ffffff;
   padding: 12px;
   margin-left: 40px;
   color: var(--text-color);
@@ -343,7 +325,7 @@ article,
   max-width: min(250px, 100%);
   height: auto;
   display: block;
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
 }
 
 .forum-media-group {
@@ -364,7 +346,7 @@ article,
 }
 
 .forum-media-item img {
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
 }
 
 .forum-media-block {
@@ -420,7 +402,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -435,7 +417,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   white-space: pre;
   tab-size: 4;
 }
@@ -445,7 +427,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
 }
 
 .attachment-preview-grid {
@@ -459,14 +441,14 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
   border-radius: 0;
   background: var(--bg-color);
   display: block;
 }
 
 .forum-meta {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
 }
 
 .forum-reply-button {

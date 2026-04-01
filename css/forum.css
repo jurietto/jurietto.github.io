@@ -1,11 +1,3 @@
-@font-face {
-  font-family: 'Cthulhumbus';
-  src: url('../art/JMH_Cthulhumbus.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* No border on heart images and youtube thumbnails */
 img[src*="heart.gif"],
 .youtube-embed img {
@@ -16,7 +8,7 @@ img[src*="heart.gif"],
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #ffffff;
   color: var(--text-color);
   font-size: 0.95rem;
   border: 3px solid var(--accent-color);
@@ -24,7 +16,7 @@ img[src*="heart.gif"],
 
 .forum-comment {
   border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: #ffffff;
   padding: 12px;
   margin-bottom: 12px;
   color: var(--text-color);
@@ -37,7 +29,7 @@ img[src*="heart.gif"],
 
 .forum-reply {
   border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: #ffffff;
   padding: 12px;
   margin-top: 10px;
   margin-left: 20px;
@@ -51,7 +43,7 @@ img[src*="heart.gif"],
 
 .forum-reply-nested {
   border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.7);
+  background: #ffffff;
   padding: 12px;
   margin-left: 40px;
   color: var(--text-color);
@@ -83,7 +75,7 @@ img[src*="heart.gif"],
   max-width: min(250px, 100%);
   height: auto;
   display: block;
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
 }
 
 .forum-media-group {
@@ -104,7 +96,7 @@ img[src*="heart.gif"],
 }
 
 .forum-media-item img {
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
 }
 
 .forum-media-block {
@@ -160,7 +152,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -175,7 +167,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
   white-space: pre;
   tab-size: 4;
 }
@@ -185,7 +177,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
 }
 
 .attachment-preview-grid {
@@ -199,14 +191,14 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 3px solid #FF1493;
+  border: 3px solid #555555;
   border-radius: 0;
   background: var(--bg-color);
   display: block;
 }
 
 .forum-meta {
-  font-family: 'Cthulhumbus';
+  font-family: system-ui;
 }
 
 .forum-reply-button {

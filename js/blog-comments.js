@@ -167,17 +167,11 @@ export async function loadComments(postId, firebaseDb) {
         meta.className = "forum-meta";
         const strong = document.createElement('strong');
         
-        // Add heart image
-        const heart = document.createElement('img');
-        heart.src = '../art/heart.gif';
-        heart.alt = '♥';
-        heart.style.width = '1em';
-        heart.style.height = '1em';
-        heart.style.display = 'inline-block';
-        heart.style.verticalAlign = 'middle';
-        heart.style.marginRight = '0.3em';
-        heart.style.border = 'none';
-        strong.appendChild(heart);
+        // Add skull emoji
+        const skull = document.createElement('span');
+        skull.textContent = '☠️';
+        skull.style.marginRight = '0.3em';
+        strong.appendChild(skull);
         
         const userName = document.createTextNode(`${comment.user || "Anonymous"}`);
         strong.appendChild(userName);
@@ -363,17 +357,11 @@ export function setupCommentForm(postId, firebaseDb) {
       meta.className = 'forum-meta';
       const strong = document.createElement('strong');
       
-      // Add heart image
-      const heart = document.createElement('img');
-      heart.src = '../art/heart.gif';
-      heart.alt = '♥';
-      heart.style.width = '1em';
-      heart.style.height = '1em';
-      heart.style.display = 'inline-block';
-      heart.style.verticalAlign = 'middle';
-      heart.style.marginRight = '0.3em';
-      heart.style.border = 'none';
-      strong.appendChild(heart);
+      // Add skull emoji
+      const skull = document.createElement('span');
+      skull.textContent = '☠️';
+      skull.style.marginRight = '0.3em';
+      strong.appendChild(skull);
       
       const userName = document.createTextNode(`${user}`);
       strong.appendChild(userName);
