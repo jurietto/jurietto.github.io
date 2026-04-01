@@ -1,19 +1,28 @@
+@font-face {
+  font-family: 'Cthulhumbus';
+  src: url('../art/JMH_Cthulhumbus.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  --highlight-color: #000000;
-  --accent-color: #555555;
+  --bg-color: rgba(0, 0, 0, 0.75);
+  --text-color: #ffffff;
+  --highlight-color: #ffffff;
+  --accent-color: #999999;
 }
 
 html,
 body {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
   line-height: 1.4;
   font-size: 16px;
   margin: 0;
   padding: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
+  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000;
 }
 
 *, *::before, *::after { 
@@ -23,9 +32,10 @@ body {
 h1,h2,h3,h4,h5,h6 { 
   margin: 0 0 0.5rem; 
   font-weight: 600; 
-  color: var(--highlight-color); 
+  color: var(--highlight-color);
+  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000;
 }
-h1,h2,h3 { font-family: system-ui; }
+h1,h2,h3 { font-family: 'Cthulhumbus'; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 p { margin: 0 0 1rem; }
@@ -34,7 +44,6 @@ img,video,iframe {
   max-width: 100%; 
   height: auto; 
   display: block;
-  border: 3px solid #555555;
 }
 
 /* No border on heart images and youtube thumbnails */
@@ -50,7 +59,8 @@ html {
 body {
   position: relative;
   z-index: 1;
-  background: var(--bg-color);
+  background: url('../art/Hinamina.600.296372.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--text-color);
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
@@ -75,14 +85,14 @@ body {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
 }
 
 /* Consistent sizing for all pages */

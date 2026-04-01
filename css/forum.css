@@ -7,8 +7,8 @@ img[src*="heart.gif"],
 .forum-notice {
   padding: 12px;
   margin-bottom: 15px;
-  border-radius: 0;
-  background-color: #ffffff;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.75);
   color: var(--text-color);
   font-size: 0.95rem;
   border: 3px solid var(--accent-color);
@@ -16,7 +16,7 @@ img[src*="heart.gif"],
 
 .forum-comment {
   border: 3px solid var(--accent-color);
-  background: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
   padding: 12px;
   margin-bottom: 12px;
   color: var(--text-color);
@@ -25,11 +25,12 @@ img[src*="heart.gif"],
   overflow-wrap: anywhere;
   word-break: break-word;
   contain: content;
+  border-radius: 6px;
 }
 
 .forum-reply {
   border: 3px solid var(--accent-color);
-  background: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
   padding: 12px;
   margin-top: 10px;
   margin-left: 20px;
@@ -39,11 +40,12 @@ img[src*="heart.gif"],
   overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
+  border-radius: 6px;
 }
 
 .forum-reply-nested {
   border: 3px solid var(--accent-color);
-  background: #ffffff;
+  background: rgba(0, 0, 0, 0.75);
   padding: 12px;
   margin-left: 40px;
   color: var(--text-color);
@@ -52,6 +54,7 @@ img[src*="heart.gif"],
   overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
+  border-radius: 6px;
 }
 
 .forum-meta {
@@ -75,7 +78,8 @@ img[src*="heart.gif"],
   max-width: min(250px, 100%);
   height: auto;
   display: block;
-  border: 3px solid #555555;
+  border: 3px solid #999999;
+  border-radius: 6px;
 }
 
 .forum-media-group {
@@ -96,7 +100,8 @@ img[src*="heart.gif"],
 }
 
 .forum-media-item img {
-  border: 3px solid #555555;
+  border: 3px solid #999999;
+  border-radius: 6px;
 }
 
 .forum-media-block {
@@ -152,7 +157,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -167,7 +172,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
   white-space: pre;
   tab-size: 4;
 }
@@ -177,7 +182,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
 }
 
 .attachment-preview-grid {
@@ -191,14 +196,14 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 3px solid #555555;
-  border-radius: 0;
+  border: 3px solid #999999;
+  border-radius: 6px;
   background: var(--bg-color);
   display: block;
 }
 
 .forum-meta {
-  font-family: system-ui;
+  font-family: 'Cthulhumbus';
 }
 
 .forum-reply-button {
