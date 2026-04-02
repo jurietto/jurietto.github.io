@@ -441,3 +441,61 @@ loadComments().then(() => {
 });
 
 window.reloadForum = () => loadComments(currentPage);
+
+// ============ TYPING EFFECT ON SCROLL ============
+import { typeText } from './utils.js';
+
+// Track which elements have already been typed
+const typedElements = new WeakSet();
+
+// Create Intersection Observer to trigger typing when posts scroll into view
+const typingObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !typedElements.has(entry.target)) {
+      const body = entry.target;
+      const text = body.dataset.text;
+      
+      if (text) {
+        typedElements.add(body);
+        typeText(body, text, 30).then(() => {
+          // Stop observing this element after typing is complete
+          typingObserver.unobserve(body);
+        });
+      }
+    }
+  });
+}, {
+  threshold: 0.1, // Start typing when 10% of element is visible
+  rootMargin: '50px' // Start slightly before element enters viewport
+});
+
+// Watch for new forum bodies being added and observe them
+const bodyObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === 1) { // Element node
+        // Check if it's a forum body or contains forum bodies
+        if (node.classList && node.classList.contains('forum-body')) {
+          typingObserver.observe(node);
+        } else if (node.querySelectorAll) {
+          node.querySelectorAll('.forum-body').forEach(body => {
+            typingObserver.observe(body);
+          });
+        }
+      }
+    });
+  });
+});
+
+// Start observing the comments container for new posts
+if (container) {
+  bodyObserver.observe(container, {
+    childList: true,
+    subtree: true
+  });
+  
+  // Observe any existing forum bodies
+  container.querySelectorAll('.forum-body').forEach(body => {
+    typingObserver.observe(body);
+  });
+}

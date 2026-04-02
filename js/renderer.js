@@ -303,7 +303,8 @@ export function renderBodyWithEmbeds(text, parent) {
   if (stripped.trim()) {
     const body = document.createElement("div");
     body.className = "forum-body";
-    body.textContent = stripped;
+    body.dataset.text = stripped; // Store text for later typing
+    body.textContent = ''; // Start empty
     parent.appendChild(body);
   }
 

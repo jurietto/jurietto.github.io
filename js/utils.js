@@ -365,3 +365,30 @@ export function textToSpeech(text, button) {
     }
   };
 }
+
+/**
+ * Typing effect - animates text appearing character by character
+ * @param {HTMLElement} element - The element to type text into
+ * @param {string} text - The text to type
+ * @param {number} speed - Milliseconds per character (default: 30)
+ */
+export function typeText(element, text, speed = 30) {
+  if (!element || !text) return Promise.resolve();
+  
+  return new Promise((resolve) => {
+    let index = 0;
+    element.textContent = '';
+    element.classList.add('typing');
+    
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        element.textContent += text[index];
+        index++;
+      } else {
+        clearInterval(interval);
+        element.classList.remove('typing');
+        resolve();
+      }
+    }, speed);
+  });
+}

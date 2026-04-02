@@ -236,3 +236,17 @@ iframe.forum-media.audio {
 .flag-reasons { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
 .flag-details { width: 100%; box-sizing: border-box; margin-bottom: 1rem; }
 .flag-actions { display: flex; gap: 0.5rem; justify-content: flex-end; }
+
+/* Typing animation effect */
+.forum-body.typing::after {
+  content: '▮';
+  animation: blink 0.7s infinite;
+  margin-left: 2px;
+  display: inline-block;
+  color: var(--text-color);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}

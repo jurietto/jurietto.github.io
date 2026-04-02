@@ -738,3 +738,17 @@ iframe.forum-media.audio {
     width: calc(100% + 1.5rem);
   }
 }
+
+/* Typing animation effect */
+.forum-body.typing::after {
+  content: '▮';
+  animation: blink 0.7s infinite;
+  margin-left: 2px;
+  display: inline-block;
+  color: var(--text-color);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
