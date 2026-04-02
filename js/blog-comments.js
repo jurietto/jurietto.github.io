@@ -14,7 +14,7 @@ import { apiPostComment, apiEditComment, apiDeleteComment } from "./forum-api.js
 import {
   formatDate, getUserId, isImageFile, isMediaFile, getSelectedImages,
   createAttachmentPreview, handlePasteImages, handleDropImages,
-  MAX_IMAGES, MAX_FILES
+  MAX_IMAGES, MAX_FILES, textToSpeech
 } from "./utils.js";
 import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 
@@ -216,6 +216,13 @@ export async function loadComments(postId, firebaseDb) {
           const hashtagEl = renderHashtags(comment.hashtags);
           if (hashtagEl) wrap.appendChild(hashtagEl);
         }
+        
+        // Text to Speech button
+        const ttsBtn = document.createElement("button");
+        ttsBtn.textContent = "Text to Speech";
+        ttsBtn.className = "tts-button";
+        ttsBtn.onclick = () => textToSpeech(comment.text, ttsBtn);
+        wrap.appendChild(ttsBtn);
 
 // Report button removed
 

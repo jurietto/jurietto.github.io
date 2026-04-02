@@ -1,7 +1,14 @@
 @media (max-width: 720px) {
+  html {
+    background: url('../art/Hinamina.600.296372.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+  }
+
   body {
     padding: 0.75rem;
     padding-top: 0.75rem;
+    background: transparent;
   }
 
   article h2 {
@@ -163,7 +170,7 @@
   #blog-comments-list img {
     max-width: 100%;
     max-height: 150px;
-    border: 3px solid #999999;
+    border: 2px solid #999999;
   }
 
   #blog-posts form button,

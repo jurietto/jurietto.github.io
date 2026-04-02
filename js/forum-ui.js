@@ -5,7 +5,7 @@
 
 import {
   formatDate, createAttachmentPreview, syncInputImages, getSelectedImages,
-  handlePasteImages, handleDropImages, MAX_IMAGES, MAX_FILES, isMediaFile
+  handlePasteImages, handleDropImages, MAX_IMAGES, MAX_FILES, isMediaFile, textToSpeech
 } from "./utils.js";
 import { renderBodyWithEmbeds, renderMedia } from "./renderer.js";
 import { uploadFile } from "./storage.js";
@@ -338,6 +338,13 @@ export function renderCommentElement(comment, options) {
     replyBtn.onclick = () => onReply(comment.id, wrap);
     wrap.appendChild(replyBtn);
   }
+  
+  // Text to Speech button
+  const ttsBtn = document.createElement("button");
+  ttsBtn.textContent = "Text to Speech";
+  ttsBtn.className = "tts-button";
+  ttsBtn.onclick = () => textToSpeech(comment.text, ttsBtn);
+  wrap.appendChild(ttsBtn);
   
   // Flag button (if not owner)
 /* Report button removed */

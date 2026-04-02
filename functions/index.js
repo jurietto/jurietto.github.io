@@ -10,6 +10,10 @@
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const { defineSecret } = require('firebase-functions/params');
+
+// Define the secret
+const claudeApiKey = defineSecret('CLAUDE_API_KEY');
 
 // Initialize if not already
 if (!admin.apps.length) {
@@ -185,6 +189,92 @@ exports.postComment = functions.https.onRequest((req, res) => {
       return res.status(200).json({ success: true, id: docRef.id });
     } catch (error) {
       console.error('Post error:', error);
+      return res.status(500).json({ error: error.message });
+    }
+  });
+});
+
+/**
+ * AI Forum Summary
+ * Expects: { threadId }
+ * Fetches recent posts and generates an AI summary using Claude
+ */
+exports.generateAISummary = functions.https.onRequest(
+  { secrets: [claudeApiKey] },
+  (req, res) => {
+  cors(req, res, async () => {
+    if (req.method !== 'POST') {
+      return res.status(405).send('Method not allowed');
+    }
+    
+    try {
+      const { threadId } = req.body;
+      
+      if (!threadId) {
+        return res.status(400).send('Missing threadId');
+      }
+      
+      // Fetch recent posts from the forum (limit to 50 most recent)
+      const commentsRef = db.collection('threads').doc(threadId).collection('comments');
+      const snapshot = await commentsRef.orderBy('createdAt', 'desc').limit(50).get();
+      
+      if (snapshot.empty) {
+        return res.status(200).json({ summary: 'No posts found in the forum yet!' });
+      }
+      
+      // Build posts text for AI
+      const posts = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        posts.push(`[${data.user || 'Anonymous'}]: ${data.text || '[image/media]'}`);
+      });
+      
+      const postsText = posts.reverse().join('\n\n');
+      
+      // Call Claude API using native fetch (Node 18+)
+      const apiKey = claudeApiKey.value();
+      
+      console.log('API Key exists:', !!apiKey);
+      console.log('Posts text length:', postsText.length);
+      
+      if (!apiKey) {
+        return res.status(500).json({ error: 'Claude API key not configured' });
+      }
+      
+      console.log('Calling Claude API...');
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01'
+        },
+        body: JSON.stringify({
+          model: 'claude-3-5-sonnet-20241022',
+          max_tokens: 1024,
+          messages: [{
+            role: 'user',
+            content: `You're summarizing a casual internet forum for friends. Be friendly and concise. Summarize what's been happening in this forum based on these recent posts:\n\n${postsText}`
+          }]
+        })
+      });
+      
+      console.log('Claude API response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Claude API error response:', errorText);
+        return res.status(500).json({ error: `AI request failed: ${errorText}` });
+      }
+      
+      const data = await response.json();
+      console.log('Claude API success, summary length:', data.content[0].text.length);
+      const summary = data.content[0].text;
+      
+      return res.status(200).json({ summary });
+    } catch (error) {
+      console.error('AI Summary error:', error);
+      console.error('Error stack:', error.stack);
       return res.status(500).json({ error: error.message });
     }
   });

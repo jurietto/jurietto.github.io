@@ -1,38 +1,45 @@
-/* No border on heart images and youtube thumbnails */
-img[src*="heart.gif"],
+/* No border on heart images */
+img[src*="heart.gif"] {
+  border: none !important;
+}
+
+/* YouTube embed container */
+.youtube-embed {
+  border: 2px solid #999999 !important;
+}
+
+/* Remove border from YouTube thumbnail images */
 .youtube-embed img {
   border: none !important;
 }
 
 .forum-notice {
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  background-color: rgba(0, 0, 0, 0.75);
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: rgba(0, 0, 0, 0.7);
   color: var(--text-color);
   font-size: 0.95rem;
-  border: 3px solid var(--accent-color);
+  border: 2px solid #999999;
 }
 
 .forum-comment {
-  border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.75);
-  padding: 12px;
-  margin-bottom: 12px;
+  border: 2px solid #999999;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 12px 16px;
+  margin-bottom: 10px;
   color: var(--text-color);
   max-width: 100%;
   overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
   contain: content;
-  border-radius: 6px;
 }
 
 .forum-reply {
-  border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.75);
-  padding: 12px;
-  margin-top: 10px;
+  border: 2px solid #999999;
+  background: transparent;
+  padding: 12px 16px;
+  margin-top: 8px;
   margin-left: 20px;
   color: var(--text-color);
   max-width: calc(100% - 20px);
@@ -40,13 +47,12 @@ img[src*="heart.gif"],
   overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
-  border-radius: 6px;
 }
 
 .forum-reply-nested {
-  border: 3px solid var(--accent-color);
-  background: rgba(0, 0, 0, 0.75);
-  padding: 12px;
+  border: 2px solid #999999;
+  background: transparent;
+  padding: 12px 16px;
   margin-left: 40px;
   color: var(--text-color);
   width: calc(100% - 40px);
@@ -54,7 +60,6 @@ img[src*="heart.gif"],
   overflow: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
-  border-radius: 6px;
 }
 
 .forum-meta {
@@ -78,8 +83,7 @@ img[src*="heart.gif"],
   max-width: min(250px, 100%);
   height: auto;
   display: block;
-  border: 3px solid #999999;
-  border-radius: 6px;
+  border: 2px solid #999999;
 }
 
 .forum-media-group {
@@ -100,8 +104,7 @@ img[src*="heart.gif"],
 }
 
 .forum-media-item img {
-  border: 3px solid #999999;
-  border-radius: 6px;
+  border: 2px solid #999999;
 }
 
 .forum-media-block {
@@ -157,7 +160,7 @@ iframe.forum-media.audio {
 }
 
 .forum-body {
-  font-family: 'Cthulhumbus';
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
   white-space: pre-wrap;
   tab-size: 4;
   overflow-wrap: anywhere;
@@ -172,7 +175,7 @@ iframe.forum-media.audio {
 #blog-search-input,
 #comment-username,
 .reply-form textarea {
-  font-family: 'Cthulhumbus';
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
   white-space: pre;
   tab-size: 4;
 }
@@ -182,7 +185,7 @@ iframe.forum-media.audio {
 #blog-search-input::placeholder,
 #comment-username::placeholder,
 .reply-form input::placeholder {
-  font-family: 'Cthulhumbus';
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
 }
 
 .attachment-preview-grid {
@@ -196,17 +199,21 @@ iframe.forum-media.audio {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border: 3px solid #999999;
-  border-radius: 6px;
+  border: 2px solid #999999;
   background: var(--bg-color);
   display: block;
 }
 
 .forum-meta {
-  font-family: 'Cthulhumbus';
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
 }
 
 .forum-reply-button {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.tts-button {
   display: inline-block;
   margin-top: 6px;
 }

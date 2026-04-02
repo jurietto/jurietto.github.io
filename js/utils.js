@@ -275,3 +275,93 @@ export function handleDropImages(e, input, showNotice, updatePreview) {
   input.files = dt.files;
   updatePreview?.();
 }
+
+// ============ TEXT TO SPEECH ============
+let currentSpeech = null;
+
+// Ensure voices are loaded
+function getVoices() {
+  return new Promise((resolve) => {
+    let voices = window.speechSynthesis.getVoices();
+    if (voices.length) {
+      resolve(voices);
+    } else {
+      window.speechSynthesis.onvoiceschanged = () => {
+        voices = window.speechSynthesis.getVoices();
+        resolve(voices);
+      };
+    }
+  });
+}
+
+export function textToSpeech(text, button) {
+  if (!text) return;
+  
+  // Check if browser supports speech synthesis
+  if (!window.speechSynthesis) {
+    alert("Text to speech is not supported in your browser.");
+    return;
+  }
+  
+  // If already speaking, stop it
+  if (currentSpeech) {
+    window.speechSynthesis.cancel();
+    currentSpeech = null;
+    // Reset all buttons
+    document.querySelectorAll('.tts-button').forEach(btn => {
+      btn.textContent = 'Text to Speech';
+      btn.disabled = false;
+    });
+    return;
+  }
+  
+  // Create speech utterance
+  const utterance = new SpeechSynthesisUtterance(text);
+  currentSpeech = utterance;
+  
+  // Select a female voice (async to ensure voices are loaded)
+  getVoices().then(voices => {
+    const femaleVoice = voices.find(voice => 
+      voice.name.toLowerCase().includes('female') ||
+      voice.name.toLowerCase().includes('woman') ||
+      voice.name.toLowerCase().includes('zira') ||
+      voice.name.toLowerCase().includes('samantha') ||
+      voice.name.toLowerCase().includes('victoria') ||
+      voice.name.toLowerCase().includes('karen') ||
+      voice.name.toLowerCase().includes('moira') ||
+      voice.name.toLowerCase().includes('tessa') ||
+      voice.name.toLowerCase().includes('fiona')
+    ) || voices.find(voice => voice.lang.startsWith('en'));
+    
+    if (femaleVoice) {
+      utterance.voice = femaleVoice;
+    }
+    
+    // Speak
+    window.speechSynthesis.speak(utterance);
+  });
+  
+  // Update button text
+  if (button) {
+    button.textContent = 'Stop Speech';
+    button.disabled = false;
+  }
+  
+  // Handle end of speech
+  utterance.onend = () => {
+    currentSpeech = null;
+    if (button) {
+      button.textContent = 'Text to Speech';
+    }
+  };
+  
+  // Handle errors
+  utterance.onerror = (event) => {
+    console.error('Speech synthesis error:', event);
+    currentSpeech = null;
+    if (button) {
+      button.textContent = 'Text to Speech';
+      button.disabled = false;
+    }
+  };
+}

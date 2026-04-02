@@ -6,6 +6,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'DotGothic16';
+  src: url('../art/DotGothic16/DotGothic16-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg-color: rgba(0, 0, 0, 0.75);
   --text-color: #ffffff;
@@ -15,14 +23,14 @@
 
 html,
 body {
-  font-family: 'Cthulhumbus';
-  line-height: 1.4;
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
+  line-height: 1.6;
   font-size: 16px;
   margin: 0;
   padding: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
-  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 *, *::before, *::after { 
@@ -33,21 +41,30 @@ h1,h2,h3,h4,h5,h6 {
   margin: 0 0 0.5rem; 
   font-weight: 600; 
   color: var(--highlight-color);
-  text-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
-h1,h2,h3 { font-family: 'Cthulhumbus'; }
+h1,h2,h3 { font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace; }
 h1 { margin-bottom: 1.5rem; }
 h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
-p { margin: 0 0 1rem; }
-ul,ol { margin: 0 0 1rem; padding-left: 1.25rem; }
+p { margin: 0 0 0.75rem; }
+ul,ol { margin: 0 0 0.75rem; padding-left: 1.25rem; }
 img,video,iframe { 
   max-width: 100%; 
   height: auto; 
   display: block;
 }
 
-/* No border on heart images and youtube thumbnails */
-img[src*="heart.gif"],
+/* No border on heart images */
+img[src*="heart.gif"] {
+  border: none !important;
+}
+
+/* YouTube embed container */
+.youtube-embed {
+  border: 2px solid #999999 !important;
+}
+
+/* Remove border from YouTube thumbnail images */
 .youtube-embed img {
   border: none !important;
 }
@@ -85,14 +102,14 @@ body {
 input:not([type="button"]):not([type="submit"]):not([type="reset"]),
 textarea,
 select {
-  font-family: 'Cthulhumbus';
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
   font-size: inherit;
   line-height: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: 'Cthulhumbus';
+  font-family: 'DotGothic16', 'MS Gothic', 'Courier New', monospace;
 }
 
 /* Consistent sizing for all pages */
