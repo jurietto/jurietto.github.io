@@ -1,14 +1,14 @@
 @media (max-width: 720px) {
   html {
-    background: url('../art/Hinamina.600.296372.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: #000000;
     min-height: 100vh;
   }
 
   body {
     padding: 0.75rem;
     padding-top: 0.75rem;
-    background: transparent;
+    background: #000000;
+    color: #ffffff;
   }
 
   article h2 {
@@ -184,5 +184,38 @@
     margin: 0 -0.75rem;
     border-radius: 0;
     width: calc(100% + 1.5rem);
+  }
+
+  /* Mobile color overrides - black/white/grey only */
+  .forum-notice,
+  .forum-comment,
+  .forum-reply,
+  .forum-reply-nested {
+    border-color: #999999 !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    color: #ffffff !important;
+  }
+
+  .forum-media.image,
+  .forum-media-item img,
+  .attachment-preview-item img,
+  .youtube-embed {
+    border-color: #999999 !important;
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .forum-meta,
+  .forum-meta .author,
+  .forum-meta .name,
+  .forum-author,
+  .post-author,
+  .post-date,
+  .forum-date,
+  .forum-meta time {
+    color: #ffffff !important;
+  }
+
+  body, p, span, div {
+    color: #ffffff !important;
   }
 }
