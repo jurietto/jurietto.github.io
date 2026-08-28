@@ -16,16 +16,16 @@
       .rating { margin:0 0 10px; color:#f0448d; }
       .site-title { margin:0 0 8px; font-weight:700; }
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; }
-      .three-column { display:grid; grid-template-columns:minmax(0,1fr) 180px; gap:18px; padding:16px; align-items:start; }
+      .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)) 180px; gap:18px; padding:16px; align-items:stretch; }
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
-      .sidebar-right { min-width:0; }
-      .page-column-center { grid-column:1; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; align-items:stretch; text-align:left; }
+      .sidebar-right { min-width:0; grid-column:3; grid-row:1 / span 2; }
+      .page-column-center { grid-column:1 / -1; }
       .sidebar-image { display:block; max-width:100%; height:auto; margin:0 auto; }
       .sidebar-title { margin:16px 0 4px; font-weight:700; }
       .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
       .site-nav form { display:block; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); }
       .site-nav button { width:100%; border:0; background:transparent; color:inherit; font:inherit; text-transform:none; }
-      .page-title { grid-column:1 / -1; margin:0 0 16px; font-weight:700; text-align:center; }
+      .page-title { grid-column:1 / 3; margin:0 0 16px; font-weight:700; text-align:center; }
       .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
       .guestbook-panel-title { margin:0 0 12px; font-weight:700; }
       .guestbook-form { display:grid; gap:10px; text-align:left; }
@@ -35,13 +35,12 @@
       .guestbook-form button { border:var(--border-width) solid var(--border-color); background:transparent; color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
       #guestbook-status { min-height:1.3em; margin:0; }
       #guestbook-entries { list-style:none; margin:0; padding:0; text-align:left; }
-      .guestbook-entry { border-top:var(--border-width) solid var(--border-color); padding:12px 0; }
-      .guestbook-entry:first-child { border-top:0; padding-top:0; }
+      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0 0 12px; }
       .guestbook-entry strong, .guestbook-entry time { display:block; }
       .guestbook-entry time { margin-top:2px; }
       .guestbook-entry p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
       .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px}.page-column{width:100%;margin-bottom:12px}.page-column-center{display:block;width:100%}.guestbook-panel{margin-bottom:12px}.sidebar-right{width:100%;margin-bottom:12px}.landing-footer{margin:0 8px 8px} }
+      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px}.page-column{width:100%;margin-bottom:12px}.page-title{width:100%}.guestbook-panel{margin-bottom:12px}.sidebar-right{width:100%;margin-bottom:12px}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
   <body data-api-base="https://jurietto-guestbook-api.onrender.com">
@@ -51,21 +50,19 @@
         <h1 class="site-title">jurietto.github.io/guestbook</h1>
       </header>
       <div class="three-column">
-        <section class="page-column page-column-center">
-          <h2 class="page-title">Guestbook</h2>
-          <section class="guestbook-panel" aria-labelledby="sign-title">
-            <h3 class="guestbook-panel-title" id="sign-title">Sign Guestbook</h3>
-            <form class="guestbook-form" id="guestbook-form">
-              <label>Name <input name="name" maxlength="80" required /></label>
-              <label>Message <textarea name="message" maxlength="2000" required></textarea></label>
-              <button type="submit">Sign guestbook</button>
-              <p id="guestbook-status" role="status" aria-live="polite"></p>
-            </form>
-          </section>
-          <section class="guestbook-panel" aria-labelledby="comments-title">
-            <h3 class="guestbook-panel-title" id="comments-title">Comments</h3>
-            <ul id="guestbook-entries" aria-live="polite"></ul>
-          </section>
+        <h2 class="page-title">Guestbook</h2>
+        <section class="guestbook-panel" aria-labelledby="sign-title">
+          <h3 class="guestbook-panel-title" id="sign-title">Sign Guestbook</h3>
+          <form class="guestbook-form" id="guestbook-form">
+            <label>Name <input name="name" maxlength="80" required /></label>
+            <label>Message <textarea name="message" maxlength="2000" required></textarea></label>
+            <button type="submit">Sign guestbook</button>
+            <p id="guestbook-status" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+        <section class="guestbook-panel" aria-labelledby="comments-title">
+          <h3 class="guestbook-panel-title" id="comments-title">Comments</h3>
+          <ul id="guestbook-entries" aria-live="polite"></ul>
         </section>
         <aside class="sidebar-right">
           <nav class="site-nav" aria-label="Main navigation">
