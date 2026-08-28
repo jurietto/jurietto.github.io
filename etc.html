@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffb5c0" />
+    <title>jurietto.github.io/etc</title>
+    <style>
+      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
+      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
+      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; }
+      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Italic.ttf") format("truetype"); font-weight:400; font-style:italic; }
+      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-LightItalic.ttf") format("truetype"); font-weight:300; font-style:italic; }
+      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-BoldItalic.ttf") format("truetype"); font-weight:700; font-style:italic; }
+      * { box-sizing:border-box; }
+      :root { --border-color:#3b164f; --border-width:3px; }
+      body { margin:0; min-width:320px; color:#161116; background-color:#ffb5c0; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
+      .intro { padding:0 16px 10px; }
+      .mark { display:block; width:92px; height:auto; margin:-48px auto 1px; position:relative; }
+      .rating { margin:0 0 10px; color:#f0448d; font-style:normal; }
+      .site-title { margin:0 0 8px; font-weight:700; }
+      .site-description { max-width:430px; margin:0 auto 9px; line-height:1.35; }
+      .hero-image { display:block; width:min(520px,calc(100% - 12px)); height:auto; margin:0 auto 9px; border:var(--border-width) solid var(--border-color); }
+      .sidebar-image { display:block; max-width:100%; height:auto; margin:0 auto; }
+      .page-title { margin:0 0 16px; font-weight:700; }
+      .sidebar-title { margin:16px 0 4px; font-weight:700; }
+      .profile { margin-top:18px; }
+      .profile-image { display:block; width:90px; height:90px; object-fit:cover; object-position:center 12%; margin:0 auto 10px; border:var(--border-width) solid var(--border-color); }
+      .intro a { color:deeppink; }
+      .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; }
+      .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:18px; padding:16px; align-items:start; }
+      .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
+      .sidebar-right { min-width:0; }
+      .page-column-center { grid-column:2; }
+      .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
+      .site-nav form { display:block; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); }
+      .site-nav button { width:100%; border:0; background:transparent; color:inherit; font:inherit; text-transform:none; }
+      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); line-height:1.35; }
+      @media (max-width:620px) { .center-body{width:100%}.center-body{min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px}.page-column{width:100%;margin-bottom:12px}.page-column-center{width:100%}.landing-footer{margin:0 8px 8px} }
+    </style>
+  </head>
+  <body>
+    <main class="center-body">
+      <header class="site-header">
+        <p class="rating">♥ Rated MA - take care of yourself ♥</p>
+        <h1 class="site-title">jurietto.github.io/etc</h1>
+      </header>
+      <div class="three-column">
+        <aside class="page-column page-column-left">
+          <img class="sidebar-image" src="assets/heart.webp" alt="Decorative heart" />
+          <section class="profile" aria-labelledby="profile-title">
+            <h2 class="sidebar-title" id="profile-title">Profile</h2>
+            <img class="profile-image" src="assets/b5cc3c1a7c0a299c79b7dfc7d1c65929.jpg" alt="Profile image" />
+            <p>Juri<br />30<br />Aroace<br />She/her, they/them<br />Likes to self-isolate.</p>
+          </section>
+        </aside>
+        <section class="page-column page-column-center">
+          <h2 class="page-title">Elsewhere</h2>
+          <p><a href="https://x.com/hexangel_93">Twitter</a></p>
+          <p><a href="https://www.youtube.com/@juriscafe">YouTube</a></p>
+        </section>
+        <aside class="sidebar-right">
+          <nav class="site-nav" aria-label="Main navigation">
+            <form action="index.html"><button type="submit">Home</button></form>
+            <form action="diary.html"><button type="submit">Diary</button></form>
+            <form action="etc.html"><button type="submit">Etc</button></form>
+            <form action="guestbook.html"><button type="submit">Guestbook</button></form>
+            <form action="https://x.com/hexangel_93"><button type="submit">Twitter</button></form>
+            <form action="https://www.youtube.com/@juriscafe"><button type="submit">YouTube</button></form>
+          </nav>
+        </aside>
+      </div>
+      <footer class="landing-footer">Site created 2026<br />Please seek professional support when you need it.<br />Last updated <time id="last-updated"></time></footer>
+    </main>
+    <script>
+      const lastUpdated = new Date(document.lastModified);
+      if (!Number.isNaN(lastUpdated.getTime())) {
+        document.getElementById("last-updated").textContent = lastUpdated.toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+      }
+    </script>
+  </body>
+</html>
