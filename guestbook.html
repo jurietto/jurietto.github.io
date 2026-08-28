@@ -5,56 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffb5c0" />
     <title>jurietto.github.io/guestbook</title>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
     <style>
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; }
       * { box-sizing:border-box; }
-      :root { --border-color:#3b164f; --border-width:3px; }
-      body { margin:0; min-width:320px; color:#161116; background-color:#ffb5c0; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      :root { --border-color:#3b164f; --page-background:#f7b5cd; --border-width:3px; }
+      body { margin:0; min-width:320px; color:var(--border-color); background:linear-gradient(135deg,#f7b5cd 0%,#fff 50%,#b7e8d2 100%) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
       .rating { margin:0 0 10px; color:#f0448d; }
       .site-title { margin:0 0 8px; font-weight:700; }
-      .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; }
-      .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)) 180px; gap:18px; padding:16px 16px 0; margin-bottom:16px; align-items:start; }
-      .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
-      .sidebar-right { min-width:0; grid-column:3; grid-row:1 / span 2; }
-      .page-column-center { grid-column:1 / -1; }
-      .sidebar-image { display:block; max-width:100%; height:auto; margin:0 auto; }
-      .sidebar-title { margin:16px 0 4px; font-weight:700; }
-      .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
-      .site-nav form { display:block; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--border-color); }
-      .site-nav button { width:100%; border:0; background:transparent; color:#ffb5c0; font:inherit; font-weight:700; text-transform:none; }
-      .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
-      .comments-column { min-width:0; padding:0; }
+      .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
+      .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
+      .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
+      .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
+      .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
+      .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
+      .comments-column { min-width:0; display:grid; align-content:start; }
       .guestbook-panel-title { margin:0 0 12px; font-weight:700; }
       .guestbook-form { display:grid; gap:10px; text-align:left; }
       .guestbook-form label { display:grid; gap:4px; }
       .guestbook-form input, .guestbook-form textarea { width:100%; border:var(--border-width) solid var(--border-color); background:#fff; color:inherit; font:inherit; padding:8px; }
+      .guestbook-form input:focus, .guestbook-form textarea:focus { outline:none; box-shadow:none; }
       .guestbook-form textarea { min-height:110px; resize:vertical; }
-      .guestbook-form button { border:var(--border-width) solid var(--border-color); background:transparent; color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
+      .turnstile-widget { min-height:0; }
+      .turnstile-widget:empty { display:none; }
+      .guestbook-form button { border:var(--border-width) solid var(--border-color); background:var(--page-background); color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
       #guestbook-status { min-height:1.3em; margin:0; }
-      #guestbook-entries { display:grid; gap:12px; list-style:none; margin:0; padding:0; text-align:left; }
-      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0; }
+      #guestbook-entries { display:grid; gap:8px; list-style:none; margin:0; padding:0; text-align:left; }
+      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0; background:var(--page-background); }
       .guestbook-entry strong, .guestbook-entry time { display:block; }
       .guestbook-entry time { margin-top:2px; }
       .guestbook-entry p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
-      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.page-column{width:100%;margin-bottom:12px}.page-title{width:100%}.guestbook-panel,.comments-column{margin-bottom:12px}.sidebar-right{width:100%;margin-bottom:12px}.landing-footer{margin:0 8px 8px} }
+      .guestbook-replies { display:grid; gap:8px; list-style:none; margin:10px 0 0; padding:0; }
+      .guestbook-reply { border:var(--border-width) solid var(--border-color); padding:8px; background:var(--page-background); }
+      .guestbook-reply p { margin:8px 0 0; }
+      .reply-editor { margin-top:10px; text-align:left; }
+      .reply-editor summary { color:deeppink; cursor:pointer; }
+      .reply-form { display:grid; gap:8px; margin-top:8px; }
+      .reply-form input, .reply-form textarea { width:100%; border:var(--border-width) solid var(--border-color); background:#fff; color:inherit; font:inherit; padding:8px; }
+      .reply-form input:focus, .reply-form textarea:focus { outline:none; box-shadow:none; }
+      .reply-form textarea { min-height:80px; resize:vertical; }
+      .reply-form button { border:var(--border-width) solid var(--border-color); background:var(--page-background); color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
+      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--page-background); line-height:1.35; }
+      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.top-nav{margin:8px 8px 0}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.page-column{width:100%;margin-bottom:8px}.page-title{width:100%}.guestbook-panel,.comments-column{margin-bottom:8px}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
-  <body data-api-base="https://jurietto-guestbook-api.onrender.com">
+  <body data-api-base="https://jurietto-guestbook-api.onrender.com" data-turnstile-sitekey="0x4AAAAAAEfAqW-jJOmysmj4">
     <main class="center-body">
       <header class="site-header">
         <p class="rating">♥ Rated MA - take care of yourself ♥</p>
         <h1 class="site-title">jurietto.github.io/guestbook</h1>
       </header>
+      <nav class="top-nav" aria-label="Page navigation">
+        <a href="index.html">Home</a>
+        <a href="diary.html">Diary</a>
+        <a href="etc.html">Etc</a>
+        <a href="guestbook.html">Guestbook</a>
+      </nav>
       <div class="three-column">
         <section class="guestbook-panel" aria-labelledby="sign-title">
           <h3 class="guestbook-panel-title" id="sign-title">Sign Guestbook</h3>
           <form class="guestbook-form" id="guestbook-form">
             <label>Name <input name="name" maxlength="80" required /></label>
             <label>Message <textarea name="message" maxlength="2000" required></textarea></label>
+            <div class="turnstile-widget" id="turnstile-widget" aria-label="Cloudflare Turnstile verification"></div>
             <button type="submit">Sign guestbook</button>
             <p id="guestbook-status" role="status" aria-live="polite"></p>
           </form>
@@ -62,16 +79,6 @@
         <section class="comments-column">
           <ul id="guestbook-entries" aria-live="polite"></ul>
         </section>
-        <aside class="sidebar-right">
-          <nav class="site-nav" aria-label="Main navigation">
-            <form action="index.html"><button type="submit">Home</button></form>
-            <form action="diary.html"><button type="submit">Diary</button></form>
-            <form action="etc.html"><button type="submit">Etc</button></form>
-            <form action="guestbook.html"><button type="submit">Guestbook</button></form>
-            <form action="https://x.com/hexangel_93"><button type="submit">Twitter</button></form>
-            <form action="https://www.youtube.com/@juriscafe"><button type="submit">YouTube</button></form>
-          </nav>
-        </aside>
       </div>
       <footer class="landing-footer">Site created 2026<br />Please seek professional support when you need it.<br />Last updated <time id="last-updated"></time></footer>
     </main>
@@ -80,6 +87,10 @@
       const form = document.getElementById("guestbook-form");
       const status = document.getElementById("guestbook-status");
       const entries = document.getElementById("guestbook-entries");
+      const turnstileSitekey = document.body.dataset.turnstileSitekey;
+      let turnstileToken = "";
+      let turnstileWidgetId = null;
+      const adminMode = new URLSearchParams(window.location.search).get("admin") === "1";
 
       function showStatus(message) {
         status.textContent = message;
@@ -106,7 +117,90 @@
           message.textContent = item.message;
           entry.className = "guestbook-entry";
           entry.append(name, date, message);
+
+          if (item.replies && item.replies.length) {
+            const replies = document.createElement("ul");
+            replies.className = "guestbook-replies";
+            item.replies.forEach((itemReply) => {
+              const reply = document.createElement("li");
+              const replyName = document.createElement("strong");
+              const replyDate = document.createElement("time");
+              const replyMessage = document.createElement("p");
+
+              replyName.textContent = itemReply.name;
+              replyDate.textContent = new Date(itemReply.createdAt).toLocaleString();
+              replyMessage.textContent = itemReply.message;
+              reply.className = "guestbook-reply";
+              reply.append(replyName, replyDate, replyMessage);
+              replies.append(reply);
+            });
+            entry.append(replies);
+          }
+
+          if (adminMode) {
+            const editor = document.createElement("details");
+            const summary = document.createElement("summary");
+            const replyForm = document.createElement("form");
+            const tokenLabel = document.createElement("label");
+            const tokenInput = document.createElement("input");
+            const replyLabel = document.createElement("label");
+            const replyInput = document.createElement("textarea");
+            const replyButton = document.createElement("button");
+
+            editor.className = "reply-editor";
+            summary.textContent = "Reply";
+            replyForm.className = "reply-form";
+            tokenLabel.textContent = "Reply key ";
+            tokenInput.type = "password";
+            tokenInput.name = "adminToken";
+            tokenInput.autocomplete = "off";
+            tokenInput.required = true;
+            tokenLabel.append(tokenInput);
+            replyLabel.textContent = "Reply ";
+            replyInput.name = "message";
+            replyInput.maxLength = 2000;
+            replyInput.required = true;
+            replyLabel.append(replyInput);
+            replyButton.type = "submit";
+            replyButton.textContent = "Send reply";
+            replyForm.append(tokenLabel, replyLabel, replyButton);
+            editor.append(summary, replyForm);
+            entry.append(editor);
+
+            replyForm.addEventListener("submit", async (event) => {
+              event.preventDefault();
+              showStatus("Sending reply...");
+              try {
+                const response = await fetch(`${apiBase}/api/guestbook/${item.id}/replies`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "X-Admin-Token": tokenInput.value
+                  },
+                  body: JSON.stringify({ message: replyInput.value })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || "Unable to send the reply.");
+                showStatus("Reply added.");
+                loadEntries();
+              } catch (error) {
+                showStatus(error.message || "Unable to send the reply.");
+              }
+            });
+          }
+
           entries.append(entry);
+        });
+      }
+
+      function renderTurnstile() {
+        if (!turnstileSitekey || !window.turnstile || turnstileWidgetId !== null) return;
+        turnstileWidgetId = window.turnstile.render("#turnstile-widget", {
+          sitekey: turnstileSitekey,
+          action: "guestbook",
+          callback: (token) => { turnstileToken = token; },
+          "expired-callback": () => { turnstileToken = ""; },
+          "error-callback": () => { turnstileToken = ""; }
         });
       }
 
@@ -122,6 +216,10 @@
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
+        if (turnstileSitekey && !turnstileToken) {
+          showStatus("Please complete the CAPTCHA.");
+          return;
+        }
         showStatus("Sending...");
         const formData = new FormData(form);
 
@@ -131,12 +229,15 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               name: formData.get("name"),
-              message: formData.get("message")
+              message: formData.get("message"),
+              turnstileToken
             })
           });
           const result = await response.json();
           if (!response.ok) throw new Error(result.error || "Unable to sign the guestbook.");
           form.reset();
+          if (turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+          turnstileToken = "";
           showStatus("Entry added.");
           loadEntries();
         } catch (error) {
@@ -145,6 +246,7 @@
       });
 
       loadEntries();
+      window.addEventListener("load", renderTurnstile);
 
       const lastUpdated = new Date(document.lastModified);
       if (!Number.isNaN(lastUpdated.getTime())) {

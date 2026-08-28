@@ -13,8 +13,9 @@
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-LightItalic.ttf") format("truetype"); font-weight:300; font-style:italic; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-BoldItalic.ttf") format("truetype"); font-weight:700; font-style:italic; }
       * { box-sizing:border-box; }
-      :root { --border-color:#3b164f; --border-width:3px; }
-      body { margin:0; min-width:320px; color:#161116; background-color:#ffb5c0; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      :root { --border-color:#3b164f; --page-background:#f7b5cd; --border-width:3px; }
+      body { margin:0; min-width:320px; color:var(--border-color); background:linear-gradient(135deg,#f7b5cd 0%,#fff 50%,#b7e8d2 100%) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
       .intro { padding:0 16px 10px; }
       .mark { display:block; width:92px; height:auto; margin:-48px auto 1px; position:relative; }
@@ -24,22 +25,37 @@
       .hero-image { display:block; width:min(520px,calc(100% - 12px)); height:auto; margin:0 auto 9px; border:var(--border-width) solid var(--border-color); }
       .sidebar-image { display:block; max-width:100%; height:auto; margin:0 auto; }
       .page-title { margin:0 0 16px; font-weight:700; }
-      .sidebar-title { margin:16px 0 4px; font-weight:700; }
-      .profile { margin-top:18px; }
-      .profile-image { display:block; width:90px; height:90px; object-fit:cover; object-position:center 12%; margin:0 auto 10px; border:var(--border-width) solid var(--border-color); }
-      .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; }
-      .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:18px; padding:16px 16px 0; margin-bottom:16px; align-items:start; }
-      .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
-      .sidebar-right { min-width:0; }
-      .page-column-center { grid-column:2; }
+      .sidebar-title { margin:8px 0 4px; font-weight:700; }
+      .profile { margin-top:8px; }
+      .profile-image-frame { width:90px; height:90px; overflow:hidden; margin:0 auto 10px; border:var(--border-width) solid var(--border-color); }
+      .profile-image { display:block; width:100%; height:100%; object-fit:cover; object-position:center top; transform:scale(1.25); transform-origin:center top; }
+      .topics { margin:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
+      .topics-title { margin:0 0 8px; font-weight:700; }
+      .topics-list { display:flex; flex-wrap:wrap; justify-content:center; list-style:none; margin:0; padding:0; }
+      .topics-list li { margin:0; }
+      .topics-list li:not(:last-child)::after { content:", "; }
+      .sidebar-box { border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); margin-bottom:8px; }
+      .sidebar-box-title { margin:0 0 10px; font-weight:700; }
+      .sidebar-box .sidebar-image { margin-bottom:10px; }
+      .cat-ellipse { display:block; width:110px; height:84px; margin:0 auto; border:var(--border-width) solid var(--border-color); border-radius:50%; object-fit:cover; }
+      .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
+      .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
+      .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
+      .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
+      .left-sidebar { grid-column:1; min-width:0; display:grid; gap:8px; align-content:start; }
+      .center-column { grid-column:2; min-width:0; display:grid; gap:8px; align-content:start; }
+      .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
+      .page-column-left { display:flex; flex-direction:column; align-items:stretch; }
+      .page-column-left .profile p { margin-bottom:0; }
+      .sidebar-right { min-width:0; grid-column:3; grid-row:1; }
+      .page-column-center { grid-column:auto; }
       .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
-      .site-nav form { display:block; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--border-color); }
-      .site-nav button { width:100%; border:0; background:transparent; color:#ffb5c0; font:inherit; font-weight:700; text-transform:none; }
+      .site-nav a { display:block; width:100%; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; text-transform:none; }
       #post-list { margin:0; padding:0 16px; list-style:none; text-align:center; }
       .post-title { margin:16px 0 4px; color:deeppink; text-align:center; }
       #post-list a { color:deeppink; }
-      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%}.center-body{min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.page-column{width:100%;margin-bottom:12px}.page-column-center{width:100%}.landing-footer{margin:0 8px 8px} }
+      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--page-background); line-height:1.35; }
+      @media (max-width:620px) { .center-body{width:100%}.center-body{min-height:100vh}.site-header{margin:0 8px}.top-nav{margin:8px 8px 0}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.left-sidebar{width:100%}.left-sidebar .page-column{margin-bottom:0}.center-column{width:100%}.page-column{width:100%;margin-bottom:8px}.page-column-center{width:100%}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
   <body>
@@ -48,26 +64,44 @@
         <p class="rating">♥ Rated MA - take care of yourself ♥</p>
         <h1 class="site-title">jurietto.github.io/diary</h1>
       </header>
+      <nav class="top-nav" aria-label="Page navigation">
+        <a href="index.html">Home</a>
+        <a href="diary.html">Diary</a>
+        <a href="etc.html">Etc</a>
+        <a href="guestbook.html">Guestbook</a>
+      </nav>
       <div class="three-column">
-        <aside class="page-column page-column-left">
-          <img class="sidebar-image" src="assets/heart.webp" alt="Decorative heart" />
-          <section class="profile" aria-labelledby="profile-title">
-            <h2 class="sidebar-title" id="profile-title">Profile</h2>
-            <img class="profile-image" src="assets/b5cc3c1a7c0a299c79b7dfc7d1c65929.jpg" alt="Profile image" />
-            <p>Juri<br />30<br />Aroace<br />She/her, they/them<br />Likes to self-isolate.</p>
+        <div class="left-sidebar">
+          <aside class="page-column page-column-left">
+            <img class="sidebar-image" src="assets/heart.webp" alt="Decorative heart" />
+            <section class="profile" aria-labelledby="profile-title">
+              <h2 class="sidebar-title" id="profile-title">Profile</h2>
+              <div class="profile-image-frame"><img class="profile-image" src="assets/b5cc3c1a7c0a299c79b7dfc7d1c65929.jpg" alt="Profile image" /></div>
+              <p>Juri<br />30<br />Neurodivergent<br />Aroace<br />She/her, they/them<br />Likes to self-isolate.</p>
+            </section>
+          </aside>
+          <section class="topics" aria-labelledby="topics-title">
+            <h2 class="topics-title" id="topics-title">Topics</h2>
+            <ul class="topics-list">
+              <li><a href="diary.html?topic=first-post">#first-post</a></li>
+              <li><a href="diary.html?topic=summer">#summer</a></li>
+            </ul>
           </section>
-        </aside>
-        <section class="page-column page-column-center">
-          <ul id="post-list"></ul>
-        </section>
+        </div>
+        <div class="center-column">
+          <section class="page-column page-column-center">
+            <ul id="post-list"></ul>
+          </section>
+        </div>
         <aside class="sidebar-right">
+          <section class="sidebar-box" aria-labelledby="cat-title">
+            <img class="sidebar-image" src="assets/heart2.webp" alt="Decorative heart" />
+            <h2 class="sidebar-box-title" id="cat-title">Loser and proud</h2>
+            <img class="cat-ellipse" src="assets/cat.jpg" alt="Cat" />
+          </section>
           <nav class="site-nav" aria-label="Main navigation">
-            <form action="index.html"><button type="submit">Home</button></form>
-            <form action="diary.html"><button type="submit">Diary</button></form>
-            <form action="etc.html"><button type="submit">Etc</button></form>
-            <form action="guestbook.html"><button type="submit">Guestbook</button></form>
-            <form action="https://x.com/hexangel_93"><button type="submit">Twitter</button></form>
-            <form action="https://www.youtube.com/@juriscafe"><button type="submit">YouTube</button></form>
+            <a href="https://x.com/hexangel_93">Twitter</a>
+            <a href="https://www.youtube.com/@juriscafe">YouTube</a>
           </nav>
         </aside>
       </div>

@@ -7,3 +7,21 @@ CREATE TABLE IF NOT EXISTS guestbook_entries (
   PRIMARY KEY (id),
   INDEX guestbook_entries_created_at_idx (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS site_stats (
+  id TINYINT UNSIGNED NOT NULL,
+  visitor_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT IGNORE INTO site_stats (id, visitor_count) VALUES (1, 0);
+
+CREATE TABLE IF NOT EXISTS guestbook_replies (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  entry_id BIGINT UNSIGNED NOT NULL,
+  name VARCHAR(80) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX guestbook_replies_entry_idx (entry_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
