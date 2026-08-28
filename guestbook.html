@@ -34,9 +34,8 @@
       .guestbook-form textarea { min-height:110px; resize:vertical; }
       .guestbook-form button { border:var(--border-width) solid var(--border-color); background:transparent; color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
       #guestbook-status { min-height:1.3em; margin:0; }
-      #guestbook-entries { list-style:none; margin:0; padding:0; text-align:left; }
-      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0 0 12px; }
-      #guestbook-entries .guestbook-entry:last-child { margin-bottom:0; }
+      #guestbook-entries { display:grid; gap:12px; list-style:none; margin:0; padding:0; text-align:left; }
+      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0; }
       .guestbook-entry strong, .guestbook-entry time { display:block; }
       .guestbook-entry time { margin-top:2px; }
       .guestbook-entry p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
