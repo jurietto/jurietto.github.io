@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffb5c0" />
-    <title>jurietto.github.io/etc</title>
+    <title>Etc</title>
     <style>
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
@@ -33,11 +33,14 @@
       .sidebar-box-title { margin:0 0 10px; font-weight:700; }
       .sidebar-box .sidebar-image { margin-bottom:10px; }
       .cat-ellipse { display:block; width:110px; height:84px; margin:0 auto; border:var(--border-width) solid var(--border-color); border-radius:50%; object-fit:cover; }
+      .site-note { margin:10px 0 0; }
       .intro a { color:deeppink; }
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
       .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .top-nav a, .site-nav a { background:var(--nav-mint); }
+      .top-nav a[aria-current="page"] { background:var(--button-ivory); }
+      .top-nav a[aria-current="page"]::before { content:"🍭 "; }
       .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .left-sidebar { grid-column:1; min-width:0; display:grid; gap:8px; align-content:start; }
       .center-column { grid-column:2; min-width:0; display:grid; gap:8px; align-content:start; }
@@ -47,6 +50,8 @@
       .sidebar-right { min-width:0; grid-column:3; grid-row:1; }
       .left-sidebar .page-column, .left-sidebar .topics, .sidebar-right .sidebar-box { background:var(--sidebar-background); }
       .page-column-center { grid-column:auto; background:var(--content-background); }
+      .note-box { background:var(--content-background); }
+      .note-image { display:block; max-width:100%; height:auto; margin:0 auto; border:var(--border-width) solid var(--border-color); }
       .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
       .site-nav a { display:block; width:100%; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; text-transform:none; }
       .sidebar-right .site-nav a { background:var(--button-ivory); }
@@ -57,13 +62,13 @@
   <body>
     <main class="center-body">
       <header class="site-header">
-        <p class="rating">♥ Rated MA - take care of yourself ♥</p>
-        <h1 class="site-title">jurietto.github.io/etc</h1>
+        <p class="rating">jurietto.github.io</p>
+        <h1 class="site-title">Living quietly day by day</h1>
       </header>
       <nav class="top-nav" aria-label="Page navigation">
         <a href="index.html">Home</a>
         <a href="diary.html">Diary</a>
-        <a href="etc.html">Etc</a>
+        <a href="etc.html" aria-current="page">Etc</a>
         <a href="guestbook.html">Guestbook</a>
       </nav>
       <div class="three-column">
@@ -83,12 +88,17 @@
             <p><a href="https://x.com/hexangel_93">Twitter</a></p>
             <p><a href="https://www.youtube.com/@juriscafe">YouTube</a></p>
           </section>
+          <section class="page-column note-box" aria-labelledby="note-title">
+            <h2 class="page-title" id="note-title">Handwritten note</h2>
+            <img class="note-image" src="assets/note.png" alt="Handwritten note" />
+          </section>
         </div>
         <aside class="sidebar-right">
           <section class="sidebar-box" aria-labelledby="cat-title">
             <img class="sidebar-image" src="assets/heart2.webp" alt="Decorative heart" />
             <h2 class="sidebar-box-title" id="cat-title">Loser and proud</h2>
             <img class="cat-ellipse" src="assets/cat.jpg" alt="Cat" />
+            <p class="site-note">Site is rated MA - take care of yourself.</p>
           </section>
           <nav class="site-nav" aria-label="Main navigation">
             <a href="https://x.com/hexangel_93">Twitter</a>

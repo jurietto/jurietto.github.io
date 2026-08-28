@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffb5c0" />
-    <title>jurietto.github.io/guestbook</title>
+    <title>Guestbook</title>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
     <style>
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
@@ -21,6 +21,8 @@
       .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .top-nav a, .site-nav a { background:var(--nav-mint); }
+      .top-nav a[aria-current="page"] { background:var(--button-ivory); }
+      .top-nav a[aria-current="page"]::before { content:"🍭 "; }
       .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
       .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
@@ -58,14 +60,14 @@
   <body data-api-base="https://jurietto-guestbook-api.onrender.com" data-turnstile-sitekey="0x4AAAAAAEfAqW-jJOmysmj4">
     <main class="center-body">
       <header class="site-header">
-        <p class="rating">♥ Rated MA - take care of yourself ♥</p>
-        <h1 class="site-title">jurietto.github.io/guestbook</h1>
+        <p class="rating">jurietto.github.io</p>
+        <h1 class="site-title">Living quietly day by day</h1>
       </header>
       <nav class="top-nav" aria-label="Page navigation">
         <a href="index.html">Home</a>
         <a href="diary.html">Diary</a>
         <a href="etc.html">Etc</a>
-        <a href="guestbook.html">Guestbook</a>
+        <a href="guestbook.html" aria-current="page">Guestbook</a>
       </nav>
       <div class="three-column">
         <section class="guestbook-panel" aria-labelledby="sign-title">

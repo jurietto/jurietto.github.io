@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffb5c0" />
     <meta name="description" content="jurietto.github.io — Kawaii things, mental health, internet life, music, games, and daily notes." />
-    <title>jurietto.github.io</title>
+    <title>Living quietly day by day</title>
     <style>
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
@@ -21,6 +21,7 @@
       .intro { padding:0 16px 10px; }
       .rating { margin:0 0 10px; color:#f0448d; font-style:normal; }
       .site-title { margin:0 0 8px; font-weight:700; }
+      .site-label { margin:0 auto 8px; font-weight:700; }
       .site-description { max-width:430px; margin:0 auto 9px; line-height:1.35; }
       .hero-image { display:block; width:min(520px,calc(100% - 12px)); height:auto; margin:0 auto 9px; border:var(--border-width) solid var(--border-color); }
       .sidebar-image { display:block; max-width:100%; height:auto; margin:0 auto; }
@@ -41,10 +42,13 @@
       .sidebar-box-title { margin:0 0 10px; font-weight:700; }
       .sidebar-box .sidebar-image { margin-bottom:10px; }
       .cat-ellipse { display:block; width:110px; height:84px; margin:0 auto; border:var(--border-width) solid var(--border-color); border-radius:50%; object-fit:cover; }
+      .site-note { margin:10px 0 0; }
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
       .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .top-nav a, .site-nav a { background:var(--nav-mint); }
+      .top-nav a[aria-current="page"] { background:var(--button-ivory); }
+      .top-nav a[aria-current="page"]::before { content:"🍭 "; }
       .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .left-sidebar { grid-column:1; min-width:0; display:grid; gap:8px; align-content:start; }
       .center-column { grid-column:2; min-width:0; display:grid; gap:8px; align-content:start; }
@@ -64,11 +68,11 @@
   <body data-api-base="https://jurietto-guestbook-api.onrender.com">
     <main class="center-body">
       <header class="site-header">
-        <p class="rating">♥ Rated MA - take care of yourself ♥</p>
-        <h1 class="site-title">jurietto.github.io</h1>
+        <p class="rating">jurietto.github.io</p>
+        <h1 class="site-title">Living quietly day by day</h1>
       </header>
       <nav class="top-nav" aria-label="Page navigation">
-        <a href="index.html">Home</a>
+        <a href="index.html" aria-current="page">Home</a>
         <a href="diary.html">Diary</a>
         <a href="etc.html">Etc</a>
         <a href="guestbook.html">Guestbook</a>
@@ -94,13 +98,16 @@
         </div>
         <div class="center-column">
           <section class="page-column page-column-center">
-            <p class="site-description">A personal site about kawaii things, mental health, online life, music, clothes, games, and daily things.</p>
+            <h2 class="site-label">Thank you kindly for visiting</h2>
+            <p class="site-description">My personal site about kawaii things, mental health, online life, music, clothes, games, and daily things.</p>
             <img class="hero-image" src="assets/mina.jpg" alt="Anime girl resting with a cat" />
             <p class="image-caption">Mina (ミーナ)<br />Waitress and main character in the visual novel Cafe Little Wish.</p>
           </section>
           <section class="topics" aria-labelledby="topics-title">
             <h2 class="topics-title" id="topics-title">Topics</h2>
             <ul class="topics-list">
+              <li><a href="diary.html?topic=new-computer">#new-computer</a></li>
+              <li><a href="diary.html?topic=daily-life">#daily-life</a></li>
               <li><a href="diary.html?topic=first-post">#first-post</a></li>
               <li><a href="diary.html?topic=summer">#summer</a></li>
             </ul>
@@ -111,6 +118,7 @@
             <img class="sidebar-image" src="assets/heart2.webp" alt="Decorative heart" />
             <h2 class="sidebar-box-title" id="cat-title">Loser and proud</h2>
             <img class="cat-ellipse" src="assets/cat.jpg" alt="Cat" />
+            <p class="site-note">Site is rated MA - take care of yourself.</p>
           </section>
           <nav class="site-nav" aria-label="Main navigation">
             <a href="https://x.com/hexangel_93">Twitter</a>
