@@ -6,7 +6,7 @@ const port = Number(process.env.PORT || 3000);
 const allowedOrigin = process.env.FRONTEND_ORIGIN || "*";
 const turnstileSecretKey = String(process.env.TURNSTILE_SECRET_KEY || "");
 const turnstileRequired = process.env.TURNSTILE_REQUIRED === "true";
-const adminReplyToken = String(process.env.ADMIN_REPLY_TOKEN || "");
+const adminReplyToken = String(process.env.ADMIN_REPLY_TOKEN || "").trim();
 const adminReplyName = String(process.env.ADMIN_REPLY_NAME || "Juri").trim() || "Juri";
 
 const pool = mariadb.createPool({
@@ -116,7 +116,7 @@ function hasAdminReplyToken(providedToken) {
     return false;
   }
 
-  const provided = Buffer.from(String(providedToken));
+  const provided = Buffer.from(String(providedToken).trim());
   const expected = Buffer.from(adminReplyToken);
   return provided.length === expected.length && timingSafeEqual(provided, expected);
 }

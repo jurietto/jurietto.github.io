@@ -11,8 +11,8 @@
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; }
       * { box-sizing:border-box; }
-      :root { --border-color:#3b164f; --page-background:#f7b5cd; --border-width:3px; }
-      body { margin:0; min-width:320px; color:var(--border-color); background:linear-gradient(135deg,#f7b5cd 0%,#fff 50%,#b7e8d2 100%) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --admin-reply-background:#d9c7ea; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:3px; }
+      body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
       a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
       .rating { margin:0 0 10px; color:#f0448d; }
@@ -20,6 +20,7 @@
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
       .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
+      .top-nav a, .site-nav a { background:var(--nav-mint); }
       .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
       .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
@@ -27,30 +28,31 @@
       .guestbook-panel-title { margin:0 0 12px; font-weight:700; }
       .guestbook-form { display:grid; gap:10px; text-align:left; }
       .guestbook-form label { display:grid; gap:4px; }
-      .guestbook-form input, .guestbook-form textarea { width:100%; border:var(--border-width) solid var(--border-color); background:#fff; color:inherit; font:inherit; padding:8px; }
+      .guestbook-form input, .guestbook-form textarea { width:100%; border:var(--border-width) solid var(--border-color); background:var(--content-background); color:inherit; font:inherit; padding:8px; }
       .guestbook-form input:focus, .guestbook-form textarea:focus { outline:none; box-shadow:none; }
       .guestbook-form textarea { min-height:110px; resize:vertical; }
-      .turnstile-widget { min-height:0; }
+      .turnstile-widget { width:100%; min-height:0; }
+      .turnstile-widget iframe { max-width:100%; }
       .turnstile-widget:empty { display:none; }
-      .guestbook-form button { border:var(--border-width) solid var(--border-color); background:var(--page-background); color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
+      .guestbook-form button { border:var(--border-width) solid var(--border-color); background:var(--nav-mint); color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
       #guestbook-status { min-height:1.3em; margin:0; }
       #guestbook-entries { display:grid; gap:8px; list-style:none; margin:0; padding:0; text-align:left; }
-      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0; background:var(--page-background); }
+      .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0; background:var(--content-background); }
       .guestbook-entry strong, .guestbook-entry time { display:block; }
       .guestbook-entry time { margin-top:2px; }
       .guestbook-entry p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
       .guestbook-replies { display:grid; gap:8px; list-style:none; margin:10px 0 0; padding:0; }
-      .guestbook-reply { border:var(--border-width) solid var(--border-color); padding:8px; background:var(--page-background); }
+      .guestbook-reply { border:var(--border-width) solid var(--border-color); padding:8px; background:var(--admin-reply-background); }
       .guestbook-reply p { margin:8px 0 0; }
       .reply-editor { margin-top:10px; text-align:left; }
       .reply-editor summary { color:deeppink; cursor:pointer; }
       .reply-form { display:grid; gap:8px; margin-top:8px; }
-      .reply-form input, .reply-form textarea { width:100%; border:var(--border-width) solid var(--border-color); background:#fff; color:inherit; font:inherit; padding:8px; }
+      .reply-form input, .reply-form textarea { width:100%; border:var(--border-width) solid var(--border-color); background:var(--content-background); color:inherit; font:inherit; padding:8px; }
       .reply-form input:focus, .reply-form textarea:focus { outline:none; box-shadow:none; }
       .reply-form textarea { min-height:80px; resize:vertical; }
       .reply-form button { border:var(--border-width) solid var(--border-color); background:var(--page-background); color:inherit; font:inherit; padding:8px 12px; cursor:pointer; }
-      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--page-background); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.top-nav{margin:8px 8px 0}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.page-column{width:100%;margin-bottom:8px}.page-title{width:100%}.guestbook-panel,.comments-column{margin-bottom:8px}.landing-footer{margin:0 8px 8px} }
+      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--footer-background); line-height:1.35; }
+      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.top-nav{grid-template-columns:1fr;gap:8px;margin:8px 8px 0}.three-column{display:flex;flex-direction:column;gap:8px;padding:8px 8px 0;margin-bottom:8px}.guestbook-panel,.comments-column{width:100%;margin:0}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
   <body data-api-base="https://jurietto-guestbook-api.onrender.com" data-turnstile-sitekey="0x4AAAAAAEfAqW-jJOmysmj4">
@@ -80,7 +82,7 @@
           <ul id="guestbook-entries" aria-live="polite"></ul>
         </section>
       </div>
-      <footer class="landing-footer">Site created 2026<br />Please seek professional support when you need it.<br />Last updated <time id="last-updated"></time></footer>
+      <footer class="landing-footer">Site created 2026<br />Please seek professional support when you need it.</footer>
     </main>
     <script>
       const apiBase = document.body.dataset.apiBase;
@@ -197,6 +199,7 @@
         if (!turnstileSitekey || !window.turnstile || turnstileWidgetId !== null) return;
         turnstileWidgetId = window.turnstile.render("#turnstile-widget", {
           sitekey: turnstileSitekey,
+          size: "flexible",
           action: "guestbook",
           callback: (token) => { turnstileToken = token; },
           "expired-callback": () => { turnstileToken = ""; },
@@ -248,14 +251,6 @@
       loadEntries();
       window.addEventListener("load", renderTurnstile);
 
-      const lastUpdated = new Date(document.lastModified);
-      if (!Number.isNaN(lastUpdated.getTime())) {
-        document.getElementById("last-updated").textContent = lastUpdated.toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        });
-      }
     </script>
   </body>
 </html>

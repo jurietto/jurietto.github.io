@@ -13,8 +13,8 @@
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-LightItalic.ttf") format("truetype"); font-weight:300; font-style:italic; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-BoldItalic.ttf") format("truetype"); font-weight:700; font-style:italic; }
       * { box-sizing:border-box; }
-      :root { --border-color:#3b164f; --page-background:#f7b5cd; --border-width:3px; }
-      body { margin:0; min-width:320px; color:var(--border-color); background:linear-gradient(135deg,#f7b5cd 0%,#fff 50%,#b7e8d2 100%) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:3px; }
+      body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
       a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
       .intro { padding:0 16px 10px; }
@@ -41,6 +41,7 @@
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
       .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
+      .top-nav a, .site-nav a { background:var(--nav-mint); }
       .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .left-sidebar { grid-column:1; min-width:0; display:grid; gap:8px; align-content:start; }
       .center-column { grid-column:2; min-width:0; display:grid; gap:8px; align-content:start; }
@@ -48,14 +49,16 @@
       .page-column-left { display:flex; flex-direction:column; align-items:stretch; }
       .page-column-left .profile p { margin-bottom:0; }
       .sidebar-right { min-width:0; grid-column:3; grid-row:1; }
-      .page-column-center { grid-column:auto; }
+      .left-sidebar .page-column, .left-sidebar .topics, .sidebar-right .sidebar-box { background:var(--sidebar-background); }
+      .page-column-center { grid-column:auto; background:var(--content-background); }
       .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
       .site-nav a { display:block; width:100%; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; text-transform:none; }
+      .sidebar-right .site-nav a { background:var(--button-ivory); }
       #post-list { margin:0; padding:0 16px; list-style:none; text-align:center; }
       .post-title { margin:16px 0 4px; color:deeppink; text-align:center; }
       #post-list a { color:deeppink; }
-      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--page-background); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%}.center-body{min-height:100vh}.site-header{margin:0 8px}.top-nav{margin:8px 8px 0}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.left-sidebar{width:100%}.left-sidebar .page-column{margin-bottom:0}.center-column{width:100%}.page-column{width:100%;margin-bottom:8px}.page-column-center{width:100%}.landing-footer{margin:0 8px 8px} }
+      .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--footer-background); line-height:1.35; }
+      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.top-nav{grid-template-columns:1fr;gap:8px;margin:8px 8px 0}.three-column{display:flex;flex-direction:column;gap:8px;padding:8px 8px 0;margin-bottom:8px}.left-sidebar,.center-column,.sidebar-right{width:100%;display:grid;gap:8px}.page-column,.topics,.sidebar-box,.site-nav{width:100%;margin:0}.page-column-center{width:100%}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
   <body>
@@ -105,7 +108,7 @@
           </nav>
         </aside>
       </div>
-      <footer class="landing-footer">Site created 2026<br />Please seek professional support when you need it.<br />Last updated <time id="last-updated"></time></footer>
+      <footer class="landing-footer">Site created 2026<br />Please seek professional support when you need it.</footer>
     </main>
     <script type="application/json" id="posts-data">
 [
@@ -168,16 +171,6 @@
       }
 
       renderPosts(posts);
-    </script>
-    <script>
-      const lastUpdated = new Date(document.lastModified);
-      if (!Number.isNaN(lastUpdated.getTime())) {
-        document.getElementById("last-updated").textContent = lastUpdated.toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        });
-      }
     </script>
   </body>
 </html>
