@@ -15,6 +15,14 @@ const pool = mariadb.createPool({
 });
 
 function sendJson(response, status, body) {
+  if (response.headersSent || response.writableEnded) {
+    return;
+  }
+
+  const payload = JSON.stringify(body, (_key, value) => (
+    typeof value === "bigint" ? Number(value) : value
+  ));
+
   response.writeHead(status, {
     "Access-Control-Allow-Origin": allowedOrigin,
     "Access-Control-Allow-Headers": "Content-Type",
@@ -22,7 +30,7 @@ function sendJson(response, status, body) {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store"
   });
-  response.end(JSON.stringify(body));
+  response.end(payload);
 }
 
 async function readJson(request) {
@@ -96,7 +104,9 @@ async function handleRequest(request, response) {
 const server = http.createServer((request, response) => {
   handleRequest(request, response).catch((error) => {
     console.error(error);
-    sendJson(response, 500, { error: "The guestbook is temporarily unavailable." });
+    if (!response.headersSent && !response.writableEnded) {
+      sendJson(response, 500, { error: "The guestbook is temporarily unavailable." });
+    }
   });
 });
 
