@@ -26,7 +26,7 @@
       .site-nav form { display:block; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); }
       .site-nav button { width:100%; border:0; background:transparent; color:inherit; font:inherit; text-transform:none; }
       .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
-      .comments-column { min-width:0; padding:12px 0 0; }
+      .comments-column { min-width:0; padding:0; }
       .guestbook-panel-title { margin:0 0 12px; font-weight:700; }
       .guestbook-form { display:grid; gap:10px; text-align:left; }
       .guestbook-form label { display:grid; gap:4px; }
@@ -36,6 +36,7 @@
       #guestbook-status { min-height:1.3em; margin:0; }
       #guestbook-entries { list-style:none; margin:0; padding:0; text-align:left; }
       .guestbook-entry { border:var(--border-width) solid var(--border-color); padding:12px; margin:0 0 12px; }
+      #guestbook-entries .guestbook-entry:last-child { margin-bottom:0; }
       .guestbook-entry strong, .guestbook-entry time { display:block; }
       .guestbook-entry time { margin-top:2px; }
       .guestbook-entry p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
