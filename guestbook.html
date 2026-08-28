@@ -16,7 +16,7 @@
       .rating { margin:0 0 10px; color:#f0448d; }
       .site-title { margin:0 0 8px; font-weight:700; }
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; }
-      .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)) 180px; gap:18px; padding:16px; align-items:start; }
+      .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)) 180px; gap:18px; padding:16px 16px 0; margin-bottom:16px; align-items:start; }
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; }
       .sidebar-right { min-width:0; grid-column:3; grid-row:1 / span 2; }
       .page-column-center { grid-column:1 / -1; }
@@ -40,7 +40,7 @@
       .guestbook-entry time { margin-top:2px; }
       .guestbook-entry p { margin:8px 0 0; white-space:pre-wrap; overflow-wrap:anywhere; }
       .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px}.page-column{width:100%;margin-bottom:12px}.page-title{width:100%}.guestbook-panel,.comments-column{margin-bottom:12px}.sidebar-right{width:100%;margin-bottom:12px}.landing-footer{margin:0 8px 8px} }
+      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.three-column{display:block;padding:8px 8px 0;margin-bottom:8px}.page-column{width:100%;margin-bottom:12px}.page-title{width:100%}.guestbook-panel,.comments-column{margin-bottom:12px}.sidebar-right{width:100%;margin-bottom:12px}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
   <body data-api-base="https://jurietto-guestbook-api.onrender.com">
@@ -59,8 +59,7 @@
             <p id="guestbook-status" role="status" aria-live="polite"></p>
           </form>
         </section>
-        <section class="comments-column" aria-labelledby="comments-title">
-          <h3 class="guestbook-panel-title" id="comments-title">Comments</h3>
+        <section class="comments-column">
           <ul id="guestbook-entries" aria-live="polite"></ul>
         </section>
         <aside class="sidebar-right">
