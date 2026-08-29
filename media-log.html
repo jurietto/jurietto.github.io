@@ -4,27 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffb5c0" />
-    <title>Etc</title>
+    <meta name="description" content="A simple media log for jurietto.github.io." />
+    <title>Media log</title>
     <style>
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
       @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Italic.ttf") format("truetype"); font-weight:400; font-style:italic; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-LightItalic.ttf") format("truetype"); font-weight:300; font-style:italic; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-BoldItalic.ttf") format("truetype"); font-weight:700; font-style:italic; }
       * { box-sizing:border-box; }
       :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:3px; }
       body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
       a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
-      .intro { padding:0 16px 10px; }
-      .mark { display:block; width:92px; height:auto; margin:-48px auto 1px; position:relative; }
-      .rating { margin:0 0 10px; color:#f0448d; font-style:normal; }
+      .rating { margin:0 0 10px; color:#f0448d; }
       .site-title { margin:0 0 8px; font-weight:700; }
-      .site-description { max-width:430px; margin:0 auto 9px; line-height:1.35; }
-      .hero-image { display:block; width:min(520px,calc(100% - 12px)); height:auto; margin:0 auto 9px; border:var(--border-width) solid var(--border-color); }
       .sidebar-image { display:block; max-width:100%; height:auto; margin:0 auto; }
-      .page-title { margin:0 0 16px; font-weight:700; }
       .sidebar-title { margin:8px 0 4px; font-weight:700; }
       .profile { margin-top:8px; }
       .profile-image-frame { width:90px; height:90px; overflow:hidden; margin:0 auto 10px; border:var(--border-width) solid var(--border-color); }
@@ -34,30 +27,32 @@
       .sidebar-box .sidebar-image { margin-bottom:10px; }
       .cat-ellipse { display:block; width:110px; height:84px; margin:0 auto; border:var(--border-width) solid var(--border-color); border-radius:50%; object-fit:cover; }
       .site-note { margin:10px 0 0; }
-      .intro a { color:deeppink; }
       .site-header { border:var(--border-width) solid var(--border-color); margin:0 16px; padding:12px 0 0; background:var(--page-background); }
       .top-nav { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 16px 0; }
-      .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
-      .top-nav a, .site-nav a { background:var(--nav-mint); }
+      .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--nav-mint); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .top-nav a[aria-current="page"] { background:var(--button-ivory); }
       .top-nav a[aria-current="page"]::before { content:"🍭 "; }
       .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .left-sidebar { grid-column:1; min-width:0; display:grid; gap:8px; align-content:start; }
-      .center-column { grid-column:2; min-width:0; display:grid; gap:8px; align-content:start; }
+      .center-column { grid-column:2; min-width:0; }
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
       .page-column-left { display:flex; flex-direction:column; align-items:stretch; }
       .page-column-left .profile p { margin-bottom:0; }
+      .page-column-center { background:var(--content-background); }
+      .page-title { margin:0 0 12px; font-weight:700; }
+      .media-log-table-wrap { overflow-x:auto; }
+      .media-log-table { width:100%; border-collapse:collapse; background:var(--content-background); text-align:left; }
+      .media-log-table th, .media-log-table td { border:var(--border-width) solid var(--border-color); padding:8px; vertical-align:top; }
+      .media-log-table th { background:var(--page-background); font-weight:700; }
+      .media-log-table td:first-child { white-space:nowrap; }
       .sidebar-right { min-width:0; grid-column:3; grid-row:1; }
-      .left-sidebar .page-column, .left-sidebar .topics, .sidebar-right .sidebar-box { background:var(--sidebar-background); }
-      .page-column-center { grid-column:auto; background:var(--content-background); }
-      .note-box { background:var(--content-background); }
-      .note-image { display:block; max-width:100%; height:auto; margin:0 auto; border:var(--border-width) solid var(--border-color); }
       .site-nav { display:grid; gap:8px; margin:0; text-align:center; }
-      .site-nav a { display:block; width:100%; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; text-transform:none; }
-      .sidebar-right .site-nav a { background:var(--button-ivory); }
+      .site-nav a { display:block; width:100%; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--button-ivory); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .media-log-button { display:block; width:100%; margin:0; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--nav-mint); color:var(--border-color); font:inherit; font-weight:700; text-align:center; text-decoration:none; }
+      .media-log-button[aria-current="page"] { background:var(--button-ivory); }
+      .media-log-button[aria-current="page"]::before { content:"🍭 "; }
       .landing-footer { margin:0 16px 16px; padding:12px 8px; border:var(--border-width) solid var(--border-color); background:var(--footer-background); line-height:1.35; }
-      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.top-nav{grid-template-columns:1fr;gap:8px;margin:8px 8px 0}.three-column{display:flex;flex-direction:column;gap:8px;padding:8px 8px 0;margin-bottom:8px}.left-sidebar,.center-column,.sidebar-right{width:100%;display:grid;gap:8px}.page-column,.topics,.sidebar-box,.site-nav{width:100%;margin:0}.page-column-center{width:100%}.landing-footer{margin:0 8px 8px} }
+      @media (max-width:620px) { .center-body{width:100%;min-height:100vh}.site-header{margin:0 8px}.top-nav{grid-template-columns:1fr;gap:8px;margin:8px 8px 0}.three-column{display:flex;flex-direction:column;gap:8px;padding:8px 8px 0;margin-bottom:8px}.left-sidebar,.center-column,.sidebar-right{width:100%}.page-column,.sidebar-box,.site-nav{width:100%;margin:0}.landing-footer{margin:0 8px 8px} }
     </style>
   </head>
   <body>
@@ -69,31 +64,82 @@
       <nav class="top-nav" aria-label="Page navigation">
         <a href="index.html">Home</a>
         <a href="diary.html">Diary</a>
-        <a href="etc.html" aria-current="page">Etc</a>
+        <a href="etc.html">Etc</a>
         <a href="guestbook.html">Guestbook</a>
       </nav>
       <div class="three-column">
-        <div class="left-sidebar">
-          <aside class="page-column page-column-left">
-          <img class="sidebar-image" src="assets/heart.webp" alt="Decorative heart" />
-          <section class="profile" aria-labelledby="profile-title">
+        <aside class="left-sidebar">
+          <section class="page-column page-column-left" aria-labelledby="profile-title">
+            <img class="sidebar-image" src="assets/heart.webp" alt="Decorative heart" />
             <h2 class="sidebar-title" id="profile-title">Profile</h2>
             <div class="profile-image-frame"><img class="profile-image" src="assets/b5cc3c1a7c0a299c79b7dfc7d1c65929.jpg" alt="Profile image" /></div>
             <p>Juri<br />30<br />Neurodivergent<br />Aroace<br />She/her, they/them<br />Likes to self-isolate.</p>
           </section>
-          </aside>
-          <a class="media-log-button" href="media-log.html">Media log</a>
-        </div>
+          <a class="media-log-button" href="media-log.html" aria-current="page">Media log</a>
+        </aside>
         <div class="center-column">
-          <section class="page-column page-column-center">
-            <h2 class="page-title">Elsewhere</h2>
-            <p><a href="https://x.com/hexangel_93">Twitter</a></p>
-            <p><a href="https://www.youtube.com/@juriscafe">YouTube</a></p>
-          </section>
-          <section class="page-column note-box" aria-labelledby="note-title">
-            <h2 class="page-title" id="note-title">Handwritten note</h2>
-            <img class="note-image" src="assets/note.jpg" alt="Handwritten note" />
-          </section>
+          <div class="media-log-table-wrap">
+            <table class="media-log-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Type / notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Date unknown</td>
+                    <td>It</td>
+                    <td>2017</td>
+                    <td>Film</td>
+                  </tr>
+                  <tr>
+                    <td>August 26, 2026</td>
+                    <td>Misery</td>
+                    <td>1990</td>
+                    <td>Film</td>
+                  </tr>
+                  <tr>
+                    <td>Date unknown</td>
+                    <td>Hearts in Atlantis</td>
+                    <td>2001</td>
+                    <td>Film</td>
+                  </tr>
+                  <tr>
+                    <td>Date unknown</td>
+                    <td>Guillermo del Toro's Pinocchio</td>
+                    <td>2022</td>
+                    <td>Film</td>
+                  </tr>
+                  <tr>
+                    <td>Date unknown</td>
+                    <td>Mr. Rococo</td>
+                    <td>Unknown</td>
+                    <td>Film / show</td>
+                  </tr>
+                  <tr>
+                    <td>Date unknown</td>
+                    <td>Backrooms</td>
+                    <td>2026</td>
+                    <td>Film / show</td>
+                  </tr>
+                  <tr>
+                    <td>August 28, 2026</td>
+                    <td>Children of the Corn</td>
+                    <td>1984</td>
+                    <td>Film</td>
+                  </tr>
+                  <tr>
+                    <td>August 28, 2026</td>
+                    <td>Horrible Home Video</td>
+                    <td>Unknown</td>
+                    <td>YouTube — seven-hour creepy and funny late-night horror TV and retro commercials.</td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
         </div>
         <aside class="sidebar-right">
           <section class="sidebar-box" aria-labelledby="cat-title">
@@ -102,7 +148,7 @@
             <img class="cat-ellipse" src="assets/cat.jpg" alt="Cat" />
             <p class="site-note">Site is rated MA - take care of yourself.</p>
           </section>
-          <nav class="site-nav" aria-label="Main navigation">
+          <nav class="site-nav" aria-label="Social links">
             <a href="https://x.com/hexangel_93">Twitter</a>
             <a href="https://www.youtube.com/@juriscafe">YouTube</a>
           </nav>
