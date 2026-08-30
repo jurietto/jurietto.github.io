@@ -20,7 +20,7 @@ The API provides:
 
 The guestbook frontend displays Cloudflare Turnstile when its `data-turnstile-sitekey` value is filled in. The backend validates the token with Cloudflare when `TURNSTILE_SECRET_KEY` is configured. Set `TURNSTILE_REQUIRED=true` in Render so submissions cannot bypass CAPTCHA if the secret is missing.
 
-The visitor counter is a global page-view count stored in MariaDB. It counts homepage loads, not unique people. The backend creates the `site_stats` and `guestbook_replies` tables automatically on first API use; `schema.sql` includes them for a manual migration or a fresh database.
+The visitor counter is a global page-view count stored in MariaDB. It counts homepage loads, not unique people. The backend creates all required tables (`guestbook_entries`, `site_stats`, and `guestbook_replies`) automatically on first API use; `schema.sql` includes them for a manual migration or a fresh database.
 
 To reply, open `guestbook.html?admin=1`. The reply key is sent only in the request header and must match the private `ADMIN_REPLY_TOKEN` environment variable. Never put that token in the site HTML or commit it.
 

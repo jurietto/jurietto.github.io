@@ -3,7 +3,7 @@ import { timingSafeEqual } from "node:crypto";
 import mariadb from "mariadb";
 
 const port = Number(process.env.PORT || 3000);
-const allowedOrigin = process.env.FRONTEND_ORIGIN || "*";
+const allowedOrigin = String(process.env.FRONTEND_ORIGIN || "*").replace(/\/+$/, "") || "*";
 const turnstileSecretKey = String(process.env.TURNSTILE_SECRET_KEY || "");
 const turnstileRequired = process.env.TURNSTILE_REQUIRED === "true";
 const adminReplyToken = String(process.env.ADMIN_REPLY_TOKEN || "").trim();
@@ -43,6 +43,17 @@ let schemaReady;
 function ensureSchema() {
   if (!schemaReady) {
     schemaReady = (async () => {
+      await pool.query(`
+        CREATE TABLE IF NOT EXISTS guestbook_entries (
+          id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+          name VARCHAR(80) NOT NULL,
+          message TEXT NOT NULL,
+          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          approved TINYINT(1) NOT NULL DEFAULT 1,
+          PRIMARY KEY (id),
+          INDEX guestbook_entries_created_at_idx (created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+      `);
       await pool.query(`
         CREATE TABLE IF NOT EXISTS site_stats (
           id TINYINT UNSIGNED NOT NULL,

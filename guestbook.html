@@ -27,6 +27,7 @@
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
       .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
       .comments-column { min-width:0; display:grid; align-content:start; }
+      .guestbook-list-status { margin:0; padding:12px; border:var(--border-width) solid var(--border-color); background:var(--content-background); text-align:left; }
       .guestbook-panel-title { margin:0 0 12px; font-weight:700; }
       .guestbook-form { display:grid; gap:10px; text-align:left; }
       .guestbook-form label { display:grid; gap:4px; }
@@ -84,6 +85,7 @@
           </section>
         </div>
         <section class="comments-column">
+          <p class="guestbook-list-status" id="guestbook-list-status" role="status" aria-live="polite">Loading entries…</p>
           <ul id="guestbook-entries" aria-live="polite"></ul>
         </section>
       </div>
@@ -93,6 +95,7 @@
       const apiBase = document.body.dataset.apiBase;
       const form = document.getElementById("guestbook-form");
       const status = document.getElementById("guestbook-status");
+      const listStatus = document.getElementById("guestbook-list-status");
       const entries = document.getElementById("guestbook-entries");
       const turnstileSitekey = document.body.dataset.turnstileSitekey;
       let turnstileToken = "";
@@ -213,12 +216,14 @@
       }
 
       async function loadEntries() {
+        listStatus.textContent = "Loading entries…";
         try {
-          const response = await fetch(`${apiBase}/api/guestbook`);
+          const response = await fetch(`${apiBase}/api/guestbook`, { cache: "no-store" });
           if (!response.ok) throw new Error();
           renderEntries(await response.json());
+          listStatus.textContent = "";
         } catch {
-          showStatus("The guestbook is not connected yet.");
+          listStatus.textContent = "The guestbook is temporarily unavailable. Please try again later.";
         }
       }
 

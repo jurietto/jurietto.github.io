@@ -90,7 +90,7 @@
           </aside>
           <section class="visitor-box" aria-labelledby="visitor-title">
             <h2 class="visitor-title" id="visitor-title">Visitors</h2>
-            <p class="visitor-number"><span id="visitor-count">0</span></p>
+            <p class="visitor-number"><span id="visitor-count" aria-live="polite">Loading…</span></p>
           </section>
           <section class="last-updated-box" aria-labelledby="last-updated-title">
             <h2 class="visitor-title" id="last-updated-title">Last updated</h2>
@@ -133,7 +133,7 @@
       const apiBase = document.body.dataset.apiBase;
       const visitorCount = document.getElementById("visitor-count");
 
-      fetch(`${apiBase}/api/visits`, { method: "POST" })
+      fetch(`${apiBase}/api/visits`, { method: "POST", cache: "no-store" })
         .then((response) => {
           if (!response.ok) throw new Error();
           return response.json();
