@@ -7,12 +7,10 @@
     <title>Guestbook</title>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
     <style>
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; }
+      @font-face { font-family:"Enka Dot Mincho"; src:url("assets/EnkaDotMincho24.ttf") format("truetype"); font-weight:100 900; font-style:normal; font-display:swap; }
       * { box-sizing:border-box; }
-      :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --admin-reply-background:#d9c7ea; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:3px; }
-      body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --admin-reply-background:#d9c7ea; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:2px; }
+      body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) url("assets/bg.webp") repeat fixed; font-family:"Enka Dot Mincho",sans-serif; font-size:16px; }
       a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
       .rating { margin:0 0 10px; color:#f0448d; }
@@ -22,7 +20,7 @@
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .top-nav a, .site-nav a { background:var(--nav-mint); }
       .top-nav a[aria-current="page"] { background:var(--button-ivory); }
-      .top-nav a[aria-current="page"]::before { content:"🍭 "; }
+      .top-nav a[aria-current="page"]::before { content:""; display:inline-block; width:1em; height:1em; margin-right:.2em; background:url("assets/ck.webp") center / contain no-repeat; vertical-align:-.15em; }
       .three-column { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .page-column { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }
       .guestbook-panel { min-width:0; border:var(--border-width) solid var(--border-color); padding:12px; background:var(--page-background); }

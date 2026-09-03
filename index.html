@@ -7,15 +7,10 @@
     <meta name="description" content="jurietto.github.io — Kawaii things, mental health, internet life, music, games, and daily notes." />
     <title>Living quietly day to day</title>
     <style>
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Light.ttf") format("truetype"); font-weight:300; font-style:normal; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Bold.ttf") format("truetype"); font-weight:700; font-style:normal; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-Italic.ttf") format("truetype"); font-weight:400; font-style:italic; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-LightItalic.ttf") format("truetype"); font-weight:300; font-style:italic; }
-      @font-face { font-family:"Comic Neue Local"; src:url("assets/font/ComicNeue-BoldItalic.ttf") format("truetype"); font-weight:700; font-style:italic; }
+      @font-face { font-family:"Enka Dot Mincho"; src:url("assets/EnkaDotMincho24.ttf") format("truetype"); font-weight:100 900; font-style:normal; font-display:swap; }
       * { box-sizing:border-box; }
-      :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:3px; }
-      body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) fixed; font-family:"Comic Neue Local",sans-serif; font-size:16px; }
+      :root { --border-color:#3b164f; --page-background:#f7b5cd; --body-background:#d8a8c8; --sidebar-background:#f7b5cd; --content-background:#fffdf5; --button-ivory:#fffdf5; --footer-background:#b7e8d2; --nav-mint:#b7e8d2; --border-width:2px; }
+      body { margin:0; min-width:320px; color:var(--border-color); background:var(--body-background) url("assets/bg.webp") repeat fixed; font-family:"Enka Dot Mincho",sans-serif; font-size:16px; }
       a { color:deeppink; }
       .center-body { width:min(900px,calc(100% - 20px)); min-width:0; margin:0 auto; overflow:hidden; background:transparent; text-align:center; }
       .intro { padding:0 16px 10px; }
@@ -48,7 +43,7 @@
       .top-nav a { display:block; padding:10px; border:var(--border-width) solid var(--border-color); background:var(--page-background); color:var(--border-color); font:inherit; font-weight:700; text-decoration:none; }
       .top-nav a, .site-nav a { background:var(--nav-mint); }
       .top-nav a[aria-current="page"] { background:var(--button-ivory); }
-      .top-nav a[aria-current="page"]::before { content:"🍭 "; }
+      .top-nav a[aria-current="page"]::before { content:""; display:inline-block; width:1em; height:1em; margin-right:.2em; background:url("assets/ck.webp") center / contain no-repeat; vertical-align:-.15em; }
       .three-column { display:grid; grid-template-columns:180px minmax(0,1fr) 180px; gap:8px; padding:8px 16px 0; margin-bottom:8px; align-items:start; }
       .left-sidebar { grid-column:1; min-width:0; display:grid; gap:8px; align-content:start; }
       .center-column { grid-column:2; min-width:0; display:grid; gap:8px; align-content:start; }
@@ -107,12 +102,7 @@
           </section>
           <section class="topics" aria-labelledby="topics-title">
             <h2 class="topics-title" id="topics-title">Topics</h2>
-            <ul class="topics-list">
-              <li><a href="diary.html?topic=new-computer">#new-computer</a></li>
-              <li><a href="diary.html?topic=daily-life">#daily-life</a></li>
-              <li><a href="diary.html?topic=first-post">#first-post</a></li>
-              <li><a href="diary.html?topic=summer">#summer</a></li>
-            </ul>
+            <ul class="topics-list" id="home-topics-list"></ul>
           </section>
         </div>
         <aside class="sidebar-right">
@@ -133,6 +123,34 @@
     <script>
       const apiBase = document.body.dataset.apiBase;
       const visitorCount = document.getElementById("visitor-count");
+      const homeTopicsList = document.getElementById("home-topics-list");
+
+      function makeTopicLink(topic) {
+        const link = document.createElement("a");
+        link.href = `diary.html?topic=${encodeURIComponent(topic)}`;
+        link.textContent = `#${topic}`;
+        return link;
+      }
+
+      async function loadHomeTopics() {
+        try {
+          const response = await fetch("posts.json", { cache: "no-store" });
+          if (!response.ok) throw new Error(`Unable to load posts.json (${response.status})`);
+
+          const posts = await response.json();
+          const topics = [...new Set(posts.flatMap((post) => post.hashtags.map((tag) => tag.replace(/^#/, ""))))];
+
+          homeTopicsList.replaceChildren();
+          topics.forEach((topic) => {
+            const item = document.createElement("li");
+            item.append(makeTopicLink(topic));
+            homeTopicsList.append(item);
+          });
+        } catch (error) {
+          console.error(error);
+          homeTopicsList.replaceChildren();
+        }
+      }
 
       fetch(`${apiBase}/api/visits`, { method: "POST", cache: "no-store" })
         .then((response) => {
@@ -154,6 +172,8 @@
           day: "numeric"
         });
       }
+
+      loadHomeTopics();
     </script>
   </body>
 </html>
